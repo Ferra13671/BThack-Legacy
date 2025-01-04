@@ -61,7 +61,7 @@ The cheat client also has a plugin system that allows you to add your own module
 <details>
     <summary>How to quickly transfer or save multiple configs?</summary>
 
-> In ClickGui, there is a `Save Config` button in the bottom right corner which can be used to save the config to a 1 json file located in your `.minecraft/BThack/Configs` folder. There is also a `Load Config` button that allows you to load the same configs.
+  > In ClickGui, there is a `Save Config` button in the bottom right corner which can be used to save the config to a 1 json file located in your `.minecraft/BThack/Configs` folder. There is also a `Load Config` button that allows you to load the same configs.
 </details>
 
 ## Support
