@@ -1,0 +1,320 @@
+//CLIENT
+"lang.module.BThackCape": Заменяет плащ и элитры игрока на плащ и элитры из BThack.
+"lang.module.BThackMainMenu": Заменяет классическое главное меню майнкрафта на главное меню из BThack.
+"lang.module.ChatNotifications": Позволяет клиенту отправлять различные сообщения в чат.
+"lang.module.ClickGui": Гуи с выбором и настройкой модулей.
+"lang.module.DiscordRPC": Вы получаете активность BThack.
+"lang.module.FPSReducer": Ограничивает фпс если игра не сфокусирована.
+"lang.module.HUD": Включение и настройка худ модулей.
+"lang.module.HudEditor": Открывает HUD Editor меню.
+"lang.module.Language": Меняет язык интерфейса BThack.
+"lang.module.MemoryCleaner": Включение и настройка модуля очистки памяти.
+"lang.module.MenuShader": Включает рендеринг шейдеров в главном меню.
+"lang.module.ToggleSound": Воспроизводит звук при включении/выключении модулей.
+
+//COMBAT
+"lang.module.KillAura": Атакует сущностей в определенном радиусе.
+"lang.module.AimBot": Автоматически смотрит на ближайшую сущность в определенном радиусе.
+"lang.module.AutoArmor": Автоматически надевает лучшую броню, которая есть у вас в инвентаре.
+"lang.module.AutoClicker": Автоматически кликает.
+"lang.module.AutoOffhand": Автоматически берет нужный предмет в правую руку.
+"lang.module.AutoShield": Если у вас в правой руке есть щит, он активируется, если в вас летит стрела.
+"lang.module.AutoSoup": Автоматическое ест грибные супы для kitpvp-серверов.
+"lang.module.AutoSword": Автоматически поднимает меч при ударе.
+"lang.module.AutoTotemFall": Берет тотем в руку, прежде чем упасть на землю.
+"lang.module.Criticals": Все удары будут с критами.
+"lang.module.FastBow": Спам из лука.
+"lang.module.FireBallAura": Откидывает огненные шары возле вас.
+"lang.module.HitSound": Воспроизводит звук при ударе.
+"lang.module.HoleFill": Автоматически застраивает дыры.
+"lang.module.IgniteAura": Автоматически поджигает энтити.
+"lang.module.NoFriendDamage": Ты не сможешь ударить своих друзей.
+"lang.module.PearlPhase": Автоматически клипается в блок при помощи эндер перлов.
+"lang.module.SafeTrap": Построит вас в ловушку, если у вас мало хп.
+"lang.module.Surround": Окружает вас обсидианом, чтобы вы получали меньше урона.
+"lang.module.TNTIgniter": Автоматически поджигает тнт.
+"lang.module.TotemPopNotifier": Сообщает о использовании тотемов у игроков поблизости.
+"lang.module.WebAura": Автоматически ставит паутину под игроками.
+"lang.module.WitherRoseAura": Автоматически ставит розу визера под игроков.
+
+//MISC
+"lang.module.AntiHunger": Уменьшает голод, потерянный при движении.
+"lang.module.AutoAuth": Автоматический вход/регистрация с использованием пароля в файле AutoAuthPassword.txt.
+"lang.module.Breaker": Автоматически добывает выбранные блоки.
+"lang.module.CleanMemory": Очищает ОЗУ при включении.
+"lang.module.CreeperRadar": Предупреждает вас, если поблизости есть крипер.
+"lang.module.DeathCamera": После смерти вы сможете летать, как с FreeCam.
+"lang.module.EnemyRadar": Предупреждает вас, если поблизости есть враг.
+"lang.module.GameCrasher": Крашит твой Майнкрафт, лол.
+"lang.module.HighwayBuilder": Автоматически строит прямые магистрали.
+"lang.module.InstaNuker": Мгновенно добывает блоки вокруг вас.
+"lang.module.ItemRandomizer": Пока модуль включен, он случайно меняет текущий слот в хотбаре.
+"lang.module.MiddleClick": Добавляет дополнительный бинд к средней кнопке мыши.
+"lang.module.MoreChatHistory": Увеличивает максимальный размер чата.
+"lang.module.NoBreakDelay": Убирает задержку ломания.
+"lang.module.NoPacketKick": Предотвращает получения кика от пакетов.
+"lang.module.NoSoundLag": Предотвращает торможение игры из-за звуковых эффектов.
+"lang.module.OpenedGuiInfo": Отправляет информацию о открытом гуи.
+"lang.module.PacketMine": Автоматически ломает блок при помощи пакетов.
+"lang.module.PingSpoof": Имитирует плохой пинг.
+"lang.module.PistonSoundDelay": Уменьшает раздражающий звук поршней при использовании рядом с лаг машиной.
+"lang.module.PortalGod": Когда вы находитесь в портале, вы можете открывать GUI.
+"lang.module.Replanish": Автоматически пополняет предметы в хотбаре.
+"lang.module.Scrapper": Ломает блоки, находящиеся выше уровня ваших ног.
+"lang.module.SuperInstaMine": Позволяет мгновенно добывать большое количество блоков.
+"lang.module.Timer": Ускоряет/замедляет игровые тики.
+"lang.module.TopperRadar": Предупреждает, если поблизости находится топпер.
+"lang.module.TrashThrower": Выбрасывает выбранный мусор из инвентаря.
+"lang.module.VisualRange": Уведомляет вас, когда человек входит или выходит из зоны видимости.
+
+//MOVEMENT
+"lang.module.AntiAFK": Рандомизатор действий для имитации активности игрока.
+"lang.module.AutoJump": Автоматически прыгает.
+"lang.module.AutoWalk": Автоматически идет вперед.
+"lang.module.CameraRotator": Вращает камеру :/
+"lang.module.ElytraFastClose": Моментально закрывает элитры после прикосновения с полом.
+"lang.module.ElytraFlight": Позволяет быстро летать на элитрах.
+"lang.module.ElytraStrafe": Позволяет поворачивать на элитрах без потери скорости.
+"lang.module.EntitySpeed": Изменяет скорость ездовых сущностей.
+"lang.module.ExtendedFirework": Позволяет летать на фейерверках гораздо дольше (работает только на Гриме).
+"lang.module.FastFall": Игрок падает быстрее.
+"lang.module.Flip": Поворачивает игрока на 180 градусов.
+"lang.module.GuiMove": Позволяет игроку ходить когда гуи открыто.
+"lang.module.Impulse": Импульс, который подается в направлении вашего взгляда.
+"lang.module.LevitationControl": Позволяет управлять левитацией.
+"lang.module.NinjaBridge": Автоматически строит мост в стиле NinjaBridge в том направлении, в котором вы смотрите.
+"lang.module.NoFall": Предотвращает урон от падения.
+"lang.module.NoJumpDelay": Отключает задержку прыжка.
+"lang.module.NoPush": Убирает отталкивание от блоков, сущностей и жидкостей.
+"lang.module.NoSlow": Предотвращает замедление игрока.
+"lang.module.NoRotate": Фиксирует камеру на ближайшей оси.
+"lang.module.NoSRotations": Блокирует повороты камеры, вызваные сервером.
+"lang,module.Parkour": Автоматически прыгает с границы блока.
+"lang.module.SafeWalk": Позволяет не заходить за края.
+"lang.module.Scaffold": Автоматически ставит блоки под вами.
+"lang.module.ShiftSpam": Спамит шифтом :/
+"lang.module.Speed": Делает игрока быстрее.
+"lang.module.Sprint": Игрок всегда бежит.
+"lang.module.Strafe": Игрок может перемещаться без замедления.
+"lang.module.Velocity": Отключает отдачу у игрока.
+
+//PLAYER
+"lang.module.ActionBot": Может поочередно выполнять различные команды.
+"lang.module.AutoDisconnect": Отключение игрока, если его здоровье ниже предела.
+"lang.module.AutoEat": Просто автоматически ест.
+"lang.module.AutoElytra": Автоматически начинает летать на элитрах, если вы падаете.
+"lang.module.AutoFirework": При включении будет использован фейерверк, если игрок летает.
+"lang.module.AutoFish": Автоматически ловит рыбу.
+"lang.module.AutoMine": Автоматически добывает для вас руду или другие блоки.
+"lang.module.AutoMount": Автоматически пытается сесть на энтити рядом с вами.
+"lang.module.AutoPearl": При включении кидает перл.
+"lang.module.AutoRespawn": Автоматически респавнит игрока.
+"lang.module.AutoTool": Автоматически берет нужный инструмент в руку.
+"lang.module.BabyModel": Ваша модель меняется на модель ребенка.
+"lang.module.ChestPutter": Автоматически помещает необходимые предметы в контейнер.
+"lang.module.ChestStealer": Ворует предметы из сундука.
+"lang.module.ElytraReplace": Автоматически заменяет элитры, если их прочность достигла минимального предела.
+"lang.module.ElytraSwap": При включении заменяет элитры на нагрудник, а также в обратном порядке.
+"lang.module.FakePlayer": Создает фейкового игрока.
+"lang.module.FastDrop": Быстрее выбрасывает предметы с хотбара. (Может оставлять призрачные предметы в хотбаре)
+"lang.module.FastPlace": Позволяет ставить блоки очень быстро.
+"lang.module.FastUse": Позволяет быстрее использовать некоторые предметы.
+"lang.module.FreeCam": Отделяет камеру игрока от тела.
+"lang.module.Introvert": Вы отключитесь, если поблизости будет обнаружен игрок.
+"lang.module.InventoryManager": Различные утилиты для инвентаря.
+"lang.module.ItemSaver": Предотвращает использование предметов с прочностью ниже предельной.
+"lang.module.LagDetector": Информирует вас о различных лагах сервера.
+"lang.module.MultiFakePlayer": Работает как обычный FakePlayer, но вы можете использовать его для создания нескольких игроков одновременно.
+"lang.module.PMSpammer": Продвинутый спамер для отправки личных сообщений всем игрокам на сервере.
+"lang.module.Spammer": Автоматически пишет текст в чат.
+"lang.module.NoElytraBreak": Позволяет летать на элитрах, не тратя их прочность.
+"lang.module.NoGlitchBlocks": Предотвращает глюки блоков в мире.
+"lang.module.NoServerSlot": Блокирует изменение текущего слота сервером.
+"lang.module.PacketPlace": Заменяет стандартный способ установки блоков на пакетный.
+"lang.module.Sneak": Автоматически приседает.
+"lang.module.XCarry": Позволяет сохранять предметы в слотах для крафта.
+
+//RENDER
+"lang.module.Africa": Почувствуйте себя африканцем.
+"lang.module.AntiHazard": Отключает эффекты тошноты и слепоты.
+"lang.module.AttackTrace": Рисует линию к ентити, которого вы атаковали последним.
+"lang.module.BetterChat": Дополнительные настройки для чата.
+"lang.module.BlockHighlight": Подсвечивает блок, на который вы смотрите.
+"lang.module.Caipirinha": Caipirinha! Caipirinha!
+"lang.module.CameraClip": Позволяет камере проходить сквозь блоки.
+"lang.module.ChatAnimation": Добавляет анимации в чат.
+"lang.module.ChestESP": Подсвечивает контейнеры.
+"lang.module.CS_Crosshair": Меняет перекрестие на прицел из Counter Strike.
+"lang.module.EnchantColor": Изменяет цвет зачарования.
+"lang.module.ESP": Подсвечивает игроков, мобов и предметы.
+"lang.module.ExtraTab": Дополнительные настройки для таба.
+"lang.module.FullBright": Увеличивает яркость гаммы.
+"lang.module.FXAA": Немного сглаживает изображение на экране.
+"lang.module.HandTweaks": Добавляет различные настройки для рук.
+"lang.module.HoleESP": Подсвечивает безопасные дыры для кпвп.
+"lang.module.LastOpenChest": Подсвечивает последний открытый контейнер.
+"lang.module.MinecraftShaders": Рендеринг шейдеров minecraft.
+"lang.module.ModifyCamera": Позволяет настроить камеру по своему вкусу.
+"lang.module.MotionBlur": При движении возникает эффект размытия (чем больше фпс, тем больше нужно устанавливать силу размытия в настройках).
+"lang.module.Nametags": Рисует описательные неймтеги над сущностями.
+"lang.module.NewChunks": Обнаруживает старые или новые чанки.
+"lang.module.NoFog": Отключает рендерер тумана.
+"lang.module.NoOverlay": Отключает рендеринг оверлея.
+"lang.module.NoRender": Отключает рендеринг некоторых элементов.
+"lang.module.NoSwing": Отменяет анимацию взмаха руки на сервере или клиенте.
+"lang.module.PasswordHider": Скрывает ваш пароль при вводе команды в чате.
+"lang.module.Radar": Радар, отображающий сущностей, которые находятся рядом с вами.
+"lang.module.Search": Подсвечивает нужные блоки.
+"lang.module.Tooltips": Показывает содержимое ящика.
+"lang.module.Tracers": Отрисовывает линии, ведущие к сущностям.
+"lang.module.Xray": Позволяет отменить отрисовку блоков.
+
+//WORLD
+"lang.module.AutoFarmland": Автоматически вспахивает траву и землю рядом с вами.
+"lang.module.AutoSign": Запоминает первый введенный текст и автоматически вставляет его в последующие разы.
+"lang.module.CloudsColor": Меняет цвет облаков.
+"lang.module.CustomDayTime": Устанавливает кастомное время дня.
+"lang.module.Fly": Более удобная замена творческому полету.
+"lang.module.FogColor": Меняет цвет тумана.
+"lang.module.Lawnmower": Ломает траву и цветы.
+"lang.module.LiquidFiller": Ставит блоки в жидкости.
+"lang.module.NoWeather": Отключает погоду.
+"lang.module.Reach": Увеличивает дальность досягаемости игрока.
+"lang.module.SkyColor": Меняет цвет неба в мире.
+"lang.module.WorldElements": Модуль для тонкой настройки мира.
+
+
+//Module messages
+"lang.module.CreeperRadar.spotted": Крипер был замечен!
+"lang.module.EnemyRadar.spotted": Враг был замечен! %sName: %s  %sHealth: %s  %sDirection: %s
+"lang.module.TopperRadar.spotted": %sТоппер %sбыл замечен! %sName: %s  %sHealth: %s  %sDirection: %s
+"lang.module.radars.disconnectCountdown": Обратный отсчет до отключения начинается!
+"lang.module.radars.disconnectAfter": Отключение через %s секунд.
+"lang.module.PMSpammer.startSpam":  Начинаем отправлять сообщения всем игрокам...
+"lang.module.PMSpammer.trySend":  Попытка отправить сообщение игроку: %s
+"lang.module.PMSpammer.movingToNext":  Сообщение отправлено всем игрокам. Перехожу к следующему сообщению...
+"lang.module.Scaffold.noBlocks": В инвентаре не найдено ни одного подходящего блока.
+"lang.module.AutoBuilder.alreadyBuilding": Вы уже что-то строите.
+"lang.module.AutoBuilder.notStandingOnGround": Вы не стоите на земле!
+"lang.module.AutoBuilder.noNearBlocks": Рядом с вами не найдено ни одного блока.
+"lang.module.AutoBuilder.errorSelect": Ошибка при выборе правильной схемы.
+"lang.module.Surround.unSafeBlock": Под вами нет безопасного блока!
+"lang.module.SafeTrap.built":  Трапка построена, выключение ...
+"lang.module.PearlPhase.noCollision": Вы не касаетесь стены.
+"lang.module.ItemSaver.saveMessage": Прочность предмета слишком низкая!
+"lang.module.LagDetector.offlineInternet": Ваш интернет отключен!
+"lang.module.LagDetector.serverNotResponding": Сервер не отвечает!
+"lang.module.LagDetector.rubberBandDetected": Руббербенд замечен!
+"lang.module.VisualRange.playerEntered":  %s вошел в зону видимости.
+"lang.module.VisualRange.playerLeaved":  %s покинул зону видимости.
+"lang.module.AutoAuth.ruWord": шепчет
+"lang.module.DeathCamera.message": Вы мертвы. Нажмите: %s, чтобы возродиться или отключить модуль.
+
+
+//Screens
+"lang.screen.MainMenu.Singleplayer": Одиночная игра
+"lang.screen.Mainmenu.Multiplayer": Сетевая игра
+"lang.screen.Mainmenu.Options": Настройки
+"lang.screen.Mainmenu.Quit": Выйти
+"lang.screen.Mainmenu.SetWallpaper": Выбрать обои
+"lang.screen.SelectWallpaper.Confirm": Подтвердить
+"lang.screen.OutdatedVersion.message1": Ваша версия BThack уже устарела. (Ваша версия:%s. Новая версия:%s)
+"lang.screen.OutdatedVersion.message2": Хотите ли вы перейти на новую версию или остаться на этой?
+"lang.screen.ExitAndUpdate": Выйти и обновить
+"lang.screen.Don'tShowUntilNext": Не показывать до следующего релиза
+"lang.screen.Don'tShowAll": Не показывать снова для всех релизов
+
+
+//Commands
+"lang.command.invalidargs": Неверные аргументы команды! Пожалуйста, попробуйте —
+"lang.command.ClanList.description": Показывает весь список кланов, а также их участников.
+"lang.command.CommandList.description": Перечисляет все существующие команды BThack.
+"lang.command.EnemyList.description": Показывает весь список врагов.
+"lang.command.FriendList.description": Показывает весь список друзей.
+"lang.command.BlockList.description": Показывает весь список %s блоков.
+"lang.command.ItemList.description": Показывает весь список %s предметов.
+"lang.command.ClanMembers.description": Добавляет/удаляет участника клана.
+"lang.command.Clans.description": Добавляет/удаляет клан.
+"lang.command.ClanStatus.description": Изменяет статус клана.
+"lang.command.Enemies.description": Добавляет/удаляет врага.
+"lang.command.Friends.description": Добавляет/удаляет друга.
+"lang.command.CleanMemory.description": Очищает ОЗУ.
+"lang.command.EntitiesNearby.description": Пишет, сколько энтити находится рядом с вами.
+"lang.command.Prefix.description": Изменяет текущий префикс на другой префикс.
+"lang.command.Refresh.description": Обновляет список друзей/врагов/союзников (необходимо, если вы изменили список через txt-файл).
+"lang.command.Rotate.description": Поворачивает камеру игрока по заданным числам.
+"lang.command.ListBlock.description": Добавляет/удаляет блок из %s списка.
+"lang.command.ListItem.description": Добавляет/удаляет предмет из %s списка.
+"lang.command.Bind.description": Биндит модуль на указаную клавишу.
+"lang.command.BreakCommand.description": Ломает блок по выбранным координатам относительно игрока.
+"lang.command.BuildCommand.description": Ставит блок по выбранным координатам относительно игрока.
+"lang.command.SoundReloadCommand.description": Перезагружает звуковой менеджер.
+"lang.command.HClipCommand.description": Позволяет телепортироваться по горизонтали.
+"lang.command.VClipCommand.description": Позволяет телепортироваться по вертикали.
+"lang.command.Config.description": Сохраняет/загружает конфиг.
+"lang.command.ResetModule.description": Сбрасывает все настройки модуля до значений по умолчанию.
+"lang.command.DisableAll.description": Отключает все модули (кроме тех, что находятся в категории CLIENT).
+"lang.command.ClientGamemode.description": Устанавливает гейммод на стороне клиента.
+"lang.command.AutoAuth.description": Добавляет/удаляет пароль для определенного ника.
+
+
+"lang.command.ClanList.message1": Все кланы:
+"lang.command.ClanList.message2":   Участники:
+"lang.command.CommandList.message": Все BThack команды:
+"lang.command.EnemyList.message": Все ваши враги:
+"lang.command.FriendList.message": Все ваши друзья:
+"lang.command.BlockList.message": Все %s блоки:
+"lang.command.BlockList.message": Все %s предметы:
+"lang.command.ClanMembers.memberAdded": Участник успешно добавлен!
+"lang.command.ClanMembers.memberRemoved": Участник успешно убран!
+"lang.command.ClanMembers.memberInTheClan": Участник уже состоит в клане.
+"lang.command.ClanMembers.memberNoLongerInTheClan": Участник не является участником клана.
+"lang.command.ClanMembers.noSuchClan": Такого клана не существует. Создайте его с помощью команды $clans add ... .
+"lang.command.Clans.clanAdded": Клан успешно добавлен!
+"lang.command.Clans.clanExists": Этот клан уже существует!
+"lang.command.Clans.clanRemoved": Клан успешно убран!
+"lang.command.Clans.clanDoesn'tExists": Этого клана не существует!
+"lang.command.ClanStatus.setStatus": Клану %s был успешно установлен статус: %s
+"lang.command.ClanStatus.incorrectStatus": Неверный статус клана! Попробуйте следующие варианты: Friendly / Neutral / Enemy.
+"lang.command.Enemies.enemyAdded": Враг успешно добавлен!
+"lang.command.Enemies.enemyExists": Этот враг уже есть!
+"lang.command.Enemies.enemyRemoved": Враг вспешно убран!
+"lang.command.Enemies.enemyDoesn'tExists": Этого врага не существует!
+"lang.command.Friends.friendAdded": Друг успешно добавлен!
+"lang.command.Friends.friendExists": Этот друг уже есть!
+"lang.command.Friends.friendRemoved": Друг успешно убран!
+"lang.command.Friends.friendDoesn'tExists": Этого друга не существует!
+"lang.command.Refresh.friendRefreshed": Список друзей обновлен!
+"lang.command.Refresh.enemyRefreshed": Список врагов обновлен!
+"lang.command.Refresh.clanRefreshed": Список кланов обновлен!
+"lang.command.Bind.bound": Модуль %s был привязан к ключу %s.
+"lang.command.Bind.noFindModule": Не удается найти модуль %s.
+"lang.command.BreakCommand.alreadyDestroying": Вы уже что-то разрушаете.
+"lang.command.SoundReloadCommand.message": Звуковой менеджер перезагружен!
+"lang.command.HClipCommand.message": Пытаюсь телепортироваться на %s по горизонтали...
+"lang.command.VClipCommand.message": Пытаюсь телепортироваться на %s по вертикали...
+"lang.command.EntitiesNearby.message": энтити поблизости: %s
+"lang.command.Config.successfulSave": Конфиг был успешно сохранен!
+"lang.command.Config.saveError": При сохранении конфига произошла ошибка.
+"lang.command.Config.configNotFound": Файл конфига не найден.
+"lang.command.Config.successfulLoad": Конфиг был успешно загружен!
+"lang.command.ResetModule.moduleNotFound": Модуль не найден.
+"lang.command.ResetModule.successfulResetting": Все настройки модуля были сброшены к значениям по умолчанию!
+"lang.command.DisableAll.message": Все модули были отключены!
+"lang.command.AutoAuth.successfulSave": Пароль был успешно сохранен для никнейма: %s!
+"lang.command.AutoAuth.successfulRewrite": Пароль был успешно перезаписан для никнейма: %s!
+"lang.command.AutoAuth.successfulRemove": Пароль был успешно удален для никнейма: %s!
+"lang.command.AutoAuth.notExists": Пароль для никнейма '%s' не существует.
+
+"lang.command.List.listCleared": %s список очищен!
+"lang.command.List.invalidBlockName": Недопустимое имя блока!
+"lang.command.List.blockAdded": Блок успешно добавлен!
+"lang.command.List.blockAlreadyAdded": Этот блок уже есть.
+"lang.command.List.blockRemoved": Блок успешно убран!
+"lang.command.List.blockAlreadyRemoved": Этот блок не добавлен.
+
+"lang.command.List.invalidItemName": Недопустимое имя предмета!
+"lang.command.List.itemAdded": Предмет успешно добавлен!
+"lang.command.List.itemAlreadyAdded": Этот предмет уже есть.
+"lang.command.List.itemRemoved": Предмет успешно убран!
+"lang.command.List.itemAlreadyRemoved": Этот предмет не добавлен.
