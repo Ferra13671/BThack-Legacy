@@ -4,4 +4,3 @@
 
 [![GitHub All Releases](https://img.shields.io/github/downloads/Ferra13671/BThack/total.svg)](https://github.com/Ferra13671/BThack/releases)
 ![GitHub repo size](https://img.shields.io/github/repo-size/Ferra13671/BThack)
-![CodeFactor grade](https://img.shields.io/codefactor/grade/github/Ferra13671/BThack/1.21.1)
