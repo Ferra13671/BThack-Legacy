@@ -1,0 +1,317 @@
+//CLIENT
+"lang.module.BThackCape": Replaces the player's cape and elites with the cape and elites from the BThack client.
+"lang.module.BThackMainMenu": Replaces the classic main menu of minecraft with the main menu from BThack.
+"lang.module.ChatNotifications": Allows the client to send various messages to the chat.
+"lang.module.ClickGui": Gui with selection and configuration of modules.
+"lang.module.DiscordRPC": You get BThack activity.
+"lang.module.FPSReducer": Limits fps if the game is unfocused.
+"lang.module.HUD": Enabling and configuring HUD modules.
+"lang.module.HudEditor": Opens the HUD Editor menu.
+"lang.module.Language": Changes the language of the BThack interface.
+"lang.module.MemoryCleaner": Enabling and configuring the memory cleaning module.
+"lang.module.MenuShader": Enables shader rendering in the main menu.
+"lang.module.ToggleSound": Plays a sound when modules are turned on/off.
+
+//COMBAT
+"lang.module.KillAura": Attacks entities within a given radius.
+"lang.module.AimBot": Automatically looks at the nearest entity within a certain radius.
+"lang.module.AutoArmor": Automatically puts on the best armor you have in your inventory.
+"lang.module.AutoClicker": Automatically clicks.
+"lang.module.AutoOffhand": Automatically places a need item in your offhand.
+"lang.module.AutoShield": If you have a shield in your right hand, it will activate if an arrow flies at you.
+"lang.module.AutoSoup": Automatically eat mushroom soups for kitpvp servers.
+"lang.module.AutoSword": Automatically picks up the sword when hit.
+"lang.module.AutoTotemFall": Taking the totem in your off hand before you hit the ground.
+"lang.module.Criticals": Make all hits critical.
+"lang.module.FastBow": Spam from the bow.
+"lang.module.FireBallAura": Throws off the fireballs coming at you.
+"lang.module.HitSound": Produces sound when struck.
+"lang.module.HoleFill": Automatically builds up holes.
+"lang.module.IgniteAura": Automatically sets the entiti on fire.
+"lang.module.NoFriendDamage": You can't hit your friends.
+"lang.module.PearlPhase": Automatically clips into the block with ender pearls.
+"lang.module.SafeTrap": Builds you into a trap if you're low on xp.
+"lang.module.Surround": Surrounds you with obsidian to take less damage.
+"lang.module.TNTIgniter": Automatically ignites TNT.
+"lang.module.TotemPopNotifier": Reports the pop totems by players nearby.
+"lang.module.WebAura": Automatically places a web underneath players.
+"lang.module.WitherRoseAura": Automatically places wither rose under the players.
+
+//MISC
+"lang.module.AutoAuth": Automatically login/register using the password in the file AutoAuthPassword.txt.
+"lang.module.Breaker": Automatically mining selected blocks.
+"lang.module.CleanMemory": Clears RAM when turned on.
+"lang.module.CreeperRadar": Alerts you if there is a creeper nearby.
+"lang.module.DeathCamera": After you die, you can fly as with FreeCam.
+"lang.module.EnemyRadar": Alerts you if there is an enemy nearby.
+"lang.module.GameCrasher": Crashing your Minecraft, lol.
+"lang.module.HighwayBuilder": Automatically builds straight highways.
+"lang.module.InstaNuker": Instantly mines the blocks around you.
+"lang.module.ItemRandomizer": While the module is enabled, it randomly changes the current slot in the hotbar.
+"lang.module.MiddleClick": Adds an additional bind on the mouse middle button.
+"lang.module.MoreChatHistory": Increases the maximum chat size.
+"lang.module.NoBreakDelay": Removes the break delay.
+"lang.module.NoPacketKick": Prevents getting kicked by packets.
+"lang.module.NoSoundLag": Prevents sound effects from lagging the game.
+"lang.module.OpenedGuiInfo": Sends information about the opened screen.
+"lang.module.PacketMine": Automatically breaks the block using packets.
+"lang.module.PistonSoundDelay": Reduces annoying pistons sounds when used near a lag machine.
+"lang.module.PortalGod": When you are in the portal, you can open the GUI.
+"lang.module.Replanish": Automatically replenishes items in the hotbar.
+"lang.module.Scrapper": Breaks blocks, above the level of your feet.
+"lang.module.SuperInstaMine": Allows you to instantly mine a lot of blocks.
+"lang.module.Timer": Speeds up/slows down game ticks.
+"lang.module.TopperRadar": Warns you if there is a topper nearby.
+"lang.module.TrashThrower": Throws selected trash out of inventory.
+"lang.module.VisualRange": Notifies you when one enters or leaves your visual range.
+
+//MOVEMENT
+"lang.module.AntiAFK": Action randomizer to simulate player activity.
+"lang.module.AutoJump": Automatic jumps.
+"lang.module.AutoWalk": Automatically walks forward.
+"lang.module.CameraRotator": Rotates the camera :/
+"lang.module.ElytraFastClose": Instantly closes the elytres after touching the floor.
+"lang.module.ElytraFlight": Allows you to fly elytres fast.
+"lang.module.ElytraStrafe": Allows you to rotate on elytres without losing speed.
+"lang.module.EntitySpeed": Changing the speed of rideable entities.
+"lang.module.ExtendedFirework": Allows you to fly on fireworks much longer (Grim works only).
+"lang.module.FastFall": The player falls faster.
+"lang.module.Flip": Rotates the player 180 degrees.
+"lang.module.GuiMove": Allows the player to move when the GUI is turned on.
+"lang.module.Impulse": An impulse is applied to you in the direction of your gaze.
+"lang.module.LevitationControl": Allows you to control levitation.
+"lang.module.NinjaBridge": Automatically builds a NinjaBridge-style bridge in the direction you're facing.
+"lang.module.NoFall": Prevents damage from falling.
+"lang.module.NoJumpDelay": Disable jump delay.
+"lang.module.NoPush": Removes pushback from blocks, entities and liquids.
+"lang.module.NoRotate": Locks the camera along the nearest axis.
+"lang.module.NoSlow": Prevents the player from slowing down.
+"lang.module.NoSRotations": Blocks camera rotations caused by the server.
+"lang,module.Parkour": Automatically jumps from the block border.
+"lang.module.SafeWalk": Keeps you from walking off edges.
+"lang.module.Scaffold": Automatically puts blocks underneath you.
+"lang.module.ShiftSpam": Spam with shift :/
+"lang.module.Speed": Makes the player faster.
+"lang.module.Sprint": The player always runs.
+"lang.module.Strafe": The player can strafe without slowing down.
+"lang.module.Velocity": Disables player knockback.
+
+//PLAYER
+"lang.module.ActionBot": Can execute various given commands in alternating order.
+"lang.module.AutoDisconnect": Disconnecting a player if his health is below the limit.
+"lang.module.AutoEat": Just automatically eats.
+"lang.module.AutoElytra": Automatically starts flying on the elytra if you falling.
+"lang.module.AutoFirework": When enabled uses fireworks if the player is flying.
+"lang.module.AutoFish": Automatically catches fish.
+"lang.module.AutoMine": Automatically mines ore or other blocks for you.
+"lang.module.AutoMount": Automatycznie próbuje zamontować jednostkę w pobliżu.
+"lang.module.AutoPearl": When turned on, it throws pearl.
+"lang.module.AutoRespawn": Automatically respawn the player.
+"lang.module.AutoTool": Automatically takes the desired tool into your hand.
+"lang.module.BabyModel": Your model changes to baby's.
+"lang.module.ChestPutter": Automatically puts the necessary items in container.
+"lang.module.ChestStealer": Steals items from a chest.
+"lang.module.ElytraReplace": Automatically replaces elytra if their durability has reached the minimum limit.
+"lang.module.ElytraSwap": When enabled, replaces elytres with chestplate, and also in reverse.
+"lang.module.FakePlayer": Creates a fake player.
+"lang.module.FastDrop": Drops items from the hotbar faster. (Can leave ghostly objects in the hotbar)
+"lang.module.FastPlace": Allows you to place blocks very fast.
+"lang.module.FastUse": Allows you to use certain things faster.
+"lang.module.FreeCam": Separates the player's camera from the body.
+"lang.module.Introvert": You will disconnect if a player is detected nearby.
+"lang.module.InventoryManager": Various inventory utilities.
+"lang.module.ItemSaver": Prevents the use of items with less than ultimate strength.
+"lang.module.LagDetector": Informs you of various server lags.
+"lang.module.MultiFakePlayer": Works like a normal FakePlayer, but you can use it to create multiple players at once.
+"lang.module.PMSpammer": Advanced spammer for sending private messages to all players on the server.
+"lang.module.Spammer": Automatically writes text to chat.
+"lang.module.NoElytraBreak": Allows you to fly the elytra without wasting their durability.
+"lang.module.NoGlitchBlocks": Prevents blocks from being glitched in the world.
+"lang.module.NoServerSlot": Blocks the current slot from being changed by the server.
+"lang.module.PacketPlace": Replaces the standard method of placing blocks with a packet method.
+"lang.module.Sneak": Automatically sneaking.
+"lang.module.XCarry": Allows you to save items in crafting slots.
+
+//RENDER
+"lang.module.Africa": Feel like an African.
+"lang.module.AntiHazard": Disables nausea and blindness effects.
+"lang.module.AttackTrace": Draws a line to the entity you last attacked.
+"lang.module.BetterChat": Additional settings for chat.
+"lang.module.BlockHighlight": Highlights the block that you are looking at.
+"lang.module.Caipirinha": Caipirinha! Caipirinha!
+"lang.module.CameraClip": Allows your camera to clip through blocks.
+"lang.module.ChatAnimation": Adds animations to the chat.
+"lang.module.ChestESP": Highlighting containers.
+"lang.module.CS_Crosshair": Swaps the crosshairs for the crosshairs from Counter Strike.
+"lang.module.EnchantColor": Changes the color of the enchantment.
+"lang.module.ESP": Highlights players, mobs and items.
+"lang.module.ExtraTab": Additional settings for tab.
+"lang.module.FullBright": Increases the gamma brightness.
+"lang.module.FXAA": Smooths out the image on the screen a bit.
+"lang.module.HandTweaks": Adds a variety of tweaks for the hands.
+"lang.module.HoleESP": Highlights safe holes for crystal pvp.
+"lang.module.LastOpenChest": Highlights the last opened chest.
+"lang.module.MinecraftShaders": Renders minecraft shaders.
+"lang.module.ModifyCamera": Allows you to customize the camera to your liking.
+"lang.module.MotionBlur": When moving there is a blurring effect (the more fps, the more you need to set the blurring force in the settings).
+"lang.module.Nametags": Draws descriptive nametags above entities.
+"lang.module.NewChunks": Detects old or new chunks.
+"lang.module.NoFog": Disables the fog renderer.
+"lang.module.NoOverlay": Disables overlay rendering.
+"lang.module.NoRender": Disables rendering of some elements.
+"lang.module.NoSwing": Cancels server or client hand swing animation.
+"lang.module.PasswordHider": Hides your password when entering a command in chat.
+"lang.module.Radar": A radar that displays entities that are near you.
+"lang.module.Search": Highlights the needed blocks.
+"lang.module.Tooltips": Shows the contents of the shulker.
+"lang.module.Tracers": Draws lines leading to entities.
+"lang.module.Xray": Allows you to cancel the rendering of blocks.
+
+//WORLD
+"lang.module.AutoFarmland": Automatically plows the grass and dirt near you.
+"lang.module.AutoSign": Memorizes the first text entered and automatically inserts it in subsequent times.
+"lang.module.CloudsColor": Changes the color of the clouds.
+"lang.module.CustomDayTime": Sets custom day time.
+"lang.module.Fly": A more comfortable substitute for creative flight.
+"lang.module.FogColor": Changes the color of the fog.
+"lang.module.Lawnmower": Breaks grass and flowers.
+"lang.module.LiquidFiller": Placing blocks in the liquids.
+"lang.module.NoWeather": Turns off the weather.
+"lang.module.SkyColor": Changes the color of the sky in the world.
+"lang.module.WorldElements": A module for fine-tuning the world.
+
+
+//Module messages
+"lang.module.CreeperRadar.spotted": Creeper has been spotted! %sX: %s  %sY: %s  %sZ: %s
+"lang.module.EnemyRadar.spotted": The enemy has been spotted! %sName: %s  %sHealth: %s  %sDirection: %s
+"lang.module.TopperRadar.spotted": The %stopper %shas been spotted! %sName: %s  %sHealth: %s  %sDirection: %s
+"lang.module.radars.disconnectCountdown": The countdown to disconnecting begins!
+"lang.module.radars.disconnectAfter": Disconnect after %s s.
+"lang.module.PMSpammer.startSpam":  Starting to send a messages to all players...
+"lang.module.PMSpammer.trySend":  Trying to send a message to a player: %s
+"lang.module.PMSpammer.movingToNext":  Message sent to all players. Moving on to the next message...
+"lang.module.Scaffold.noBlocks": No matching blocks were found in the inventory.
+"lang.module.AutoBuilder.alreadyBuilding": You're already building something.
+"lang.module.AutoBuilder.notStandingOnGround": You're not standing on the ground!
+"lang.module.AutoBuilder.noNearBlocks": No blocks were found near you.
+"lang.module.AutoBuilder.errorSelect": Error in selecting the right schematic.
+"lang.module.Surround.unSafeBlock": There's no safe block underneath you!
+"lang.module.SafeTrap.built":  The trap is built, disable ...
+"lang.module.PearlPhase.noCollision": You're not touching the wall.
+"lang.module.ItemSaver.saveMessage": The strength of the item is too low!
+"lang.module.LagDetector.offlineInternet": Your internet is offline!
+"lang.module.LagDetector.serverNotResponding": Server Not Responding!
+"lang.module.LagDetector.rubberBandDetected": RubberBand Detected!
+"lang.module.VisualRange.playerEntered":  %s has entered your visual range.
+"lang.module.VisualRange.playerLeaved":  %s has left your visual range.
+"lang.module.DeathCamera.message": You are dead. Press: %s to respawn or disable module.
+
+
+
+//Screens
+"lang.screen.MainMenu.Singleplayer": Singleplayer
+"lang.screen.Mainmenu.Multiplayer": Multiplayer
+"lang.screen.Mainmenu.Options": Options
+"lang.screen.Mainmenu.Quit": Quit
+"lang.screen.Mainmenu.SetWallpaper": Set Wallpaper
+"lang.screen.SelectWallpaper.Confirm": Confirm
+"lang.screen.OutdatedVersion.message1": Your version of BThack is already out of date. (Your version:%s. New version:%s)
+"lang.screen.OutdatedVersion.message2": Do you want to update to the new version or stay on this one?
+"lang.screen.ExitAndUpdate": Exit and update
+"lang.screen.Don'tShowUntilNext": Don't show again until the next release
+"lang.screen.Don'tShowAll": Don't show again for all releases
+
+
+//Commands
+"lang.command.invalidargs": Invalid command arguments! Please try —
+"lang.command.ClanList.description": Shows the entire list of clans, as well as their members.
+"lang.command.CommandList.description": Lists all existing BThack commands.
+"lang.command.EnemyList.description": Shows the entire list of enemies.
+"lang.command.FriendList.description": Shows the entire list of friends.
+"lang.command.BlockList.description": Shows the entire list of %s blocks.
+"lang.command.ItemList.description": Shows the entire list of %s items.
+"lang.command.ClanMembers.description": Adds/removes a clan member.
+"lang.command.Clans.description": Adds/Deletes a clan.
+"lang.command.ClanStatus.description": Changes the status of the clan.
+"lang.command.Enemies.description": Adds/removes an enemy.
+"lang.command.Friends.description": Adds/removes a friend.
+"lang.command.CleanMemory.description": Clears RAM.
+"lang.command.EntitiesNearby.description": Sends how many entities are near you.
+"lang.command.Prefix.description": Changes the current prefix to another prefix.
+"lang.command.Refresh.description": Updates friends/enemies/allies list(needed if you changed the list via txt file).
+"lang.command.Rotate.description": Rotates the player's camera by specified numbers.
+"lang.command.ListBlock.description": Adds/removes a block from the %s list.
+"lang.command.ListItem.description": Adds/removes a item from the %s list.
+"lang.command.Bind.description": Binds a module to a specified key.
+"lang.command.BreakCommand.description": Breaks a block at selected coordinates relative to the player.
+"lang.command.BuildCommand.description": Places a block at selected coordinates relative to the player.
+"lang.command.SoundReloadCommand.description": Reloads the sound manager.
+"lang.command.HClipCommand.description": Allows you to teleport horizontally.
+"lang.command.VClipCommand.description": Allows you to teleport vertically.
+"lang.command.Config.description": Saves/Loads the config.
+"lang.command.ResetModule.description": Resets all module settings to default values.
+"lang.command.DisableAll.description": Disables all modules (except those in the CLIENT category).
+"lang.command.ClientGamemode.description": Sets the gamemode on the client side.
+"lang.command.AutoAuth.description": Adds/removes a password for a specific nickname.
+
+
+"lang.command.ClanList.message1": All clans:
+"lang.command.ClanList.message2":   Members:
+"lang.command.CommandList.message": All BThack commands:
+"lang.command.EnemyList.message": All your enemies:
+"lang.command.FriendList.message": All your friends:
+"lang.command.BlockList.message": All %s blocks:
+"lang.command.ItemList.message": All %s items:
+"lang.command.ClanMembers.memberAdded": Member successfully added!
+"lang.command.ClanMembers.memberRemoved": Member successfully removed!
+"lang.command.ClanMembers.memberInTheClan": The member is already in the clan.
+"lang.command.ClanMembers.memberNoLongerInTheClan": The member is not a member of a clan.
+"lang.command.ClanMembers.noSuchClan": There is no such clan. Create it using the $clans add ... command.
+"lang.command.Clans.clanAdded": Clan successfully added!
+"lang.command.Clans.clanExists": This clan already exists!
+"lang.command.Clans.clanRemoved": Clan successfully removed!
+"lang.command.Clans.clanDoesn'tExists": This clan doesn't exist!
+"lang.command.ClanStatus.setStatus": Clan %s has been successfully set status: %s
+"lang.command.ClanStatus.incorrectStatus": Incorrect clan status! Try the following options: Friendly / Neutral / Enemy.
+"lang.command.Enemies.enemyAdded": Enemy successfully added!
+"lang.command.Enemies.enemyExists": This enemy already exists!
+"lang.command.Enemies.enemyRemoved": Enemy successfully removed!
+"lang.command.Enemies.enemyDoesn'tExists": This enemy doesn't exist!
+"lang.command.Friends.friendAdded": Friend successfully added!
+"lang.command.Friends.friendExists": This friend already exists!
+"lang.command.Friends.friendRemoved": Friend successfully removed!
+"lang.command.Friends.friendDoesn'tExists": This friend doesn't exist!
+"lang.command.Refresh.friendRefreshed": Friend list refreshed!
+"lang.command.Refresh.enemyRefreshed": Enemy list refreshed!
+"lang.command.Refresh.clanRefreshed": Clan list refreshed!
+"lang.command.Bind.bound": The %s module has been bound to the %s key.
+"lang.command.Bind.noFindModule": Could not find module %s.
+"lang.command.BreakCommand.alreadyDestroying": You're already destroying something.
+"lang.command.SoundReloadCommand.message": Sound Manager reloaded!
+"lang.command.HClipCommand.message": Trying to teleport on %s horizontally...
+"lang.command.VClipCommand.message": Trying to teleport on %s vertically...
+"lang.command.EntitiesNearby.message": Entities nearby: %s
+"lang.command.Config.successfulSave": The config was successfully saved!
+"lang.command.Config.saveError": An error occurred while saving the config.
+"lang.command.Config.configNotFound": The config file was not found.
+"lang.command.Config.successfulLoad": The config was successfully loaded!
+"lang.command.ResetModule.moduleNotFound": Module was not found.
+"lang.command.ResetModule.successfulResetting": All module settings have been reset to defaults!
+"lang.command.DisableAll.message": All modules have been disabled!
+"lang.command.AutoAuth.successfulSave": The password was successfully saved for the nickname: %s!
+"lang.command.AutoAuth.successfulRewrite": Password was successfully rewritten for nickname: %s!
+"lang.command.AutoAuth.successfulRemove": Password was successfully removed for nickname: %s!
+"lang.command.AutoAuth.notExists": The password for the nickname '%s' does not exist.
+
+"lang.command.List.listCleared": %s list cleared!
+"lang.command.List.invalidBlockName": Invalid block name!
+"lang.command.List.blockAdded": Block added successfully!
+"lang.command.List.blockAlreadyAdded": This block has already been added.
+"lang.command.List.blockRemoved": Block removed successfully!
+"lang.command.List.blockAlreadyRemoved": This block has already been removed.
+
+"lang.command.List.invalidItemName": Invalid item name!
+"lang.command.List.itemAdded": Item added successfully!
+"lang.command.List.itemAlreadyAdded": This item has already been added.
+"lang.command.List.itemRemoved": Item removed successfully!
+"lang.command.List.itemAlreadyRemoved": This item has already been removed.
