@@ -2,13 +2,13 @@
     <img src="https://raw.githubusercontent.com/Ferra13671/BThack/1.21.1/src/main/resources/assets/bthack/bthacklogo.png" style="width: 69%" alt="logo">
 </p>
 
-![All Downloads](https://img.shields.io/github/downloads/Ferra13671/BThack/total)
-![Repo size](https://img.shields.io/github/repo-size/Ferra13671/BThack)
+![All Downloads](https://img.shields.io/github/downloads/nikitadan4pi/BThack-1.20.4/total)
+![Repo size](https://img.shields.io/github/repo-size/nikitadan4pi/BThack-1.20.4)
 ![Discord Online](https://img.shields.io/discord/1227601645907742750)
-![License](https://img.shields.io/github/license/Ferra13671/BThack?color=blue)
-![Last Release](https://img.shields.io/github/v/release/Ferra13671/BThack?include_prereleases&display_name=release&color=orange)
-![Repo Stars](https://img.shields.io/github/stars/Ferra13671/BThack?style=flat&color=yellow)
-![Repo Forks](https://img.shields.io/github/forks/Ferra13671/BThack?style=flat&color=pink)
+![License](https://img.shields.io/github/license/nikitadan4pi/BThack-1.20.4?color=blue)
+![Last Release](https://img.shields.io/github/v/release/nikitadan4pi/BThack-1.20.4?include_prereleases&display_name=release&color=orange)
+![Repo Stars](https://img.shields.io/github/stars/nikitadan4pi/BThack-1.20.4?style=flat&color=yellow)
+![Repo Forks](https://img.shields.io/github/forks/nikitadan4pi/BThack-1.20.4?style=flat&color=pink)
 
 BThack is a free open source PVE cheat client created for playing on anarchy servers. The client has more than 150+ modules to enhance your gaming experience.
 The cheat client also has a plugin system that allows you to add your own modules, commands, hud components, categories, change client behavior and more.
