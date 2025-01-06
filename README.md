@@ -18,7 +18,7 @@ BThack это беспланый ПВЕ чит клиент с открытым 
 
 ## My Discord server
 <div align="center">
-  <a href="https://discord.gg/xecWXN97s6"><img src="https://invidget.switchblade.xyz/xecWXN97s6" alt="Link to the bthack discord server https://discord.gg/xecWXN97s6"></a>
+  <a href="https://discord.gg/YmGUCFYRtG"><img src="https://invidget.switchblade.xyz/YmGUCFYRtG" alt="Link to the bthack discord server https://discord.gg/YmGUCFYRtG"></a>
 </div>
 
 ## Installing
