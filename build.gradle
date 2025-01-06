@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.7-SNAPSHOT'
+    id 'fabric-loom' version '1.6-SNAPSHOT'
     id 'maven-publish'
     id "com.github.johnrengelman.shadow" version "8.1.1"
 }
@@ -10,8 +10,8 @@ plugins {
       NO --- Baritone will not be integrated into the jar file.
  */
 project.ext.withBaritone = WithBaritone.YES
-// The version of BThack to be used both in the file name and within BThack
-project.ext.version = "1.4-beta"
+// Version under which BThack jar file will be created and customized
+project.ext.version = "1.4 beta"
 
 version = project.ext.version + (project.ext.withBaritone == WithBaritone.YES ? "" : "-NoBaritone")
 group = "com.ferra13671"
@@ -90,13 +90,10 @@ dependencies {
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
-    // Fabric API. This is technically optional, but you probably want it anyway.
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
     //Remove later???
     modInclude "maven.modrinth:satin-api:${satin_version}"
-    //This is to prevent warnings related to missing enum constants from appearing when launching the client in the IDE
-    compileOnly "org.apiguardian:apiguardian-api:1.0.0"
 
     library "com.github.Ferra13671:MegaEvents:1.2"
     library "com.github.Ferra13671:SimpleLanguageSystem:1.1"
@@ -128,7 +125,7 @@ processResources {
     }
 }
 
-def targetJavaVersion = 21
+def targetJavaVersion = 17
 tasks.withType(JavaCompile).configureEach {
     // ensure that the encoding is set to UTF-8, no matter what the system default is
     // this fixes some edge cases with special characters not displaying correctly
