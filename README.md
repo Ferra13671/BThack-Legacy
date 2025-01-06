@@ -24,7 +24,7 @@ BThack это беспланый ПВЕ чит клиент с открытым 
 ## Installing
 1. Install Minecraft 1.20.4
 2. install the latest Fabric loader for 1.20.4 [(fabric website)](https://fabricmc.net/)
-3. Get the latest 1.20.4 BThack version [(releases)](https://github.com/nikitadan4pi/.BThack-1.20.4/releases/)
+3. Get the latest 1.20.4 BThack version [(releases)](https://github.com/nikitadan4pi/BThack-1.20.4/releases/)
 4. Get the latest 1.20.4 Fabric Api version [(modrinth)](https://modrinth.com/mod/fabric-api)
 5. Put the files in your `.minecraft/mods` folder
 
