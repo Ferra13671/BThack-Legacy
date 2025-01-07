@@ -15,7 +15,7 @@ The cheat client also has a plugin system that allows you to add your own module
 
 ## My Discord server
 <div align="center">
-  <a href="https://discord.gg/xecWXN97s6"><img src="https://invidget.switchblade.xyz/xecWXN97s6" alt="Link to the bthack discord server https://discord.gg/xecWXN97s6"></a>
+  <a href="https://discord.gg/vmX26ByYEX"><img src="https://invidget.switchblade.xyz/vmX26ByYEX" alt="Link to the bthack discord server https://discord.gg/vmX26ByYEX"></a>
 </div>
 
 ## Installing
