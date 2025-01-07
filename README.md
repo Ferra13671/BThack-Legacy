@@ -2,27 +2,30 @@
     <img src="https://raw.githubusercontent.com/Ferra13671/BThack/1.21.1/src/main/resources/assets/bthack/bthacklogo.png" style="width: 69%" alt="logo">
 </p>
 
-![All Downloads](https://img.shields.io/github/downloads/Ferra13671/BThack/total)
-![Repo size](https://img.shields.io/github/repo-size/Ferra13671/BThack)
+![All Downloads](https://img.shields.io/github/downloads/nikitadan4pi/BThack-1.20.4/total)
+![Repo size](https://img.shields.io/github/repo-size/nikitadan4pi/BThack-1.20.4)
 ![Discord Online](https://img.shields.io/discord/1227601645907742750)
-![License](https://img.shields.io/github/license/Ferra13671/BThack?color=blue)
-![Last Release](https://img.shields.io/github/v/release/Ferra13671/BThack?include_prereleases&display_name=release&color=orange)
-![Repo Stars](https://img.shields.io/github/stars/Ferra13671/BThack?style=flat&color=yellow)
-![Repo Forks](https://img.shields.io/github/forks/Ferra13671/BThack?style=flat&color=pink)
+![License](https://img.shields.io/github/license/nikitadan4pi/BThack-1.20.4?color=blue)
+![Last Release](https://img.shields.io/github/v/release/nikitadan4pi/BThack-1.20.4?include_prereleases&display_name=release&color=orange)
+![Repo Stars](https://img.shields.io/github/stars/nikitadan4pi/BThack-1.20.4?style=flat&color=yellow)
+![Repo Forks](https://img.shields.io/github/forks/nikitadan4pi/BThack-1.20.4?style=flat&color=pink)
 
 BThack is a free open source PVE cheat client created for playing on anarchy servers. The client has more than 150+ modules to enhance your gaming experience.
 The cheat client also has a plugin system that allows you to add your own modules, commands, hud components, categories, change client behavior and more.
 
+
+BThack это беспланый ПВЕ чит клиент с открытым исходным кодом созданный для игры на анархических серверах. Включает в себя более 150 модулей для улучшения вашего игрового опыта. Данный клиент имеет систему плагинов, позволяющюю добовлять свои модули, команды, категории и Худ компоненты, менять визуальные темы и многое другое.
+
 ## My Discord server
 <div align="center">
-  <a href="https://discord.gg/xecWXN97s6"><img src="https://invidget.switchblade.xyz/xecWXN97s6" alt="Link to the bthack discord server https://discord.gg/xecWXN97s6"></a>
+  <a href="https://discord.gg/YmGUCFYRtG"><img src="https://invidget.switchblade.xyz/YmGUCFYRtG" alt="Link to the bthack discord server https://discord.gg/YmGUCFYRtG"></a>
 </div>
 
 ## Installing
-1. Install Minecraft 1.21.1
-2. install the latest Fabric loader for 1.21.1 [(fabric website)](https://fabricmc.net/)
-3. Get the latest 1.21.1 BThack version [(releases)](https://github.com/Ferra13671/BThack/releases)
-4. Get the latest 1.21.1 Fabric Api version [(modrinth)](https://modrinth.com/mod/fabric-api)
+1. Install Minecraft 1.20.4
+2. install the latest Fabric loader for 1.20.4 [(fabric website)](https://fabricmc.net/)
+3. Get the latest 1.20.4 BThack version [(releases)](https://github.com/nikitadan4pi/BThack-1.20.4/releases/)
+4. Get the latest 1.20.4 Fabric Api version [(modrinth)](https://modrinth.com/mod/fabric-api)
 5. Put the files in your `.minecraft/mods` folder
 
 ## FAQ
