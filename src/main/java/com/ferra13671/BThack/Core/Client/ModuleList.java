@@ -187,6 +187,7 @@ public final class ModuleList {
     public static NoRender noRender;
     public static NoSwing noSwing;
     public static PasswordHider passwordHider;
+    public static PhaseESP phaseESP;
     public static Radar radar;
     public static Search search;
     public static Tooltips tooltips;
@@ -375,6 +376,7 @@ public final class ModuleList {
         noRender = register(new NoRender());
         noSwing = register(new NoSwing());
         passwordHider = register(new PasswordHider());
+        phaseESP = register(new PhaseESP());
         radar = register(new Radar());
         search = register(new Search());
         tooltips = register(new Tooltips());

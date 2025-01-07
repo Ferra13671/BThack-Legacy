@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.api.Managers.TravelChange;
 
+import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Events.PacketEvent;
 import com.ferra13671.BThack.api.Events.Player.PlayerTraverRotEvent;
@@ -30,6 +31,9 @@ public class TravelChangeManager implements Mc {
     private float pitch;
 
     public void addChanger(TravelChanger changer) {
+        if (!ModuleList.elytraFlight.mode.getValue().equals("bounce") && !ModuleList.elytraFlight.isEnabled()) {
+            return;
+        }
         if (!changers.contains(changer)) {
             changers.add(changer);
             filterChangers();

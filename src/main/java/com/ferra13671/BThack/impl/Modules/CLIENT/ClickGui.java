@@ -38,6 +38,8 @@ public class ClickGui extends OneActionModule {
     public static NumberSetting animationTime;
     public static ModeSetting easing;
 
+    public static BooleanSetting shouldPause;
+
     public static NumberSetting guiScale;
 
     public ClickGui() {
@@ -78,6 +80,8 @@ public class ClickGui extends OneActionModule {
         easing.setValue("CIRC_OUT");
         easing.setIndex(17);
 
+        shouldPause = new BooleanSetting("Should Pause", this, true);
+
         guiScale = new NumberSetting("Gui Scale", this, 1, 0.5, 1.5, false, () -> false);
 
         initSettings(
@@ -97,6 +101,8 @@ public class ClickGui extends OneActionModule {
 
                 animationTime,
                 easing,
+
+                shouldPause,
 
                 guiScale
         );

@@ -295,4 +295,8 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
         }
         instanceScreen = null;
     }
+    @Override
+    public boolean shouldPause() {
+        return ModuleList.clickGui.shouldPause.getValue();
+    }
 }

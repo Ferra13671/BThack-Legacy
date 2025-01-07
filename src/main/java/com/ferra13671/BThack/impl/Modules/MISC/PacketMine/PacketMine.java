@@ -22,6 +22,7 @@ import com.ferra13671.BThack.api.Utils.Modules.AimBotUtils;
 import com.ferra13671.BThack.api.Utils.Grim.GrimUtils;
 import com.ferra13671.BThack.impl.Modules.PLAYER.AutoTool;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
+import com.ferra13671.BThack.api.Animation.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
@@ -37,6 +38,8 @@ import net.minecraft.util.math.Vec3i;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static com.ferra13671.BThack.BThack.initLog;
 
 public class PacketMine extends Module {
 
@@ -65,6 +68,9 @@ public class PacketMine extends Module {
     public static NumberSetting fastSpeed;
     public static NumberSetting normalSpeed;
     public static BooleanSetting switchToOld;
+
+    public static BooleanSetting rebreak;
+    public static BooleanSetting instaRebreak;
 
     public static BooleanSetting inventoryMode;
     public static NumberSetting hotbarSlot;
@@ -99,17 +105,20 @@ public class PacketMine extends Module {
         speedMine = new BooleanSetting("Speed Mine", this, false, () -> !doubleMode.getValue() && page.getValue().equals("General"));
         mineSpeed = new NumberSetting("Mine Speed", this, 1.2, 1, 10, false, () -> speedMine.getValue() && !doubleMode.getValue() && page.getValue().equals("General"));
 
-        autoCityMode = new BooleanSetting("Auto City", this, false, () -> page.getValue().equals("General"));
-        friends = new BooleanSetting("Friends", this, false, () -> autoCityMode.getValue() && page.getValue().equals("General"));
+        doubleMode = new BooleanSetting("Double Mode", this, false, () -> conveyorMode.getValue() && page.getValue().equals("General"));
+        fastSpeed = new NumberSetting("Fast Speed", this, 5, 5, 50, false, () -> conveyorMode.getValue() && doubleMode.getValue() && page.getValue().equals("General"));
+        normalSpeed = new NumberSetting("Normal Speed", this, 1.05, 0.9, 1.3, false, () -> conveyorMode.getValue() && doubleMode.getValue() && page.getValue().equals("General"));
+        switchToOld = new BooleanSetting("Switch To Old", this, false, () -> conveyorMode.getValue() && doubleMode.getValue() && page.getValue().equals("General"));
+
+        rebreak = new BooleanSetting("Rebreak", this, false, () -> page.getValue().equals("General"));
+        instaRebreak = new BooleanSetting("Instant", this, false, () -> page.getValue().equals("General"));
 
         conveyorMode = new BooleanSetting("Conveyor Mode", this, false, () -> page.getValue().equals("General"));
         conveyorLimitState = new BooleanSetting("ConveyorLimit", this, false, () -> page.getValue().equals("General"));
         conveyorLimit = new NumberSetting("Limit", this, 2, 1, 10, true, () -> page.getValue().equals("General") && conveyorLimitState.getValue());
 
-        doubleMode = new BooleanSetting("Double Mode", this, false, () -> conveyorMode.getValue() && page.getValue().equals("General"));
-        fastSpeed = new NumberSetting("Fast Speed", this, 5, 5, 50, false, () -> conveyorMode.getValue() && doubleMode.getValue() && page.getValue().equals("General"));
-        normalSpeed = new NumberSetting("Normal Speed", this, 1.05, 0.9, 1.3, false, () -> conveyorMode.getValue() && doubleMode.getValue() && page.getValue().equals("General"));
-        switchToOld = new BooleanSetting("Switch To Old", this, false, () -> conveyorMode.getValue() && doubleMode.getValue() && page.getValue().equals("General"));
+        autoCityMode = new BooleanSetting("Auto City", this, false, () -> page.getValue().equals("General"));
+        friends = new BooleanSetting("Friends", this, false, () -> autoCityMode.getValue() && page.getValue().equals("General"));
 
         inventoryMode = new BooleanSetting("Inventory Mode", this, false, () -> page.getValue().equals("General"));
         hotbarSlot = new NumberSetting("Hotbar Slot", this, 1, 1, 9, true, () ->inventoryMode.getValue() && page.getValue().equals("General"));
@@ -137,17 +146,20 @@ public class PacketMine extends Module {
                 speedMine,
                 mineSpeed,
 
+                doubleMode,
+                fastSpeed,
+                normalSpeed,
+                switchToOld,
+
+                rebreak,
+                instaRebreak,
+
                 autoCityMode,
                 friends,
 
                 conveyorMode,
                 conveyorLimitState,
                 conveyorLimit,
-
-                doubleMode,
-                fastSpeed,
-                normalSpeed,
-                switchToOld,
 
                 inventoryMode,
                 hotbarSlot,
@@ -159,6 +171,8 @@ public class PacketMine extends Module {
         );
 
     }
+    private final Animation conveyorAnimation = new Animation(Easing.LINEAR, 1000);
+    private boolean animationInvert = true;
 
     private boolean doubleFast;
     private BreakingBlock doubleBlock;
@@ -171,6 +185,8 @@ public class PacketMine extends Module {
     private int currentInventoryModeSlot = -1;
     private int currentInventoryModeHotbarSlot = -1;
 
+    BlockPos breakedPos;
+
     @Override
     public void onEnable() {
         super.onEnable();
@@ -182,6 +198,8 @@ public class PacketMine extends Module {
         firstSkip = true;
 
         ModuleList.superInstaMine.setToggled(false);
+
+        breakedPos = null;
     }
 
     @Override
@@ -292,46 +310,59 @@ public class PacketMine extends Module {
     public void onRender(RenderWorldEvent.Last e) {
         if (!renderBox.getValue() || currentBreakingBlock == null) return;
 
+        if (conveyorAnimation.getEase() >= 1) {
+            conveyorAnimation.reset();
+            animationInvert = !animationInvert;
+        }
+
         ArrayList<RenderBox> renderBoxes = new ArrayList<>();
+        double currentDestroyBlockSize = currentBreakingBlock.currentDestroyProgress / 2;
+        float boxR = (float) boxRed.getValue() / 255f;
+        float boxG = (float) boxGreen.getValue() / 255f;
+        float boxB = (float) boxBlue.getValue() / 255f;
         renderBoxes.add(
                 new RenderBox(
                         BlockUtils.createBox(
                                 currentBreakingBlock.blockPos,
-                                currentBreakingBlock.currentDestroyProgress / 2,
-                                currentBreakingBlock.currentDestroyProgress / 2,
-                                currentBreakingBlock.currentDestroyProgress / 2,
+                                currentDestroyBlockSize,
+                                currentDestroyBlockSize,
+                                currentDestroyBlockSize,
                                 true
                         ),
-                        (float) boxRed.getValue() / 255f,
-                        (float) boxGreen.getValue() / 255f,
-                        (float) boxBlue.getValue() / 255f,
+                        boxR,
+                        boxG,
+                        boxB,
                         1,
-                        (float) boxRed.getValue() / 255f,
-                        (float) boxGreen.getValue() / 255f,
-                        (float) boxBlue.getValue() / 255f,
+                        boxR,
+                        boxG,
+                        boxB,
                         0.3f
                 )
         );
 
+        float conveyorLinesAlpha = (float) ((conveyorAlpha.getValue() / 255d) * (animationInvert ? 1 - conveyorAnimation.getEase() : conveyorAnimation.getEase()));
+        float conveyorBoxAlpha = 0.3f * conveyorLinesAlpha;
+
         if (conveyorMode.getValue()) {
             if (doubleMode.getValue() && doubleBlock != null) {
                 if (BlockUtils.canBreak(doubleBlock.blockPos)) {
+                    double doubleBlockSize = doubleBlock.currentDestroyProgress / 2;
                     renderBoxes.add(
                             new RenderBox(
                                     BlockUtils.createBox(
                                             doubleBlock.blockPos,
-                                            doubleBlock.currentDestroyProgress / 2,
-                                            doubleBlock.currentDestroyProgress / 2,
-                                            doubleBlock.currentDestroyProgress / 2,
+                                            doubleBlockSize,
+                                            doubleBlockSize,
+                                            doubleBlockSize,
                                             true
                                     ),
-                                    (float) boxRed.getValue() / 255f,
-                                    (float) boxGreen.getValue() / 255f,
-                                    (float) boxBlue.getValue() / 255f,
+                                    boxR,
+                                    boxG,
+                                    boxB,
                                     1,
-                                    (float) boxRed.getValue() / 255f,
-                                    (float) boxGreen.getValue() / 255f,
-                                    (float) boxBlue.getValue() / 255f,
+                                    boxR,
+                                    boxG,
+                                    boxB,
                                     0.3f
                             )
                     );
@@ -351,11 +382,11 @@ public class PacketMine extends Module {
                                     1,
                                     1,
                                     0,
-                                    (float) (conveyorAlpha.getValue() / 255d),
+                                    conveyorLinesAlpha,
                                     1,
                                     1,
                                     0,
-                                    0.3f * (float) (conveyorAlpha.getValue() / 255d)
+                                    conveyorBoxAlpha
                             )
                     );
                 }
@@ -370,6 +401,12 @@ public class PacketMine extends Module {
     @EventSubscriber
     public void onTick(ClientTickEvent e) {
         if (nullCheck() || mc.isPaused()) return;
+
+        if (rebreak.getValue() && breakedPos != null){
+            if (!mc.world.isAir(breakedPos) && currentBreakingBlock == null) {
+                updateBlockLimited(breakedPos);
+            }
+        }
 
         if ((!conveyorMode.getValue() || conveyorBlocks.isEmpty()) && currentBreakingBlock == null) doubleBlock = null;
 
@@ -411,12 +448,13 @@ public class PacketMine extends Module {
                 } else {
                     firstSkip = false;
                 }
-
+                breakedPos = currentBreakingBlock.blockPos;
                 currentBreakingBlock = null;
                 if (!conveyorBlocks.isEmpty()) {
                     updateBlock(conveyorBlocks.get(0).blockPos);
                 }
             } else {
+                breakedPos = currentBreakingBlock.blockPos;
                 currentBreakingBlock = null;
             }
         }
@@ -446,28 +484,44 @@ public class PacketMine extends Module {
             if (!breakingBlock.startDestroying) {
                 if (extraPackets.getValue()) {
                     mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.Full(mc.player.getX(), mc.player.getY(), mc.player.getZ(), mc.player.yaw, mc.player.pitch, true));
+                    initLog("FULL");
                 }
 
+                if (instaRebreak.getValue() && breakedPos != null && breakedPos.equals(breakingBlock.blockPos)){
+                    breakingBlock.currentDestroyProgress = 1;
+                    mc.player.networkHandler.sendPacket(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.STOP_DESTROY_BLOCK, breakingBlock.blockPos, AimBotUtils.getInvertedFacingEntity(mc.player), 0));
+                    initLog("STOP_ACTION");
+                    breakingBlock.startDestroying = true;
+                } else{
                 mc.player.networkHandler.sendPacket(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.START_DESTROY_BLOCK, breakingBlock.blockPos, AimBotUtils.getInvertedFacingEntity(mc.player), 0));
-                if (swingHand.getValue()) mc.player.swingHand(Hand.MAIN_HAND);
+                initLog("START_ACTION");
                 breakingBlock.startDestroying = true;
+                if (swingHand.getValue()) mc.player.swingHand(Hand.MAIN_HAND);
+                }
+
             } else {
                 if (swingHand.getValue()) mc.player.swingHand(Hand.MAIN_HAND);
                 breakingBlock.currentDestroyProgress += destroyDelta * (doubleMode.getValue() && conveyorMode.getValue() && !conveyorBlocks.isEmpty() ? (doubleFast && (firstSkip || conveyorBlocks.size() > 1) ? fastSpeed.getValue() : normalSpeed.getValue()) : (speedMine.getValue() ? mineSpeed.getValue() : 1));
                 if (visibleBreaking.getValue()) mc.world.setBlockBreakingInfo(mc.player.getId(), breakingBlock.blockPos, (int)(breakingBlock.currentDestroyProgress * 10.0F));
-
             }
             if (breakingBlock.currentDestroyProgress >= 1) {
+                if (instaRebreak.getValue() && breakedPos != null && breakedPos.equals(breakingBlock.blockPos)){
+                    packetRemoveItem();
+                    breakingBlock.currentDestroyProgress = 1;
+                    return false;
+                }
                 breakingBlock.currentDestroyProgress = 1;
                 if (extraPackets.getValue()) {
                     mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.Full(mc.player.getX(), mc.player.getY(), mc.player.getZ(), mc.player.yaw, mc.player.pitch, true));
+                    initLog("FULL");
                 }
 
                 if (clientDestroy.getValue())
                     mc.interactionManager.breakBlock(breakingBlock.blockPos);
-
                 mc.player.networkHandler.sendPacket(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.ABORT_DESTROY_BLOCK, breakingBlock.blockPos, Direction.DOWN));
+                initLog("ABORT_ACTION");
                 mc.player.networkHandler.sendPacket(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.STOP_DESTROY_BLOCK, breakingBlock.blockPos, AimBotUtils.getInvertedFacingEntity(mc.player), 0));
+                initLog("STOP_ACTION");
 
                 packetRemoveItem();
 
