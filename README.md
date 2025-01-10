@@ -58,7 +58,7 @@ BThack это беспланый ПВЕ чит клиент с открытым 
 <details>
     <summary>How do I create my own plugin?</summary>
 
-  > You can use the plugin example for BThack [(repo)](https://github.com/Ferra13671/BThack-Plugin), it's a fully customized gradle project that will make it easy for you to create your own plugin.
+  > You can use the plugin example for BThack [(repo)](https://github.com/Ferra13671/BThack-Plugin/tree/1.20.4), it's a fully customized gradle project that will make it easy for you to create your own plugin.
 </details>
 
 <details>
@@ -68,4 +68,4 @@ BThack это беспланый ПВЕ чит клиент с открытым 
 </details>
 
 ## Support
-If you have a bug or want to suggest a feature, create an issue on Github or contact me through the [Discord](https://discord.gg/xecWXN97s6) server.
+If you have a bug or want to suggest a feature, create an issue on Github or contact me through the [Discord](https://discord.gg/YmGUCFYRtG) server.
