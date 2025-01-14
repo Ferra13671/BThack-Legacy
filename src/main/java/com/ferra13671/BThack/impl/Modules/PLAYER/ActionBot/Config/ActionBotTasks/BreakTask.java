@@ -4,11 +4,11 @@ import com.ferra13671.BThack.Core.FileSystem.JsonUtils;
 import com.ferra13671.BThack.api.Managers.Destroy.DestroyManager;
 import com.ferra13671.BThack.api.Managers.Destroy.SimpleDestroyThread;
 import com.ferra13671.BThack.api.Managers.Thread.ThreadClosedException;
-import com.ferra13671.BThack.api.Utils.ModifyBlockPos;
 import com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.ActionBotConfig;
 import com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.ActionBotTask;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import net.minecraft.util.math.BlockPos;
 
 import java.util.Arrays;
 
@@ -34,7 +34,7 @@ public class BreakTask extends ActionBotTask {
 
     @Override
     public void play() throws ThreadClosedException {
-        SimpleDestroyThread simpleDestroyThread = new SimpleDestroyThread(new ModifyBlockPos(mc.player.getX() + x, mc.player.getY() + y, mc.player.getZ() + z));
+        SimpleDestroyThread simpleDestroyThread = new SimpleDestroyThread(BlockPos.ofFloored(mc.player.getX() + x, mc.player.getY() + y, mc.player.getZ() + z));
         simpleDestroyThread.start();
         DestroyManager.isDestroying = true;
         while (DestroyManager.isDestroying) {

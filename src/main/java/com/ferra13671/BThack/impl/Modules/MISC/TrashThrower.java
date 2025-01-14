@@ -5,8 +5,9 @@ import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.ChatUtils;
+import com.ferra13671.BThack.api.Utils.DataList.DataLists;
+import com.ferra13671.BThack.api.Utils.DataList.ItemList;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
-import com.ferra13671.BThack.api.Utils.List.ItemList.ItemLists;
 import com.ferra13671.BThack.api.Utils.Ticker;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.screen.slot.SlotActionType;
@@ -37,7 +38,7 @@ public class TrashThrower extends Module {
         ticker.reset();
         if (!nullCheck()) {
             if (firstOpened) {
-                ChatUtils.sendMessage(Formatting.GRAY + "Use: " + Client.clientInfo.getChatPrefix() + ItemLists.get("TrashThrower").editItemListCommand.getAliases()[0]);
+                ChatUtils.sendMessage(Formatting.GRAY + "Use: " + Client.clientInfo.getChatPrefix() + DataLists.get("TrashThrower", ItemList.class).editDataListCommand.getAliases()[0]);
                 firstOpened = false;
             }
         }
@@ -49,7 +50,7 @@ public class TrashThrower extends Module {
 
         if (ticker.passed(delay.getValue())) {
             for (int i = 0; i < 36; i++) {
-                if (ItemLists.get("TrashThrower").items.contains(mc.player.getInventory().getStack(i).getItem())) {
+                if (DataLists.get("TrashThrower", ItemList.class).values.contains(mc.player.getInventory().getStack(i).getItem())) {
                     pc.clickSlot(0, (i < 9 ? i + 36 : i), 0, SlotActionType.PICKUP);
                     pc.clickSlot(0, -999, 0, SlotActionType.PICKUP);
                 }

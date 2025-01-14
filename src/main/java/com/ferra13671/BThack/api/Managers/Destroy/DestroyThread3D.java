@@ -5,7 +5,6 @@ import com.ferra13671.BThack.api.Managers.Build.BuildManager;
 import com.ferra13671.BThack.api.Managers.Thread.ThreadClosedException;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.BlockUtils;
-import com.ferra13671.BThack.api.Utils.ModifyBlockPos;
 import com.ferra13671.BThack.impl.Modules.PLAYER.AutoTool;
 import net.minecraft.block.Block;
 import net.minecraft.util.math.BlockPos;
@@ -56,7 +55,7 @@ public class DestroyThread3D extends AbstractDestroyThread {
         ArrayList<BlockPos> sch = new ArrayList<>();
 
         for (Vec3d vector : schematic) {
-            sch.add(new ModifyBlockPos(new Vec3d(startPos.getX() + vector.x, startPos.getY() + vector.y, startPos.getZ() + vector.z)));
+            sch.add(BlockPos.ofFloored(new Vec3d(startPos.getX() + vector.x, startPos.getY() + vector.y, startPos.getZ() + vector.z)));
         }
 
         for (BlockPos pos : sch) {

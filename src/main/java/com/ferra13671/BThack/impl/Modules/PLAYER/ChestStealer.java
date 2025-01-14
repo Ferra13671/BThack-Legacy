@@ -11,8 +11,9 @@ import com.ferra13671.BThack.api.Managers.Setting.Settings.Setting;
 import com.ferra13671.BThack.api.Managers.Thread.ThreadManager;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.ChatUtils;
+import com.ferra13671.BThack.api.Utils.DataList.DataLists;
+import com.ferra13671.BThack.api.Utils.DataList.ItemList;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
-import com.ferra13671.BThack.api.Utils.List.ItemList.ItemLists;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.client.gui.screen.ingame.GenericContainerScreen;
 import net.minecraft.item.ItemStack;
@@ -56,7 +57,7 @@ public class ChestStealer extends Module {
     public void onChangeSetting(Setting setting) {
         if (setting == steal) {
             if (steal.getValue().equals("Select"))
-                ChatUtils.sendMessage(Formatting.GRAY + "Use: " + Client.clientInfo.getChatPrefix() + ItemLists.get("ChestStealer").editItemListCommand.getAliases()[0]);
+                ChatUtils.sendMessage(Formatting.GRAY + "Use: " + Client.clientInfo.getChatPrefix() + DataLists.get("ChestStealer", ItemList.class).editDataListCommand.getAliases()[0]);
         }
     }
 
@@ -117,8 +118,8 @@ public class ChestStealer extends Module {
     public boolean filterStack(ItemStack stack) {
         if (steal.getValue().equals("All")) return stack.getItem() != Items.AIR;
         else {
-            if (mode.getValue().equals("WhiteList")) return ItemLists.get("ChestStealer").items.contains(stack.getItem());
-            else return !ItemLists.get("ChestStealer").items.contains(stack.getItem());
+            if (mode.getValue().equals("WhiteList")) return DataLists.get("ChestStealer", ItemList.class).values.contains(stack.getItem());
+            else return !DataLists.get("ChestStealer", ItemList.class).values.contains(stack.getItem());
         }
     }
 

@@ -18,7 +18,6 @@ import com.ferra13671.BThack.api.Managers.Thread.ThreadManager;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.ChatUtils;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
-import com.ferra13671.BThack.api.Utils.ModifyBlockPos;
 import com.ferra13671.BThack.api.Utils.Modules.AimBotUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
@@ -153,7 +152,7 @@ public class HighwayBuilder extends Module {
 
     private void breakInternal(Thread thread, byte[] moveFactor, ArrayList<Vec3i> schematic, boolean ignoreObsidian) {
         DestroyThread3D destroyThread = new DestroyThread3D();
-        destroyThread.set3DSchematic(schematic, new ModifyBlockPos(mc.player.getX() + (moveFactor[0] * 2), Math.round(mc.player.getY()) - (!mode.getValue().equals("Tunnel") ? 1 : 0), mc.player.getZ() + (moveFactor[1] * 2)));
+        destroyThread.set3DSchematic(schematic, BlockPos.ofFloored(mc.player.getX() + (moveFactor[0] * 2), Math.round(mc.player.getY()) - (!mode.getValue().equals("Tunnel") ? 1 : 0), mc.player.getZ() + (moveFactor[1] * 2)));
         destroyThread.setIgnoreBlocks(ignoreObsidian ? Arrays.asList(Blocks.OBSIDIAN, Blocks.CRYING_OBSIDIAN) : new ArrayList<>());
         destroyThread.start();
         try {
@@ -171,9 +170,9 @@ public class HighwayBuilder extends Module {
     All the logic and action to move.
      */
     private void gotoAction(Thread thread, byte[] moveFactor) {
-        boolean obstructionFound = !mc.world.isAir(new ModifyBlockPos(mc.player.getX() + moveFactor[0], mc.player.getY(), mc.player.getZ() + moveFactor[1]));
+        boolean obstructionFound = !mc.world.isAir(BlockPos.ofFloored(mc.player.getX() + moveFactor[0], mc.player.getY(), mc.player.getZ() + moveFactor[1]));
 
-        if (!mc.world.isAir(new ModifyBlockPos(mc.player.getX() + moveFactor[0], mc.player.getY() + 1, mc.player.getZ() + moveFactor[1])))
+        if (!mc.world.isAir(BlockPos.ofFloored(mc.player.getX() + moveFactor[0], mc.player.getY() + 1, mc.player.getZ() + moveFactor[1])))
             obstructionFound = true;
 
         Goto gotoN = new Goto(mc.player.getX() + (moveFactor[0] * (obstructionFound ? 0.16 : 1)), mc.player.getZ() + (moveFactor[1] * (obstructionFound ? 0.16 : 1)), CollisionAction.NONE);
@@ -242,7 +241,7 @@ public class HighwayBuilder extends Module {
             }
         }
         BuildThread3D thread3D = new BuildThread3D();
-        thread3D.set3DSchematic(1, checkBlocks, new ModifyBlockPos(mc.player.getX() + (moveFactor[0]), Math.round(mc.player.getY()) - (!mode.getValue().equals("Tunnel") ? 1 : 0), mc.player.getZ() + (moveFactor[1])));
+        thread3D.set3DSchematic(1, checkBlocks, BlockPos.ofFloored(mc.player.getX() + (moveFactor[0]), Math.round(mc.player.getY()) - (!mode.getValue().equals("Tunnel") ? 1 : 0), mc.player.getZ() + (moveFactor[1])));
         thread3D.start();
 
         try {

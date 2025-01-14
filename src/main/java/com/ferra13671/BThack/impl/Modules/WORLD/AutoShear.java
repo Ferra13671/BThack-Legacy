@@ -8,7 +8,6 @@ import com.ferra13671.BThack.api.Utils.Grim.GrimUtils;
 import com.ferra13671.BThack.api.Utils.InventoryUtils;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.Utils.Modules.AimBotUtils;
-import com.ferra13671.BThack.api.Utils.Modules.EntityFilter;
 import com.ferra13671.BThack.api.Utils.Modules.KillAuraUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.entity.Entity;
@@ -17,6 +16,7 @@ import net.minecraft.item.Items;
 import net.minecraft.util.Hand;
 
 import java.util.Arrays;
+import java.util.function.Predicate;
 
 public class AutoShear extends Module {
 
@@ -41,7 +41,7 @@ public class AutoShear extends Module {
         );
     }
 
-    private EntityFilter filter;
+    private Predicate<Entity> filter;
 
     @Override
     public void onEnable() {

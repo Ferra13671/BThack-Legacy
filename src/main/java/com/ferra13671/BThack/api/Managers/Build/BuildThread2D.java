@@ -1,7 +1,6 @@
 package com.ferra13671.BThack.api.Managers.Build;
 
 import com.ferra13671.BThack.api.Managers.Thread.ThreadClosedException;
-import com.ferra13671.BThack.api.Utils.ModifyBlockPos;
 import com.ferra13671.BThack.mixins.accessor.IRenderTickCounter$Dynamic;
 import net.minecraft.block.Block;
 import net.minecraft.util.math.BlockPos;
@@ -71,17 +70,17 @@ public class BuildThread2D extends AbstractBuildThread {
         for (Vec2f vector : buildSchematic2D) {
             switch (direction) {
                 case 90:
-                    positions.add(new ModifyBlockPos(new Vec3d(startPos.getX(), startPos.getY() + vector.y, startPos.getZ() - vector.x)));
+                    positions.add(BlockPos.ofFloored(new Vec3d(startPos.getX(), startPos.getY() + vector.y, startPos.getZ() - vector.x)));
                     break;
                 case 180:
-                    positions.add(new ModifyBlockPos(new Vec3d(startPos.getX() + vector.x, startPos.getY() + vector.y, startPos.getZ())));
+                    positions.add(BlockPos.ofFloored(new Vec3d(startPos.getX() + vector.x, startPos.getY() + vector.y, startPos.getZ())));
                     break;
                 case 270:
-                    positions.add(new ModifyBlockPos(new Vec3d(startPos.getX(), startPos.getY() + vector.y, startPos.getZ() + vector.x)));
+                    positions.add(BlockPos.ofFloored(new Vec3d(startPos.getX(), startPos.getY() + vector.y, startPos.getZ() + vector.x)));
                     break;
                 case 0:
                 default:
-                    positions.add(new ModifyBlockPos(new Vec3d(startPos.getX() - vector.x, startPos.getY() + vector.y, startPos.getZ())));
+                    positions.add(BlockPos.ofFloored(new Vec3d(startPos.getX() - vector.x, startPos.getY() + vector.y, startPos.getZ())));
             }
         }
         return positions;

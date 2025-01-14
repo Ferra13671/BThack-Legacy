@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.api.Managers.Command.CustomArguments;
 
-import com.ferra13671.BThack.api.Utils.List.PacketList.PacketList;
+import com.ferra13671.BThack.api.Utils.DataList.PacketList;
 import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.arguments.ArgumentType;
@@ -10,7 +10,6 @@ import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import net.minecraft.command.CommandSource;
-import net.minecraft.network.packet.Packet;
 import net.minecraft.text.Text;
 
 import java.util.Collection;
@@ -30,7 +29,7 @@ public class PacketListPacketArgument implements ArgumentType<String> {
     public String parse(StringReader reader) throws CommandSyntaxException {
         String name = reader.readString();
 
-        String packetName = packetList.packetNames.stream()
+        String packetName = packetList.valueNames.stream()
                 .filter(name::equals)
                 .findFirst()
                 .orElse(null);
@@ -43,7 +42,7 @@ public class PacketListPacketArgument implements ArgumentType<String> {
 
     @Override
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
-        return CommandSource.suggestMatching(packetList.packetNames, builder);
+        return CommandSource.suggestMatching(packetList.valueNames, builder);
     }
 
     @Override

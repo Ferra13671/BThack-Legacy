@@ -1,7 +1,8 @@
 package com.ferra13671.BThack.mixins.xray;
 
 import com.ferra13671.BThack.api.Interfaces.Mc;
-import com.ferra13671.BThack.api.Utils.List.BlockList.BlockLists;
+import com.ferra13671.BThack.api.Utils.DataList.BlockList;
+import com.ferra13671.BThack.api.Utils.DataList.DataLists;
 import com.ferra13671.BThack.impl.Modules.RENDER.Xray;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.render.model.BakedQuad;
@@ -24,7 +25,7 @@ public class MixinBasicBakedModel implements Mc {
 		if (state == null) return;
 
 		if (Xray.doXray) {
-			if (!BlockLists.get("Xray").blocks.contains(state.getBlock())) {
+			if (!DataLists.get("Xray", BlockList.class).values.contains(state.getBlock())) {
 				cir.setReturnValue(List.of());
 			}
 		}

@@ -94,7 +94,7 @@ public class PearlPhase extends Module {
 
         if (mc.player.horizontalCollision) {
             if (ticker.passed(phaseDelay.getValue())) {
-                BlockPos pos = new ModifyBlockPos(mc.player.getX(), mc.player.getY(), mc.player.getZ());
+                BlockPos pos = BlockPos.ofFloored(mc.player.getX(), mc.player.getY(), mc.player.getZ());
                 if (!BlockUtils.isOpaqueFullCube(pos) || mc.world.isAir(pos)) {
                     double minLength = 1000;
                     BlockPos minPos = null;

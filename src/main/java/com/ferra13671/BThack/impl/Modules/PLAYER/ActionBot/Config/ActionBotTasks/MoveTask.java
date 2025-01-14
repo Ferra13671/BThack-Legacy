@@ -14,7 +14,6 @@ import com.ferra13671.BThack.api.Managers.Thread.ThreadClosedException;
 import com.ferra13671.BThack.api.Managers.TravelChange.TravelChanger;
 import com.ferra13671.BThack.api.Utils.ChatUtils;
 import com.ferra13671.BThack.api.Utils.Grim.GrimUtils;
-import com.ferra13671.BThack.api.Utils.ModifyBlockPos;
 import com.ferra13671.BThack.api.Utils.Modules.AimBotUtils;
 import com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.ActionBotConfig;
 import com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.ActionBotTask;
@@ -132,9 +131,9 @@ public class MoveTask extends ActionBotTask {
                                 double x = mc.player.getX() + AimBotUtils.getCordFactorFromDirection((int) yaw)[0];
                                 double z = mc.player.getZ() + AimBotUtils.getCordFactorFromDirection((int) yaw)[1];
                                 double y = mc.player.getY() + 0.5;
-                                BlockPos blockPos = new ModifyBlockPos(x, y, z);
+                                BlockPos blockPos = BlockPos.ofFloored(x, y, z);
                                 if (BuildManager.ignoreBlocks.contains(mc.world.getBlockState(blockPos).getBlock()) || mc.world.isAir(blockPos) || mc.world.getBlockState(blockPos).getBlock() instanceof FlowerBlock) {
-                                    blockPos = new ModifyBlockPos(blockPos.getX(), blockPos.getY() + 1, blockPos.getZ());
+                                    blockPos = new BlockPos(blockPos.getX(), blockPos.getY() + 1, blockPos.getZ());
                                 }
                                 SimpleDestroyThread destroyThread = new SimpleDestroyThread(blockPos);
                                 destroyThread.start();

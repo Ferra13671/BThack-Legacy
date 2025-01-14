@@ -17,9 +17,7 @@ import com.ferra13671.BThack.api.Plugin.PluginSystem;
 import com.ferra13671.BThack.api.Social.Clans.Ally;
 import com.ferra13671.BThack.api.Social.Clans.Clan;
 import com.ferra13671.BThack.api.Social.Clans.ClansUtils;
-import com.ferra13671.BThack.api.Utils.List.BlockList.BlockLists;
-import com.ferra13671.BThack.api.Utils.List.ItemList.ItemLists;
-import com.ferra13671.BThack.api.Utils.List.PacketList.PacketLists;
+import com.ferra13671.BThack.api.Utils.DataList.DataLists;
 import com.ferra13671.BThack.impl.Modules.MISC.AutoAuth;
 import com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.ActionBotConfig;
 import com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.ActionBotTask;
@@ -48,23 +46,9 @@ public final class ConfigSystem {
             saveModules();
             saveFrames();
             saveClans();
-            BlockLists.forEach(blockList -> {
+            DataLists.forEach(dataList -> {
                 try {
-                    blockList.saveInFile();
-                } catch (IOException e) {
-                    BThack.error(e.getMessage());
-                }
-            });
-            ItemLists.forEach(itemList -> {
-                try {
-                    itemList.saveInFile();
-                } catch (IOException e) {
-                    BThack.error(e.getMessage());
-                }
-            });
-            PacketLists.forEach(packetList -> {
-                try {
-                    packetList.saveInFile();
+                    dataList.saveInFile();
                 } catch (IOException e) {
                     BThack.error(e.getMessage());
                 }
@@ -81,23 +65,9 @@ public final class ConfigSystem {
         try {
             loadModules();
             loadClans();
-            BlockLists.forEach(blockList -> {
+            DataLists.forEach(dataList -> {
                 try {
-                    blockList.loadFromFile();
-                } catch (IOException e) {
-                    BThack.error(e.getMessage());
-                }
-            });
-            ItemLists.forEach(itemList -> {
-                try {
-                    itemList.loadFromFile();
-                } catch (IOException e) {
-                    BThack.error(e.getMessage());
-                }
-            });
-            PacketLists.forEach(packetList -> {
-                try {
-                    packetList.loadFromFile();
+                    dataList.loadFromFile();
                 } catch (IOException e) {
                     BThack.error(e.getMessage());
                 }

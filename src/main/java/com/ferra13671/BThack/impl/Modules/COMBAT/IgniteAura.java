@@ -8,7 +8,6 @@ import com.ferra13671.BThack.api.Social.Clans.ClansUtils;
 import com.ferra13671.BThack.api.Utils.InventoryUtils;
 import com.ferra13671.BThack.api.Utils.ItemUtils;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
-import com.ferra13671.BThack.api.Utils.ModifyBlockPos;
 import com.ferra13671.BThack.api.Utils.Modules.KillAuraUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.block.Block;
@@ -78,8 +77,8 @@ public class IgniteAura extends Module {
                 targetClan.getValue(),
                 (entity) -> entity.onGround &&
                         KillAuraUtils.canBeSeeTarget(ignoreWalls, entity) &&
-                        !fires.contains(mc.world.getBlockState(new ModifyBlockPos(entity.getX(), entity.getY(), entity.getZ())).getBlock()) &&
-                        mc.world.isAir(new ModifyBlockPos(entity.getX(), entity.getY(), entity.getZ()))
+                        !fires.contains(mc.world.getBlockState(BlockPos.ofFloored(entity.getX(), entity.getY(), entity.getZ())).getBlock()) &&
+                        mc.world.isAir(BlockPos.ofFloored(entity.getX(), entity.getY(), entity.getZ()))
         );
 
         Entity entity = KillAuraUtils.filterEntity(
@@ -87,8 +86,8 @@ public class IgniteAura extends Module {
                 (entity1) -> entity1.onGround &&
                         entity1 instanceof LivingEntity &&
                         KillAuraUtils.canBeSeeTarget(ignoreWalls, entity1) &&
-                        !fires.contains(mc.world.getBlockState(new ModifyBlockPos(entity1.getX(), entity1.getY(), entity1.getZ())).getBlock()) &&
-                        mc.world.isAir(new ModifyBlockPos(entity1.getX(), entity1.getY(), entity1.getZ()))
+                        !fires.contains(mc.world.getBlockState(BlockPos.ofFloored(entity1.getX(), entity1.getY(), entity1.getZ())).getBlock()) &&
+                        mc.world.isAir(BlockPos.ofFloored(entity1.getX(), entity1.getY(), entity1.getZ()))
         );
 
         if (players.getValue() && player != null) {
@@ -103,7 +102,7 @@ public class IgniteAura extends Module {
 
         InventoryUtils.swapAction(oldSlot, slot, false, swap.getValue());
 
-        BlockPos pos = new ModifyBlockPos(entity.getX(), entity.getY(), entity.getZ());
+        BlockPos pos = BlockPos.ofFloored(entity.getX(), entity.getY(), entity.getZ());
         ItemUtils.useItemOnBlock(pos);
 
         InventoryUtils.swapAction(oldSlot, slot, true, swap.getValue());

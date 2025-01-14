@@ -90,7 +90,7 @@ public final class HoleUtils implements Mc {
         int holeBlocks = 0;
 
         for (Vec3d vec3d : hole) {
-            BlockPos offset = new ModifyBlockPos(vec3d.x, vec3d.y, vec3d.z);
+            BlockPos offset = BlockPos.ofFloored(vec3d.x, vec3d.y, vec3d.z);
 
             if (mc.world.getBlockState(offset).getBlock() == Blocks.OBSIDIAN || mc.world.getBlockState(offset).getBlock() == Blocks.BEDROCK) {
                 holeBlocks++;

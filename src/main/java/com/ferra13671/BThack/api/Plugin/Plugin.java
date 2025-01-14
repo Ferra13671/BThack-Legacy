@@ -18,11 +18,7 @@ public abstract class Plugin {
 
     public void onInitCommands() {}
 
-    public void onInitBlockLists() {}
-
-    public void onInitItemLists() {}
-
-    public void onInitPacketLists() {}
+    public void onInitDataLists() {}
 
     public void onInitCustomCategories() {}
 

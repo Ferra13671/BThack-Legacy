@@ -12,7 +12,6 @@ import com.ferra13671.BThack.api.Utils.BlockUtils;
 import com.ferra13671.BThack.api.Utils.Grim.GrimUtils;
 import com.ferra13671.BThack.api.Utils.InventoryUtils;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
-import com.ferra13671.BThack.api.Utils.ModifyBlockPos;
 import com.ferra13671.BThack.api.Utils.Modules.AimBotUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.block.Block;
@@ -79,7 +78,7 @@ public class LiquidFiller extends Module {
     }
 
     public void filterAction(List<Vec3i> sch) {
-        for (BlockPos pos : BlockUtils.getSphere(new ModifyBlockPos(mc.player.getX(), mc.player.getY(), mc.player.getZ()), (float) range.getValue(), (float) range.getValue(), false, true, 0)) {
+        for (BlockPos pos : BlockUtils.getSphere(BlockPos.ofFloored(mc.player.getX(), mc.player.getY(), mc.player.getZ()), (float) range.getValue(), (float) range.getValue(), false, true, 0)) {
             Block block = mc.world.getBlockState(pos).getBlock();
 
             if (!ignoreWalls.getValue())

@@ -6,8 +6,9 @@ import com.ferra13671.BThack.api.Managers.Destroy.DestroyThread3D;
 import com.ferra13671.BThack.api.Managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.BlockUtils;
+import com.ferra13671.BThack.api.Utils.DataList.BlockList;
+import com.ferra13671.BThack.api.Utils.DataList.DataLists;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
-import com.ferra13671.BThack.api.Utils.List.BlockList.BlockLists;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3i;
@@ -49,9 +50,9 @@ public class Breaker extends Module {
 
     public boolean check(BlockPos pos) {
         if (mode.getValue().equals("WhiteList")) {
-            return BlockLists.get("Breaker").blocks.contains(mc.world.getBlockState(pos).getBlock());
+            return DataLists.get("Breaker", BlockList.class).values.contains(mc.world.getBlockState(pos).getBlock());
         } else {
-            return !BlockLists.get("Breaker").blocks.contains(mc.world.getBlockState(pos).getBlock());
+            return !DataLists.get("Breaker", BlockList.class).values.contains(mc.world.getBlockState(pos).getBlock());
         }
     }
 }

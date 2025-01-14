@@ -547,13 +547,13 @@ public class PacketMine extends Module {
                 if (SocialManagers.FRIENDS.contains(player)) continue;
             }
             if (player.distanceTo(mc.player) > 4) continue;
-            BlockPos blockPos = new ModifyBlockPos(player.getX(), player.getY(),player.getZ());
+            BlockPos blockPos = BlockPos.ofFloored(player.getX(), player.getY(),player.getZ());
             if (BlockUtils.canBreak(blockPos) && MathUtils.getDistance(mc.player.getPos(), blockPos.toCenterPos()) < 4.25)
                 updateBlockLimited(blockPos);
             BlockPos nearestPos = null;
             double nearestLength = 9999;
             for (Vec3i vec : autoCityVectors) {
-                BlockPos checkPos = new ModifyBlockPos(player.getX() + vec.getX(), player.getY(), player.getZ() + vec.getZ());
+                BlockPos checkPos = BlockPos.ofFloored(player.getX() + vec.getX(), player.getY(), player.getZ() + vec.getZ());
                 double length = MathUtils.getDistance(mc.player.getPos(), checkPos.toCenterPos());
                 if (length > 4.25) continue;
                 if (length < nearestLength) {

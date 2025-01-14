@@ -6,9 +6,9 @@ import com.ferra13671.BThack.api.Managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
-import com.ferra13671.BThack.api.Utils.ModifyBlockPos;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.client.option.KeyBinding;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 
 import java.util.ArrayList;
@@ -55,7 +55,7 @@ public class SafeWalk extends Module {
     public void onTick(ClientTickEvent e) {
         if (nullCheck() || !mode.getValue().equals("Legit Shift") || !mc.player.verticalCollision) return;
 
-        if (BuildManager.ignoreBlocks.contains(mc.world.getBlockState(new ModifyBlockPos(mc.player.getX(), mc.player.getY() - 0.2, mc.player.getZ())).getBlock())) {
+        if (BuildManager.ignoreBlocks.contains(mc.world.getBlockState(BlockPos.ofFloored(mc.player.getX(), mc.player.getY() - 0.2, mc.player.getZ())).getBlock())) {
             mc.options.sneakKey.setPressed(true);
         } else {
             mc.options.sneakKey.setPressed(KeyboardUtils.isKeyDown(mc.options.sneakKey.getDefaultKey().getCode()));

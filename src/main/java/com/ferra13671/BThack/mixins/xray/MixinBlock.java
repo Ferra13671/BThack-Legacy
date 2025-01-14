@@ -2,8 +2,8 @@ package com.ferra13671.BThack.mixins.xray;
 
 import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.api.Interfaces.Mc;
-import com.ferra13671.BThack.api.Utils.List.BlockList.BlockList;
-import com.ferra13671.BThack.api.Utils.List.BlockList.BlockLists;
+import com.ferra13671.BThack.api.Utils.DataList.BlockList;
+import com.ferra13671.BThack.api.Utils.DataList.DataLists;
 import com.ferra13671.BThack.impl.Modules.RENDER.Xray;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -24,13 +24,13 @@ public class MixinBlock implements Mc {
 
         if (Xray.doXray) {
             BlockState state2 = mc.world.getBlockState(pos);
-            BlockList blockList = BlockLists.get("Xray");
-            if (!blockList.blocks.contains(state.getBlock()))
+            BlockList blockList = DataLists.get("Xray", BlockList.class);
+            if (!blockList.values.contains(state.getBlock()))
                 cir.setReturnValue(false);
             else
                 cir.setReturnValue(true);
 
-            if (!blockList.blocks.contains(state2.getBlock()))
+            if (!blockList.values.contains(state2.getBlock()))
                 cir.setReturnValue(false);
             else
                 cir.setReturnValue(true);
@@ -56,7 +56,7 @@ public class MixinBlock implements Mc {
     public void modifyGetSlipperiness(CallbackInfoReturnable<Float> cir) {
         Block block = (Block) (Object) this;
         if (ModuleList.customFriction.isEnabled()) {
-            boolean eq = BlockLists.get("CustomFriction").blocks.contains(block);
+            boolean eq = DataLists.get("CustomFriction", BlockList.class).values.contains(block);
             if (ModuleList.customFriction.mode.getValue().equals("WhiteList") == eq)
                 cir.setReturnValue((float) ModuleList.customFriction.friction.getValue());
         }

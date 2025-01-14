@@ -95,14 +95,14 @@ public class LavaAura extends Module {
                 clanMode.getValue(),
                 targetClan.getValue(),
                 (entity) -> entity.onGround &&
-                        !BuildManager.lavas.contains(mc.world.getBlockState(new ModifyBlockPos(entity.getX(), entity.getY(), entity.getZ())).getBlock()) &&
+                        !BuildManager.lavas.contains(mc.world.getBlockState(BlockPos.ofFloored(entity.getX(), entity.getY(), entity.getZ())).getBlock()) &&
                         BlockUtils.hasLineOfSight((new Vec3d(mc.player.getX(), mc.player.getY(), mc.player.getZ()).add(0, mc.player.getStandingEyeHeight(), 0)), new Vec3d(entity.getX(), entity.getY(), entity.getZ()))
                 );
         Entity entity = KillAuraUtils.filterEntity(
                 4,
                 (entity1) -> entity1.onGround &&
                         entity1 instanceof LivingEntity &&
-                        !BuildManager.lavas.contains(mc.world.getBlockState(new ModifyBlockPos(entity1.getX(), entity1.getY(), entity1.getZ())).getBlock()) &&
+                        !BuildManager.lavas.contains(mc.world.getBlockState(BlockPos.ofFloored(entity1.getX(), entity1.getY(), entity1.getZ())).getBlock()) &&
                         BlockUtils.hasLineOfSight((new Vec3d(mc.player.getX(), mc.player.getY(), mc.player.getZ()).add(0, mc.player.getStandingEyeHeight(), 0)), new Vec3d(entity1.getX(), entity1.getY(), entity1.getZ()))
                 );
 
@@ -144,7 +144,7 @@ public class LavaAura extends Module {
 
         swapAction(oldSlot, slot, false);
 
-        BlockPos pos = new ModifyBlockPos(entity.getX(), entity.getY(), entity.getZ());
+        BlockPos pos = BlockPos.ofFloored(entity.getX(), entity.getY(), entity.getZ());
         Vec3d vec3d = new Vec3d(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
         vec3d.y = pos.getY() - 0.4;
         float[] rots = AimBotUtils.rotations(vec3d);

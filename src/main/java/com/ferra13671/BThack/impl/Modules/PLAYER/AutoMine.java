@@ -7,8 +7,9 @@ import com.ferra13671.BThack.api.Managers.Setting.Settings.Setting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.BaritoneUtils;
 import com.ferra13671.BThack.api.Utils.ChatUtils;
+import com.ferra13671.BThack.api.Utils.DataList.BlockList;
+import com.ferra13671.BThack.api.Utils.DataList.DataLists;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
-import com.ferra13671.BThack.api.Utils.List.BlockList.BlockLists;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -72,7 +73,7 @@ public class AutoMine extends Module {
             reMineAction();
         if (setting.equals(extraBlocks))
             if (extraBlocks.getValue())
-                ChatUtils.sendMessage(Formatting.GRAY + "Use: " + Client.clientInfo.getChatPrefix() + BlockLists.get("AutoMine").editBlockListCommand.getAliases()[0]);
+                ChatUtils.sendMessage(Formatting.GRAY + "Use: " + Client.clientInfo.getChatPrefix() + DataLists.get("AutoMine", BlockList.class).editDataListCommand.getAliases()[0]);
     }
 
     @Override
@@ -135,7 +136,7 @@ public class AutoMine extends Module {
         if (deepslateCoal.getValue()) blocks.add(Blocks.DEEPSLATE_COAL_ORE);
         if (quartz.getValue()) blocks.add(Blocks.NETHER_QUARTZ_ORE);
 
-        if (extraBlocks.getValue()) blocks.addAll(BlockLists.get("AutoMine").blocks);
+        if (extraBlocks.getValue()) blocks.addAll(DataLists.get("AutoMine", BlockList.class).values);
 
         BaritoneUtils.mine(blocks);
     }

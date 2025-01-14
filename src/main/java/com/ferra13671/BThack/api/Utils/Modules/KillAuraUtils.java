@@ -23,6 +23,7 @@ import net.minecraft.util.math.Vec3d;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.function.Predicate;
 
 public final class KillAuraUtils implements Mc {
 
@@ -81,8 +82,8 @@ public final class KillAuraUtils implements Mc {
         }
     }
 
-    public static PlayerEntity filterPlayers(double range, boolean friends, boolean teammates, boolean clanManager, String clanMode, String targetClan, EntityFilter extraFilter) {
-        return mc.world.getPlayers().stream().filter(entityPlayer -> filterPlayer(entityPlayer, friends, teammates, clanManager, clanMode, targetClan) && extraFilter.get(entityPlayer)).min(Comparator.comparing(entityPlayer ->
+    public static PlayerEntity filterPlayers(double range, boolean friends, boolean teammates, boolean clanManager, String clanMode, String targetClan, Predicate<Entity> extraFilter) {
+        return mc.world.getPlayers().stream().filter(entityPlayer -> filterPlayer(entityPlayer, friends, teammates, clanManager, clanMode, targetClan) && extraFilter.test(entityPlayer)).min(Comparator.comparing(entityPlayer ->
                 entityPlayer.distanceTo(mc.player))).filter(entityPlayer -> entityPlayer.distanceTo(mc.player) <= range).orElse(null);
     }
 
@@ -94,13 +95,13 @@ public final class KillAuraUtils implements Mc {
         return entityPlayer != mc.player && !isFriend(entityPlayer, friends) && !isTeammate(entityPlayer, teammates) && isSuccessfulClanMember(entityPlayer, clanManager, clanMode, targetClan) && entityPlayer.isAlive();
     }
 
-    public static Entity filterEntity(double range, EntityFilter entityFilter) {
+    public static Entity filterEntity(double range, Predicate<Entity> entityFilter) {
         ArrayList<Entity> entities = new ArrayList<>();
         for (Entity entity : mc.world.getEntities()) {
             entities.add(entity);
         }
 
-        return entities.stream().filter(entity1 -> entity1 != mc.player && entity1.isAlive() && entityFilter.get(entity1)).min(Comparator.comparing(entity1 ->
+        return entities.stream().filter(entity1 -> entity1 != mc.player && entity1.isAlive() && entityFilter.test(entity1)).min(Comparator.comparing(entity1 ->
                 entity1.distanceTo(mc.player))).filter(entity1 -> entity1.distanceTo(mc.player) <= range).orElse(null);
     }
 
@@ -140,7 +141,7 @@ public final class KillAuraUtils implements Mc {
         return !isHostile(entity) && !isPassive(entity) && !isGolem(entity) && entity instanceof MobEntity;
     }
 
-    public static EntityFilter createEntityFilter(BooleanSetting hostiles, BooleanSetting passive, BooleanSetting golems, BooleanSetting otherMobs) {
+    public static Predicate<Entity> createEntityFilter(BooleanSetting hostiles, BooleanSetting passive, BooleanSetting golems, BooleanSetting otherMobs) {
         return entity -> (hostiles.getValue() && isHostile(entity)) || (passive.getValue() && isPassive(entity)) || (golems.getValue() && isGolem(entity)) || (otherMobs.getValue() && isOtherMob(entity));
     }
 

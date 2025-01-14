@@ -3,9 +3,7 @@ package com.ferra13671.BThack.api.Managers.Command;
 import com.ferra13671.BThack.api.Plugin.Plugin;
 import com.ferra13671.BThack.api.Plugin.PluginSystem;
 import com.ferra13671.BThack.api.Plugin.PluginUtils;
-import com.ferra13671.BThack.api.Utils.List.BlockList.BlockLists;
-import com.ferra13671.BThack.api.Utils.List.ItemList.ItemLists;
-import com.ferra13671.BThack.api.Utils.List.PacketList.PacketLists;
+import com.ferra13671.BThack.api.Utils.DataList.DataLists;
 import com.ferra13671.BThack.impl.Commands.*;
 import com.ferra13671.BThack.impl.Commands.Social.Clans.ClanMembersCommand;
 import com.ferra13671.BThack.impl.Commands.Social.Clans.ClanStatusCommand;
@@ -41,17 +39,9 @@ public class CommandManager {
         register(new ClanStatusCommand());
         register(new ClanMembersCommand());
 
-        BlockLists.forEach(blockList -> {
-            register(blockList.editBlockListCommand);
-            register(blockList.blockListCommand);
-        });
-        ItemLists.forEach(itemList -> {
-            register(itemList.editItemListCommand);
-            register(itemList.itemListCommand);
-        });
-        PacketLists.forEach(packetList -> {
-            register(packetList.editPacketListCommand);
-            register(packetList.packetListCommand);
+        DataLists.forEach(dataList -> {
+            register(dataList.editDataListCommand);
+            register(dataList.abstractDataListCommand);
         });
 
         register(new FriendsCommand());

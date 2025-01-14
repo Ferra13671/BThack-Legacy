@@ -9,7 +9,7 @@ plugins {
       YES --- Baritone will be integrated into the jar file.
       NO --- Baritone will not be integrated into the jar file.
  */
-project.ext.withBaritone = WithBaritone.YES
+project.ext.withBaritone = WithBaritone.NO
 // The version of BThack to be used both in the file name and within BThack
 project.ext.version = "1.5"
 

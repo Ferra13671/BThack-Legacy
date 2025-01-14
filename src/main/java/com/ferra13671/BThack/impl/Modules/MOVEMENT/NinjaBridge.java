@@ -12,7 +12,6 @@ import com.ferra13671.BThack.api.Utils.ChatUtils;
 import com.ferra13671.BThack.api.Utils.InventoryUtils;
 import com.ferra13671.BThack.api.Utils.ItemUtils;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
-import com.ferra13671.BThack.api.Utils.ModifyBlockPos;
 import com.ferra13671.BThack.api.Utils.Modules.AimBotUtils;
 import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
 import net.minecraft.block.BlockState;
@@ -164,16 +163,16 @@ public class NinjaBridge extends Module {
             BlockPos block = null;
             switch (yaw) {
                 case -135:
-                    block = new ModifyBlockPos(mc.player.getX(), mc.player.getY() - 0.5F, mc.player.getZ() + extraRange);
+                    block = BlockPos.ofFloored(mc.player.getX(), mc.player.getY() - 0.5F, mc.player.getZ() + extraRange);
                     break;
                 case -45:
-                    block = new ModifyBlockPos(mc.player.getX() - extraRange, mc.player.getY() - extraRange, mc.player.getZ());
+                    block = BlockPos.ofFloored(mc.player.getX() - extraRange, mc.player.getY() - extraRange, mc.player.getZ());
                     break;
                 case 45:
-                    block = new ModifyBlockPos(mc.player.getX(), mc.player.getY() - 0.5F, mc.player.getZ() - extraRange);
+                    block = BlockPos.ofFloored(mc.player.getX(), mc.player.getY() - 0.5F, mc.player.getZ() - extraRange);
                     break;
                 case 135:
-                    block = new ModifyBlockPos(mc.player.getX() + extraRange, mc.player.getY() - 0.5F, mc.player.getZ());
+                    block = BlockPos.ofFloored(mc.player.getX() + extraRange, mc.player.getY() - 0.5F, mc.player.getZ());
             }
 
             return block;

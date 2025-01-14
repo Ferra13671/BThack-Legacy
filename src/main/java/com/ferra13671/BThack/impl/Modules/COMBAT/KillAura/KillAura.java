@@ -14,7 +14,6 @@ import com.ferra13671.BThack.api.Utils.Grim.GrimUtils;
 import com.ferra13671.BThack.api.Utils.ItemUtils;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.Utils.Modules.AimBotUtils;
-import com.ferra13671.BThack.api.Utils.Modules.EntityFilter;
 import com.ferra13671.BThack.api.Utils.Modules.KillAuraUtils;
 import com.ferra13671.BThack.api.Utils.Ticker;
 import com.ferra13671.BThack.mixins.accessor.IPlayerInputC2SPacket;
@@ -31,6 +30,7 @@ import net.minecraft.util.math.Vec3d;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.function.Predicate;
 
 public class KillAura extends Module {
 
@@ -101,7 +101,7 @@ public class KillAura extends Module {
         );
     }
 
-    private EntityFilter entityFilter;
+    private Predicate<Entity> entityFilter;
 
     private final Ticker delayTicker = new Ticker();
     public Target targetedEntity;
@@ -251,7 +251,7 @@ public class KillAura extends Module {
                     KillAuraUtils.attack(ent, RotateMode.NONE, 0);
                 }
             }
-            if (entityFilter.get(ent)) {
+            if (entityFilter.test(ent)) {
                 KillAuraUtils.attack(ent, RotateMode.NONE, 0);
             }
 

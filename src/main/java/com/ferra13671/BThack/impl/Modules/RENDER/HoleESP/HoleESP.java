@@ -92,7 +92,7 @@ public class HoleESP extends Module {
         if (rangeMode.getValue().equals("Normal")) {
             obsHoles = BlockUtils.getNearbyBlocks(mc.player, range.getValue(), false);
         } else {
-            obsHoles = BlockUtils.getSphere(new ModifyBlockPos(mc.player.getBlockPos()), (float) rangeH.getValue(), (float) rangeV.getValue(), false, sphere.getValue(), 0);
+            obsHoles = BlockUtils.getSphere(new BlockPos(mc.player.getBlockPos()), (float) rangeH.getValue(), (float) rangeV.getValue(), false, sphere.getValue(), 0);
         }
         return obsHoles.stream()
                 .filter(blockPos -> HoleUtils.isMutableHole(blockPos, true))
@@ -104,7 +104,7 @@ public class HoleESP extends Module {
         if (rangeMode.getValue().equals("Normal")) {
             bedHoles = BlockUtils.getNearbyBlocks(mc.player, range.getValue(), false);
         } else {
-            bedHoles = BlockUtils.getSphere(new ModifyBlockPos(mc.player.getBlockPos()), (float) rangeH.getValue(), (float) rangeV.getValue(), false, sphere.getValue(), 0);
+            bedHoles = BlockUtils.getSphere(new BlockPos(mc.player.getBlockPos()), (float) rangeH.getValue(), (float) rangeV.getValue(), false, sphere.getValue(), 0);
         }
         return bedHoles.stream()
                 .filter(HoleUtils::isBedrockHole)

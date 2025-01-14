@@ -16,7 +16,6 @@ import com.ferra13671.BThack.api.Managers.TravelChange.TravelChanger;
 import com.ferra13671.BThack.api.Utils.ChatUtils;
 import com.ferra13671.BThack.api.Utils.Grim.GrimUtils;
 import com.ferra13671.BThack.api.Utils.InventoryUtils;
-import com.ferra13671.BThack.api.Utils.ModifyBlockPos;
 import com.ferra13671.BThack.api.Utils.Modules.AimBotUtils;
 import com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.ActionBotConfig;
 import com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.ActionBotTask;
@@ -141,7 +140,7 @@ public class TunnelTask extends ActionBotTask {
                     z = mc.player.getZ() + (AimBotUtils.getCordFactorFromDirection((int) yaw)[1]);
                 }
 
-                blockPos1 = new ModifyBlockPos(x, y, z);
+                blockPos1 = BlockPos.ofFloored(x, y, z);
                 blockPos2 = new BlockPos(blockPos1.getX(), blockPos1.getY() + 1, blockPos1.getZ());
                 Block block1 = mc.world.getBlockState(blockPos1).getBlock();
                 Block block2 = mc.world.getBlockState(blockPos2).getBlock();
@@ -205,21 +204,21 @@ public class TunnelTask extends ActionBotTask {
         double z = mc.player.getZ() + (AimBotUtils.getCordFactorFromDirection((int) yaw)[1] * 2);
 
         ArrayList<BlockPos> blockPosData = new ArrayList<>(Arrays.asList(
-                new ModifyBlockPos(x, y, z),
-                new ModifyBlockPos(x - 1, y, z),
-                new ModifyBlockPos(x + 1, y, z),
-                new ModifyBlockPos(x, y, z + 1),
-                new ModifyBlockPos(x, y, z - 1)
+                BlockPos.ofFloored(x, y, z),
+                BlockPos.ofFloored(x - 1, y, z),
+                BlockPos.ofFloored(x + 1, y, z),
+                BlockPos.ofFloored(x, y, z + 1),
+                BlockPos.ofFloored(x, y, z - 1)
         ));
 
         for (BlockPos pos : blockPosData) {
             if (BuildManager.lavas.contains(mc.world.getBlockState(pos).getBlock())) {
                 return true;
-            } else if (BuildManager.lavas.contains(mc.world.getBlockState(new ModifyBlockPos(pos.getX(), pos.getY() - 1, pos.getZ())).getBlock())) {
+            } else if (BuildManager.lavas.contains(mc.world.getBlockState(new BlockPos(pos.getX(), pos.getY() - 1, pos.getZ())).getBlock())) {
                 return true;
-            } else if (BuildManager.lavas.contains(mc.world.getBlockState(new ModifyBlockPos(pos.getX(), pos.getY() + 1, pos.getZ())).getBlock())) {
+            } else if (BuildManager.lavas.contains(mc.world.getBlockState(new BlockPos(pos.getX(), pos.getY() + 1, pos.getZ())).getBlock())) {
                 return true;
-            } else if (BuildManager.lavas.contains(mc.world.getBlockState(new ModifyBlockPos(pos.getX(), pos.getY() + 2, pos.getZ())).getBlock())) {
+            } else if (BuildManager.lavas.contains(mc.world.getBlockState(new BlockPos(pos.getX(), pos.getY() + 2, pos.getZ())).getBlock())) {
                 return true;
             }
         }
@@ -258,7 +257,7 @@ public class TunnelTask extends ActionBotTask {
             }
         }
 
-        BlockPos startPos = new ModifyBlockPos(mc.player.getX(), mc.player.getY() - 0.1, mc.player.getZ());
+        BlockPos startPos = BlockPos.ofFloored(mc.player.getX(), mc.player.getY() - 0.1, mc.player.getZ());
 
         BuildThread3D buildThread3D = new BuildThread3D();
         buildThread3D.set3DSchematic(1, trapSchematic, startPos);

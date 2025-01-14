@@ -4,8 +4,9 @@ import com.ferra13671.BThack.Core.Client.Client;
 import com.ferra13671.BThack.api.Events.SetOpaqueCubeEvent;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.ChatUtils;
+import com.ferra13671.BThack.api.Utils.DataList.BlockList;
+import com.ferra13671.BThack.api.Utils.DataList.DataLists;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
-import com.ferra13671.BThack.api.Utils.List.BlockList.BlockLists;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.util.Formatting;
 
@@ -33,7 +34,7 @@ public class Xray extends Module {
 
         doXray = true;
         mc.worldRenderer.reload();
-        ChatUtils.sendMessage(Formatting.GRAY + "Use: " + Client.clientInfo.getChatPrefix() + BlockLists.get("Xray").editBlockListCommand.getAliases()[0]);
+        ChatUtils.sendMessage(Formatting.GRAY + "Use: " + Client.clientInfo.getChatPrefix() + DataLists.get("Xray", BlockList.class).editDataListCommand.getAliases()[0]);
     }
 
     @Override

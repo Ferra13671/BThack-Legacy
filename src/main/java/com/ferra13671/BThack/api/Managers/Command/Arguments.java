@@ -12,7 +12,7 @@ import com.ferra13671.BThack.api.Social.Clans.ClansUtils;
 import com.ferra13671.BThack.api.Social.SocialManager;
 import com.ferra13671.BThack.api.Utils.BlockUtils;
 import com.ferra13671.BThack.api.Utils.ItemUtils;
-import com.ferra13671.BThack.api.Utils.List.PacketList.PacketList;
+import com.ferra13671.BThack.api.Utils.DataList.PacketList;
 import com.ferra13671.BThack.impl.Modules.MISC.AutoAuth;
 import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
 import com.mojang.brigadier.StringReader;

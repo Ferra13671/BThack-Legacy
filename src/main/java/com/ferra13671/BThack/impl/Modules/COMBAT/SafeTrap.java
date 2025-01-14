@@ -11,7 +11,6 @@ import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.ChatUtils;
 import com.ferra13671.BThack.api.Utils.InventoryUtils;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
-import com.ferra13671.BThack.api.Utils.ModifyBlockPos;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
 import net.minecraft.block.Blocks;
@@ -82,7 +81,7 @@ public class SafeTrap extends Module {
                 return;
             }
 
-            BlockPos blockPos = new ModifyBlockPos(new Vec3d(mc.player.getX(), mc.player.getY() - 0.1, mc.player.getZ()));
+            BlockPos blockPos = BlockPos.ofFloored(new Vec3d(mc.player.getX(), mc.player.getY() - 0.1, mc.player.getZ()));
 
             if (checkObsidian.getValue()) {
                 if (mc.world.getBlockState(blockPos).getBlock() != Blocks.OBSIDIAN) {

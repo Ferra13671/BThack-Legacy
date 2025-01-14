@@ -5,8 +5,9 @@ import com.ferra13671.BThack.api.Managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.ChatUtils;
+import com.ferra13671.BThack.api.Utils.DataList.BlockList;
+import com.ferra13671.BThack.api.Utils.DataList.DataLists;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
-import com.ferra13671.BThack.api.Utils.List.BlockList.BlockLists;
 import net.minecraft.util.Formatting;
 
 import java.util.Arrays;
@@ -34,6 +35,6 @@ public class CustomFriction extends Module {
     public void onEnable() {
         super.onEnable();
         if (!nullCheck())
-            ChatUtils.sendMessage(Formatting.GRAY + "Use: " + Client.clientInfo.getChatPrefix() + BlockLists.get("CustomFriction").editBlockListCommand.getAliases()[0]);
+            ChatUtils.sendMessage(Formatting.GRAY + "Use: " + Client.clientInfo.getChatPrefix() + DataLists.get("CustomFriction", BlockList.class).editDataListCommand.getAliases()[0]);
     }
 }

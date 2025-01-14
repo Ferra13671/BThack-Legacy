@@ -1,7 +1,6 @@
 package com.ferra13671.BThack.api.Managers.Build;
 
 import com.ferra13671.BThack.api.Managers.Thread.ThreadClosedException;
-import com.ferra13671.BThack.api.Utils.ModifyBlockPos;
 import com.ferra13671.BThack.mixins.accessor.IRenderTickCounter$Dynamic;
 import net.minecraft.block.Block;
 import net.minecraft.util.math.BlockPos;
@@ -46,7 +45,7 @@ public class BuildThread3D extends AbstractBuildThread {
         ArrayList<BlockPos> positions = new ArrayList<>();
 
         for (Vec3d vector : buildSchematic3D) {
-            positions.add(new ModifyBlockPos(new Vec3d(startPos.getX() + vector.x, startPos.getY() + vector.y, startPos.getZ() + vector.z)));
+            positions.add(BlockPos.ofFloored(new Vec3d(startPos.getX() + vector.x, startPos.getY() + vector.y, startPos.getZ() + vector.z)));
         }
 
         for (int i = 0; i < 5; i++) {

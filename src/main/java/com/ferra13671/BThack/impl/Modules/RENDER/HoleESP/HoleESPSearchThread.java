@@ -4,7 +4,6 @@ import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Utils.HoleUtils;
 import com.ferra13671.BThack.api.Utils.MathUtils;
-import com.ferra13671.BThack.api.Utils.ModifyBlockPos;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 
@@ -22,7 +21,7 @@ public class HoleESPSearchThread extends Thread implements Mc {
             if (ModuleList.holeESP.rangeMode.getValue().equals("Normal")) {
                 obsHoles = bedHoles = getNearbyBlocks(mc.player, ModuleList.holeESP.range.getValue());
             } else {
-                obsHoles = bedHoles = getSphere(new ModifyBlockPos(mc.player.getBlockPos()), (float) ModuleList.holeESP.rangeH.getValue(), (float) ModuleList.holeESP.rangeV.getValue(), ModuleList.holeESP.sphere.getValue());
+                obsHoles = bedHoles = getSphere(new BlockPos(mc.player.getBlockPos()), (float) ModuleList.holeESP.rangeH.getValue(), (float) ModuleList.holeESP.rangeV.getValue(), ModuleList.holeESP.sphere.getValue());
             }
             ModuleList.holeESP.obsidianHoleList = obsHoles.stream().filter(blockPos -> HoleUtils.isMutableHole(blockPos, true))
                     .collect(Collectors.toList());

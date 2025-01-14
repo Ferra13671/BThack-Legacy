@@ -1,6 +1,7 @@
 package com.ferra13671.BThack.mixins.xray;
 
-import com.ferra13671.BThack.api.Utils.List.BlockList.BlockLists;
+import com.ferra13671.BThack.api.Utils.DataList.BlockList;
+import com.ferra13671.BThack.api.Utils.DataList.DataLists;
 import com.ferra13671.BThack.impl.Modules.RENDER.Xray;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.render.VertexConsumer;
@@ -20,13 +21,13 @@ public class MixinBlockModelRenderer {
 
     @Inject(method = "render(Lnet/minecraft/world/BlockRenderView;Lnet/minecraft/client/render/model/BakedModel;Lnet/minecraft/block/BlockState;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;ZLnet/minecraft/util/math/random/Random;JI)V", at = @At("HEAD"), cancellable = true)
     public void modifyModelRender(BlockRenderView world, BakedModel model, BlockState state, BlockPos pos, MatrixStack matrices, VertexConsumer vertexConsumer, boolean cull, Random random, long seed, int overlay, CallbackInfo ci) {
-        if (Xray.doXray && !BlockLists.get("Xray").blocks.contains(state.getBlock()))
+        if (Xray.doXray && !DataLists.get("Xray", BlockList.class).values.contains(state.getBlock()))
             ci.cancel();
     }
 
     @Inject(method = "renderSmooth", at = @At("HEAD"), cancellable = true)
     public void modifyModelRenderSmooth(BlockRenderView world, BakedModel model, BlockState state, BlockPos pos, MatrixStack matrices, VertexConsumer vertexConsumer, boolean cull, Random random, long seed, int overlay, CallbackInfo ci) {
-        if (Xray.doXray && !BlockLists.get("Xray").blocks.contains(state.getBlock()))
+        if (Xray.doXray && !DataLists.get("Xray", BlockList.class).values.contains(state.getBlock()))
             ci.cancel();
     }
 }

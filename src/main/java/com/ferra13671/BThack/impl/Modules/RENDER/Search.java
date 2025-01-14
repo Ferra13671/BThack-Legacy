@@ -10,8 +10,9 @@ import com.ferra13671.BThack.api.Managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.ChatUtils;
+import com.ferra13671.BThack.api.Utils.DataList.BlockList;
+import com.ferra13671.BThack.api.Utils.DataList.DataLists;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
-import com.ferra13671.BThack.api.Utils.List.BlockList.BlockLists;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
@@ -46,7 +47,7 @@ public class Search extends Module {
     public void onEnable() {
         super.onEnable();
         Managers.BLOCK_SEARCH_MANAGER.start();
-        if (!nullCheck()) ChatUtils.sendMessage(Formatting.GRAY + "Use: " + Client.clientInfo.getChatPrefix() + BlockLists.get("Search").editBlockListCommand.getAliases()[0]);
+        if (!nullCheck()) ChatUtils.sendMessage(Formatting.GRAY + "Use: " + Client.clientInfo.getChatPrefix() + DataLists.get("Search", BlockList.class).editDataListCommand.getAliases()[0]);
     }
 
     @EventSubscriber

@@ -3,7 +3,6 @@ package com.ferra13671.BThack.api.Managers.Build;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Utils.InventoryUtils;
 import com.ferra13671.BThack.api.Utils.MathUtils;
-import com.ferra13671.BThack.api.Utils.ModifyBlockPos;
 import com.ferra13671.BThack.api.Utils.Modules.AimBotUtils;
 import com.ferra13671.BThack.api.Utils.Grim.GrimUtils;
 import com.google.common.collect.Sets;
@@ -215,7 +214,7 @@ public class BuildManager implements Mc {
     }
 
     public static FacingBlock checkNearBlocks(BlockPos blockPos) {
-        BlockPos playerPos = new ModifyBlockPos(mc.player.getX(), mc.player.getY() - 1, mc.player.getZ());
+        BlockPos playerPos = BlockPos.ofFloored(mc.player.getX(), mc.player.getY() - 1, mc.player.getZ());
 
         FacingBlock facingBlock = null;
         FacingBlock tempFacingBlock;

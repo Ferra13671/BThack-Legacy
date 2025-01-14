@@ -11,9 +11,7 @@ import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.List.BlockList.BlockLists;
-import com.ferra13671.BThack.api.Utils.List.ItemList.ItemLists;
-import com.ferra13671.BThack.api.Utils.List.PacketList.PacketLists;
+import com.ferra13671.BThack.api.Utils.DataList.DataLists;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -33,11 +31,9 @@ public final class Client implements Mc {
         InitializeHelper.initCustomCategories();
 
         ModuleList.initModules();
-        BThack.log("All modules have been initialized! Number of modules: " + modules.size());
+        BThack.log("All modules have been initialized! Number of modules: " + getAllModules().size());
 
-        BlockLists.init();
-        ItemLists.init();
-        PacketLists.init();
+        DataLists.init();
 
         Managers.COMMAND_MANAGER.init();
 
