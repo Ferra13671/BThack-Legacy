@@ -1,8 +1,8 @@
 package com.ferra13671.BThack.impl.Modules.CLIENT;
 
 import com.ferra13671.BThack.Core.Client.ModuleList;
-import com.ferra13671.BThack.api.Managers.Setting.Settings.BooleanSetting;
-import com.ferra13671.BThack.api.Managers.Setting.Settings.ModeSetting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Social.SocialManagers;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;

@@ -6,7 +6,7 @@ import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.api.Category.Categories;
 import com.ferra13671.BThack.api.Category.Category;
 import com.ferra13671.BThack.api.Managers.Managers;
-import com.ferra13671.BThack.api.Managers.Setting.Settings.Setting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.Setting;
 import com.ferra13671.BThack.api.SoundSystem.SoundSystem;
 import com.ferra13671.BThack.api.SoundSystem.Sounds;
 import com.ferra13671.BThack.api.Utils.ChatUtils;

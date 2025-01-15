@@ -3,7 +3,7 @@ package com.ferra13671.BThack.impl.Modules.RENDER;
 import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Line.RenderLine;
 import com.ferra13671.BThack.api.Events.Render.RenderWorldLastEvent;
-import com.ferra13671.BThack.api.Managers.Setting.Settings.BooleanSetting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Social.Clans.Clan;
 import com.ferra13671.BThack.api.Social.Clans.ClanManager;

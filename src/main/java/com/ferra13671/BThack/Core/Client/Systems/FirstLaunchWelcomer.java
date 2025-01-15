@@ -19,6 +19,7 @@ public class FirstLaunchWelcomer implements Mc {
             mc.player.sendMessage(Text.of("Welcome to " + Formatting.BLUE + "BThack" + Formatting.RESET + "!"));
             mc.player.sendMessage(Text.of("The ClickGui bind is " + Formatting.AQUA + KeyboardUtils.getKeyName(ModuleList.clickGui.getKey())));
             mc.player.sendMessage(Text.of("The command prefix is " + Formatting.AQUA + Client.clientInfo.getChatPrefix()));
+            mc.player.sendMessage(Text.of("Type " + Formatting.AQUA + "$help" + Formatting.RESET + " to get a list of available commands"));
 
             BThack.instance.versionInfo.setFirstLaunched(false);
             BThack.EVENT_BUS.unregister(this);

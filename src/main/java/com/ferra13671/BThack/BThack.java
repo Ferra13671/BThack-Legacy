@@ -67,6 +67,11 @@ public final class BThack implements ClientModInitializer, Mc {
         logger.error(message);
     }
 
+    public static void debug(String message) {
+        if (instance.versionInfo.isSendDebug())
+            logger.debug(message);
+    }
+
     public static boolean isBaritonePresent() {
         FabricLoader fl = FabricLoader.getInstance();
         return fl.getModContainer("baritone").isPresent() || fl.getModContainer("baritone-meteor").isPresent();
@@ -253,6 +258,8 @@ public final class BThack implements ClientModInitializer, Mc {
                     versionInfo.setNeedShowAgainAllReleases(jsonObject.get("needShowAgainAllReleases").getAsBoolean());
                 if (!JsonUtils._null(jsonObject, "firstLaunched"))
                     versionInfo.setFirstLaunched(jsonObject.get("firstLaunched").getAsBoolean());
+                if (!JsonUtils._null(jsonObject, "sendDebug"))
+                    versionInfo.setSendDebug(jsonObject.get("sendDebug").getAsBoolean());
             }, () -> {});
         } catch (IOException ignored) {}
     }
@@ -264,6 +271,7 @@ public final class BThack implements ClientModInitializer, Mc {
                 jsonObject.add("needShowAgainOneRelease", new JsonPrimitive(versionInfo.isNeedShowAgainOneRelease()));
                 jsonObject.add("needShowAgainAllReleases", new JsonPrimitive(versionInfo.isNeedShowAgainAllReleases()));
                 jsonObject.add("firstLaunched", new JsonPrimitive(versionInfo.isFirstLaunched()));
+                jsonObject.add("sendDebug", new JsonPrimitive(versionInfo.isSendDebug()));
             });
         } catch (IOException ignored) {}
     }

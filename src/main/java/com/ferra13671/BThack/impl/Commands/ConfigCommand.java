@@ -1,8 +1,8 @@
 package com.ferra13671.BThack.impl.Commands;
 
 import com.ferra13671.BThack.Core.FileSystem.ConfigSystem.ConfigSystem;
-import com.ferra13671.BThack.api.Managers.Command.AbstractCommand;
-import com.ferra13671.BThack.api.Managers.Command.Arguments;
+import com.ferra13671.BThack.api.Managers.managers.Command.AbstractCommand;
+import com.ferra13671.BThack.api.Managers.managers.Command.Arguments;
 import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.minecraft.command.CommandSource;

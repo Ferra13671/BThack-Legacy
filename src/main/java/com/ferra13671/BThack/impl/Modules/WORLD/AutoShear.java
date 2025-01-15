@@ -1,8 +1,8 @@
 package com.ferra13671.BThack.impl.Modules.WORLD;
 
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
-import com.ferra13671.BThack.api.Managers.Setting.Settings.BooleanSetting;
-import com.ferra13671.BThack.api.Managers.Setting.Settings.ModeSetting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.Grim.GrimUtils;
 import com.ferra13671.BThack.api.Utils.InventoryUtils;

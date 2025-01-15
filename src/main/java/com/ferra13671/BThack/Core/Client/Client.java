@@ -5,11 +5,11 @@ import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.api.Category.Categories;
 import com.ferra13671.BThack.api.Category.Category;
 import com.ferra13671.BThack.api.IMixin.ModifyWindow;
-import com.ferra13671.BThack.api.Managers.ColourTheme.ColorTheme;
+import com.ferra13671.BThack.api.Managers.managers.ColourTheme.ColorTheme;
 import com.ferra13671.BThack.api.HudComponent.HudComponent;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Managers.Managers;
-import com.ferra13671.BThack.api.Managers.Setting.Settings.BooleanSetting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.DataList.DataLists;
 
@@ -34,8 +34,6 @@ public final class Client implements Mc {
         BThack.log("All modules have been initialized! Number of modules: " + getAllModules().size());
 
         DataLists.init();
-
-        Managers.COMMAND_MANAGER.init();
 
         InitializeHelper.initManagers();
 

@@ -6,6 +6,7 @@ public final class VersionInfo {
     private boolean needShowAgainAllReleases = true;
     private boolean outdated = false;
     private boolean firstLaunched = true;
+    private boolean sendDebug = false;
 
     public VersionInfo() {
     }
@@ -26,6 +27,14 @@ public final class VersionInfo {
         this.outdated = outdated;
     }
 
+    public void setFirstLaunched(boolean firstLaunched) {
+        this.firstLaunched = firstLaunched;
+    }
+
+    void setSendDebug(boolean sendDebug) {
+        this.sendDebug = sendDebug;
+    }
+
     public String getNewVersion() {
         return new String(newVersion);
     }
@@ -42,11 +51,11 @@ public final class VersionInfo {
         return outdated;
     }
 
-    public void setFirstLaunched(boolean firstLaunched) {
-        this.firstLaunched = firstLaunched;
-    }
-
     public boolean isFirstLaunched() {
         return firstLaunched;
+    }
+
+    public boolean isSendDebug() {
+        return sendDebug;
     }
 }

@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.impl.Modules.PLAYER;
 
-import com.ferra13671.BThack.api.Managers.Setting.Settings.ModeSetting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Module.OneActionModule;
 import com.ferra13671.BThack.api.Utils.InventoryUtils;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;

@@ -1,9 +1,9 @@
 package com.ferra13671.BThack.impl.Modules.COMBAT;
 
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
-import com.ferra13671.BThack.api.Managers.Build.BuildManager;
-import com.ferra13671.BThack.api.Managers.Build.BuildThread3D;
-import com.ferra13671.BThack.api.Managers.Setting.Settings.BooleanSetting;
+import com.ferra13671.BThack.api.Managers.managers.Build.BuildManager;
+import com.ferra13671.BThack.api.Managers.managers.Build.BuildThread3D;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.BlockUtils;
 import com.ferra13671.BThack.api.Utils.HoleUtils;

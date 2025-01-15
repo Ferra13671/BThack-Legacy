@@ -1,12 +1,12 @@
 package com.ferra13671.BThack.impl.Modules.MOVEMENT;
 
 
-import com.ferra13671.BThack.api.Managers.Build.BuildManager;
-import com.ferra13671.BThack.api.Managers.Setting.Settings.NumberSetting;
-import com.ferra13671.BThack.api.Managers.Thread.BThackThread;
-import com.ferra13671.BThack.api.Managers.Thread.IThread;
-import com.ferra13671.BThack.api.Managers.Thread.ThreadClosedException;
-import com.ferra13671.BThack.api.Managers.Thread.ThreadManager;
+import com.ferra13671.BThack.api.Managers.managers.Build.BuildManager;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
+import com.ferra13671.BThack.api.Managers.managers.Thread.BThackThread;
+import com.ferra13671.BThack.api.Managers.managers.Thread.IThread;
+import com.ferra13671.BThack.api.Managers.managers.Thread.ThreadClosedException;
+import com.ferra13671.BThack.api.Managers.managers.Thread.ThreadManager;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.ChatUtils;
 import com.ferra13671.BThack.api.Utils.InventoryUtils;

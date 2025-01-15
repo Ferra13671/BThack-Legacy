@@ -5,7 +5,7 @@ import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.HudComponent.HudComponent;
-import com.ferra13671.BThack.api.Managers.Setting.Settings.BooleanSetting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.impl.Modules.CLIENT.ClickGui;
 import net.minecraft.client.MinecraftClient;

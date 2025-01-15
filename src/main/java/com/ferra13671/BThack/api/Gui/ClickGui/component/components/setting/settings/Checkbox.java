@@ -8,7 +8,7 @@ import com.ferra13671.BThack.api.Animation.Animation;
 import com.ferra13671.BThack.api.Animation.Easing;
 import com.ferra13671.BThack.api.Gui.ClickGui.component.components.ModuleButton;
 import com.ferra13671.BThack.api.Gui.ClickGui.component.components.setting.AbstractSetting;
-import com.ferra13671.BThack.api.Managers.Setting.Settings.BooleanSetting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.impl.Modules.CLIENT.ClickGui;
 

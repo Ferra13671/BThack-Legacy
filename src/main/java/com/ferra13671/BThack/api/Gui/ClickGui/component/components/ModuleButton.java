@@ -13,7 +13,7 @@ import com.ferra13671.BThack.api.Gui.ClickGui.component.components.setting.setti
 import com.ferra13671.BThack.api.Gui.ClickGui.component.components.setting.settings.Checkbox;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Managers.Managers;
-import com.ferra13671.BThack.api.Managers.Setting.Settings.*;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.*;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.impl.Modules.CLIENT.ClickGui;
 

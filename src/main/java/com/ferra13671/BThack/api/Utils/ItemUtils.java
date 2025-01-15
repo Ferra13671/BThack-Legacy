@@ -1,27 +1,24 @@
 package com.ferra13671.BThack.api.Utils;
 
 import com.ferra13671.BThack.api.Interfaces.Mc;
-import com.ferra13671.BThack.api.Managers.Build.BuildManager;
+import com.ferra13671.BThack.api.Managers.managers.Build.BuildManager;
 import net.minecraft.block.*;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.effect.StatusEffectUtil;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.*;
 import net.minecraft.network.packet.c2s.play.PlayerInteractItemC2SPacket;
 import net.minecraft.registry.*;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.InvalidIdentifierException;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.BlockView;
 
 import java.util.Objects;
 import java.util.function.Predicate;
@@ -62,7 +59,6 @@ public final class ItemUtils implements Mc {
         BlockHitResult bhr = BuildManager.getHitResult(pos);
         if (bhr != null) {
             mc.interactionManager.interactBlock(mc.player, Hand.MAIN_HAND, bhr);
-            //mc.player.networkHandler.sendPacket(new PlayerInteractBlockC2SPacket(Hand.MAIN_HAND, bhr, 0));
         }
         if (slot < 9) {
             InventoryUtils.swapItem(oldSlot);
@@ -102,7 +98,6 @@ public final class ItemUtils implements Mc {
     public static void useItemOnBlock(BlockHitResult bhr) {
         if (bhr != null) {
             mc.interactionManager.interactBlock(mc.player, Hand.MAIN_HAND, bhr);
-            //mc.player.networkHandler.sendPacket(new PlayerInteractBlockC2SPacket(Hand.MAIN_HAND, bhr, 0));
         }
     }
 

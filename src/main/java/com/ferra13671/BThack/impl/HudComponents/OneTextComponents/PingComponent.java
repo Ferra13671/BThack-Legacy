@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.impl.HudComponents.OneTextComponents;
 
-import com.ferra13671.BThack.api.Managers.Setting.Settings.ModeSetting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.impl.HudComponents.AbstractOneTextComponent;
 import net.minecraft.util.Formatting;
 

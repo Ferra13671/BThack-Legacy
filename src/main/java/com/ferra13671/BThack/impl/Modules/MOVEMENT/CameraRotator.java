@@ -1,11 +1,11 @@
 package com.ferra13671.BThack.impl.Modules.MOVEMENT;
 
 import com.ferra13671.BThack.Core.Client.ModuleList;
-import com.ferra13671.BThack.api.Managers.Setting.Settings.BooleanSetting;
-import com.ferra13671.BThack.api.Managers.Setting.Settings.NumberSetting;
-import com.ferra13671.BThack.api.Managers.Thread.BThackThread;
-import com.ferra13671.BThack.api.Managers.Thread.IThread;
-import com.ferra13671.BThack.api.Managers.Thread.ThreadManager;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
+import com.ferra13671.BThack.api.Managers.managers.Thread.BThackThread;
+import com.ferra13671.BThack.api.Managers.managers.Thread.IThread;
+import com.ferra13671.BThack.api.Managers.managers.Thread.ThreadManager;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 

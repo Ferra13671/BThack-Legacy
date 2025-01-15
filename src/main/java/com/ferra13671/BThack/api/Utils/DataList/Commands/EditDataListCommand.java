@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.api.Utils.DataList.Commands;
 
-import com.ferra13671.BThack.api.Managers.Command.AbstractCommand;
+import com.ferra13671.BThack.api.Managers.managers.Command.AbstractCommand;
 import com.ferra13671.BThack.api.Utils.DataList.DataList;
 
 public abstract class EditDataListCommand<T, KEY> extends AbstractCommand {

@@ -10,7 +10,7 @@ import com.ferra13671.BThack.api.Gui.MainMenu.SelectWallpaper.SelectWallpaperScr
 import com.ferra13671.BThack.api.Gui.MainMenu.SelectWallpaper.Wallpaper;
 import com.ferra13671.BThack.api.HudComponent.HudComponent;
 import com.ferra13671.BThack.api.Managers.Managers;
-import com.ferra13671.BThack.api.Managers.Setting.Settings.*;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.*;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Plugin.Plugin;
 import com.ferra13671.BThack.api.Plugin.PluginSystem;

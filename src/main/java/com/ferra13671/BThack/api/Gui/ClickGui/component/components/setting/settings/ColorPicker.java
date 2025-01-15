@@ -6,7 +6,7 @@ import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Gui.ClickGui.component.components.ModuleButton;
 import com.ferra13671.BThack.api.Gui.ClickGui.component.components.setting.AbstractSetting;
-import com.ferra13671.BThack.api.Managers.Setting.Settings.ColorSetting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ColorSetting;
 import com.ferra13671.BThack.api.Module.Module;
 
 import java.awt.*;

@@ -1,13 +1,13 @@
 package com.ferra13671.BThack.impl.Modules.MOVEMENT;
 
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
-import com.ferra13671.BThack.api.Managers.Build.BuildManager;
-import com.ferra13671.BThack.api.Managers.Build.FacingBlock;
-import com.ferra13671.BThack.api.Managers.Setting.Settings.ModeSetting;
+import com.ferra13671.BThack.api.Managers.managers.Build.BuildManager;
+import com.ferra13671.BThack.api.Managers.managers.Build.FacingBlock;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.InventoryUtils;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
-import com.ferra13671.BThack.api.Managers.Setting.Settings.BooleanSetting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.block.Block;
 import net.minecraft.util.math.BlockPos;

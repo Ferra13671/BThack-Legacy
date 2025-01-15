@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.impl.Modules.MOVEMENT;
 
-import com.ferra13671.BThack.api.Managers.Setting.Settings.BooleanSetting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Module.OneActionModule;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 

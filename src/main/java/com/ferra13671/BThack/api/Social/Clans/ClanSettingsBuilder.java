@@ -1,9 +1,9 @@
 package com.ferra13671.BThack.api.Social.Clans;
 
 import com.ferra13671.BThack.api.Managers.Managers;
-import com.ferra13671.BThack.api.Managers.Setting.Settings.BooleanSetting;
-import com.ferra13671.BThack.api.Managers.Setting.Settings.ModeSetting;
-import com.ferra13671.BThack.api.Managers.Setting.Settings.Setting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.Setting;
 import com.ferra13671.BThack.api.Module.Module;
 
 import java.util.ArrayList;

@@ -2,7 +2,7 @@ package com.ferra13671.BThack.api.Gui.ClickGui.component.components.setting;
 
 import com.ferra13671.BThack.api.Gui.ClickGui.component.Component;
 import com.ferra13671.BThack.api.Gui.ClickGui.component.components.ModuleButton;
-import com.ferra13671.BThack.api.Managers.Setting.Settings.Setting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.Setting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.impl.Modules.CLIENT.ClickGui;
 

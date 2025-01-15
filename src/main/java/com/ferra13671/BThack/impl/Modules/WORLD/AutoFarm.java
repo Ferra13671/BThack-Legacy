@@ -2,9 +2,9 @@ package com.ferra13671.BThack.impl.Modules.WORLD;
 
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.IMixin.ModifyClientPlayerInteractionManager;
-import com.ferra13671.BThack.api.Managers.Build.BuildManager;
-import com.ferra13671.BThack.api.Managers.Setting.Settings.BooleanSetting;
-import com.ferra13671.BThack.api.Managers.Setting.Settings.ModeSetting;
+import com.ferra13671.BThack.api.Managers.managers.Build.BuildManager;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.*;
 import com.ferra13671.BThack.api.Utils.Grim.GrimUtils;

@@ -2,8 +2,8 @@ package com.ferra13671.BThack.api.Utils.Modules;
 
 import com.ferra13671.BTbot.api.Utils.Generate.GenerateNumber;
 import com.ferra13671.BThack.api.Interfaces.Mc;
-import com.ferra13671.BThack.api.Managers.Setting.Settings.BooleanSetting;
-import com.ferra13671.BThack.api.Managers.Setting.Settings.ModeSetting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Social.Clans.Clan;
 import com.ferra13671.BThack.api.Social.Clans.ClanStatus;
 import com.ferra13671.BThack.api.Social.Clans.ClanManager;

@@ -1,16 +1,17 @@
 package com.ferra13671.BThack.api.Managers;
 
-import com.ferra13671.BThack.api.Managers.ColourTheme.ColorThemeManager;
-import com.ferra13671.BThack.api.Managers.Command.CommandManager;
-import com.ferra13671.BThack.api.Managers.Destroy.DestroyManager;
-import com.ferra13671.BThack.api.Managers.Memory.MemoryManager;
-import com.ferra13671.BThack.api.Managers.Setting.SettingsManager;
-import com.ferra13671.BThack.api.Managers.TravelChange.TravelChangeManager;
+import com.ferra13671.BThack.api.Managers.managers.*;
+import com.ferra13671.BThack.api.Managers.managers.ColourTheme.ColorThemeManager;
+import com.ferra13671.BThack.api.Managers.managers.Command.CommandManager;
+import com.ferra13671.BThack.api.Managers.managers.Destroy.DestroyManager;
+import com.ferra13671.BThack.api.Managers.managers.Memory.MemoryManager;
+import com.ferra13671.BThack.api.Managers.managers.Setting.SettingsManager;
+import com.ferra13671.BThack.api.Managers.managers.TravelChange.TravelChangeManager;
 
 public class Managers {
     public static final TPSManager TPS_MANAGER = new TPSManager();
     public static final BlockSearchManager BLOCK_SEARCH_MANAGER = new BlockSearchManager();
-    public static final FireWorkManager FIREWORK_MANAGER = new FireWorkManager();
+    public static final FireworkManager FIREWORK_MANAGER = new FireworkManager();
     public static final DestroyManager DESTROY_MANAGER = new DestroyManager();
     public static final NetworkManager NETWORK_MANAGER = new NetworkManager();
     public static final TickManager TICK_MANAGER = new TickManager();
@@ -21,4 +22,5 @@ public class Managers {
     public static final MemoryManager MEMORY_MANAGER = new MemoryManager();
     public static final TravelChangeManager TRAVEL_CHANGE_MANAGER = new TravelChangeManager();
     public static final CommandManager COMMAND_MANAGER = new CommandManager();
+    public static final EntityDeathManager ENTITY_DEATH_MANAGER = new EntityDeathManager();
 }

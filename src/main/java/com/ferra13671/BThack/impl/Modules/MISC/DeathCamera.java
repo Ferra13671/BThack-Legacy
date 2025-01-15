@@ -10,7 +10,7 @@ import com.ferra13671.BThack.api.Events.InputEvent;
 import com.ferra13671.BThack.api.Events.Player.ChangePlayerLookEvent;
 import com.ferra13671.BThack.api.Events.Render.RenderHudPostEvent;
 import com.ferra13671.BThack.api.Events.SetOpaqueCubeEvent;
-import com.ferra13671.BThack.api.Managers.Setting.Settings.KeyCodeSetting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.KeyCodeSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.impl.Modules.PLAYER.FreeCam;

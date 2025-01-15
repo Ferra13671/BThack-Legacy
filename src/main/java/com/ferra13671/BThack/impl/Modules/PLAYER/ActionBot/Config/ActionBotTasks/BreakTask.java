@@ -1,9 +1,9 @@
 package com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.ActionBotTasks;
 
 import com.ferra13671.BThack.Core.FileSystem.JsonUtils;
-import com.ferra13671.BThack.api.Managers.Destroy.DestroyManager;
-import com.ferra13671.BThack.api.Managers.Destroy.SimpleDestroyThread;
-import com.ferra13671.BThack.api.Managers.Thread.ThreadClosedException;
+import com.ferra13671.BThack.api.Managers.managers.Destroy.DestroyManager;
+import com.ferra13671.BThack.api.Managers.managers.Destroy.SimpleDestroyThread;
+import com.ferra13671.BThack.api.Managers.managers.Thread.ThreadClosedException;
 import com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.ActionBotConfig;
 import com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.ActionBotTask;
 import com.google.gson.JsonObject;

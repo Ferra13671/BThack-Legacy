@@ -3,7 +3,7 @@ package com.ferra13671.BThack.impl.HudComponents;
 import com.ferra13671.BThack.Core.Client.Client;
 import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.api.HudComponent.HudComponent;
-import com.ferra13671.BThack.api.Managers.Setting.Settings.ModeSetting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.impl.Modules.CLIENT.HUD;
 
 import java.util.Arrays;

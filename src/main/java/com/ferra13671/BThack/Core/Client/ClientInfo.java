@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.Core.Client;
 
 import com.ferra13671.BThack.BThack;
-import com.ferra13671.BThack.api.Managers.ColourTheme.ColorTheme;
+import com.ferra13671.BThack.api.Managers.managers.ColourTheme.ColorTheme;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.TextureUtils.GLTexture;
 import com.ferra13671.TextureUtils.PathMode;

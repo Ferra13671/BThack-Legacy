@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.api.Utils.DataList;
 
 import com.ferra13671.BThack.Core.FileSystem.ConfigSystem.ConfigUtils;
-import com.ferra13671.BThack.api.Managers.Command.Arguments;
+import com.ferra13671.BThack.api.Managers.managers.Command.Arguments;
 import com.ferra13671.BThack.api.Utils.ChatUtils;
 import com.ferra13671.BThack.api.Utils.DataList.Commands.AbstractDataListCommand;
 import com.ferra13671.BThack.api.Utils.DataList.Commands.EditDataListCommand;

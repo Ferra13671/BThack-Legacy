@@ -7,7 +7,7 @@ import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Gui.ClickGui.component.components.ModuleButton;
 import com.ferra13671.BThack.api.Gui.ClickGui.component.components.setting.AbstractSetting;
-import com.ferra13671.BThack.api.Managers.Setting.Settings.ModeSetting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Module.Module;
 
 public class ModeButton extends AbstractSetting {

@@ -2,7 +2,7 @@ package com.ferra13671.BThack.impl.Modules.MISC;
 
 import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.api.Events.GuiOpenEvent;
-import com.ferra13671.BThack.api.Managers.Setting.Settings.BooleanSetting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.ChatUtils;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
