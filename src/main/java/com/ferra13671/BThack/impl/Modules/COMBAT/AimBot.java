@@ -7,7 +7,7 @@ import com.ferra13671.BThack.api.Managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Social.Clans.ClansUtils;
+import com.ferra13671.BThack.api.Social.Clans.ClanSettingsBuilder;
 import com.ferra13671.BThack.api.Utils.Modules.AimBotUtils;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.Utils.Modules.KillAuraUtils;
@@ -25,9 +25,9 @@ public class AimBot extends Module {
     public final BooleanSetting friends = new BooleanSetting("Friends", this, false);
     public final BooleanSetting ignoreWalls = new BooleanSetting("Ignore Walls", this, false);
 
-    public final BooleanSetting clanManager = ClansUtils.getClanManagerSetting(this);
-    public final ModeSetting clanMode = ClansUtils.getClanModeSetting(this, clanManager);
-    public final ModeSetting target = ClansUtils.getClanTargetSetting(this, clanManager, clanMode);
+    public final BooleanSetting clanManager = ClanSettingsBuilder.buildToggle(this);
+    public final ModeSetting clanMode = ClanSettingsBuilder.buildStatusMode(this, clanManager);
+    public final ModeSetting target = ClanSettingsBuilder.buildClanTargetMode(this, clanManager, clanMode);
 
     public AimBot() {
         super(

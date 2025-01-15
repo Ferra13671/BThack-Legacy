@@ -9,7 +9,7 @@ import com.ferra13671.BThack.api.Managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Managers.TravelChange.TravelChanger;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Social.Clans.ClansUtils;
+import com.ferra13671.BThack.api.Social.Clans.ClanSettingsBuilder;
 import com.ferra13671.BThack.api.Utils.Grim.GrimUtils;
 import com.ferra13671.BThack.api.Utils.ItemUtils;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
@@ -58,9 +58,9 @@ public class KillAura extends Module {
     public final BooleanSetting pauseIfEat = new BooleanSetting("Pause If Eat", this, true);
     public final BooleanSetting pauseIfMine = new BooleanSetting("Pause If Mine", this, true);
 
-    public final BooleanSetting clanManager = ClansUtils.getClanManagerSetting(this);
-    public final ModeSetting clanMode = ClansUtils.getClanModeSetting(this, clanManager);
-    public final ModeSetting targetClan = ClansUtils.getClanTargetSetting(this, clanManager, clanMode);
+    public final BooleanSetting clanManager = ClanSettingsBuilder.buildToggle(this);
+    public final ModeSetting clanMode = ClanSettingsBuilder.buildStatusMode(this, clanManager);
+    public final ModeSetting targetClan = ClanSettingsBuilder.buildClanTargetMode(this, clanManager, clanMode);
 
     public KillAura() {
         super("KillAura",

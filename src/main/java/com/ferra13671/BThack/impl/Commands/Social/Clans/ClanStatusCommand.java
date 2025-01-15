@@ -3,6 +3,7 @@ package com.ferra13671.BThack.impl.Commands.Social.Clans;
 import com.ferra13671.BThack.api.Managers.Command.AbstractCommand;
 import com.ferra13671.BThack.api.Managers.Command.Arguments;
 import com.ferra13671.BThack.api.Social.Clans.Clan;
+import com.ferra13671.BThack.api.Social.Clans.ClanStatus;
 import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.minecraft.command.CommandSource;
@@ -19,7 +20,7 @@ public class ClanStatusCommand extends AbstractCommand {
             Clan clan = context.getArgument("clan name", Clan.class);
             String mode = context.getArgument("mode", String.class);
 
-            clan.setStatus(mode);
+            clan.setStatus(ClanStatus.valueOf(mode));
             sendMessage(Formatting.AQUA + String.format(LanguageSystem.translate("lang.command.ClanStatus.setStatus"), Formatting.WHITE + clan.getName() + Formatting.AQUA, Formatting.WHITE + mode + Formatting.AQUA));
             return SUCCESFUL;
         })));

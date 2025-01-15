@@ -17,7 +17,7 @@ public class ClanMembersCommand extends AbstractCommand {
     public void compile(LiteralArgumentBuilder<CommandSource> builder) {
         builder.then(literal("add").then(arg("clan name", Arguments.CLAN).then(arg("member name", Arguments.GREEDY_STRING).executes(context -> {
             Clan clan = context.getArgument("clan name", Clan.class);
-            if (clan.addMemberToClan(context.getArgument("member name", String.class)))
+            if (clan.addMember(context.getArgument("member name", String.class)))
                 sendMessage(Formatting.AQUA + LanguageSystem.translate("lang.command.ClanMembers.memberAdded"));
             else
                 sendMessage(Formatting.YELLOW + LanguageSystem.translate("lang.command.ClanMembers.memberInTheClan"));
@@ -25,7 +25,7 @@ public class ClanMembersCommand extends AbstractCommand {
         }))));
         builder.then(literal("remove").then(arg("clan name", Arguments.CLAN).then(arg("member name", Arguments.CLAN_MEMBER).executes(context -> {
             Clan clan = context.getArgument("clan name", Clan.class);
-            if (clan.removeMemberFromClan(context.getArgument("member name", String.class)))
+            if (clan.removeMember(context.getArgument("member name", String.class)))
                 sendMessage(Formatting.AQUA + LanguageSystem.translate("lang.command.ClanMembers.memberRemoved"));
             else
                 sendMessage(Formatting.YELLOW + LanguageSystem.translate("lang.command.ClanMembers.memberNoLongerInTheClan"));

@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.impl.Commands;
 
 import com.ferra13671.BThack.api.Managers.Command.AbstractCommand;
-import com.ferra13671.BThack.api.Social.Clans.ClansUtils;
+import com.ferra13671.BThack.api.Social.Clans.ClanManager;
 import com.ferra13671.BThack.api.Social.SocialManagers;
 import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
@@ -26,7 +26,7 @@ public class RefreshCommand extends AbstractCommand {
             return SUCCESFUL;
         }));
         builder.then(literal("clans").executes(context -> {
-            ClansUtils.reloadClans();
+            ClanManager.reload();
             sendMessage(Formatting.AQUA + LanguageSystem.translate("lang.command.Refresh.clanRefreshed"));
             return SUCCESFUL;
         }));

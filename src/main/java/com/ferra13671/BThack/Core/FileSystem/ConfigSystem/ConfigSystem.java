@@ -14,9 +14,9 @@ import com.ferra13671.BThack.api.Managers.Setting.Settings.*;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Plugin.Plugin;
 import com.ferra13671.BThack.api.Plugin.PluginSystem;
-import com.ferra13671.BThack.api.Social.Clans.Ally;
 import com.ferra13671.BThack.api.Social.Clans.Clan;
-import com.ferra13671.BThack.api.Social.Clans.ClansUtils;
+import com.ferra13671.BThack.api.Social.Clans.ClanManager;
+import com.ferra13671.BThack.api.Social.Clans.ClanSettingsBuilder;
 import com.ferra13671.BThack.api.Utils.DataList.DataLists;
 import com.ferra13671.BThack.impl.Modules.MISC.AutoAuth;
 import com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.ActionBotConfig;
@@ -336,28 +336,25 @@ public final class ConfigSystem {
     public static void saveClans() throws IOException {
         FileSystem.deleteDirectory(new File("BThack/Social/Clans"));
         FileSystem.registerFolder("Clans", "/Social");
-        for (Clan clan : ClansUtils.clans) {
+        for (Clan clan : ClanManager.getClans()) {
+            JsonArray list = new JsonArray();
+            for (String ally : clan.getMembers()) {
+                list.add(new JsonPrimitive(ally));
+            }
             ConfigUtils.saveInJson(clan.getName(), "Social/Clans", clansObject -> {
                 add(clansObject, "ClanName", clan.getName());
                 add(clansObject, "R", clan.getR());
                 add(clansObject, "G", clan.getG());
                 add(clansObject, "B", clan.getB());
+                add(clansObject, "Members", list);
             });
-
-            FileSystem.registerFolder(clan.getName() + "_Members", "/Social/Clans");
-
-            for (Ally ally : clan.members) {
-                ConfigUtils.saveInJson(ally.name() + "_Member", "Social/Clans/" + clan.getName() + "_Members", allyObject -> {
-                    add(allyObject, "name", ally.name());
-                });
-            }
         }
 
-        ClansUtils.reloadClanListOnModules();
+        ClanSettingsBuilder.reloadSettings();
     }
 
     public static void loadClans() throws IOException {
-        ClansUtils.clans.clear();
+        ClanManager.getClans().clear();
         File folder = new File(Paths.get("BThack/Social/Clans").toUri());
         File[] files = folder.listFiles();
 
@@ -375,31 +372,15 @@ public final class ConfigSystem {
                             float g = clanOject.get("G").getAsFloat();
                             float b = clanOject.get("B").getAsFloat();
 
-                            Clan clan = new Clan(clanName, r, g, b);
+                            Clan clan = Clan.of(clanName, r, g, b);
 
-                            File clanMembersFolder = new File(Paths.get("BThack/Social/Clans/" + clan.getName() + "_Members").toUri());
-                            File[] clanMembers = clanMembersFolder.listFiles();
-
-                            if (clanMembers != null) {
-                                for (File memberFile : clanMembers) {
-                                    if (memberFile.isFile()) {
-                                        if (Objects.equals(FilenameUtils.getExtension(memberFile.getName()), "json")) {
-                                            String memberName = memberFile.getName();
-                                            InputStream memberInputStream = Files.newInputStream(Paths.get("BThack/Social/Clans/" + clan.getName() + "_Members/" + memberName));
-                                            JsonObject memberObject = JsonParser.parseReader(new InputStreamReader(memberInputStream)).getAsJsonObject();
-
-                                            if (memberObject.get("name") != null) {
-                                                String member = memberObject.get("name").getAsString();
-                                                clan.members.add(new Ally(member));
-                                            }
-
-                                            memberInputStream.close();
-                                        }
-                                    }
-                                }
+                            if (_null(clanOject, "Members")) loadClanMembersOld(clan);
+                            else {
+                                JsonArray list = clanOject.get("Members").getAsJsonArray();
+                                clan.getMembers().addAll(list.asList().stream().map(JsonElement::getAsString).toList());
                             }
 
-                            ClansUtils.clans.add(clan);
+                            ClanManager.getClans().add(clan);
                         }
                         inputStream.close();
                     }
@@ -407,7 +388,33 @@ public final class ConfigSystem {
             }
         }
 
-        ClansUtils.reloadClanListOnModules();
+        ClanSettingsBuilder.reloadSettings();
+    }
+
+    /** The old method of loading clan members */
+    @Deprecated
+    public static void loadClanMembersOld(Clan clan) throws IOException {
+        File clanMembersFolder = new File(Paths.get("BThack/Social/Clans/" + clan.getName() + "_Members").toUri());
+        File[] clanMembers = clanMembersFolder.listFiles();
+
+        if (clanMembers != null) {
+            for (File memberFile : clanMembers) {
+                if (memberFile.isFile()) {
+                    if (Objects.equals(FilenameUtils.getExtension(memberFile.getName()), "json")) {
+                        String memberName = memberFile.getName();
+                        InputStream memberInputStream = Files.newInputStream(Paths.get("BThack/Social/Clans/" + clan.getName() + "_Members/" + memberName));
+                        JsonObject memberObject = JsonParser.parseReader(new InputStreamReader(memberInputStream)).getAsJsonObject();
+
+                        if (memberObject.get("name") != null) {
+                            String member = memberObject.get("name").getAsString();
+                            clan.getMembers().add(member);
+                        }
+
+                        memberInputStream.close();
+                    }
+                }
+            }
+        }
     }
 
 

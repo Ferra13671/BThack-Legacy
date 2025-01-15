@@ -6,7 +6,7 @@ import com.ferra13671.BThack.api.Managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Social.Clans.Clan;
-import com.ferra13671.BThack.api.Social.Clans.ClansUtils;
+import com.ferra13671.BThack.api.Social.Clans.ClanManager;
 import com.ferra13671.BThack.api.Social.SocialManagers;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
@@ -105,8 +105,8 @@ public class Radar extends Module {
                             BThackRender.drawSquare(x, y, 1, friendColor.hashCode());
                         } else if (SocialManagers.ENEMIES.contains(player)) {
                             BThackRender.drawSquare(x, y, 1, enemyColor.hashCode());
-                        } else if (ClansUtils.isAlly(player)) {
-                            Clan clan = ClansUtils.getFirstClanFromMember(player.getDisplayName().getString());
+                        } else if (ClanManager.isAlly(player)) {
+                            Clan clan = ClanManager.getFirstClanFromMember(player.getDisplayName().getString());
 
                             if (clan != null) {
                                 BThackRender.drawSquare(x,y,3, -1);

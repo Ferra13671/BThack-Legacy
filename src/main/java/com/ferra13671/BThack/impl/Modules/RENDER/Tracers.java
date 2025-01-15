@@ -6,7 +6,7 @@ import com.ferra13671.BThack.api.Events.Render.RenderWorldLastEvent;
 import com.ferra13671.BThack.api.Managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Social.Clans.Clan;
-import com.ferra13671.BThack.api.Social.Clans.ClansUtils;
+import com.ferra13671.BThack.api.Social.Clans.ClanManager;
 import com.ferra13671.BThack.api.Social.SocialManagers;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.Utils.Modules.KillAuraUtils;
@@ -55,8 +55,8 @@ public class Tracers extends Module {
                         lines.add(new RenderLine(playerEntity, 0.03f, 0.96f, 0.86f, 1f));
                     } else if (SocialManagers.ENEMIES.contains(name)) {
                         lines.add(new RenderLine(playerEntity, 1f, 0, 0, 1f));
-                    } else if (ClansUtils.isAlly(name)) {
-                        Clan clan = ClansUtils.getFirstClanFromMember(name);
+                    } else if (ClanManager.isAlly(name)) {
+                        Clan clan = ClanManager.getFirstClanFromMember(name);
                         if (clan != null) {
                             lines.add(new RenderLine(playerEntity, clan.getR(), clan.getG(), clan.getB(), 1f));
                         } else {

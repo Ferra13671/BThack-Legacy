@@ -4,7 +4,7 @@ import com.ferra13671.BThack.api.Events.Entity.TotemPopEvent;
 import com.ferra13671.BThack.api.Managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Social.Clans.ClansUtils;
+import com.ferra13671.BThack.api.Social.Clans.ClanSettingsBuilder;
 import com.ferra13671.BThack.api.Social.SocialManagers;
 import com.ferra13671.BThack.api.Utils.ChatUtils;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
@@ -20,9 +20,9 @@ public class TotemPopNotifier extends Module {
 
     public final BooleanSetting friends = new BooleanSetting("Friends", this, false);
 
-    public final BooleanSetting clanManager = ClansUtils.getClanManagerSetting(this);
-    public final ModeSetting clanMode = ClansUtils.getClanModeSetting(this, clanManager);
-    public final ModeSetting targetClan = ClansUtils.getClanTargetSetting(this, clanManager, clanMode);
+    public final BooleanSetting clanManager = ClanSettingsBuilder.buildToggle(this);
+    public final ModeSetting clanMode = ClanSettingsBuilder.buildStatusMode(this, clanManager);
+    public final ModeSetting targetClan = ClanSettingsBuilder.buildClanTargetMode(this, clanManager, clanMode);
 
     public TotemPopNotifier() {
         super("TotemPopNotifier",

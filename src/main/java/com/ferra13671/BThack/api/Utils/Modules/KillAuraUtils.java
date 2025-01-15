@@ -6,7 +6,7 @@ import com.ferra13671.BThack.api.Managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Social.Clans.Clan;
 import com.ferra13671.BThack.api.Social.Clans.ClanStatus;
-import com.ferra13671.BThack.api.Social.Clans.ClansUtils;
+import com.ferra13671.BThack.api.Social.Clans.ClanManager;
 import com.ferra13671.BThack.api.Social.SocialManagers;
 import com.ferra13671.BThack.api.Utils.Grim.GrimUtils;
 import com.ferra13671.BThack.api.Utils.PlayerUtils;
@@ -23,6 +23,7 @@ import net.minecraft.util.math.Vec3d;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import java.util.function.Predicate;
 
 public final class KillAuraUtils implements Mc {
@@ -173,12 +174,12 @@ public final class KillAuraUtils implements Mc {
 
     public static boolean isSuccessfulClanMember(PlayerEntity player, boolean clanManager, String clanMode, String targetClan) {
         if (clanManager) {
-            ArrayList<Clan> clans = ClansUtils.getClansFromMember(player.getDisplayName().getString());
+            List<Clan> clans = ClanManager.getClansFromMember(player.getDisplayName().getString());
             switch (clanMode) {
                 case "Only Enemy":
                     if (!clans.isEmpty()) {
                         for (Clan clan : clans) {
-                            if (ClanStatus.ENEMY.getName().contains(clan.getStatus())) {
+                            if (clan.getStatus() == ClanStatus.ENEMY) {
                                 return true;
                             }
                         }
@@ -189,7 +190,7 @@ public final class KillAuraUtils implements Mc {
                 case "Neutral Also":
                     if (!clans.isEmpty()) {
                         for (Clan clan : clans) {
-                            if (ClanStatus.ENEMY.getName().contains(clan.getStatus()) || ClanStatus.NEUTRAL.getName().contains(clan.getStatus())) {
+                            if (clan.getStatus() == ClanStatus.ENEMY || clan.getStatus() == ClanStatus.NEUTRAL) {
                                 return true;
                             }
                         }

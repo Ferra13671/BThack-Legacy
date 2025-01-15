@@ -6,9 +6,8 @@ import com.ferra13671.BThack.api.Managers.Command.CustomArguments.PacketListPack
 import com.ferra13671.BThack.api.Managers.Command.CustomArguments.SocialAddArgument;
 import com.ferra13671.BThack.api.Managers.Command.CustomArguments.SocialRemoveArgument;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Social.Clans.Ally;
 import com.ferra13671.BThack.api.Social.Clans.Clan;
-import com.ferra13671.BThack.api.Social.Clans.ClansUtils;
+import com.ferra13671.BThack.api.Social.Clans.ClanManager;
 import com.ferra13671.BThack.api.Social.SocialManager;
 import com.ferra13671.BThack.api.Utils.BlockUtils;
 import com.ferra13671.BThack.api.Utils.ItemUtils;
@@ -188,7 +187,7 @@ public class Arguments {
         public String parse(StringReader reader) throws CommandSyntaxException {
             String name = reader.readString();
 
-            Clan clan = ClansUtils.clans.stream()
+            Clan clan = ClanManager.getClans().stream()
                     .filter(cl -> cl.getName().equals(name))
                     .findFirst()
                     .orElse(null);
@@ -211,7 +210,7 @@ public class Arguments {
         public String parse(StringReader reader) throws CommandSyntaxException {
             String name = reader.readString();
 
-            Clan clan = ClansUtils.clans.stream()
+            Clan clan = ClanManager.getClans().stream()
                     .filter(cl -> cl.getName().equals(name))
                     .findFirst()
                     .orElse(null);
@@ -224,7 +223,7 @@ public class Arguments {
 
         @Override
         public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
-            return CommandSource.suggestMatching(ClansUtils.clans.stream().map(Clan::getName), builder);
+            return CommandSource.suggestMatching(ClanManager.getClans().stream().map(Clan::getName), builder);
         }
 
         @Override
@@ -239,7 +238,7 @@ public class Arguments {
         public Clan parse(StringReader reader) throws CommandSyntaxException {
             String name = reader.readString();
 
-            Clan clan = ClansUtils.clans.stream()
+            Clan clan = ClanManager.getClans().stream()
                     .filter(cl -> cl.getName().equals(name))
                     .findFirst()
                     .orElse(null);
@@ -252,7 +251,7 @@ public class Arguments {
 
         @Override
         public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
-            return CommandSource.suggestMatching(ClansUtils.clans.stream().map(Clan::getName), builder);
+            return CommandSource.suggestMatching(ClanManager.getClans().stream().map(Clan::getName), builder);
         }
 
         @Override
@@ -270,7 +269,7 @@ public class Arguments {
 
         @Override
         public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
-            return CommandSource.suggestMatching(context.getArgument("clan name", Clan.class).members.stream().map(Ally::name), builder);
+            return CommandSource.suggestMatching(context.getArgument("clan name", Clan.class).getMembers(), builder);
         }
 
         @Override

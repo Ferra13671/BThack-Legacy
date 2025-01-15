@@ -6,7 +6,7 @@ import com.ferra13671.BThack.api.Managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Managers.Thread.ThreadManager;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Social.Clans.ClansUtils;
+import com.ferra13671.BThack.api.Social.Clans.ClanSettingsBuilder;
 import com.ferra13671.BThack.api.Social.SocialManagers;
 import com.ferra13671.BThack.api.Utils.ChatUtils;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
@@ -36,9 +36,9 @@ public class TopperRadar extends Module {
     public final BooleanSetting onlyGoodArmor = new BooleanSetting("Only Good Armor", this, true);
 
     public final BooleanSetting friends = new BooleanSetting("Friends", this, false);
-    public final BooleanSetting clanManager = ClansUtils.getClanManagerSetting(this);
-    public final ModeSetting clanMode = ClansUtils.getClanModeSetting(this, clanManager);
-    public final ModeSetting target = ClansUtils.getClanTargetSetting(this, clanManager, clanMode);
+    public final BooleanSetting clanManager = ClanSettingsBuilder.buildToggle(this);
+    public final ModeSetting clanMode = ClanSettingsBuilder.buildStatusMode(this, clanManager);
+    public final ModeSetting target = ClanSettingsBuilder.buildClanTargetMode(this, clanManager, clanMode);
 
     public final BooleanSetting autoDisconnect = new BooleanSetting("AutoDisconnect", this, false);
     public final NumberSetting shutdownDelay = new NumberSetting("Shutdown Delay", this, 3, 1, 10, true, autoDisconnect::getValue);
