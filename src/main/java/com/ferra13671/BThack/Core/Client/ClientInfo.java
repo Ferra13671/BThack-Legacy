@@ -9,12 +9,7 @@ import com.ferra13671.TextureUtils.PathMode;
 public final class ClientInfo implements Mc {
     private String name = "BThack " + BThack.instance.VERSION + " | " + mc.getSession().getUsername();
     private final String cName = "BThack " + BThack.instance.VERSION;
-    private final GLTexture defaultMainMenuImage = new GLTexture("assets/bthack/bthack_mainmenu.jpg", PathMode.INSIDEJAR, GLTexture.ColorMode.RGBA) {
-        @Override
-        public GLTexture deleteTexture() {
-            return null;
-        }
-    };
+    private final GLTexture defaultMainMenuImage = GLTexture.fromPath("assets/bthack/bthack_mainmenu.jpg", PathMode.INSIDEJAR, GLTexture.ColorMode.RGBA);
     private String chatPrefix = "$";
     private String currentConfigName = "";
     private ColorTheme colorTheme;

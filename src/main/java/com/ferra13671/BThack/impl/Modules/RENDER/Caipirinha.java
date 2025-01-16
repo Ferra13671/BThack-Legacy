@@ -42,12 +42,12 @@ public class Caipirinha extends Module {
     }
 
     ArrayList<GLTexture> caipirinhi = new ArrayList<>(Arrays.asList(
-            new GLTexture("assets/bthack/caipirinha/caipirinha1.png", PathMode.INSIDEJAR, GLTexture.ColorMode.RGBA),
-            new GLTexture("assets/bthack/caipirinha/caipirinha2.png", PathMode.INSIDEJAR, GLTexture.ColorMode.RGBA),
-            new GLTexture("assets/bthack/caipirinha/caipirinha3.png", PathMode.INSIDEJAR, GLTexture.ColorMode.RGBA),
-            new GLTexture("assets/bthack/caipirinha/caipirinha4.png", PathMode.INSIDEJAR, GLTexture.ColorMode.RGBA),
-            new GLTexture("assets/bthack/caipirinha/caipirinha5.png", PathMode.INSIDEJAR, GLTexture.ColorMode.RGBA),
-            new GLTexture("assets/bthack/caipirinha/caipirinha6.png", PathMode.INSIDEJAR, GLTexture.ColorMode.RGBA)
+            GLTexture.fromPath("assets/bthack/caipirinha/caipirinha1.png", PathMode.INSIDEJAR, GLTexture.ColorMode.RGBA),
+            GLTexture.fromPath("assets/bthack/caipirinha/caipirinha2.png", PathMode.INSIDEJAR, GLTexture.ColorMode.RGBA),
+            GLTexture.fromPath("assets/bthack/caipirinha/caipirinha3.png", PathMode.INSIDEJAR, GLTexture.ColorMode.RGBA),
+            GLTexture.fromPath("assets/bthack/caipirinha/caipirinha4.png", PathMode.INSIDEJAR, GLTexture.ColorMode.RGBA),
+            GLTexture.fromPath("assets/bthack/caipirinha/caipirinha5.png", PathMode.INSIDEJAR, GLTexture.ColorMode.RGBA),
+            GLTexture.fromPath("assets/bthack/caipirinha/caipirinha6.png", PathMode.INSIDEJAR, GLTexture.ColorMode.RGBA)
     ));
 
     @EventSubscriber
