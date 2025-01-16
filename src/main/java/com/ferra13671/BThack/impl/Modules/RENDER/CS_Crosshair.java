@@ -4,7 +4,7 @@ package com.ferra13671.BThack.impl.Modules.RENDER;
 import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Events.Entity.AttackEntityEvent;
-import com.ferra13671.BThack.api.Events.Render.RenderHudPostEvent;
+import com.ferra13671.BThack.api.Events.Render.RenderHudPreEvent;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
@@ -68,7 +68,7 @@ public class CS_Crosshair extends Module {
     private float spread = 0;
 
     @EventSubscriber
-    public void onOverlay(RenderHudPostEvent e) {
+    public void onOverlay(RenderHudPreEvent e) {
         if (nullCheck()) return;
 
         if (!movable.getValue())

@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.impl.Modules.RENDER;
 
 import com.ferra13671.BThack.Core.Render.BThackRender;
-import com.ferra13671.BThack.api.Events.Render.RenderHudPostEvent;
+import com.ferra13671.BThack.api.Events.Render.RenderHudPreEvent;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
@@ -57,7 +57,7 @@ public class Radar extends Module {
 
     @EventSubscriber
     @SuppressWarnings("unused")
-    public void onRender(RenderHudPostEvent e) {
+    public void onRender(RenderHudPreEvent e) {
         Window sr = mc.getWindow();
         Color rectColor = new Color(0, 0, 0, (float) opacity.getValue());
 

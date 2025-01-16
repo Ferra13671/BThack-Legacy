@@ -4,7 +4,7 @@ import com.ferra13671.BThack.Core.Client.Client;
 import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
-import com.ferra13671.BThack.api.Events.Render.RenderHudPostEvent;
+import com.ferra13671.BThack.api.Events.Render.RenderHudPreEvent;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Gui.HudMover.HudMoverScreen;
 import com.ferra13671.BThack.api.HudComponent.HudComponent;
@@ -76,7 +76,7 @@ public class HUD extends Module {
     }
 
     @EventSubscriber(priority = Integer.MAX_VALUE)
-    public void onRender(RenderHudPostEvent e) {
+    public void onRender(RenderHudPreEvent e) {
         if (mc.currentScreen instanceof HudMoverScreen) return;
         BThackRender.guiGraphics.getMatrices().push();
         BThackRender.guiGraphics.getMatrices().translate(0,0,3000);

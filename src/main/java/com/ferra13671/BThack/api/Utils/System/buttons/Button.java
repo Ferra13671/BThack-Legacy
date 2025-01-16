@@ -2,6 +2,8 @@ package com.ferra13671.BThack.api.Utils.System.buttons;
 
 import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
+import com.ferra13671.BThack.api.Animation.Animation;
+import com.ferra13671.BThack.api.Animation.Easing;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Utils.System.ButtonClickInfo;
 import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
@@ -14,22 +16,16 @@ public class Button implements Mc {
 
     public double centerX;
     public double centerY;
-
     private int width;
     private int height;
-
     public String text;
-
     public boolean hovered;
-
     public boolean outline = false;
-
     public boolean hided = false;
     public boolean allowUpdate = true;
-
     public boolean selected = false;
-
     private Consumer<ButtonClickInfo> clickConsumer = null;
+    private final Animation hoveredAnimation = new Animation(Easing.LINEAR, 200);
 
 
 
@@ -43,11 +39,14 @@ public class Button implements Mc {
         this.height = height;
 
         this.text = text;
+        hoveredAnimation.setStartMillis(-1);
     }
 
     public void updateButton(int mouseX, int mouseY) {
         if (!allowUpdate) return;
-        this.hovered = isMouseOnButton(mouseX, mouseY);
+        boolean prevHovered = hovered;
+        hovered = isMouseOnButton(mouseX, mouseY);
+        if (hovered != prevHovered) hoveredAnimation.reset();
     }
 
     public void mouseClicked(int mouseX, int mouseY, int mouseButton) {}
@@ -61,22 +60,22 @@ public class Button implements Mc {
     public int alphaColor = ColorUtils.fastRGBA(255,255,255,0);
 
     public void renderButton() {
-        if (!this.hovered) {
-            BThackRender.drawRect(getCenterX() - this.width, getCenterY() - this.height, getCenterX() + this.width, getCenterY() + this.height, rectColor);
+        float animationDelta = (float) (hovered ? hoveredAnimation.getEase() : 1 - hoveredAnimation.getEase());
+        if (!hovered && hoveredAnimation.getEase() >= 1) {
+            BThackRender.drawRect(getCenterX() - width, getCenterY() - height, getCenterX() + width, getCenterY() + height, rectColor);
         } else {
-            BThackRender.drawRect(getCenterX() - this.width - 1, getCenterY() - this.height - 1, getCenterX() + this.width + 1, getCenterY() + this.height + 1, rectColor);
+            BThackRender.drawRect(getCenterX() - width - 1, getCenterY() - height - animationDelta, getCenterX() + width + animationDelta, getCenterY() + height + 1, rectColor);
 
-            BThackRender.drawHorizontalGradientRect((int)(getCenterX() - (this.width * 0.8)), getCenterY() + this.height - 4, getCenterX(), getCenterY() + this.height - 2, alphaColor, whiteColor);
-            BThackRender.drawHorizontalGradientRect(getCenterX(), getCenterY() + this.height - 4, (int)(getCenterX() + (this.width * 0.8)), getCenterY() + this.height - 2, whiteColor, alphaColor);
+            BThackRender.drawHorizontalGradientRect((int)(getCenterX() - (width * 0.8 * animationDelta)), getCenterY() + height - 4, getCenterX(), getCenterY() + height - 2, alphaColor, ColorUtils.integrateAlpha(whiteColor, (int) (animationDelta * 255)));
+            BThackRender.drawHorizontalGradientRect(getCenterX(), getCenterY() + height - 4, (int)(getCenterX() + (width * 0.8 * animationDelta)), getCenterY() + height - 2, ColorUtils.integrateAlpha(whiteColor, (int) (animationDelta * 255)), alphaColor);
         }
         if (outline && !selected)
-            BThackRender.drawOutlineRect(getCenterX() - getWidth() - (hovered ? 2 : 0), getCenterY() - getHeight() - (hovered ? 2 : 0), getCenterX() + getWidth() + (hovered ? 2 : 0), getCenterY() + getHeight() + (hovered ? 2 : 0), 1, -1);
+            BThackRender.drawOutlineRect(getCenterX() - getWidth() - (animationDelta * 2), getCenterY() - getHeight() - (animationDelta * 2), getCenterX() + getWidth() + (animationDelta * 2), getCenterY() + getHeight() + (animationDelta * 2), 1, -1);
         BThackRender.drawString(getText(), (getCenterX() - (mc.textRenderer.getWidth(getText()) / 2f)), (getCenterY() - (mc.textRenderer.fontHeight / 2f)), -1);
 
         if (selected)
             BThackRender.drawOutlineRect(getCenterX() - getWidth(), getCenterY() - getHeight(), getCenterX() + getWidth(), getCenterY() + getHeight(), 1, ColorUtils.rainbow(100));
     }
-
 
 
     public boolean isMouseOnButton(int mouseX, int mouseY) {

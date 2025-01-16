@@ -4,7 +4,7 @@ import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.api.Events.Block.AttackBlockEvent;
 import com.ferra13671.BThack.api.Events.Block.UseBlockEvent;
 import com.ferra13671.BThack.api.Events.Entity.AttackEntityEvent;
-import com.ferra13671.BThack.api.Events.Render.RenderHudPostEvent;
+import com.ferra13671.BThack.api.Events.Render.RenderHudPreEvent;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.Setting;
@@ -53,7 +53,7 @@ public class ItemSaver extends Module {
     }
 
     @EventSubscriber
-    public void onRenderOverlay(RenderHudPostEvent e) {
+    public void onRenderOverlay(RenderHudPreEvent e) {
         if (alpha > 0) {
             BThackRender.drawString(LanguageSystem.translate("lang.module.ItemSaver.saveMessage"), (mc.getWindow().getScaledWidth() / 2f) - (mc.textRenderer.getWidth(LanguageSystem.translate("lang.module.ItemSaver.saveMessage")) / 2f), (mc.getWindow().getScaledHeight() / 2f) + 40, new Color(255, 98, 0, Math.min(Math.max(alpha, 1), 255)).hashCode());
         }

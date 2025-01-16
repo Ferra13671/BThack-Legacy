@@ -8,7 +8,7 @@ import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Events.GuiOpenEvent;
 import com.ferra13671.BThack.api.Events.InputEvent;
 import com.ferra13671.BThack.api.Events.Player.ChangePlayerLookEvent;
-import com.ferra13671.BThack.api.Events.Render.RenderHudPostEvent;
+import com.ferra13671.BThack.api.Events.Render.RenderHudPreEvent;
 import com.ferra13671.BThack.api.Events.SetOpaqueCubeEvent;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.KeyCodeSetting;
 import com.ferra13671.BThack.api.Module.Module;
@@ -123,7 +123,7 @@ public class DeathCamera extends Module {
     }
 
     @EventSubscriber
-    public void onHudRender(RenderHudPostEvent e) {
+    public void onHudRender(RenderHudPreEvent e) {
         if (death) {
             BThackRender.drawCenteredString(String.format(LanguageSystem.translate("lang.module.DeathCamera.message"), KeyboardUtils.getKeyName(respawnKey.getValue())), mc.getWindow().getScaledWidth() / 2f, mc.getWindow().getScaledHeight() / 4f, new Color(255, 100, 100).hashCode());
         }

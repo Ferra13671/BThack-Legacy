@@ -4,7 +4,7 @@ package com.ferra13671.BThack.impl.Modules.RENDER;
 import com.ferra13671.BTbot.api.Utils.Generate.GenerateNumber;
 import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
-import com.ferra13671.BThack.api.Events.Render.RenderHudPostEvent;
+import com.ferra13671.BThack.api.Events.Render.RenderHudPreEvent;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
@@ -34,7 +34,7 @@ public class Africa extends Module {
     private int colorAlpha = 76;
 
     @EventSubscriber(priority = Integer.MIN_VALUE)
-    public void onHudRender(RenderHudPostEvent e) {
+    public void onHudRender(RenderHudPreEvent e) {
         BThackRender.drawRect(0,0, mc.getWindow().getScaledWidth(), mc.getWindow().getScaledHeight(), africaColor);
         tickTimer++;
         if (tickTimer > 15) {

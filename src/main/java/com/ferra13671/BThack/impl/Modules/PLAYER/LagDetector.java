@@ -2,7 +2,7 @@ package com.ferra13671.BThack.impl.Modules.PLAYER;
 
 import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.api.Events.PacketEvent;
-import com.ferra13671.BThack.api.Events.Render.RenderHudPostEvent;
+import com.ferra13671.BThack.api.Events.Render.RenderHudPreEvent;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.ChatUtils;
@@ -46,7 +46,7 @@ public class LagDetector extends Module {
 
 
     @EventSubscriber
-    public void onOverlay(RenderHudPostEvent e) {
+    public void onOverlay(RenderHudPreEvent e) {
         if (!mc.isIntegratedServerRunning()) {
             if (lagText.isEmpty())
                 return;

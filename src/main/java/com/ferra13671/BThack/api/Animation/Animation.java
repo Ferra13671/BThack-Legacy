@@ -20,6 +20,10 @@ public class Animation implements Mc {
         startMillis = System.currentTimeMillis();
     }
 
+    public void setStartMillis(long millis) {
+        startMillis = millis;
+    }
+
     public double getEase() {
         long currentMillis = getPassedMillis();
         return currentMillis >= millis ? 1 : easing.ease(currentMillis / (double) millis);
