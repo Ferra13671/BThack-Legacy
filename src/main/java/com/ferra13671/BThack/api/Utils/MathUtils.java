@@ -41,6 +41,16 @@ public final class MathUtils {
         return MathHelper.sqrt(f * f + g * g + h * h);
     }
 
+    public static int nearest(int value, int min, int max) {
+        double n = Math.abs(min - max) / 2d;
+        if (value <= min + n) return min;
+        else return max;
+    }
+
+    public static boolean hasInRange(int value, int min, int max) {
+        return value >= min && value <= max;
+    }
+
     public static float absDegrees(float degrees) {
         degrees /= 360;
         degrees -= (int) degrees;

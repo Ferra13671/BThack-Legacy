@@ -121,7 +121,7 @@ public final class AimBotUtils implements Mc {
 
     public static String getDirection(Entity entity) {
 
-        return switch (NoRotateMathUtils.rotateYawMath(entity)) {
+        return switch (NoRotateMathUtils.getNearestYawAxis(entity)) {
             case 45, -315 -> "X- Z+";
             case 90, -270 -> "X-";
             case 135, -225 -> "X- Z-";
@@ -136,7 +136,7 @@ public final class AimBotUtils implements Mc {
 
     public static String getDirection(float yaw) {
 
-        return switch (NoRotateMathUtils.rotateYawMath(yaw)) {
+        return switch (NoRotateMathUtils.getNearestYawAxis((int) yaw)) {
             case 45, -315 -> "X- Z+";
             case 90, -270 -> "X-";
             case 135, -225 -> "X- Z-";
@@ -150,7 +150,7 @@ public final class AimBotUtils implements Mc {
     }
 
     public static short getAbsDirection(Entity entity) {
-        return switch (NoRotateMathUtils.rotateYawMath(entity)) {
+        return switch (NoRotateMathUtils.getNearestYawAxis(entity)) {
             case 45, -315 -> 45;
             case 90, -270 -> 90;
             case 135, -225 -> 135;
@@ -163,7 +163,7 @@ public final class AimBotUtils implements Mc {
     }
 
     public static short getAbsDirection(int yaw) {
-        return switch (NoRotateMathUtils.rotateYawMath(yaw)) {
+        return switch (NoRotateMathUtils.getNearestYawAxis(yaw)) {
             case 45, -315 -> 45;
             case 90, -270 -> 90;
             case 135, -225 -> 135;

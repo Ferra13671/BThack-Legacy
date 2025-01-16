@@ -40,7 +40,7 @@ public final class RotateUtils implements Mc {
     public static String getDirection(PlayerEntity entity) {
         String look = "ERROR!";
 
-        switch (NoRotateMathUtils.rotateYawMath(entity)) {
+        switch (NoRotateMathUtils.getNearestYawAxis(entity)) {
             case 45:
             case -315:
                 look = "X- Z+";

@@ -91,7 +91,7 @@ public abstract class MixinEntity implements Mc {
     public void modifySetYaw(float yaw, CallbackInfo ci) {
         if ((Object) this != mc.player) return;
         if (ModuleList.noRotate.isEnabled()) {
-            this.yaw = NoRotateMathUtils.rotateYawMath(mc.player);
+            this.yaw = NoRotateMathUtils.getNearestYawAxis(mc.player);
             ci.cancel();
         }
     }
@@ -102,7 +102,7 @@ public abstract class MixinEntity implements Mc {
         if ((Object) this != mc.player) return;
         if (ModuleList.noRotate.isEnabled()) {
             if (ModuleList.noRotate.blockPitch.getValue()) {
-                mc.player.pitch = NoRotateMathUtils.RotatePitchMath(mc.player);
+                mc.player.pitch = NoRotateMathUtils.getNearestPitchAxis(mc.player);
                 ci.cancel();
             }
         }

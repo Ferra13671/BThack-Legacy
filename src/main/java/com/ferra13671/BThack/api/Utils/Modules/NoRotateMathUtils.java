@@ -1,132 +1,62 @@
 package com.ferra13671.BThack.api.Utils.Modules;
 
+import com.ferra13671.BThack.api.Utils.MathUtils;
 import net.minecraft.entity.Entity;
 
-//TODO: rewrite
 public final class NoRotateMathUtils {
-    private static double checkYaw1;
-    private static double checkYaw2;
-    private static double checkPitch1;
-    private static double checkPitch2;
 
-    public static int rotateYawMath(Entity entity) {
-        return rotateYawMath(entity.getYaw());
+    public static int getNearestYawAxis(Entity entity) {
+        return getNearestYawAxis((int) entity.getYaw());
     }
 
-    public static int rotateYawMath(float yaw) {
-        int CorrectlyYaw = 0;
-        boolean isNegative;
+    public static int getNearestYawAxis(int yaw) {
+        boolean invert = false;
 
-        yaw = yaw / 360;
         if (yaw < 0) {
-            isNegative = true;
-            yaw = -yaw;
-        } else
-            isNegative = false;
-        int yawint = (int)yaw;
-        yaw = yaw - yawint;
-        if (yaw <= 0.125 && yaw >= 0) {
-            checkYaw1 = 0.125 - yaw;
-            if (yaw > checkYaw1)
-                CorrectlyYaw = checkIsNegative(isNegative, 45);
-        }
-        if (yaw <= 0.25 && yaw >= 0.125) {
-            checkYawRotate(0.25, 0.125, yaw);
-            if (checkYaw1 > checkYaw2)
-                CorrectlyYaw = checkIsNegative(isNegative, 45);
-            else
-                CorrectlyYaw = checkIsNegative(isNegative, 90);
-        }
-        if (yaw <= 0.375 && yaw >= 0.25) {
-            checkYawRotate(0.375, 0.25, yaw);
-            if (checkYaw1 > checkYaw2)
-                CorrectlyYaw = checkIsNegative(isNegative, 90);
-            else
-                CorrectlyYaw = checkIsNegative(isNegative, 135);
-        }
-        if (yaw <= 0.5 && yaw >= 0.375) {
-            checkYawRotate(0.5, 0.375, yaw);
-            if (checkYaw1 > checkYaw2)
-                CorrectlyYaw = checkIsNegative(isNegative, 135);
-            else
-                CorrectlyYaw = checkIsNegative(isNegative, 180);
-        }
-        if (yaw <= 0.625 && yaw >= 0.5) {
-            checkYawRotate(0.625, 0.5, yaw);
-            if (checkYaw1 > checkYaw2)
-                CorrectlyYaw = checkIsNegative(isNegative, 180);
-            else
-                CorrectlyYaw = checkIsNegative(isNegative, 225);
-        }
-        if (yaw <= 0.75 && yaw >= 0.625) {
-            checkYawRotate(0.75, 0.625, yaw);
-            if (checkYaw1 > checkYaw2)
-                CorrectlyYaw = checkIsNegative(isNegative, 225);
-            else
-                CorrectlyYaw = checkIsNegative(isNegative, 270);
-        }
-        if (yaw <= 0.875 && yaw >= 0.75) {
-            checkYawRotate(0.875, 0.75, yaw);
-            if (checkYaw1 > checkYaw2)
-                CorrectlyYaw = checkIsNegative(isNegative, 270);
-            else
-                CorrectlyYaw = checkIsNegative(isNegative, 315);
-        }
-        if (yaw >= 0.875) {
-            checkYaw1 = yaw - 0.875;
-            if (checkYaw1 <= 0.0625)
-                CorrectlyYaw = checkIsNegative(isNegative, 315);
-            else
-                CorrectlyYaw = checkIsNegative(isNegative, 360);
+            invert = true;
+            yaw *= -1;
         }
 
-        return CorrectlyYaw;
+        //Reduces yaw to a value between 0 and 360.
+        yaw = (int) (((yaw / 360d) - (int) (yaw / 360d)) * 360);
+
+        if (MathUtils.hasInRange(yaw, 0, 45))
+            return invertIfNeed(invert, MathUtils.nearest(yaw, 0, 45));
+        if (MathUtils.hasInRange(yaw, 45, 90))
+            return invertIfNeed(invert, MathUtils.nearest(yaw, 45, 90));
+        if (MathUtils.hasInRange(yaw, 90, 135))
+            return invertIfNeed(invert, MathUtils.nearest(yaw, 90, 135));
+        if (MathUtils.hasInRange(yaw, 135, 180))
+            return invertIfNeed(invert, MathUtils.nearest(yaw, 135, 180));
+        if (MathUtils.hasInRange(yaw, 180, 225))
+            return invertIfNeed(invert, MathUtils.nearest(yaw, 180, 225));
+        if (MathUtils.hasInRange(yaw, 225, 270))
+            return invertIfNeed(invert, MathUtils.nearest(yaw, 225, 270));
+        if (MathUtils.hasInRange(yaw, 270, 315))
+            return invertIfNeed(invert, MathUtils.nearest(yaw, 270, 315));
+        if (MathUtils.hasInRange(yaw, 315, 360))
+            return invertIfNeed(invert, MathUtils.nearest(yaw, 315, 360));
+        return yaw;
     }
 
-    public static int RotatePitchMath(Entity entity) {
-        int CorrectlyPitch = 0;
-        boolean isNegative2;
-
-        double pitch = entity.getPitch();
-        if (pitch < 0) {
-            isNegative2 = true;
-            pitch = -pitch;
-        } else
-            isNegative2 = false;
-        if (pitch <= 90 && pitch >= 45) {
-            checkPitchRotate(90, 45, pitch);
-            if (checkPitch1 > checkPitch2)
-                CorrectlyPitch = checkIsNegative(isNegative2, 45);
-            else
-                CorrectlyPitch = checkIsNegative(isNegative2, 90);
-        }
-        if (pitch <= 45 && pitch >= 0) {
-            checkPitch1 = 45 - pitch;
-            if (checkPitch1 <= pitch)
-                CorrectlyPitch = checkIsNegative(isNegative2, 45);
-        }
-
-        return CorrectlyPitch;
+    public static int getNearestPitchAxis(Entity entity) {
+        return getNearestPitchAxis((int) entity.getPitch());
     }
 
-    @Deprecated(forRemoval = true)
-    protected static int checkIsNegative(boolean a, int b) {
-        if (a) {
-            return -b;
-        } else {
-            return b;
-        }
+    public static int getNearestPitchAxis(int pitch) {
+        if (MathUtils.hasInRange(pitch, 45, 90))
+            return MathUtils.nearest(pitch, 45, 90);
+        if (MathUtils.hasInRange(pitch, 0, 45))
+            return MathUtils.nearest(pitch, 0, 45);
+        if (MathUtils.hasInRange(pitch, -45, 0))
+            return MathUtils.nearest(pitch, -45, 0);
+        if (MathUtils.hasInRange(pitch, -90, -45))
+            return MathUtils.nearest(pitch, -90, -45);
+        return pitch;
     }
 
-    @Deprecated(forRemoval = true)
-    protected static void checkYawRotate(double maxValue, double minValue, double yaw) {
-        checkYaw1 = maxValue - yaw;
-        checkYaw2 = yaw - minValue;
-    }
-
-    @Deprecated(forRemoval = true)
-    protected static void checkPitchRotate(double maxValue, double minValue, double pitch) {
-        checkPitch1 = maxValue - pitch;
-        checkPitch2 = pitch - minValue;
+    private static int invertIfNeed(boolean invert, int value) {
+        if (invert) return -value;
+        return value;
     }
 }
