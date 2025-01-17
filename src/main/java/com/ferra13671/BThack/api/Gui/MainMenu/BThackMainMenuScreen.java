@@ -5,6 +5,8 @@ import com.ferra13671.BThack.Core.Client.Client;
 import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
+import com.ferra13671.BThack.api.Animation.Animation;
+import com.ferra13671.BThack.api.Animation.Easing;
 import com.ferra13671.BThack.api.Gui.MainMenu.SelectWallpaper.SelectWallpaperScreen;
 import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Utils.DesktopUtils;
@@ -21,15 +23,23 @@ import net.minecraft.text.Text;
 public class BThackMainMenuScreen extends BThackScreen {
     public static GLTexture mainMenuTexture = Client.clientInfo.getDefaultMainMenuImage();
 
+    private Animation fadeInAnimation;
+
     public BThackMainMenuScreen() {
         super(Text.of("BThack Main Menu"));
 
         Managers.MAIN_MENU_SHADER_MANAGER.setMainMenuShader(ModuleList.menuShader.getShader());
     }
 
+    public void initFadeInAnimation() {
+        if (fadeInAnimation == null) fadeInAnimation = new Animation(Easing.LINEAR, 1000);
+    }
+
     @Override
     public void onDisplayed() {
         super.onDisplayed();
+
+        BThack.instance.versionInfo.setFirstLaunched(false);
 
         init();
         buttons.forEach(button -> button.allowUpdate = true);
@@ -45,6 +55,13 @@ public class BThackMainMenuScreen extends BThackScreen {
         BThackRender.drawTextureRect(HUD.bthack_logo, 20, 20, 20 + 138 * 2, 20 + 72 * 2);
 
         super.render(context, mouseX, mouseY, partialTicks);
+
+        if (fadeInAnimation != null && fadeInAnimation.getEase() < 1) {
+            BThackRender.guiGraphics.getMatrices().push();
+            BThackRender.guiGraphics.getMatrices().translate(0, 0, 1000);
+            BThackRender.drawRect(0, 0, mc.getWindow().getScaledWidth(), mc.getWindow().getScaledHeight(), ColorUtils.integrateAlpha(ColorUtils.BLACK, (int) ((1 - fadeInAnimation.getEase()) * 255)));
+            BThackRender.guiGraphics.getMatrices().pop();
+        }
     }
 
     @Override

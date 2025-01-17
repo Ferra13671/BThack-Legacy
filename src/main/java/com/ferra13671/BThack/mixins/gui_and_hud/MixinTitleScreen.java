@@ -2,6 +2,7 @@ package com.ferra13671.BThack.mixins.gui_and_hud;
 
 import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.Core.Client.ModuleList;
+import com.ferra13671.BThack.api.Gui.MainMenu.LanguageSelectorScreen;
 import com.ferra13671.BThack.api.Gui.MainMenu.OutdatedVersionScreen;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.SoundSystem.Sounds;
@@ -30,23 +31,32 @@ public class MixinTitleScreen implements Mc {
             guiOverwritten = true;
         }
 
-        if (ModuleList.bthackMainMenu.isEnabled())
-            mc.setScreen(BThack.instance.mainMenu);
-
         if (firstOpened) {
+            boolean needReturn = false;
+            if (ModuleList.clientSettings.startSound.getValue())
+                mc.getSoundManager().play(PositionedSoundInstance.master(Sounds.START.getSoundEvent(), 1, 1));
 
             if (BThack.instance.versionInfo.isOutdated()) {
                 if (BThack.instance.versionInfo.isNeedShowAgainAllReleases()) {//              It seems that disabling showing the same issue
                     if (BThack.instance.versionInfo.isNeedShowAgainOneRelease()) {//      <--- multiple times is broken, but I assure you it works.
                         mc.setScreen(new OutdatedVersionScreen());
+                        needReturn = true;
                     }
                 }
             }
 
-            if (ModuleList.clientSettings.startSound.getValue())
-                mc.getSoundManager().play(PositionedSoundInstance.master(Sounds.START.getSoundEvent(), 1, 1));
+            if (!needReturn) {
+                if (BThack.instance.versionInfo.isFirstLaunched()) {
+                    mc.setScreen(new LanguageSelectorScreen());
+                    needReturn = true;
+                }
+            }
 
             firstOpened = false;
+            if (needReturn) return;
         }
+
+        if (ModuleList.bthackMainMenu.isEnabled())
+            mc.setScreen(BThack.instance.mainMenu);
     }
 }

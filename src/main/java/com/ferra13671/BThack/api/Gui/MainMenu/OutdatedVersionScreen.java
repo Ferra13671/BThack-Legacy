@@ -29,12 +29,14 @@ public class OutdatedVersionScreen extends BThackScreen {
         buttons.add(Button.of(2, mc.getWindow().getScaledWidth() / 2, mc.getWindow().getScaledHeight() / 2 + 25, 120, 10, "lang.screen.Don'tShowUntilNext")
                 .withAction(buttonClickInfo -> {
                     BThack.instance.versionInfo.setNeedShowAgainOneRelease(false);
-                    mc.setScreen(null);
+                    if (BThack.instance.versionInfo.isFirstLaunched()) mc.setScreen(new LanguageSelectorScreen());
+                    else mc.setScreen(null);
                 }));
         buttons.add(Button.of(3, mc.getWindow().getScaledWidth() / 2, mc.getWindow().getScaledHeight() / 2 + 50, 120, 10, "lang.screen.Don'tShowAll")
                 .withAction(buttonClickInfo -> {
                     BThack.instance.versionInfo.setNeedShowAgainAllReleases(false);
-                    mc.setScreen(null);
+                    if (BThack.instance.versionInfo.isFirstLaunched()) mc.setScreen(new LanguageSelectorScreen());
+                    else mc.setScreen(null);
                 }));
 
         buttons.forEach(button -> button.outline = true);

@@ -21,7 +21,6 @@ public class FirstLaunchWelcomer implements Mc {
             mc.player.sendMessage(Text.of("The command prefix is " + Formatting.AQUA + Client.clientInfo.getChatPrefix()));
             mc.player.sendMessage(Text.of("Type " + Formatting.AQUA + "$help" + Formatting.RESET + " to get a list of available commands"));
 
-            BThack.instance.versionInfo.setFirstLaunched(false);
             BThack.EVENT_BUS.unregister(this);
         }
     }
