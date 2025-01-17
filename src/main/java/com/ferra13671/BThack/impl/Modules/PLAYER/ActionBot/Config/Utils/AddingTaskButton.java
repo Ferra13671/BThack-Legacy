@@ -37,6 +37,6 @@ public class AddingTaskButton extends Button {
 
     @Override
     public int getCenterY() {
-        return (int) centerY + ((offset * (getHeight() * 2)));
+        return super.getCenterY() + ((offset * (getHeight() * 2)));
     }
 }

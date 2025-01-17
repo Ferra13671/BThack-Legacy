@@ -34,14 +34,11 @@ public class BThackCreditsScreen extends BThackScreen {
 
         this.buttons.add(Button.of(10, mc.getWindow().getScaledWidth() / 2, mc.getWindow().getScaledHeight() - 22,
                 100, 10, "Back").withAction(buttonClickInfo -> mc.setScreen(parent)));
-
-
-        this.buttons.forEach(button -> button.outline = true);
     }
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float partialTicks) {
-        BThackMainMenuScreen.drawWallpaper(mouseX, mouseY);
+        drawMainMenuWallpaper(mouseX, mouseY);
 
         BThackRender.drawVerticalGradientRect(0, 0, mc.getWindow().getScaledWidth(), mc.getWindow().getScaledHeight(), ColorUtils.TRANSPARENT, ColorUtils.fastRGBA(0,0,0, 240));
 

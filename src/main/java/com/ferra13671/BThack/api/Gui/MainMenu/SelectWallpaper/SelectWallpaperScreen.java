@@ -31,8 +31,6 @@ public class SelectWallpaperScreen extends BThackScreen {
 
     @Override
     protected void init() {
-        super.init();
-
         ConfigSystem.refreshWallpapers();
 
         imageButtons.clear();
@@ -44,7 +42,6 @@ public class SelectWallpaperScreen extends BThackScreen {
                 getX100P() * 13, 15,
                 getX100P() * 10, 10,
                 new Wallpaper("default", Client.clientInfo.getDefaultMainMenuImage()));
-        defaultWallpaper.outline = true;
         defaultWallpaper.setOffset(0);
         imageButtons.add(defaultWallpaper);
 
@@ -57,19 +54,14 @@ public class SelectWallpaperScreen extends BThackScreen {
             button.setOffset(offset);
             offset++;
         }
-        maxYScroll = imageButtons.get(imageButtons.size() - 1).centerY;
+        maxYScroll = imageButtons.getLast().getCenterY();
 
         confirmButton = Button.of(3, mc.getWindow().getScaledWidth() - 55, mc.getWindow().getScaledHeight() - 35, 40, 10, "lang.screen.SelectWallpaper.Confirm");
-        confirmButton.outline = true;
-
-        imageButtons.forEach(button -> button.outline = true);
-        this.buttons.forEach(button -> button.outline = true);
     }
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float partialTicks) {
-
-        BThackMainMenuScreen.drawWallpaper(mouseX, mouseY);
+        drawMainMenuWallpaper(mouseX, mouseY);
 
         BThackRender.drawVerticalGradientRect(0, 0, mc.getWindow().getScaledWidth(), mc.getWindow().getScaledHeight(), ColorUtils.TRANSPARENT, ColorUtils.fastRGBA(0,0,0, 240));
 
@@ -94,13 +86,13 @@ public class SelectWallpaperScreen extends BThackScreen {
     public boolean mouseClicked(double mouseX, double mouseY, int mouseButton) {
         super.mouseClicked(mouseX, mouseY, mouseButton);
 
-        imageButtons.forEach(button -> button.selected = false);
+        imageButtons.forEach(button -> button.setSelected(false));
 
         for (WallpaperImageButton button : imageButtons) {
             if (button.isMouseOnButton((int) mouseX, (int) mouseY)) {
                 button.mouseClicked((int) mouseX, (int) mouseY, mouseButton);
             }
-            if (button.selected) {
+            if (button.isSelected()) {
                 preSelectWallpaper = button.wallpaper;
                 return false;
             }
@@ -119,12 +111,12 @@ public class SelectWallpaperScreen extends BThackScreen {
 
     @Override
     public boolean mouseScrolled(double mouseX, double mouseY, double horizontalAmount, double verticalAmount) {
-        Button button = imageButtons.get(imageButtons.size() - 1);
-        if ((button.centerY + (verticalAmount * 10)) > maxYScroll)
+        Button button = imageButtons.getLast();
+        if ((button.getCenterY() + (verticalAmount * 10)) > maxYScroll)
             return false;
 
         for (WallpaperImageButton wButton : imageButtons) {
-            wButton.centerY += (verticalAmount * 10);
+            wButton.setCenterY((int) (wButton.getCenterY() + (verticalAmount * 10)));
         }
 
         return false;

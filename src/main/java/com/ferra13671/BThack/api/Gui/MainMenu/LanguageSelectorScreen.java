@@ -45,8 +45,6 @@ public class LanguageSelectorScreen extends BThackScreen {
                     ModuleList.clientSettings.language.setIndex(2);
                     fadeOffAnimation = new Animation(Easing.LINEAR, 1000);
                 }));
-
-        buttons.forEach(button -> button.outline = true);
     }
 
     private final int blackColor = ColorUtils.fastRGBA(0,0,0, 240);
@@ -63,7 +61,7 @@ public class LanguageSelectorScreen extends BThackScreen {
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float partialTicks) {
-        BThackMainMenuScreen.drawWallpaper(mouseX, mouseY);
+        drawMainMenuWallpaper(mouseX, mouseY);
         BThackRender.drawVerticalGradientRect(0, 0, mc.getWindow().getScaledWidth(), mc.getWindow().getScaledHeight(), ColorUtils.TRANSPARENT, blackColor);
 
         float yUp = (float) (mc.getWindow().getScaledHeight() / 1.7) - 36;

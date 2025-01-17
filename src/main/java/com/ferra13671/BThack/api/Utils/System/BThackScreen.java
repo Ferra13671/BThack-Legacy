@@ -1,10 +1,12 @@
 package com.ferra13671.BThack.api.Utils.System;
 
 
+import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Gui.MainMenu.BThackMainMenuScreen;
 import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.System.buttons.Button;
 import net.minecraft.client.gui.DrawContext;
@@ -31,7 +33,7 @@ public class BThackScreen extends Screen implements Mc {
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float partialTicks) {
         for (Button button : buttons) {
-            if (!button.hided) {
+            if (!button.isHided()) {
                 button.updateButton(mouseX, mouseY);
 
                 button.renderButton();
@@ -44,7 +46,7 @@ public class BThackScreen extends Screen implements Mc {
         activeButton = Button.of(Integer.MIN_VALUE, -100, -100, 1, 1, "nullButton");
 
         for (Button button : buttons) {
-            if (!button.hided) {
+            if (!button.isHided()) {
                 button.mouseClicked((int) mouseX, (int) mouseY, mouseButton);
                 if (button.isMouseOnButton((int) mouseX, (int) mouseY)) {
                     if (mouseButton == 0) {
@@ -76,7 +78,7 @@ public class BThackScreen extends Screen implements Mc {
     @Override
     public boolean charTyped(char chr, int modifiers) {
         for (Button button : buttons) {
-            if (!button.hided)
+            if (!button.isHided())
                 button.charTyped(chr);
         }
 
@@ -86,7 +88,7 @@ public class BThackScreen extends Screen implements Mc {
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int shift) {
         for (Button button : buttons) {
-            if (!button.hided)
+            if (!button.isHided())
                 button.keyTyped(keyCode);
         }
 
@@ -107,8 +109,21 @@ public class BThackScreen extends Screen implements Mc {
     }
 
     public void drawBackGround(int mouseX, int mouseY) {
-        if (Module.nullCheck()) BThackMainMenuScreen.drawWallpaper(mouseX, mouseY);
+        if (Module.nullCheck()) drawMainMenuWallpaper(mouseX, mouseY);
         BThackRender.draw4ColorRect( 0, 0, mc.getWindow().getScaledWidth(), mc.getWindow().getScaledHeight(), BACKGROUND_TABLE_COLOR, BACKGROUND_TABLE_COLOR, ColorUtils.fastRGBA(161,0, 255, 255), ColorUtils.fastRGBA(255, 0, 0, 255));
+    }
+
+    public void drawMainMenuWallpaper(float mouseX, float mouseY) {
+        if (ModuleList.menuShader.isEnabled()) {
+            float width = mc.getWindow().getScaledWidth();
+            float height = mc.getWindow().getScaledHeight();
+
+            Managers.MAIN_MENU_SHADER_MANAGER.getMainMenuShader().use();
+            Managers.MAIN_MENU_SHADER_MANAGER.getMainMenuShader().setParameters(mouseX, mouseY, width, height, Managers.MAIN_MENU_SHADER_MANAGER.getShaderTime());
+            BThackRender.drawShader(Managers.MAIN_MENU_SHADER_MANAGER.getMainMenuShader(), 0, 0, width, height);
+        } else {
+            BThackRender.drawTextureRect(BThackMainMenuScreen.mainMenuTexture, 0, 0, mc.getWindow().getScaledWidth(), mc.getWindow().getScaledHeight());
+        }
     }
 
     public int getX100P() {

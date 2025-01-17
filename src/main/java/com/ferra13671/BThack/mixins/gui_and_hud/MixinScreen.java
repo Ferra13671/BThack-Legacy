@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.mixins.gui_and_hud;
 
+import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.Core.Client.ModuleList;
-import com.ferra13671.BThack.api.Gui.MainMenu.BThackMainMenuScreen;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.AbstractParentElement;
@@ -34,7 +34,7 @@ public abstract class MixinScreen extends AbstractParentElement implements Drawa
     private void modifyRenderBackgroundTexture(DrawContext context, float delta, CallbackInfo ci) {
         if (ModuleList.bthackMainMenu.isEnabled()) {
             ci.cancel();
-            BThackMainMenuScreen.drawWallpaper(_mouseX, _mouseY);
+            BThack.instance.mainMenu.drawMainMenuWallpaper(_mouseX, _mouseY);
         }
     }
 

@@ -38,14 +38,11 @@ public class LoadConfigScreen extends BThackScreen {
                     }
                     mc.setScreen(BThack.instance.clickGui);
                 });
-        confirmButton.hided = selectedConfig == null;
+        confirmButton.setHided(selectedConfig == null);
 
         buttons.add(confirmButton);
         buttons.add(Button.of(2, 60, mc.getWindow().getScaledHeight() - 15, 50, 10, "Refresh")
                 .withAction(buttonClickInfo -> refreshConfigs()));
-
-        configs.forEach(button -> button.outline = true);
-        buttons.forEach(button -> button.outline = true);
     }
 
     public void refreshConfigs() {
@@ -61,12 +58,9 @@ public class LoadConfigScreen extends BThackScreen {
         }
 
         if (!configs.isEmpty())
-            maxYScroll = configs.get(configs.size() - 1).centerY;
+            maxYScroll = configs.getLast().getCenterY();
         else
             maxYScroll = 0;
-
-        configs.forEach(button -> button.outline = true);
-        buttons.forEach(button -> button.outline = true);
     }
 
     @Override
@@ -84,9 +78,9 @@ public class LoadConfigScreen extends BThackScreen {
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int mouseButton) {
         for (Button button : configs) {
-            button.selected = false;
+            button.setSelected(false);
             if (button.isMouseOnButton((int) mouseX, (int) mouseY)) {
-                button.selected = true;
+                button.setSelected(true);
                 button.mouseClicked((int) mouseX, (int) mouseY, mouseButton);
                 selectedConfig = button;
             }
@@ -100,12 +94,12 @@ public class LoadConfigScreen extends BThackScreen {
 
     @Override
     public boolean mouseScrolled(double mouseX, double mouseY, double horizontalAmount, double verticalAmount) {
-        Button button = configs.get(configs.size() - 1);
-        if ((button.centerY + (verticalAmount * 10)) > maxYScroll)
+        Button button = configs.getLast();
+        if ((button.getCenterY() + (verticalAmount * 10)) > maxYScroll)
             return false;
 
         for (Button button1 : configs)
-            button1.centerY += (verticalAmount * 10);
+            button1.setCenterY((int) (button1.getCenterY() + (verticalAmount * 10)));
 
         return false;
     }

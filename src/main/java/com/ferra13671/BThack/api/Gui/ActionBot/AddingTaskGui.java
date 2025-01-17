@@ -51,14 +51,11 @@ public class AddingTaskGui extends BThackScreen {
             offset++;
             taskButtons.add(addingTaskButton);
         }
-        maxYScroll = taskButtons.get(taskButtons.size() - 1).centerY;
+        maxYScroll = taskButtons.getLast().getCenterY();
 
         Button setupButton = Button.of(-1, (scaledResolution.getScaledWidth() - 60), (scaledResolution.getScaledHeight() - 30), 40, 10, "Setup")
                 .withAction(buttonClickInfo -> mc.setScreen(preSelectTask.task.getTaskScreen(null, false)));
-        setupButton.outline = true;
         buttons.add(setupButton);
-        buttons.forEach(button -> button.outline = true);
-        taskButtons.forEach(buttons -> buttons.outline = true);
     }
 
     @Override
@@ -89,12 +86,12 @@ public class AddingTaskGui extends BThackScreen {
 
     @Override
     public boolean mouseScrolled(double mouseX, double mouseY, double horizontalAmount, double verticalAmount) {
-        Button button = taskButtons.get(taskButtons.size() - 1);
-        if ((button.centerY + (verticalAmount * 10)) > maxYScroll)
+        Button button = taskButtons.getLast();
+        if ((button.getCenterY() + (verticalAmount * 10)) > maxYScroll)
             return false;
 
         for (AddingTaskButton tButton : taskButtons) {
-            tButton.centerY += (verticalAmount * 10);
+            tButton.setCenterY((int) (tButton.getCenterY() + (verticalAmount * 10)));
         }
 
         return false;

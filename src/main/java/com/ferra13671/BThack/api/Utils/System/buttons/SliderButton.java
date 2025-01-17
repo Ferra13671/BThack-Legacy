@@ -25,7 +25,7 @@ public class SliderButton extends Button {
 
     @Override
     public void renderButton() {
-        BThackRender.drawRect(getCenterX() - getWidth(), getCenterY() - getHeight(), getCenterX() + getWidth(), getCenterY() + getHeight(), rectColor);
+        BThackRender.drawRect(getCenterX() - getWidth(), getCenterY() - getHeight(), getCenterX() + getWidth(), getCenterY() + getHeight(), RECT_COLOR);
 
         BThackRender.drawRect(getCenterX() - getWidth(), getCenterY() - getHeight(), getCenterX() - getWidth() + (int) renderWidth, getCenterY() + getHeight(), ColorUtils.fastRGBA(255,255,255,100));
 

@@ -11,19 +11,21 @@ import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
 import java.util.function.Consumer;
 
 public class Button implements Mc {
+    public static final int RECT_COLOR = ColorUtils.fastRGBA(0, 0, 0, 76);
+    public static final int HOVERED_LIGHT_COLOR = ColorUtils.fastRGBA(255,255,255, 178);
 
     private final int id;
 
-    public double centerX;
-    public double centerY;
-    private int width;
-    private int height;
+    protected int centerX;
+    protected int centerY;
+    protected int width;
+    protected int height;
     public String text;
-    public boolean hovered;
-    public boolean outline = false;
-    public boolean hided = false;
-    public boolean allowUpdate = true;
-    public boolean selected = false;
+    protected boolean hovered;
+    protected boolean outline = true;
+    protected boolean hided = false;
+    protected boolean allowUpdate = true;
+    protected boolean selected = false;
     private Consumer<ButtonClickInfo> clickConsumer = null;
     private final Animation hoveredAnimation = new Animation(Easing.LINEAR, 200);
 
@@ -53,28 +55,34 @@ public class Button implements Mc {
 
     public void mouseReleased(int mouseX, int mouseY, int mouseButton) {}
 
-
-    public int rectColor = ColorUtils.fastRGBA(0, 0, 0, 76);
-
-    public int whiteColor = ColorUtils.fastRGBA(255,255,255, 178);
-    public int alphaColor = ColorUtils.fastRGBA(255,255,255,0);
-
     public void renderButton() {
-        float animationDelta = (float) (hovered ? hoveredAnimation.getEase() : 1 - hoveredAnimation.getEase());
-        if (!hovered && hoveredAnimation.getEase() >= 1) {
-            BThackRender.drawRect(getCenterX() - width, getCenterY() - height, getCenterX() + width, getCenterY() + height, rectColor);
-        } else {
-            BThackRender.drawRect(getCenterX() - width - 1, getCenterY() - height - animationDelta, getCenterX() + width + animationDelta, getCenterY() + height + 1, rectColor);
-
-            BThackRender.drawHorizontalGradientRect((int)(getCenterX() - (width * 0.8 * animationDelta)), getCenterY() + height - 4, getCenterX(), getCenterY() + height - 2, alphaColor, ColorUtils.integrateAlpha(whiteColor, (int) (animationDelta * 255)));
-            BThackRender.drawHorizontalGradientRect(getCenterX(), getCenterY() + height - 4, (int)(getCenterX() + (width * 0.8 * animationDelta)), getCenterY() + height - 2, ColorUtils.integrateAlpha(whiteColor, (int) (animationDelta * 255)), alphaColor);
-        }
+        float animationDelta = getAnimationDelta();
+        drawPlate(animationDelta);
         if (outline && !selected)
             BThackRender.drawOutlineRect(getCenterX() - getWidth() - (animationDelta * 2), getCenterY() - getHeight() - (animationDelta * 2), getCenterX() + getWidth() + (animationDelta * 2), getCenterY() + getHeight() + (animationDelta * 2), 1, -1);
         BThackRender.drawString(getText(), (getCenterX() - (mc.textRenderer.getWidth(getText()) / 2f)), (getCenterY() - (mc.textRenderer.fontHeight / 2f)), -1);
 
         if (selected)
             BThackRender.drawOutlineRect(getCenterX() - getWidth(), getCenterY() - getHeight(), getCenterX() + getWidth(), getCenterY() + getHeight(), 1, ColorUtils.rainbow(100));
+    }
+
+    protected void drawPlate(float animationDelta) {
+        if (!hovered && hoveredAnimation.getEase() >= 1) {
+            BThackRender.drawRect(getCenterX() - width, getCenterY() - height, getCenterX() + width, getCenterY() + height, RECT_COLOR);
+        } else {
+            BThackRender.drawRect(getCenterX() - width - 1, getCenterY() - height - animationDelta, getCenterX() + width + animationDelta, getCenterY() + height + 1, RECT_COLOR);
+
+            drawHoveredLight(animationDelta);
+        }
+    }
+
+    protected void drawHoveredLight(float animationDelta) {
+        BThackRender.drawHorizontalGradientRect((int)(getCenterX() - (width * 0.8 * animationDelta)), getCenterY() + height - 4, getCenterX(), getCenterY() + height - 2, ColorUtils.TRANSPARENT, ColorUtils.integrateAlpha(HOVERED_LIGHT_COLOR, (int) (animationDelta * 255)));
+        BThackRender.drawHorizontalGradientRect(getCenterX(), getCenterY() + height - 4, (int)(getCenterX() + (width * 0.8 * animationDelta)), getCenterY() + height - 2, ColorUtils.integrateAlpha(HOVERED_LIGHT_COLOR, (int) (animationDelta * 255)), ColorUtils.TRANSPARENT);
+    }
+
+    public float getAnimationDelta() {
+        return (float) (hovered ? hoveredAnimation.getEase() : 1 - hoveredAnimation.getEase());
     }
 
 
@@ -92,11 +100,11 @@ public class Button implements Mc {
     }
 
     public int getCenterX() {
-        return (int) centerX;
+        return centerX;
     }
 
     public int getCenterY() {
-        return (int) centerY;
+        return centerY;
     }
 
     public int getWidth() {
@@ -105,6 +113,22 @@ public class Button implements Mc {
 
     public int getHeight() {
         return this.height;
+    }
+
+    public boolean isHovered() {
+        return hovered;
+    }
+
+    public boolean isHided() {
+        return hided;
+    }
+
+    public boolean isAllowUpdate() {
+        return allowUpdate;
+    }
+
+    public boolean isSelected() {
+        return selected;
     }
 
     public String getText() {
@@ -132,6 +156,22 @@ public class Button implements Mc {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public void setHovered(boolean hovered) {
+        this.hovered = hovered;
+    }
+
+    public void setHided(boolean hided) {
+        this.hided = hided;
+    }
+
+    public void setAllowUpdate(boolean allowUpdate) {
+        this.allowUpdate = allowUpdate;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 
     public void clickAction(int mouseX, int mouseY, int mouseButton) {

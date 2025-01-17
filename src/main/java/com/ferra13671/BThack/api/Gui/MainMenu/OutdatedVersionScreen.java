@@ -38,13 +38,11 @@ public class OutdatedVersionScreen extends BThackScreen {
                     if (BThack.instance.versionInfo.isFirstLaunched()) mc.setScreen(new LanguageSelectorScreen());
                     else mc.setScreen(null);
                 }));
-
-        buttons.forEach(button -> button.outline = true);
     }
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float partialTicks) {
-        BThackMainMenuScreen.drawWallpaper(mouseX, mouseY);
+        drawMainMenuWallpaper(mouseX, mouseY);
         BThackRender.drawVerticalGradientRect(0, 0, mc.getWindow().getScaledWidth(), mc.getWindow().getScaledHeight(), ColorUtils.TRANSPARENT, ColorUtils.fastRGBA(0,0,0, 240));
 
         BThackRender.drawCenteredString(String.format(LanguageSystem.translate("lang.screen.OutdatedVersion.message1"), BThack.instance.VERSION, BThack.instance.versionInfo.getNewVersion()), mc.getWindow().getScaledWidth() / 2f, mc.getWindow().getScaledHeight() / 2f - 50, -1);
