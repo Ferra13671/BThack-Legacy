@@ -46,14 +46,14 @@ public final class FileSystem {
         Path path1 = Paths.get(Paths.get("BThack/" + path + "/" + name + "." + typeFile).toUri());
         if (!Files.exists(path1)) {
             Files.createFile(path1);
-            BThack.log(name + "." + typeFile + " file was created successfully");
+            BThack.debug(name + "." + typeFile + " file was created successfully");
             if (typeFile.equals("json")) {
                 BufferedWriter writer = Files.newBufferedWriter(path1, StandardCharsets.UTF_8);
                 writer.write("{}");
                 writer.close();
             }
         } else {
-            BThack.log(name + "." + typeFile + " file already exists");
+            BThack.debug(name + "." + typeFile + " file already exists");
         }
 
     }
@@ -62,9 +62,9 @@ public final class FileSystem {
         Path path1 = Paths.get(Paths.get("BThack" + path + "/" + name).toUri());
         if (!Files.exists(path1)) {
             Files.createDirectories(path1);
-            BThack.log(name + " folder created successfully");
+            BThack.debug(name + " folder created successfully");
         } else {
-            BThack.log(name + " folder already exists");
+            BThack.debug(name + " folder already exists");
         }
     }
 

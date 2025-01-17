@@ -69,7 +69,7 @@ public final class BThack implements ClientModInitializer, Mc {
 
     public static void debug(String message) {
         if (instance.versionInfo.isSendDebug())
-            logger.debug(message);
+            logger.info("[DEBUG] {}", message);
     }
 
     public static boolean isBaritonePresent() {
@@ -89,6 +89,11 @@ public final class BThack implements ClientModInitializer, Mc {
 
         initStage = InitStage.CLIENT_INIT;
 
+        instance = this;
+
+        checkForOutdate();
+        loadVersionInfo();
+
         logBThackLogo();
 
         initLog("BThack initialization has begun. Your nickname: " + mc.getSession().getUsername());
@@ -96,41 +101,39 @@ public final class BThack implements ClientModInitializer, Mc {
         PluginSystem.loadPlugins();
 
         try {
-            initLog("Starting to create BThack directory...");
+            initDebug("Starting to create BThack directory...");
             FileSystem.start();
             FileSystem.createTutorialJsonTheme();
-            initLog("BThack directory successfully created!");
+            initDebug("BThack directory successfully created!");
         } catch (IOException e) {
             initErr("There was an error when creating the BThack directory.");
             throw new RuntimeException(e);
         }
 
-        initLog("Starting initialization of the sound engine...");
+        initDebug("Starting initialization of the sound engine...");
         TinySound.init();
         Sounds.initSounds();
         if (TinySound.isInitialized()) {
-            initLog("The sound engine has been successfully initialized!");
+            initDebug("The sound engine has been successfully initialized!");
         } else {
             initErr("The sound engine is not initialized!");
         }
 
-        initLog("Starting loading languages...");
+        initDebug("Starting loading languages...");
         try {
             ConfigSystem.loadLanguages();
         } catch (Exception e) {
             initErr("There was an error loading languages!");
         }
 
-        initLog("Starting loading ActionBot tasks...");
+        initDebug("Starting loading ActionBot tasks...");
         try {
             ActionBotConfig.loadActionBotTasksData();
         } catch (Exception e) {
             initErr("There was an error loading ActionBot tasks!");
         }
 
-        instance = this;
-
-        initLog("Starting to upload social info...");
+        initDebug("Starting to upload social info...");
         try {
             for (Field field : SocialManagers.class.getFields()) {
                 if ( Modifier.isStatic(field.getModifiers())
@@ -147,9 +150,6 @@ public final class BThack implements ClientModInitializer, Mc {
             e.printStackTrace(); //Okay
         }
 
-        checkForOutdate();
-        loadVersionInfo();
-
         PluginSystem.getLoadedPlugins().forEach(Plugin::preInit);
     }
 
@@ -160,19 +160,19 @@ public final class BThack implements ClientModInitializer, Mc {
 
         initStage = InitStage.POST_INIT;
 
-        BThack.initLog("Starting to upload color themes....");
+        BThack.initDebug("Starting to upload color themes....");
         try {
             ConfigSystem.loadColourThemes();
-            BThack.initLog("Color themes has loaded!");
+            BThack.initDebug("Color themes has loaded!");
         } catch (IOException e) {
             BThack.initErr("There was a error when loading color themes!");
             throw new RuntimeException(e);
         }
 
-        BThack.initLog("Starting client initialization...");
+        BThack.initDebug("Starting client initialization...");
         Client.startup();
         if (Client.inited) {
-            BThack.initLog("Client initialized!");
+            BThack.initDebug("Client initialized!");
         } else {
             BThack.initErr("There was an error during client initialization! Further work is impossible!");
             throw new RuntimeException();
@@ -182,33 +182,14 @@ public final class BThack implements ClientModInitializer, Mc {
         BThack.instance.mainMenu = new BThackMainMenuScreen();
         BThack.instance.hudMoverScreen = new HudMoverScreen();
 
-        BThack.initLog("Starting loading the config...");
+        BThack.initDebug("Starting loading the config...");
         try {
             ConfigSystem.loadConfig();
-            BThack.initLog("Config successfully uploaded!");
+            BThack.initDebug("Config successfully uploaded!");
         } catch (Exception e) {
             BThack.initErr("There was an error when loading the config. Further work may occur with failures.");
             e.printStackTrace();
         }
-
-        /*
-
-        It wasn't very good, so I changed the way it worked :/
-
-        ThreadManager.startNewThread(thread -> {
-            do {
-                if (BThack.instance.clickGui != null) {
-                    if (mc.currentScreen == BThack.instance.clickGui) {
-                        BThack.instance.clickGui.clickGuiTick();
-                    }
-                }
-                try {
-                    thread.sleep(10);
-                } catch (InterruptedException ignored) {}
-            } while (true);
-        });
-
-         */
 
         BThackRender.init();
 
@@ -302,6 +283,17 @@ public final class BThack implements ClientModInitializer, Mc {
         log(line);
         log(message.toString());
         log(line);
+    }
+
+    public static void initDebug(CharSequence message) {
+        String line = " ";
+        for (int i = 2; i < message.length(); i++) {
+            line = line + "-";
+        }
+
+        debug(line);
+        debug(message.toString());
+        debug(line);
     }
 
     public static void initErr(CharSequence message) {
