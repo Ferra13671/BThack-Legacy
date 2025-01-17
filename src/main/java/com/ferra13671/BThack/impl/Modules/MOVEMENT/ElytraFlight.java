@@ -21,6 +21,7 @@ import com.ferra13671.BThack.api.Utils.PlayerUtils;
 import com.ferra13671.BThack.api.Utils.Ticker;
 import com.ferra13671.BThack.impl.Modules.PLAYER.AutoFirework;
 import com.ferra13671.BThack.mixins.accessor.IEntity;
+import com.ferra13671.BThack.mixins.accessor.ILivingEntity;
 import com.ferra13671.BThack.mixins.accessor.IPlayerPositionLookS2CPacket;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.client.input.Input;
@@ -323,7 +324,7 @@ public class ElytraFlight extends Module {
                 default -> new Float[]{mc.player.getYaw(), mc.player.getPitch()};
             },
             () -> {},
-            () -> !nullCheck() && mc.player.getInventory().getArmorStack(2).getItem() == Items.ELYTRA
+            () -> true
     );
 
     @Override
@@ -572,6 +573,7 @@ public class ElytraFlight extends Module {
     //---------Bounce Mode---------//
     @SuppressWarnings("ConstantConditions")
     public void bounceMode() {
+        ((ILivingEntity) mc.player).setJumpingCooldown(0);
         IEntity player = (IEntity) mc.player;
 
         bounceYaw = bounceYawRotate(mc.player.getYaw());
@@ -702,7 +704,6 @@ public class ElytraFlight extends Module {
     }
 
     public void sendStrafePacket() {
-        //Client.networkManager.setDefaultPacket(new PlayerMoveC2SPacket.LookAndOnGround(fireworkYaw, fireworkPitch, mc.player.onGround));
         GrimUtils.sendPreActionGrimPackets(fireworkYaw, fireworkPitch);
     }
 
