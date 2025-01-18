@@ -3,7 +3,6 @@ package com.ferra13671.BThack.mixins.gui_and_hud;
 import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.api.Events.Render.RenderHudPreEvent;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.render.RenderTickCounter;
@@ -23,7 +22,7 @@ public abstract class MixinInGameHud {
 
 	@Shadow @Final private static Identifier PUMPKIN_BLUR;
 
-	@Inject(method = "render", at = @At("HEAD"))
+	@Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/LayeredDrawer;render(Lnet/minecraft/client/gui/DrawContext;Lnet/minecraft/client/render/RenderTickCounter;)V", shift = At.Shift.AFTER))
 	public void modifyRenderPre(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci) {
 		BThack.EVENT_BUS.activate(new RenderHudPreEvent(tickCounter.getTickDelta(true)));
 	}
@@ -31,13 +30,6 @@ public abstract class MixinInGameHud {
 	@Inject(method = "renderVignetteOverlay", at = @At("HEAD"), cancellable = true)
 	public void modifyRenderVignetteOverlay(DrawContext context, Entity entity, CallbackInfo ci) {
 		if (ModuleList.noOverlay.isEnabled() && ModuleList.noOverlay.vignette.getValue()) {
-			//fix blur render
-			RenderSystem.depthMask(true);
-			RenderSystem.enableDepthTest();
-			context.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-			RenderSystem.defaultBlendFunc();
-			RenderSystem.disableBlend();
-
 			ci.cancel();
 		}
 	}
