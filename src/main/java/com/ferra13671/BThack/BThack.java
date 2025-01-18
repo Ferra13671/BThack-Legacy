@@ -8,7 +8,7 @@ import com.ferra13671.BThack.Core.FileSystem.ConfigSystem.ConfigUtils;
 import com.ferra13671.BThack.Core.FileSystem.FileSystem;
 import com.ferra13671.BThack.Core.FileSystem.JsonUtils;
 import com.ferra13671.BThack.Core.Render.BThackRender;
-import com.ferra13671.BThack.api.Gui.HudMover.HudMoverScreen;
+import com.ferra13671.BThack.api.Gui.HudEditor.HudEditorScreen;
 import com.ferra13671.BThack.api.Gui.MainMenu.BThackMainMenuScreen;
 import com.ferra13671.BThack.api.Gui.ClickGui.ClickGuiScreen;
 import com.ferra13671.BThack.api.Interfaces.Mc;
@@ -51,7 +51,7 @@ public final class BThack implements ClientModInitializer, Mc {
 
     public ClickGuiScreen clickGui;
     public BThackMainMenuScreen mainMenu;
-    public HudMoverScreen hudMoverScreen;
+    public HudEditorScreen hudEditorScreen;
 
     public BThack() {
         ModMetadata mod = FabricLoader.getInstance().getModContainer("bthack").get().getMetadata();
@@ -180,7 +180,7 @@ public final class BThack implements ClientModInitializer, Mc {
 
         BThack.instance.clickGui = new ClickGuiScreen();
         BThack.instance.mainMenu = new BThackMainMenuScreen();
-        BThack.instance.hudMoverScreen = new HudMoverScreen();
+        BThack.instance.hudEditorScreen = new HudEditorScreen();
 
         BThack.initDebug("Starting loading the config...");
         try {

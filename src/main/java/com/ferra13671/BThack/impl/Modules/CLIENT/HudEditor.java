@@ -27,6 +27,6 @@ public class HudEditor extends OneActionModule {
             return;
         }
 
-        mc.setScreen(BThack.instance.hudMoverScreen);
+        mc.setScreen(BThack.instance.hudEditorScreen);
     }
 }
