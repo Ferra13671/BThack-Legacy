@@ -56,7 +56,7 @@ public class NewChunks extends Module {
 
     //---------Render---------//
     public final BooleanSetting newChunkRender = new BooleanSetting("New Render", this, true, () -> page.getValue().equals("Render"));
-    public final NumberSetting newDist = new NumberSetting("New Dist", this, 500, 100, 2000, false, () -> page.getValue().equals("Render") && newChunkRender.getValue());
+    public final NumberSetting newDist = new NumberSetting("New Dist", this, 350, 100, 2000, false, () -> page.getValue().equals("Render") && newChunkRender.getValue());
     public final NumberSetting newY = new NumberSetting("New Y", this, 0, 0, 400, false, () -> page.getValue().equals("Render") && newChunkRender.getValue());
     public final NumberSetting newRed = new NumberSetting("New Red", this, 0, 0, 255, true, () -> page.getValue().equals("Render") && newChunkRender.getValue());
     public final NumberSetting newGreen = new NumberSetting("New Green", this, 255, 0, 255, true, () -> page.getValue().equals("Render") && newChunkRender.getValue());
@@ -68,7 +68,7 @@ public class NewChunks extends Module {
     public final NumberSetting newLAlpha = new NumberSetting("New LAlpha", this, 255, 0, 255, true, () -> page.getValue().equals("Render") && newChunkRender.getValue());
 
     public final BooleanSetting oldChunkRender = new BooleanSetting("Old Render", this, true, () -> page.getValue().equals("Render"));
-    public final NumberSetting oldDist = new NumberSetting("Old Dist", this, 500, 100, 2000, false, () -> page.getValue().equals("Render") && oldChunkRender.getValue());
+    public final NumberSetting oldDist = new NumberSetting("Old Dist", this, 350, 100, 2000, false, () -> page.getValue().equals("Render") && oldChunkRender.getValue());
     public final NumberSetting oldY = new NumberSetting("Old Y", this, 0, 0, 400, false, () -> page.getValue().equals("Render") && oldChunkRender.getValue());
     public final NumberSetting oldRed = new NumberSetting("Old Red", this, 255, 0, 255, true, () -> page.getValue().equals("Render") && oldChunkRender.getValue());
     public final NumberSetting oldGreen = new NumberSetting("Old Green", this, 255, 0, 255, true, () -> page.getValue().equals("Render") && oldChunkRender.getValue());
@@ -255,13 +255,15 @@ public class NewChunks extends Module {
         if (e.getPacket() instanceof ChunkDeltaUpdateS2CPacket packet && liquidSearch.getValue()) {
             packet.visitUpdates((pos, state) -> {
                 ChunkPos chunkPos = new ChunkPos(pos);
+                if (newChunks.contains(chunkPos) || oldChunks.contains(chunkPos)) return;
                 if (!state.getFluidState().isEmpty() && !state.getFluidState().isStill()) {
                     liquidDirsSearchAction(pos, chunkPos);
                 }
             });
         } else if (e.getPacket() instanceof BlockUpdateS2CPacket packet) {
             ChunkPos chunkPos = new ChunkPos(packet.getPos());
-            if (blockUpdateSearch.getValue()){
+            if (newChunks.contains(chunkPos) || oldChunks.contains(chunkPos)) return;
+            if (blockUpdateSearch.getValue()) {
                 blockUpdateSearchAction(chunkPos);
             }
             if (!packet.getState().getFluidState().isEmpty() && !packet.getState().getFluidState().isStill() && liquidSearch.getValue()) {
@@ -294,6 +296,7 @@ public class NewChunks extends Module {
 
     public void chunkDataSearchAction(ChunkDataS2CPacket packet) {
         ChunkPos oldPos = new ChunkPos(packet.getChunkX(), packet.getChunkZ());
+        if (newChunks.contains(oldPos) || oldChunks.contains(oldPos)) return;
 
         if (mc.world.getChunkManager().getChunk(packet.getChunkX(), packet.getChunkZ()) == null) {
             WorldChunk chunk = new WorldChunk(mc.world, oldPos);
@@ -551,7 +554,7 @@ public class NewChunks extends Module {
     @SuppressWarnings("ConstantConditions")
     public void addOldChunkBoxes(Set<ChunkPos> chunks, List<RenderBox> renderBoxes, double oldRenderY) {
         for (ChunkPos c : chunks) {
-            if (mc.getCameraEntity().getBlockPos().isWithinDistance(c.getStartPos(), oldDist.getValue() * 16)) {
+            if (mc.getCameraEntity().getBlockPos().isWithinDistance(c.getStartPos(), oldDist.getValue())) {
                 Box box = new Box(
                         c.getStartX(), oldRenderY, c.getStartZ(),
                         c.getStartX() + 16, oldRenderY, c.getStartZ() + 16);
