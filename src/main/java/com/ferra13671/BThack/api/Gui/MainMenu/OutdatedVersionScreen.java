@@ -5,6 +5,7 @@ import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Utils.DesktopUtils;
 import com.ferra13671.BThack.api.Utils.System.BThackScreen;
+import com.ferra13671.BThack.api.Utils.System.BThackScreens;
 import com.ferra13671.BThack.api.Utils.System.buttons.Button;
 import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
 import net.minecraft.client.gui.DrawContext;
@@ -29,14 +30,12 @@ public class OutdatedVersionScreen extends BThackScreen {
         buttons.add(Button.of(2, mc.getWindow().getScaledWidth() / 2, mc.getWindow().getScaledHeight() / 2 + 25, 120, 10, "lang.screen.Don'tShowUntilNext")
                 .withAction(buttonClickInfo -> {
                     BThack.instance.versionInfo.setNeedShowAgainOneRelease(false);
-                    if (BThack.instance.versionInfo.isFirstLaunched()) mc.setScreen(new LanguageSelectorScreen());
-                    else mc.setScreen(null);
+                    actionAfterClicking(() -> changeScreen(BThack.instance.versionInfo.isFirstLaunched() ? BThackScreens.LANGUAGE_SELECTOR : BThackScreens.BTHACK_MAIN_MENU));
                 }));
         buttons.add(Button.of(3, mc.getWindow().getScaledWidth() / 2, mc.getWindow().getScaledHeight() / 2 + 50, 120, 10, "lang.screen.Don'tShowAll")
                 .withAction(buttonClickInfo -> {
                     BThack.instance.versionInfo.setNeedShowAgainAllReleases(false);
-                    if (BThack.instance.versionInfo.isFirstLaunched()) mc.setScreen(new LanguageSelectorScreen());
-                    else mc.setScreen(null);
+                    actionAfterClicking(() -> changeScreen(BThack.instance.versionInfo.isFirstLaunched() ? BThackScreens.LANGUAGE_SELECTOR : BThackScreens.BTHACK_MAIN_MENU));
                 }));
     }
 
@@ -49,5 +48,10 @@ public class OutdatedVersionScreen extends BThackScreen {
         BThackRender.drawCenteredString(LanguageSystem.translate("lang.screen.OutdatedVersion.message2"), mc.getWindow().getScaledWidth() / 2f, mc.getWindow().getScaledHeight() / 2f - 50 + mc.textRenderer.fontHeight + 5, -1);
 
         super.render(context, mouseX, mouseY, partialTicks);
+    }
+
+    @Override
+    public boolean shouldCloseOnEsc() {
+        return false;
     }
 }

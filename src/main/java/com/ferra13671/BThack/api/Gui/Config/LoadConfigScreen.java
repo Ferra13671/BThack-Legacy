@@ -1,9 +1,9 @@
 package com.ferra13671.BThack.api.Gui.Config;
 
-import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.Core.FileSystem.ConfigSystem.ConfigSystem;
 import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.api.Utils.System.BThackScreen;
+import com.ferra13671.BThack.api.Utils.System.BThackScreens;
 import com.ferra13671.BThack.api.Utils.System.buttons.Button;
 import com.ferra13671.BThack.api.Utils.System.buttons.ButtonWithOffset;
 import net.minecraft.client.gui.DrawContext;
@@ -36,7 +36,7 @@ public class LoadConfigScreen extends BThackScreen {
                         ConfigSystem.loadConfigFile(selectedConfig.getText());
                     } catch (IOException ignored) {
                     }
-                    mc.setScreen(BThack.instance.clickGui);
+                    mc.setScreen(BThackScreens.CLICK_GUI);
                 });
         confirmButton.setHided(selectedConfig == null);
 

@@ -6,6 +6,7 @@ import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Gui.MainMenu.BThackMainMenuScreen;
 import com.ferra13671.BThack.api.Utils.System.BThackScreen;
+import com.ferra13671.BThack.api.Utils.System.BThackScreens;
 import com.ferra13671.BThack.api.Utils.System.buttons.Button;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.text.Text;
@@ -120,5 +121,10 @@ public class SelectWallpaperScreen extends BThackScreen {
         }
 
         return false;
+    }
+
+    @Override
+    public void close() {
+        changeScreen(BThackScreens.BTHACK_MAIN_MENU);
     }
 }

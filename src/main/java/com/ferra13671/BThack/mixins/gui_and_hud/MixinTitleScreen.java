@@ -2,10 +2,9 @@ package com.ferra13671.BThack.mixins.gui_and_hud;
 
 import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.Core.Client.ModuleList;
-import com.ferra13671.BThack.api.Gui.MainMenu.LanguageSelectorScreen;
-import com.ferra13671.BThack.api.Gui.MainMenu.OutdatedVersionScreen;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.SoundSystem.Sounds;
+import com.ferra13671.BThack.api.Utils.System.BThackScreens;
 import net.minecraft.client.gui.screen.TitleScreen;
 import net.minecraft.client.sound.PositionedSoundInstance;
 import org.spongepowered.asm.mixin.Mixin;
@@ -39,7 +38,7 @@ public class MixinTitleScreen implements Mc {
             if (BThack.instance.versionInfo.isOutdated()) {
                 if (BThack.instance.versionInfo.isNeedShowAgainAllReleases()) {//              It seems that disabling showing the same issue
                     if (BThack.instance.versionInfo.isNeedShowAgainOneRelease()) {//      <--- multiple times is broken, but I assure you it works.
-                        mc.setScreen(new OutdatedVersionScreen());
+                        mc.setScreen(BThackScreens.OUTDATED_VERSION);
                         needReturn = true;
                     }
                 }
@@ -47,7 +46,7 @@ public class MixinTitleScreen implements Mc {
 
             if (!needReturn) {
                 if (BThack.instance.versionInfo.isFirstLaunched()) {
-                    mc.setScreen(new LanguageSelectorScreen());
+                    mc.setScreen(BThackScreens.LANGUAGE_SELECTOR);
                     needReturn = true;
                 }
             }
@@ -57,6 +56,6 @@ public class MixinTitleScreen implements Mc {
         }
 
         if (ModuleList.bthackMainMenu.isEnabled())
-            mc.setScreen(BThack.instance.mainMenu);
+            mc.setScreen(BThackScreens.BTHACK_MAIN_MENU);
     }
 }

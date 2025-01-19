@@ -4,6 +4,8 @@ package com.ferra13671.BThack.api.Utils.System;
 import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
+import com.ferra13671.BThack.api.Animation.Animation;
+import com.ferra13671.BThack.api.Gui.TransitionScreen;
 import com.ferra13671.BThack.api.Gui.MainMenu.BThackMainMenuScreen;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Managers.Managers;
@@ -22,8 +24,8 @@ public class BThackScreen extends Screen implements Mc {
 
     public Button activeButton = Button.of(Integer.MIN_VALUE, -100, -100, 1, 1, "nullButton");
 
-    public boolean closeAfterClicking = false;
-    public Runnable runnable;
+    private boolean actionAfterClicking = false;
+    private Runnable afterClickAction;
 
     protected BThackScreen(Text title) {
         super(title);
@@ -61,9 +63,9 @@ public class BThackScreen extends Screen implements Mc {
     }
 
     public void checkCloseAfterClicking() {
-        if (closeAfterClicking) {
-            closeAfterClicking = false;
-            runnable.run();
+        if (actionAfterClicking) {
+            actionAfterClicking = false;
+            afterClickAction.run();
         }
     }
 
@@ -103,9 +105,9 @@ public class BThackScreen extends Screen implements Mc {
         return null;
     }
 
-    public void closeAfterClicking(Runnable action) {
-        closeAfterClicking = true;
-        runnable = action;
+    public void actionAfterClicking(Runnable action) {
+        actionAfterClicking = true;
+        afterClickAction = action;
     }
 
     public void drawBackGround(int mouseX, int mouseY) {
@@ -128,5 +130,13 @@ public class BThackScreen extends Screen implements Mc {
 
     public int getX100P() {
         return mc.getWindow().getScaledWidth() / 100;
+    }
+
+    public void changeScreen(Screen screen, Animation animation) {
+        mc.setScreen(new TransitionScreen(() -> this, () -> screen, animation));
+    }
+
+    public void changeScreen(Screen screen) {
+        changeScreen(screen, TransitionScreen.STANDARD_FLIP_ANIMATION);
     }
 }

@@ -14,6 +14,7 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSettin
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.Setting;
 import com.ferra13671.BThack.api.Module.OneActionModule;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
+import com.ferra13671.BThack.api.Utils.System.BThackScreens;
 import com.ferra13671.BThack.mixins.accessor.IGameRenderer;
 import net.minecraft.client.gl.PostEffectProcessor;
 
@@ -122,8 +123,8 @@ public class ClickGui extends OneActionModule {
         }
 
         if (mc.currentScreen == null) {
-            BThack.instance.clickGui.firstIgnore = true;
-            mc.setScreen(BThack.instance.clickGui);
+            BThackScreens.CLICK_GUI.firstIgnore = true;
+            mc.setScreen(BThackScreens.CLICK_GUI);
         }
 
         toggle();

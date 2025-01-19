@@ -4,18 +4,15 @@ import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Utils.DesktopUtils;
 import com.ferra13671.BThack.api.Utils.System.BThackScreen;
+import com.ferra13671.BThack.api.Utils.System.BThackScreens;
 import com.ferra13671.BThack.api.Utils.System.buttons.Button;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
 
 public class BThackCreditsScreen extends BThackScreen {
 
-    private final Screen parent;
-
-    public BThackCreditsScreen(Screen parent) {
+    public BThackCreditsScreen() {
         super(Text.of("CreditsScreen"));
-        this.parent = parent;
     }
 
     @Override
@@ -33,7 +30,7 @@ public class BThackCreditsScreen extends BThackScreen {
 
 
         this.buttons.add(Button.of(10, mc.getWindow().getScaledWidth() / 2, mc.getWindow().getScaledHeight() - 22,
-                100, 10, "Back").withAction(buttonClickInfo -> mc.setScreen(parent)));
+                100, 10, "Back").withAction(buttonClickInfo -> actionAfterClicking(() -> changeScreen(BThackScreens.BTHACK_MAIN_MENU))));
     }
 
     @Override
@@ -43,5 +40,10 @@ public class BThackCreditsScreen extends BThackScreen {
         BThackRender.drawVerticalGradientRect(0, 0, mc.getWindow().getScaledWidth(), mc.getWindow().getScaledHeight(), ColorUtils.TRANSPARENT, ColorUtils.fastRGBA(0,0,0, 240));
 
         super.render(context, mouseX, mouseY, partialTicks);
+    }
+
+    @Override
+    public void close() {
+        changeScreen(BThackScreens.BTHACK_MAIN_MENU);
     }
 }

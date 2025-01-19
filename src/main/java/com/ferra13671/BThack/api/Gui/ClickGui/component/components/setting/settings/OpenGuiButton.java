@@ -47,7 +47,7 @@ public class OpenGuiButton extends AbstractSetting implements Mc {
         if (!getVisible()) return false;
 
         if (isMouseOnButton(mouseX, mouseY) && button == 0 && this.parent.open) {
-            ((BThackScreen) mc.currentScreen).closeAfterClicking(() -> mc.setScreen(set.getValue()));
+            ((BThackScreen) mc.currentScreen).actionAfterClicking(() -> mc.setScreen(set.getValue()));
         }
 
         return isMouseOnButton(mouseX, mouseY);
