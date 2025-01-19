@@ -31,6 +31,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.net.URI;
 import java.net.URL;
 
 public final class BThack implements ClientModInitializer, Mc {
@@ -206,7 +207,7 @@ public final class BThack implements ClientModInitializer, Mc {
 
     private void checkForOutdate() {
         try {
-            String text = new BufferedReader(new InputStreamReader(new URL("https://raw.githubusercontent.com/Ferra13671/BThack/" + MC_VERSION + "/currentVersion.txt").openStream())).readLine();
+            String text = new BufferedReader(new InputStreamReader(new URI("https://raw.githubusercontent.com/Ferra13671/BThack/" + MC_VERSION + "/currentVersion.txt").toURL().openStream())).readLine();
             if (!text.equals(VERSION)) {
                 versionInfo.setOutdated(true);
                 versionInfo.setNewVersion(text);

@@ -1,6 +1,5 @@
 package com.ferra13671.BThack.impl.Modules.CLIENT;
 
-import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.Core.Client.Client;
 import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
