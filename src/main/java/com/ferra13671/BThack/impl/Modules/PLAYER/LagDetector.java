@@ -8,6 +8,7 @@ import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.ChatUtils;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.Utils.Ticker;
+import com.ferra13671.BThack.mixins.accessor.packet.IPlayerMoveC2SPacket;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
 import net.minecraft.network.packet.c2s.login.LoginHelloC2SPacket;
@@ -86,11 +87,13 @@ public class LagDetector extends Module {
     public void onReceivePackets(PacketEvent.Receive e) {
         lastPacketTimer.reset();
 
-        if (!rubberBandDetected || !(e.getPacket() instanceof PlayerMoveC2SPacket packet))
+        if (!rubberBandDetected || !(e.getPacket() instanceof PlayerMoveC2SPacket))
             return;
 
-        double dist = new Vec3d(packet.x, packet.y, packet.z).subtract(mc.player.getPos()).length();
-        Vec2f rotVec =  new Vec2f(packet.yaw - mc.player.yaw, packet.pitch - mc.player.pitch);
+        IPlayerMoveC2SPacket packet = (IPlayerMoveC2SPacket) e.getPacket();
+
+        double dist = new Vec3d(packet._getX(), packet._getY(), packet._getZ()).subtract(mc.player.getPos()).length();
+        Vec2f rotVec =  new Vec2f(packet._getYaw() - mc.player.yaw, packet._getPitch() - mc.player.pitch);
         double rotationDiff = Math.sqrt(rotVec.x * rotVec.x + rotVec.y * rotVec.y);
 
         if (0.5 <= dist && dist <= 64 || rotationDiff > 1.0)

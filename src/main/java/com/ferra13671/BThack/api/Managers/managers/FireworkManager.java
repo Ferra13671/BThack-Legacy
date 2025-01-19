@@ -7,7 +7,7 @@ import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Managers.Manager;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.Ticker;
-import com.ferra13671.BThack.mixins.accessor.IFireworkRocketEntity;
+import com.ferra13671.BThack.mixins.accessor.entity.IFireworkRocketEntity;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.projectile.FireworkRocketEntity;

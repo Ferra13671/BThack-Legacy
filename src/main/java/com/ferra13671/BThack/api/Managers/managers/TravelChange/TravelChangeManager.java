@@ -9,6 +9,7 @@ import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Managers.Manager;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.Modules.AimBotUtils;
+import com.ferra13671.BThack.mixins.accessor.packet.IPlayerMoveC2SPacket;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 
@@ -93,10 +94,11 @@ public class TravelChangeManager implements Manager, Mc {
     public void onPacketSend(PacketEvent.Send e) {
         if (!changers.isEmpty()) {
             if (e.getPacket() instanceof PlayerMoveC2SPacket packet && (packet instanceof PlayerMoveC2SPacket.Full || packet instanceof PlayerMoveC2SPacket.LookAndOnGround)) {
-                if (packet.yaw == mc.player.getYaw() && packet.pitch == mc.player.getPitch()) {
-                    if (changers.get(0).needTravelChange.get()) {
-                        packet.yaw = yaw;
-                        packet.pitch = pitch;
+                IPlayerMoveC2SPacket iPacket = (IPlayerMoveC2SPacket) packet;
+                if (iPacket._getYaw() == mc.player.getYaw() && iPacket._getPitch() == mc.player.getPitch()) {
+                    if (changers.getFirst().needTravelChange.get()) {
+                        iPacket.setYaw(yaw);
+                        iPacket.setPitch(pitch);
                     }
                 }
             }

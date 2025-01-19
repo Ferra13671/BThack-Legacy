@@ -2,7 +2,7 @@ package com.ferra13671.BThack.api.Utils;
 
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Utils.Modules.AimBotUtils;
-import com.ferra13671.BThack.mixins.accessor.IEntity;
+import com.ferra13671.BThack.mixins.accessor.entity.IEntity;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.network.OtherClientPlayerEntity;

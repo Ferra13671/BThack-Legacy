@@ -9,6 +9,8 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSettin
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.Setting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
+import com.ferra13671.BThack.mixins.accessor.packet.IEntityVelocityUpdateS2CPacket;
+import com.ferra13671.BThack.mixins.accessor.packet.IExplosionS2CPacket;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
@@ -83,8 +85,8 @@ public class Velocity extends Module {
         if ((mc.player.isTouchingWater() || mc.player.isSubmergedInWater() || mc.player.isInLava()) && !liquid.getValue())
             return;
 
-        int velV = (int) explosionV.getValue();
-        int velH = (int) explosionH.getValue();
+        double velV = velocityV.getValue();
+        double velH = velocityH.getValue();
         float explV = (float) explosionV.getValue();
         float explH = (float) explosionH.getValue();
 
@@ -101,15 +103,12 @@ public class Velocity extends Module {
             if (packet.getEntityId() == mc.player.getId()) {
                 switch (mode.getValue()) {
                     case "Normal" -> {
-                        if (velH == 0 && velV == 0) {
-                            e.setCancelled(true);
-                        } else {
-                            velV = velV / 100;
-                            velH = velH / 100;
-                            packet.velocityX *= velH;
-                            packet.velocityY *= velV;
-                            packet.velocityZ *= velH;
-                        }
+                        velV /= 100;
+                        velH /= 100;
+                        IEntityVelocityUpdateS2CPacket iPacket = (IEntityVelocityUpdateS2CPacket) packet;
+                        iPacket.setVelocityX((int) (iPacket._getVelocityX() * velH));
+                        iPacket.setVelocityY((int) (iPacket._getVelocityY() * velV));
+                        iPacket.setVelocityZ((int) (iPacket._getVelocityZ() * velH));
                     }
                     case "Cancel" -> e.setCancelled(true);
                     case "Grim" -> {
@@ -119,26 +118,21 @@ public class Velocity extends Module {
                 }
             }
         }
-        if (e.getPacket() instanceof ExplosionS2CPacket packet && explosion.getValue()) {
+        if (e.getPacket() instanceof ExplosionS2CPacket && explosion.getValue()) {
+            IExplosionS2CPacket packet = (IExplosionS2CPacket) e.getPacket();
             switch (mode.getValue()) {
                 case "Normal" -> {
-                    if (explH == 0.0f && explV == 0.0f) {
-                        packet.playerVelocityX = 0;
-                        packet.playerVelocityY = 0;
-                        packet.playerVelocityZ = 0;
-                    } else {
-                        explV = explV / 100;
-                        explH = explH / 100;
-                        packet.playerVelocityX *= explH;
-                        packet.playerVelocityY *= explV;
-                        packet.playerVelocityZ *= explH;
-                    }
+                    explV = explV / 100;
+                    explH = explH / 100;
+                    packet.setPlayerVelocityX(packet._getPlayerVelocityX() * explH);
+                    packet.setPlayerVelocityY(packet._getPlayerVelocityY() * explV);
+                    packet.setPlayerVelocityZ(packet._getPlayerVelocityZ() * explH);
                 }
                 case "Cancel" -> e.setCancelled(true);
                 case "Grim" -> {
-                    packet.playerVelocityX = 0;
-                    packet.playerVelocityY = 0;
-                    packet.playerVelocityZ = 0;
+                    packet.setPlayerVelocityX(0);
+                    packet.setPlayerVelocityY(0);
+                    packet.setPlayerVelocityZ(0);
                     flag = true;
                 }
             }

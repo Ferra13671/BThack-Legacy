@@ -4,7 +4,7 @@ import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
-import com.ferra13671.BThack.mixins.accessor.IEntity;
+import com.ferra13671.BThack.mixins.accessor.entity.IEntity;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 
 public class ElytraFastClose extends Module {

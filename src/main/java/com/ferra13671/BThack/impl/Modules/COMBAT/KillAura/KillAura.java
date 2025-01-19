@@ -16,7 +16,8 @@ import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.Utils.Modules.AimBotUtils;
 import com.ferra13671.BThack.api.Utils.Modules.KillAuraUtils;
 import com.ferra13671.BThack.api.Utils.Ticker;
-import com.ferra13671.BThack.mixins.accessor.IPlayerInputC2SPacket;
+import com.ferra13671.BThack.mixins.accessor.packet.IPlayerInputC2SPacket;
+import com.ferra13671.BThack.mixins.accessor.packet.IPlayerMoveC2SPacket;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -158,9 +159,10 @@ public class KillAura extends Module {
                             IPlayerInputC2SPacket packet = (IPlayerInputC2SPacket) e.getPacket();
                             changeInput(packet);
                         }
-                        if (e.getPacket() instanceof PlayerMoveC2SPacket packet) {
-                            packet.yaw = rotations[0];
-                            packet.pitch = rotations[1];
+                        if (e.getPacket() instanceof PlayerMoveC2SPacket) {
+                            IPlayerMoveC2SPacket packet = (IPlayerMoveC2SPacket) e.getPacket();
+                            packet.setYaw(rotations[0]);
+                            packet.setPitch(rotations[1]);
                         }
                         rotations = null;
                     }

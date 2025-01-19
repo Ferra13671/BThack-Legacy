@@ -5,6 +5,7 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetti
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.Setting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
+import com.ferra13671.BThack.mixins.accessor.packet.IPlayerMoveC2SPacket;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
@@ -35,8 +36,8 @@ public class AntiHunger extends Module {
     public void onPacket(PacketEvent.Send e) {
 
         if (e.getPacket() instanceof PlayerMoveC2SPacket) {
-            PlayerMoveC2SPacket packet = (PlayerMoveC2SPacket) e.getPacket();
-            packet.onGround = (mc.player.fallDistance <= 0 || mc.interactionManager.isBreakingBlock()) && mc.player.isFallFlying();
+            IPlayerMoveC2SPacket packet = (IPlayerMoveC2SPacket) e.getPacket();
+            packet.setOnGround((mc.player.fallDistance <= 0 || mc.interactionManager.isBreakingBlock()) && mc.player.isFallFlying());
         }
 
         if (e.getPacket() instanceof ClientCommandC2SPacket) {

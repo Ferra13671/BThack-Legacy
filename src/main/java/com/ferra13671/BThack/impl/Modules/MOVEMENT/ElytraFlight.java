@@ -20,9 +20,10 @@ import com.ferra13671.BThack.api.Utils.Grim.GrimUtils;
 import com.ferra13671.BThack.api.Utils.PlayerUtils;
 import com.ferra13671.BThack.api.Utils.Ticker;
 import com.ferra13671.BThack.impl.Modules.PLAYER.AutoFirework;
-import com.ferra13671.BThack.mixins.accessor.IEntity;
-import com.ferra13671.BThack.mixins.accessor.ILivingEntity;
-import com.ferra13671.BThack.mixins.accessor.IPlayerPositionLookS2CPacket;
+import com.ferra13671.BThack.mixins.accessor.entity.IEntity;
+import com.ferra13671.BThack.mixins.accessor.entity.ILivingEntity;
+import com.ferra13671.BThack.mixins.accessor.packet.IPlayerMoveC2SPacket;
+import com.ferra13671.BThack.mixins.accessor.packet.IPlayerPositionLookS2CPacket;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.client.input.Input;
 import net.minecraft.item.ItemStack;
@@ -725,7 +726,7 @@ public class ElytraFlight extends Module {
         if (e.getPacket() instanceof PlayerMoveC2SPacket packet) {
             if (stopMode.getValue().equals("Glide") || stopMode.getValue().equals("Jitter")) {
                 if (onGround.getValue() && !isMoving()) {
-                    packet.onGround = true;
+                    ((IPlayerMoveC2SPacket) packet).setOnGround(true);
                 }
             }
         }

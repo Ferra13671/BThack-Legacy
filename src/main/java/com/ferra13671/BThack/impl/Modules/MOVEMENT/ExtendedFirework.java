@@ -9,7 +9,7 @@ import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.Grim.GrimFreezeUtils;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.Utils.Ticker;
-import com.ferra13671.BThack.mixins.accessor.IFireworkRocketEntity;
+import com.ferra13671.BThack.mixins.accessor.entity.IFireworkRocketEntity;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.entity.projectile.FireworkRocketEntity;
 import net.minecraft.network.packet.c2s.common.CommonPongC2SPacket;

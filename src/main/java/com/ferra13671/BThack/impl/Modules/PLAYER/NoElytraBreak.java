@@ -7,7 +7,7 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSettin
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.Utils.Ticker;
-import com.ferra13671.BThack.mixins.accessor.IEntity;
+import com.ferra13671.BThack.mixins.accessor.entity.IEntity;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket;

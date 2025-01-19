@@ -7,6 +7,7 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSettin
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.Utils.Modules.StrafeUtils;
+import com.ferra13671.BThack.mixins.accessor.packet.IPlayerMoveC2SPacket;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 import net.minecraft.util.math.Vec3d;
@@ -56,7 +57,7 @@ public class Fly extends Module {
     @SuppressWarnings("unused")
     public void onPacket(PacketEvent.Send e) {
         if (e.getPacket() instanceof PlayerMoveC2SPacket packet) {
-            packet.onGround = true;
+            ((IPlayerMoveC2SPacket) packet).setOnGround(true);
         }
     }
 

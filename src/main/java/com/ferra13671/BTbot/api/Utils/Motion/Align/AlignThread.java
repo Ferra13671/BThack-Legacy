@@ -12,6 +12,7 @@ import com.ferra13671.BThack.api.Managers.managers.Thread.BThackThread;
 import com.ferra13671.BThack.api.Managers.managers.Thread.ThreadClosedException;
 import com.ferra13671.BThack.api.Utils.Grim.GrimUtils;
 import com.ferra13671.BThack.api.Utils.Modules.AimBotUtils;
+import com.ferra13671.BThack.mixins.accessor.packet.IPlayerMoveC2SPacket;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.network.packet.c2s.play.PlayerInputC2SPacket;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
@@ -74,7 +75,7 @@ public class AlignThread extends BThackThread implements Mc {
     public void onPacketSend(PacketEvent.Send e) {
         if (yaw == -99999999) return;
         if (e.getPacket() instanceof PlayerMoveC2SPacket packet) {
-            packet.yaw = yaw;
+            ((IPlayerMoveC2SPacket) packet).setYaw(yaw);
         }
     }
 
