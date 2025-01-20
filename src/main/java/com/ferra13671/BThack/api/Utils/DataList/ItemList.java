@@ -1,12 +1,15 @@
 package com.ferra13671.BThack.api.Utils.DataList;
 
-import com.ferra13671.BThack.Core.FileSystem.ConfigSystem.ConfigUtils;
+import com.ferra13671.BThack.Core.FileSystem.JsonUtils;
 import com.ferra13671.BThack.api.Managers.managers.Command.Arguments;
 import com.ferra13671.BThack.api.Utils.ChatUtils;
 import com.ferra13671.BThack.api.Utils.DataList.Commands.AbstractDataListCommand;
 import com.ferra13671.BThack.api.Utils.DataList.Commands.EditDataListCommand;
 import com.ferra13671.BThack.api.Utils.ItemUtils;
 import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.minecraft.command.CommandSource;
 import net.minecraft.item.Item;
@@ -17,7 +20,7 @@ import java.io.IOException;
 public class ItemList extends DataList<Item, Item> {
 
     public ItemList(String descName, String alias, String txtName) {
-        super(descName, txtName);
+        super(txtName);
         initEditDataListCommand(new EditItemListCommand("lang.command.ListItem.description", descName, alias, this));
         initAbstractDataListCommand(new AbstractDataListCommand("lang.command.ListItem.description", "lang.command.ItemList.message", descName, alias) {
             @Override
@@ -27,26 +30,29 @@ public class ItemList extends DataList<Item, Item> {
         });
     }
 
-    public void saveInFile() throws IOException {
-        ConfigUtils.saveInTxt(txtName, editDataListCommand.descName, writer -> {
-            for (String itemName : valueNames) {
-                try {
-                    writer.write(itemName + System.lineSeparator());
-                } catch (IOException ignored) {}
-            }
-        });
+    @Override
+    protected void save(JsonObject jsonObject) {
+        JsonArray jsonList = new JsonArray();
+        valueNames.forEach(value -> jsonList.add(new JsonPrimitive(value)));
+        jsonObject.add("values", jsonList);
     }
 
-    public void loadFromFile() throws IOException {
-        ConfigUtils.loadFromTxt(txtName, editDataListCommand.descName, line -> {
-            Item item = ItemUtils.getItemFromName(line);
-            if (item != null) {
-                values.add(item);
-                valueNames.add(line);
-            }
-        });
+    @Override
+    protected void load(JsonObject jsonObject) {
+        if (!JsonUtils._null(jsonObject, "values")) {
+            JsonArray jsonList = jsonObject.get("values").getAsJsonArray();
+            jsonList.asList().forEach(jsonElement -> {
+                String value = jsonElement.getAsString();
+                Item item = ItemUtils.getItemFromName(value);
+                if (item != null) {
+                    values.add(item);
+                    valueNames.add(value);
+                }
+            });
+        }
     }
 
+    @Override
     public void addToList(Item item) {
         if (!values.contains(item)) {
             values.add(item);
@@ -60,6 +66,7 @@ public class ItemList extends DataList<Item, Item> {
         }
     }
 
+    @Override
     public void removeFromList(Item item) {
         if (values.contains(item)) {
             values.remove(item);
@@ -73,6 +80,7 @@ public class ItemList extends DataList<Item, Item> {
         }
     }
 
+    @Override
     public void clearList() {
         values.clear();
         valueNames.clear();
@@ -82,6 +90,7 @@ public class ItemList extends DataList<Item, Item> {
         ChatUtils.sendMessage(Formatting.AQUA + String.format(LanguageSystem.translate("lang.command.List.listCleared"), editDataListCommand.descName));
     }
 
+    @Override
     public void sendAllList() {
         for (String itemName : valueNames) {
             ChatUtils.sendMessage(itemName);

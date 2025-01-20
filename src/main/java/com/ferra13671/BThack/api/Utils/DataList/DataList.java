@@ -1,8 +1,10 @@
 package com.ferra13671.BThack.api.Utils.DataList;
 
+import com.ferra13671.BThack.Core.FileSystem.ConfigSystem.ConfigUtils;
 import com.ferra13671.BThack.Core.FileSystem.FileSystem;
 import com.ferra13671.BThack.api.Utils.DataList.Commands.AbstractDataListCommand;
 import com.ferra13671.BThack.api.Utils.DataList.Commands.EditDataListCommand;
+import com.google.gson.JsonObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,11 +18,10 @@ public abstract class DataList<T, KEY> {
     public final ArrayList<T> values = new ArrayList<>();
     public final ArrayList<String> valueNames = new ArrayList<>();
 
-    public DataList(String descName, String txtName) {
+    public DataList(String txtName) {
         this.txtName = txtName;
         try {
-            FileSystem.registerFolder(descName, "");
-            FileSystem.registerFile(txtName, descName, "txt");
+            FileSystem.registerFile(txtName, "", "json");
         } catch (Exception ignored) {}
     }
 
@@ -32,9 +33,17 @@ public abstract class DataList<T, KEY> {
         if (this.abstractDataListCommand == null) this.abstractDataListCommand = abstractDataListCommand;
     }
 
-    public abstract void saveInFile() throws IOException;
+    public final void saveInFile() throws IOException {
+        ConfigUtils.saveInJson(txtName, "", this::save);
+    }
 
-    public abstract void loadFromFile() throws IOException;
+    public final void loadFromFile() throws IOException {
+        ConfigUtils.loadFromJson(txtName, "", this::load, () -> {});
+    }
+
+    protected abstract void save(JsonObject jsonObject);
+
+    protected abstract void load(JsonObject jsonObject);
 
     public abstract void addToList(KEY key);
 

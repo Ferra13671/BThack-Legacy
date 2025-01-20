@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.api.Utils.DataList;
 
 import com.ferra13671.BThack.Core.Client.ModuleList;
-import com.ferra13671.BThack.Core.FileSystem.ConfigSystem.ConfigUtils;
+import com.ferra13671.BThack.Core.FileSystem.JsonUtils;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Plugin.Plugin;
@@ -9,6 +9,8 @@ import com.ferra13671.BThack.api.Plugin.PluginSystem;
 import com.ferra13671.BThack.api.Utils.BlockUtils;
 import com.ferra13671.BThack.api.Utils.ChatUtils;
 import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import net.minecraft.block.Block;
 import net.minecraft.util.Formatting;
 
@@ -20,26 +22,20 @@ import java.util.function.Supplier;
 public class DataLists implements Mc {
     //Block Lists
     private static final Supplier<BlockList> SEARCH = () -> new BlockList("Search", "search", "SearchBlocks") {
-        @Override
-        public void saveInFile() throws IOException {
-            ConfigUtils.saveInTxt("SearchBlocks", "Search", writer -> {
-                for (String blockName : get("Search", BlockList.class).valueNames) {
-                    try {
-                        writer.write(blockName + System.lineSeparator());
-                    } catch (IOException ignored) {}
-                }
-            });
-        }
 
         @Override
-        public void loadFromFile() throws IOException {
-            ConfigUtils.loadFromTxt("SearchBlocks", "Search", line -> {
-                Block block = BlockUtils.getBlockFromNameOrID(line);
-                if (block != null) {
-                    Managers.BLOCK_SEARCH_MANAGER.addBlockToSearch(block);
-                    get("Search", BlockList.class).valueNames.add(line);
-                }
-            });
+        protected void load(JsonObject jsonObject) {
+            if (!JsonUtils._null(jsonObject, "values")) {
+                JsonArray jsonList = jsonObject.get("values").getAsJsonArray();
+                jsonList.asList().forEach(jsonElement -> {
+                    String value = jsonElement.getAsString();
+                    Block block = BlockUtils.getBlockFromNameOrID(value);
+                    if (block != null) {
+                        Managers.BLOCK_SEARCH_MANAGER.addBlockToSearch(block);
+                        valueNames.add(value);
+                    }
+                });
+            }
         }
 
         @Override
