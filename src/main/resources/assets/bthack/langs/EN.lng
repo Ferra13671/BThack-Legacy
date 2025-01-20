@@ -168,6 +168,7 @@
 "lang.module.NoRender": Disables rendering of some elements.
 "lang.module.NoSwing": Cancels server or client hand swing animation.
 "lang.module.PasswordHider": Hides your password when entering a command in chat.
+"lang.module.PhaseESP": Highlights blocks that can be phase.
 "lang.module.Radar": A radar that displays entities that are near you.
 "lang.module.Search": Highlights the needed blocks.
 "lang.module.Tooltips": Shows the contents of the shulker.
