@@ -1,13 +1,13 @@
 package com.ferra13671.BThack.api.Managers.managers.Setting;
 
-import com.ferra13671.BThack.api.Managers.Manager;
+import com.ferra13671.BThack.api.Utils.Initializable;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.Setting;
 import com.ferra13671.BThack.api.Module.Module;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class SettingsManager implements Manager {
+public class SettingsManager implements Initializable {
 	private final ArrayList<Setting> moduleSettings = new ArrayList<>();
 
 	@Override

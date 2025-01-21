@@ -6,7 +6,7 @@ import com.ferra13671.BThack.api.Events.Entity.EntityDeathEvent;
 import com.ferra13671.BThack.api.Events.Entity.TotemPopEvent;
 import com.ferra13671.BThack.api.Events.PacketEvent;
 import com.ferra13671.BThack.api.Interfaces.Mc;
-import com.ferra13671.BThack.api.Managers.Manager;
+import com.ferra13671.BThack.api.Utils.Initializable;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityStatuses;
@@ -17,7 +17,7 @@ import net.minecraft.network.packet.s2c.play.EntityStatusS2CPacket;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class TotemPopManager implements Manager, Mc {
+public class TotemPopManager implements Initializable, Mc {
     private final ConcurrentHashMap<UUID, Integer> playerInfos = new ConcurrentHashMap<>();
 
     @Override

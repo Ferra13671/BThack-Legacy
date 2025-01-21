@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.impl.Modules.PLAYER.Spammer;
 
-import com.ferra13671.BTbot.api.Utils.Generate.AntiSpamGenerate;
-import com.ferra13671.BTbot.api.Utils.Generate.GenerateNumber;
+import com.ferra13671.BTbot.api.Utils.Generate.StringGenerator;
+import com.ferra13671.BTbot.api.Utils.Generate.NumberGenerator;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
@@ -110,7 +110,7 @@ public class Spammer extends Module {
                                 break;
                             case "Random":
                                 readTXT.read();
-                                int randomValue = GenerateNumber.generateInt(1, readTXT.value);
+                                int randomValue = NumberGenerator.generateInt(1, readTXT.value);
                                 if (randomValue == 1) {
                                     String tempLine;
                                     if (antiSpam.getValue()) {
@@ -143,9 +143,9 @@ public class Spammer extends Module {
 
                     if (delaySpread.getValue()) {
                         if (!random.nextBoolean()) {
-                            a = (int) (a * GenerateNumber.generateFloat(1, 1f + (float) spreadRange.getValue()));
+                            a = (int) (a * NumberGenerator.generateFloat(1, 1f + (float) spreadRange.getValue()));
                         } else {
-                            a = (int) (a * GenerateNumber.generateFloat((float) spreadRange.getValue(), 1));
+                            a = (int) (a * NumberGenerator.generateFloat((float) spreadRange.getValue(), 1));
                         }
                     }
 
@@ -160,7 +160,7 @@ public class Spammer extends Module {
     }
 
     private String genAntiSpam() {
-        return AntiSpamGenerate.generateNextString(
+        return StringGenerator.generateNextString(
                 (int) aSpamLength.getValue(),
                 aSpamCaps.getValue(),
                 aSpamNumbers.getValue(),

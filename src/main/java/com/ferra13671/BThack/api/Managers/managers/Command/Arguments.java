@@ -1,10 +1,7 @@
 package com.ferra13671.BThack.api.Managers.managers.Command;
 
 import com.ferra13671.BThack.Core.Client.Client;
-import com.ferra13671.BThack.api.Managers.managers.Command.CustomArguments.ModeArgument;
-import com.ferra13671.BThack.api.Managers.managers.Command.CustomArguments.PacketListPacketArgument;
-import com.ferra13671.BThack.api.Managers.managers.Command.CustomArguments.SocialAddArgument;
-import com.ferra13671.BThack.api.Managers.managers.Command.CustomArguments.SocialRemoveArgument;
+import com.ferra13671.BThack.api.Managers.managers.Command.CustomArguments.*;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Social.Clans.Clan;
 import com.ferra13671.BThack.api.Social.Clans.ClanManager;
@@ -329,6 +326,17 @@ public class Arguments {
     };
     public static Supplier<ArgumentType<String>> PACKET_LIST_PACKET(PacketList packetList) {
         return () -> new PacketListPacketArgument(packetList);
+    }
+    public static Supplier<ArgumentType<String>> FILE(String folderPath) {
+        return () -> new FileArgument(folderPath);
+    }
+    public static Supplier<ArgumentType<String>> FONT_FILE(String folderPath) {
+        return () -> new FileArgument(folderPath) {
+            @Override
+            public boolean checkFileName(String name) {
+                return name.endsWith(".ttf");
+            }
+        };
     }
 
 

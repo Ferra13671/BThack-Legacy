@@ -1,6 +1,7 @@
 package com.ferra13671.BThack.impl.HudComponents;
 
 
+import com.ferra13671.BThack.Core.Render.Font.FontUtils;
 import com.ferra13671.BThack.api.HudComponent.HudComponent;
 import com.ferra13671.BThack.api.Utils.PlayerUtils;
 import net.minecraft.util.Formatting;
@@ -47,7 +48,7 @@ public class CoordinatesComponent extends HudComponent {
         xyz1 = "XYZ: " + Formatting.WHITE + overWorldX + " " + Math.round(mc.player.getY()) + " " + overWorldZ;
         xyz2 = "Nether: " + Formatting.WHITE + netherX + " " + Math.round(mc.player.getY()) + " " + netherZ;
 
-        this.width = Math.max(mc.textRenderer.getWidth(xyz1), mc.textRenderer.getWidth(xyz2));
-        this.height = mc.textRenderer.fontHeight * 2.2f;
+        this.width = Math.max(FontUtils.getTextWidth(xyz1), FontUtils.getTextWidth(xyz2));
+        this.height = FontUtils.getTextHeight(xyz1) * 2.2f;
     }
 }

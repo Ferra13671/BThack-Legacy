@@ -4,6 +4,7 @@
 "lang.module.ChatNotifications": Позволяет клиенту отправлять различные сообщения в чат.
 "lang.module.ClickGui": Гуи с выбором и настройкой модулей.
 "lang.module.ClientSettings": Различные настройки клиента.
+"lang.module.CustomFont": Позволяет BThack рендерить пользовательский шрифт.
 "lang.module.DiscordRPC": Вы получаете активность BThack.
 "lang.module.FPSReducer": Ограничивает фпс если игра не сфокусирована.
 "lang.module.HUD": Включение и настройка худ модулей.
@@ -246,10 +247,10 @@
 "lang.argument.ClientPacket.exception": '%s' не является пакетом клиент->сервер.
 "lang.argument.ServerPacket.exception": '%s' не является пакетом сервер->клиент.
 "lang.argument.PacketListPacket.exception": Пакет '%s' отсутствует в этом списке пакетов.
+"lang.argument.File.exception": Файл '%s' не найден или не соответствует условиям.
 
 
 //Commands
-"lang.command.invalidargs": Неверные аргументы команды! Пожалуйста, попробуйте —
 "lang.command.ClanList.description": Показывает весь список кланов, а также их участников.
 "lang.command.Help.description": Перечисляет все существующие команды BThack.
 "lang.command.PluginList.description": Показывает весь список плагинов.
@@ -282,6 +283,7 @@
 "lang.command.AutoAuth.description": Добавляет/удаляет пароль для определенного ника.
 "lang.command.Module.description": Выполняет определенное действие над модулем.
 "lang.command.CordsCopy.description": Копирует координаты игрока.
+"lang.command.CustomFont.description": Позволяет выбрать пользовательский шрифт из папки или установить шрифт по умолчанию.
 
 
 "lang.command.ClanList.message2":   Участники:

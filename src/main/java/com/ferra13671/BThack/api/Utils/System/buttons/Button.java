@@ -1,6 +1,7 @@
 package com.ferra13671.BThack.api.Utils.System.buttons;
 
 import com.ferra13671.BThack.Core.Render.BThackRender;
+import com.ferra13671.BThack.Core.Render.Font.FontUtils;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Animation.Animation;
 import com.ferra13671.BThack.api.Animation.Easing;
@@ -60,7 +61,7 @@ public class Button implements Mc {
         drawPlate(animationDelta);
         if (outline && !selected)
             BThackRender.drawOutlineRect(getCenterX() - getWidth() - (animationDelta * 2), getCenterY() - getHeight() - (animationDelta * 2), getCenterX() + getWidth() + (animationDelta * 2), getCenterY() + getHeight() + (animationDelta * 2), 1, -1);
-        BThackRender.drawString(getText(), (getCenterX() - (mc.textRenderer.getWidth(getText()) / 2f)), (getCenterY() - (mc.textRenderer.fontHeight / 2f)), -1);
+        BThackRender.drawString(getText(), (getCenterX() - (FontUtils.getTextWidth(getText()) / 2f)), (getCenterY() - (FontUtils.getTextHeight(getText()) / 2f)), -1);
 
         if (selected)
             BThackRender.drawOutlineRect(getCenterX() - getWidth(), getCenterY() - getHeight(), getCenterX() + getWidth(), getCenterY() + getHeight(), 1, ColorUtils.rainbow(100));

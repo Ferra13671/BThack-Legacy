@@ -4,13 +4,13 @@ import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Events.Entity.EntityDeathEvent;
 import com.ferra13671.BThack.api.Interfaces.Mc;
-import com.ferra13671.BThack.api.Managers.Manager;
+import com.ferra13671.BThack.api.Utils.Initializable;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.Ticker;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.entity.LivingEntity;
 
-public class EntityDeathManager implements Manager, Mc {
+public class EntityDeathManager implements Initializable, Mc {
 
     public EntityDeathManager() {
         delayTicker.reset();

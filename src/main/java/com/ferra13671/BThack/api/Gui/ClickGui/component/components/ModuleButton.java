@@ -3,6 +3,7 @@ package com.ferra13671.BThack.api.Gui.ClickGui.component.components;
 import com.ferra13671.BThack.Core.Client.Client;
 import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.Core.Render.BThackRender;
+import com.ferra13671.BThack.Core.Render.Font.FontUtils;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Animation.Animation;
 import com.ferra13671.BThack.api.Animation.Easing;
@@ -110,7 +111,7 @@ public class ModuleButton extends Component implements Mc {
 		if (!module.isEnabled() || toggleAnimation.getEase() < 1) drawNormalBackground(alpha);
 		if (module.isEnabled() || toggleAnimation.getEase() < 1) drawEnabledBackground(alpha);
 
-		BThackRender.drawString(module.getName(), (parent.getX() + 5), (parent.getY() + offset + 2), getModuleTextColor());
+		BThackRender.drawString(module.getName(), (parent.getX() + 5), (parent.getY() + offset + (BUTTON_HEIGHT / 2f) - (FontUtils.getTextHeight(module.getName())) / 2f), getModuleTextColor());
 
 		if (!settings.isEmpty()) {
 			BThackRender.drawString(open ? "-" : "+", (parent.getX() + parent.getWidth() - 10), (parent.getY() + offset + 2), new Color(Client.clientInfo.getColorTheme().moduleDisabledColor()).hashCode());
@@ -176,34 +177,27 @@ public class ModuleButton extends Component implements Mc {
 		if (isHovered)
 			BThackRender.drawRect(parent.getX(), parent.getY() + offset, parent.getX() + parent.getWidth(), parent.getY() + BUTTON_HEIGHT + offset,
 					ColorUtils.integrateAlpha(
-							new Color(Client.clientInfo.getColorTheme().backgroundFontHoveredColor()).brighter().brighter().hashCode()
+							new Color(Client.clientInfo.getColorTheme().backgroundHoveredColor()).brighter().brighter().hashCode()
 							, alpha
 					)
 			);
-		/*
-		BThackRender.drawRect(parent.getX(), parent.getY() + offset, parent.getX() + parent.getWidth(), parent.getY() + BUTTON_HEIGHT + offset,
-				isHovered ?
-						ColorUtils.integrateAlpha(
-								ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().backgroundFontHoveredColor())
-								, alpha
-						)
-						:
-						ColorUtils.integrateAlpha(
-								ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().backgroundFontColor())
-								, alpha
-						)
-		);
-		 */
+		else
+			BThackRender.drawRect(parent.getX(), parent.getY() + offset, parent.getX() + parent.getWidth(), parent.getY() + BUTTON_HEIGHT + offset,
+					ColorUtils.integrateAlpha(
+							new Color(Client.clientInfo.getColorTheme().backgroundColor()).darker().darker().hashCode()
+							, alpha
+					)
+			);
 		if (ModuleList.clickGui.moduleOutline.getValue()) {
 			BThackRender.drawOutlineRect(parent.getX(), parent.getY() + offset, parent.getX() + parent.getWidth(), parent.getY() + BUTTON_HEIGHT + offset, 1,
 					isHovered ?
 							ColorUtils.integrateAlpha(
-									new Color(Client.clientInfo.getColorTheme().backgroundFontHoveredColor()).darker().hashCode()
+									new Color(Client.clientInfo.getColorTheme().backgroundHoveredColor()).darker().hashCode()
 									, alpha
 							)
 							:
 							ColorUtils.integrateAlpha(
-									new Color(Client.clientInfo.getColorTheme().backgroundFontColor()).darker().hashCode()
+									new Color(Client.clientInfo.getColorTheme().backgroundColor()).darker().hashCode()
 									, alpha
 							)
 			);

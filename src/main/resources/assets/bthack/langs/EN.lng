@@ -5,6 +5,7 @@
 "lang.module.ChatNotifications": Allows the client to send various messages to the chat.
 "lang.module.ClickGui": Gui with selection and configuration of modules.
 "lang.module.ClientSettings": Various client settings.
+"lang.module.CustomFont": Allows BThack to render a custom font.
 "lang.module.DiscordRPC": You get BThack activity.
 "lang.module.FPSReducer": Limits fps if the game is unfocused.
 "lang.module.HUD": Enabling and configuring HUD modules.
@@ -247,10 +248,10 @@
 "lang.argument.ClientPacket.exception": '%s' is not a client->server packet.
 "lang.argument.ServerPacket.exception": '%s' is not a server->client packet.
 "lang.argument.PacketListPacket.exception": Packet '%s' is not in this packet list.
+"lang.argument.File.exception": File '%s' was not found or does not meet the conditions.
 
 
 //Commands
-"lang.command.invalidargs": Invalid command arguments! Please try —
 "lang.command.ClanList.description": Shows the entire list of clans, as well as their members.
 "lang.command.Help.description": Lists all existing BThack commands.
 "lang.command.PluginList.description": Shows the entire list of plugins.
@@ -283,6 +284,7 @@
 "lang.command.AutoAuth.description": Adds/removes a password for a specific nickname.
 "lang.command.Module.description": Performs a specific action on a module.
 "lang.command.CordsCopy.description": Copies the player's coordinates.
+"lang.command.CustomFont.description": Allows you to select a custom font from a folder or set the default font.
 
 
 "lang.command.ClanList.message2":   Members:

@@ -31,6 +31,7 @@ public final class ModuleList {
     public static ChatNotifications chatNotifications;
     public static ClickGui clickGui;
     public static ClientSettings clientSettings;
+    public static CustomFont customFont;
     public static DiscordRPC discordRPC;
     public static FPSReducer fpsReducer;
     public static HUD HUD;
@@ -226,6 +227,7 @@ public final class ModuleList {
         chatNotifications = register(new ChatNotifications());
         clickGui = register(new ClickGui());
         clientSettings = register(new ClientSettings());
+        customFont = register(new CustomFont());
         discordRPC = register(new DiscordRPC());
         fpsReducer = register(new FPSReducer());
         HUD = register(new HUD());

@@ -103,7 +103,8 @@ public class SelectWallpaperScreen extends BThackScreen {
             confirmButton.mouseClicked((int) mouseX, (int) mouseY, mouseButton);
             BThackMainMenuScreen.mainMenuTexture = preSelectWallpaper.texture();
             try {
-                ConfigSystem.saveWallpaper(preSelectWallpaper.filename());
+                Client.clientInfo.setWallpaper(preSelectWallpaper.filename());
+                ConfigSystem.saveClientInfo();
             } catch (IOException ignored) {}
         }
 

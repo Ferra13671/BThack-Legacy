@@ -2,11 +2,11 @@ package com.ferra13671.BThack.api.Managers.managers.Memory;
 
 import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.api.Interfaces.Mc;
-import com.ferra13671.BThack.api.Managers.Manager;
+import com.ferra13671.BThack.api.Utils.Initializable;
 import com.ferra13671.BThack.api.Utils.ChatUtils;
 import net.minecraft.util.Formatting;
 
-public class MemoryManager implements Manager, Mc {
+public class MemoryManager implements Initializable, Mc {
 
    @Override
    public void init() {

@@ -2,7 +2,7 @@ package com.ferra13671.BThack.api.Managers.managers;
 
 import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.api.Interfaces.Mc;
-import com.ferra13671.BThack.api.Managers.Manager;
+import com.ferra13671.BThack.api.Utils.Initializable;
 import com.ferra13671.BThack.api.Managers.managers.Thread.ThreadManager;
 import com.ferra13671.BThack.api.Module.Module;
 import net.minecraft.block.Block;
@@ -14,7 +14,7 @@ import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Predicate;
 
-public class BlockSearchManager implements Manager, Mc {
+public class BlockSearchManager implements Initializable, Mc {
 
     private final HashSet<Block> searchBlocks = new HashSet<>();
     private final CopyOnWriteArrayList<BlockPos> results = new CopyOnWriteArrayList<>();

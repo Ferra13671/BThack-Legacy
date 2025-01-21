@@ -34,6 +34,14 @@ public final class MathUtils {
         return bigDecimal.doubleValue();
     }
 
+    public static double roundToDecimal(double n, int point) {
+        if (point == 0) {
+            return Math.floor(n);
+        }
+        double factor = Math.pow(10, point);
+        return Math.round(n * factor) / factor;
+    }
+
     public static double getDistance(Vec3d from, Vec3d to) {
         float f = (float)(from.x - to.x);
         float g = (float)(from.y - to.y);

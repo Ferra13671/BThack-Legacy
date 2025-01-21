@@ -2,12 +2,12 @@ package com.ferra13671.BThack.api.Managers.managers;
 
 import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.api.Events.PacketEvent;
-import com.ferra13671.BThack.api.Managers.Manager;
+import com.ferra13671.BThack.api.Utils.Initializable;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.network.packet.s2c.play.WorldTimeUpdateS2CPacket;
 import net.minecraft.util.math.MathHelper;
 
-public class TPSManager implements Manager {
+public class TPSManager implements Initializable {
     private long prevTime;
     private final float[] ticks = new float[20];
     private int currentTick;

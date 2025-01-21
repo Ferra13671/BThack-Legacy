@@ -30,16 +30,16 @@ public final class FileSystem {
         registerFolder("DefaultConfig", "/ActionBot");
         registerFolder("Wallpapers", "");
         registerFolder("Configs", "");
+        registerFolder("Fonts", "");
         registerFile("AutoAuthPasswords", "", "json");
         registerFile("VersionInfo", "", "json");
-        registerFile("Prefix", "", "txt");
         registerFile("Friends", "Social/Friends", "txt");
         registerFile("Enemies", "Social/Enemies", "txt");
         registerFile("Spammer", "Spammer", "txt");
         registerFile("ConfigInfo", "ActionBot", "txt");
-        registerFile("WallpaperInfo", "Wallpapers", "txt");
         registerFile("CurrentConfig", "Modules", "txt");
         registerFile("Frames", "", "json");
+        registerFile("ClientInfo", "", "json");
     }
 
     public static void registerFile(String name, String path, String typeFile) throws IOException {
@@ -78,9 +78,9 @@ public final class FileSystem {
 
         colourThemeObject.add("Name", new JsonPrimitive("TutorialTheme"));
 
-        coloursObject.add("fontColor", new JsonPrimitive(0x191CFF));
-        coloursObject.add("backgroundFontColor", new JsonPrimitive(0xFF111111));
-        coloursObject.add("backgroundFontHoveredColor", new JsonPrimitive(0xFF222222));
+        coloursObject.add("color", new JsonPrimitive(0x191CFF));
+        coloursObject.add("backgroundColor", new JsonPrimitive(0xFF111111));
+        coloursObject.add("backgroundHoveredColor", new JsonPrimitive(0xFF222222));
         coloursObject.add("moduleEnabledColor", new JsonPrimitive(0x191CFF));
         coloursObject.add("moduleDisabledColor", new JsonPrimitive(0xFFFFFF));
         coloursObject.add("arrayListColor", new JsonPrimitive(0x191CFF));

@@ -1,8 +1,8 @@
 package com.ferra13671.BThack.api.Managers.managers;
 
-import com.ferra13671.BThack.api.Managers.Manager;
+import com.ferra13671.BThack.api.Utils.Initializable;
 
-public class TickManager implements Manager {
+public class TickManager implements Initializable {
     private float tickModifier = 1;
 
     public float getTickModifier() {

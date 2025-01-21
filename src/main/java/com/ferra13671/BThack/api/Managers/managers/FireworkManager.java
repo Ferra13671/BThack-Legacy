@@ -4,7 +4,7 @@ import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.api.Events.Entity.FireworkTickEvent;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Interfaces.Mc;
-import com.ferra13671.BThack.api.Managers.Manager;
+import com.ferra13671.BThack.api.Utils.Initializable;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.Ticker;
 import com.ferra13671.BThack.mixins.accessor.entity.IFireworkRocketEntity;
@@ -12,7 +12,7 @@ import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.projectile.FireworkRocketEntity;
 
-public class FireworkManager implements Manager, Mc {
+public class FireworkManager implements Initializable, Mc {
     private final Ticker lastClientUseFireworkTicker = new Ticker();
     public long lastFireWorkTick = 0;
 

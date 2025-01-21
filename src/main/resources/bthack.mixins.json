@@ -5,11 +5,11 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "MixinDecoderHandler",
+    "accessor.IPlayerInventory",
+    "accessor.IRenderTickCounter$Dynamic",
     "accessor.entity.IEntity",
     "accessor.entity.IFireworkRocketEntity",
     "accessor.entity.ILivingEntity",
-    "accessor.IPlayerInventory",
-    "accessor.IRenderTickCounter$Dynamic",
     "accessor.packet.IEntityVelocityUpdateS2CPacket",
     "accessor.packet.IExplosionS2CPacket",
     "accessor.packet.IPlayerInputC2SPacket",

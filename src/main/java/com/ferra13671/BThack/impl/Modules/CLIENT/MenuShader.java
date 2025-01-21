@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.impl.Modules.CLIENT;
 
-import com.ferra13671.BTbot.api.Utils.Generate.GenerateNumber;
+import com.ferra13671.BTbot.api.Utils.Generate.NumberGenerator;
 import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
@@ -61,7 +61,7 @@ public class MenuShader extends Module {
         if (!random.getValue()) {
             return MainMenuShaders.getShaders().get(shader.getValue().toUpperCase());
         } else {
-            int randomIShader = GenerateNumber.generateInt(0, MainMenuShaders.getShaders().size() - 1);
+            int randomIShader = NumberGenerator.generateInt(0, MainMenuShaders.getShaders().size() - 1);
             return MainMenuShaders.getShaders().get(shader.getOptions().get(randomIShader).toUpperCase());
         }
     }

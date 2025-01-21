@@ -6,7 +6,7 @@ import com.ferra13671.BThack.api.Events.PacketEvent;
 import com.ferra13671.BThack.api.Events.Player.PlayerTraverRotEvent;
 import com.ferra13671.BThack.api.Events.Player.VelocityUpdateEvent;
 import com.ferra13671.BThack.api.Interfaces.Mc;
-import com.ferra13671.BThack.api.Managers.Manager;
+import com.ferra13671.BThack.api.Utils.Initializable;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.Modules.AimBotUtils;
 import com.ferra13671.BThack.mixins.accessor.packet.IPlayerMoveC2SPacket;
@@ -18,7 +18,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class TravelChangeManager implements Manager, Mc {
+public class TravelChangeManager implements Initializable, Mc {
     /*
     TravelChangers priority:
 

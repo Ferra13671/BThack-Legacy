@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.api.Managers.managers.Build;
 
 import com.ferra13671.BThack.api.Interfaces.Mc;
-import com.ferra13671.BThack.api.Managers.Manager;
+import com.ferra13671.BThack.api.Utils.Initializable;
 import com.ferra13671.BThack.api.Utils.InventoryUtils;
 import com.ferra13671.BThack.api.Utils.MathUtils;
 import com.ferra13671.BThack.api.Utils.Modules.AimBotUtils;
@@ -24,7 +24,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
-public class BuildManager implements Manager, Mc {
+public class BuildManager implements Initializable, Mc {
     public static final Set<Block> ignoreBlocks = Sets.newHashSet(
             Blocks.AIR,
             Blocks.CAVE_AIR,

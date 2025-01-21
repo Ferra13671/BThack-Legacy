@@ -1,7 +1,7 @@
 package com.ferra13671.BTbot.impl.AntiAFK.Start;
 
 
-import com.ferra13671.BTbot.api.Utils.Generate.GenerateNumber;
+import com.ferra13671.BTbot.api.Utils.Generate.NumberGenerator;
 import com.ferra13671.BTbot.api.Utils.Motion.Goto.CollisionAction;
 import com.ferra13671.BTbot.impl.AntiAFK.Doing.ActivateHand;
 import com.ferra13671.BTbot.api.Utils.Motion.Goto.Goto;
@@ -22,7 +22,7 @@ public class StartAntiAFKThread extends Thread{
 
         reset();
 
-        byte a = (byte) GenerateNumber.generateInt(0,4);
+        byte a = (byte) NumberGenerator.generateInt(0,4);
         if (a == 0) {
             new Nothing().start();
         } else if (a == 1) {

@@ -2,6 +2,7 @@ package com.ferra13671.BThack.api.Gui.MainMenu;
 
 import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.Core.Render.BThackRender;
+import com.ferra13671.BThack.Core.Render.Font.FontUtils;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Utils.DesktopUtils;
 import com.ferra13671.BThack.api.Utils.System.BThackScreen;
@@ -45,7 +46,7 @@ public class OutdatedVersionScreen extends BThackScreen {
         BThackRender.drawVerticalGradientRect(0, 0, mc.getWindow().getScaledWidth(), mc.getWindow().getScaledHeight(), ColorUtils.TRANSPARENT, ColorUtils.fastRGBA(0,0,0, 240));
 
         BThackRender.drawCenteredString(String.format(LanguageSystem.translate("lang.screen.OutdatedVersion.message1"), BThack.instance.VERSION, BThack.instance.versionInfo.getNewVersion()), mc.getWindow().getScaledWidth() / 2f, mc.getWindow().getScaledHeight() / 2f - 50, -1);
-        BThackRender.drawCenteredString(LanguageSystem.translate("lang.screen.OutdatedVersion.message2"), mc.getWindow().getScaledWidth() / 2f, mc.getWindow().getScaledHeight() / 2f - 50 + mc.textRenderer.fontHeight + 5, -1);
+        BThackRender.drawCenteredString(LanguageSystem.translate("lang.screen.OutdatedVersion.message2"), mc.getWindow().getScaledWidth() / 2f, mc.getWindow().getScaledHeight() / 2f - 50 + FontUtils.getTextHeight(LanguageSystem.translate("lang.screen.OutdatedVersion.message1")) + 5, -1);
 
         super.render(context, mouseX, mouseY, partialTicks);
     }

@@ -5,13 +5,13 @@ import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Interfaces.Pc;
-import com.ferra13671.BThack.api.Managers.Manager;
+import com.ferra13671.BThack.api.Utils.Initializable;
 import com.ferra13671.BThack.api.Utils.Modules.AimBotUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 
-public class DestroyManager implements Manager, Mc, Pc {
+public class DestroyManager implements Initializable, Mc, Pc {
     public static boolean isDestroying = false;
     public static BlockPos currentBlockPos;
 

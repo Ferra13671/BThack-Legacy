@@ -11,6 +11,8 @@ public final class ClientInfo implements Mc {
     private final String cName = "BThack " + BThack.instance.VERSION;
     private final GLTexture defaultMainMenuImage = GLTexture.fromPath("assets/bthack/bthack_mainmenu.jpg", PathMode.INSIDEJAR, GLTexture.ColorMode.RGBA);
     private String chatPrefix = "$";
+    private String wallpaper = "default";
+    private String font = "default";
     private String currentConfigName = "";
     private ColorTheme colorTheme;
 
@@ -20,6 +22,7 @@ public final class ClientInfo implements Mc {
         name = "BThack " + BThack.instance.VERSION + " | " + mc.getSession().getUsername();
     }
 
+    //get
     public String getName() {
         return name;
     }
@@ -32,27 +35,44 @@ public final class ClientInfo implements Mc {
         return defaultMainMenuImage;
     }
 
-    public void setChatPrefix(String chatPrefix) {
-        this.chatPrefix = chatPrefix;
-    }
-
     public String getChatPrefix() {
         return chatPrefix;
-    }
-
-    public void setCurrentConfigName(String currentConfigName) {
-        this.currentConfigName = currentConfigName;
     }
 
     public String getCurrentConfigName() {
         return currentConfigName;
     }
 
+    public ColorTheme getColorTheme() {
+        return colorTheme;
+    }
+
+    public String getWallpaper() {
+        return wallpaper;
+    }
+
+    public String getFont() {
+        return font;
+    }
+
+    //set
+    public void setChatPrefix(String chatPrefix) {
+        this.chatPrefix = chatPrefix;
+    }
+
+    public void setCurrentConfigName(String currentConfigName) {
+        this.currentConfigName = currentConfigName;
+    }
+
     public void setColorTheme(ColorTheme colorTheme) {
         this.colorTheme = colorTheme;
     }
 
-    public ColorTheme getColorTheme() {
-        return colorTheme;
+    public void setWallpaper(String wallpaper) {
+        this.wallpaper = wallpaper;
+    }
+
+    public void setFont(String font) {
+        this.font = font;
     }
 }

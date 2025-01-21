@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.api.Managers.managers.Command;
 
 import com.ferra13671.BThack.BThack;
-import com.ferra13671.BThack.api.Managers.Manager;
+import com.ferra13671.BThack.api.Utils.Initializable;
 import com.ferra13671.BThack.api.Plugin.Plugin;
 import com.ferra13671.BThack.api.Plugin.PluginSystem;
 import com.ferra13671.BThack.api.Plugin.PluginUtils;
@@ -24,7 +24,7 @@ import net.minecraft.command.CommandSource;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommandManager implements Manager {
+public class CommandManager implements Initializable {
 
     private final CommandDispatcher<CommandSource> dispatcher = new CommandDispatcher<>();
     private final CommandSource source = new ClientCommandSource(null, MinecraftClient.getInstance());
@@ -64,6 +64,7 @@ public class CommandManager implements Manager {
         register(new AutoAuthCommand());
         register(new HelpCommand());
         register(new CordsCopyCommand());
+        register(new CustomFontCommand());
 
         register(new HClipCommand());
         register(new VClipCommand());

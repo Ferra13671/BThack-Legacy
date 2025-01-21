@@ -44,8 +44,6 @@ public class HUD extends Module {
         );
     }
 
-    public static final GLTexture bthack_logo = GLTexture.fromPath("assets/bthack/bthacklogo.png", PathMode.INSIDEJAR, GLTexture.ColorMode.RGBA);
-
 
     private int updateTickDelay = 0;
 
@@ -75,7 +73,7 @@ public class HUD extends Module {
         }
     }
 
-    @EventSubscriber(priority = Integer.MAX_VALUE)
+    @EventSubscriber(priority = Integer.MIN_VALUE)
     public void onRender(RenderHudPreEvent e) {
         if (mc.currentScreen instanceof HudEditorScreen) return;
         BThackRender.guiGraphics.getMatrices().push();

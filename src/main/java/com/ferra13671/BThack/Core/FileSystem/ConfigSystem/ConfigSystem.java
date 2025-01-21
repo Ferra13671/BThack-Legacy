@@ -54,8 +54,8 @@ public final class ConfigSystem {
                 }
             });
             saveActionBotTasks();
-            savePrefix();
             saveAutoAuthPasswords();
+            saveClientInfo();
         } catch (IOException e) {
             BThack.error(e.getMessage());
         }
@@ -72,11 +72,10 @@ public final class ConfigSystem {
                     BThack.error(e.getMessage());
                 }
             });
-            loadWallpaper();
             loadFrames();
             loadActionBotTasks();
-            loadPrefix();
             loadAutoAuthPasswords();
+            loadClientInfo();
         } catch (IOException e) {
             BThack.error(e.getMessage());
         }
@@ -554,9 +553,9 @@ public final class ConfigSystem {
 
                             Client.addCTheme(
                                     colourThemeObject.get("Name").getAsString(),
-                                    colourObject.get("fontColor").getAsInt(),
-                                    colourObject.get("backgroundFontColor").getAsInt(),
-                                    colourObject.get("backgroundFontHoveredColor").getAsInt(),
+                                    colourObject.get("color").getAsInt(),
+                                    colourObject.get("backgroundColor").getAsInt(),
+                                    colourObject.get("backgroundHoveredColor").getAsInt(),
                                     colourObject.get("moduleEnabledColor").getAsInt(),
                                     colourObject.get("moduleDisabledColor").getAsInt(),
                                     colourObject.get("arrayListColor").getAsInt()
@@ -588,39 +587,23 @@ public final class ConfigSystem {
         }
     }
 
-    public static void saveWallpaper(String fileName) throws IOException {
-        Path infoPath = Paths.get("BThack/Wallpapers/WallpaperInfo.txt");
-        if (Files.exists(infoPath)) {
-            BufferedWriter writer = Files.newBufferedWriter(infoPath);
-            writer.write(fileName);
-            writer.close();
-        }
-    }
-
-    public static void loadWallpaper() throws IOException {
-        Path infoPath = Paths.get("BThack/Wallpapers/WallpaperInfo.txt");
-        if (Files.exists(infoPath)) {
-            BufferedReader reader = Files.newBufferedReader(infoPath, StandardCharsets.UTF_8);
-            String line = reader.readLine();
-            if (line != null) {
-                if (!line.equals("default") && Files.exists(Paths.get("BThack/Wallpapers/" + line))) {
-                    BThackMainMenuScreen.mainMenuTexture = GLTexture.fromPath("BThack/Wallpapers/" + line, PathMode.OUTSIDEJAR, GLTexture.ColorMode.RGBA);
-                }
-            }
-            reader.close();
-        }
-    }
-
-    public static void loadPrefix() throws IOException {
-        ConfigUtils.loadFromTxt("Prefix", "", Client.clientInfo::setChatPrefix);
-    }
-
-    public static void savePrefix() throws IOException {
-        ConfigUtils.saveInTxt("Prefix", "", writer -> {
-            try {
-                writer.write(Client.clientInfo.getChatPrefix());
-            } catch (IOException ignored) {}
+    public static void saveClientInfo() throws IOException {
+        ConfigUtils.saveInJson("ClientInfo", "", jsonObject -> {
+            add(jsonObject, "prefix", Client.clientInfo.getChatPrefix());
+            add(jsonObject, "wallpaper", Client.clientInfo.getWallpaper());
+            add(jsonObject, "font", Client.clientInfo.getFont());
         });
+    }
+
+    public static void loadClientInfo() throws IOException {
+        ConfigUtils.loadFromJson("ClientInfo", "", jsonObject -> {
+            if (!_null(jsonObject, "prefix")) Client.clientInfo.setChatPrefix(jsonObject.get("prefix").getAsString());
+            if (!_null(jsonObject, "wallpaper")) Client.clientInfo.setWallpaper(jsonObject.get("wallpaper").getAsString());
+            if (!_null(jsonObject, "font")) Client.clientInfo.setFont(jsonObject.get("font").getAsString());
+            if (!Client.clientInfo.getWallpaper().equals("default") && Files.exists(Paths.get("BThack/Wallpapers/" + Client.clientInfo.getWallpaper())))
+                BThackMainMenuScreen.mainMenuTexture = GLTexture.fromPath("BThack/Wallpapers/" + Client.clientInfo.getWallpaper(), PathMode.OUTSIDEJAR, GLTexture.ColorMode.RGBA);
+                }
+        ,() -> {});
     }
 
     private static final Set<String> imageFormats = new HashSet<>(Arrays.asList(

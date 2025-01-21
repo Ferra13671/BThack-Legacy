@@ -6,6 +6,7 @@ import com.ferra13671.BThack.api.Events.GuiOpenEvent;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Managers.Managers;
+import com.ferra13671.TextureUtils.GLTextureSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.Mouse;
 import net.minecraft.client.RunArgs;
@@ -23,6 +24,7 @@ import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -124,6 +126,15 @@ public abstract class MixinMinecraftClient implements Mc {
         }
 
         ci.cancel();
+    }
+
+    @Unique
+    private static boolean closing = false;
+    @Inject(method = "stop", at = @At("HEAD"))
+    public void modifyStop(CallbackInfo ci) {
+        if (closing) return;
+        GLTextureSystem.close();
+        closing = true;
     }
 
     @Inject(at = @At("HEAD"), method = "tick")

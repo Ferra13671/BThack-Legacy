@@ -50,6 +50,14 @@ public final class BThackRenderUtils implements Mc {
         };
     }
 
+    public static float[] hashCodeToRGB(int hashCode) {
+        return new float[]{
+                (float) ColorHelper.Argb.getRed(hashCode) / 255.0F,
+                (float) ColorHelper.Argb.getGreen(hashCode) / 255.0F,
+                (float) ColorHelper.Argb.getBlue(hashCode) / 255.0F
+        };
+    }
+
     public static Tessellator prepareToDraw(Supplier<ShaderProgram> shader) {
         Tessellator tessellator = Tessellator.getInstance();
         RenderSystem.setShader(shader);

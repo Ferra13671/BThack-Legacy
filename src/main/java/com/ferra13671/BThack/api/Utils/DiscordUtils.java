@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.api.Utils;
 
-import com.ferra13671.BTbot.api.Utils.Generate.GenerateNumber;
+import com.ferra13671.BTbot.api.Utils.Generate.NumberGenerator;
 import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.api.Interfaces.Mc;
@@ -45,7 +45,7 @@ public final class DiscordUtils implements Mc {
         String imageKey = "bthack_icon";
 
         if (ModuleList.discordRPC.secret.getValue()) {
-            int percent = GenerateNumber.generateInt(1, 100);
+            int percent = NumberGenerator.generateInt(1, 100);
             if (percent > 0 && percent <= 10) {
                 imageKey = "hentai_face1";
             } else if (percent > 10 && percent <= 20) {

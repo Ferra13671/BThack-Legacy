@@ -2,9 +2,10 @@ package com.ferra13671.BThack.impl.HudComponents;
 
 import com.ferra13671.BThack.Core.Client.Client;
 import com.ferra13671.BThack.Core.Render.BThackRender;
+import com.ferra13671.BThack.Core.Render.Font.FontUtils;
 import com.ferra13671.BThack.api.HudComponent.HudComponent;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
-import com.ferra13671.BThack.impl.Modules.CLIENT.HUD;
+import com.ferra13671.BThack.api.Utils.TextureStorage;
 
 import java.util.Arrays;
 
@@ -37,7 +38,7 @@ public class WatermarkComponent extends HudComponent {
         } else {
             glEnable(GL_BLEND);
             glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-            BThackRender.drawTextureRect(HUD.bthack_logo, getX(), getY() - 18, getX() + 138, getY() + 54);
+            BThackRender.drawTextureRect(TextureStorage.BTHACK_LOGO, getX(), getY() - 18, getX() + 138, getY() + 54);
             //glDisable(GL_BLEND);
         }
     }
@@ -47,8 +48,8 @@ public class WatermarkComponent extends HudComponent {
         if (nullCheck()) return;
 
         if (logoType.getValue().equals("Text")) {
-            this.width = mc.textRenderer.getWidth(Client.clientInfo.getCName());
-            this.height = mc.textRenderer.fontHeight;
+            this.width = FontUtils.getTextWidth(Client.clientInfo.getCName());
+            this.height = FontUtils.getTextHeight(Client.clientInfo.getCName());
         } else {
             this.width = 138;
             this.height = 42;

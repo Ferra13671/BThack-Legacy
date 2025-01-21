@@ -3,6 +3,7 @@ package com.ferra13671.BThack.api.Gui.ClickGui;
 import com.ferra13671.BThack.Core.Client.Client;
 import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.Core.Render.BThackRender;
+import com.ferra13671.BThack.Core.Render.Font.FontUtils;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.Core.Render.Utils.RainbowUtils;
 import com.ferra13671.BThack.api.Animation.Animation;
@@ -21,18 +22,18 @@ public class ClickGuiRenderer implements Mc {
             int alpha = (int) (descriptionModule.get() != null ? (descriptionAnimation.getEase() * 255) : (1 - (descriptionAnimation.getEase() * 255)));
 
             if (descriptionModule.get() instanceof PluginModule pluginMod) {
-                int pluginNameLength = mc.textRenderer.getWidth("Plugin: " + pluginMod.plugin.pluginName) + 10;
-                int descriptionLength = mc.textRenderer.getWidth(descriptionModule.get().getDescription()) + 10;
-                int length = Math.max(pluginNameLength, descriptionLength);
-                BThackRender.drawRect(1, ClickGuiScreen.descriptionY - 17, length, (ClickGuiScreen.descriptionY + 12), ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().backgroundFontColor()), alpha));
+                float pluginNameLength = FontUtils.getTextWidth("Plugin: " + pluginMod.plugin.pluginName) + 10;
+                float descriptionLength = FontUtils.getTextWidth(descriptionModule.get().getDescription()) + 10;
+                float length = Math.max(pluginNameLength, descriptionLength);
+                BThackRender.drawRect(1, ClickGuiScreen.descriptionY - 17, length, (ClickGuiScreen.descriptionY + 12), ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().backgroundColor()), alpha));
                 BThackRender.drawOutlineRect(1, ClickGuiScreen.descriptionY - 17, length, (ClickGuiScreen.descriptionY + 12), 1, ColorUtils.integrateAlpha(ColorUtils.fastRGBA(rainbow), alpha));
-                BThackRender.drawString(descriptionModule.get().getDescription(), 6, (ClickGuiScreen.descriptionY - 1), ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()), alpha));
-                BThackRender.drawString("Plugin: " + pluginMod.plugin.pluginName, 6, (ClickGuiScreen.descriptionY - 12), ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()), alpha));
+                BThackRender.drawString(descriptionModule.get().getDescription(), 6, (ClickGuiScreen.descriptionY + 6) - (FontUtils.getTextHeight(descriptionModule.get().getDescription()) / 2f), ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()), alpha));
+                BThackRender.drawString("Plugin: " + pluginMod.plugin.pluginName, 6, (ClickGuiScreen.descriptionY - 6) - (FontUtils.getTextHeight(descriptionModule.get().getDescription()) / 2f), ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()), alpha));
             } else {
-                int length = mc.textRenderer.getWidth(descriptionModule.get().getDescription()) + 10;
-                BThackRender.drawRect(1, ClickGuiScreen.descriptionY - 5, length, (ClickGuiScreen.descriptionY + 12), ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().backgroundFontColor()), alpha));
+                float length = FontUtils.getTextWidth(descriptionModule.get().getDescription()) + 10;
+                BThackRender.drawRect(1, ClickGuiScreen.descriptionY - 5, length, (ClickGuiScreen.descriptionY + 12), ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().backgroundColor()), alpha));
                 BThackRender.drawOutlineRect(1, ClickGuiScreen.descriptionY - 5, length, (ClickGuiScreen.descriptionY + 12), 1, ColorUtils.integrateAlpha(ColorUtils.fastRGBA(rainbow), alpha));
-                BThackRender.drawString(descriptionModule.get().getDescription(), 6, (ClickGuiScreen.descriptionY - 1), ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()), alpha));
+                BThackRender.drawString(descriptionModule.get().getDescription(), 6, (ClickGuiScreen.descriptionY + 6) - (FontUtils.getTextHeight(descriptionModule.get().getDescription()) / 2f), ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()), alpha));
             }
         }
     }

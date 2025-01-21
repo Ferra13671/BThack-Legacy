@@ -4,7 +4,7 @@ import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.Core.Client.Systems.FirstLaunchWelcomer;
 import com.ferra13671.BThack.Core.Client.Systems.KeyHandler;
 import com.ferra13671.BThack.api.Interfaces.Mc;
-import com.ferra13671.BThack.api.Managers.Manager;
+import com.ferra13671.BThack.api.Utils.Initializable;
 import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Plugin.*;
 import com.ferra13671.BThack.api.Utils.Grim.GrimFreezeUtils;
@@ -55,7 +55,7 @@ public final class InitializeHelper implements Mc {
         Field[] fields = Managers.class.getFields();
         for (Field field : fields) {
             try {
-                Manager manager = (Manager) field.get(null);
+                Initializable manager = (Initializable) field.get(null);
                 manager.init();
             } catch (IllegalAccessException e) {
                 BThack.error(e.getMessage());

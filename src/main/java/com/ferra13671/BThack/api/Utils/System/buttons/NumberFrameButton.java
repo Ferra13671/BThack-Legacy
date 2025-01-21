@@ -1,6 +1,7 @@
 package com.ferra13671.BThack.api.Utils.System.buttons;
 
 import com.ferra13671.BThack.Core.Render.BThackRender;
+import com.ferra13671.BThack.Core.Render.Font.FontUtils;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.google.common.collect.Sets;
@@ -25,7 +26,7 @@ public class NumberFrameButton extends Button {
     public void renderButton() {
         BThackRender.drawRect(this.getCenterX() - this.getWidth(), this.getCenterY() - this.getHeight(), this.getCenterX() + this.getWidth(), this.getCenterY() + this.getHeight(), RECT_COLOR);
 
-        BThackRender.drawString(textBuilder.toString(), this.getCenterX() - this.getWidth() + 3, this.getCenterY() - (mc.textRenderer.fontHeight / 2f), ColorUtils.WHITE);
+        BThackRender.drawString(textBuilder.toString(), this.getCenterX() - this.getWidth() + 3, this.getCenterY() - (FontUtils.getTextHeight(getText()) / 2f), ColorUtils.WHITE);
     }
 
 
@@ -56,14 +57,14 @@ public class NumberFrameButton extends Button {
         }
 
         if (keys.contains(symbol)) {
-            if (mc.textRenderer.getWidth(textBuilder.toString()) < ((this.getWidth() * 2) - ((this.getWidth() * 2) * 0.1))) {
+            if (FontUtils.getTextWidth(textBuilder.toString()) < ((this.getWidth() * 2) - ((this.getWidth() * 2) * 0.1))) {
                 textBuilder.append(_char);
             }
             return;
         }
 
         if (symbol.equals(".")) {
-            if (!isDouble && mc.textRenderer.getWidth(textBuilder.toString()) < ((this.getWidth() * 2) - ((this.getWidth() * 2) * 0.1)) && !textBuilder.isEmpty()) {
+            if (!isDouble && FontUtils.getTextWidth(textBuilder.toString()) < ((this.getWidth() * 2) - ((this.getWidth() * 2) * 0.1)) && !textBuilder.isEmpty()) {
                 textBuilder.append(_char);
                 isDouble = true;
             }

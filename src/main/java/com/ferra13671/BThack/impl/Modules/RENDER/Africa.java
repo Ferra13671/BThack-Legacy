@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.impl.Modules.RENDER;
 
 
-import com.ferra13671.BTbot.api.Utils.Generate.GenerateNumber;
+import com.ferra13671.BTbot.api.Utils.Generate.NumberGenerator;
 import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Events.Render.RenderHudPreEvent;
@@ -38,7 +38,7 @@ public class Africa extends Module {
         BThackRender.drawRect(0,0, mc.getWindow().getScaledWidth(), mc.getWindow().getScaledHeight(), africaColor);
         tickTimer++;
         if (tickTimer > 15) {
-            int alpha = (int) (colorAlpha * GenerateNumber.generateFloat(0.94f, 1.05f));
+            int alpha = (int) (colorAlpha * NumberGenerator.generateFloat(0.94f, 1.05f));
             if (alpha > 110) {
                 alpha = 110;
             } else if (alpha < 50) {

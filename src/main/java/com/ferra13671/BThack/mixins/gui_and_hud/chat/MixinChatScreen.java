@@ -3,6 +3,7 @@ package com.ferra13671.BThack.mixins.gui_and_hud.chat;
 import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.Core.Render.BThackRender;
+import com.ferra13671.BThack.Core.Render.Font.FontUtils;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Events.SendMessageEvent;
 import com.ferra13671.BThack.api.Interfaces.Mc;
@@ -81,7 +82,7 @@ public abstract class MixinChatScreen implements Mc {
                 BThackRender.drawRect(
                         7,
                         mc.getWindow().getScaledHeight() - 14,
-                        mc.textRenderer.getWidth(chatField.getText()) + 8,
+                        FontUtils.getTextWidth(chatField.getText()) + 8,
                         mc.getWindow().getScaledHeight() - 2,
                         ColorUtils.BLACK
                 );

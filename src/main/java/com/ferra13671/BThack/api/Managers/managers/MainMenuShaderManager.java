@@ -3,12 +3,12 @@ package com.ferra13671.BThack.api.Managers.managers;
 import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.api.Events.DisconnectEvent;
 import com.ferra13671.BThack.api.Interfaces.Mc;
-import com.ferra13671.BThack.api.Managers.Manager;
+import com.ferra13671.BThack.api.Utils.Initializable;
 import com.ferra13671.BThack.api.Shader.MainMenu.MainMenuShader;
 import com.ferra13671.BThack.api.Utils.Ticker;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 
-public class MainMenuShaderManager implements Manager, Mc {
+public class MainMenuShaderManager implements Initializable, Mc {
     private final Ticker shaderTicker = new Ticker();
     private MainMenuShader shader;
     private Runnable postResetAction;

@@ -3,7 +3,7 @@ package com.ferra13671.BThack.api.Gui.ClickGui.component;
 import com.ferra13671.BThack.Core.Client.Client;
 import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.Core.Render.BThackRender;
-import com.ferra13671.BThack.Core.Render.Utils.BThackRenderUtils;
+import com.ferra13671.BThack.Core.Render.Font.FontUtils;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Animation.Animation;
 import com.ferra13671.BThack.api.Animation.Easing;
@@ -15,7 +15,6 @@ import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.Data;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.impl.Modules.CLIENT.ClickGui;
-import com.mojang.blaze3d.systems.RenderSystem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -165,8 +164,6 @@ public class Frame implements Mc {
 					component.renderComponent();
 				}
 				BThackRender.guiGraphics.getMatrices().translate(0, 0, -1);
-				//plate for module buttons
-				BThackRender.drawRect(x, y, x + FRAME_WIDTH, y + height, ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().backgroundFontColor()), (int) (255 * ModuleList.clickGui.opacity.getValue())));
 				if (needScissor)
 					BThackRender.disableScissor();
 			}
@@ -175,11 +172,11 @@ public class Frame implements Mc {
 			int type = (int) ModuleList.clickGui.rainbowSpeed.getValue();
 			BThackRender.drawHorizontalRainbowRect(x, y, x + FRAME_WIDTH, y + BAR_HEIGHT, type);
 		} else {
-			BThackRender.drawRect(x, y, x + FRAME_WIDTH, y + BAR_HEIGHT, ModuleList.clickGui.customColor.getValue() ? ColorUtils.fastRGBA((int) ModuleList.clickGui.redColor.getValue(), (int) ModuleList.clickGui.greenColor.getValue(), (int) ModuleList.clickGui.blueColor.getValue(), 255) : ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().fontColor()));
+			BThackRender.drawRect(x, y, x + FRAME_WIDTH, y + BAR_HEIGHT, ModuleList.clickGui.customColor.getValue() ? ColorUtils.fastRGBA((int) ModuleList.clickGui.redColor.getValue(), (int) ModuleList.clickGui.greenColor.getValue(), (int) ModuleList.clickGui.blueColor.getValue(), 255) : ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().color()));
 		}
 		if (ModuleList.clickGui.frameOutline.getValue())
 			BThackRender.drawOutlineRect(x, y, x + FRAME_WIDTH, y + BAR_HEIGHT, 1, BAR_OUTLINE_COLOR);
-		BThackRender.drawString(frameName, x + (FRAME_WIDTH / 2f) - (mc.textRenderer.getWidth(frameName) / 2f), y + (BAR_HEIGHT / 2f) - (mc.textRenderer.fontHeight / 2f), Client.clientInfo.getColorTheme().moduleDisabledColor());
+		BThackRender.drawString(frameName, x + (FRAME_WIDTH / 2f) - (FontUtils.getTextWidth(frameName) / 2f), y + (BAR_HEIGHT / 2f) - (FontUtils.getTextHeight(frameName) / 2f), Client.clientInfo.getColorTheme().moduleDisabledColor());
 	}
 	
 	public void refresh() {

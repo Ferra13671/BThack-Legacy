@@ -1,6 +1,6 @@
 package com.ferra13671.BTbot.impl.AntiAFK.Doing;
 
-import com.ferra13671.BTbot.api.Utils.Generate.GenerateNumber;
+import com.ferra13671.BTbot.api.Utils.Generate.NumberGenerator;
 import com.ferra13671.BTbot.impl.AntiAFK.Start.StartAntiAFK;
 import com.ferra13671.BTbot.impl.AntiAFK.Start.StartAntiAFKThread;
 import com.ferra13671.BThack.api.Interfaces.Mc;
@@ -15,9 +15,9 @@ public class SendToChat extends Thread implements Mc {
         int s = StartAntiAFK.messageSize;
         for (int i = 0; i < s; i++) {
             if (number == 0) {
-                number = GenerateNumber.generateInt(0,9);
+                number = NumberGenerator.generateInt(0,9);
             } else {
-                number = (number * 10) + GenerateNumber.generateInt(0,9);
+                number = (number * 10) + NumberGenerator.generateInt(0,9);
             }
         }
         ChatUtils.sendChatMessage(String.valueOf(number));

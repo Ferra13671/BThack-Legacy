@@ -1,8 +1,8 @@
 package com.ferra13671.BThack.api.Managers.managers.Thread;
 
-import com.ferra13671.BThack.api.Managers.Manager;
+import com.ferra13671.BThack.api.Utils.Initializable;
 
-public final class ThreadManager implements Manager {
+public final class ThreadManager implements Initializable {
 
     private ThreadManager() {}
 

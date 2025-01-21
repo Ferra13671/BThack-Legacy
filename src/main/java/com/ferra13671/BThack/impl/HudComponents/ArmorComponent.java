@@ -1,6 +1,7 @@
 package com.ferra13671.BThack.impl.HudComponents;
 
 import com.ferra13671.BThack.Core.Render.BThackRender;
+import com.ferra13671.BThack.Core.Render.Font.FontUtils;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.HudComponent.HudComponent;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
@@ -48,15 +49,15 @@ public class ArmorComponent extends HudComponent {
             if (armorStack.getItem() != Items.AIR) {
                 String text = ItemUtils.getItemDurability(armorStack) + "/" + ItemUtils.getItemMaxDurability(armorStack) + " (" + ItemUtils.getItemDurabilityInPercentages(armorStack) + ")";
 
-                if (mc.textRenderer.getWidth(text) > maxWidth) {
-                    maxWidth = mc.textRenderer.getWidth(text);
+                if (FontUtils.getTextWidth(text) > maxWidth) {
+                    maxWidth = FontUtils.getTextWidth(text);
                 }
 
                 BThackRender.drawItem(BThackRender.guiGraphics, armorStack, (int) getX(), (int) getY() + y, null, false);
                 BThackRender.drawString(text, (int) getX() + 20, (int) getY() + y, armorStack.getItemBarColor());
-                BThackRender.drawRect((int) getX() + 20, (int) (getY() + y + mc.textRenderer.fontHeight), (int) getX() + 20 + 50, (int) (getY() + y + mc.textRenderer.fontHeight + 3), ColorUtils.BLACK);
+                BThackRender.drawRect((int) getX() + 20, (int) (getY() + y + FontUtils.getTextHeight(text)), (int) getX() + 20 + 50, (int) (getY() + y + FontUtils.getTextHeight(text) + 3), ColorUtils.BLACK);
                 if (ItemUtils.getItemDurabilityInPercentages(armorStack) > 0)
-                    BThackRender.drawRect((int) getX() + 20, (int) (getY() + y + mc.textRenderer.fontHeight), (int) (getX() + 20 + (50 * (ItemUtils.getItemDurabilityInPercentages(armorStack) / 100f))), (int) (getY() + y + mc.textRenderer.fontHeight + 3), ColorUtils.fastRGBA(armorStack.getItemBarColor()));
+                    BThackRender.drawRect((int) getX() + 20, (int) (getY() + y + FontUtils.getTextHeight(text)), (int) (getX() + 20 + (50 * (ItemUtils.getItemDurabilityInPercentages(armorStack) / 100f))), (int) (getY() + y + FontUtils.getTextHeight(text) + 3), ColorUtils.fastRGBA(armorStack.getItemBarColor()));
             }
 
             y += 20;

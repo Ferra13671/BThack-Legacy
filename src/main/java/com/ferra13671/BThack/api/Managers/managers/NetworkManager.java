@@ -2,13 +2,13 @@ package com.ferra13671.BThack.api.Managers.managers;
 
 import com.ferra13671.BThack.api.IMixin.ModifyClientConnection;
 import com.ferra13671.BThack.api.Interfaces.Mc;
-import com.ferra13671.BThack.api.Managers.Manager;
+import com.ferra13671.BThack.api.Utils.Initializable;
 import com.ferra13671.BThack.mixins.accessor.IClientWorld;
 import net.minecraft.client.network.PendingUpdateManager;
 import net.minecraft.client.network.SequencedPacketCreator;
 import net.minecraft.network.packet.Packet;
 
-public class NetworkManager implements Manager, Mc {
+public class NetworkManager implements Initializable, Mc {
 
     public void sendSequencePacket(SequencedPacketCreator packetCreator) {
         if (mc.getNetworkHandler() == null || mc.world == null) return;

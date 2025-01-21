@@ -3,6 +3,7 @@ package com.ferra13671.BThack.api.Gui.ClickGui;
 import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.Core.FileSystem.ConfigSystem.ConfigSystem;
 import com.ferra13671.BThack.Core.Render.BThackRender;
+import com.ferra13671.BThack.Core.Render.Font.FontUtils;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Animation.Animation;
 import com.ferra13671.BThack.api.Animation.Easing;
@@ -23,21 +24,18 @@ import com.ferra13671.BThack.api.Utils.System.buttons.SliderButton;
 import com.ferra13671.BThack.api.Utils.System.buttons.TextFrameButton;
 import com.ferra13671.BThack.api.Utils.Ticker;
 import com.ferra13671.BThack.impl.Modules.CLIENT.ClickGui;
-import com.ferra13671.BThack.mixins.accessor.IScreen;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.function.Supplier;
 
 public class ClickGuiScreen extends BThackScreen implements Mc {
     public static int descriptionY;
 
     private final ArrayList<Frame> frames = new ArrayList<>();
     private boolean startSaving = false;
-    private Supplier<Screen> instanceScreen;
     private SliderButton guiScaleSlider;
     private final Data<Module> descriptionModule = new Data<>();
     private final Animation descriptionAnimation = new Animation(Easing.LINEAR, 500);
@@ -67,10 +65,6 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
     public void onDisplayed() {
         ModuleList.clickGui.updateColorTheme();
         for (Frame frame : frames) frame.resetFrameAnimation();
-    }
-
-    public void setInstanceScreen(Supplier<Screen> screen) {
-        instanceScreen = screen;
     }
 
     @Override
@@ -110,17 +104,12 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
 
         getButtonFromId(8).setHided(!startSaving);
         getButtonFromId(9).setHided(!startSaving);
-
-        if (instanceScreen != null) {
-            ((IScreen) instanceScreen.get())._init();
-        }
     }
 
     @Override
     public void render(DrawContext guiGraphics, int mouseX, int mouseY, float partialTicks) {
-        if (instanceScreen != null) {
-            instanceScreen.get().render(guiGraphics, mouseX, mouseY, partialTicks);
-        }
+        RenderSystem.enableDepthTest();
+        if (Module.nullCheck()) drawMainMenuWallpaper(mouseX, mouseY);
 
         if (ModuleList.clickGui.blur.getValue()) {
             ClickGui.renderBlur(partialTicks);
@@ -146,7 +135,7 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
 
         if (writingSlider.get() != null) {
             if (writingSlider.get().writing) {
-                BThackRender.drawString("New Value: " + writingSlider.get().textBuilder, (int) ((mc.getWindow().getScaledWidth() / 2f) - (mc.textRenderer.getWidth("New Value: " + writingSlider.get().textBuilder) / 2)), (mc.getWindow().getScaledHeight() - 45), ColorUtils.WHITE);
+                BThackRender.drawString("New Value: " + writingSlider.get().textBuilder, (int) ((mc.getWindow().getScaledWidth() / 2f) - (FontUtils.getTextWidth("New Value: " + writingSlider.get().textBuilder) / 2)), (mc.getWindow().getScaledHeight() - 45), ColorUtils.WHITE);
             }
         }
         BThackRender.guiGraphics.getMatrices().push();
@@ -277,7 +266,6 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
                 component.parent.refresh();
             }
         }
-        instanceScreen = null;
     }
 
     @Override

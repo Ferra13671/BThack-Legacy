@@ -1,8 +1,8 @@
 package com.ferra13671.BThack.impl.Modules.PLAYER;
 
 
-import com.ferra13671.BTbot.api.Utils.Generate.AntiSpamGenerate;
-import com.ferra13671.BTbot.api.Utils.Generate.GenerateNumber;
+import com.ferra13671.BTbot.api.Utils.Generate.StringGenerator;
+import com.ferra13671.BTbot.api.Utils.Generate.NumberGenerator;
 import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
@@ -123,9 +123,9 @@ public class PMSpammer extends Module {
                                     long a = (long) (delay.getValue() * 1000);
                                     if (delaySpread.getValue()) {
                                         if (!random.nextBoolean()) {
-                                            a = (long) (a * GenerateNumber.generateFloat(1, 1f + (float) spreadRange.getValue()));
+                                            a = (long) (a * NumberGenerator.generateFloat(1, 1f + (float) spreadRange.getValue()));
                                         } else {
-                                            a = (long) (a * GenerateNumber.generateFloat((float) spreadRange.getValue(), 1));
+                                            a = (long) (a * NumberGenerator.generateFloat((float) spreadRange.getValue(), 1));
                                         }
                                     }
                                     try {
@@ -144,9 +144,9 @@ public class PMSpammer extends Module {
                             long a = (long) (delay.getValue() * 1000);
                             if (delaySpread.getValue()) {
                                 if (!random.nextBoolean()) {
-                                    a = (long) (a * GenerateNumber.generateFloat(1, 1f + (float) spreadRange.getValue()));
+                                    a = (long) (a * NumberGenerator.generateFloat(1, 1f + (float) spreadRange.getValue()));
                                 } else {
-                                    a = (long) (a * GenerateNumber.generateFloat((float) spreadRange.getValue(), 1));
+                                    a = (long) (a * NumberGenerator.generateFloat((float) spreadRange.getValue(), 1));
                                 }
                             }
                             try {
@@ -193,9 +193,9 @@ public class PMSpammer extends Module {
                                     long a = (long) (delay.getValue() * 1000);
                                     if (delaySpread.getValue()) {
                                         if (!random.nextBoolean()) {
-                                            a = (long) (a * GenerateNumber.generateFloat(1, 1f + (float) spreadRange.getValue()));
+                                            a = (long) (a * NumberGenerator.generateFloat(1, 1f + (float) spreadRange.getValue()));
                                         } else {
-                                            a = (long) (a * GenerateNumber.generateFloat((float) spreadRange.getValue(), 1));
+                                            a = (long) (a * NumberGenerator.generateFloat((float) spreadRange.getValue(), 1));
                                         }
                                     }
                                     try {
@@ -210,9 +210,9 @@ public class PMSpammer extends Module {
                             long a = (long) (delay.getValue() * 1000);
                             if (delaySpread.getValue()) {
                                 if (!random.nextBoolean()) {
-                                    a = (long) (a * GenerateNumber.generateFloat(1, 1f + (float) spreadRange.getValue()));
+                                    a = (long) (a * NumberGenerator.generateFloat(1, 1f + (float) spreadRange.getValue()));
                                 } else {
-                                    a = (long) (a * GenerateNumber.generateFloat((float) spreadRange.getValue(), 1));
+                                    a = (long) (a * NumberGenerator.generateFloat((float) spreadRange.getValue(), 1));
                                 }
                             }
                             try {
@@ -256,7 +256,7 @@ public class PMSpammer extends Module {
     }
 
     private String genAntiSpam() {
-        return AntiSpamGenerate.generateNextString(
+        return StringGenerator.generateNextString(
                 (int) aSpamLength.getValue(),
                 aSpamCaps.getValue(),
                 aSpamNumbers.getValue(),

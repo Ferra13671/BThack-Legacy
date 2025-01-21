@@ -8,15 +8,11 @@ import com.ferra13671.BThack.api.Animation.Easing;
 import com.ferra13671.BThack.api.Utils.System.BThackScreen;
 import com.ferra13671.BThack.api.Utils.System.BThackScreens;
 import com.ferra13671.BThack.api.Utils.System.buttons.Button;
-import com.ferra13671.TextureUtils.GLTexture;
-import com.ferra13671.TextureUtils.PathMode;
+import com.ferra13671.BThack.api.Utils.TextureStorage;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.text.Text;
 
 public class LanguageSelectorScreen extends BThackScreen {
-    private static final GLTexture EN_FLAG = GLTexture.fromPath("assets/bthack/flags/en_flag.png", PathMode.INSIDEJAR, GLTexture.ColorMode.RGBA);
-    private static final GLTexture RU_FLAG = GLTexture.fromPath("assets/bthack/flags/ru_flag.png", PathMode.INSIDEJAR, GLTexture.ColorMode.RGBA);
-    private static final GLTexture PL_FLAG = GLTexture.fromPath("assets/bthack/flags/pl_flag.png", PathMode.INSIDEJAR, GLTexture.ColorMode.RGBA);
 
     public LanguageSelectorScreen() {
         super(Text.of("LanguageSelector"));
@@ -57,9 +53,9 @@ public class LanguageSelectorScreen extends BThackScreen {
         float yDown = (float) (mc.getWindow().getScaledHeight() / 1.7) - 14;
         float center = mc.getWindow().getScaledWidth() / 2f;
 
-        BThackRender.drawTextureRect(EN_FLAG, center - 64, yUp, center - 24, yDown);
-        BThackRender.drawTextureRect(RU_FLAG, center - 20, yUp, center + 20, yDown);
-        BThackRender.drawTextureRect(PL_FLAG, center + 24, yUp, center + 64, yDown);
+        BThackRender.drawTextureRect(TextureStorage.EN_FLAG, center - 64, yUp, center - 24, yDown);
+        BThackRender.drawTextureRect(TextureStorage.RU_FLAG, center - 20, yUp, center + 20, yDown);
+        BThackRender.drawTextureRect(TextureStorage.PL_FLAG, center + 24, yUp, center + 64, yDown);
 
         BThackRender.drawCenteredString("Welcome! Please select the language to be used.", center, yUp - 20, -1);
 

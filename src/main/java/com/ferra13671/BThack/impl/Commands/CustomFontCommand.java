@@ -1,0 +1,35 @@
+package com.ferra13671.BThack.impl.Commands;
+
+import com.ferra13671.BThack.Core.Client.Client;
+import com.ferra13671.BThack.Core.FileSystem.ConfigSystem.ConfigSystem;
+import com.ferra13671.BThack.Core.Render.BThackRender;
+import com.ferra13671.BThack.api.Managers.managers.Command.AbstractCommand;
+import com.ferra13671.BThack.api.Managers.managers.Command.Arguments;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import net.minecraft.command.CommandSource;
+
+public class CustomFontCommand extends AbstractCommand {
+    public CustomFontCommand() {
+        super("lang.command.CustomFont.description", "customFont");
+    }
+
+    @Override
+    public void compile(LiteralArgumentBuilder<CommandSource> builder) {
+        builder.then(literal("setDefault").executes(context -> {
+            Client.clientInfo.setFont("default");
+            try {
+                ConfigSystem.saveClientInfo();
+                BThackRender.reloadFontRenderManager();
+            } catch (Exception ignored) {}
+            return SUCCESFUL;
+        }));
+        builder.then(literal("set").then(arg("font", Arguments.FONT_FILE("BThack/Fonts/")).executes(context -> {
+            Client.clientInfo.setFont(context.getArgument("font", String.class));
+            try {
+                ConfigSystem.saveClientInfo();
+                BThackRender.reloadFontRenderManager();
+            } catch (Exception ignored) {}
+            return SUCCESFUL;
+        })));
+    }
+}

@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.api.Utils.Modules;
 
-import com.ferra13671.BTbot.api.Utils.Generate.GenerateNumber;
+import com.ferra13671.BTbot.api.Utils.Generate.NumberGenerator;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
@@ -37,9 +37,9 @@ public final class KillAuraUtils implements Mc {
         double xLength = Math.abs(target.getBoundingBox().maxX - target.getBoundingBox().minX);
         double yLength = Math.abs(target.getBoundingBox().maxY - target.getBoundingBox().minY);
         double zLength = Math.abs(target.getBoundingBox().maxZ - target.getBoundingBox().minZ);
-        rotateVector.x += GenerateNumber.generateDouble(-(xLength / 3), xLength / 3);
-        rotateVector.y += GenerateNumber.generateDouble(-(yLength / 3), yLength / 3);
-        rotateVector.z += GenerateNumber.generateDouble(-(zLength / 3), zLength / 3);
+        rotateVector.x += NumberGenerator.generateDouble(-(xLength / 3), xLength / 3);
+        rotateVector.y += NumberGenerator.generateDouble(-(yLength / 3), yLength / 3);
+        rotateVector.z += NumberGenerator.generateDouble(-(zLength / 3), zLength / 3);
         float[] rotations = AimBotUtils.rotations(rotateVector);
         preAttackRotate(rotateMode, rotations, packets);
         attackNoRotate(target);

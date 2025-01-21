@@ -4,6 +4,7 @@
 "lang.module.ChatNotifications": Umożliwia klientowi wysyłanie różnych wiadomości do pokoju rozmów.
 "lang.module.ClickGui": Gui z wyborem i konfiguracją modułów.
 "lang.module.ClientSettings": Różne personalizacje klienta.
+"lang.module.CustomFont": Umożliwia BThack renderowanie niestandardowej czcionki.
 "lang.module.DiscordRPC": Otrzymujesz aktywność BThack.
 "lang.module.FPSReducer": Ogranicza fps, jeśli gra jest nieostra.
 "lang.module.HUD": Włączanie i konfigurowanie modułów HUD.
@@ -245,10 +246,10 @@
 "lang.argument.ClientPacket.exception": '%s' nie jest pakietem klient->serwer.
 "lang.argument.ServerPacket.exception": '%s' nie jest pakietem serwer->klient.
 "lang.argument.PacketListPacket.exception": Na liście pakietów brakuje pakietu '%s'.
+"lang.argument.File.exception": Plik '%s' nie został znaleziony lub nie spełnia warunków.
 
 
 //Commands
-"lang.command.invalidargs": Nieprawidłowe argumenty polecenia! Spróbuj —
 "lang.command.ClanList.description": Wyświetla całą listę klanów oraz ich członków.
 "lang.command.Help.description": Wyświetla listę wszystkich istniejących poleceń BThack.
 "lang.command.PluginList.description": Wyświetla całą listę pluginów.
@@ -281,6 +282,7 @@
 "lang.command.AutoAuth.description": Dodaje/usuwa hasło dla określonego pseudonimu.
 "lang.command.Module.description": Wykonuje określoną akcję na module.
 "lang.command.CordsCopy.description": Kopiuje współrzędne gracza.
+"lang.command.CustomFont.description": Umożliwia wybranie niestandardowej czcionki z folderu lub ustawienie czcionki domyślnej.
 
 
 "lang.command.ClanList.message2":   Uczestnicy:

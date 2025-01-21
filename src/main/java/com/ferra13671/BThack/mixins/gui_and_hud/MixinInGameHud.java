@@ -22,7 +22,11 @@ public abstract class MixinInGameHud {
 
 	@Shadow @Final private static Identifier PUMPKIN_BLUR;
 
-	@Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/LayeredDrawer;render(Lnet/minecraft/client/gui/DrawContext;Lnet/minecraft/client/render/RenderTickCounter;)V", shift = At.Shift.AFTER))
+	/*
+	The blur renderer doesn't like the font renderer, so to invoke the event should be at the
+	 very beginning of the hud renderer to avoid render bugs.
+	 */
+	@Inject(method = "render", at = @At("HEAD"))
 	public void modifyRenderPre(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci) {
 		BThack.EVENT_BUS.activate(new RenderHudPreEvent(tickCounter.getTickDelta(true)));
 	}

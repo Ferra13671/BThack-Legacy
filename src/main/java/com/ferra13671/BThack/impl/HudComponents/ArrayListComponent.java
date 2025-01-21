@@ -3,6 +3,7 @@ package com.ferra13671.BThack.impl.HudComponents;
 import com.ferra13671.BThack.Core.Client.Client;
 import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.Core.Render.BThackRender;
+import com.ferra13671.BThack.Core.Render.Font.FontUtils;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.HudComponent.HudComponent;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
@@ -44,12 +45,12 @@ public class ArrayListComponent extends HudComponent {
             if (module.isEnabled() && module.visible) {
                 String moduleName = !module.arrayListInfo.isEmpty() ? module.name + " " + Formatting.GRAY + "[" + Formatting.WHITE +  module.arrayListInfo + Formatting.GRAY + "]" : module.name;
                 tempList.add(moduleName);
-                float length = mc.textRenderer.getWidth(moduleName);
+                float length = FontUtils.getTextWidth(moduleName);
                 if (length > newMaxLength)
                     newMaxLength = length;
             }
         }
-        moduleStrings.addAll(tempList.stream().sorted((string1, string2) -> mc.textRenderer.getWidth(string2) - mc.textRenderer.getWidth(string1)).toList());
+        moduleStrings.addAll(tempList.stream().sorted((string1, string2) -> (int) ((FontUtils.getTextWidth(string2) - FontUtils.getTextWidth(string1)) * 100)).toList());
         width = -(7 + newMaxLength);
     }
 
@@ -63,11 +64,11 @@ public class ArrayListComponent extends HudComponent {
             if (ModuleList.HUD.rainbow.getValue()) {
                 if (drawRects.getValue())
                     BThackRender.drawRect((int) getX(), y, (int) getX() - 2, y + 10, getArrayColor(count));
-                drawText(string, (int) (getX() - 4 - mc.textRenderer.getWidth(string)), y, getArrayColor(count));
+                drawText(string, (int) (getX() - 4 - FontUtils.getTextWidth(string)), y, getArrayColor(count));
             } else {
                 if (drawRects.getValue())
                     BThackRender.drawRect((int) getX(), y, (int) getX() - 2, y + 10, getArrayColor(count));
-                drawText(string, ((int) getX() - 4 - mc.textRenderer.getWidth(string)), y, getArrayColor(count));
+                drawText(string, (int) (getX() - 4 - FontUtils.getTextWidth(string)), y, getArrayColor(count));
             }
 
             y += 10;

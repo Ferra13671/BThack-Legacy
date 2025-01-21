@@ -1,6 +1,7 @@
 package com.ferra13671.BThack.impl.Modules.PLAYER;
 
 import com.ferra13671.BThack.Core.Render.BThackRender;
+import com.ferra13671.BThack.Core.Render.Font.FontUtils;
 import com.ferra13671.BThack.api.Events.PacketEvent;
 import com.ferra13671.BThack.api.Events.Render.RenderHudPreEvent;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
@@ -52,7 +53,7 @@ public class LagDetector extends Module {
             if (lagText.isEmpty())
                 return;
 
-            BThackRender.drawString(lagText, (mc.getWindow().getScaledWidth() / 2f) - (mc.textRenderer.getWidth(lagText) / 2f), (mc.getWindow().getScaledHeight() / 2f) + 20, red);
+            BThackRender.drawString(lagText, (mc.getWindow().getScaledWidth() / 2f) - (FontUtils.getTextWidth(lagText) / 2f), (mc.getWindow().getScaledHeight() / 2f) + 20, red);
         }
     }
 

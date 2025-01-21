@@ -1,6 +1,7 @@
 package com.ferra13671.BThack.api.Gui.ActionBot;
 
 import com.ferra13671.BThack.Core.Render.BThackRender;
+import com.ferra13671.BThack.Core.Render.Font.FontUtils;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Utils.System.BThackScreen;
 import com.ferra13671.BThack.api.Utils.System.buttons.Button;
@@ -41,7 +42,7 @@ public class MoveTaskGui extends BThackScreen {
     public void render(DrawContext context, int mouseX, int mouseY, float partialTicks) {
         drawBackGround(mouseX, mouseY);
 
-        BThackRender.drawString("New task number", (int) ((scaledResolution.getScaledWidth() / 2) - (mc.textRenderer.getWidth("New task number") / 2)), (int) ((scaledResolution.getScaledHeight() / 2) - (heightFactor * 4.5)), ColorUtils.WHITE);
+        BThackRender.drawString("New task number", (int) ((scaledResolution.getScaledWidth() / 2) - (FontUtils.getTextWidth("New task number") / 2)), (int) ((scaledResolution.getScaledHeight() / 2) - (heightFactor * 4.5)), ColorUtils.WHITE);
 
         super.render(context, mouseX, mouseY, partialTicks);
     }
