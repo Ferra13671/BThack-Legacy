@@ -10,7 +10,7 @@ public class CustomFont extends Module {
                 "lang.module.CustomFont",
                 KeyboardUtils.RELEASE,
                 MCategory.CLIENT,
-                false
+                true
         );
     }
 }
