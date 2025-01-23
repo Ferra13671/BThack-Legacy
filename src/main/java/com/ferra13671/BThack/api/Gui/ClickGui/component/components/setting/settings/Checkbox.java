@@ -35,7 +35,7 @@ public class Checkbox extends AbstractSetting {
 			BThackRender.drawHorizontalGradientRect(parent.parent.getX() + 1, parent.parent.getY() + offset, parent.parent.getX() + (parent.parent.getWidth() / 2f), parent.parent.getY() + offset + 15, getGradientColor(), ColorUtils.TRANSPARENT);
 		}
 
-		BThackRender.drawString(getText(), parent.parent.getX() + 7, parent.parent.getY() + offset + 4, Client.clientInfo.getColorTheme().moduleDisabledColor());
+		BThackRender.drawString(getText(), parent.parent.getX() + 7, parent.parent.getY() + offset + 4, ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()));
 	}
 
 	protected boolean needRenderGradient() {

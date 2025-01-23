@@ -1,6 +1,7 @@
 package com.ferra13671.BThack.impl.Modules.RENDER;
 
 import com.ferra13671.BThack.Core.Render.BThackRender;
+import com.ferra13671.BThack.Core.Render.Font.FontRenderManager;
 import com.ferra13671.BThack.Core.Render.Font.FontUtils;
 import com.ferra13671.BThack.Core.Render.Utils.BThackRenderUtils;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
@@ -63,7 +64,7 @@ public class Nametags extends Module {
         if (cords == null) return;
 
         BThackRender.drawItem(BThackRender.guiGraphics, itemEntity.getStack(), (int) cords[0] - 8, (int) cords[1] - 18, null, true);
-        BThackRender.drawCenteredString(itemEntity.getName().getString(), cords[0], cords[1], -1, true);
+        BThackRender.drawCenteredString(itemEntity.getName().getString(), cords[0], cords[1], -1, FontRenderManager.DrawMode.SMALL);
     }
 
     public void renderPlayerNametag(PlayerEntity player) {
@@ -159,7 +160,7 @@ public class Nametags extends Module {
     }
 
     public void drawName(String name, float leftX, float downY) {
-        BThackRender.drawString(name, leftX + 5, downY - FontUtils.getTextHeight(name) - 3, -1, false, false);
+        BThackRender.drawString(name, leftX + 5, downY - FontUtils.getTextHeight(name) - 3, -1, false, FontRenderManager.DrawMode.NORMAL);
     }
 
     public float drawArmor(float startX, float startY, LivingEntity entity) {

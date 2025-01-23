@@ -2,6 +2,7 @@ package com.ferra13671.BThack.impl.Modules.PLAYER;
 
 import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Font.FontUtils;
+import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Events.Block.AttackBlockEvent;
 import com.ferra13671.BThack.api.Events.Block.UseBlockEvent;
 import com.ferra13671.BThack.api.Events.Entity.AttackEntityEvent;
@@ -18,8 +19,6 @@ import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
-
-import java.awt.*;
 
 public class ItemSaver extends Module {
 
@@ -56,7 +55,7 @@ public class ItemSaver extends Module {
     @EventSubscriber
     public void onRenderOverlay(RenderHudPreEvent e) {
         if (alpha > 0) {
-            BThackRender.drawString(LanguageSystem.translate("lang.module.ItemSaver.saveMessage"), (mc.getWindow().getScaledWidth() / 2f) - (FontUtils.getTextWidth(LanguageSystem.translate("lang.module.ItemSaver.saveMessage")) / 2f), (mc.getWindow().getScaledHeight() / 2f) + 40, new Color(255, 98, 0, Math.min(Math.max(alpha, 1), 255)).hashCode());
+            BThackRender.drawString(LanguageSystem.translate("lang.module.ItemSaver.saveMessage"), (mc.getWindow().getScaledWidth() / 2f) - (FontUtils.getTextWidth(LanguageSystem.translate("lang.module.ItemSaver.saveMessage")) / 2f), (mc.getWindow().getScaledHeight() / 2f) + 40, ColorUtils.fastRGBA(255, 98, 0, Math.min(Math.max(alpha, 1), 255)));
         }
         if (alpha > 0) alpha--;
     }

@@ -3,6 +3,7 @@ package com.ferra13671.BThack.api.Gui.ClickGui.component;
 import com.ferra13671.BThack.Core.Client.Client;
 import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.Core.Render.BThackRender;
+import com.ferra13671.BThack.Core.Render.Font.FontRenderManager;
 import com.ferra13671.BThack.Core.Render.Font.FontUtils;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Animation.Animation;
@@ -176,7 +177,7 @@ public class Frame implements Mc {
 		}
 		if (ModuleList.clickGui.frameOutline.getValue())
 			BThackRender.drawOutlineRect(x, y, x + FRAME_WIDTH, y + BAR_HEIGHT, 1, BAR_OUTLINE_COLOR);
-		BThackRender.drawString(frameName, x + (FRAME_WIDTH / 2f) - (FontUtils.getTextWidth(frameName) / 2f), y + (BAR_HEIGHT / 2f) - (FontUtils.getTextHeight(frameName) / 2f), Client.clientInfo.getColorTheme().moduleDisabledColor());
+		BThackRender.drawString(frameName, x + (FRAME_WIDTH / 2f) - (FontUtils.getTextWidth(frameName) / 2f), y + (BAR_HEIGHT / 2f) - (FontUtils.getTextHeight(frameName) / 2f), ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()), true, FontRenderManager.DrawMode.NORMAL_BOLD);
 	}
 	
 	public void refresh() {

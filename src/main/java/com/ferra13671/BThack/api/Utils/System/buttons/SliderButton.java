@@ -2,6 +2,7 @@ package com.ferra13671.BThack.api.Utils.System.buttons;
 
 
 import com.ferra13671.BThack.Core.Render.BThackRender;
+import com.ferra13671.BThack.Core.Render.Font.FontRenderManager;
 import com.ferra13671.BThack.Core.Render.Font.FontUtils;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 
@@ -32,7 +33,7 @@ public class SliderButton extends Button {
 
         BThackRender.drawOutlineRect(getCenterX() - getWidth(), getCenterY() - getHeight(), getCenterX() + getWidth(), getCenterY() + getHeight(), 1, ColorUtils.WHITE);
 
-        BThackRender.drawString(getText() + ": " + value, getCenterX() - getWidth() + 3, getCenterY() - (int) (FontUtils.getTextHeight(getText()) / 2f), ColorUtils.WHITE);
+        BThackRender.drawString(getText() + ": " + value, getCenterX() - getWidth() + 3, getCenterY() - (int) (FontUtils.getTextHeight(getText()) / 2f), ColorUtils.WHITE, true, FontRenderManager.DrawMode.NORMAL_BOLD);
     }
 
     @Override

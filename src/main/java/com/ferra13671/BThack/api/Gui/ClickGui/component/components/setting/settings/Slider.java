@@ -65,7 +65,7 @@ public class Slider extends AbstractSetting implements Mc {
 			BThackRender.drawRect(parent.parent.getX() + 2, parent.parent.getY() + offset + 11, parent.parent.getX() + 2 + (int) renderWidth, parent.parent.getY() + offset + 15, ClickGui.getClickGuiColor(false));
 		}
 
-		BThackRender.drawString(op.getName() + ": " + set.getValue(), parent.parent.getX() + 2, (parent.parent.getY() + offset + 1), Client.clientInfo.getColorTheme().moduleDisabledColor());
+		BThackRender.drawString(op.getName() + ": " + set.getValue(), parent.parent.getX() + 2, (parent.parent.getY() + offset + 1), ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()));
 
 
 		/*

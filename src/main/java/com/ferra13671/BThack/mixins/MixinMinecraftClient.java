@@ -133,7 +133,7 @@ public abstract class MixinMinecraftClient implements Mc {
     @Inject(method = "stop", at = @At("HEAD"))
     public void modifyStop(CallbackInfo ci) {
         if (closing) return;
-        GLTextureSystem.close();
+        GLTextureSystem.close(); //Deletes all textures that were ever loaded into the GLTextureSystem at runtime.
         closing = true;
     }
 

@@ -17,10 +17,9 @@ public final class FontUtils implements Mc {
         else return mc.textRenderer.getWidth(text);
     }
 
-    public static float getTextWidth(String text, boolean smallFont) {
+    public static float getTextWidth(String text, FontRenderManager.DrawMode drawMode) {
         if (ModuleList.customFont.isEnabled()) {
-            if (!smallFont) return BThackRender.fontRenderManager.normalFontRenderer.getStringWidth(text);
-            else return BThackRender.fontRenderManager.smallFontRenderer.getStringWidth(text);
+            return BThackRender.fontRenderManager.fontRendererOf(drawMode).getStringWidth(text);
         } else return mc.textRenderer.getWidth(text);
     }
 
@@ -29,20 +28,19 @@ public final class FontUtils implements Mc {
         else return mc.textRenderer.fontHeight;
     }
 
-    public static float getTextHeight(String text, boolean smallFont) {
+    public static float getTextHeight(String text, FontRenderManager.DrawMode drawMode) {
         if (ModuleList.customFont.isEnabled()) {
-            if (!smallFont) return BThackRender.fontRenderManager.normalFontRenderer.getStringHeight(text);
-            else return BThackRender.fontRenderManager.smallFontRenderer.getStringHeight(text);
+            return BThackRender.fontRenderManager.fontRendererOf(drawMode).getStringHeight(text);
         } else return mc.textRenderer.fontHeight;
     }
 
     public static Font createFont(InputStream inputStream, float size) throws IOException, FontFormatException {
-        return Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(inputStream)).deriveFont(Font.PLAIN, size / 2f);
+        return Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(inputStream)).deriveFont(Font.PLAIN, size);
     }
 
     public static Font createFontNoThrow(InputStream inputStream, float size) {
         try {
-            return Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(inputStream)).deriveFont(Font.PLAIN, size / 2f);
+            return Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(inputStream)).deriveFont(Font.PLAIN, size);
         } catch (Exception ignored) {
             return null;
         }

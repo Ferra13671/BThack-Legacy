@@ -54,7 +54,7 @@ public class ArmorComponent extends HudComponent {
                 }
 
                 BThackRender.drawItem(BThackRender.guiGraphics, armorStack, (int) getX(), (int) getY() + y, null, false);
-                BThackRender.drawString(text, (int) getX() + 20, (int) getY() + y, armorStack.getItemBarColor());
+                BThackRender.drawString(text, (int) getX() + 20, (int) getY() + y, ColorUtils.fastRGBA(armorStack.getItemBarColor()));
                 BThackRender.drawRect((int) getX() + 20, (int) (getY() + y + FontUtils.getTextHeight(text)), (int) getX() + 20 + 50, (int) (getY() + y + FontUtils.getTextHeight(text) + 3), ColorUtils.BLACK);
                 if (ItemUtils.getItemDurabilityInPercentages(armorStack) > 0)
                     BThackRender.drawRect((int) getX() + 20, (int) (getY() + y + FontUtils.getTextHeight(text)), (int) (getX() + 20 + (50 * (ItemUtils.getItemDurabilityInPercentages(armorStack) / 100f))), (int) (getY() + y + FontUtils.getTextHeight(text) + 3), ColorUtils.fastRGBA(armorStack.getItemBarColor()));

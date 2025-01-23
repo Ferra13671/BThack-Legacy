@@ -1,6 +1,7 @@
 package com.ferra13671.BThack.api.Utils.System.buttons;
 
 import com.ferra13671.BThack.Core.Render.BThackRender;
+import com.ferra13671.BThack.Core.Render.Font.FontRenderManager;
 import com.ferra13671.BThack.Core.Render.Font.FontUtils;
 
 public class SwitchButton extends Button {
@@ -16,7 +17,7 @@ public class SwitchButton extends Button {
     @Override
     public void renderButton() {
         drawPlate(getAnimationDelta());
-        BThackRender.drawString(this.getText(), this.getCenterX() - this.getHalfTextWidth(), this.getCenterY() - (FontUtils.getTextHeight(getText()) / 2f), -1);
+        BThackRender.drawString(this.getText(), this.getCenterX() - this.getHalfTextWidth(), this.getCenterY() - (FontUtils.getTextHeight(getText()) / 2f), -1, true, FontRenderManager.DrawMode.NORMAL_BOLD);
     }
 
     @Override

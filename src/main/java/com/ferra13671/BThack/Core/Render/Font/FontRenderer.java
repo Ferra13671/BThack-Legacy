@@ -14,7 +14,6 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.minecraft.client.render.*;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.Identifier;
 import org.joml.Matrix4f;
 import org.lwjgl.opengl.GL11;
 
@@ -294,9 +293,7 @@ public class FontRenderer implements Closeable, Mc {
                 prebakeGlyphsFuture.get();
                 prebakeGlyphsFuture = null;
             }
-            for (GlyphMap map : maps) {
-                map.destroy();
-            }
+            maps.forEach(GlyphMap::destroy);
             maps.clear();
             allGlyphs.clear();
             initialized = false;

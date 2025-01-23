@@ -14,6 +14,6 @@ public class ButtonWithOffset extends Button {
 
     @Override
     public int getCenterY() {
-        return (int) centerY + ((offset * (getHeight() * 2)));
+        return centerY + ((offset * (getHeight() * 2)));
     }
 }

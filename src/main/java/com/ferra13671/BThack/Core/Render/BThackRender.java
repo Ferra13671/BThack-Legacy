@@ -64,6 +64,8 @@ public final class BThackRender implements Mc {
     }
 
     public static void reloadFontRenderManager() throws Exception {
+        if (fontRenderManager != null)
+            fontRenderManager.close();
         if (Client.clientInfo.getFont().equals("default")) fontRenderManager = new FontRenderManager(defaultFont);
         else if (Files.exists(Paths.get("BThack/Fonts/" + Client.clientInfo.getFont()))) fontRenderManager = new FontRenderManager(FontUtils.createFont(ConfigUtils.newInputStream("BThack/Fonts/" + Client.clientInfo.getFont(), PathMode.OUTSIDEJAR), 17));
     }
@@ -304,30 +306,29 @@ public final class BThackRender implements Mc {
         draw(buffer.end());
     }
 
-    public static void drawString(String text, float x1, float y1, int color, boolean shadow, boolean small) {
+    public static void drawString(String text, float x, float y, int color, boolean shadow, FontRenderManager.DrawMode drawMode) {
 
         if (text == null || text.isEmpty()) return;
 
         if (!ModuleList.customFont.isEnabled()) {
             guiGraphics.getMatrices().push();
-            float size = small ? 0.7f : 1;
-            if (small)
+            float size = drawMode.getSize();
+            if (size != 1f)
                 guiGraphics.getMatrices().scale(size, size, size);
             RenderSystem.disableDepthTest();
-            mc.textRenderer.draw(text, x1 * (1 / size), y1 * (1 / size), color, shadow, guiGraphics.getMatrices().peek().getPositionMatrix(), ((IDrawContext) guiGraphics).getVertexConsumers(), TextRenderer.TextLayerType.NORMAL, 0, 15728880, mc.textRenderer.isRightToLeft());
+            mc.textRenderer.draw(text, x * (1 / size), y * (1 / size), color, shadow, guiGraphics.getMatrices().peek().getPositionMatrix(), ((IDrawContext) guiGraphics).getVertexConsumers(), TextRenderer.TextLayerType.NORMAL, 0, 15728880, mc.textRenderer.isRightToLeft());
             guiGraphics.draw();
             resetShader();
             RenderSystem.enableDepthTest();
             guiGraphics.getMatrices().pop();
         } else {
             RenderSystem.enableDepthTest();
-            if (small) fontRenderManager.drawSmall(text, x1, y1, ColorUtils.fastRGBA(color), shadow);
-            else fontRenderManager.drawNormal(text, x1, y1, ColorUtils.fastRGBA(color), shadow);
+            fontRenderManager.draw(text, x, y, color, shadow, drawMode);
         }
     }
 
     public static void drawString(String text, float x1, float y1, int color, boolean shadow) {
-        drawString(text, x1, y1, color, shadow, false);
+        drawString(text, x1, y1, color, shadow, FontRenderManager.DrawMode.NORMAL);
     }
 
     public static void drawString(String text, float x1, float y1, int color) {
@@ -335,11 +336,11 @@ public final class BThackRender implements Mc {
     }
 
     public static void drawCenteredString(String text, float x1, float y1, int color) {
-        drawCenteredString(text, x1, y1, color, false);
+        drawCenteredString(text, x1, y1, color, FontRenderManager.DrawMode.NORMAL);
     }
 
-    public static void drawCenteredString(String text, float x1, float y1, int color, boolean small) {
-        drawString(text, (x1 - (FontUtils.getTextWidth(text, small) / 2f)), y1, color, true, small);
+    public static void drawCenteredString(String text, float x1, float y1, int color, FontRenderManager.DrawMode drawMode) {
+        drawString(text, (x1 - (FontUtils.getTextWidth(text, drawMode) / 2f)), y1, color, true, drawMode);
     }
 
     /**

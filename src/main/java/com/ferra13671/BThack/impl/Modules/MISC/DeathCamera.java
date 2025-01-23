@@ -2,6 +2,7 @@ package com.ferra13671.BThack.impl.Modules.MISC;
 
 import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.Core.Render.BThackRender;
+import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Events.Camera.PositionCameraEvent;
 import com.ferra13671.BThack.api.Events.Camera.RotateCameraEvent;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
@@ -19,8 +20,6 @@ import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
 import net.minecraft.client.gui.screen.DeathScreen;
 import net.minecraft.client.input.KeyboardInput;
 import net.minecraft.util.math.Vec2f;
-
-import java.awt.*;
 
 public class DeathCamera extends Module {
 
@@ -125,7 +124,7 @@ public class DeathCamera extends Module {
     @EventSubscriber
     public void onHudRender(RenderHudPreEvent e) {
         if (death) {
-            BThackRender.drawCenteredString(String.format(LanguageSystem.translate("lang.module.DeathCamera.message"), KeyboardUtils.getKeyName(respawnKey.getValue())), mc.getWindow().getScaledWidth() / 2f, mc.getWindow().getScaledHeight() / 4f, new Color(255, 100, 100).hashCode());
+            BThackRender.drawCenteredString(String.format(LanguageSystem.translate("lang.module.DeathCamera.message"), KeyboardUtils.getKeyName(respawnKey.getValue())), mc.getWindow().getScaledWidth() / 2f, mc.getWindow().getScaledHeight() / 4f, ColorUtils.fastRGBA(255, 100, 100, 255));
         }
     }
 }

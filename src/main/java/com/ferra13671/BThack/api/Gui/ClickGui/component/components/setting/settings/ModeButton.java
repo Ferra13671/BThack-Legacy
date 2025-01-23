@@ -34,7 +34,7 @@ public class ModeButton extends AbstractSetting {
 			BThackRender.guiGraphics.getMatrices().push();
 			BThackRender.guiGraphics.getMatrices().scale(scale, scale, 1);
 		}
-		BThackRender.drawString(text, (parent.parent.getX() + 2) / scale, (parent.parent.getY() + offset + 4) / scale, Client.clientInfo.getColorTheme().moduleDisabledColor());
+		BThackRender.drawString(text, (parent.parent.getX() + 2) / scale, (parent.parent.getY() + offset + 4) / scale, ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()));
 		if (scale != 1)
 			BThackRender.guiGraphics.getMatrices().pop();
 	}

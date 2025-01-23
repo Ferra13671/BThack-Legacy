@@ -114,7 +114,7 @@ public class ModuleButton extends Component implements Mc {
 		BThackRender.drawString(module.getName(), (parent.getX() + 5), (parent.getY() + offset + (BUTTON_HEIGHT / 2f) - (FontUtils.getTextHeight(module.getName())) / 2f), getModuleTextColor());
 
 		if (!settings.isEmpty()) {
-			BThackRender.drawString(open ? "-" : "+", (parent.getX() + parent.getWidth() - 10), (parent.getY() + offset + 2), new Color(Client.clientInfo.getColorTheme().moduleDisabledColor()).hashCode());
+			BThackRender.drawString(open ? "-" : "+", (parent.getX() + parent.getWidth() - 10), (parent.getY() + offset + 2), ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()));
 		}
 		if(renderOpen || open) {
 			if(!settings.isEmpty()) {
