@@ -23,7 +23,7 @@ public class PhaseESP extends Module {
 
     public PhaseESP() {
         super("PhaseESP",
-                "",
+                "lang.module.PhaseESP",
                 KeyboardUtils.RELEASE,
                 Module.MCategory.RENDER,
                 false
