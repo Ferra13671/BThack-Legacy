@@ -2,7 +2,6 @@ package com.ferra13671.BThack.mixins.render;
 
 import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.Core.Render.Utils.BThackRenderUtils;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.render.*;
 import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Mixin;
@@ -16,8 +15,7 @@ public class MixinWorldRenderer {
     @Inject(method = "render", at = @At("HEAD"))
     private void beforeRender(RenderTickCounter tickCounter, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer, LightmapTextureManager lightmapTextureManager, Matrix4f positionMatrix, Matrix4f projectionMatrix, CallbackInfo ci) {
         BThackRenderUtils.lastWorldMatrix.set(positionMatrix);
-        BThackRenderUtils.lastProjMatrix.set(RenderSystem.getProjectionMatrix());
-        BThackRenderUtils.lastModViewMatrix.set(RenderSystem.getModelViewMatrix());
+        BThackRenderUtils.updateMatrixData();
     }
 
     @Inject(method = "renderWeather", at = @At("HEAD"), cancellable = true)

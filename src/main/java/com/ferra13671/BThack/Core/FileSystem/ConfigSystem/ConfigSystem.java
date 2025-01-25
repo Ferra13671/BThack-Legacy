@@ -11,6 +11,7 @@ import com.ferra13671.BThack.api.Gui.MainMenu.SelectWallpaper.Wallpaper;
 import com.ferra13671.BThack.api.HudComponent.HudComponent;
 import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.*;
+import com.ferra13671.BThack.api.Managers.managers.Waypoint.Waypoint;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Plugin.Plugin;
 import com.ferra13671.BThack.api.Plugin.PluginSystem;
@@ -26,6 +27,7 @@ import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
 import com.ferra13671.TextureUtils.GLTexture;
 import com.ferra13671.TextureUtils.PathMode;
 import com.google.gson.*;
+import net.minecraft.util.math.Vec3d;
 import org.apache.commons.io.FilenameUtils;
 
 import java.io.*;
@@ -56,6 +58,7 @@ public final class ConfigSystem {
             saveActionBotTasks();
             saveAutoAuthPasswords();
             saveClientInfo();
+            saveWaypoints();
         } catch (IOException e) {
             BThack.error(e.getMessage());
         }
@@ -76,6 +79,7 @@ public final class ConfigSystem {
             loadActionBotTasks();
             loadAutoAuthPasswords();
             loadClientInfo();
+            loadWaypoints();
         } catch (IOException e) {
             BThack.error(e.getMessage());
         }
@@ -518,6 +522,57 @@ public final class ConfigSystem {
                 jsonElement.getAsJsonObject().asMap().forEach((playerName, password) -> AutoAuth.passwords.put(playerName, password.getAsString()));
             }
         }, () -> {});
+    }
+
+    public static void saveWaypoints() throws IOException {
+        ConfigUtils.saveInJson("Waypoints", "", jsonObject -> {
+            JsonArray jsonList = new JsonArray();
+            for (Waypoint waypoint : Managers.WAYPOINT_MANAGER.getWaypoints()) {
+                JsonObject wpObject = new JsonObject();
+                JsonArray wpPosition = new JsonArray();
+                wpPosition.add(waypoint.getPosition().getX());
+                wpPosition.add(waypoint.getPosition().getY());
+                wpPosition.add(waypoint.getPosition().getZ());
+
+                add(wpObject, "name", waypoint.getName());
+                add(wpObject, "position", wpPosition);
+                add(wpObject, "visible", waypoint.isVisible());
+                add(wpObject, "dimension", waypoint.getDimension().name());
+                add(wpObject, "color", waypoint.getColor());
+
+                jsonList.add(wpObject);
+            }
+            add(jsonObject, "waypoints", jsonList);
+        });
+    }
+
+    public static void loadWaypoints() throws IOException {
+        ConfigUtils.loadFromJson("Waypoints", "", jsonObject -> {
+            if (!_null(jsonObject, "waypoints")) {
+                JsonArray waypoints = jsonObject.get("waypoints").getAsJsonArray();
+                waypoints.asList().forEach(jsonElement -> {
+                    JsonObject waypoint = jsonElement.getAsJsonObject();
+
+                    String name = Waypoint.DEFAULT_NAME.get();
+                    Vec3d position = new Vec3d(Waypoint.DEFAULT_POSITION[0], Waypoint.DEFAULT_POSITION[1], Waypoint.DEFAULT_POSITION[2]);
+                    boolean visible = Waypoint.DEFAULT_VISIBLE;
+                    Waypoint.WaypointDimension dimension = Waypoint.DEFAULT_DIMENSION;
+                    int color = Waypoint.DEFAULT_COLOR;
+
+                    if (!_null(waypoint, "name")) name = waypoint.get("name").getAsString();
+                    if (!_null(waypoint, "position")) {
+                        JsonArray jsonList = waypoint.get("position").getAsJsonArray();
+                        position = new Vec3d(jsonList.get(0).getAsDouble(), jsonList.get(1).getAsDouble(), jsonList.get(2).getAsDouble());
+                    }
+                    if (!_null(waypoint, "visible")) visible = waypoint.get("visible").getAsBoolean();
+                    if (!_null(waypoint, "dimension")) dimension = Waypoint.WaypointDimension.valueOf(waypoint.get("dimension").getAsString());
+                    if (!_null(waypoint, "color")) color = waypoint.get("color").getAsInt();
+
+                    Managers.WAYPOINT_MANAGER.addWaypoint(new Waypoint(name, position, visible, dimension, color));
+                });
+            }
+        }
+        , () -> {});
     }
 
 

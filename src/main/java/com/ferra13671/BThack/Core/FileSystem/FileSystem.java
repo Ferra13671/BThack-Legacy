@@ -31,29 +31,30 @@ public final class FileSystem {
         registerFolder("Wallpapers", "");
         registerFolder("Configs", "");
         registerFolder("Fonts", "");
-        registerFile("AutoAuthPasswords", "", "json");
-        registerFile("VersionInfo", "", "json");
-        registerFile("Friends", "Social/Friends", "txt");
-        registerFile("Enemies", "Social/Enemies", "txt");
-        registerFile("Spammer", "Spammer", "txt");
-        registerFile("ConfigInfo", "ActionBot", "txt");
-        registerFile("CurrentConfig", "Modules", "txt");
-        registerFile("Frames", "", "json");
-        registerFile("ClientInfo", "", "json");
+        registerFile("AutoAuthPasswords", "", FileType.JSON);
+        registerFile("VersionInfo", "", FileType.JSON);
+        registerFile("Friends", "Social/Friends", FileType.TXT);
+        registerFile("Enemies", "Social/Enemies", FileType.TXT);
+        registerFile("Spammer", "Spammer", FileType.TXT);
+        registerFile("ConfigInfo", "ActionBot", FileType.TXT);
+        registerFile("CurrentConfig", "Modules", FileType.TXT);
+        registerFile("Frames", "", FileType.JSON);
+        registerFile("ClientInfo", "", FileType.JSON);
+        registerFile("Waypoints", "", FileType.JSON);
     }
 
-    public static void registerFile(String name, String path, String typeFile) throws IOException {
-        Path path1 = Paths.get(Paths.get("BThack/" + path + "/" + name + "." + typeFile).toUri());
+    public static void registerFile(String name, String path, FileType typeFile) throws IOException {
+        Path path1 = Paths.get(Paths.get("BThack/" + path + "/" + name + "." + typeFile.getFileType()).toUri());
         if (!Files.exists(path1)) {
             Files.createFile(path1);
-            BThack.debug(name + "." + typeFile + " file was created successfully");
-            if (typeFile.equals("json")) {
+            BThack.debug(name + "." + typeFile.getFileType() + " file was created successfully");
+            if (typeFile == FileType.JSON) {
                 BufferedWriter writer = Files.newBufferedWriter(path1, StandardCharsets.UTF_8);
                 writer.write("{}");
                 writer.close();
             }
         } else {
-            BThack.debug(name + "." + typeFile + " file already exists");
+            BThack.debug(name + "." + typeFile.getFileType() + " file already exists");
         }
 
     }
@@ -99,5 +100,20 @@ public final class FileSystem {
             }
         }
         directory.delete();
+    }
+
+    public enum FileType {
+        TXT("txt"),
+        JSON("json");
+
+        private final String fileType;
+
+        FileType(String fileType) {
+            this.fileType = fileType;
+        }
+
+        public String getFileType() {
+            return fileType;
+        }
     }
 }

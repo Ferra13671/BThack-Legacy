@@ -21,7 +21,7 @@ public abstract class DataList<T, KEY> {
     public DataList(String txtName) {
         this.txtName = txtName;
         try {
-            FileSystem.registerFile(txtName, "", "json");
+            FileSystem.registerFile(txtName, "", FileSystem.FileType.JSON);
         } catch (Exception ignored) {}
     }
 

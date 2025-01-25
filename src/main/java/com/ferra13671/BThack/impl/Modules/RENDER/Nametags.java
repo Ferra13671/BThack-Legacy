@@ -20,7 +20,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.math.Vec3d;
-import org.joml.Vector4d;
 
 import java.util.Arrays;
 
@@ -60,7 +59,7 @@ public class Nametags extends Module {
     }
 
     public void renderItemNametag(ItemEntity itemEntity) {
-        float[] cords = getNametagPos(itemEntity, 0);
+        float[] cords = BThackRenderUtils.worldPosToScreenXY(getNametagPos(itemEntity, 0), false);
         if (cords == null) return;
 
         BThackRender.drawItem(BThackRender.guiGraphics, itemEntity.getStack(), (int) cords[0] - 8, (int) cords[1] - 18, null, true);
@@ -68,7 +67,7 @@ public class Nametags extends Module {
     }
 
     public void renderPlayerNametag(PlayerEntity player) {
-        float[] cords = getNametagPos(player, player.getHeight() + 0.3f);
+        float[] cords = BThackRenderUtils.worldPosToScreenXY(getNametagPos(player, player.getHeight() + 0.3f), false);
         if (cords == null) return;
 
         BThackRender.guiGraphics.getMatrices().push();
@@ -131,27 +130,11 @@ public class Nametags extends Module {
 
     }
 
-    public float[] getNametagPos(Entity entity, float yPlus) {
+    public Vec3d getNametagPos(Entity entity, float yPlus) {
         double x = entity.prevX + (entity.getX() - entity.prevX) * mc.getRenderTickCounter().getTickDelta(true);
         double y = entity.prevY + (entity.getY() - entity.prevY) * mc.getRenderTickCounter().getTickDelta(true);
         double z = entity.prevZ + (entity.getZ() - entity.prevZ) * mc.getRenderTickCounter().getTickDelta(true);
-        Vec3d vector = new Vec3d(x, y + yPlus, z);
-
-        Vector4d position;
-
-        vector = BThackRenderUtils.worldCordsToScreenCords(vector);
-
-        if (vector.z > 0 && vector.z < 1) {
-            position = new Vector4d(vector.x, vector.y, vector.z, 0);
-            position.x = Math.min(vector.x, position.x);
-            position.y = Math.min(vector.y, position.y);
-            position.z = Math.max(vector.x, position.z);
-        } else {
-            return null;
-        }
-
-        //                      X                  Y
-        return new float[]{(float) position.x, (float) position.y};
+        return new Vec3d(x, y + yPlus, z);
     }
 
     public void drawBase(float leftX, float upY, float rightX, float downY) {

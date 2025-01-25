@@ -198,6 +198,7 @@ public final class ModuleList {
     public static Search search;
     public static Tooltips tooltips;
     public static Tracers tracers;
+    public static Waypoints waypoints;
     public static Xray xray;
 
     //WORLD
@@ -394,6 +395,7 @@ public final class ModuleList {
         search = register(new Search());
         tooltips = register(new Tooltips());
         tracers = register(new Tracers());
+        waypoints = register(new Waypoints());
         xray = register(new Xray());
 
         //WORLD

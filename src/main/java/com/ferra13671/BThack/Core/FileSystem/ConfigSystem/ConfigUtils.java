@@ -48,7 +48,7 @@ public final class ConfigUtils {
         Path savePath = Paths.get("BThack/" + path + "/" + fileName + ".txt");
 
         if (!Files.exists(savePath)) {
-            FileSystem.registerFile(fileName, path, "txt");
+            FileSystem.registerFile(fileName, path, FileSystem.FileType.TXT);
             return;
         }
 
@@ -67,7 +67,7 @@ public final class ConfigUtils {
         if (Files.exists(savePath)) {
             File file = savePath.toFile();
             file.delete();
-            FileSystem.registerFile(fileName, path, "txt");
+            FileSystem.registerFile(fileName, path, FileSystem.FileType.TXT);
         }
 
         BufferedWriter writer = Files.newBufferedWriter(savePath, StandardCharsets.UTF_8);

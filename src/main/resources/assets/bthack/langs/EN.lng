@@ -174,6 +174,7 @@
 "lang.module.Search": Highlights the needed blocks.
 "lang.module.Tooltips": Shows the contents of the shulker.
 "lang.module.Tracers": Draws lines leading to entities.
+"lang.module.Waypoints": Allows rendering of waypoints.
 "lang.module.Xray": Allows you to cancel the rendering of blocks.
 
 //WORLD
@@ -249,6 +250,7 @@
 "lang.argument.ServerPacket.exception": '%s' is not a server->client packet.
 "lang.argument.PacketListPacket.exception": Packet '%s' is not in this packet list.
 "lang.argument.File.exception": File '%s' was not found or does not meet the conditions.
+"lang.argument.Waypoint.exception": Waypoint '%s' does not exist.
 
 
 //Commands
@@ -285,6 +287,7 @@
 "lang.command.Module.description": Performs a specific action on a module.
 "lang.command.CordsCopy.description": Copies the player's coordinates.
 "lang.command.CustomFont.description": Allows you to select a custom font from a folder or set the default font.
+"lang.command.Waypoint.description": Adds, deletes, modifies a waypoint or shows a list of waypoints.
 
 
 "lang.command.ClanList.message2":   Members:
@@ -329,6 +332,9 @@
 "lang.command.Prefix.changed": The prefix was changed to %s.
 "lang.command.CordsCopy.successfulMessage": The coordinates have been successfully copied.
 "lang.command.CordsCopy.errorMessage": Failed to copy player coordinates.
+"lang.command.Waypoint.added": Waypoint '%s' has been successfully added.
+"lang.command.Waypoint.removed": Waypoint '%s' has been successfully removed.
+"lang.command.Waypoint.changedValue": [Waypoint: %s]%s The %s value has been changed to: %s.
 
 "lang.command.List.listCleared": %s list cleared!
 

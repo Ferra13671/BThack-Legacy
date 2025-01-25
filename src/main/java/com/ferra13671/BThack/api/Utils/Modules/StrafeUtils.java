@@ -48,12 +48,24 @@ public final class StrafeUtils implements Mc {
     }
 
     public static double[] getMoveFactors() {
-        double yaw = Math.toRadians(StrafeUtils.getPlayerYawOnInput());
+        return getMoveFactors(StrafeUtils.getPlayerYawOnInput());
+    }
+
+    public static double[] getMoveFactors(float yaw) {
+        yaw = (float) Math.toRadians(yaw);
         return new double[]{-Math.sin(yaw), Math.cos(yaw)};
     }
 
     public static double[] getMoveFactors(double speed) {
         double[] move = getMoveFactors();
+        move[0] = move[0] * speed;
+        move[1] = move[1] * speed;
+        return move;
+    }
+
+    public static double[] getMoveFactors(double speed, float yaw) {
+        yaw = (float) Math.toRadians(yaw);
+        double[] move = getMoveFactors(yaw);
         move[0] = move[0] * speed;
         move[1] = move[1] * speed;
         return move;

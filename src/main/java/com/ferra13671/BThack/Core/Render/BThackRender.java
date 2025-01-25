@@ -340,7 +340,7 @@ public final class BThackRender implements Mc {
     }
 
     public static void drawCenteredString(String text, float x1, float y1, int color, FontRenderManager.DrawMode drawMode) {
-        drawString(text, (x1 - (FontUtils.getTextWidth(text, drawMode) / 2f)), y1, color, true, drawMode);
+        drawString(text, (x1 - (FontUtils.getTextWidth(text, drawMode) / (drawMode == FontRenderManager.DrawMode.NORMAL || drawMode == FontRenderManager.DrawMode.NORMAL_BOLD || ModuleList.customFont.isEnabled() ? 2f : 2.85714f))), y1, color, true, drawMode);
     }
 
     /**

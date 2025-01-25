@@ -173,6 +173,7 @@
 "lang.module.Search": Podkreśla właściwe bloki.
 "lang.module.Tooltips": Pokazuje zawartość shulkera.
 "lang.module.Tracers": Rysuje linie prowadzące do podmiotów.
+"lang.module.Waypoints": Umożliwia renderowanie waypointów.
 "lang.module.Xray": Umożliwia anulowanie rysowania bloków.
 
 //WORLD
@@ -247,6 +248,7 @@
 "lang.argument.ServerPacket.exception": '%s' nie jest pakietem serwer->klient.
 "lang.argument.PacketListPacket.exception": Na liście pakietów brakuje pakietu '%s'.
 "lang.argument.File.exception": Plik '%s' nie został znaleziony lub nie spełnia warunków.
+"lang.argument.Waypoint.exception": Waypoint '%s' nie istnieje.
 
 
 //Commands
@@ -283,6 +285,7 @@
 "lang.command.Module.description": Wykonuje określoną akcję na module.
 "lang.command.CordsCopy.description": Kopiuje współrzędne gracza.
 "lang.command.CustomFont.description": Umożliwia wybranie niestandardowej czcionki z folderu lub ustawienie czcionki domyślnej.
+"lang.command.Waypoint.description": Dodaje, usuwa, modyfikuje waypoint lub wyświetla listę waypointów.
 
 
 "lang.command.ClanList.message2":   Uczestnicy:
@@ -327,6 +330,9 @@
 "lang.command.Prefix.changed": Prefiks został zmieniony na %s.
 "lang.command.CordsCopy.successfulMessage": Współrzędne zostały pomyślnie skopiowane.
 "lang.command.CordsCopy.errorMessage": Nie udało się skopiować współrzędnych gracza.
+"lang.command.Waypoint.added": Waypoint '%s' został pomyślnie dodany.
+"lang.command.Waypoint.removed": Waypoint '%s' został pomyślnie usunięty.
+"lang.command.Waypoint.changedValue": [Waypoint: %s]%s Wartość %s została zmieniona na: %s.
 
 "lang.command.List.listCleared": Lista %s została wyczyszczona!
 

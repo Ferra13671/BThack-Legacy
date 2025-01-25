@@ -30,7 +30,7 @@ public final class FontUtils implements Mc {
 
     public static float getTextHeight(String text, FontRenderManager.DrawMode drawMode) {
         if (ModuleList.customFont.isEnabled()) {
-            return BThackRender.fontRenderManager.fontRendererOf(drawMode).getStringHeight(text);
+            return BThackRender.fontRenderManager.fontRendererOf(drawMode).getStringHeight(text) / 2;
         } else return mc.textRenderer.fontHeight;
     }
 

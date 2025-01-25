@@ -1,0 +1,181 @@
+package com.ferra13671.BThack.impl.Commands;
+
+import com.ferra13671.BThack.Core.FileSystem.ConfigSystem.ConfigSystem;
+import com.ferra13671.BThack.Core.Render.Utils.BThackRenderUtils;
+import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
+import com.ferra13671.BThack.api.Managers.Managers;
+import com.ferra13671.BThack.api.Managers.managers.Command.AbstractCommand;
+import com.ferra13671.BThack.api.Managers.managers.Command.Arguments;
+import com.ferra13671.BThack.api.Managers.managers.Waypoint.Waypoint;
+import com.ferra13671.BThack.impl.Modules.CLIENT.ClientSettings;
+import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import com.mojang.brigadier.context.CommandContext;
+import net.minecraft.command.CommandSource;
+import net.minecraft.util.Formatting;
+import net.minecraft.util.math.Vec3d;
+
+import java.io.IOException;
+import java.util.List;
+
+public class WaypointCommand extends AbstractCommand {
+    public WaypointCommand() {
+        super("lang.command.Waypoint.description", "waypoint");
+    }
+
+    @Override
+    public void compile(LiteralArgumentBuilder<CommandSource> builder) {
+        builder.then(literal("list").then(arg("mode", Arguments.MODE("OnlyNames", "Full")).executes(context -> {
+            sendMessage(Formatting.AQUA + "|$#> " + ClientSettings.getFriendColor() + "Waypoints" + Formatting.AQUA + " <#&|");
+
+            sendMessage(Formatting.DARK_PURPLE + " Overworld:");
+            sendWaypointList(Managers.WAYPOINT_MANAGER.getOverworldWaypoints(), context);
+
+            sendMessage(Formatting.DARK_PURPLE + " Nether:");
+            sendWaypointList(Managers.WAYPOINT_MANAGER.getNetherWaypoints(), context);
+
+            sendMessage(Formatting.DARK_PURPLE + " End:");
+            sendWaypointList(Managers.WAYPOINT_MANAGER.getEndWaypoints(), context);
+
+            return SUCCESFUL;
+        })));
+        builder.then(literal("add").then(
+                arg("name", Arguments.STRING_ONE).then(
+                        arg("x", Arguments.DOUBLE).then(arg("y", Arguments.DOUBLE).then(arg("z", Arguments.DOUBLE)
+                                .then(arg("visible", Arguments.BOOLEAN).then(arg("dimension", Arguments.MODE("OVERWORLD", "END", "NETHER"))
+                                        .then(arg("red", Arguments.INTEGER(0, 255))
+                                                .then(arg("green", Arguments.INTEGER(0, 255))
+                                                        .then(arg("blue", Arguments.INTEGER(0, 255))
+                                                                .executes(context -> {
+                                                                    Managers.WAYPOINT_MANAGER.addWaypoint(
+                                                                            new Waypoint(
+                                                                                    context.getArgument("name", String.class),
+                                                                                    new Vec3d(
+                                                                                            context.getArgument("x", Double.class),
+                                                                                            context.getArgument("y", Double.class),
+                                                                                            context.getArgument("z", Double.class)
+                                                                                    ),
+                                                                                    context.getArgument("visible", Boolean.class),
+                                                                                    Waypoint.WaypointDimension.valueOf(context.getArgument("dimension", String.class)),
+                                                                                    ColorUtils.fastRGBA(
+                                                                                            context.getArgument("red", Integer.class),
+                                                                                            context.getArgument("green", Integer.class),
+                                                                                            context.getArgument("blue", Integer.class),
+                                                                                            255
+                                                                                    )
+                                                                            )
+                                                                    );
+                                                                    try {
+                                                                        ConfigSystem.saveWaypoints();
+                                                                    } catch (IOException ignored) {}
+
+                                                                    sendMessage(Formatting.AQUA + String.format(LanguageSystem.translate("lang.command.Waypoint.added"), context.getArgument("name", String.class)));
+
+                                                                    return SUCCESFUL;
+                                                                })
+                                                        )
+                                                )
+                                        )
+                                ))
+                        ))
+                )
+        ));
+        builder.then(literal("remove").then(arg("waypoint", Arguments.WAYPOINT).executes(context -> {
+            Managers.WAYPOINT_MANAGER.removeWaypoint(context.getArgument("waypoint", Waypoint.class));
+            try {
+                ConfigSystem.saveWaypoints();
+            } catch (IOException ignored) {}
+
+            sendMessage(Formatting.AQUA +  String.format(LanguageSystem.translate("lang.command.Waypoint.removed"), Formatting.WHITE + context.getArgument("waypoint", Waypoint.class).getName() + Formatting.AQUA));
+
+            return SUCCESFUL;
+        })));
+        builder.then(literal("get").then(arg("waypoint", Arguments.WAYPOINT)
+                .then(literal("setName").then(arg("name", Arguments.STRING_ONE).executes(context -> {
+                    Waypoint waypoint = context.getArgument("waypoint", Waypoint.class);
+                    String oldName = waypoint.getName();
+                    String newName = context.getArgument("name", String.class);
+                    waypoint.setName(newName);
+                    try {
+                        ConfigSystem.saveWaypoints();
+                    } catch (IOException ignored) {}
+
+                    sendMessage(String.format(LanguageSystem.translate("lang.command.Waypoint.changedValue"), oldName, Formatting.AQUA, Formatting.WHITE + "Name: " + oldName + Formatting.AQUA, Formatting.WHITE + newName));
+
+                    return SUCCESFUL;
+                })))
+                .then(literal("setPosition").then(arg("x", Arguments.DOUBLE).then(arg("y", Arguments.DOUBLE).then(arg("z", Arguments.DOUBLE).executes(context -> {
+                    Waypoint waypoint = context.getArgument("waypoint", Waypoint.class);
+                    Vec3d oldPos = waypoint.getPosition();
+                    Vec3d newPos = new Vec3d(context.getArgument("x", Double.class), context.getArgument("y", Double.class), context.getArgument("z", Double.class));
+                    waypoint.setPosition(newPos);
+                    try {
+                        ConfigSystem.saveWaypoints();
+                    } catch (IOException ignored) {}
+
+                    sendMessage(String.format(LanguageSystem.translate("lang.command.Waypoint.changedValue"), waypoint.getName(), Formatting.AQUA, Formatting.WHITE + "Position: " + oldPos.getX() + " " + oldPos.getY() + " " + oldPos.getZ() + Formatting.AQUA, Formatting.WHITE + "" + newPos.getX() + " " + newPos.getY() + " " + newPos.getZ()));
+
+                    return SUCCESFUL;
+                })))))
+                .then(literal("setVisible").then(arg("visible", Arguments.BOOLEAN).executes(context -> {
+                    Waypoint waypoint = context.getArgument("waypoint", Waypoint.class);
+                    boolean oldVisible = waypoint.isVisible();
+                    boolean newVisible = context.getArgument("visible", Boolean.class);
+                    waypoint.setVisible(newVisible);
+                    try {
+                        ConfigSystem.saveWaypoints();
+                    } catch (IOException ignored) {}
+
+                    sendMessage(String.format(LanguageSystem.translate("lang.command.Waypoint.changedValue"), waypoint.getName(), Formatting.AQUA, Formatting.WHITE + "Visible: " + oldVisible + Formatting.AQUA, Formatting.WHITE + "" + newVisible));
+
+                    return SUCCESFUL;
+                })))
+                .then(literal("setDimension").then(arg("dimension", Arguments.MODE("OVERWORLD", "END", "NETHER")).executes(context -> {
+                    Waypoint waypoint = context.getArgument("waypoint", Waypoint.class);
+                    Waypoint.WaypointDimension oldDimension = waypoint.getDimension();
+                    Waypoint.WaypointDimension newDimension = Waypoint.WaypointDimension.valueOf(context.getArgument("dimension", String.class));
+                    waypoint.setDimension(newDimension);
+                    try {
+                        ConfigSystem.saveWaypoints();
+                    } catch (IOException ignored) {}
+
+                    sendMessage(String.format(LanguageSystem.translate("lang.command.Waypoint.changedValue"), waypoint.getName(), Formatting.AQUA, Formatting.WHITE + "Dimension: " + oldDimension.name() + Formatting.AQUA, Formatting.WHITE + newDimension.name()));
+
+                    return SUCCESFUL;
+                })))
+                .then(literal("setColor").then(arg("red", Arguments.INTEGER(0, 255)).then(arg("green", Arguments.INTEGER(0, 255)).then(arg("blue", Arguments.INTEGER(0, 255)).executes(context -> {
+                    Waypoint waypoint = context.getArgument("waypoint", Waypoint.class);
+                    float[] oldColor = BThackRenderUtils.hashCodeToRGB(waypoint.getColor());
+                    int[] newColor = new int[]{context.getArgument("red", Integer.class), context.getArgument("green", Integer.class), context.getArgument("blue", Integer.class)};
+                    waypoint.setColor(ColorUtils.fastRGBA(newColor[0], newColor[1], newColor[2], 255));
+                    try {
+                        ConfigSystem.saveWaypoints();
+                    } catch (IOException ignored) {}
+
+                    sendMessage(String.format(LanguageSystem.translate("lang.command.Waypoint.changedValue"), waypoint.getName(), Formatting.AQUA, Formatting.WHITE + "Color: " + (int) (oldColor[0] * 255) + " " + (int) (oldColor[1] * 255) + " " + (int) (oldColor[2] * 255) + Formatting.AQUA, Formatting.WHITE + "" + newColor[0] + " " + newColor[1] + " " + newColor[2]));
+
+                    return SUCCESFUL;
+                })))))
+        ));
+    }
+
+    private void sendWaypointList(List<Waypoint> waypoints, CommandContext<CommandSource> context) {
+        int count = 1;
+        for (Waypoint waypoint : waypoints) {
+            String text = Formatting.GRAY + "" + count + Formatting.WHITE + "Name: " + Formatting.DARK_AQUA + waypoint.getName();
+            if (context.getArgument("mode", String.class).equals("Full")) {
+                float[] colors = BThackRenderUtils.hashCodeToRGB(waypoint.getColor());
+                text = text +
+                        Formatting.WHITE + "  X: " + Formatting.DARK_AQUA + waypoint.getPosition().getX() +
+                        Formatting.WHITE + "  Y: " + Formatting.DARK_AQUA + waypoint.getPosition().getY() +
+                        Formatting.WHITE + "  Z: " + Formatting.DARK_AQUA + waypoint.getPosition().getZ() +
+                        Formatting.WHITE + "  Visible: " + Formatting.DARK_AQUA + waypoint.isVisible() +
+                        Formatting.WHITE + "  Red: " + Formatting.DARK_AQUA + (int) (colors[0] * 255) +
+                        Formatting.WHITE + "  Green: " + Formatting.DARK_AQUA + (int) (colors[1] * 255) +
+                        Formatting.WHITE + "  Blue: " + Formatting.DARK_AQUA + (int) (colors[2] * 255);
+            }
+            sendMessage(text);
+            count++;
+        }
+    }
+}

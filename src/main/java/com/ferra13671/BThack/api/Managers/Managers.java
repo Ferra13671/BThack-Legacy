@@ -7,6 +7,7 @@ import com.ferra13671.BThack.api.Managers.managers.Destroy.DestroyManager;
 import com.ferra13671.BThack.api.Managers.managers.Memory.MemoryManager;
 import com.ferra13671.BThack.api.Managers.managers.Setting.SettingsManager;
 import com.ferra13671.BThack.api.Managers.managers.TravelChange.TravelChangeManager;
+import com.ferra13671.BThack.api.Managers.managers.Waypoint.WaypointManager;
 
 public class Managers {
     public static final TPSManager TPS_MANAGER = new TPSManager();
@@ -23,4 +24,5 @@ public class Managers {
     public static final TravelChangeManager TRAVEL_CHANGE_MANAGER = new TravelChangeManager();
     public static final CommandManager COMMAND_MANAGER = new CommandManager();
     public static final EntityDeathManager ENTITY_DEATH_MANAGER = new EntityDeathManager();
+    public static final WaypointManager WAYPOINT_MANAGER = new WaypointManager();
 }

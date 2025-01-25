@@ -23,7 +23,7 @@ public abstract class HudComponent extends Module {
     public float width;  //Right
     public float height; //Down
 
-    public final DecimalFormat decimal = new DecimalFormat("0.00");
+    public static final DecimalFormat decimal = new DecimalFormat("0.00");
 
     public HudComponent(String name, float x, float y, boolean autoToggled) {
         super(name, "", KeyboardUtils.RELEASE, Categories.HUD, autoToggled);

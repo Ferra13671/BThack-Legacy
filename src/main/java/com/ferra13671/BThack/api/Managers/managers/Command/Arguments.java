@@ -1,7 +1,9 @@
 package com.ferra13671.BThack.api.Managers.managers.Command;
 
 import com.ferra13671.BThack.Core.Client.Client;
+import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Command.CustomArguments.*;
+import com.ferra13671.BThack.api.Managers.managers.Waypoint.Waypoint;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Social.Clans.Clan;
 import com.ferra13671.BThack.api.Social.Clans.ClanManager;
@@ -338,6 +340,31 @@ public class Arguments {
             }
         };
     }
+    public static Supplier<ArgumentType<Waypoint>> WAYPOINT = () -> new ArgumentType<>() {
+        private static final Collection<String> examples = List.of("Waypoint123", "MyHome");
+
+        @Override
+        public Waypoint parse(StringReader reader) throws CommandSyntaxException {
+            String name = reader.readString();
+
+            Waypoint waypoint = Managers.WAYPOINT_MANAGER.getWaypoint(name);
+            if (waypoint == null)
+                throw new DynamicCommandExceptionType(
+                        n -> Text.literal(String.format(LanguageSystem.translate("lang.argument.Waypoint.exception"), name))
+                ).create(reader.readString());
+            return waypoint;
+        }
+
+        @Override
+        public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
+            return CommandSource.suggestMatching(Managers.WAYPOINT_MANAGER.getWaypoints().stream().map(Waypoint::getName), builder);
+        }
+
+        @Override
+        public Collection<String> getExamples() {
+            return examples;
+        }
+    };
 
 
 

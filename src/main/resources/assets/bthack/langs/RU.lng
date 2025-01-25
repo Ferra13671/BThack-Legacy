@@ -173,6 +173,7 @@
 "lang.module.Search": Подсвечивает нужные блоки.
 "lang.module.Tooltips": Показывает содержимое ящика.
 "lang.module.Tracers": Отрисовывает линии, ведущие к сущностям.
+"lang.module.Waypoints": Позволяет рендерить вейпоинты.
 "lang.module.Xray": Позволяет отменить отрисовку блоков.
 
 //WORLD
@@ -248,6 +249,7 @@
 "lang.argument.ServerPacket.exception": '%s' не является пакетом сервер->клиент.
 "lang.argument.PacketListPacket.exception": Пакет '%s' отсутствует в этом списке пакетов.
 "lang.argument.File.exception": Файл '%s' не найден или не соответствует условиям.
+"lang.argument.Waypoint.exception": Вейпоинт '%s' не существует.
 
 
 //Commands
@@ -284,6 +286,7 @@
 "lang.command.Module.description": Выполняет определенное действие над модулем.
 "lang.command.CordsCopy.description": Копирует координаты игрока.
 "lang.command.CustomFont.description": Позволяет выбрать пользовательский шрифт из папки или установить шрифт по умолчанию.
+"lang.command.Waypoint.description": Добавляет, удаляет, изменяет вейпоинт или показывает список вейпоинтов.
 
 
 "lang.command.ClanList.message2":   Участники:
@@ -328,6 +331,9 @@
 "lang.command.Prefix.changed": Префикс был изменен на %s.
 "lang.command.CordsCopy.successfulMessage": Координаты успешно скопированы.
 "lang.command.CordsCopy.errorMessage": Не удалось скопировать координаты игрока.
+"lang.command.Waypoint.added": Вейпоинт '%s' успешно добавлен.
+"lang.command.Waypoint.removed": Вейпоинт '%s' успешно удален.
+"lang.command.Waypoint.changedValue": [Waypoint: %s]%s Значение %s было изменено на: %s.
 
 "lang.command.List.listCleared": %s список очищен!
 
