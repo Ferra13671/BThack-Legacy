@@ -56,30 +56,28 @@ public class BuildManager implements Initializable, Mc {
     }
 
     public static void placeBlock(BlockPos pos) {
-        RenderSystem.recordRenderCall(() -> {
-            try {
-                if (!mc.world.getBlockState(pos).isReplaceable()) return;
-                BlockState block1 = mc.world.getBlockState(pos);
-                if ((!mc.world.isAir(pos) && !block1.isLiquid()) || block1.isSolid()) return;
-                FacingBlock block = checkNearBlocksExtended(pos);
-                if (block == null) return;
-                BlockHitResult bhr;
-                bhr = new BlockHitResult(new Vec3d((double) block.pos().getX() + Math.random(), block.pos().getY() + 0.99f, (double) block.pos().getZ() + Math.random()), block.direction(), block.pos(), false);
+        try {
+            if (!mc.world.getBlockState(pos).isReplaceable()) return;
+            BlockState block1 = mc.world.getBlockState(pos);
+            if ((!mc.world.isAir(pos) && !block1.isLiquid()) || block1.isSolid()) return;
+            FacingBlock block = checkNearBlocksExtended(pos);
+            if (block == null) return;
+            BlockHitResult bhr;
+            bhr = new BlockHitResult(new Vec3d((double) block.pos().getX() + Math.random(), block.pos().getY() + 0.99f, (double) block.pos().getZ() + Math.random()), block.direction(), block.pos(), false);
 
-                float[] rotations = AimBotUtils.rotations(bhr.getPos());
-                boolean sneak = BuildManager.needSneak(mc.world.getBlockState(bhr.getBlockPos()).getBlock()) && !mc.player.isSneaking();
+            float[] rotations = AimBotUtils.rotations(bhr.getPos());
+            boolean sneak = BuildManager.needSneak(mc.world.getBlockState(bhr.getBlockPos()).getBlock()) && !mc.player.isSneaking();
 
-                if (sneak)
-                    mc.player.networkHandler.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.PRESS_SHIFT_KEY));
+            if (sneak)
+                mc.player.networkHandler.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.PRESS_SHIFT_KEY));
 
-                GrimUtils.sendPreActionGrimPackets(rotations[0], rotations[1]);
-                mc.interactionManager.interactBlock(mc.player, Hand.MAIN_HAND, bhr);
-                mc.player.networkHandler.sendPacket(new HandSwingC2SPacket(Hand.MAIN_HAND));
+            GrimUtils.sendPreActionGrimPackets(rotations[0], rotations[1]);
+            mc.interactionManager.interactBlock(mc.player, Hand.MAIN_HAND, bhr);
+            mc.player.networkHandler.sendPacket(new HandSwingC2SPacket(Hand.MAIN_HAND));
 
-                mc.player.networkHandler.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.RELEASE_SHIFT_KEY));
-                GrimUtils.sendPostActionGrimPackets();
-            } catch (Exception ignored) {}
-        });
+            mc.player.networkHandler.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.RELEASE_SHIFT_KEY));
+            GrimUtils.sendPostActionGrimPackets();
+        } catch (Exception ignored) {}
     }
 
     public static BlockHitResult getHitResult(BlockPos pos) {
