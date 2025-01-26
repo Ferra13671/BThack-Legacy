@@ -222,11 +222,9 @@ public final class BThackRender implements Mc {
             float size = drawMode.getSize();
             if (size != 1f)
                 guiGraphics.getMatrices().scale(size, size, size);
-            RenderSystem.disableDepthTest();
             mc.textRenderer.draw(text, x * (1 / size), y * (1 / size), color, shadow, guiGraphics.getMatrices().peek().getPositionMatrix(), ((IDrawContext) guiGraphics).getVertexConsumers(), TextRenderer.TextLayerType.NORMAL, 0, 15728880, mc.textRenderer.isRightToLeft());
             guiGraphics.draw();
             resetShader();
-            RenderSystem.enableDepthTest();
             guiGraphics.getMatrices().pop();
         } else {
             RenderSystem.enableDepthTest();

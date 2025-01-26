@@ -1,6 +1,7 @@
 package com.ferra13671.BThack.impl.HudComponents;
 
 import com.ferra13671.BThack.Core.Render.BThackRender;
+import com.ferra13671.BThack.Core.Render.Font.FontRenderManager;
 import com.ferra13671.BThack.Core.Render.Font.FontUtils;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.HudComponent.HudComponent;
@@ -55,9 +56,9 @@ public class ArmorComponent extends HudComponent {
 
                 BThackRender.drawItem(BThackRender.guiGraphics, armorStack, (int) getX(), (int) getY() + y, null, false);
                 BThackRender.drawString(text, (int) getX() + 20, (int) getY() + y, ColorUtils.fastRGBA(armorStack.getItemBarColor()));
-                BThackRender.drawRect((int) getX() + 20, (int) (getY() + y + FontUtils.getTextHeight(text)), (int) getX() + 20 + 50, (int) (getY() + y + FontUtils.getTextHeight(text) + 3), ColorUtils.BLACK);
+                BThackRender.drawRect((int) getX() + 20, (int) (getY() + y + 2 + FontUtils.getTextHeight(text)), (int) getX() + 20 + 50, (int) (getY() + y + FontUtils.getTextHeight(text) + 5), ColorUtils.BLACK);
                 if (ItemUtils.getItemDurabilityInPercentages(armorStack) > 0)
-                    BThackRender.drawRect((int) getX() + 20, (int) (getY() + y + FontUtils.getTextHeight(text)), (int) (getX() + 20 + (50 * (ItemUtils.getItemDurabilityInPercentages(armorStack) / 100f))), (int) (getY() + y + FontUtils.getTextHeight(text) + 3), ColorUtils.fastRGBA(armorStack.getItemBarColor()));
+                    BThackRender.drawRect((int) getX() + 20, (int) (getY() + y + 2 + FontUtils.getTextHeight(text)), (int) (getX() + 20 + (50 * (ItemUtils.getItemDurabilityInPercentages(armorStack) / 100f))), (int) (getY() + y + FontUtils.getTextHeight(text) + 5), ColorUtils.fastRGBA(armorStack.getItemBarColor()));
             }
 
             y += 20;
@@ -82,12 +83,11 @@ public class ArmorComponent extends HudComponent {
         x = 0;
 
         BThackRender.guiGraphics.getMatrices().push();
-        BThackRender.guiGraphics.getMatrices().scale(0.5f, 0.5f, 1);
         for (int i = 3; i > -1; i--) {
             ItemStack armorStack = mc.player.getInventory().armor.get(i);
 
             if (armorStack.getItem() != Items.AIR) {
-                BThackRender.drawCenteredString("" + ((int) ItemUtils.getItemDurabilityInPercentages(armorStack)), (int) (getX() + x + 8) * 2, (int) getY() * 2, ColorUtils.fastRGBA(armorStack.getItemBarColor()));
+                BThackRender.drawCenteredString("" + ((int) ItemUtils.getItemDurabilityInPercentages(armorStack)), (int) (getX() + x + 8), (int) getY(), ColorUtils.fastRGBA(armorStack.getItemBarColor()), FontRenderManager.DrawMode.SMALL);
             }
 
             x += 20;

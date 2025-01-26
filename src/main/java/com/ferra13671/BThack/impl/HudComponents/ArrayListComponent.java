@@ -61,15 +61,9 @@ public class ArrayListComponent extends HudComponent {
         int count = 1;
 
         for (String string : moduleStrings) {
-            if (ModuleList.HUD.rainbow.getValue()) {
-                if (drawRects.getValue())
-                    BThackRender.drawRect((int) getX(), y, (int) getX() - 2, y + 10, getArrayColor(count));
-                drawText(string, (int) (getX() - 4 - FontUtils.getTextWidth(string)), y, getArrayColor(count));
-            } else {
-                if (drawRects.getValue())
-                    BThackRender.drawRect((int) getX(), y, (int) getX() - 2, y + 10, getArrayColor(count));
-                drawText(string, (int) (getX() - 4 - FontUtils.getTextWidth(string)), y, getArrayColor(count));
-            }
+            if (drawRects.getValue())
+                BThackRender.drawRect((int) getX() - 2, y, (int) getX(), y + 10, getArrayColor(count));
+            drawText(string, (int) (getX() - 4 - FontUtils.getTextWidth(string)), y, getArrayColor(count));
 
             y += 10;
             count++;
