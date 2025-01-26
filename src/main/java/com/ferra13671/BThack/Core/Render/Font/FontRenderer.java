@@ -2,6 +2,7 @@ package com.ferra13671.BThack.Core.Render.Font;
 
 import com.ferra13671.BTbot.api.Utils.Generate.StringGenerator;
 import com.ferra13671.BThack.Core.Render.Utils.BThackRenderUtils;
+import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Utils.MathUtils;
 import com.ferra13671.BThack.api.Utils.TextureStorage;
@@ -25,8 +26,6 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-
-import static com.ferra13671.BThack.Core.Render.Utils.BThackRenderUtils.hashCodeToRGBA;
 
 public class FontRenderer implements Closeable, Mc {
     private static final Char2IntArrayMap colorCodes = new Char2IntArrayMap() {{
@@ -145,7 +144,7 @@ public class FontRenderer implements Closeable, Mc {
     }
 
     public void draw(MatrixStack stack, String s, double x, double y, int color, boolean shadow) {
-        float[] rgba = hashCodeToRGBA(color);
+        float[] rgba = ColorUtils.hashCodeToRGBA(color);
         if (shadow)
             drawInternal(stack, s, (float) x + (1f / mc.options.getGuiScale().getValue()), (float) y + (1f / mc.options.getGuiScale().getValue()), new float[]{0, 0, 0, rgba[3]}, true);
         drawInternal(stack, s, (float) x, (float) y, rgba, false);
@@ -185,7 +184,7 @@ public class FontRenderer implements Closeable, Mc {
                     inSel = false;
                     char c1 = Character.toUpperCase(c);
                     if (colorCodes.containsKey(c1) && !shadow)
-                        colors = BThackRenderUtils.hashCodeToRGB(colorCodes.get(c1));
+                        colors = ColorUtils.hashCodeToRGB(colorCodes.get(c1));
                     else if (c1 == 'R')
                         colors = new float[]{color[0], color[1], color[2]};
                     continue;

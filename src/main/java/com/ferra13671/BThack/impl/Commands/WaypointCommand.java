@@ -1,7 +1,6 @@
 package com.ferra13671.BThack.impl.Commands;
 
 import com.ferra13671.BThack.Core.FileSystem.ConfigSystem.ConfigSystem;
-import com.ferra13671.BThack.Core.Render.Utils.BThackRenderUtils;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Command.AbstractCommand;
@@ -145,7 +144,7 @@ public class WaypointCommand extends AbstractCommand {
                 })))
                 .then(literal("setColor").then(arg("red", Arguments.INTEGER(0, 255)).then(arg("green", Arguments.INTEGER(0, 255)).then(arg("blue", Arguments.INTEGER(0, 255)).executes(context -> {
                     Waypoint waypoint = context.getArgument("waypoint", Waypoint.class);
-                    float[] oldColor = BThackRenderUtils.hashCodeToRGB(waypoint.getColor());
+                    float[] oldColor = ColorUtils.hashCodeToRGB(waypoint.getColor());
                     int[] newColor = new int[]{context.getArgument("red", Integer.class), context.getArgument("green", Integer.class), context.getArgument("blue", Integer.class)};
                     waypoint.setColor(ColorUtils.fastRGBA(newColor[0], newColor[1], newColor[2], 255));
                     try {
@@ -164,7 +163,7 @@ public class WaypointCommand extends AbstractCommand {
         for (Waypoint waypoint : waypoints) {
             String text = Formatting.GRAY + "" + count + Formatting.WHITE + "Name: " + Formatting.DARK_AQUA + waypoint.getName();
             if (context.getArgument("mode", String.class).equals("Full")) {
-                float[] colors = BThackRenderUtils.hashCodeToRGB(waypoint.getColor());
+                float[] colors = ColorUtils.hashCodeToRGB(waypoint.getColor());
                 text = text +
                         Formatting.WHITE + "  X: " + Formatting.DARK_AQUA + waypoint.getPosition().getX() +
                         Formatting.WHITE + "  Y: " + Formatting.DARK_AQUA + waypoint.getPosition().getY() +

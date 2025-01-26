@@ -1,6 +1,7 @@
 package com.ferra13671.BThack.Core.Render.Utils;
 
 import com.ferra13671.BThack.api.Utils.MathUtils;
+import net.minecraft.util.math.ColorHelper;
 
 import java.awt.*;
 
@@ -53,6 +54,23 @@ public final class ColorUtils {
         int blue = (colorHashcode & 255);
 
         return fastRGBA(red, green, blue, alpha);
+    }
+
+    public static float[] hashCodeToRGB(int hashCode) {
+        return new float[]{
+                (float) ColorHelper.Argb.getRed(hashCode) / 255.0F,
+                (float) ColorHelper.Argb.getGreen(hashCode) / 255.0F,
+                (float) ColorHelper.Argb.getBlue(hashCode) / 255.0F
+        };
+    }
+
+    public static float[] hashCodeToRGBA(int hashCode) {
+        return new float[]{
+                (float) ColorHelper.Argb.getRed(hashCode) / 255.0F,
+                (float) ColorHelper.Argb.getGreen(hashCode) / 255.0F,
+                (float) ColorHelper.Argb.getBlue(hashCode) / 255.0F,
+                (float) ColorHelper.Argb.getAlpha(hashCode) / 255.0F
+        };
     }
 
     public static int fastRGBA(int red, int green, int blue, int alpha) {
