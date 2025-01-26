@@ -151,6 +151,7 @@
 "lang.module.ChatAnimation": Adds animations to the chat.
 "lang.module.ChestESP": Highlighting containers.
 "lang.module.CS_Crosshair": Swaps the crosshairs for the crosshairs from Counter Strike.
+"lang.module.CustomBob": Changes the strength of the camera bobbing effect.
 "lang.module.EnchantColor": Changes the color of the enchantment.
 "lang.module.ESP": Highlights players, mobs and items.
 "lang.module.ExtraTab": Additional settings for tab.

@@ -150,6 +150,7 @@
 "lang.module.ChatAnimation": Добавляет анимации в чат.
 "lang.module.ChestESP": Подсвечивает контейнеры.
 "lang.module.CS_Crosshair": Меняет перекрестие на прицел из Counter Strike.
+"lang.module.CustomBob": Изменяет силу эффекта покачивания камеры.
 "lang.module.EnchantColor": Изменяет цвет зачарования.
 "lang.module.ESP": Подсвечивает игроков, мобов и предметы.
 "lang.module.ExtraTab": Дополнительные настройки для таба.

@@ -175,6 +175,7 @@ public final class ModuleList {
     public static CameraClip cameraClip;
     public static ChestESP chestESP;
     public static CS_Crosshair csCrosshair;
+    public static CustomBob customBob;
     public static EnchantColor enchantColor;
     public static ESP ESP;
     public static ExtraTab extraTab;
@@ -372,6 +373,7 @@ public final class ModuleList {
         cameraClip = register(new CameraClip());
         chestESP = register(new ChestESP());
         csCrosshair = register(new CS_Crosshair());
+        customBob = register(new CustomBob());
         enchantColor = register(new EnchantColor());
         ESP = register(new ESP());
         extraTab = register(new ExtraTab());
