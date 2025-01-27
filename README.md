@@ -65,4 +65,4 @@ The cheat client also has a plugin system that allows you to add your own module
 </details>
 
 ## Support
-If you have a bug or want to suggest a feature, create an issue on Github or contact me through the [Discord](https://discord.gg/xecWXN97s6) server.
+If you have a bug or want to suggest a feature, create an issue on Github or contact me through the [Discord](https://discord.gg/vmX26ByYEX) server.
