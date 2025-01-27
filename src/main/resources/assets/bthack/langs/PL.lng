@@ -9,6 +9,7 @@
 "lang.module.FPSReducer": Ogranicza fps, jeśli gra jest nieostra.
 "lang.module.HUD": Włączanie i konfigurowanie modułów HUD.
 "lang.module.HudEditor": Otwiera menu HUD edytor.
+"lang.module.Macros": Zawiera systemu makrosów.
 "lang.module.MemoryCleaner": Włączanie i konfigurowanie modułu czyszczenia pamięci.
 "lang.module.MenuShader": Włącza renderowanie shaderów w menu głównym.
 "lang.module.ToggleSound": Odtwarza dźwięk po włączeniu/wyłączeniu modułów.
@@ -250,6 +251,7 @@
 "lang.argument.PacketListPacket.exception": Na liście pakietów brakuje pakietu '%s'.
 "lang.argument.File.exception": Plik '%s' nie został znaleziony lub nie spełnia warunków.
 "lang.argument.Waypoint.exception": Waypoint '%s' nie istnieje.
+"lang.argument.KeyBind.exception": Klawisz '%s' nie istnieje.
 
 
 //Commands
@@ -287,6 +289,8 @@
 "lang.command.CordsCopy.description": Kopiuje współrzędne gracza.
 "lang.command.CustomFont.description": Umożliwia wybranie niestandardowej czcionki z folderu lub ustawienie czcionki domyślnej.
 "lang.command.Waypoint.description": Dodaje, usuwa, modyfikuje waypoint lub wyświetla listę waypointów.
+"lang.command.Macro.description": Dodaje, usuwa, modyfikuje makro lub wyświetla listę makrosów.
+"lang.argument.Macro.exception": Makro '%s' nie istnieje.
 
 
 "lang.command.ClanList.message2":   Uczestnicy:
@@ -333,7 +337,10 @@
 "lang.command.CordsCopy.errorMessage": Nie udało się skopiować współrzędnych gracza.
 "lang.command.Waypoint.added": Waypoint '%s' został pomyślnie dodany.
 "lang.command.Waypoint.removed": Waypoint '%s' został pomyślnie usunięty.
-"lang.command.Waypoint.changedValue": [Waypoint: %s]%s Wartość %s została zmieniona na: %s.
+"lang.command.Waypoint.changedValue": [Waypoint: %s]%s wartość %s została zmieniona na: %s.
+"lang.command.Macro.added": Макрос '%s' został pomyślnie dodany.
+"lang.command.Macro.removed": Макрос '%s' został pomyślnie usunięty.
+"lang.command.Macro.changedValue": [Macro: %s]%s wartość %s została zmieniona na: %s.
 
 "lang.command.List.listCleared": Lista %s została wyczyszczona!
 

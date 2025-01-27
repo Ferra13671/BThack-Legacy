@@ -36,6 +36,7 @@ public final class ModuleList {
     public static FPSReducer fpsReducer;
     public static HUD HUD;
     public static HudEditor hudEditor;
+    public static Macros macros;
     public static MemoryCleaner memoryCleaner;
     public static MenuShader menuShader;
     public static ToggleSound toggleSound;
@@ -234,6 +235,7 @@ public final class ModuleList {
         fpsReducer = register(new FPSReducer());
         HUD = register(new HUD());
         hudEditor = register(new HudEditor());
+        macros = register(new Macros());
         memoryCleaner = register(new MemoryCleaner());
         menuShader = register(new MenuShader());
         toggleSound = register(new ToggleSound());

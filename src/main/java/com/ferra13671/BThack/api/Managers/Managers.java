@@ -4,6 +4,7 @@ import com.ferra13671.BThack.api.Managers.managers.*;
 import com.ferra13671.BThack.api.Managers.managers.ColourTheme.ColorThemeManager;
 import com.ferra13671.BThack.api.Managers.managers.Command.CommandManager;
 import com.ferra13671.BThack.api.Managers.managers.Destroy.DestroyManager;
+import com.ferra13671.BThack.api.Managers.managers.Macros.MacrosManager;
 import com.ferra13671.BThack.api.Managers.managers.Memory.MemoryManager;
 import com.ferra13671.BThack.api.Managers.managers.Setting.SettingsManager;
 import com.ferra13671.BThack.api.Managers.managers.TravelChange.TravelChangeManager;
@@ -25,4 +26,5 @@ public class Managers {
     public static final CommandManager COMMAND_MANAGER = new CommandManager();
     public static final EntityDeathManager ENTITY_DEATH_MANAGER = new EntityDeathManager();
     public static final WaypointManager WAYPOINT_MANAGER = new WaypointManager();
+    public static final MacrosManager MACROS_MANAGER = new MacrosManager();
 }

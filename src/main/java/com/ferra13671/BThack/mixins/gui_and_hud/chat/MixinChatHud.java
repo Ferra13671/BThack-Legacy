@@ -93,7 +93,7 @@ public abstract class MixinChatHud {
         boolean bl = this.isChatFocused();
 
         for(int j = 0; j < list.size(); ++j) {
-            OrderedText orderedText = (OrderedText)list.get(j);
+            OrderedText orderedText = list.get(j);
             if (bl && this.scrolledLines > 0) {
                 this.hasUnreadNewMessages = true;
                 this.scroll(1);

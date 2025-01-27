@@ -41,6 +41,7 @@ public final class FileSystem {
         registerFile("Frames", "", FileType.JSON);
         registerFile("ClientInfo", "", FileType.JSON);
         registerFile("Waypoints", "", FileType.JSON);
+        registerFile("Macros", "", FileType.JSON);
     }
 
     public static void registerFile(String name, String path, FileType typeFile) throws IOException {

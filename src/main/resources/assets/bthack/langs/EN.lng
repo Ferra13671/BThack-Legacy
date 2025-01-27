@@ -10,6 +10,7 @@
 "lang.module.FPSReducer": Limits fps if the game is unfocused.
 "lang.module.HUD": Enabling and configuring HUD modules.
 "lang.module.HudEditor": Opens the HUD Editor menu.
+"lang.module.Macros": Enables the macro system.
 "lang.module.MemoryCleaner": Enabling and configuring the memory cleaning module.
 "lang.module.MenuShader": Enables shader rendering in the main menu.
 "lang.module.ToggleSound": Plays a sound when modules are turned on/off.
@@ -252,6 +253,8 @@
 "lang.argument.PacketListPacket.exception": Packet '%s' is not in this packet list.
 "lang.argument.File.exception": File '%s' was not found or does not meet the conditions.
 "lang.argument.Waypoint.exception": Waypoint '%s' does not exist.
+"lang.argument.KeyBind.exception": The '%s' key does not exist.
+"lang.argument.Macro.exception": The macro '%s' does not exist.
 
 
 //Commands
@@ -289,6 +292,7 @@
 "lang.command.CordsCopy.description": Copies the player's coordinates.
 "lang.command.CustomFont.description": Allows you to select a custom font from a folder or set the default font.
 "lang.command.Waypoint.description": Adds, deletes, modifies a waypoint or shows a list of waypoints.
+"lang.command.Macro.description": Adds, deletes, modifies a macro or shows a list of macros.
 
 
 "lang.command.ClanList.message2":   Members:
@@ -336,6 +340,9 @@
 "lang.command.Waypoint.added": Waypoint '%s' has been successfully added.
 "lang.command.Waypoint.removed": Waypoint '%s' has been successfully removed.
 "lang.command.Waypoint.changedValue": [Waypoint: %s]%s The %s value has been changed to: %s.
+"lang.command.Macro.added": Macro '%s' has been successfully added.
+"lang.command.Macro.removed": Macro '%s' has been successfully removed.
+"lang.command.Macro.changedValue": [Macro: %s]%s The %s value has been changed to: %s.
 
 "lang.command.List.listCleared": %s list cleared!
 

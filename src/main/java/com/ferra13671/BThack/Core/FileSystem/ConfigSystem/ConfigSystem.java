@@ -10,6 +10,7 @@ import com.ferra13671.BThack.api.Gui.MainMenu.SelectWallpaper.SelectWallpaperScr
 import com.ferra13671.BThack.api.Gui.MainMenu.SelectWallpaper.Wallpaper;
 import com.ferra13671.BThack.api.HudComponent.HudComponent;
 import com.ferra13671.BThack.api.Managers.Managers;
+import com.ferra13671.BThack.api.Managers.managers.Macros.Macro;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.*;
 import com.ferra13671.BThack.api.Managers.managers.Waypoint.Waypoint;
 import com.ferra13671.BThack.api.Module.Module;
@@ -59,6 +60,7 @@ public final class ConfigSystem {
             saveAutoAuthPasswords();
             saveClientInfo();
             saveWaypoints();
+            saveMacros();
         } catch (IOException e) {
             BThack.error(e.getMessage());
         }
@@ -80,6 +82,7 @@ public final class ConfigSystem {
             loadAutoAuthPasswords();
             loadClientInfo();
             loadWaypoints();
+            loadMacros();
         } catch (IOException e) {
             BThack.error(e.getMessage());
         }
@@ -572,6 +575,35 @@ public final class ConfigSystem {
                 });
             }
         }
+        , () -> {});
+    }
+
+    public static void saveMacros() throws IOException {
+        ConfigUtils.saveInJson("Macros", "", jsonObject -> {
+            JsonArray jsonList = new JsonArray();
+            Managers.MACROS_MANAGER.forEach(macro -> {
+                JsonObject macroObject = new JsonObject();
+                add(macroObject, "Name", macro.getName());
+                add(macroObject, "Key", macro.getKey());
+                add(macroObject, "Action", macro.getAction());
+                jsonList.add(macroObject);
+            });
+            add(jsonObject, "Macros", jsonList);
+        });
+    }
+
+    public static void loadMacros() throws IOException {
+        ConfigUtils.loadFromJson("Macros", "", jsonObject -> {
+            if (!_null(jsonObject, "Macros")) {
+                JsonArray jsonList = jsonObject.get("Macros").getAsJsonArray();
+                jsonList.asList().forEach(element -> {
+                    JsonObject macroObject = element.getAsJsonObject();
+                    if (!equalsNull(macroObject, "Name", "Key", "Action")) {
+                        Managers.MACROS_MANAGER.addMacro(new Macro(macroObject.get("Name").getAsString(), macroObject.get("Key").getAsInt(), macroObject.get("Action").getAsString()));
+                    }
+                });
+            }
+                }
         , () -> {});
     }
 

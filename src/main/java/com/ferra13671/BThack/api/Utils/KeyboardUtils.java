@@ -9,7 +9,6 @@ import java.util.Set;
 
 @SuppressWarnings("unused")
 public final class KeyboardUtils {
-    private static final String[] keyNames = new String[256];
     private static final HashMap<String, Integer> keyMap = new HashMap<>();
 
     private static final Set<Integer> activeKeys = Sets.newHashSet();
@@ -27,7 +26,6 @@ public final class KeyboardUtils {
 
                     int key = field.getInt(null);
                     String name = field.getName().substring(4).toLowerCase();
-                    keyNames[key] = name;
                     keyMap.put(name, key);
                 }
             }
@@ -50,8 +48,20 @@ public final class KeyboardUtils {
         return activeKeys;
     }
 
+    public static boolean containsKey(String key) {
+        return keyMap.containsKey(key.toLowerCase());
+    }
+
+    public static boolean containsIndex(int index) {
+        return keyMap.containsValue(index);
+    }
+
     public static int getKeyIndex(String key) {
         return keyMap.get(key.toLowerCase());
+    }
+
+    public static Set<String> getKeys() {
+        return keyMap.keySet();
     }
 
     public static String getKeyName(int key) {
@@ -174,10 +184,6 @@ public final class KeyboardUtils {
             case 0 -> "NONE";
             default -> "UNKNOWN";
         };
-    }
-
-    public static String[] getKeyNames() {
-        return keyNames;
     }
 
     public static final int KEY_0 = 48;

@@ -3,6 +3,7 @@ package com.ferra13671.BThack.api.Managers.managers.Command;
 import com.ferra13671.BThack.Core.Client.Client;
 import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Command.CustomArguments.*;
+import com.ferra13671.BThack.api.Managers.managers.Macros.Macro;
 import com.ferra13671.BThack.api.Managers.managers.Waypoint.Waypoint;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Social.Clans.Clan;
@@ -11,6 +12,7 @@ import com.ferra13671.BThack.api.Social.SocialManager;
 import com.ferra13671.BThack.api.Utils.BlockUtils;
 import com.ferra13671.BThack.api.Utils.ItemUtils;
 import com.ferra13671.BThack.api.Utils.DataList.PacketList;
+import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.impl.Modules.MISC.AutoAuth;
 import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
 import com.mojang.brigadier.StringReader;
@@ -27,8 +29,10 @@ import net.minecraft.network.packet.Packet;
 import net.minecraft.registry.Registries;
 import net.minecraft.text.Text;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
 
@@ -340,7 +344,7 @@ public class Arguments {
             }
         };
     }
-    public static Supplier<ArgumentType<Waypoint>> WAYPOINT = () -> new ArgumentType<>() {
+    public static final Supplier<ArgumentType<Waypoint>> WAYPOINT = () -> new ArgumentType<>() {
         private static final Collection<String> examples = List.of("Waypoint123", "MyHome");
 
         @Override
@@ -358,6 +362,59 @@ public class Arguments {
         @Override
         public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
             return CommandSource.suggestMatching(Managers.WAYPOINT_MANAGER.getWaypoints().stream().map(Waypoint::getName), builder);
+        }
+
+        @Override
+        public Collection<String> getExamples() {
+            return examples;
+        }
+    };
+    public static final Supplier<ArgumentType<Integer>> KEY_BIND = () -> new ArgumentType<>() {
+        private static final Collection<String> examples = List.of("F", "Tab");
+
+        @Override
+        public Integer parse(StringReader reader) throws CommandSyntaxException {
+            String name = reader.readString();
+
+            if (!KeyboardUtils.containsKey(name))
+                throw new DynamicCommandExceptionType(
+                        n -> Text.literal(String.format(LanguageSystem.translate("lang.argument.KeyBind.exception"), name))
+                ).create(reader.readString());
+            return KeyboardUtils.getKeyIndex(name);
+        }
+
+        @Override
+        public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
+            return CommandSource.suggestMatching(KeyboardUtils.getKeys(), builder);
+        }
+
+        @Override
+        public Collection<String> getExamples() {
+            return examples;
+        }
+    };
+    public static final Supplier<ArgumentType<Macro>> MACRO = () -> new ArgumentType<>() {
+        private static final Collection<String> examples = List.of("Macro123", "Home");
+
+        @Override
+        public Macro parse(StringReader reader) throws CommandSyntaxException {
+            String name = reader.readString();
+
+            Macro macro = Managers.MACROS_MANAGER.getMacros()
+                    .filter(macro1 -> macro1.getName().equals(name))
+                    .findFirst()
+                    .orElse(null);
+            if (macro == null)
+                throw new DynamicCommandExceptionType(
+                        n -> Text.literal(String.format(LanguageSystem.translate("lang.argument.Macro.exception"), name))
+                ).create(reader.readString());
+
+            return macro;
+        }
+
+        @Override
+        public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
+            return CommandSource.suggestMatching(Managers.MACROS_MANAGER.getMacros().map(Macro::getName), builder);
         }
 
         @Override
