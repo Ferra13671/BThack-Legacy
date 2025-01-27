@@ -37,11 +37,6 @@ accessible   field  net/minecraft/entity/player/PlayerEntity PLAYER_MODEL_PARTS 
 #ClientPlayerInteractionManager
 accessible   method  net/minecraft/client/network/ClientPlayerInteractionManager syncSelectedSlot ()V
 
-#RenderPhase
-accessible   class  net/minecraft/client/render/RenderPhase$Texturing
-mutable   field  net/minecraft/client/render/RenderPhase GLINT_TEXTURING Lnet/minecraft/client/render/RenderPhase$Texturing;
-mutable   field  net/minecraft/client/render/RenderPhase ENTITY_GLINT_TEXTURING Lnet/minecraft/client/render/RenderPhase$Texturing;
-
 #PalettedContainer
 accessible field net/minecraft/world/chunk/PalettedContainer data Lnet/minecraft/world/chunk/PalettedContainer$Data;
 accessible method net/minecraft/world/chunk/PalettedContainer$Data palette ()Lnet/minecraft/world/chunk/Palette;

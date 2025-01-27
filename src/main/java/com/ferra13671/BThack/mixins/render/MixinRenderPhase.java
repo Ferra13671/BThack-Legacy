@@ -7,8 +7,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.render.RenderPhase;
 import net.minecraft.util.Util;
 import org.joml.Matrix4f;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -16,9 +15,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(RenderPhase.class)
 public class MixinRenderPhase implements Mc {
 
+    @Mutable
+    @Shadow @Final public static RenderPhase.Texturing GLINT_TEXTURING;
+
+    @Mutable
+    @Shadow @Final public static RenderPhase.Texturing ENTITY_GLINT_TEXTURING;
+
     @Inject(method = "<clinit>", at = @At("TAIL"))
     private static void modifyInitTexturing(CallbackInfo ci) {
-        RenderPhase.GLINT_TEXTURING = new RenderPhase.Texturing("glint_texturing", () -> {
+        GLINT_TEXTURING = new RenderPhase.Texturing("glint_texturing", () -> {
             newSetupGlintTexturing(8.0f);
             if (ModuleList.enchantColor.isEnabled()) {
                 float[] clr = EnchantColor.getEnchantColor();
@@ -31,7 +36,7 @@ public class MixinRenderPhase implements Mc {
             RenderSystem.setShaderColor(1,1,1,1);
             RenderSystem.resetTextureMatrix();
         });
-        RenderPhase.ENTITY_GLINT_TEXTURING = new RenderPhase.Texturing("entity_glint_texturing", () -> {
+        ENTITY_GLINT_TEXTURING = new RenderPhase.Texturing("entity_glint_texturing", () -> {
             newSetupGlintTexturing(0.16f);
             if (ModuleList.enchantColor.isEnabled()) {
                 float[] clr = EnchantColor.getEnchantColor();
