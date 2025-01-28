@@ -29,6 +29,7 @@ import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3i;
 
 import java.util.ArrayList;
@@ -292,7 +293,7 @@ public class PacketMine extends Module {
                 conveyorAnimationInvert = !conveyorAnimationInvert;
             }
 
-            double currentDestroyBlockSize = currentBreakingBlock.currentDestroyProgress / 2;
+            double currentDestroyBlockSize = MathHelper.lerp(mc.getRenderTickCounter().getTickDelta(true), currentBreakingBlock.prevDestroyProgress, currentBreakingBlock.currentDestroyProgress) / 2;
             float boxR = (float) boxRed.getValue() / 255f;
             float boxG = (float) boxGreen.getValue() / 255f;
             float boxB = (float) boxBlue.getValue() / 255f;
@@ -474,6 +475,7 @@ public class PacketMine extends Module {
                 breakingBlock.startDestroying = true;
             } else {
                 if (swingHand.getValue()) mc.player.swingHand(Hand.MAIN_HAND);
+                breakingBlock.prevDestroyProgress = breakingBlock.currentDestroyProgress;
                 breakingBlock.currentDestroyProgress += getDestroyDelta();
                 if (visibleBreaking.getValue()) mc.world.setBlockBreakingInfo(mc.player.getId(), breakingBlock.blockPos, (int)(breakingBlock.currentDestroyProgress * 10.0F));
 

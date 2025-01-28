@@ -6,10 +6,12 @@ public class BreakingBlock {
 
     public final BlockPos blockPos;
     public double currentDestroyProgress;
+    public double prevDestroyProgress;
     public boolean startDestroying = false;
 
     public BreakingBlock(BlockPos blockPos) {
         this.blockPos = blockPos;
         currentDestroyProgress = 0;
+        prevDestroyProgress = 0;
     }
 }
