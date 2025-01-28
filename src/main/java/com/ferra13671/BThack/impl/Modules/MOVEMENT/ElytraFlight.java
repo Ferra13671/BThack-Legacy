@@ -52,16 +52,16 @@ public class ElytraFlight extends Module {
 
     //Bounce Settings          <--------   One of the best free Bounce ElytraFly <3
     public final NumberSetting jumpHeight = new NumberSetting("Jump Height", this, 0.42, 0.05, 0.42, false, () -> mode.getValue().equals("Bounce"));
-    public final ModeSetting alwaysPress = new ModeSetting("Always Press", this, new ArrayList<>(Arrays.asList("None", "Sprint", "Shift", "Multi")), () -> mode.getValue().equals("Bounce"));
+    public final ModeSetting alwaysPress = new ModeSetting("Always Press", this, Arrays.asList("None", "Sprint", "Shift", "Multi"), () -> mode.getValue().equals("Bounce")).defaultValue("Sprint");
     public final BooleanSetting strafing = new BooleanSetting("Strafing", this, true, () -> mode.getValue().equals("Bounce"));
     public final BooleanSetting groundTakeoffFix = new BooleanSetting("Ground Takeoff Fix", this, true, () -> mode.getValue().equals("Bounce"));
-    public final NumberSetting takeoffTime = new NumberSetting("Takeoff Time", this, 250, 50, 500, true, () -> mode.getValue().equals("Bounce"));
+    public final NumberSetting takeoffTime = new NumberSetting("Takeoff Time", this, 100, 50, 500, true, () -> mode.getValue().equals("Bounce"));
 
     public final BooleanSetting autoWalk = new BooleanSetting("Auto Walk", this, true, () -> mode.getValue().equals("Bounce"));
     public final BooleanSetting autoJump = new BooleanSetting("Auto Jump", this, true, () -> mode.getValue().equals("Bounce"));
 
     public final BooleanSetting abusePitch = new BooleanSetting("Abuse Pitch", this, true, () -> mode.getValue().equals("Bounce"));
-    public final NumberSetting pitch = new NumberSetting("Pitch", this, 33, 0, 90, false, () -> abusePitch.getValue() && mode.getValue().equals("Bounce"));
+    public final NumberSetting pitch = new NumberSetting("Pitch", this, 74.4, 0, 90, false, () -> abusePitch.getValue() && mode.getValue().equals("Bounce"));
 
     public final BooleanSetting fireworkStart = new BooleanSetting("Firework Start", this, false, () -> mode.getValue().equals("Bounce"));
     public final NumberSetting fireworkPitchSetting = new NumberSetting("Firework Pitch", this, -1.20, -5, 0, false, () -> abusePitch.getValue() && mode.getValue().equals("Bounce"));

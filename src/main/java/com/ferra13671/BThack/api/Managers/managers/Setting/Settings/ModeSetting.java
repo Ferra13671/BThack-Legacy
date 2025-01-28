@@ -70,4 +70,14 @@ public class ModeSetting extends Setting {
         jsonObject.add(getName(), new JsonPrimitive(getValue()));
         jsonObject.add(getName() + " Index", new JsonPrimitive(getIndex()));
     }
+
+    public ModeSetting defaultValue(String value) {
+        for (int i = 0; i < options.size() - 1; i++) {
+            if (options.get(i).equals(value)) {
+                setValue(value);
+                setIndex(i);
+            }
+        }
+        return this;
+    }
 }
