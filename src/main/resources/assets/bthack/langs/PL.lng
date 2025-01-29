@@ -87,6 +87,7 @@
 "lang.module.GuiMove": Pozwala graczowi chodzić, gdy GUI jest otwarte.
 "lang.module.Impulse": Impuls, który jest dostarczany w kierunku twojego wzroku.
 "lang.module.LevitationControl": Pozwala kontrolować lewitację.
+"lang.module.LongJump": Umożliwia dalekie skoki.
 "lang.module.NinjaBridge": Automatycznie buduje most w stylu NinjaBridge w kierunku, w którym jesteś zwrócony.
 "lang.module.NoFall": Zapobiega uszkodzeniom spowodowanym upadkiem.
 "lang.module.NoJumpDelay": Wyłącza opóźnienie skoków.
@@ -220,6 +221,7 @@
 "lang.module.DeathCamera.message": Jesteś martwy. Naciśnij: %s, aby ożywić lub dezaktywować moduł.
 "lang.module.ExtraTab.futurePresentMessage": Ponieważ korzystasz z klienta Future, nie możesz używać tego modułu!
 "lang.module.AutoMend.toggleMessage": Wszystkie items naprawione, wyłączanie.
+"lang.module.LongJump.ItemsNotFound": W ekwipunku nie ma żadnych elytra lub fajerwerków.
 
 
 //Screens

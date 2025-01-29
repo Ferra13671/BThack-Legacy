@@ -350,6 +350,7 @@ public class ElytraFlight extends Module {
         }
 
         ModuleList.fastFall.setToggled(false);
+        ModuleList.longJump.setToggled(false);
 
         super.onEnable();
         fireworkUsed = false;

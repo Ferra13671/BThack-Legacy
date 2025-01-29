@@ -115,6 +115,7 @@ public final class ModuleList {
     public static GuiMove guiMove;
     public static Impulse impulse;
     public static LevitationControl levitationControl;
+    public static LongJump longJump;
     public static NinjaBridge ninjaBridge;
     public static NoFall noFall;
     public static NoJumpDelay noJumpDelay;
@@ -314,6 +315,7 @@ public final class ModuleList {
         guiMove = register(new GuiMove());
         impulse = register(new Impulse());
         levitationControl = register(new LevitationControl());
+        longJump = register(new LongJump());
         ninjaBridge = register(new NinjaBridge());
         noFall = register(new NoFall());
         noJumpDelay = register(new NoJumpDelay());

@@ -3,6 +3,7 @@ package com.ferra13671.BThack.mixins.entity;
 import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.api.Events.Entity.JumpHeightEvent;
+import com.ferra13671.BThack.api.Events.Player.PlayerJumpEvent;
 import com.ferra13671.BThack.api.Events.Player.PlayerTravelEvent;
 import com.ferra13671.BThack.api.Events.Player.PlayerTraverRotEvent;
 import com.ferra13671.BThack.api.Interfaces.Mc;
@@ -12,6 +13,9 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MovementType;
+import net.minecraft.entity.attribute.EntityAttribute;
+import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -41,6 +45,8 @@ public abstract class MixinLivingEntity extends Entity implements Mc {
 
     @Shadow public abstract void remove(RemovalReason reason);
 
+    @Shadow public abstract double getAttributeValue(RegistryEntry<EntityAttribute> attribute);
+
     @Inject(method = "isBaby", at = @At("HEAD"), cancellable = true)
     public void modifyIsBaby(CallbackInfoReturnable<Boolean> cir) {
         if (!Module.nullCheck())
@@ -49,10 +55,10 @@ public abstract class MixinLivingEntity extends Entity implements Mc {
                     cir.setReturnValue(true);
     }
 
-    @Inject(method = "getJumpVelocity", at = @At("TAIL"), cancellable = true)
-    public void modifyGetJumpVelocity(CallbackInfoReturnable<Float> cir) {
+    @Inject(method = "getJumpVelocity(F)F", at = @At("TAIL"), cancellable = true)
+    public void modifyGetJumpVelocity(float strength, CallbackInfoReturnable<Float> cir) {
         if ((Object) this != mc.player) return;
-        JumpHeightEvent event = new JumpHeightEvent(0.42F * getJumpVelocityMultiplier() + getJumpBoostVelocityModifier());
+        JumpHeightEvent event = new JumpHeightEvent((float) getAttributeValue(EntityAttributes.GENERIC_JUMP_STRENGTH) * strength * this.getJumpVelocityMultiplier() + this.getJumpBoostVelocityModifier());
 
         BThack.EVENT_BUS.activate(event);
 
@@ -66,6 +72,7 @@ public abstract class MixinLivingEntity extends Entity implements Mc {
     public void modifyArgsInSetVelocityOnJump(Args args) {
         PlayerTraverRotEvent event = new PlayerTraverRotEvent(mc.player.getYaw(), mc.player.getPitch(), false);
         BThack.EVENT_BUS.activate(event);
+        BThack.EVENT_BUS.activate(new PlayerJumpEvent());
         float f = event.yaw * 0.017453292F;
         args.set(0, new Vec3d((-MathHelper.sin(f) * 0.2), 0.0, (MathHelper.cos(f) * 0.2)));
     }

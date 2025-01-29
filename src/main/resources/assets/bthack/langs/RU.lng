@@ -87,6 +87,7 @@
 "lang.module.GuiMove": Позволяет игроку ходить когда гуи открыто.
 "lang.module.Impulse": Импульс, который подается в направлении вашего взгляда.
 "lang.module.LevitationControl": Позволяет управлять левитацией.
+"lang.module.LongJump": Позволяет далеко прыгать.
 "lang.module.NinjaBridge": Автоматически строит мост в стиле NinjaBridge в том направлении, в котором вы смотрите.
 "lang.module.NoFall": Предотвращает урон от падения.
 "lang.module.NoJumpDelay": Отключает задержку прыжка.
@@ -221,6 +222,7 @@
 "lang.module.DeathCamera.message": Вы мертвы. Нажмите: %s, чтобы возродиться или отключить модуль.
 "lang.module.ExtraTab.futurePresentMessage": Поскольку вы используете Future клиент, вы не можете использовать этот модуль!
 "lang.module.AutoMend.toggleMessage": Все предметы отремонтированы, выключение.
+"lang.module.LongJump.ItemsNotFound": В вашем инвентаре не обнаружены элитры или фейерверки.
 
 
 //Screens

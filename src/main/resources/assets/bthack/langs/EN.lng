@@ -88,6 +88,7 @@
 "lang.module.GuiMove": Allows the player to move when the GUI is turned on.
 "lang.module.Impulse": An impulse is applied to you in the direction of your gaze.
 "lang.module.LevitationControl": Allows you to control levitation.
+"lang.module.LongJump": Allows you to jump far.
 "lang.module.NinjaBridge": Automatically builds a NinjaBridge-style bridge in the direction you're facing.
 "lang.module.NoFall": Prevents damage from falling.
 "lang.module.NoJumpDelay": Disable jump delay.
@@ -221,6 +222,7 @@
 "lang.module.DeathCamera.message": You are dead. Press: %s to respawn or disable module.
 "lang.module.ExtraTab.futurePresentMessage": Because you are using Future client you cannot use this module!
 "lang.module.AutoMend.toggleMessage": All items repaired, disabling.
+"lang.module.LongJump.ItemsNotFound": Not found elytra or fireworks in your inventory.
 
 
 
