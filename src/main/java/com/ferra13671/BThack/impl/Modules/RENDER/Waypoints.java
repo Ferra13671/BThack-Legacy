@@ -41,10 +41,14 @@ public class Waypoints extends Module {
     @EventSubscriber
     public void onHudRender(RenderHudPreEvent e) {
         if (nullCheck()) return;
+
+        String currentServer = mc.isInSingleplayer() ? "SinglePlayer" : mc.getNetworkHandler().getServerInfo().address;
+
         BThackRender.guiGraphics.getMatrices().push();
         if (mc.world.getRegistryKey() == World.OVERWORLD || (convertOverworld.getValue() && mc.world.getRegistryKey() == World.NETHER)) {
             Managers.WAYPOINT_MANAGER.getOverworldWaypoints().forEach(waypoint -> {
                 if (!waypoint.isVisible()) return;
+                if (!waypoint.getServer().equals(currentServer)) return;
                 Vec3d position = new Vec3d(waypoint.getPosition().getX(), waypoint.getPosition().getY(), waypoint.getPosition().getZ());
 
                 if (convertOverworld.getValue() && mc.world.getRegistryKey() == World.NETHER) {
@@ -58,12 +62,14 @@ public class Waypoints extends Module {
         if (mc.world.getRegistryKey() == World.END) {
             Managers.WAYPOINT_MANAGER.getEndWaypoints().forEach(waypoint -> {
                 if (!waypoint.isVisible()) return;
+                if (!waypoint.getServer().equals(currentServer)) return;
                 drawWaypoint(waypoint.getPosition(), waypoint);
             });
         }
         if (mc.world.getRegistryKey() == World.NETHER || (convertNether.getValue() && mc.world.getRegistryKey() == World.OVERWORLD)) {
             Managers.WAYPOINT_MANAGER.getNetherWaypoints().forEach(waypoint -> {
                 if (!waypoint.isVisible()) return;
+                if (!waypoint.getServer().equals(currentServer)) return;
                 Vec3d position = new Vec3d(waypoint.getPosition().getX(), waypoint.getPosition().getY(), waypoint.getPosition().getZ());
                 if (convertNether.getValue() && mc.world.getRegistryKey() == World.OVERWORLD) {
                     position.x *= 8;

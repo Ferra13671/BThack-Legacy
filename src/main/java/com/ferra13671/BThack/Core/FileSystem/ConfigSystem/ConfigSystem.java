@@ -542,6 +542,7 @@ public final class ConfigSystem {
                 add(wpObject, "visible", waypoint.isVisible());
                 add(wpObject, "dimension", waypoint.getDimension().name());
                 add(wpObject, "color", waypoint.getColor());
+                add(wpObject, "server", waypoint.getServer());
 
                 jsonList.add(wpObject);
             }
@@ -561,6 +562,7 @@ public final class ConfigSystem {
                     boolean visible = Waypoint.DEFAULT_VISIBLE;
                     Waypoint.WaypointDimension dimension = Waypoint.DEFAULT_DIMENSION;
                     int color = Waypoint.DEFAULT_COLOR;
+                    String server = "";
 
                     if (!_null(waypoint, "name")) name = waypoint.get("name").getAsString();
                     if (!_null(waypoint, "position")) {
@@ -570,8 +572,9 @@ public final class ConfigSystem {
                     if (!_null(waypoint, "visible")) visible = waypoint.get("visible").getAsBoolean();
                     if (!_null(waypoint, "dimension")) dimension = Waypoint.WaypointDimension.valueOf(waypoint.get("dimension").getAsString());
                     if (!_null(waypoint, "color")) color = waypoint.get("color").getAsInt();
+                    if (!_null(waypoint, "server")) server = waypoint.get("server").getAsString();
 
-                    Managers.WAYPOINT_MANAGER.addWaypoint(new Waypoint(name, position, visible, dimension, color));
+                    Managers.WAYPOINT_MANAGER.addWaypoint(new Waypoint(name, position, visible, dimension, color, server));
                 });
             }
         }

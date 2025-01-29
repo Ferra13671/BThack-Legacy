@@ -25,16 +25,19 @@ public class WaypointCommand extends AbstractCommand {
     @Override
     public void compile(LiteralArgumentBuilder<CommandSource> builder) {
         builder.then(literal("list").then(arg("mode", Arguments.MODE("OnlyNames", "Full")).executes(context -> {
+            String currentServer = mc.isInSingleplayer() ? "SinglePlayer" : mc.getNetworkHandler().getServerInfo().address;
+
             sendMessage(Formatting.AQUA + "|$#> " + ClientSettings.getFriendColor() + "Waypoints" + Formatting.AQUA + " <#&|");
+            sendMessage(Formatting.GREEN + " " + currentServer);
 
-            sendMessage(Formatting.DARK_PURPLE + " Overworld:");
-            sendWaypointList(Managers.WAYPOINT_MANAGER.getOverworldWaypoints(), context);
+            sendMessage(Formatting.DARK_PURPLE + "  Overworld:");
+            sendWaypointList(Managers.WAYPOINT_MANAGER.getOverworldWaypoints(), context, currentServer);
 
-            sendMessage(Formatting.DARK_PURPLE + " Nether:");
-            sendWaypointList(Managers.WAYPOINT_MANAGER.getNetherWaypoints(), context);
+            sendMessage(Formatting.DARK_PURPLE + "  Nether:");
+            sendWaypointList(Managers.WAYPOINT_MANAGER.getNetherWaypoints(), context, currentServer);
 
-            sendMessage(Formatting.DARK_PURPLE + " End:");
-            sendWaypointList(Managers.WAYPOINT_MANAGER.getEndWaypoints(), context);
+            sendMessage(Formatting.DARK_PURPLE + "  End:");
+            sendWaypointList(Managers.WAYPOINT_MANAGER.getEndWaypoints(), context, currentServer);
 
             return SUCCESFUL;
         })));
@@ -61,7 +64,8 @@ public class WaypointCommand extends AbstractCommand {
                                                                                             context.getArgument("green", Integer.class),
                                                                                             context.getArgument("blue", Integer.class),
                                                                                             255
-                                                                                    )
+                                                                                    ),
+                                                                                    mc.isInSingleplayer() ? "SinglePlayer" : mc.getNetworkHandler().getServerInfo().address
                                                                             )
                                                                     );
                                                                     try {
@@ -158,10 +162,12 @@ public class WaypointCommand extends AbstractCommand {
         ));
     }
 
-    private void sendWaypointList(List<Waypoint> waypoints, CommandContext<CommandSource> context) {
+    private void sendWaypointList(List<Waypoint> waypoints, CommandContext<CommandSource> context, String currentServer) {
         int count = 1;
         for (Waypoint waypoint : waypoints) {
-            String text = Formatting.GRAY + "" + count + Formatting.WHITE + "Name: " + Formatting.DARK_AQUA + waypoint.getName();
+            if (!currentServer.equals(waypoint.getServer())) continue;
+
+            String text = Formatting.GRAY + "   " + count + "." + Formatting.WHITE + "Name: " + Formatting.DARK_AQUA + waypoint.getName();
             if (context.getArgument("mode", String.class).equals("Full")) {
                 float[] colors = ColorUtils.hashCodeToRGB(waypoint.getColor());
                 text = text +

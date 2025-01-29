@@ -19,13 +19,15 @@ public class Waypoint {
     private boolean visible = DEFAULT_VISIBLE;
     private WaypointDimension dimension = DEFAULT_DIMENSION;
     private int color = DEFAULT_COLOR;
+    private String server;
 
-    public Waypoint(String name, Vec3d position, boolean visible, WaypointDimension dimension, int color) {
+    public Waypoint(String name, Vec3d position, boolean visible, WaypointDimension dimension, int color, String server) {
         this.name = name;
         this.position = position;
         this.visible = visible;
         this.color = color;
         this.dimension = dimension;
+        this.server = server;
     }
 
     public Waypoint() {
@@ -65,6 +67,14 @@ public class Waypoint {
 
     public WaypointDimension getDimension() {
         return dimension;
+    }
+
+    public String getServer() {
+        return server;
+    }
+
+    public void setServer(String server) {
+        this.server = server;
     }
 
     public void setDimension(WaypointDimension dimension) {
