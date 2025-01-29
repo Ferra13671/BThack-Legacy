@@ -37,14 +37,14 @@ public class KillAura extends Module {
 
     public final ModeSetting mode = new ModeSetting("Mode", this, new ArrayList<>(Arrays.asList("Aura", "TriggerBot")));
     public final ModeSetting attackMode = new ModeSetting("AttackMode", this, new ArrayList<>(Arrays.asList("CoolDown", "Delay")));
-    public final NumberSetting range = new NumberSetting("Range", this, 4.0, 1, 10, false, () -> mode.getValue().equals("Aura"));
-    public final ModeSetting rotateMode = new ModeSetting("RotateMode", this, new ArrayList<>(Arrays.asList("Packet", "Vanilla", "Grim", "None")), () -> !mode.getValue().equals("TriggerBot"));
+    public final NumberSetting range = new NumberSetting("Range", this, 3.62, 1, 10, false, () -> mode.getValue().equals("Aura"));
+    public final ModeSetting rotateMode = new ModeSetting("RotateMode", this, new ArrayList<>(Arrays.asList("Packet", "Vanilla", "Grim", "None")), () -> !mode.getValue().equals("TriggerBot")).defaultValue("Grim");
     public final NumberSetting packets = new NumberSetting("Packets", this, 1, 1, 5, true, () -> rotateMode.getValue().equals("Packet") && mode.getValue().equals("Aura"));
     public final NumberSetting delay = new NumberSetting("Delay(Second)", this, 1.4, 0.1, 4, false, () -> attackMode.getValue().equals("Delay"));
-    public final NumberSetting postCooldown = new NumberSetting("Post Cooldown", this, 0, 0, 100, true, () -> attackMode.getValue().equals("CoolDown"));
+    public final NumberSetting postCooldown = new NumberSetting("Post Cooldown", this, 56, 0, 100, true, () -> attackMode.getValue().equals("CoolDown"));
 
     public final BooleanSetting instaAttack = new BooleanSetting("Insta Attack", this, false, () -> mode.getValue().equals("Aura") && !mode.getValue().equals("Grim"));
-    public final NumberSetting lockTicks = new NumberSetting("Lock Ticks", this, 5, 3, 10, false, () -> mode.getValue().equals("Aura") && (mode.getValue().equals("Grim") || !instaAttack.getValue()));
+    public final NumberSetting lockTicks = new NumberSetting("Lock Ticks", this, 7, 3, 10, false, () -> mode.getValue().equals("Aura") && (mode.getValue().equals("Grim") || !instaAttack.getValue()));
 
     public final BooleanSetting players = new BooleanSetting("Players", this, true);
     public final BooleanSetting teammates = new BooleanSetting("Teammates", this, false);
