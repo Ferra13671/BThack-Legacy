@@ -325,7 +325,6 @@ public final class ConfigSystem {
         loadOldHudInfo();
     }
 
-    //TODO:
     /** Will need to remove this in the next versions */
     @Deprecated
     private static void loadOldHudInfo() throws IOException {
