@@ -79,7 +79,6 @@ public final class ModuleList {
     public static GameCrasher gameCrasher;
     public static HighwayBuilder highwayBuilder;
     public static InstaNuker instaNuker;
-    //public static InstaRemine instaRemine;  //TODO: maybe?
     public static ItemRandomizer itemRandomizer;
     public static MiddleClick middleClick;
     public static MoreChatHistory moreChatHistory;
@@ -279,7 +278,6 @@ public final class ModuleList {
         gameCrasher = register(new GameCrasher());
         highwayBuilder = register(new HighwayBuilder());
         instaNuker = register(new InstaNuker());
-        //instaRemine = register(new InstaRemine());
         itemRandomizer = register(new ItemRandomizer());
         middleClick = register(new MiddleClick());
         moreChatHistory = register(new MoreChatHistory());
