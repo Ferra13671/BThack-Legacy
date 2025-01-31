@@ -15,7 +15,6 @@ import net.minecraft.client.util.Window;
 
 import java.awt.*;
 
-//TODO: Render fix
 public class CS_Crosshair extends Module {
 
     public final NumberSetting width = new NumberSetting("Width", this, 4, 1, 50, false);
@@ -85,10 +84,10 @@ public class CS_Crosshair extends Module {
             BThackRender.drawRect((int)-height.getValue(), (int)- height.getValue(), (int)height.getValue(), (int)height.getValue(), color.hashCode());
 
         if (upRect.getValue())
-            BThackRender.drawRect((int)(0 -height.getValue()), (int)(0 - height.getValue() - distance.getValue() - spread), (int)(0 + height.getValue()), (int)(0 - height.getValue() - distance.getValue() - width.getValue() - spread), color.hashCode());
+            BThackRender.drawRect((int)(0 -height.getValue()),(int)(0 - height.getValue() - distance.getValue() - width.getValue() - spread), (int)(0 + height.getValue()), (int)(0 - height.getValue() - distance.getValue() - spread), color.hashCode());
 
         if (leftRect.getValue())
-            BThackRender.drawRect((int)(0 - height.getValue() - distance.getValue() - spread), (int)(0 - height.getValue()), (int)(0 - height.getValue() - distance.getValue() - width.getValue() - spread), (int)(0 + height.getValue()), color.hashCode());
+            BThackRender.drawRect((int)(0 - height.getValue() - distance.getValue() - width.getValue() - spread), (int)(0 - height.getValue()), (int)(0 - height.getValue() - distance.getValue() - spread), (int)(0 + height.getValue()), color.hashCode());
 
         if (downRect.getValue())
             BThackRender.drawRect((int)-height.getValue(), (int)(0 + height.getValue() + distance.getValue() + spread), (int)( + height.getValue()), (int)(0 + height.getValue() + distance.getValue() + width.getValue() + spread), color.hashCode());
