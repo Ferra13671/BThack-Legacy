@@ -8,8 +8,8 @@ import com.google.gson.JsonPrimitive;
 import java.awt.*;
 import java.util.function.Supplier;
 
-@Deprecated
 public class ColorSetting extends Setting {
+    private boolean blockedAlpha = false;
 
     private Color color;
     private final Color defaultColor;
@@ -60,5 +60,14 @@ public class ColorSetting extends Setting {
         colorObject.add("Alpha", new JsonPrimitive(color.getAlpha()));
 
         jsonObject.add(getName(), colorObject);
+    }
+
+    public boolean isBlockedAlpha() {
+        return blockedAlpha;
+    }
+
+    public ColorSetting withBlockedAlpha() {
+        blockedAlpha = true;
+        return this;
     }
 }

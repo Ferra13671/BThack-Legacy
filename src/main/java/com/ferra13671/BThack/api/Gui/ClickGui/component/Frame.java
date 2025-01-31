@@ -173,7 +173,7 @@ public class Frame implements Mc {
 			int type = (int) ModuleList.clickGui.rainbowSpeed.getValue();
 			BThackRender.drawHorizontalRainbowRect(x, y, x + FRAME_WIDTH, y + BAR_HEIGHT, type);
 		} else {
-			BThackRender.drawRect(x, y, x + FRAME_WIDTH, y + BAR_HEIGHT, ModuleList.clickGui.customColor.getValue() ? ColorUtils.fastRGBA((int) ModuleList.clickGui.redColor.getValue(), (int) ModuleList.clickGui.greenColor.getValue(), (int) ModuleList.clickGui.blueColor.getValue(), 255) : ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().color()));
+			BThackRender.drawRect(x, y, x + FRAME_WIDTH, y + BAR_HEIGHT, ModuleList.clickGui.customColor.getValue() ? ColorUtils.fastRGBA((int) ModuleList.clickGui.color.getValue().getRed(), (int) ModuleList.clickGui.color.getValue().getGreen(), (int) ModuleList.clickGui.color.getValue().getBlue(), 255) : ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().color()));
 		}
 		if (ModuleList.clickGui.frameOutline.getValue())
 			BThackRender.drawOutlineRect(x, y, x + FRAME_WIDTH, y + BAR_HEIGHT, 1, BAR_OUTLINE_COLOR);

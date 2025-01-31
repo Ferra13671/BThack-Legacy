@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+//TODO: Color change
 public class ESP extends Module {
 
     public final ModeSetting mode = new ModeSetting("Mode", this, new ArrayList<>(Arrays.asList("Box", "Glow")));

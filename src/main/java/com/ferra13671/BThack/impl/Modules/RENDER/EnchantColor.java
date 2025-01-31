@@ -4,10 +4,13 @@ import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.Core.Render.Utils.RainbowUtils;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ColorSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import net.minecraft.util.math.ColorHelper;
+
+import java.awt.*;
 
 public class EnchantColor extends Module {
 
@@ -18,9 +21,7 @@ public class EnchantColor extends Module {
     public final NumberSetting rainbowSpeed = new NumberSetting("Rainbow Speed", this, 2, 1, 4, true, rainbow::getValue);
 
     public final NumberSetting alphaColor = new NumberSetting("Alpha", this, 180, 0, 255, true);
-    public final NumberSetting redColor = new NumberSetting("Red", this, 255, 0, 255, true, () -> !rainbow.getValue());
-    public final NumberSetting greenColor = new NumberSetting("Green", this, 255, 0, 255, true, () -> !rainbow.getValue());
-    public final NumberSetting blueColor = new NumberSetting("Blue", this, 255, 0, 255, true, () -> !rainbow.getValue());
+    public final ColorSetting colorSet = new ColorSetting("Color", this, new Color(255, 255, 255), () -> !rainbow.getValue()).withBlockedAlpha();
 
     public EnchantColor() {
         super("EnchantColor",
@@ -36,9 +37,7 @@ public class EnchantColor extends Module {
 
                 alphaColor,
 
-                redColor,
-                greenColor,
-                blueColor,
+                colorSet,
 
                 rainbow,
                 rainbowSpeed
@@ -52,9 +51,9 @@ public class EnchantColor extends Module {
         float alpha = (float) (ModuleList.enchantColor.alphaColor.getValue() / 255d);
 
         if (!ModuleList.enchantColor.rainbow.getValue()) {
-            red = (float) (ModuleList.enchantColor.redColor.getValue() / 255d);
-            green = (float) (ModuleList.enchantColor.greenColor.getValue() / 255d);
-            blue = (float) (ModuleList.enchantColor.blueColor.getValue() / 255d);
+            red = (float) (ModuleList.enchantColor.colorSet.getValue().getRed() / 255d);
+            green = (float) (ModuleList.enchantColor.colorSet.getValue().getGreen() / 255d);
+            blue = (float) (ModuleList.enchantColor.colorSet.getValue().getBlue() / 255d);
         } else {
             int rainbowType = (int) ModuleList.enchantColor.rainbowSpeed.getValue();
             float speed = RainbowUtils.getRainbowRectSpeed(rainbowType)[0];

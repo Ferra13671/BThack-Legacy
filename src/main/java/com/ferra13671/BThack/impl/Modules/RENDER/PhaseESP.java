@@ -17,6 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+//TODO: Color change
 public class PhaseESP extends Module {
     public final BooleanSetting outline = new BooleanSetting("Outline", this, true);
     public final BooleanSetting fill = new BooleanSetting("Fill", this, true);

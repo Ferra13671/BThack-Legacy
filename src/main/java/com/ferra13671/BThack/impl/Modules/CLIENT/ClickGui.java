@@ -7,10 +7,7 @@ import com.ferra13671.BThack.Core.Render.Utils.RainbowUtils;
 import com.ferra13671.BThack.api.Animation.Easing;
 import com.ferra13671.BThack.api.Managers.managers.ColourTheme.ColorTheme;
 import com.ferra13671.BThack.api.Managers.Managers;
-import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
-import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
-import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
-import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.Setting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.*;
 import com.ferra13671.BThack.api.Module.OneActionModule;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.Utils.System.BThackScreens;
@@ -27,9 +24,7 @@ public class ClickGui extends OneActionModule {
     public final ModeSetting activeTheme = new ModeSetting("Theme", this, getActiveThemeList());
     public final BooleanSetting rainbow = new BooleanSetting("Rainbow", this, false);
     public final BooleanSetting customColor = new BooleanSetting("Custom Color", this, false, () -> !rainbow.getValue());
-    public final NumberSetting redColor = new NumberSetting("Red", this, 25,0,255,true, customColor::getValue);
-    public final NumberSetting greenColor = new NumberSetting("Green", this, 28,0,255,true, customColor::getValue);
-    public final NumberSetting blueColor = new NumberSetting("Blue", this, 255,0,255,true, customColor::getValue);
+    public final ColorSetting color = new ColorSetting("ClickGui Color", this, new Color(25, 28, 255), () -> customColor.getValue() && !rainbow.getValue()).withBlockedAlpha();
     public final NumberSetting rainbowSpeed = new NumberSetting("Rainbow speed", this, 2, 1, 4, true, rainbow::getValue);
 
     public final BooleanSetting frameOutline = new BooleanSetting("Frame Outline", this, true);
@@ -62,9 +57,7 @@ public class ClickGui extends OneActionModule {
 
         initSettings(
                 activeTheme,
-                redColor,
-                greenColor,
-                blueColor,
+                color,
                 customColor,
                 rainbow,
                 rainbowSpeed,
@@ -158,7 +151,7 @@ public class ClickGui extends OneActionModule {
 
             return ColorUtils.rainbow(delay, speed);
         } else if (ModuleList.clickGui.customColor.getValue()) {
-            return new Color((int) ModuleList.clickGui.redColor.getValue(), (int) ModuleList.clickGui.greenColor.getValue(), (int) ModuleList.clickGui.blueColor.getValue()).getRGB();
+            return new Color(ModuleList.clickGui.color.getValue().getRed(), ModuleList.clickGui.color.getValue().getGreen(), ModuleList.clickGui.color.getValue().getBlue()).getRGB();
         } else {
             return new Color(Client.clientInfo.getColorTheme().moduleEnabledColor()).hashCode();
         }

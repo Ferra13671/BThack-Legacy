@@ -4,6 +4,7 @@ import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Box.RenderBox;
 import com.ferra13671.BThack.api.Events.Render.RenderWorldLastEvent;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ColorSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
@@ -13,6 +14,7 @@ import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -43,14 +45,10 @@ public class HoleESP extends Module {
 
     //Holes Settings
     public final BooleanSetting obsidianHoles = new BooleanSetting("Obsidian Holes", this, true, () -> page.getValue().equals("Holes"));
-    public final NumberSetting obsidianRed = new NumberSetting("Obs Red", this, 255, 0, 255, true, () -> obsidianHoles.getValue() && page.getValue().equals("Holes"));
-    public final NumberSetting obsidianGreen = new NumberSetting("Obs Green", this, 255, 0, 255, true, () -> obsidianHoles.getValue() && page.getValue().equals("Holes"));
-    public final NumberSetting obsidianBlue = new NumberSetting("Obs Blue", this, 0, 0, 255, true, () -> obsidianHoles.getValue() && page.getValue().equals("Holes"));
+    public final ColorSetting obsidianColor = new ColorSetting("Obsidian Color", this, new Color(255, 255, 0), () -> obsidianHoles.getValue() && page.getValue().equals("Holes")).withBlockedAlpha();
 
     public final BooleanSetting bedrockHoles = new BooleanSetting("Bedrock Holes", this, true, () -> page.getValue().equals("Holes"));
-    public final NumberSetting bedrockRed = new NumberSetting("Bed Red", this, 61, 0, 255, true, () -> bedrockHoles.getValue() && page.getValue().equals("Holes"));
-    public final NumberSetting bedrockGreen = new NumberSetting("Bed Green", this, 194, 0, 255, true, () -> bedrockHoles.getValue() && page.getValue().equals("Holes"));
-    public final NumberSetting bedrockBlue = new NumberSetting("Bed Blue", this, 46, 0, 255, true, () -> bedrockHoles.getValue() && page.getValue().equals("Holes"));
+    public final ColorSetting bedrockColor = new ColorSetting("Bedrock Color", this, new Color(61, 194, 46), () -> bedrockHoles.getValue() && page.getValue().equals("Holes")).withBlockedAlpha();
     /////////
 
 
@@ -75,13 +73,10 @@ public class HoleESP extends Module {
                 boxWidth,
                 boxHeight,
                 obsidianHoles,
-                obsidianRed,
-                obsidianGreen,
-                obsidianBlue,
+                obsidianColor,
+
                 bedrockHoles,
-                bedrockRed,
-                bedrockGreen,
-                bedrockBlue
+                bedrockColor
         );
     }
 
@@ -132,9 +127,9 @@ public class HoleESP extends Module {
 
         if (obsidianHoles.getValue() && obsidianHoleList != null) {
 
-            float oRed = (float) obsidianRed.getValue() / 255f;
-            float oGreen = (float) obsidianGreen.getValue() / 255f;
-            float oBlue = (float) obsidianBlue.getValue() / 255f;
+            float oRed = (float) obsidianColor.getValue().getRed() / 255f;
+            float oGreen = (float) obsidianColor.getValue().getGreen() / 255f;
+            float oBlue = (float) obsidianColor.getValue().getBlue() / 255f;
 
             for (BlockPos obsidianHole : obsidianHoleList) {
                 Box box = BlockUtils.createBox(obsidianHole, boxLength.getValue(), boxWidth.getValue(), boxHeight.getValue(), false);
@@ -143,9 +138,9 @@ public class HoleESP extends Module {
         }
 
         if (bedrockHoles.getValue() && bedrockHoleList != null) {
-            float bRed = (float) bedrockRed.getValue() / 255f;
-            float bGreen = (float) bedrockGreen.getValue() / 255f;
-            float bBlue = (float) bedrockBlue.getValue() / 255f;
+            float bRed = (float) bedrockColor.getValue().getRed() / 255f;
+            float bGreen = (float) bedrockColor.getValue().getGreen() / 255f;
+            float bBlue = (float) bedrockColor.getValue().getBlue() / 255f;
 
             for (BlockPos bedrockHole : bedrockHoleList) {
                 Box box = BlockUtils.createBox(bedrockHole, boxLength.getValue(), boxWidth.getValue(), boxHeight.getValue(), false);

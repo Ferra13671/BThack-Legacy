@@ -11,6 +11,7 @@ import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Events.Render.RenderWorldLastEvent;
 import com.ferra13671.BThack.api.Managers.managers.Destroy.DestroyManager;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ColorSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
@@ -32,6 +33,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3i;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -70,9 +72,7 @@ public class PacketMine extends Module {
     public final NumberSetting hotbarSlot = new NumberSetting("Hotbar Slot", this, 1, 1, 9, true, () -> inventoryMode.getValue() && page.getValue().equals("General"));
 
     public final BooleanSetting renderBox = new BooleanSetting("Render Box", this, true, () -> page.getValue().equals("Render"));
-    public final NumberSetting boxRed = new NumberSetting("Box Red", this, 0, 0, 255, true, () -> renderBox.getValue() && page.getValue().equals("Render"));
-    public final NumberSetting boxGreen = new NumberSetting("Box Green", this, 255, 0, 255, true, () -> renderBox.getValue() && page.getValue().equals("Render"));
-    public final NumberSetting boxBlue = new NumberSetting("Box Blue", this, 0, 0, 255, true, () -> renderBox.getValue() && page.getValue().equals("Render"));
+    public final ColorSetting boxColor = new ColorSetting("Box Color", this, new Color(0, 255, 0), () -> renderBox.getValue() && page.getValue().equals("Render")).withBlockedAlpha();
     public final BooleanSetting conveyorRender = new BooleanSetting("Conveyor Render", this, true, () -> renderBox.getValue() && page.getValue().equals("Render"));
 
     public final NumberSetting conveyorAlpha = new NumberSetting("Conv. Alpha", this, 255, 0, 255, true, () -> renderBox.getValue() && conveyorRender.getValue() && page.getValue().equals("Render"));
@@ -119,9 +119,9 @@ public class PacketMine extends Module {
                 hotbarSlot,
 
                 renderBox,
-                boxRed,
-                boxGreen,
-                boxBlue
+                boxColor,
+
+                conveyorAlpha
         );
 
     }
@@ -294,9 +294,9 @@ public class PacketMine extends Module {
             }
 
             double currentDestroyBlockSize = MathHelper.lerp(mc.getRenderTickCounter().getTickDelta(true), currentBreakingBlock.prevDestroyProgress, currentBreakingBlock.currentDestroyProgress) / 2;
-            float boxR = (float) boxRed.getValue() / 255f;
-            float boxG = (float) boxGreen.getValue() / 255f;
-            float boxB = (float) boxBlue.getValue() / 255f;
+            float boxR = (float) boxColor.getValue().getRed() / 255f;
+            float boxG = (float) boxColor.getValue().getGreen() / 255f;
+            float boxB = (float) boxColor.getValue().getBlue() / 255f;
             renderBoxes.add(
                     new RenderBox(
                             BlockUtils.createBox(

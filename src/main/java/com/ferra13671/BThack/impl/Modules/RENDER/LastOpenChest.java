@@ -6,7 +6,7 @@ import com.ferra13671.BThack.api.Events.Block.UseBlockEvent;
 import com.ferra13671.BThack.api.Events.GuiOpenEvent;
 import com.ferra13671.BThack.api.Events.Render.RenderWorldLastEvent;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
-import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ColorSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.BlockUtils;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
@@ -21,14 +21,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class LastOpenChest extends Module {
 
-    public final NumberSetting red = new NumberSetting("Red", this, 0, 0, 255, true);
-    public final NumberSetting green = new NumberSetting("Green", this, 255, 0, 255, true);
-    public final NumberSetting blue = new NumberSetting("Blue", this, 255, 0, 255, true);
+    public final ColorSetting colorSet = new ColorSetting("Color", this, new Color(0, 255, 255)).withBlockedAlpha();
 
     public LastOpenChest() {
         super("LastOpenChest",
@@ -39,9 +38,7 @@ public class LastOpenChest extends Module {
         );
 
         initSettings(
-                red,
-                green,
-                blue
+                colorSet
         );
     }
 
@@ -85,9 +82,9 @@ public class LastOpenChest extends Module {
     @EventSubscriber
     public void onRender(RenderWorldLastEvent e) {
         if (chestPos != null && needRender) {
-            float _red = (float) red.getValue() / 255f;
-            float _green = (float) green.getValue() / 255f;
-            float _blue = (float) blue.getValue() / 255f;
+            float _red = colorSet.getValue().getRed() / 255f;
+            float _green = colorSet.getValue().getGreen() / 255f;
+            float _blue = colorSet.getValue().getBlue() / 255f;
 
             Box box = BlockUtils.getBoundingBox(chestPos);
             if (box == null) return;

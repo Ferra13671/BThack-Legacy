@@ -88,23 +88,8 @@ public class Slider extends AbstractSetting implements Mc {
 		y = parent.parent.getY() + offset;
 		x = parent.parent.getX();
 
-		//double diff = Math.min(ClickGui.applyGuiScale(100), Math.max(0, mouseX - ClickGui.applyGuiScale(this.x)));
-
 		double min = set.getMinValue();
 		double max = set.getMaxValue();
-
-		//renderWidth = (100) * (set.getValue() - min) / (max - min);
-
-		//if (dragging) {
-		//	if (diff == 0) {
-		//		set.setValue(set.getMinValue());
-		//	} else {
-		//		double newValue = roundToPlace(((diff / 100) * (max - min) + min), 2);
-		//		set.setValue(newValue);
-		//	}
-		//}
-
-
 
 		double diff = ((mouseX - 1 - ClickGui.applyGuiScale(x)) / (getWidth() * 2)) * 100;
 		diff = Math.max(0, Math.min(100, diff));

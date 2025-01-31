@@ -45,13 +45,13 @@ public abstract class MixinClientWorld extends World {
     @Inject(method = "getCloudsColor", at = @At("HEAD"), cancellable = true)
     public void modifyGetCloudColor(float p_getCloudColour_1_, CallbackInfoReturnable<Vec3d> cir) {
         if (ModuleList.cloudsColor.isEnabled())
-            cir.setReturnValue(new Vec3d(ModuleList.cloudsColor.cloudsRed.getValue() / 255, ModuleList.cloudsColor.cloudsGreen.getValue() / 255, ModuleList.cloudsColor.cloudsBlue.getValue() / 255));
+            cir.setReturnValue(new Vec3d(ModuleList.cloudsColor.cloudsColor.getValue().getRed() / 255d, ModuleList.cloudsColor.cloudsColor.getValue().getGreen() / 255d, ModuleList.cloudsColor.cloudsColor.getValue().getBlue() / 255d));
     }
 
     @Inject(method = "getSkyColor", at = @At("HEAD"), cancellable = true)
     public void modifyGetSkyColor(Vec3d cameraPos, float tickDelta, CallbackInfoReturnable<Vec3d> cir) {
         if (ModuleList.skyColor.isEnabled())
-            cir.setReturnValue(new Vec3d(ModuleList.skyColor.skyRed.getValue() / 255.0f, ModuleList.skyColor.skyGreen.getValue() / 255.0f, ModuleList.skyColor.skyBlue.getValue() / 255.0f));
+            cir.setReturnValue(new Vec3d(ModuleList.skyColor.skyColor.getValue().getRed() / 255.0f, ModuleList.skyColor.skyColor.getValue().getGreen() / 255.0f, ModuleList.skyColor.skyColor.getValue().getBlue() / 255.0f));
     }
 
     @Inject(method = "getStarBrightness", at = @At("HEAD"), cancellable = true)

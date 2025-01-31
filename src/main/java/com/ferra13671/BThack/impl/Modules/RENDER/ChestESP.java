@@ -20,6 +20,7 @@ import net.minecraft.util.math.Box;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+//TODO: Color change
 public class ChestESP extends Module {
 
     public final BooleanSetting tracers = new BooleanSetting("Tracers", this, false);

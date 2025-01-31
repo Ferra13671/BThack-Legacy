@@ -6,6 +6,7 @@ import com.ferra13671.BThack.api.Events.PacketEvent;
 import com.ferra13671.BThack.api.Events.Render.RenderWorldLastEvent;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ColorSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
@@ -31,7 +32,9 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeKeys;
 import net.minecraft.world.chunk.*;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
 import java.util.concurrent.ExecutorService;
@@ -58,26 +61,14 @@ public class NewChunks extends Module {
     public final BooleanSetting newChunkRender = new BooleanSetting("New Render", this, true, () -> page.getValue().equals("Render"));
     public final NumberSetting newDist = new NumberSetting("New Dist", this, 350, 100, 2000, false, () -> page.getValue().equals("Render") && newChunkRender.getValue());
     public final NumberSetting newY = new NumberSetting("New Y", this, 0, 0, 400, false, () -> page.getValue().equals("Render") && newChunkRender.getValue());
-    public final NumberSetting newRed = new NumberSetting("New Red", this, 0, 0, 255, true, () -> page.getValue().equals("Render") && newChunkRender.getValue());
-    public final NumberSetting newGreen = new NumberSetting("New Green", this, 255, 0, 255, true, () -> page.getValue().equals("Render") && newChunkRender.getValue());
-    public final NumberSetting newBlue = new NumberSetting("New Blue", this, 0, 0, 255, true, () -> page.getValue().equals("Render") && newChunkRender.getValue());
-    public final NumberSetting newAlpha = new NumberSetting("New Alpha", this, 100, 0, 255, true, () -> page.getValue().equals("Render") && newChunkRender.getValue());
-    public final NumberSetting newLRed = new NumberSetting("New LRed", this, 0, 0, 255, true, () -> page.getValue().equals("Render") && newChunkRender.getValue());
-    public final NumberSetting newLGreen = new NumberSetting("New LGreen", this, 255, 0, 255, true, () -> page.getValue().equals("Render") && newChunkRender.getValue());
-    public final NumberSetting newLBlue = new NumberSetting("New LBlue", this, 0, 0, 255, true, () -> page.getValue().equals("Render") && newChunkRender.getValue());
-    public final NumberSetting newLAlpha = new NumberSetting("New LAlpha", this, 255, 0, 255, true, () -> page.getValue().equals("Render") && newChunkRender.getValue());
+    public final ColorSetting newColor = new ColorSetting("New Color", this, new Color(0, 255, 0, 100), () -> page.getValue().equals("Render") && newChunkRender.getValue());
+    public final ColorSetting newLineColor = new ColorSetting("New Line Color", this, new Color(0, 255, 0, 255), () -> page.getValue().equals("Render") && newChunkRender.getValue());
 
     public final BooleanSetting oldChunkRender = new BooleanSetting("Old Render", this, true, () -> page.getValue().equals("Render"));
     public final NumberSetting oldDist = new NumberSetting("Old Dist", this, 350, 100, 2000, false, () -> page.getValue().equals("Render") && oldChunkRender.getValue());
     public final NumberSetting oldY = new NumberSetting("Old Y", this, 0, 0, 400, false, () -> page.getValue().equals("Render") && oldChunkRender.getValue());
-    public final NumberSetting oldRed = new NumberSetting("Old Red", this, 255, 0, 255, true, () -> page.getValue().equals("Render") && oldChunkRender.getValue());
-    public final NumberSetting oldGreen = new NumberSetting("Old Green", this, 255, 0, 255, true, () -> page.getValue().equals("Render") && oldChunkRender.getValue());
-    public final NumberSetting oldBlue = new NumberSetting("Old Blue", this, 0, 0, 255, true, () -> page.getValue().equals("Render") && oldChunkRender.getValue());
-    public final NumberSetting oldAlpha = new NumberSetting("Old Alpha", this, 100, 0, 255, true, () -> page.getValue().equals("Render") && oldChunkRender.getValue());
-    public final NumberSetting oldLRed = new NumberSetting("Old LRed", this, 255, 0, 255, true, () -> page.getValue().equals("Render") && oldChunkRender.getValue());
-    public final NumberSetting oldLGreen = new NumberSetting("Old LGreen", this, 255, 0, 255, true, () -> page.getValue().equals("Render") && oldChunkRender.getValue());
-    public final NumberSetting oldLBlue = new NumberSetting("Old LBlue", this, 0, 0, 255, true, () -> page.getValue().equals("Render") && oldChunkRender.getValue());
-    public final NumberSetting oldLAlpha = new NumberSetting("Old LAlpha", this, 255, 0, 255, true, () -> page.getValue().equals("Render") && oldChunkRender.getValue());
+    public final ColorSetting oldColor = new ColorSetting("Old Color", this, new Color(255, 255, 0, 100), () -> page.getValue().equals("Render") && oldChunkRender.getValue());
+    public final ColorSetting oldLineColor = new ColorSetting("Old Line Color", this, new Color(255, 255, 0, 255), () -> page.getValue().equals("Render") && oldChunkRender.getValue());
     //------------------------//
 
 
@@ -107,26 +98,14 @@ public class NewChunks extends Module {
                 newChunkRender,
                 newDist,
                 newY,
-                newRed,
-                newGreen,
-                newBlue,
-                newAlpha,
-                newLRed,
-                newLGreen,
-                newLBlue,
-                newLAlpha,
+                newColor,
+                newLineColor,
 
                 oldChunkRender,
                 oldDist,
                 oldY,
-                oldRed,
-                oldGreen,
-                oldBlue,
-                oldAlpha,
-                oldLRed,
-                oldLGreen,
-                oldLBlue,
-                oldLAlpha
+                oldColor,
+                oldLineColor
         );
     }
 
@@ -538,14 +517,14 @@ public class NewChunks extends Module {
                         c.getStartX() + 16, newRenderY, c.getStartZ() + 16);
                 renderBoxes.add(new RenderBox(
                         box,
-                        (float) (newLRed.getValue() / 255d),
-                        (float) (newLGreen.getValue() / 255d),
-                        (float) (newLBlue.getValue() / 255d),
-                        (float) (newLAlpha.getValue() / 255d),
-                        (float) (newRed.getValue() / 255d),
-                        (float) (newGreen.getValue() / 255d),
-                        (float) (newBlue.getValue() / 255d),
-                        (float) (newAlpha.getValue() / 255d)
+                        (float) (newLineColor.getValue().getRed() / 255d),
+                        (float) (newLineColor.getValue().getGreen() / 255d),
+                        (float) (newLineColor.getValue().getBlue() / 255d),
+                        (float) (newLineColor.getValue().getAlpha() / 255d),
+                        (float) (newColor.getValue().getRed() / 255d),
+                        (float) (newColor.getValue().getGreen() / 255d),
+                        (float) (newColor.getValue().getBlue() / 255d),
+                        (float) (newColor.getValue().getAlpha() / 255d)
                 ));
             }
         }
@@ -560,14 +539,14 @@ public class NewChunks extends Module {
                         c.getStartX() + 16, oldRenderY, c.getStartZ() + 16);
                 renderBoxes.add(new RenderBox(
                         box,
-                        (float) (oldLRed.getValue() / 255d),
-                        (float) (oldLGreen.getValue() / 255d),
-                        (float) (oldLBlue.getValue() / 255d),
-                        (float) (oldLAlpha.getValue() / 255d),
-                        (float) (oldRed.getValue() / 255d),
-                        (float) (oldGreen.getValue() / 255d),
-                        (float) (oldBlue.getValue() / 255d),
-                        (float) (oldAlpha.getValue() / 255d)
+                        (oldLineColor.getValue().getRed() / 255f),
+                        (oldLineColor.getValue().getGreen() / 255f),
+                        (oldLineColor.getValue().getBlue() / 255f),
+                        (oldLineColor.getValue().getAlpha() / 255f),
+                        (oldColor.getValue().getRed() / 255f),
+                        (oldColor.getValue().getGreen() / 255f),
+                        (oldColor.getValue().getBlue() / 255f),
+                        (oldColor.getValue().getAlpha() / 255f)
                 ));
             }
         }

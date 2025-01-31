@@ -1,14 +1,14 @@
 package com.ferra13671.BThack.impl.Modules.WORLD;
 
-import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ColorSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 
+import java.awt.*;
+
 public class CloudsColor extends Module {
 
-    public final NumberSetting cloudsRed = new NumberSetting("Red", this, 255, 0, 255, false);
-    public final NumberSetting cloudsGreen = new NumberSetting("Green", this, 255, 0, 255, false);
-    public final NumberSetting cloudsBlue = new NumberSetting("Blue", this, 255, 0, 255, false);
+    public final ColorSetting cloudsColor = new ColorSetting("Clouds Color", this, new Color(255, 255, 255)).withBlockedAlpha();
 
     public CloudsColor() {
         super("CloudsColor",
@@ -19,9 +19,7 @@ public class CloudsColor extends Module {
         );
 
         initSettings(
-                cloudsRed,
-                cloudsGreen,
-                cloudsBlue
+                cloudsColor
         );
     }
 }

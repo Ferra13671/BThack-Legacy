@@ -7,6 +7,7 @@ import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Events.DisconnectEvent;
 import com.ferra13671.BThack.api.Events.Render.RenderWorldLastEvent;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ColorSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
@@ -29,7 +30,9 @@ import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.WorldChunk;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 //Taken and modified from here   :3
 //https://github.com/etianl/Trouser-Streak/blob/main/src/main/java/pwn/noobs/trouserstreak/modules/ActivatedSpawnerDetector.java
@@ -54,18 +57,9 @@ public class ActiveSpawnerDetect extends Module {
     public final BooleanSetting removerenderdist = new BooleanSetting("No Outside Render", this, true, () -> page.getValue().equals("Render"));
     public final BooleanSetting trcr = new BooleanSetting("Tracers", this, true, () -> page.getValue().equals("Render"));
     //Colors
-    public final NumberSetting spawnerRed = new NumberSetting("Spawner R", this, 251, 0, 255, true, () -> page.getValue().equals("Render"));
-    public final NumberSetting spawnerGreen = new NumberSetting("Spawner G", this, 5, 0, 255, true, () -> page.getValue().equals("Render"));
-    public final NumberSetting spawnerBlue = new NumberSetting("Spawner B", this, 5, 0, 255, true, () -> page.getValue().equals("Render"));
-    public final NumberSetting spawnerAlpha = new NumberSetting("Spawner A", this, 70, 0, 255, true, () -> page.getValue().equals("Render"));
-    public final NumberSetting trialRed = new NumberSetting("Trial R", this, 255, 0, 255, true, () -> page.getValue().equals("Render"));
-    public final NumberSetting trialGreen = new NumberSetting("Trial G", this, 100, 0, 255, true, () -> page.getValue().equals("Render"));
-    public final NumberSetting trialBlue = new NumberSetting("Trial B", this, 0, 0, 255, true, () -> page.getValue().equals("Render"));
-    public final NumberSetting trialAlpha = new NumberSetting("Trial A", this, 235, 0, 255, true, () -> page.getValue().equals("Render"));
-    public final NumberSetting despawnerRed = new NumberSetting("DeSpawner R", this, 251, 0, 255, true, () -> page.getValue().equals("Render"));
-    public final NumberSetting despawnerGreen = new NumberSetting("DeSpawner G", this, 5, 0, 255, true, () -> page.getValue().equals("Render"));
-    public final NumberSetting despawnerBlue = new NumberSetting("DeSpawner B", this, 251, 0, 255, true, () -> page.getValue().equals("Render"));
-    public final NumberSetting despawnerAlpha = new NumberSetting("DeSpawner A", this, 235, 0, 255, true, () -> page.getValue().equals("Render"));
+    public final ColorSetting spawnerColor = new ColorSetting("Spawner Color", this, new Color(251, 5, 5, 70), () -> page.getValue().equals("Render"));
+    public final ColorSetting trialColor = new ColorSetting("Trial Color", this, new Color(255, 100, 0, 235), () -> page.getValue().equals("Render"));
+    public final ColorSetting despawnerColor = new ColorSetting("Despawner Color", this, new Color(251, 5, 251, 235), () -> page.getValue().equals("Render"));
 
     public ActiveSpawnerDetect() {
         super("ActiveSpawnerDetect",
@@ -91,18 +85,9 @@ public class ActiveSpawnerDetect extends Module {
                 renderDistance,
                 removerenderdist,
                 trcr,
-                spawnerRed,
-                spawnerGreen,
-                spawnerBlue,
-                spawnerAlpha,
-                trialRed,
-                trialGreen,
-                trialBlue,
-                trialAlpha,
-                despawnerRed,
-                despawnerGreen,
-                despawnerBlue,
-                despawnerAlpha
+                spawnerColor,
+                trialColor,
+                despawnerColor
         );
     }
     private final Set<Block> goodBlocks = Sets.newHashSet(
@@ -335,7 +320,7 @@ public class ActiveSpawnerDetect extends Module {
         List<RenderBox> renderBoxes = new ArrayList<>();
         List<RenderLine> renderLines = new ArrayList<>();
 
-        if (spawnerAlpha.getValue() > 5 || despawnerAlpha.getValue() > 5) {
+        if (spawnerColor.getValue().getAlpha() > 5 || despawnerColor.getValue().getAlpha() > 5) {
             synchronized (spawnerPositions) {
                 for (BlockPos pos : spawnerPositions) {
                     BlockPos playerPos = new BlockPos(mc.player.getBlockX(), pos.getY(), mc.player.getBlockZ());
@@ -343,38 +328,38 @@ public class ActiveSpawnerDetect extends Module {
                         if (deactivatedSpawnerPositions.contains(pos)) {
                             renderBoxes.add(new RenderBox(
                                     BlockUtils.createBox(pos, 0.5, 0.5, 1, false),
-                                    (int) despawnerRed.getValue() / 255f,
-                                    (int) despawnerGreen.getValue() / 255f,
-                                    (int) despawnerBlue.getValue() / 255f,
-                                    (int) despawnerAlpha.getValue() / 255f,
-                                    (int) despawnerRed.getValue() / 255f,
-                                    (int) despawnerGreen.getValue() / 255f,
-                                    (int) despawnerBlue.getValue() / 255f,
-                                    (int) despawnerAlpha.getValue() / 255f
+                                    despawnerColor.getValue().getRed() / 255f,
+                                    despawnerColor.getValue().getGreen() / 255f,
+                                    despawnerColor.getValue().getBlue() / 255f,
+                                    despawnerColor.getValue().getAlpha() / 255f,
+                                    despawnerColor.getValue().getRed() / 255f,
+                                    despawnerColor.getValue().getGreen() / 255f,
+                                    despawnerColor.getValue().getBlue() / 255f,
+                                    despawnerColor.getValue().getAlpha() / 255f
                             ));
                             if (trcr.getValue()) renderLines.add(new RenderLine(pos.toCenterPos(),
-                                    (int) despawnerRed.getValue() / 255f,
-                                    (int) despawnerGreen.getValue() / 255f,
-                                    (int) despawnerBlue.getValue() / 255f,
+                                    despawnerColor.getValue().getRed() / 255f,
+                                    despawnerColor.getValue().getGreen() / 255f,
+                                    despawnerColor.getValue().getBlue() / 255f,
                                     1
                             ));
                         }
                         else {
                             renderBoxes.add(new RenderBox(
                                     BlockUtils.createBox(pos, 0.5, 0.5, 1, false),
-                                    (int) spawnerRed.getValue() / 255f,
-                                    (int) spawnerGreen.getValue() / 255f,
-                                    (int) spawnerBlue.getValue() / 255f,
-                                    (int) spawnerAlpha.getValue() / 255f,
-                                    (int) spawnerRed.getValue() / 255f,
-                                    (int) spawnerGreen.getValue() / 255f,
-                                    (int) spawnerBlue.getValue() / 255f,
-                                    (int) spawnerAlpha.getValue() / 255f
+                                    spawnerColor.getValue().getRed() / 255f,
+                                    spawnerColor.getValue().getGreen() / 255f,
+                                    spawnerColor.getValue().getBlue() / 255f,
+                                    spawnerColor.getValue().getAlpha() / 255f,
+                                    spawnerColor.getValue().getRed() / 255f,
+                                    spawnerColor.getValue().getGreen() / 255f,
+                                    spawnerColor.getValue().getBlue() / 255f,
+                                    spawnerColor.getValue().getAlpha() / 255f
                             ));
                             if (trcr.getValue()) renderLines.add(new RenderLine(pos.toCenterPos(),
-                                    (int) spawnerRed.getValue() / 255f,
-                                    (int) spawnerGreen.getValue() / 255f,
-                                    (int) spawnerBlue.getValue() / 255f,
+                                    spawnerColor.getValue().getRed() / 255f,
+                                    spawnerColor.getValue().getGreen() / 255f,
+                                    spawnerColor.getValue().getBlue() / 255f,
                                     1
                             ));
                         }
@@ -382,24 +367,25 @@ public class ActiveSpawnerDetect extends Module {
                 }
             }
         }
-        if (trialAlpha.getValue() > 5) {
+        if (trialColor.getValue().getAlpha() > 5) {
             synchronized (trialspawnerPositions) {
                 for (BlockPos pos : trialspawnerPositions) {
                     BlockPos playerPos = new BlockPos(mc.player.getBlockX(), pos.getY(), mc.player.getBlockZ());
                     if (pos != null && playerPos.isWithinDistance(pos, renderDistance.getValue() * 16)) {
                         renderBoxes.add(new RenderBox(BlockUtils.createBox(pos, 0.5, 0.5, 1, false),
-                                (int) trialRed.getValue() / 255f,
-                                (int) trialGreen.getValue() / 255f,
-                                (int) trialBlue.getValue() / 255f,
-                                (int) trialAlpha.getValue() / 255f,
-                                (int) trialRed.getValue() / 255f,
-                                (int) trialGreen.getValue() / 255f,
-                                (int) trialBlue.getValue() / 255f,
-                                (int) trialAlpha.getValue() / 255f));
+                                trialColor.getValue().getRed() / 255f,
+                                trialColor.getValue().getGreen() / 255f,
+                                trialColor.getValue().getBlue() / 255f,
+                                trialColor.getValue().getAlpha() / 255f,
+                                trialColor.getValue().getRed() / 255f,
+                                trialColor.getValue().getGreen() / 255f,
+                                trialColor.getValue().getBlue() / 255f,
+                                trialColor.getValue().getAlpha() / 255f
+                        ));
                         if (trcr.getValue()) renderLines.add(new RenderLine(pos.toCenterPos(),
-                                (int) trialRed.getValue() / 255f,
-                                (int) trialGreen.getValue() / 255f,
-                                (int) trialBlue.getValue() / 255f,
+                                trialColor.getValue().getRed() / 255f,
+                                trialColor.getValue().getGreen() / 255f,
+                                trialColor.getValue().getBlue() / 255f,
                                 1));
                     }
                 }

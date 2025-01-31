@@ -7,7 +7,7 @@ import com.ferra13671.BThack.Core.Render.Line.RenderLine;
 import com.ferra13671.BThack.api.Events.Render.RenderWorldLastEvent;
 import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
-import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ColorSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.ChatUtils;
 import com.ferra13671.BThack.api.Utils.DataList.BlockList;
@@ -18,13 +18,13 @@ import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class Search extends Module {
 
-    public final NumberSetting searchRed = new NumberSetting("Search Red", this, 255, 0, 255, false);
-    public final NumberSetting searchGreen = new NumberSetting("Search Green", this, 255, 0, 255, false);
-    public final NumberSetting searchBlue = new NumberSetting("Search Blue", this, 255, 0, 255, false);
+    public final ColorSetting boxColor = new ColorSetting("Box Color", this, new Color(255, 255, 255, 102));
+    public final ColorSetting lineColor = new ColorSetting("Line Color", this, new Color(255, 255, 255, 255));
     public final BooleanSetting tracers = new BooleanSetting("Tracers", this, false);
 
     public Search() {
@@ -36,9 +36,8 @@ public class Search extends Module {
         );
 
         initSettings(
-                searchRed,
-                searchGreen,
-                searchBlue,
+                boxColor,
+                lineColor,
                 tracers
         );
     }
@@ -57,15 +56,27 @@ public class Search extends Module {
         ArrayList<RenderBox> boxes = new ArrayList<>();
         ArrayList<RenderLine> lines = new ArrayList<>();
 
-        float red = ((int) searchRed.getValue()) / 255f;
-        float green = ((int) searchGreen.getValue()) / 255f;
-        float blue = ((int) searchBlue.getValue()) / 255f;
-
         for (BlockPos pos : Managers.BLOCK_SEARCH_MANAGER.getResults()) {
             Box box = new Box(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 1, pos.getZ() + 1);
 
-            boxes.add(new RenderBox(box, red, green, blue, 0.6f, red, green, blue, 0.4f));
-            lines.add(new RenderLine(box.getCenter(), red, green, blue, 1f));
+            boxes.add(new RenderBox(
+                    box,
+                    lineColor.getValue().getRed() / 255f,
+                    lineColor.getValue().getGreen() / 255f,
+                    lineColor.getValue().getBlue() / 255f,
+                    lineColor.getValue().getAlpha() / 255f,
+                    boxColor.getValue().getRed() / 255f,
+                    boxColor.getValue().getGreen() / 255f,
+                    boxColor.getValue().getBlue() / 255f,
+                    boxColor.getValue().getAlpha() / 255f
+            ));
+            lines.add(new RenderLine(
+                    box.getCenter(),
+                    lineColor.getValue().getRed() / 255f,
+                    lineColor.getValue().getGreen() / 255f,
+                    lineColor.getValue().getBlue() / 255f,
+                    lineColor.getValue().getAlpha() / 255f
+            ));
         }
 
         BThackRender.boxRender.prepareBoxRender();

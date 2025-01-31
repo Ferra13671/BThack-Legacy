@@ -3,6 +3,7 @@ package com.ferra13671.BThack.impl.Modules.RENDER;
 import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Box.RenderBox;
 import com.ferra13671.BThack.api.Events.Render.RenderWorldLastEvent;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ColorSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.BlockUtils;
@@ -12,15 +13,13 @@ import net.minecraft.block.FluidBlock;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.Box;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class BlockHighlight extends Module {
 
-    public final NumberSetting renderRed = new NumberSetting("Render Red", this, 200, 0, 255, true);
-    public final NumberSetting renderGreen = new NumberSetting("Render Green", this, 200, 0, 255, true);
-    public final NumberSetting renderBlue = new NumberSetting("Render Blue", this, 200, 0, 255, true);
-    public final NumberSetting renderAlpha = new NumberSetting("Render Alpha", this, 220, 0, 255, true);
+    public final ColorSetting boxColor = new ColorSetting("Box Color", this, new Color(200, 200, 200, 220));
     public final NumberSetting linesAlpha = new NumberSetting("Lines Alpha", this, 255, 0, 255, true);
 
     public BlockHighlight() {
@@ -32,10 +31,7 @@ public class BlockHighlight extends Module {
         );
 
         initSettings(
-                renderRed,
-                renderGreen,
-                renderBlue,
-                renderAlpha,
+                boxColor,
                 linesAlpha
         );
     }
@@ -45,10 +41,10 @@ public class BlockHighlight extends Module {
         if (mc.crosshairTarget != null) {
             if (mc.crosshairTarget instanceof BlockHitResult result) {
                 if (!mc.world.isAir(result.getBlockPos()) && !(mc.world.getBlockState(result.getBlockPos()).getBlock() instanceof FluidBlock)) {
-                    float red = (float) renderRed.getValue() / 255f;
-                    float green = (float) renderGreen.getValue() / 255f;
-                    float blue = (float) renderBlue.getValue() / 255f;
-                    float alpha = (float) renderAlpha.getValue() / 255f;
+                    float red = (float) boxColor.getValue().getRed() / 255f;
+                    float green = (float) boxColor.getValue().getGreen() / 255f;
+                    float blue = (float) boxColor.getValue().getBlue() / 255f;
+                    float alpha = (float) boxColor.getValue().getAlpha() / 255f;
                     float lAlpha = (float) linesAlpha.getValue() / 255f;
 
                     Box box = BlockUtils.getBoundingBox(result.getBlockPos());
