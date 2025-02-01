@@ -48,6 +48,7 @@ public class PhaseESP extends Module {
     }
 
     private final List<Block> normalBlocks = Arrays.asList(Blocks.OBSIDIAN, Blocks.CRYING_OBSIDIAN);
+    private final List<Block> goodBlocks = Arrays.asList(Blocks.BEDROCK, Blocks.BARRIER, Blocks.END_PORTAL_FRAME, Blocks.COMMAND_BLOCK, Blocks.STRUCTURE_BLOCK);
 
     List<RenderBox> boxes = new CopyOnWriteArrayList<>();
     final List<Vec3i> phaseBlocksVectors = Arrays.asList(
@@ -69,45 +70,17 @@ public class PhaseESP extends Module {
             BlockPos blockPos = BlockPos.ofFloored(mc.player.getX() + vec.getX(), mc.player.getY(), mc.player.getZ() + vec.getZ());
             BlockPos blockPosy = BlockPos.ofFloored(mc.player.getX() + vec.getX(), mc.player.getY() - 1, mc.player.getZ() + vec.getZ());
             Box box = BlockUtils.createBox(blockPos, 0.5, 0.5, 0.03, false);
-            if (mc.world.isAir(blockPos)) continue;
-            if (isGood(blockPos, blockPosy)) {
-                renderBoxes.add(new RenderBox(
-                        box,
-                        goodColor.getValue().getRed() / 255f,
-                        goodColor.getValue().getGreen() / 255f,
-                        goodColor.getValue().getBlue() / 255f,
-                        outline.getValue() ? 0.6f : 0,
-                        goodColor.getValue().getRed() / 255f,
-                        goodColor.getValue().getGreen() / 255f,
-                        goodColor.getValue().getBlue() / 255f,
-                        fill.getValue() ? 0.3f : 0
-                ));
+            if (blockPos == null || mc.world.isAir(blockPos)) continue;
+
+            Block block = mc.world.getBlockState(blockPos).getBlock();
+            Block downBlock = mc.world.getBlockState(blockPosy).getBlock();
+
+            if (goodBlocks.contains(block) && goodBlocks.contains(downBlock)) {
+                addGood(box, renderBoxes);
             } else
-            if (isNormal(blockPos, blockPosy)) {
-                renderBoxes.add(new RenderBox(
-                        box,
-                        normalColor.getValue().getRed() / 255f,
-                        normalColor.getValue().getGreen() / 255f,
-                        normalColor.getValue().getBlue() / 255f,
-                        outline.getValue() ? 0.6f : 0,
-                        normalColor.getValue().getRed() / 255f,
-                        normalColor.getValue().getGreen() / 255f,
-                        normalColor.getValue().getBlue() / 255f,
-                        fill.getValue() ? 0.3f : 0
-                ));
-            } else {
-                renderBoxes.add(new RenderBox(
-                        box,
-                        dangerColor.getValue().getRed() / 255f,
-                        dangerColor.getValue().getGreen() / 255f,
-                        dangerColor.getValue().getBlue() / 255f,
-                        outline.getValue() ? 0.6f : 0,
-                        dangerColor.getValue().getRed() / 255f,
-                        dangerColor.getValue().getGreen() / 255f,
-                        dangerColor.getValue().getBlue() / 255f,
-                        fill.getValue() ? 0.3f : 0
-                ));
-            }
+            if ((goodBlocks.contains(block) || normalBlocks.contains(block)) && (goodBlocks.contains(downBlock) || normalBlocks.contains(downBlock))) {
+                addNormal(box, renderBoxes);
+            } else addDanger(box, renderBoxes);
         }
         boxes = renderBoxes;
         BThackRender.boxRender.prepareBoxRender();
@@ -115,8 +88,50 @@ public class PhaseESP extends Module {
         BThackRender.boxRender.stopBoxRender();
     }
 
+    private void addGood(Box box, List<RenderBox> renderBoxes) {
+        renderBoxes.add(new RenderBox(
+                box,
+                goodColor.getValue().getRed() / 255f,
+                goodColor.getValue().getGreen() / 255f,
+                goodColor.getValue().getBlue() / 255f,
+                outline.getValue() ? 0.6f : 0,
+                goodColor.getValue().getRed() / 255f,
+                goodColor.getValue().getGreen() / 255f,
+                goodColor.getValue().getBlue() / 255f,
+                fill.getValue() ? 0.3f : 0
+        ));
+    }
+
+    private void addNormal(Box box, List<RenderBox> renderBoxes) {
+        renderBoxes.add(new RenderBox(
+                box,
+                normalColor.getValue().getRed() / 255f,
+                normalColor.getValue().getGreen() / 255f,
+                normalColor.getValue().getBlue() / 255f,
+                outline.getValue() ? 0.6f : 0,
+                normalColor.getValue().getRed() / 255f,
+                normalColor.getValue().getGreen() / 255f,
+                normalColor.getValue().getBlue() / 255f,
+                fill.getValue() ? 0.3f : 0
+        ));
+    }
+
+    private void addDanger(Box box, List<RenderBox> renderBoxes) {
+        renderBoxes.add(new RenderBox(
+                box,
+                dangerColor.getValue().getRed() / 255f,
+                dangerColor.getValue().getGreen() / 255f,
+                dangerColor.getValue().getBlue() / 255f,
+                outline.getValue() ? 0.6f : 0,
+                dangerColor.getValue().getRed() / 255f,
+                dangerColor.getValue().getGreen() / 255f,
+                dangerColor.getValue().getBlue() / 255f,
+                fill.getValue() ? 0.3f : 0
+        ));
+    }
+
     private boolean isGood(BlockPos pos, BlockPos downPos) {
-        return !BlockUtils.canBreak(pos) && !BlockUtils.canBreak(downPos) && !mc.world.isAir(downPos);
+        return !BlockUtils.canBreak(pos) && (!BlockUtils.canBreak(downPos) || !mc.world.isAir(downPos));
     }
 
     private boolean isNormal(BlockPos pos, BlockPos downPos) {
