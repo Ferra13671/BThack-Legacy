@@ -5,6 +5,7 @@ import com.ferra13671.BThack.Core.Render.Box.RenderBox;
 import com.ferra13671.BThack.api.Events.Render.RenderWorldLastEvent;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ColorSetting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.BlockUtils;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
@@ -22,6 +23,8 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class PhaseESP extends Module {
+
+    public final NumberSetting extraRange = new NumberSetting("Extra Range", this, 0, 0, 3, true);
     public final BooleanSetting outline = new BooleanSetting("Outline", this, true);
     public final BooleanSetting fill = new BooleanSetting("Fill", this, true);
 
@@ -37,6 +40,7 @@ public class PhaseESP extends Module {
                 false
         );
         initSettings(
+                extraRange,
                 outline,
                 fill,
 
@@ -51,22 +55,12 @@ public class PhaseESP extends Module {
     private final List<Block> goodBlocks = Arrays.asList(Blocks.BEDROCK, Blocks.BARRIER, Blocks.END_PORTAL_FRAME, Blocks.COMMAND_BLOCK, Blocks.STRUCTURE_BLOCK);
 
     List<RenderBox> boxes = new CopyOnWriteArrayList<>();
-    final List<Vec3i> phaseBlocksVectors = Arrays.asList(
-            new Vec3i(1, 0, 0),
-            new Vec3i(0, 0, 1),
-            new Vec3i(1, 0, 1),
-            new Vec3i(-1, 0, 0),
-            new Vec3i(0, 0, -1),
-            new Vec3i(-1, 0, -1),
-            new Vec3i(1, 0, -1),
-            new Vec3i(-1, 0, 1)
-    );
 
     @EventSubscriber
     public void onRender (RenderWorldLastEvent e){
         List<RenderBox> renderBoxes = new CopyOnWriteArrayList<>();
         if (nullCheck() || mc.player == null ||!mc.player.isOnGround()) return;
-        for (Vec3i vec : phaseBlocksVectors) {
+        for (Vec3i vec : getVectors()) {
             BlockPos blockPos = BlockPos.ofFloored(mc.player.getX() + vec.getX(), mc.player.getY(), mc.player.getZ() + vec.getZ());
             BlockPos blockPosy = BlockPos.ofFloored(mc.player.getX() + vec.getX(), mc.player.getY() - 1, mc.player.getZ() + vec.getZ());
             Box box = BlockUtils.createBox(blockPos, 0.5, 0.5, 0.03, false);
@@ -130,11 +124,11 @@ public class PhaseESP extends Module {
         ));
     }
 
-    private boolean isGood(BlockPos pos, BlockPos downPos) {
-        return !BlockUtils.canBreak(pos) && (!BlockUtils.canBreak(downPos) || !mc.world.isAir(downPos));
-    }
-
-    private boolean isNormal(BlockPos pos, BlockPos downPos) {
-        return (!BlockUtils.canBreak(pos) || normalBlocks.contains(mc.world.getBlockState(pos).getBlock())) && (!BlockUtils.canBreak(downPos) || normalBlocks.contains(mc.world.getBlockState(downPos).getBlock())) && !mc.world.isAir(downPos);
+    private List<Vec3i> getVectors() {
+        List<Vec3i> vecList = new ArrayList<>();
+        for (int x = -1 - (int) extraRange.getValue(); x < 2 + (int) extraRange.getValue(); x++)
+            for (int z = -1 - (int) extraRange.getValue(); z < 2 + (int) extraRange.getValue(); z++)
+                vecList.add(new Vec3i(x, 0, z));
+        return vecList;
     }
 }
