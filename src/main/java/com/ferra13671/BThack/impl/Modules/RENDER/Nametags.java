@@ -8,6 +8,7 @@ import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Events.Render.RenderHudPreEvent;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Social.SocialManagers;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
@@ -27,8 +28,10 @@ public class Nametags extends Module {
 
     public final BooleanSetting players = new BooleanSetting("Players", this, true);
     public final ModeSetting playerMode = new ModeSetting("PMode", this, Arrays.asList("Mini", "Normal", "Full"));
+    public final NumberSetting pSize = new NumberSetting("PSize", this, 0.7, 0.4, 2, false, players::getValue);
 
     public final BooleanSetting items = new BooleanSetting("Items", this, true);
+    public final NumberSetting iSize = new NumberSetting("ISize", this, 1, 0.5, 2, false, items::getValue);
 
     public Nametags() {
         super("Nametags",
@@ -41,7 +44,10 @@ public class Nametags extends Module {
         initSettings(
                 players,
                 playerMode,
-                items
+                pSize,
+
+                items,
+                iSize
         );
     }
 
@@ -62,8 +68,15 @@ public class Nametags extends Module {
         float[] cords = BThackRenderUtils.worldPosToScreenXY(getNametagPos(itemEntity, 0), false);
         if (cords == null) return;
 
+        BThackRender.guiGraphics.getMatrices().push();
+        BThackRender.guiGraphics.getMatrices().scale((float) iSize.getValue(), (float) iSize.getValue(), 1);
+        cords[0] /= (float) iSize.getValue();
+        cords[1] /= (float) iSize.getValue();
+
         BThackRender.drawItem(BThackRender.guiGraphics, itemEntity.getStack(), (int) cords[0] - 8, (int) cords[1] - 18, null, true);
         BThackRender.drawCenteredString(itemEntity.getName().getString(), cords[0], cords[1], -1, FontRenderManager.DrawMode.SMALL);
+
+        BThackRender.guiGraphics.getMatrices().pop();
     }
 
     public void renderPlayerNametag(PlayerEntity player) {
@@ -72,6 +85,10 @@ public class Nametags extends Module {
 
         BThackRender.guiGraphics.getMatrices().push();
         BThackRender.guiGraphics.getMatrices().translate(1,1,600);
+
+        BThackRender.guiGraphics.getMatrices().scale((float) pSize.getValue(), (float) pSize.getValue(), 1);
+        cords[0] /= (float) pSize.getValue();
+        cords[1] /= (float) pSize.getValue();
 
         switch (playerMode.getValue()) {
             case "Mini" -> renderMiniPlayerNametag(cords, player);
@@ -83,14 +100,15 @@ public class Nametags extends Module {
     }
 
     public void renderMiniPlayerNametag(float[] cords, PlayerEntity player) {
-        float leftX = cords[0] - 60;
+        float hp = player.getHealth();
+        float length = FontUtils.getTextWidth(player.getDisplayName().getString() + " " + (hp > 15 ? Formatting.GREEN : (hp > 8 ? Formatting.YELLOW : Formatting.RED)) + hp);
+        float leftX = cords[0] - (length / 2) - 3;
         float upY = cords[1] - 16;
-        float rightX = cords[0] + 60;
+        float rightX = cords[0] + (length / 2) + 3;
         float downY = cords[1];
 
         drawBase(leftX, upY, rightX, downY);
-        float hp = player.getHealth();
-        drawName((SocialManagers.FRIENDS.contains(player) ? ClientSettings.getFriendColor() : (SocialManagers.ENEMIES.contains(player) ? ClientSettings.getEnemyColor() : "")) + player.getDisplayName().getString() + " " + (hp > 15 ? Formatting.GREEN : (hp > 8 ? Formatting.YELLOW : Formatting.RED)) + hp, leftX, downY);
+        drawName((SocialManagers.FRIENDS.contains(player) ? ClientSettings.getFriendColor() : (SocialManagers.ENEMIES.contains(player) ? ClientSettings.getEnemyColor() : "")) + player.getDisplayName().getString() + " " + (hp > 15 ? Formatting.GREEN : (hp > 8 ? Formatting.YELLOW : Formatting.RED)) + hp, leftX - 2, downY);
     }
 
     public void renderNormalPlayerNametag(float[] cords, PlayerEntity player) {
@@ -110,7 +128,6 @@ public class Nametags extends Module {
         float upY = cords[1] - 50;
         float rightX = cords[0] + 100;
         float downY = cords[1];
-
 
         drawBase(leftX, upY, rightX, downY);
         drawName(player.getDisplayName().getString(), leftX, downY);
