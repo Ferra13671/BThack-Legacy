@@ -96,9 +96,11 @@ public class WaypointCommand extends AbstractCommand {
         builder.then(literal("get").then(arg("waypoint", Arguments.WAYPOINT)
                 .then(literal("setName").then(arg("name", Arguments.STRING_ONE).executes(context -> {
                     Waypoint waypoint = context.getArgument("waypoint", Waypoint.class);
+                    Managers.WAYPOINT_MANAGER.removeWaypoint(waypoint);
                     String oldName = waypoint.getName();
                     String newName = context.getArgument("name", String.class);
                     waypoint.setName(newName);
+                    Managers.WAYPOINT_MANAGER.addWaypoint(waypoint);
                     try {
                         ConfigSystem.saveWaypoints();
                     } catch (IOException ignored) {}
@@ -109,9 +111,11 @@ public class WaypointCommand extends AbstractCommand {
                 })))
                 .then(literal("setPosition").then(arg("x", Arguments.DOUBLE).then(arg("y", Arguments.DOUBLE).then(arg("z", Arguments.DOUBLE).executes(context -> {
                     Waypoint waypoint = context.getArgument("waypoint", Waypoint.class);
+                    Managers.WAYPOINT_MANAGER.removeWaypoint(waypoint);
                     Vec3d oldPos = waypoint.getPosition();
                     Vec3d newPos = new Vec3d(context.getArgument("x", Double.class), context.getArgument("y", Double.class), context.getArgument("z", Double.class));
                     waypoint.setPosition(newPos);
+                    Managers.WAYPOINT_MANAGER.addWaypoint(waypoint);
                     try {
                         ConfigSystem.saveWaypoints();
                     } catch (IOException ignored) {}
@@ -122,9 +126,11 @@ public class WaypointCommand extends AbstractCommand {
                 })))))
                 .then(literal("setVisible").then(arg("visible", Arguments.BOOLEAN).executes(context -> {
                     Waypoint waypoint = context.getArgument("waypoint", Waypoint.class);
+                    Managers.WAYPOINT_MANAGER.removeWaypoint(waypoint);
                     boolean oldVisible = waypoint.isVisible();
                     boolean newVisible = context.getArgument("visible", Boolean.class);
                     waypoint.setVisible(newVisible);
+                    Managers.WAYPOINT_MANAGER.addWaypoint(waypoint);
                     try {
                         ConfigSystem.saveWaypoints();
                     } catch (IOException ignored) {}
@@ -135,9 +141,11 @@ public class WaypointCommand extends AbstractCommand {
                 })))
                 .then(literal("setDimension").then(arg("dimension", Arguments.MODE("OVERWORLD", "END", "NETHER")).executes(context -> {
                     Waypoint waypoint = context.getArgument("waypoint", Waypoint.class);
+                    Managers.WAYPOINT_MANAGER.removeWaypoint(waypoint);
                     Waypoint.WaypointDimension oldDimension = waypoint.getDimension();
                     Waypoint.WaypointDimension newDimension = Waypoint.WaypointDimension.valueOf(context.getArgument("dimension", String.class));
                     waypoint.setDimension(newDimension);
+                    Managers.WAYPOINT_MANAGER.addWaypoint(waypoint);
                     try {
                         ConfigSystem.saveWaypoints();
                     } catch (IOException ignored) {}
@@ -148,9 +156,11 @@ public class WaypointCommand extends AbstractCommand {
                 })))
                 .then(literal("setColor").then(arg("red", Arguments.INTEGER(0, 255)).then(arg("green", Arguments.INTEGER(0, 255)).then(arg("blue", Arguments.INTEGER(0, 255)).executes(context -> {
                     Waypoint waypoint = context.getArgument("waypoint", Waypoint.class);
+                    Managers.WAYPOINT_MANAGER.removeWaypoint(waypoint);
                     float[] oldColor = ColorUtils.hashCodeToRGB(waypoint.getColor());
                     int[] newColor = new int[]{context.getArgument("red", Integer.class), context.getArgument("green", Integer.class), context.getArgument("blue", Integer.class)};
                     waypoint.setColor(ColorUtils.fastRGBA(newColor[0], newColor[1], newColor[2], 255));
+                    Managers.WAYPOINT_MANAGER.addWaypoint(waypoint);
                     try {
                         ConfigSystem.saveWaypoints();
                     } catch (IOException ignored) {}
