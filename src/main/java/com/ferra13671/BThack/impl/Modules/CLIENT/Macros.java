@@ -23,6 +23,7 @@ public class Macros extends Module {
 
     @EventSubscriber
     public void onKey(InputEvent.KeyInputEvent e) {
+        if (nullCheck() || mc.currentScreen != null) return;
         if (!Managers.MACROS_MANAGER.isEmpty()) {
             Managers.MACROS_MANAGER.forEach(macro -> {
                 if (macro.getKey() == e.getKeyCode()) macro.run();
