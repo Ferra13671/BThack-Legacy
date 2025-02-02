@@ -29,7 +29,7 @@ public final class BThackLineRender implements Mc {
         Matrix4f matrix = BThackRender.worldMatrixStack.peek().getPositionMatrix();
         Vec3d regionVec = BThackRenderUtils.getCameraRegion().toVec3d();
 
-        Vec3d start = RotateUtils.getClientLookVec(mc.getRenderTickCounter().getTickDelta(true)).add(getCameraPos()).subtract(regionVec);
+        Vec3d start = RotateUtils.getClientLookVec().add(getCameraPos()).subtract(regionVec);
 
         for (RenderLine line : lines) {
             BThackRender.trace(line.vec3d, matrix, start, line.red, line.green, line.blue, line.alpha, regionVec);

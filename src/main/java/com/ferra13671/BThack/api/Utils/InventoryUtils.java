@@ -31,10 +31,6 @@ public final class InventoryUtils implements Mc, Pc {
         pc.tick();
     }
 
-    public static void packetSwapItemOnInventory(int needHotbarSlot, int inventorySlot) {
-        pc.packetClickSlot(0, inventorySlot, needHotbarSlot, SlotActionType.SWAP);
-    }
-
     public static int findItem(Item item) {
         return findItem(item, 36);
     }

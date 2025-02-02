@@ -9,7 +9,6 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.ChestBlockEntity;
 import net.minecraft.block.entity.EnderChestBlockEntity;
 import net.minecraft.block.enums.ChestType;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
@@ -25,8 +24,6 @@ import net.minecraft.world.RaycastContext;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 
 public final class BlockUtils implements Mc {
 
@@ -108,15 +105,6 @@ public final class BlockUtils implements Mc {
                 .getType() == HitResult.Type.MISS;
     }
 
-    public static Stream<Box> getBlockCollisions(Box box) {
-        Iterable<VoxelShape> blockCollisions =
-                mc.world.getBlockCollisions(mc.player, box);
-
-        return StreamSupport.stream(blockCollisions.spliterator(), false)
-                .flatMap(shape -> shape.getBoundingBoxes().stream())
-                .filter(shapeBox -> shapeBox.intersects(box));
-    }
-
     public static ArrayList<BlockPos> getAllInBox(BlockPos from, BlockPos to) {
         ArrayList<BlockPos> blocks = new ArrayList<>();
 
@@ -136,44 +124,6 @@ public final class BlockUtils implements Mc {
     public static ArrayList<BlockPos> getAllInBox(BlockPos center, int range) {
         return getAllInBox(center.add(-range, -range, -range),
                 center.add(range, range, range));
-    }
-
-    public static Stream<BlockPos> getAllInBoxStream(BlockPos from, BlockPos to) {
-        BlockPos min = new BlockPos(Math.min(from.getX(), to.getX()),
-                Math.min(from.getY(), to.getY()), Math.min(from.getZ(), to.getZ()));
-        BlockPos max = new BlockPos(Math.max(from.getX(), to.getX()),
-                Math.max(from.getY(), to.getY()), Math.max(from.getZ(), to.getZ()));
-
-        Stream<BlockPos> stream = Stream.<BlockPos> iterate(min, pos -> {
-
-            int x = pos.getX();
-            int y = pos.getY();
-            int z = pos.getZ();
-
-            x++;
-
-            if(x > max.getX())
-            {
-                x = min.getX();
-                y++;
-            }
-
-            if(y > max.getY())
-            {
-                y = min.getY();
-                z++;
-            }
-
-            if(z > max.getZ())
-                throw new IllegalStateException("Stream limit didn't work.");
-
-            return new BlockPos(x, y, z);
-        });
-
-        int limit = (max.getX() - min.getX() + 1)
-                * (max.getY() - min.getY() + 1) * (max.getZ() - min.getZ() + 1);
-
-        return stream.limit(limit);
     }
 
     public static List<BlockPos> getNearbyBlocks(PlayerEntity entityPlayer, double blockRange, boolean motion) {
@@ -256,15 +206,6 @@ public final class BlockUtils implements Mc {
         BlockPos pos = chestBE.getPos();
 
         return getBoundingBox(pos);
-    }
-
-    public static boolean isIntercepted(BlockPos pos) {
-        for (Entity entity : mc.world.getEntities()) {
-            if (new Box(pos).intersects(entity.getBoundingBox())) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public static Box createBox(BlockPos blockPos, double length, double width, double height, boolean yOnCenter) {

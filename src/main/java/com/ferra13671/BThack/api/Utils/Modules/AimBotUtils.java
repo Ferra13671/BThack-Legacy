@@ -23,13 +23,6 @@ public final class AimBotUtils implements Mc {
         mc.player.setPitch(MathHelper.lerp(partialTicks, oldPitch, pitch));
     }
 
-
-    public static void packetRotateToEntity(Entity target) {
-        float yaw = rotations(target)[0];
-        float pitch = rotations(target)[1];
-        packetRotate(yaw, pitch);
-    }
-
     public static void packetRotate(float yaw, float pitch) {
         mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.LookAndOnGround(yaw, pitch, mc.player.onGround));
         mc.player.lastYaw = yaw;
@@ -201,32 +194,6 @@ public final class AimBotUtils implements Mc {
         return yaw;
     }
 
-    public static int getRoundedToStraightEntityRotation(Entity entity) {
-        int yaw;
-
-        switch (AimBotUtils.getDirection(entity)) {
-            case "X- Z+":
-            case  "X-":
-                yaw = 90;
-                break;
-            case "X- Z-":
-            case "Z-":
-                yaw = 180;
-                break;
-            case "X+ Z-":
-            case "X+":
-                yaw = 270;
-                break;
-            case "X+ Z+":
-            case "Z+":
-            default:
-                yaw = 0;
-                break;
-        }
-
-        return yaw;
-    }
-
     public static Direction getFacing(Entity entity) {
         float pitch = mc.player.getPitch();
         if (-45 > pitch) {
@@ -251,24 +218,6 @@ public final class AimBotUtils implements Mc {
             default:
                 return Direction.SOUTH;
         }
-    }
-
-    public static Direction getFacing(float yaw, float pitch, boolean pitchAlso) {
-        if (pitchAlso) {
-            if (-45 > pitch) {
-                return Direction.UP;
-            }
-            if (45 < pitch) {
-                return Direction.DOWN;
-            }
-        }
-
-        return switch (AimBotUtils.getDirection(yaw)) {
-            case "X- Z+", "X-" -> Direction.WEST;
-            case "X- Z-", "Z-" -> Direction.NORTH;
-            case "X+ Z-", "X+" -> Direction.EAST;
-            default -> Direction.SOUTH;
-        };
     }
 
     public static Direction getInvertedFacing(float yaw, float pitch, boolean pitchAlso) {

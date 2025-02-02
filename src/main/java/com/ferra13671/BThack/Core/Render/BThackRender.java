@@ -27,7 +27,6 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.chunk.Chunk;
 import org.joml.Matrix4f;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 

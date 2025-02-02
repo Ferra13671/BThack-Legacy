@@ -13,6 +13,7 @@ import com.ferra13671.BThack.api.Gui.ClickGui.component.components.setting.Abstr
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ColorSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Shader.Shaders;
+import com.ferra13671.BThack.api.Utils.MathUtils;
 import com.ferra13671.BThack.impl.Modules.CLIENT.ClickGui;
 import net.minecraft.client.render.Tessellator;
 
@@ -206,8 +207,8 @@ public class ColorPicker extends AbstractSetting {
         if (colorRect.hovered) {
             float width = ClickGui.applyGuiScale(colorRect.getWidth());
             float height = ClickGui.applyGuiScale(colorRect.getHeight());
-            float xF = Math.max(0, Math.min(width, mouseX - ClickGui.applyGuiScale(colorRect.getStartX())));
-            float yF = Math.max(0, Math.min(height, mouseY - ClickGui.applyGuiScale(colorRect.getStartY())));
+            float xF = MathUtils.applyRange(mouseX - ClickGui.applyGuiScale(colorRect.getStartX()), 0, width);
+            float yF = MathUtils.applyRange(mouseY - ClickGui.applyGuiScale(colorRect.getStartY()), 0, height);
             xF = (xF / width) * colorRect.getWidth();
             yF = (yF / height) * colorRect.getHeight();
 
@@ -217,7 +218,7 @@ public class ColorPicker extends AbstractSetting {
         }
         if (hueRect.hovered) {
             float height = ClickGui.applyGuiScale(hueRect.getHeight());
-            float yF = Math.max(0, Math.min(height, mouseY - ClickGui.applyGuiScale(hueRect.getStartY())));
+            float yF = MathUtils.applyRange(mouseY - ClickGui.applyGuiScale(hueRect.getStartY()), 0, height);
             yF = (yF / height) * hueRect.getHeight();
 
             hue = yF / colorRect.getHeight();
@@ -228,7 +229,7 @@ public class ColorPicker extends AbstractSetting {
         if (!set.isBlockedAlpha()) {
             if (alphaRect.hovered) {
                 float height = ClickGui.applyGuiScale(alphaRect.getHeight());
-                float yF = Math.max(0, Math.min(height, mouseY - ClickGui.applyGuiScale(alphaRect.getStartY())));
+                float yF = MathUtils.applyRange(mouseY - ClickGui.applyGuiScale(alphaRect.getStartY()), 0, height);
                 yF = (yF / height) * alphaRect.getHeight();
 
                 Color color = new Color(Color.HSBtoRGB(hue, hsbColor[1], hsbColor[2]));

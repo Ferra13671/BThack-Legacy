@@ -29,9 +29,4 @@ public class TextureStorage {
     public static GLTexture getTexture(String key) {
         return TEXTURES.get(key);
     }
-
-    private static GLTexture register(String key, GLTexture texture) {
-        TEXTURES.put(key, texture);
-        return texture;
-    }
 }
