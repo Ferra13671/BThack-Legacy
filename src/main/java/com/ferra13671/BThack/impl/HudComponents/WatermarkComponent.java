@@ -9,8 +9,6 @@ import com.ferra13671.BThack.api.Utils.TextureStorage;
 
 import java.util.Arrays;
 
-import static org.lwjgl.opengl.GL11.*;
-
 public class WatermarkComponent extends HudComponent {
 
     private final ModeSetting logoType;
@@ -36,10 +34,7 @@ public class WatermarkComponent extends HudComponent {
         if (logoType.getValue().equals("Text")) {
             drawText(Client.clientInfo.getCName(), (int) this.getX(), (int) this.getY());
         } else {
-            glEnable(GL_BLEND);
-            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
             BThackRender.drawTextureRect(TextureStorage.BTHACK_LOGO, getX(), getY() - 18, getX() + 138, getY() + 54);
-            //glDisable(GL_BLEND);
         }
     }
 

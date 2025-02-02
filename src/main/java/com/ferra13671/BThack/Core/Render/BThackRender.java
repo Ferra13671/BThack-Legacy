@@ -281,7 +281,6 @@ public final class BThackRender implements Mc {
         draw(bufferBuilder.end());
         shaderProgram.release();
         guiGraphics.getMatrices().pop();
-        //RenderSystem.setShader(GameRenderer::getPositionProgram);
     }
 
     public static void drawItem(DrawContext context, ItemStack stack, int x, int y, String amountText, boolean onSlot) {
@@ -290,7 +289,6 @@ public final class BThackRender implements Mc {
 
     public static void drawItem(DrawContext context, ItemStack stack, int x, int y, String amountText, boolean onSlot, float size) {
         context.getMatrices().push();
-        //context.getMatrices().translate(0.0f, 0.0f, 232.0f);
         context.getMatrices().scale(size, size, 1);
         context.drawItem(stack, x, y);
         if (onSlot)
@@ -323,10 +321,6 @@ public final class BThackRender implements Mc {
 
     public static void applyRegionalRenderOffset(MatrixStack matrixStack) {
         applyRegionalRenderOffset(matrixStack, getCameraRegion());
-    }
-
-    public static void applyRegionalRenderOffset(MatrixStack matrixStack, Chunk chunk) {
-        applyRegionalRenderOffset(matrixStack, RegionPos.of(chunk.getPos()));
     }
 
     public static void applyRegionalRenderOffset(MatrixStack matrixStack, RegionPos region) {

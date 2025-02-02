@@ -12,7 +12,6 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import org.joml.Matrix4f;
-import org.lwjgl.opengl.GL11;
 
 import java.util.List;
 
@@ -31,8 +30,8 @@ public class BThackBoxRender {
 
     public void prepareBoxRender() {
         BThackRenderUtils.applyBlend();
-        GL11.glEnable(GL11.GL_CULL_FACE);
-        GL11.glDisable(GL11.GL_DEPTH_TEST);
+        RenderSystem.enableCull();
+        RenderSystem.disableDepthTest();
 
         BThackRender.worldMatrixStack.push();
         BThackRender.applyRegionalRenderOffset(BThackRender.worldMatrixStack);
@@ -45,7 +44,7 @@ public class BThackBoxRender {
 
         // GL resets
         RenderSystem.setShaderColor(1, 1, 1, 1);
-        GL11.glEnable(GL11.GL_DEPTH_TEST);
+        RenderSystem.enableDepthTest();
     }
 
     public void renderBoxes(List<RenderBox> boxes) {

@@ -8,7 +8,6 @@ import com.ferra13671.BThack.api.Utils.RotateUtils;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.util.math.Vec3d;
 import org.joml.Matrix4f;
-import org.lwjgl.opengl.GL11;
 
 import java.util.List;
 
@@ -23,7 +22,7 @@ public final class BThackLineRender implements Mc {
         BThackRender.applyRegionalRenderOffset(BThackRender.worldMatrixStack, region);
 
         BThackRenderUtils.applyBlend();
-        GL11.glDisable(GL11.GL_DEPTH_TEST);
+        RenderSystem.disableDepthTest();
     }
 
     public void renderLines(List<RenderLine> lines) {
@@ -39,7 +38,7 @@ public final class BThackLineRender implements Mc {
     }
 
     public void stopLineRenderer() {
-        GL11.glEnable(GL11.GL_DEPTH_TEST);
+        RenderSystem.enableDepthTest();
         RenderSystem.setShaderColor(1,1,1,1);
 
         BThackRender.worldMatrixStack.pop();
