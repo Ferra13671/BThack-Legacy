@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.api.Managers.managers.Build;
 
+import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Thread.ThreadClosedException;
 import com.ferra13671.BThack.mixins.accessor.IRenderTickCounter$Dynamic;
 import net.minecraft.block.Block;
@@ -12,7 +13,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class BuildThread3D extends AbstractBuildThread {
-
     private ArrayList<Vec3d> buildSchematic3D;
 
 
@@ -52,7 +52,7 @@ public class BuildThread3D extends AbstractBuildThread {
             checkThreadStopped();
             for (BlockPos pos : positions) {
                 checkThreadStopped();
-                if (!BuildManager.pickUpPlaceBlocks(true, blocks)) {
+                if (!BuildManager.pickUpPlaceBlocks(true, blocks) && !blocks.isEmpty()) {
                     return;
                 }
                 if (BuildManager.isPossibleRich(pos)) {
@@ -64,8 +64,10 @@ public class BuildThread3D extends AbstractBuildThread {
                             continue;
                         }
 
-                        BuildManager.placeBlock(pos);
-                        BuildManager.delay((long) (delayTicks == 0 ? 1 : (delayTicks * ((IRenderTickCounter$Dynamic)  mc.getRenderTickCounter()).getTickTime())), pos, this);
+                        Managers.BUILD_MANAGER.blockPoses.add(pos);
+                        try {
+                            sleep((long) (delayTicks == 0 ? 1 : (delayTicks * ((IRenderTickCounter$Dynamic)  mc.getRenderTickCounter()).getTickTime())));
+                        } catch (Exception ignored) {}
                     }
                 } else {
                     return;

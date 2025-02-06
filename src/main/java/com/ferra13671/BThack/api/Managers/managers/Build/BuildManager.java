@@ -1,13 +1,16 @@
 package com.ferra13671.BThack.api.Managers.managers.Build;
 
+import com.ferra13671.BThack.BThack;
+import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.Initializable;
 import com.ferra13671.BThack.api.Utils.InventoryUtils;
 import com.ferra13671.BThack.api.Utils.MathUtils;
 import com.ferra13671.BThack.api.Utils.Modules.AimBotUtils;
 import com.ferra13671.BThack.api.Utils.Grim.GrimUtils;
+import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import com.google.common.collect.Sets;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.block.*;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Items;
@@ -19,10 +22,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class BuildManager implements Initializable, Mc {
     public static final Set<Block> ignoreBlocks = Sets.newHashSet(
@@ -50,9 +50,26 @@ public class BuildManager implements Initializable, Mc {
 
     public static boolean isBuilding = false;
 
+    protected final List<BlockPos> blockPoses = Collections.synchronizedList(new ArrayList<>());
+
     @Override
     public void init() {
-        //no action
+        BThack.EVENT_BUS.register(this);
+        BThack.debug("Build Manager inited!");
+    }
+
+    @EventSubscriber
+    public void onTick(ClientTickEvent e) {
+        if (blockPoses.isEmpty()) return;
+        synchronized (blockPoses) {
+            if (Module.nullCheck()) {
+                blockPoses.clear();
+                return;
+            }
+
+            blockPoses.forEach(BuildManager::placeBlock);
+            blockPoses.clear();
+        }
     }
 
     public static void placeBlock(BlockPos pos) {
@@ -101,16 +118,6 @@ public class BuildManager implements Initializable, Mc {
             }
         }
         return false;
-    }
-
-    public static void delay(long milliseconds, BlockPos pos, Thread thread) {
-        for (long i = 0; i < milliseconds; i += 10) {
-            //RenderManager.addRenderBox(pos, new BoxColor(0, 1, 0, 1, 0, 1, 0, 0.5f));
-
-            try {
-                thread.sleep(10);
-            } catch (InterruptedException ignored) {}
-        }
     }
 
     public static boolean needSneak(Block in) {

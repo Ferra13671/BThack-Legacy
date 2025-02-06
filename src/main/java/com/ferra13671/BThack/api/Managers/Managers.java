@@ -1,6 +1,7 @@
 package com.ferra13671.BThack.api.Managers;
 
 import com.ferra13671.BThack.api.Managers.managers.*;
+import com.ferra13671.BThack.api.Managers.managers.Build.BuildManager;
 import com.ferra13671.BThack.api.Managers.managers.ColourTheme.ColorThemeManager;
 import com.ferra13671.BThack.api.Managers.managers.Command.CommandManager;
 import com.ferra13671.BThack.api.Managers.managers.Destroy.DestroyManager;
@@ -27,4 +28,5 @@ public class Managers {
     public static final EntityDeathManager ENTITY_DEATH_MANAGER = new EntityDeathManager();
     public static final WaypointManager WAYPOINT_MANAGER = new WaypointManager();
     public static final MacrosManager MACROS_MANAGER = new MacrosManager();
+    public static final BuildManager BUILD_MANAGER = new BuildManager();
 }

@@ -175,7 +175,7 @@ public class HighwayBuilder extends Module {
         if (!mc.world.isAir(BlockPos.ofFloored(mc.player.getX() + moveFactor[0], mc.player.getY() + 1, mc.player.getZ() + moveFactor[1])))
             obstructionFound = true;
 
-        Goto gotoN = new Goto(mc.player.getX() + (moveFactor[0] * (obstructionFound ? 0.16 : 1)), mc.player.getZ() + (moveFactor[1] * (obstructionFound ? 0.16 : 1)), CollisionAction.NONE);
+        Goto gotoN = new Goto(mc.player.getX() + (moveFactor[0] * (obstructionFound ? 0.16 : 0.5)), mc.player.getZ() + (moveFactor[1] * (obstructionFound ? 0.16 : 0.5)), CollisionAction.NONE);
         gotoN.start();
         try {
             thread.sleep(2);
