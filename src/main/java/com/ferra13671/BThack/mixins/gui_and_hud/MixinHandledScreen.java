@@ -38,7 +38,7 @@ public abstract class MixinHandledScreen<T extends ScreenHandler> extends Screen
 
         if (itemStack.getItem() == Items.FILLED_MAP && ModuleList.tooltips.maps.getValue()) {
             ci.cancel();
-            Tooltips.renderMapTooltip(context, focusedSlot.getStack(), x, y - 30);
+            ModuleList.tooltips.renderMapTooltip(context, focusedSlot.getStack(), x, y - 30);
             return;
         }
 
@@ -48,7 +48,7 @@ public abstract class MixinHandledScreen<T extends ScreenHandler> extends Screen
             if (compoundTag.stream().toList().isEmpty()) return;
             ci.cancel();
 
-            Tooltips.renderShulkerTooltip(itemStack, compoundTag.stream().toList(), x + 6, y - 33);
+            ModuleList.tooltips.renderShulkerTooltip(itemStack, compoundTag.stream().toList(), x + 6, y - 33);
         }
     }
 }
