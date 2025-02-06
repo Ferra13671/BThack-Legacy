@@ -33,7 +33,6 @@
 "lang.module.IgniteAura": Automatically sets the entiti on fire.
 "lang.module.NoFriendDamage": You can't hit your friends.
 "lang.module.PearlPhase": Automatically clips into the block with ender pearls.
-"lang.module.SafeTrap": Builds you into a trap if you're low on xp.
 "lang.module.Surround": Surrounds you with obsidian to take less damage.
 "lang.module.TNTIgniter": Automatically ignites TNT.
 "lang.module.TotemPopNotifier": Reports the pop totems by players nearby.

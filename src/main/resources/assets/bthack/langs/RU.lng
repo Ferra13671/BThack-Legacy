@@ -32,7 +32,6 @@
 "lang.module.IgniteAura": Автоматически поджигает энтити.
 "lang.module.NoFriendDamage": Ты не сможешь ударить своих друзей.
 "lang.module.PearlPhase": Автоматически клипается в блок при помощи эндер перлов.
-"lang.module.SafeTrap": Построит вас в ловушку, если у вас мало хп.
 "lang.module.Surround": Окружает вас обсидианом, чтобы вы получали меньше урона.
 "lang.module.TNTIgniter": Автоматически поджигает тнт.
 "lang.module.TotemPopNotifier": Сообщает о использовании тотемов у игроков поблизости.

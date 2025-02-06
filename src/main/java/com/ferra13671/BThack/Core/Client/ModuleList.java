@@ -60,7 +60,6 @@ public final class ModuleList {
     //public static LavaAura lavaAura;
     public static NoFriendDamage noFriendDamage;
     public static PearlPhase pearlPhase;
-    public static SafeTrap safeTrap;
     public static Surround surround;
     public static TNTIgniter tntIgniter;
     public static TotemPopNotifier totemPopNotifier;
@@ -259,7 +258,6 @@ public final class ModuleList {
         //lavaAura = register(new LavaAura());
         noFriendDamage = register(new NoFriendDamage());
         pearlPhase = register(new PearlPhase());
-        safeTrap = register(new SafeTrap());
         surround = register(new Surround());
         tntIgniter = register(new TNTIgniter());
         totemPopNotifier = register(new TotemPopNotifier());
