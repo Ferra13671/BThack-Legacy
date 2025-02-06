@@ -209,7 +209,6 @@
 "lang.module.AutoBuilder.notStandingOnGround": You're not standing on the ground!
 "lang.module.AutoBuilder.noNearBlocks": No blocks were found near you.
 "lang.module.AutoBuilder.errorSelect": Error in selecting the right schematic.
-"lang.module.Surround.unSafeBlock": There's no safe block underneath you!
 "lang.module.SafeTrap.built":  The trap is built, disable ...
 "lang.module.PearlPhase.noCollision": You're not touching the wall.
 "lang.module.ItemSaver.saveMessage": The strength of the item is too low!

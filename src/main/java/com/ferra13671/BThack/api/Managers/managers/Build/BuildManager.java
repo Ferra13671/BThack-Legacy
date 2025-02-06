@@ -3,6 +3,7 @@ package com.ferra13671.BThack.api.Managers.managers.Build;
 import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.Initializable;
 import com.ferra13671.BThack.api.Utils.InventoryUtils;
@@ -16,6 +17,7 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket;
 import net.minecraft.network.packet.c2s.play.HandSwingC2SPacket;
+import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -34,7 +36,7 @@ public class BuildManager implements Initializable, Mc {
             Blocks.LAVA,
             Blocks.LAVA_CAULDRON
     );
-    private static final List<Block> shiftBlocks = Arrays.asList(
+    public static final List<Block> shiftBlocks = Arrays.asList(
             Blocks.ENDER_CHEST, Blocks.CHEST, Blocks.TRAPPED_CHEST, Blocks.CRAFTING_TABLE,
             Blocks.BIRCH_TRAPDOOR, Blocks.BAMBOO_TRAPDOOR, Blocks.DARK_OAK_TRAPDOOR, Blocks.CHERRY_TRAPDOOR,
             Blocks.ANVIL, Blocks.BREWING_STAND, Blocks.HOPPER, Blocks.DROPPER, Blocks.DISPENSER,
@@ -46,6 +48,10 @@ public class BuildManager implements Initializable, Mc {
     public static final List<Block> lavas = Arrays.asList(
             Blocks.LAVA,
             Blocks.LAVA_CAULDRON
+    );
+    public static final List<Block> obsidians = Arrays.asList(
+            Blocks.OBSIDIAN,
+            Blocks.CRYING_OBSIDIAN
     );
 
     public static boolean isBuilding = false;
@@ -88,12 +94,12 @@ public class BuildManager implements Initializable, Mc {
             if (sneak)
                 mc.player.networkHandler.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.PRESS_SHIFT_KEY));
 
-            GrimUtils.sendPreActionGrimPackets(rotations[0], rotations[1]);
+            Managers.NETWORK_MANAGER.sendPacketNoEvent(new PlayerMoveC2SPacket.Full(mc.player.getX(), mc.player.getY(), mc.player.getZ(), rotations[0], rotations[1], mc.player.isOnGround()));
             mc.interactionManager.interactBlock(mc.player, Hand.MAIN_HAND, bhr);
             mc.player.networkHandler.sendPacket(new HandSwingC2SPacket(Hand.MAIN_HAND));
 
             mc.player.networkHandler.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.RELEASE_SHIFT_KEY));
-            GrimUtils.sendPostActionGrimPackets();
+            Managers.NETWORK_MANAGER.sendPacketNoEvent(new PlayerMoveC2SPacket.Full(mc.player.getX(), mc.player.getY(), mc.player.getZ(), mc.player.getYaw(), mc.player.getPitch(), mc.player.isOnGround()));
         } catch (Exception ignored) {}
     }
 
@@ -265,7 +271,7 @@ public class BuildManager implements Initializable, Mc {
         vec3d.y += direction.getOffsetY() / 2d;
         vec3d.z += direction.getOffsetZ() / 2d;
         return checkCanPlaceAtDirectionInternal(mc.player.getX(), vec3d.x, direction.getOffsetX()) &&
-                checkCanPlaceAtDirectionInternal(mc.player.getY(), vec3d.y, direction.getOffsetY()) &&
+                checkCanPlaceAtDirectionInternal(mc.player.getY() + mc.player.getStandingEyeHeight(), vec3d.y, direction.getOffsetY()) &&
                 checkCanPlaceAtDirectionInternal(mc.player.getZ(), vec3d.z, direction.getOffsetZ());
     }
 

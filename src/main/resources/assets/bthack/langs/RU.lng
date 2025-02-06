@@ -208,7 +208,6 @@
 "lang.module.AutoBuilder.notStandingOnGround": Вы не стоите на земле!
 "lang.module.AutoBuilder.noNearBlocks": Рядом с вами не найдено ни одного блока.
 "lang.module.AutoBuilder.errorSelect": Ошибка при выборе правильной схемы.
-"lang.module.Surround.unSafeBlock": Под вами нет безопасного блока!
 "lang.module.SafeTrap.built":  Трапка построена, выключение ...
 "lang.module.PearlPhase.noCollision": Вы не касаетесь стены.
 "lang.module.ItemSaver.saveMessage": Прочность предмета слишком низкая!

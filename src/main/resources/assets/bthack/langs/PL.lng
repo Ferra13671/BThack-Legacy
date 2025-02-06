@@ -208,7 +208,6 @@
 "lang.module.AutoBuilder.notStandingOnGround": Nie stoisz na powierzchni!
 "lang.module.AutoBuilder.noNearBlocks": W pobliżu nie znaleziono pasujących jednostek.
 "lang.module.AutoBuilder.errorSelect": Błąd w wyborze odpowiedniego schematu.
-"lang.module.Surround.unSafeBlock": Pod tobą nie ma bezpiecznego bloku!
 "lang.module.SafeTrap.built":  Pułapka zbudowana, wyłączenie ...
 "lang.module.PearlPhase.noCollision": Aby PearlPhase działał, musisz dotykać ściany.
 "lang.module.ItemSaver.saveMessage": Trwałość przedmiotu jest zbyt niska!
