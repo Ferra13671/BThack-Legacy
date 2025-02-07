@@ -267,8 +267,6 @@ public class ColorPicker extends AbstractSetting {
 
     @Override
     public void mouseReleased(int mouseX, int mouseY, int mouseButton) {
-        super.mouseReleased(mouseX, mouseY, mouseButton);
-
         colorRect.hovered = false;
         hueRect.hovered = false;
         alphaRect.hovered = false;

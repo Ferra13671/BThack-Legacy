@@ -44,7 +44,7 @@ public class Keybind extends AbstractSetting {
 	
 	@Override
 	public boolean mouseClicked(int mouseX, int mouseY, int button) {
-		if(isMouseOnButton(mouseX, mouseY) && button == 0 && this.parent.open) {
+		if(isMouseOnButton(mouseX, mouseY) && button == 0) {
 			this.binding = !this.binding;
 		}
 

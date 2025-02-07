@@ -263,8 +263,10 @@ public class ModuleButton extends Component implements Mc {
 				}
 			}
 		}
-		for(Component comp : settings) {
-			comp.mouseClicked(mouseX, mouseY, button);
+		if (open) {
+			for (Component comp : settings) {
+				comp.mouseClicked(mouseX, mouseY, button);
+			}
 		}
 		if (open)
 			parent.updateDependencies();

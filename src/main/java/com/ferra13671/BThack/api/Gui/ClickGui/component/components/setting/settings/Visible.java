@@ -46,7 +46,7 @@ public class Visible extends Checkbox {
 
     @Override
     public boolean mouseClicked(int mouseX, int mouseY, int button) {
-        if (isMouseOnButton(mouseX, mouseY) && button == 0 && parent.open) {
+        if (isMouseOnButton(mouseX, mouseY) && button == 0) {
             module.visible = !module.visible;
             animation.reset();
         }

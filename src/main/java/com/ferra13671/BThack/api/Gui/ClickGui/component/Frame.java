@@ -17,10 +17,11 @@ import com.ferra13671.BThack.api.Utils.Data;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.impl.Modules.CLIENT.ClickGui;
 
+import java.io.Closeable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Frame implements Mc {
+public class Frame implements Mc, Closeable {
 	public static final int BAR_HEIGHT = 12;
 	public static final int FRAME_WIDTH = 100;
 	public static final int BAR_OUTLINE_COLOR = ColorUtils.fastRGBA(0, 0, 0, 100);
@@ -203,7 +204,13 @@ public class Frame implements Mc {
 			button.tick();
 		}
 	}
-	
+
+	@Override
+	public void close() {
+		for (Component comp : buttons)
+			comp.mouseReleased(0, 0, 0);
+	}
+
 	public int getX() {
 		return x;
 	}

@@ -65,7 +65,7 @@ public class Checkbox extends AbstractSetting {
 	public boolean mouseClicked(int mouseX, int mouseY, int button) {
 		if (!getVisible()) return false;
 
-		if (isMouseOnButton(mouseX, mouseY) && button == 0 && this.parent.open) {
+		if (isMouseOnButton(mouseX, mouseY) && button == 0) {
 			set.setValue(!set.getValue());
 			set.module.onChangeSetting(set);
 			animation.reset();

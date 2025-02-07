@@ -265,6 +265,7 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
                 component.open = false;
                 component.parent.refresh();
             }
+            frame.close();
         }
     }
 

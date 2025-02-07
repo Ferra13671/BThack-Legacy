@@ -161,5 +161,6 @@ public class HudEditorScreen extends BThackScreen {
             component.open = false;
             component.parent.refresh();
         }
+        frame.close();
     }
 }

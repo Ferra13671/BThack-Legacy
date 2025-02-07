@@ -61,9 +61,9 @@ public class ModeButton extends AbstractSetting {
 
 	@Override
 	public boolean mouseClicked(int mouseX, int mouseY, int button) {
-		if (!getVisible() || !parent.open) return false;
+		if (!getVisible()) return false;
 
-		if (isMouseOnButton(mouseX, mouseY) && button == 0 && this.parent.open) {
+		if (isMouseOnButton(mouseX, mouseY) && button == 0) {
 			int maxIndex = set.getOptions().size();
 
 			if (set.getIndex() + 1 >= maxIndex) {

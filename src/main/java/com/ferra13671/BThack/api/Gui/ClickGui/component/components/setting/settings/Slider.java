@@ -66,19 +66,6 @@ public class Slider extends AbstractSetting implements Mc {
 		}
 
 		BThackRender.drawString(op.getName() + ": " + set.getValue(), parent.parent.getX() + 2, (parent.parent.getY() + offset + 1), ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()));
-
-
-		/*
-		if (writing) {
-			int scaleWidth = mc.getWindow().getScaledWidth();
-
-			BThackRender.guiGraphics.getMatrices().pop();
-			BThackRender.drawString("New Value: " + textBuilder, (int) ((scaleWidth / 2f) - (mc.textRenderer.getWidth("New Value: " + textBuilder) / 2)), (mc.getWindow().getScaledHeight() - 45), Color.white.hashCode());
-			BThackRender.guiGraphics.getMatrices().push();
-			BThackRender.guiGraphics.getMatrices().scale((float) ClickGui.guiScale.getValue(), (float) ClickGui.guiScale.getValue(), 1);
-		}
-
-		 */
 	}
 
 	@Override
@@ -125,7 +112,7 @@ public class Slider extends AbstractSetting implements Mc {
 	@Override
 	public boolean mouseClicked(int mouseX, int mouseY, int button) {
 
-		if (!getVisible() || !parent.open) {
+		if (!getVisible()) {
 			writing = false;
 			return false;
 		}
