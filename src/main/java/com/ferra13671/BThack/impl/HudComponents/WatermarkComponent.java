@@ -5,7 +5,7 @@ import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Font.FontUtils;
 import com.ferra13671.BThack.api.HudComponent.HudComponent;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
-import com.ferra13671.BThack.api.Utils.TextureStorage;
+import com.ferra13671.BThack.api.Utils.Textures;
 
 import java.util.Arrays;
 
@@ -34,7 +34,7 @@ public class WatermarkComponent extends HudComponent {
         if (logoType.getValue().equals("Text")) {
             drawText(Client.clientInfo.getCName(), (int) this.getX(), (int) this.getY());
         } else {
-            BThackRender.drawTextureRect(TextureStorage.BTHACK_LOGO, getX(), getY() - 18, getX() + 138, getY() + 54);
+            BThackRender.drawTextureRect(Textures.BTHACK_LOGO, getX(), getY() - 18, getX() + 138, getY() + 54);
         }
     }
 

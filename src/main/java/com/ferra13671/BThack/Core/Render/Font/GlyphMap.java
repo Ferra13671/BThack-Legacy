@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.Core.Render.Font;
 
-import com.ferra13671.BThack.api.Utils.TextureStorage;
 import com.ferra13671.TextureUtils.GLTexture;
+import com.ferra13671.TextureUtils.TextureStorage;
 import it.unimi.dsi.fastutil.chars.Char2ObjectArrayMap;
 
 import java.awt.*;
@@ -38,7 +38,7 @@ public class GlyphMap {
     }
 
     public void destroy() {
-        TextureStorage.getTexture(textureKey).deleteTexture();
+        TextureStorage.getTexture(textureKey).delete();
         TextureStorage.removeTexture(textureKey);
         this.glyphs.clear();
         this.width = -1;

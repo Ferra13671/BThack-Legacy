@@ -12,7 +12,7 @@ import com.ferra13671.BThack.api.Utils.DesktopUtils;
 import com.ferra13671.BThack.api.Utils.System.BThackScreen;
 import com.ferra13671.BThack.api.Utils.System.BThackScreens;
 import com.ferra13671.BThack.api.Utils.System.buttons.Button;
-import com.ferra13671.BThack.api.Utils.TextureStorage;
+import com.ferra13671.BThack.api.Utils.Textures;
 import com.ferra13671.TextureUtils.GLTexture;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.multiplayer.MultiplayerScreen;
@@ -44,7 +44,7 @@ public class BThackMainMenuScreen extends BThackScreen {
 
         BThackRender.drawHorizontalGradientRect(0,0, mc.getWindow().getScaledWidth(), mc.getWindow().getScaledHeight(), ColorUtils.fastRGBA(0,0,0, 80), ColorUtils.TRANSPARENT);
 
-        BThackRender.drawTextureRect(TextureStorage.BTHACK_LOGO, 20, 20, 20 + 138 * 2, 20 + 72 * 2);
+        BThackRender.drawTextureRect(Textures.BTHACK_LOGO, 20, 20, 20 + 138 * 2, 20 + 72 * 2);
 
         super.render(context, mouseX, mouseY, partialTicks);
     }

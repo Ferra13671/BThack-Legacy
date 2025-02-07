@@ -659,7 +659,7 @@ public final class ConfigSystem {
     public static void refreshWallpapers() {
         for (Wallpaper wallpaper : SelectWallpaperScreen.wallpapers) {
             if (wallpaper.texture().getTexId() != Client.clientInfo.getDefaultMainMenuImage().getTexId())
-                wallpaper.texture().deleteTexture();
+                wallpaper.texture().delete();
         }
         SelectWallpaperScreen.wallpapers.clear();
 

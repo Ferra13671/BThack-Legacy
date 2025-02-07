@@ -8,7 +8,7 @@ import com.ferra13671.BThack.api.Animation.Easing;
 import com.ferra13671.BThack.api.Utils.System.BThackScreen;
 import com.ferra13671.BThack.api.Utils.System.BThackScreens;
 import com.ferra13671.BThack.api.Utils.System.buttons.Button;
-import com.ferra13671.BThack.api.Utils.TextureStorage;
+import com.ferra13671.BThack.api.Utils.Textures;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.text.Text;
 
@@ -53,9 +53,9 @@ public class LanguageSelectorScreen extends BThackScreen {
         float yDown = (float) (mc.getWindow().getScaledHeight() / 1.7) - 14;
         float center = mc.getWindow().getScaledWidth() / 2f;
 
-        BThackRender.drawTextureRect(TextureStorage.EN_FLAG, center - 64, yUp, center - 24, yDown);
-        BThackRender.drawTextureRect(TextureStorage.RU_FLAG, center - 20, yUp, center + 20, yDown);
-        BThackRender.drawTextureRect(TextureStorage.PL_FLAG, center + 24, yUp, center + 64, yDown);
+        BThackRender.drawTextureRect(Textures.EN_FLAG, center - 64, yUp, center - 24, yDown);
+        BThackRender.drawTextureRect(Textures.RU_FLAG, center - 20, yUp, center + 20, yDown);
+        BThackRender.drawTextureRect(Textures.PL_FLAG, center + 24, yUp, center + 64, yDown);
 
         BThackRender.drawCenteredString("Welcome! Please select the language to be used.", center, yUp - 20, -1);
 

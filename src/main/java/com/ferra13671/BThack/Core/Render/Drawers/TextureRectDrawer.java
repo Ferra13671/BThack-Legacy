@@ -2,7 +2,7 @@ package com.ferra13671.BThack.Core.Render.Drawers;
 
 import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Utils.BThackRenderUtils;
-import com.ferra13671.TextureUtils.GLTexture;
+import com.ferra13671.TextureUtils.GlTex;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.render.VertexFormat;
@@ -19,7 +19,7 @@ public class TextureRectDrawer extends Drawer {
         buffer = BThackRenderUtils.prepareToDraw(GameRenderer::getPositionTexProgram).begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE);
     }
 
-    public void begin(GLTexture texture) {
+    public void begin(GlTex texture) {
         RenderSystem.setShaderTexture(0, texture.getTexId());
         buffer = BThackRenderUtils.prepareToDraw(GameRenderer::getPositionTexProgram).begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE);
     }

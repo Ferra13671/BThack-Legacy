@@ -171,7 +171,6 @@ public final class ModuleList {
     public static AttackTrace attackTrace;
     public static BetterChat betterChat;
     public static BlockHighlight blockHighlight;
-    public static Caipirinha caipirinha;
     public static CameraClip cameraClip;
     public static ChestESP chestESP;
     public static CS_Crosshair csCrosshair;
@@ -369,7 +368,6 @@ public final class ModuleList {
         attackTrace = register(new AttackTrace());
         betterChat = register(new BetterChat());
         blockHighlight = register(new BlockHighlight());
-        caipirinha = register(new Caipirinha());
         cameraClip = register(new CameraClip());
         chestESP = register(new ChestESP());
         csCrosshair = register(new CS_Crosshair());
@@ -428,6 +426,7 @@ public final class ModuleList {
 
         Client.hudComponents.addAll(Arrays.asList(
                 new WatermarkComponent(),
+                new CompanionComponent(),
                 new FPSComponent(),
                 new CoordinatesComponent(),
                 new RotationComponent(),
