@@ -100,7 +100,7 @@ dependencies {
 
     library "com.github.Ferra13671:MegaEvents:1.2"
     library "com.github.Ferra13671:SimpleLanguageSystem:1.1"
-    library "com.github.Ferra13671:GLTextureUtils:1.3"
+    library "com.github.Ferra13671:GLTextureUtils:1.3.1"
     library "com.github.Ferra13671:Java-DiscordRPC:1.0"
 
     includeBaritone()

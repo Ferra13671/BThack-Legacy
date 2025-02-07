@@ -4,6 +4,7 @@ import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.api.HudComponent.HudComponent;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.Setting;
 import com.ferra13671.BThack.api.Utils.Textures;
 
 import java.util.Arrays;
@@ -12,6 +13,7 @@ public class CompanionComponent extends HudComponent {
 
     public final ModeSetting mode = new ModeSetting("Mode", this, Arrays.asList("Caipirinha", "Cutie"));
     public final NumberSetting size = new NumberSetting("Size", this, 40, 20, 100, true);
+    public final NumberSetting speed = new NumberSetting("Speed", this, 1, 0.5, 3, false);
 
     public CompanionComponent() {
         super("Companion",
@@ -22,8 +24,15 @@ public class CompanionComponent extends HudComponent {
 
         initSettings(
                 mode,
-                size
+                size,
+                speed
         );
+    }
+
+    @Override
+    public void onChangeSetting(Setting setting) {
+        Textures.CAIPIRINHA.setUpdateDelayMillis((int) (150 / speed.getValue()));
+        Textures.CUTIE.setUpdateDelayMillis((int) (50 / speed.getValue()));
     }
 
     @Override
