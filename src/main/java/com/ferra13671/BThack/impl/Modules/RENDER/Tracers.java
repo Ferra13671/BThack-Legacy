@@ -4,6 +4,7 @@ import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Line.RenderLine;
 import com.ferra13671.BThack.api.Events.Render.RenderWorldLastEvent;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ColorSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Social.Clans.Clan;
 import com.ferra13671.BThack.api.Social.Clans.ClanManager;
@@ -15,14 +16,21 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class Tracers extends Module {
 
     public final BooleanSetting players = new BooleanSetting("Players", this, true);
-    public final BooleanSetting mobs = new BooleanSetting("Mobs", this, true);
+
+    public final BooleanSetting hostile = new BooleanSetting("Mobs", this, true);
+    public final ColorSetting hostileColor = new ColorSetting("Hostile Color", this, new Color(212, 235, 43), hostile::getValue).withBlockedAlpha();
+
     public final BooleanSetting animals = new BooleanSetting("Animals", this, true);
+    public final ColorSetting animalColor = new ColorSetting("Animal Color", this, new Color(176, 255, 87), animals::getValue).withBlockedAlpha();
+
     public final BooleanSetting items = new BooleanSetting("Items", this, false);
+    public final ColorSetting itemColor = new ColorSetting("Item Color", this, new Color(150, 150, 255), items::getValue).withBlockedAlpha();
 
     public Tracers() {
         super("Tracers",
@@ -34,9 +42,15 @@ public class Tracers extends Module {
 
         initSettings(
                 players,
-                mobs,
+
+                hostile,
+                hostileColor,
+
                 animals,
-                items
+                animalColor,
+
+                items,
+                itemColor
         );
     }
 
@@ -69,14 +83,14 @@ public class Tracers extends Module {
             }
         }
 
-        if (mobs.getValue() || animals.getValue() || items.getValue()) {
+        if (hostile.getValue() || animals.getValue() || items.getValue()) {
             for (Entity entity : mc.world.getEntities()) {
-                if (mobs.getValue() && KillAuraUtils.isHostile(entity)) {
-                    lines.add(new RenderLine(entity, 0.83f,0.92f,0.17f, 1f));
+                if (hostile.getValue() && KillAuraUtils.isHostile(entity)) {
+                    lines.add(new RenderLine(entity, hostileColor.getValue().getRed() / 255f,hostileColor.getValue().getGreen() / 255f,hostileColor.getValue().getBlue() / 255f, 1f));
                 } else if (animals.getValue() && KillAuraUtils.isPassive(entity)) {
-                    lines.add(new RenderLine(entity, 0.69f,1f,0.34f, 1f));
+                    lines.add(new RenderLine(entity, animalColor.getValue().getRed() / 255f,animalColor.getValue().getGreen() / 255f,animalColor.getValue().getBlue() / 255f, 1f));
                 } else if (items.getValue() && entity instanceof ItemEntity) {
-                    lines.add(new RenderLine(entity, 0.59f,0.59f, 1f, 1f));
+                    lines.add(new RenderLine(entity, itemColor.getValue().getRed() / 255f,itemColor.getValue().getGreen() / 255f, itemColor.getValue().getBlue() / 255f, 1f));
                 }
             }
         }
