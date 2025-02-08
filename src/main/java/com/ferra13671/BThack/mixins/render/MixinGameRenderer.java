@@ -36,7 +36,7 @@ public class MixinGameRenderer {
     public void modifyBobView(MatrixStack matrices, float tickDelta, CallbackInfo ci) {
         if (ModuleList.customBob.isEnabled()) {
             ci.cancel();
-            if (ModuleList.customBob.strength.getValue() == 0) return;
+            if (ModuleList.customBob.getFullStrength() == 0) return;
             ModuleList.customBob.customBob(matrices);
         }
     }

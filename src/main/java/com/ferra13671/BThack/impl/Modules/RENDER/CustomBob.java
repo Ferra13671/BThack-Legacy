@@ -10,7 +10,10 @@ import net.minecraft.util.math.RotationAxis;
 
 public class CustomBob extends Module {
 
-    public final NumberSetting strength = new NumberSetting("Strength", this, 0, 0, 10, false);
+    public final NumberSetting TXStrength = new NumberSetting("TX Strength", this, 0.45, 0, 10, false);
+    public final NumberSetting TYStrength = new NumberSetting("TY Strength", this, 0.3, 0, 10, false);
+    public final NumberSetting RXStrength = new NumberSetting("RX Strength", this, 1.35, 0, 10, false);
+    public final NumberSetting RZStrength = new NumberSetting("RZ Strength", this, 1.5, 0, 10, false);
 
     public CustomBob() {
         super("CustomBob",
@@ -21,7 +24,10 @@ public class CustomBob extends Module {
         );
 
         initSettings(
-                strength
+                TXStrength,
+                TYStrength,
+                RXStrength,
+                RZStrength
         );
     }
 
@@ -30,9 +36,12 @@ public class CustomBob extends Module {
         float f = playerEntity.horizontalSpeed - playerEntity.prevHorizontalSpeed;
         float g = -(playerEntity.horizontalSpeed + f * mc.getRenderTickCounter().getTickDelta(true));
         float h = MathHelper.lerp(mc.getRenderTickCounter().getTickDelta(true), playerEntity.prevStrideDistance, playerEntity.strideDistance);
-        float strength = (float) this.strength.getValue();
-        matrices.translate((MathHelper.sin(g * 3.1415927F) * h * 0.5F) * strength, (-Math.abs(MathHelper.cos(g * 3.1415927F) * h)) * strength, 0.0F);
-        matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees((MathHelper.sin(g * 3.1415927F) * h * 3.0F) * strength));
-        matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees((Math.abs(MathHelper.cos(g * 3.1415927F - 0.2F) * h) * 5.0F) * strength));
+        matrices.translate((MathHelper.sin(g * 3.1415927F) * h * 0.5F) * (float) TXStrength.getValue(), (-Math.abs(MathHelper.cos(g * 3.1415927F) * h)) * (float) TYStrength.getValue(), 0.0F);
+        matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees((MathHelper.sin(g * 3.1415927F) * h * 3.0F) * (float) RZStrength.getValue()));
+        matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees((Math.abs(MathHelper.cos(g * 3.1415927F - 0.2F) * h) * 5.0F) * (float) RXStrength.getValue()));
+    }
+
+    public double getFullStrength() {
+        return TXStrength.getValue() + TYStrength.getValue() + RXStrength.getValue() + RZStrength.getValue();
     }
 }
