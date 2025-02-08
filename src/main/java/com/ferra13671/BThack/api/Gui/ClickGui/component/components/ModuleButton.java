@@ -22,6 +22,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class ModuleButton extends Component implements Mc {
+	public static final int OUTLINE_COLOR = ColorUtils.fastRGBA(0, 0, 0, 100);
 	public static final int BUTTON_HEIGHT = 12;
 
 	public Module module;
@@ -110,6 +111,8 @@ public class ModuleButton extends Component implements Mc {
 		int alpha = (int) (255 * ModuleList.clickGui.opacity.getValue());
 		if (!module.isEnabled() || toggleAnimation.getEase() < 1) drawNormalBackground(alpha);
 		if (module.isEnabled() || toggleAnimation.getEase() < 1) drawEnabledBackground(alpha);
+		if (ModuleList.clickGui.moduleOutline.getValue())
+			BThackRender.drawOutlineRect(parent.getX(), parent.getY() + offset, parent.getX() + parent.getWidth(), parent.getY() + BUTTON_HEIGHT + offset, 1, OUTLINE_COLOR);
 
 		BThackRender.drawString(module.getName(), (parent.getX() + 5), (parent.getY() + offset + (BUTTON_HEIGHT / 2f) - (FontUtils.getTextHeight(module.getName())) / 2f), getModuleTextColor());
 
@@ -157,51 +160,21 @@ public class ModuleButton extends Component implements Mc {
 								, alpha
 						)
 		);
-		if (ModuleList.clickGui.moduleOutline.getValue()) {
-			BThackRender.drawOutlineRect(parent.getX(), parent.getY() + offset, parent.getX() + parent.getWidth(), parent.getY() + BUTTON_HEIGHT + offset, 1,
-					isHovered ?
-							ColorUtils.integrateAlpha(
-									new Color(ClickGui.getClickGuiColor(true)).darker().darker().hashCode()
-									, alpha
-							)
-							:
-							ColorUtils.integrateAlpha(
-									new Color(ClickGui.getClickGuiColor(true)).darker().darker().darker().hashCode()
-									, alpha
-							)
-			);
-		}
 	}
 
 	private void drawNormalBackground(int alpha) {
-		if (isHovered)
-			BThackRender.drawRect(parent.getX(), parent.getY() + offset, parent.getX() + parent.getWidth(), parent.getY() + BUTTON_HEIGHT + offset,
-					ColorUtils.integrateAlpha(
-							new Color(Client.clientInfo.getColorTheme().backgroundHoveredColor()).brighter().brighter().hashCode()
-							, alpha
-					)
-			);
-		else
-			BThackRender.drawRect(parent.getX(), parent.getY() + offset, parent.getX() + parent.getWidth(), parent.getY() + BUTTON_HEIGHT + offset,
-					ColorUtils.integrateAlpha(
-							new Color(Client.clientInfo.getColorTheme().backgroundColor()).darker().darker().hashCode()
-							, alpha
-					)
-			);
-		if (ModuleList.clickGui.moduleOutline.getValue()) {
-			BThackRender.drawOutlineRect(parent.getX(), parent.getY() + offset, parent.getX() + parent.getWidth(), parent.getY() + BUTTON_HEIGHT + offset, 1,
-					isHovered ?
-							ColorUtils.integrateAlpha(
-									new Color(Client.clientInfo.getColorTheme().backgroundHoveredColor()).darker().hashCode()
-									, alpha
-							)
-							:
-							ColorUtils.integrateAlpha(
-									new Color(Client.clientInfo.getColorTheme().backgroundColor()).darker().hashCode()
-									, alpha
-							)
-			);
-		}
+		BThackRender.drawRect(parent.getX(), parent.getY() + offset, parent.getX() + parent.getWidth(), parent.getY() + BUTTON_HEIGHT + offset,
+				isHovered ?
+						ColorUtils.integrateAlpha(
+								new Color(Client.clientInfo.getColorTheme().backgroundHoveredColor()).brighter().brighter().hashCode()
+								, alpha
+						)
+						:
+						ColorUtils.integrateAlpha(
+								new Color(Client.clientInfo.getColorTheme().backgroundColor()).darker().darker().hashCode()
+								, alpha
+						)
+		);
 	}
 
 
