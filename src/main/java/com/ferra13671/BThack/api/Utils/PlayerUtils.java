@@ -59,11 +59,11 @@ public final class PlayerUtils implements Mc {
     }
 
 
-    public static Entity createNewFakePlayer(PlayerEntity parent, String name) {
+    public static PlayerEntity createNewFakePlayer(PlayerEntity parent, String name) {
         return createNewFakePlayer(parent, new GameProfile(UUID.randomUUID(), name));
     }
 
-    public static Entity createNewFakePlayer(PlayerEntity parent, GameProfile profile) {
+    public static PlayerEntity createNewFakePlayer(PlayerEntity parent, GameProfile profile) {
         OtherClientPlayerEntity entity = new OtherClientPlayerEntity(mc.world, profile);
         entity.copyPositionAndRotation(parent);
         entity.prevYaw = entity.getYaw();
