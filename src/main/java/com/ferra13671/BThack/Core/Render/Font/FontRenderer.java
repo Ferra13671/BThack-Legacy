@@ -5,7 +5,6 @@ import com.ferra13671.BThack.Core.Render.Utils.BThackRenderUtils;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Utils.MathUtils;
-import com.ferra13671.BThack.api.Utils.Textures;
 import com.ferra13671.TextureUtils.TextureStorage;
 import com.mojang.blaze3d.systems.RenderSystem;
 import it.unimi.dsi.fastutil.chars.Char2IntArrayMap;
@@ -144,14 +143,9 @@ public class FontRenderer implements Closeable, Mc {
         return glyphMap.getGlyph(glyph);
     }
 
-    public void draw(MatrixStack stack, String s, double x, double y, int color, boolean shadow) {
-        float[] rgba = ColorUtils.hashCodeToRGBA(color);
-        if (shadow)
-            drawInternal(stack, s, (float) x + (1f / mc.options.getGuiScale().getValue()), (float) y + (1f / mc.options.getGuiScale().getValue()), new float[]{0, 0, 0, rgba[3]}, true);
-        drawInternal(stack, s, (float) x, (float) y, rgba, false);
-    }
+    public void draw(MatrixStack stack, String s, float x, float y, int rgb, boolean shadow) {
+        float[] color = ColorUtils.hashCodeToRGBA(rgb);
 
-    public void drawInternal(MatrixStack stack, String s, float x, float y, float[] color, boolean shadow) {
         if (prebakeGlyphsFuture != null && !prebakeGlyphsFuture.isDone()) {
             try {
                 prebakeGlyphsFuture.get();
@@ -184,7 +178,7 @@ public class FontRenderer implements Closeable, Mc {
                 if (inSel) {
                     inSel = false;
                     char c1 = Character.toUpperCase(c);
-                    if (colorCodes.containsKey(c1) && !shadow)
+                    if (colorCodes.containsKey(c1))
                         colors = ColorUtils.hashCodeToRGB(colorCodes.get(c1));
                     else if (c1 == 'R')
                         colors = new float[]{color[0], color[1], color[2]};
@@ -232,6 +226,16 @@ public class FontRenderer implements Closeable, Mc {
                     float u2 = (float) (glyph.u() + glyph.width()) / owner.width;
                     float v2 = (float) (glyph.v() + glyph.height()) / owner.height;
 
+                    if (shadow) {
+                        xo++;
+                        yo++;
+                        bb.vertex(mat, xo + 0, yo + h, 0).texture(u1, v2).color(0, 0, 0, color[3]);
+                        bb.vertex(mat, xo + w, yo + h, 0).texture(u2, v2).color(0, 0, 0, color[3]);
+                        bb.vertex(mat, xo + w, yo + 0, 0).texture(u2, v1).color(0, 0, 0, color[3]);
+                        bb.vertex(mat, xo + 0, yo + 0, 0).texture(u1, v1).color(0, 0, 0, color[3]);
+                        xo--;
+                        yo--;
+                    }
                     bb.vertex(mat, xo + 0, yo + h, 0).texture(u1, v2).color(cr, cg, cb, color[3]);
                     bb.vertex(mat, xo + w, yo + h, 0).texture(u2, v2).color(cr, cg, cb, color[3]);
                     bb.vertex(mat, xo + w, yo + 0, 0).texture(u2, v1).color(cr, cg, cb, color[3]);
