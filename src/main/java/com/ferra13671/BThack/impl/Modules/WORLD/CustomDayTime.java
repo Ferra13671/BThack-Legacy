@@ -81,16 +81,10 @@ public class CustomDayTime extends Module {
                         try {
                             thread.sleep(20);
                         } catch (InterruptedException ignored) {}
-                        //if (mc.world != null)
-                        //    mc.world.setTimeOfDay(time);
                     } else {
-                        //if (mc.world != null)
-                        //    mc.world.setTimeOfDay(time);
                         try {
                             thread.sleep(200);
                         } catch (InterruptedException ignored) {}
-                        //if (mc.world != null)
-                        //    mc.world.setTimeOfDay(time);
                     }
                 } else {
                     try {

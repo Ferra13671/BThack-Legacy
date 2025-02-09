@@ -185,7 +185,7 @@ public final class ConfigSystem {
                     try {
                         saveConfigFile(Client.clientInfo.getCurrentConfigName());
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        BThack.error(e.getMessage());
                     }
 
                     for (Module module : Client.getAllModules()) {
@@ -220,7 +220,7 @@ public final class ConfigSystem {
                             } catch (IOException ignored) {}
                         });
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        BThack.error(e.getMessage());
                     }
                 },
                 () -> {}

@@ -88,7 +88,7 @@ public final class FileSystem {
         coloursObject.add("arrayListColor", new JsonPrimitive(0x191CFF));
 
         colourThemeObject.add("Colours", coloursObject);
-        String jsonString = gson.toJson(new JsonParser().parse(colourThemeObject.toString()));
+        String jsonString = gson.toJson(JsonParser.parseString(colourThemeObject.toString()));
         fileOutputStreamWriter.write(jsonString);
         fileOutputStreamWriter.close();
     }

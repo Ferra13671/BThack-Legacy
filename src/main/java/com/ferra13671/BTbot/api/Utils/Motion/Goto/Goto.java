@@ -54,7 +54,6 @@ public class Goto extends BThackThread implements Mc {
 
             mc.player.yaw = AimBotUtils.rotations(new Vec3d(needX, mc.player.getY(), needZ))[0];
             mc.player.input.movementForward = 1;
-            //mc.options.forwardKey.setPressed(true);
 
             if (mc.player.horizontalCollision) {
                 if (action == CollisionAction.JUMPING) {
@@ -80,7 +79,6 @@ public class Goto extends BThackThread implements Mc {
         cancel = false;
         pause = false;
         mc.player.input.movementForward = 0;
-        //mc.options.forwardKey.setPressed(false);
         moving = false;
         if (runnable != null) {
             runnable.run();
@@ -89,37 +87,30 @@ public class Goto extends BThackThread implements Mc {
 
     public void tryJump() {
         mc.player.input.movementForward = 0;
-        //mc.options.forwardKey.setPressed(false);
         double oldPosY = mc.player.getY();
         mc.player.jump();
         mc.player.input.movementForward = 1;
-        //mc.options.forwardKey.setPressed(true);
         try {
             sleep(600);
         } catch (InterruptedException ignored) {}
         mc.player.input.movementForward = 0;
-        //mc.options.forwardKey.setPressed(false);
         if (mc.player.getY() < oldPosY + 0.4) {
             mc.player.jump();
             mc.player.input.movementForward = 1;
-            //mc.options.forwardKey.setPressed(true);
             try {
                 sleep(600);
             } catch (InterruptedException ignored) {}
             mc.player.input.movementForward = 0;
-            //mc.options.forwardKey.setPressed(false);
         } else {
             pause = false;
         }
         if (mc.player.getY() < oldPosY + 0.4) {
             mc.player.jump();
             mc.player.input.movementForward = 1;
-            //mc.options.forwardKey.setPressed(true);
             try {
                 sleep(600);
             } catch (InterruptedException ignored) {}
             mc.player.input.movementForward = 0;
-            //mc.options.forwardKey.setPressed(false);
         } else {
             pause = false;
         }
@@ -133,7 +124,6 @@ public class Goto extends BThackThread implements Mc {
         cancel = false;
         pause = false;
         mc.player.input.movementForward = 0;
-        //mc.options.forwardKey.setPressed(false);
         moving = false;
         if (runnable != null) {
             runnable.run();

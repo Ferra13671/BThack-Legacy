@@ -21,7 +21,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(FireworkRocketEntity.class)
 public class MixinFireWorkRocketEntity implements Mc {
 
-    @Shadow public int life;
+    @Shadow private int life;
 
     @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/projectile/FireworkRocketEntity;updateRotation()V", shift = At.Shift.AFTER), cancellable = true)
     public void modifyRocketTick(CallbackInfo ci) {

@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.Core.Render;
 
+import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.Core.Client.Client;
 import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.Core.FileSystem.ConfigSystem.ConfigUtils;
@@ -59,7 +60,7 @@ public final class BThackRender implements Mc {
         try {
             reloadFontRenderManager();
         } catch (Exception e) {
-            e.printStackTrace();
+            BThack.error(e.getMessage());
         }
         inited = true;
     }
