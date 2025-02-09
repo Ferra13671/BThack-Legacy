@@ -2,6 +2,7 @@ package com.ferra13671.BThack.impl.Modules.RENDER.HoleESP;
 
 import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Managers.managers.Thread.BThackThread;
 import com.ferra13671.BThack.api.Utils.HoleUtils;
 import com.ferra13671.BThack.api.Utils.MathUtils;
 import net.minecraft.entity.player.PlayerEntity;
@@ -11,10 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class HoleESPSearchThread extends Thread implements Mc {
+public class HoleESPSearchThread extends BThackThread implements Mc {
 
     @Override
-    public void run() {
+    public void threadAction() {
         while (ModuleList.holeESP.isEnabled() && ModuleList.holeESP.updateMode.getValue().equals("Thread")) {
             List<BlockPos> obsHoles;
             List<BlockPos> bedHoles;
@@ -28,7 +29,7 @@ public class HoleESPSearchThread extends Thread implements Mc {
             ModuleList.holeESP.bedrockHoleList = bedHoles.stream().filter(HoleUtils::isBedrockHole)
                     .collect(Collectors.toList());
 
-            applySleep((int) ModuleList.holeESP.updateDelay.getValue());
+            sleepThread((int) ModuleList.holeESP.updateDelay.getValue());
         }
     }
 
@@ -66,11 +67,5 @@ public class HoleESPSearchThread extends Thread implements Mc {
         }
 
         return nearbyBlocks;
-    }
-
-    private void applySleep(int millis) {
-        try {
-            sleep(millis);
-        } catch (Exception ignored) {}
     }
 }

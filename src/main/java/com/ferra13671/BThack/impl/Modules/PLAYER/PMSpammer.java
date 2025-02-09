@@ -128,10 +128,7 @@ public class PMSpammer extends Module {
                                             a = (long) (a * NumberGenerator.generateFloat((float) spreadRange.getValue(), 1));
                                         }
                                     }
-                                    try {
-                                        thread.sleep(a);
-                                    } catch (Exception ignored) {
-                                    }
+                                    thread.sleepThread(a);
                                 }
                                 m = m + 1;
                                 sendNotification(Formatting.AQUA + LanguageSystem.translate("lang.module.PMSpammer.movingToNext"));
@@ -149,10 +146,7 @@ public class PMSpammer extends Module {
                                     a = (long) (a * NumberGenerator.generateFloat((float) spreadRange.getValue(), 1));
                                 }
                             }
-                            try {
-                                thread.sleep(a);
-                            } catch (Exception ignored) {
-                            }
+                            thread.sleepThread(a);
                         }
                     } catch (IOException e) {
                         throw new RuntimeException(e);
@@ -198,10 +192,7 @@ public class PMSpammer extends Module {
                                             a = (long) (a * NumberGenerator.generateFloat((float) spreadRange.getValue(), 1));
                                         }
                                     }
-                                    try {
-                                        thread.sleep(a);
-                                    } catch (Exception ignored) {
-                                    }
+                                    thread.sleepThread(a);
                                 }
                             }
                             reader.close();
@@ -215,10 +206,7 @@ public class PMSpammer extends Module {
                                     a = (long) (a * NumberGenerator.generateFloat((float) spreadRange.getValue(), 1));
                                 }
                             }
-                            try {
-                                thread.sleep(a);
-                            } catch (Exception ignored) {
-                            }
+                            thread.sleepThread(a);
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }

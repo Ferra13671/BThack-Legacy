@@ -84,7 +84,7 @@ public final class DiscordUtils implements Mc {
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 } try {
-                    Thread.sleep(5000L);
+                    Thread.sleep(1000);
                 } catch (InterruptedException exception) {
                     exception.printStackTrace();
                 }

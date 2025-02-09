@@ -4,12 +4,14 @@ import com.ferra13671.BTbot.api.Utils.Generate.NumberGenerator;
 import com.ferra13671.BTbot.impl.AntiAFK.Start.StartAntiAFK;
 import com.ferra13671.BTbot.impl.AntiAFK.Start.StartAntiAFKThread;
 import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Managers.managers.Thread.BThackThread;
 import com.ferra13671.BThack.api.Utils.ChatUtils;
 
-public class SendToChat extends Thread implements Mc {
+public class SendToChat extends BThackThread implements Mc {
     public static long number = 0;
 
-    public void run() {
+    @Override
+    public void threadAction() {
         if (StartAntiAFKThread.startDoing) return;
         StartAntiAFKThread.startDoing = true;
         int s = StartAntiAFK.messageSize;
@@ -23,9 +25,7 @@ public class SendToChat extends Thread implements Mc {
         ChatUtils.sendChatMessage(String.valueOf(number));
         double d = StartAntiAFK.delay * 1000;
         long delay = (long) d;
-        try {
-            sleep(delay);
-        } catch (InterruptedException ignored) {}
+        sleepThread(delay);
         StartAntiAFKThread.startDoing = false;
         new StartAntiAFKThread().start();
     }

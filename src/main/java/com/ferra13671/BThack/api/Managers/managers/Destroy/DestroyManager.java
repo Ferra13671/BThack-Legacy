@@ -48,10 +48,4 @@ public class DestroyManager implements Initializable, Mc, Pc {
             }
         } catch (Exception ignored) {}
     }
-
-    public static void delay(long milliseconds, Thread thread) {
-        try {
-            thread.sleep(milliseconds);
-        } catch (InterruptedException ignored) {}
-    }
 }

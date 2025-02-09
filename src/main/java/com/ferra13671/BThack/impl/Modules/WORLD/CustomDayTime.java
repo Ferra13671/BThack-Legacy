@@ -78,19 +78,12 @@ public class CustomDayTime extends Module {
                         long newTime = (long) (time + ((speed * speedFactor) / 50));
                         if (newTime >= 24000L) newTime = 0L;
                         time = newTime;
-                        try {
-                            thread.sleep(20);
-                        } catch (InterruptedException ignored) {}
+                        thread.sleepThread(20);
                     } else {
-                        try {
-                            thread.sleep(200);
-                        } catch (InterruptedException ignored) {}
+                        thread.sleepThread(200);
                     }
                 } else {
-                    try {
-                        thread.sleep(200);
-                    } catch (InterruptedException ignored) {
-                    }
+                    thread.sleepThread(200);
                 }
             }
         });

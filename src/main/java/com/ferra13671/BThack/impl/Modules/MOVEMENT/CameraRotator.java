@@ -45,10 +45,7 @@ public class CameraRotator extends Module {
                         } else {
                             mc.player.yaw = mc.player.yaw - b;
                         }
-                        try {
-                            thread.sleep(1);
-                        } catch (InterruptedException ignored) {
-                        }
+                        thread.sleepThread(1);
                     } else Thread.yield();
                 }
             }

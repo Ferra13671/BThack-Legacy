@@ -76,9 +76,7 @@ public class ChestStealer extends Module {
                     if (mc.player.currentScreenHandler instanceof GenericContainerScreenHandler container) {
                         if (container.getInventory().isEmpty() || checkFullInventory()) {
                             while (mc.currentScreen instanceof GenericContainerScreen) {
-                                try {
-                                    thread.sleep(100);
-                                } catch (InterruptedException ignored) {}
+                                thread.sleepThread(100);
                             }
                             ChestStealer.active = false;
                             thread.stopOnException();
@@ -88,9 +86,7 @@ public class ChestStealer extends Module {
                                 if (checkFullInventory()) break;
                                 if (filterStack(container.getInventory().getStack(index))) {
                                     pc.clickSlot(container.syncId, index, 0, SlotActionType.QUICK_MOVE);
-                                    try {
-                                        thread.sleep((long) stealDelay.getValue());
-                                    } catch (InterruptedException ignored) {}
+                                    thread.sleepThread((long) stealDelay.getValue());
                                 }
 
                                 if (container.getInventory().isEmpty()) {

@@ -36,9 +36,7 @@ public class PacketPlace extends Module {
 
         e.setCancelled(true);
         ThreadManager.startNewThread(thread -> {
-            try {
-                thread.sleep(5);
-            } catch (InterruptedException ignored) {}
+            thread.sleepThread(5);
 
             for (int i = 0; i < (int) sendPackets.getValue(); i++) {
                 if (shifting.getValue())
@@ -49,9 +47,7 @@ public class PacketPlace extends Module {
                 if (shifting.getValue())
                     mc.player.networkHandler.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.RELEASE_SHIFT_KEY));
 
-                try {
-                    thread.sleep(5);
-                } catch (InterruptedException ignored) {}
+                thread.sleepThread(5);
             }
         });
     }

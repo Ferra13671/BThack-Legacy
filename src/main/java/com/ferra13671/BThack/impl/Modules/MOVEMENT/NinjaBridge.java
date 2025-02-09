@@ -99,9 +99,7 @@ public class NinjaBridge extends Module {
 
                     //Delay between actions
                     if (_actionDelay != 0) {
-                        try {
-                            thread.sleep(_actionDelay);
-                        } catch (InterruptedException ignored) {}
+                        thread.sleepThread(_actionDelay);
                     }
                     //
 
@@ -116,9 +114,7 @@ public class NinjaBridge extends Module {
 
                     //Delay between actions
                     if (_actionDelay != 0) {
-                        try {
-                            thread.sleep(_actionDelay);
-                        } catch (InterruptedException ignored) {}
+                        thread.sleepThread(_actionDelay);
                     }
                     //
 
@@ -139,13 +135,11 @@ public class NinjaBridge extends Module {
         }
 
         //Spams a keybind to use an item to put a block
-        private void placeBlock(long time, long factor, Thread thread) {
+        private void placeBlock(long time, long factor, BThackThread thread) {
             long a = time;
             while (a > 0) {
                 mc.options.useKey.setPressed(true);
-                try {
-                    thread.sleep(factor);
-                } catch (InterruptedException ignored) {}
+                thread.sleepThread(factor);
                 mc.options.useKey.setPressed(false);
                 a -= factor;
             }

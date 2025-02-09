@@ -102,16 +102,12 @@ public final class InventoryUtils implements Mc, Pc {
             pc.clickSlot(0, slot1, 0, SlotActionType.PICKUP);
             pc.tick();
             if (delay > 0) {
-                try {
-                    thread.sleep(delay);
-                } catch (InterruptedException ignored) {}
+                thread.sleepThread(delay);
             }
             pc.clickSlot(0, slot2, 0, SlotActionType.PICKUP);
             pc.tick();
             if (delay > 0) {
-                try {
-                    thread.sleep(delay);
-                } catch (InterruptedException ignored) {}
+                thread.sleepThread(delay);
             }
             pc.clickSlot(0, slot1, 0, SlotActionType.PICKUP);
             pc.tick();

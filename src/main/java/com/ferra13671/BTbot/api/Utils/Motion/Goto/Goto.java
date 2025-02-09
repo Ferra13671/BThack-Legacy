@@ -90,16 +90,12 @@ public class Goto extends BThackThread implements Mc {
         double oldPosY = mc.player.getY();
         mc.player.jump();
         mc.player.input.movementForward = 1;
-        try {
-            sleep(600);
-        } catch (InterruptedException ignored) {}
+        sleepThread(600);
         mc.player.input.movementForward = 0;
         if (mc.player.getY() < oldPosY + 0.4) {
             mc.player.jump();
             mc.player.input.movementForward = 1;
-            try {
-                sleep(600);
-            } catch (InterruptedException ignored) {}
+            sleepThread(600);
             mc.player.input.movementForward = 0;
         } else {
             pause = false;
@@ -107,9 +103,7 @@ public class Goto extends BThackThread implements Mc {
         if (mc.player.getY() < oldPosY + 0.4) {
             mc.player.jump();
             mc.player.input.movementForward = 1;
-            try {
-                sleep(600);
-            } catch (InterruptedException ignored) {}
+            sleepThread(600);
             mc.player.input.movementForward = 0;
         } else {
             pause = false;

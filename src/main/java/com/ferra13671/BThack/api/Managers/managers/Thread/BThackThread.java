@@ -26,6 +26,12 @@ public abstract class BThackThread extends Thread {
 
     }
 
+    public void sleepThread(long millis) {
+        try {
+            sleep(millis);
+        } catch (InterruptedException ignored) {}
+    }
+
     public void checkThreadStopped() throws ThreadClosedException {
         if (isThreadClosed()) throw new ThreadClosedException();
     }

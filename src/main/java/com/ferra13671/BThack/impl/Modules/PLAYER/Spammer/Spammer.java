@@ -149,9 +149,7 @@ public class Spammer extends Module {
                         }
                     }
 
-                    try {
-                        thread.sleep(a);
-                    } catch (InterruptedException ignored) {}
+                    thread.sleepThread(a);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

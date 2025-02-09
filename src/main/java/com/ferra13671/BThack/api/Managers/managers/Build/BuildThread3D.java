@@ -65,9 +65,7 @@ public class BuildThread3D extends AbstractBuildThread {
                         }
 
                         Managers.BUILD_MANAGER.blockPoses.add(pos);
-                        try {
-                            sleep((long) (delayTicks == 0 ? 1 : (delayTicks * ((IRenderTickCounter$Dynamic)  mc.getRenderTickCounter()).getTickTime())));
-                        } catch (Exception ignored) {}
+                        sleepThread((long) (delayTicks == 0 ? 1 : (delayTicks * ((IRenderTickCounter$Dynamic)  mc.getRenderTickCounter()).getTickTime())));
                     }
                 } else {
                     return;

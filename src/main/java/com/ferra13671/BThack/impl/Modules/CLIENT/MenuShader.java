@@ -16,7 +16,7 @@ import java.util.List;
 public class MenuShader extends Module {
 
     public final BooleanSetting random = new BooleanSetting("Random", this, false);
-    public final ModeSetting shader = new ModeSetting("Sh", this, getShaderList(), () -> !random.getValue());
+    public final ModeSetting shader = new ModeSetting("Sh", this, getShaderList(), () -> !random.getValue()).defaultValue("bubble");
 
     public MenuShader() {
         super("MenuShader",

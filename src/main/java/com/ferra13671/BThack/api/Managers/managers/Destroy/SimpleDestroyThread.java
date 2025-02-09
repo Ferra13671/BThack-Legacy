@@ -42,16 +42,14 @@ public class SimpleDestroyThread extends AbstractDestroyThread {
                     if (!BuildManager.isPossibleRich(pos)) break;
                     if (ModuleList.packetMine.currentBreakingBlock == null)
                         ModuleList.packetMine.updateBlock(pos);
-                    DestroyManager.delay(50, this);
+                    sleepThread(50);
                 } else {
                     if (BuildManager.isPossibleRich(pos)) {
-                        //mc.player.yaw = AimBotUtils.rotations(pos)[0];
-                        //mc.player.pitch = AimBotUtils.rotations(pos)[1];
                         AutoTool.equipBestSlot(mc.world.getBlockState(pos));
 
                         DestroyManager.currentBlockPos = pos;
 
-                        DestroyManager.delay(50, this);
+                        sleepThread(50);
                     } else {
                         break;
                     }

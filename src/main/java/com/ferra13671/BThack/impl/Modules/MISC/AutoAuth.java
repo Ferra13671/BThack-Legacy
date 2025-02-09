@@ -65,9 +65,7 @@ public class AutoAuth extends Module {
 
     public void sendCommandAction(String command) {
         ThreadManager.startNewThread(thread -> {
-            try {
-                thread.sleep((long) delay.getValue());
-            } catch (Exception ignored) {}
+            thread.sleepThread((long) delay.getValue());
             ChatUtils.sendCommand(command);
             if (autoToggle.getValue())
                 setToggled(false);

@@ -33,9 +33,7 @@ public abstract class ActionBotTask implements Mc {
 
 
     public void sleepThread(long millis) {
-        try {
-            thread.sleep(millis);
-        } catch (InterruptedException e) {}
+        thread.sleepThread(millis);
     }
 
     //Checks if the condition is met

@@ -105,10 +105,7 @@ public class HighwayBuilder extends Module {
                 ModuleList.scaffold.setToggled(false);
 
                 while (BuildManager.isBuilding) {
-                    try {
-                        thread.sleep((int) actDelay.getValue());
-                    } catch (Exception ignored) {
-                    }
+                    thread.sleepThread((int) actDelay.getValue());
                 }
 
                 byte[] moveFactor = AimBotUtils.getCordFactorFromDirection(highwayYaw);
@@ -132,7 +129,7 @@ public class HighwayBuilder extends Module {
         });
     }
 
-    private void breakAction(Thread thread, byte[] moveFactor) {
+    private void breakAction(BThackThread thread, byte[] moveFactor) {
         ArrayList<Vec3i> schematic = getBreakSchematic(highwayYaw, 0, 0, 0,0);
         breakInternal(thread, moveFactor, schematic, true);
 
@@ -150,26 +147,21 @@ public class HighwayBuilder extends Module {
         }
     }
 
-    private void breakInternal(Thread thread, byte[] moveFactor, ArrayList<Vec3i> schematic, boolean ignoreObsidian) {
+    private void breakInternal(BThackThread thread, byte[] moveFactor, ArrayList<Vec3i> schematic, boolean ignoreObsidian) {
         DestroyThread3D destroyThread = new DestroyThread3D();
         destroyThread.set3DSchematic(schematic, BlockPos.ofFloored(mc.player.getX() + (moveFactor[0] * 2), Math.round(mc.player.getY()) - (!mode.getValue().equals("Tunnel") ? 1 : 0), mc.player.getZ() + (moveFactor[1] * 2)));
         destroyThread.setIgnoreBlocks(ignoreObsidian ? Arrays.asList(Blocks.OBSIDIAN, Blocks.CRYING_OBSIDIAN) : new ArrayList<>());
         destroyThread.start();
-        try {
-            thread.sleep(2);
-        } catch (Exception ignored) {}
+        thread.sleepThread(2);
         while (DestroyManager.isDestroying) {
-            try {
-                thread.sleep((int) actDelay.getValue());
-            } catch (Exception ignored) {
-            }
+            thread.sleepThread((int) actDelay.getValue());
         }
     }
 
     /*
     All the logic and action to move.
      */
-    private void gotoAction(Thread thread, byte[] moveFactor) {
+    private void gotoAction(BThackThread thread, byte[] moveFactor) {
         boolean obstructionFound = !mc.world.isAir(BlockPos.ofFloored(mc.player.getX() + moveFactor[0], mc.player.getY(), mc.player.getZ() + moveFactor[1]));
 
         if (!mc.world.isAir(BlockPos.ofFloored(mc.player.getX() + moveFactor[0], mc.player.getY() + 1, mc.player.getZ() + moveFactor[1])))
@@ -177,14 +169,9 @@ public class HighwayBuilder extends Module {
 
         Goto gotoN = new Goto(mc.player.getX() + (moveFactor[0] * (obstructionFound ? 0.16 : 0.5)), mc.player.getZ() + (moveFactor[1] * (obstructionFound ? 0.16 : 0.5)), CollisionAction.NONE);
         gotoN.start();
-        try {
-            thread.sleep(2);
-        } catch (Exception ignored) {}
+        thread.sleepThread(2);
         while (gotoN.isMoving()) {
-            try {
-                thread.sleep((int) actDelay.getValue());
-            } catch (Exception ignored) {
-            }
+            thread.sleepThread((int) actDelay.getValue());
         }
     }
 
@@ -208,21 +195,16 @@ public class HighwayBuilder extends Module {
     /*
     All the actions and logic for placing highways.
      */
-    private void buildAction(Thread thread) {
+    private void buildAction(BThackThread thread) {
         if (!mode.getValue().equals("Tunnel")) {
             ArrayList<Vec3i> schematic = getBuildSchematic(highwayYaw);
             BuildThread3D buildThread3D = new BuildThread3D();
             buildThread3D.set3DSchematic((int) buildTicks.getValue(), schematic, BlockPos.ofFloored(mc.player.getX(), Math.round(mc.player.getY()) - 1, mc.player.getZ()));
             buildThread3D.setNeedBlocks(onlyObsidian.getValue() ? Arrays.asList(Blocks.OBSIDIAN, Blocks.CRYING_OBSIDIAN) : new ArrayList<>());
             buildThread3D.start();
-            try {
-                thread.sleep(2);
-            } catch (Exception ignored) {}
+            thread.sleepThread(2);
             while (BuildManager.isBuilding) {
-                try {
-                    thread.sleep((int) actDelay.getValue());
-                } catch (Exception ignored) {
-                }
+                thread.sleepThread((int) actDelay.getValue());
             }
         }
     }
@@ -244,14 +226,9 @@ public class HighwayBuilder extends Module {
         thread3D.set3DSchematic(1, checkBlocks, BlockPos.ofFloored(mc.player.getX() + (moveFactor[0]), Math.round(mc.player.getY()) - (!mode.getValue().equals("Tunnel") ? 1 : 0), mc.player.getZ() + (moveFactor[1])));
         thread3D.start();
 
-        try {
-            thread.sleep(2);
-        } catch (Exception ignored) {}
+        thread.sleepThread(2);
         while (BuildManager.isBuilding) {
-            try {
-                thread.sleep((int) actDelay.getValue());
-            } catch (Exception ignored) {
-            }
+            thread.sleepThread((int) actDelay.getValue());
         }
 
         for (Vec3i vec3i : checkBlocks) {

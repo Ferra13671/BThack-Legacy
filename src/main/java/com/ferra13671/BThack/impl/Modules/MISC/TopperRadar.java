@@ -132,10 +132,7 @@ public class TopperRadar extends Module {
                         while (delay != 0) {
                             ChatUtils.sendMessage(String.format(Formatting.RED + LanguageSystem.translate("lang.module.radars.disconnectAfter"), delay));
 
-                            try {
-                                thread.sleep(1000);
-                            } catch (InterruptedException ignored) {
-                            }
+                            thread.sleepThread(1000);
 
                             delay--;
                         }
