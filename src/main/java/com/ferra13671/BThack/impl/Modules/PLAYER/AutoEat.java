@@ -84,17 +84,14 @@ public class AutoEat extends Module {
                             InventoryUtils.swapItem(i);
                             gappleEating = true;
                         } else {
-                            for (int a = 0; a < 9; a++) {
-                                if (mc.player.getInventory().getStack(a).getItem() == Items.AIR) {
-                                    InventoryUtils.swapItemOnInventory(a, i);
-                                    InventoryUtils.swapItem(a);
-                                    gappleEating = true;
-                                    break;
-                                }
+                            int freeSlot = InventoryUtils.findFreeHotbarSlot();
+                            if (freeSlot != -1) {
+                                InventoryUtils.swapItemOnInventory(freeSlot, i);
+                                InventoryUtils.swapItem(freeSlot);
+                                gappleEating = true;
                             }
-                            if (!gappleEating) {
+                            if (!gappleEating)
                                 InventoryUtils.swapItemOnInventory(mc.player.getInventory().selectedSlot, i);
-                            }
                         }
                         break;
                     }
@@ -122,13 +119,11 @@ public class AutoEat extends Module {
                                 InventoryUtils.swapItem(i);
                                 foodEating = true;
                             } else {
-                                for (int a = 0; a < 9; a++) {
-                                    if (mc.player.getInventory().getStack(a).getItem() == Items.AIR) {
-                                        InventoryUtils.swapItemOnInventory(a, i);
-                                        InventoryUtils.swapItem(a);
-                                        foodEating = true;
-                                        break;
-                                    }
+                                int freeSlot = InventoryUtils.findFreeHotbarSlot();
+                                if (freeSlot != -1) {
+                                    InventoryUtils.swapItemOnInventory(freeSlot, i);
+                                    InventoryUtils.swapItem(freeSlot);
+                                    foodEating = true;
                                 }
                             }
                             break;

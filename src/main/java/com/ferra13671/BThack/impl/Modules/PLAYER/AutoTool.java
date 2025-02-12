@@ -56,12 +56,11 @@ public class AutoTool extends Module {
             if (bestSlot < 9) {
                 InventoryUtils.swapItem(bestSlot);
             } else {
-                for (int a = 0; a < 9; a++) {
-                    if (mc.player.getInventory().getStack(a).getItem() == Items.AIR) {
-                        InventoryUtils.swapItemOnInventory(a, bestSlot);
-                        InventoryUtils.swapItem(a);
-                        return;
-                    }
+                int freeSlot = InventoryUtils.findFreeHotbarSlot();
+                if (freeSlot != -1) {
+                    InventoryUtils.swapItemOnInventory(freeSlot, bestSlot);
+                    InventoryUtils.swapItem(freeSlot);
+                    return;
                 }
                 InventoryUtils.swapItemOnInventory(mc.player.getInventory().selectedSlot, bestSlot);
                 mc.interactionManager.tick();
@@ -92,12 +91,4 @@ public class AutoTool extends Module {
         }
         return -1;
     }
-
-    public static final Set<Block> ignoreBlocks = Sets.newHashSet(
-            Blocks.BEDROCK,
-            Blocks.AIR,
-            Blocks.FLOWER_POT,
-            Blocks.END_PORTAL,
-            Blocks.END_PORTAL_FRAME
-    );
 }
