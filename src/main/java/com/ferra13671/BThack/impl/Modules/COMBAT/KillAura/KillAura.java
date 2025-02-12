@@ -44,7 +44,7 @@ public class KillAura extends Module {
     public final NumberSetting postCooldown = new NumberSetting("Post Cooldown", this, 56, 0, 100, true, () -> attackMode.getValue().equals("CoolDown"));
 
     public final BooleanSetting instaAttack = new BooleanSetting("Insta Attack", this, false, () -> mode.getValue().equals("Aura") && !mode.getValue().equals("Grim"));
-    public final NumberSetting lockTicks = new NumberSetting("Lock Ticks", this, 7, 3, 10, false, () -> mode.getValue().equals("Aura") && (mode.getValue().equals("Grim") || !instaAttack.getValue()));
+    public final NumberSetting lockTicks = new NumberSetting("Lock Ticks", this, 7, 3, 10, true, () -> mode.getValue().equals("Aura") && (mode.getValue().equals("Grim") || !instaAttack.getValue()));
 
     public final BooleanSetting players = new BooleanSetting("Players", this, true);
     public final BooleanSetting teammates = new BooleanSetting("Teammates", this, false);
