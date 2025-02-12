@@ -2,6 +2,8 @@ package com.ferra13671.BThack.api.Utils;
 
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import org.joml.Matrix4f;
+import org.joml.Vector3f;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -55,5 +57,10 @@ public final class MathUtils {
 
     public static float applyRange(float number, float min, float max) {
         return Math.min(Math.max(min, number), max);
+    }
+
+    public static Vec3d transformPos(Matrix4f matrix, float x, float y, float z) {
+        Vector3f vector3f = matrix.transformPosition(x, y, z, new Vector3f());
+        return new Vec3d(vector3f.x(), vector3f.y(), vector3f.z());
     }
 }

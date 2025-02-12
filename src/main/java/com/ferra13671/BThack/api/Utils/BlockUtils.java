@@ -5,6 +5,7 @@ import com.ferra13671.BThack.api.Utils.Modules.AimBotUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ChestBlock;
+import net.minecraft.block.FluidBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.ChestBlockEntity;
 import net.minecraft.block.entity.EnderChestBlockEntity;
@@ -216,6 +217,7 @@ public final class BlockUtils implements Mc {
     public static boolean canBreak(BlockPos pos, BlockState state) {
         if (!mc.player.isCreative() && state.getHardness(mc.world, pos) < 0) return false;
         if (mc.world.isAir(pos)) return false;
+        if (state.getBlock() instanceof FluidBlock) return false;
         return state.getOutlineShape(mc.world, pos) != VoxelShapes.empty();
     }
 

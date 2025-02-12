@@ -65,7 +65,7 @@
 "lang.module.PortalGod": When you are in the portal, you can open the GUI.
 "lang.module.Replanish": Automatically replenishes items in the hotbar.
 "lang.module.Scrapper": Breaks blocks, above the level of your feet.
-"lang.module.SuperInstaMine": Allows you to instantly mine a lot of blocks.
+"lang.module.SuperInstaMine": Allows you to instantly mine a lot of blocks. (WARNING: change the size settings with caution!)
 "lang.module.Timer": Speeds up/slows down game ticks.
 "lang.module.TopperRadar": Warns you if there is a topper nearby.
 "lang.module.TrashThrower": Throws selected trash out of inventory.
