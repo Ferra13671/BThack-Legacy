@@ -1,4 +1,4 @@
-#version 120
+#version 150
 //не читай это сообщение)) не нуж но))) конык ига га смийеться над тобою аа))) ах ты ж воображение пахаха))
 //подпись форева: Cyber DragOn С-йбер
 // russian fag ^^
@@ -8,6 +8,8 @@ precision highp float;
 #endif
 uniform vec2 resolution;
 uniform float time; //время идти всем на...) баю баю не зеваю в сон твой не вхожу с хуя я это пишу аа?)) а в твоей глове одни хуи а?) айай ц ц )) йа йа йа онли форевар я)))
+
+out vec4 BThack_FragColor;
 
 vec3 Smeg()
 {
@@ -101,5 +103,5 @@ if( rect(pos-vec2(x+.42,y), vec2(0.06, 0.005)) == 0.0 )			// BONE
 	col2 = (col2*(0.95+sin(-1.2+cos(ppy*10.0))*0.3))*1.3;	// NUT
 	col = mix(col,col2,b);					// JAPS EYE
 
-	gl_FragColor = vec4(col*e, 1.0 );		// COMBINE FOR DANCING COCKS
+	BThack_FragColor = vec4(col*e, 1.0 );		// COMBINE FOR DANCING COCKS
 }

@@ -1,10 +1,12 @@
-#version 120
+#version 150
 #extension GL_OES_standard_derivatives : enable
 
 precision highp float;
 
 uniform float time;
 uniform vec2 resolution;
+
+out vec4 BThack_FragColor;
 
 vec3 rotatey(in vec3 p, float ang) { return vec3(p.x*cos(ang)-p.z*sin(ang),p.y,p.x*sin(ang)+p.z*cos(ang));  }
 vec3 rotatex(in vec3 p, float ang) { return vec3(p.x,p.y*cos(ang)-p.z*sin(ang),p.y*sin(ang)+p.z*cos(ang));  }
@@ -28,5 +30,5 @@ void main( void ) {
 
 	}
 	col /=100.0;
-	gl_FragColor = vec4(col, 1.0);
+	BThack_FragColor = vec4(col, 1.0);
 }

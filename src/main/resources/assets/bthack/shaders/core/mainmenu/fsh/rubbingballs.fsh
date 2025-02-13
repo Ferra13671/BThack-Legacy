@@ -1,10 +1,12 @@
-#version 120
+#version 150
 #extension GL_OES_standard_derivatives : enable
 
 precision highp float;
 
 uniform float time;
 uniform vec2 resolution;
+
+out vec4 BThack_FragColor;
 
 // 'balls are rubbing' by Pudi
 // Email: k.a.komissar@gmail.com
@@ -190,5 +192,5 @@ void main( ) {
     float stripes = abs(fract(dir) - 0.5) + (light * 0.5 - 0.5);
     col *= mix(vec3(0.), vec3(1.), smoothstep(pix, -pix, stripes));
 
-    gl_FragColor = vec4(pow(col, vec3(0.4545)),1.0);
+    BThack_FragColor = vec4(pow(col, vec3(0.4545)),1.0);
 }

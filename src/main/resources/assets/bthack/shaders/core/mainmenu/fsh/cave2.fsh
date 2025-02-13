@@ -1,10 +1,12 @@
-#version 120
+#version 150
 #extension GL_OES_standard_derivatives : enable
 
 precision highp float;
 
 uniform float time;
 uniform vec2 resolution;
+
+out vec4 BThack_FragColor;
 
 float rand(vec3 p){
 	return fract(sin(dot(p, vec3(23.5349, 12.4324, 94.5204))) * 8471.4309);
@@ -115,6 +117,6 @@ void main( void ) {
 
 	col = sqrt(col);
 
-	gl_FragColor = vec4( col, 2.0 );
+	BThack_FragColor = vec4( col, 2.0 );
 
 }

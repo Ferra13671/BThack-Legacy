@@ -1,4 +1,4 @@
-#version 120
+#version 150
 #ifdef GL_ES
 precision highp float;
 #endif
@@ -12,6 +12,8 @@ vec2 uv;
 
 uniform float time;
 uniform vec2 resolution;
+
+out vec4 BThack_FragColor;
 
 const vec2 ch_size  = vec2(1.0, 2.0) * 0.6;              // character size (Y,X)
 const vec2 ch_space = ch_size + vec2(1.0, 1.0);    // character distance Vector(X,Y)
@@ -178,5 +180,5 @@ _ _ _ _ O N _ T O P nl3;
 
 
 	vec3 color = mix(ch_color, bg_color, 1.0- (0.08 / d*2.0));  // shading
-	gl_FragColor = vec4(color, 1.0);
+	BThack_FragColor = vec4(color, 1.0);
 }

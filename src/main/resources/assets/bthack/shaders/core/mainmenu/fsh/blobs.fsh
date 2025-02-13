@@ -1,4 +1,4 @@
-#version 120
+#version 150
 // By @paulofalcao
 //
 // Blobs
@@ -9,6 +9,8 @@ precision highp float;
 
 uniform float time;
 uniform vec2 resolution;
+
+out vec4 BThack_FragColor;
 
 float makePoint(float x,float y,float fx,float fy,float sx,float sy,float t){
    float xx=x+sin(t*fx)*sx;
@@ -56,5 +58,5 @@ void main( void ) {
 
    vec3 d=vec3(a,b,c)/32.0;
 
-   gl_FragColor = vec4(d.x,d.y,d.z,1.0);
+   BThack_FragColor = vec4(d.x,d.y,d.z,1.0);
 }

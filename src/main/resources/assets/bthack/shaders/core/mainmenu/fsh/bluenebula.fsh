@@ -1,4 +1,4 @@
-#version 120
+#version 150
 #ifdef GL_ES
 precision highp float;// ios
 #endif
@@ -7,6 +7,7 @@ precision highp float;// ios
 uniform float time;
 uniform vec2 resolution;
 
+out vec4 BThack_FragColor;
 
 #define iterations 4
 #define formuparam2 .9
@@ -218,5 +219,5 @@ void main()
 
     backCol2.bg = mix(backCol2.gb, backCol2.bg, 0.5*(cos(time*0.01) + 1.0));
 
-    gl_FragColor = forCol2 + vec4(backCol2, 1.0);
+    BThack_FragColor = forCol2 + vec4(backCol2, 1.0);
 }

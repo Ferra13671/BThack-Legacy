@@ -1,4 +1,4 @@
-#version 120
+#version 150
 /*
  * "Seascape" by Alexander Alekseev aka TDM - 2014
  * License Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License.
@@ -14,6 +14,8 @@ precision mediump float;
 uniform float time;
 uniform vec2 resolution;
 uniform vec3 pointers[1];
+
+out vec4 BThack_FragColor;
 
 const int NUM_STEPS = 8;
 const float PI      = 3.141592;
@@ -191,5 +193,5 @@ void main(void) {
         pow(smoothstep(0.0,-0.05,dir.y),0.3));
 
     // post
-    gl_FragColor = vec4(pow(color,vec3(0.75)), 1.0);
+    BThack_FragColor = vec4(pow(color,vec3(0.75)), 1.0);
 }

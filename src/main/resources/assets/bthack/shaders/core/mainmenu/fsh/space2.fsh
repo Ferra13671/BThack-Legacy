@@ -1,4 +1,4 @@
-#version 120
+#version 150
 #ifdef GL_ES
 precision highp float;
 #endif
@@ -6,6 +6,8 @@ precision highp float;
 
 uniform float time;
 uniform vec2 resolution;
+
+out vec4 BThack_FragColor;
 
 #define mouse vec2(sin(time)/48., cos(time)/48.)
 #define iterations 14
@@ -167,5 +169,5 @@ void main() {
 	backCol2.b = 0.5*mix(backCol2.g, backCol2.b, 0.8);
 	backCol2.g = 0.0;
 	backCol2.bg = mix(backCol2.gb, backCol2.bg, 0.5*(cos(time*0.01) + 1.0));
-	gl_FragColor = forCol2 + vec4(backCol2, 1.0);
+	BThack_FragColor = forCol2 + vec4(backCol2, 1.0);
 }

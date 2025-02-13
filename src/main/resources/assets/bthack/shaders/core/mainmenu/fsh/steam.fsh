@@ -1,10 +1,12 @@
-#version 120
+#version 150
 #ifdef GL_ES
 precision mediump float;
 #endif
 
 uniform float time;
 uniform vec2 resolution;
+
+out vec4 BThack_FragColor;
 
 //Animated Steam logo using 2D distance fields
 
@@ -93,7 +95,7 @@ void main( void ) {
 
     vec3 color = mix(background,shade,blend);
 
-    gl_FragColor = vec4( vec3(color), 1.0 );
+    BThack_FragColor = vec4( vec3(color), 1.0 );
 
 }
 

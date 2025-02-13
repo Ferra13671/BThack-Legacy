@@ -1,4 +1,4 @@
-#version 120
+#version 150
 #ifdef GL_FRAGMENT_PRECISION_HIGH
 	precision highp float;
 #else
@@ -7,6 +7,8 @@
 
 uniform float time;
 uniform vec2 resolution;
+
+out vec4 BThack_FragColor;
 
 void main( void ) {
 	vec2 pos = ( gl_FragCoord.xy / resolution.xy );
@@ -20,5 +22,5 @@ void main( void ) {
 	color += color2;
 	color /= 1.0;
 
-	gl_FragColor = vec4(color, 6.0 );
+	BThack_FragColor = vec4(color, 6.0 );
 }

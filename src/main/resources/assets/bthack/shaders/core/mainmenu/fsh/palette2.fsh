@@ -1,4 +1,4 @@
-#version 120
+#version 150
 #ifdef GL_ES
 precision mediump float;
 #endif
@@ -6,6 +6,8 @@ precision mediump float;
 uniform vec2 resolution;
 uniform float time;
 uniform vec2 mouse;
+
+out vec4 BThack_FragColor;
 
 const int   complexity      = 150;                  // More points of color.
 float mouse_factor          = 3.01*sin(0.01*time);  // Makes it more/less jumpy.
@@ -28,6 +30,6 @@ void main()
 
     vec3 col=vec3(color_intensity*sin(3.0*p.x)+color_intensity + 0.3,color_intensity*sin(3.0*p.y)+color_intensity + 0.2,sin(p.x+p.y));
 
-    gl_FragColor=vec4(col, 1.0);
-    gl_FragColor = vec4(gl_FragColor.xyz, 1.);
+    BThack_FragColor=vec4(col, 1.0);
+    BThack_FragColor = vec4(BThack_FragColor.xyz, 1.);
 }

@@ -1,4 +1,4 @@
-#version 120
+#version 150
 #ifdef GL_ES
 precision mediump float;
 #endif
@@ -7,6 +7,8 @@ precision mediump float;
 
 uniform vec2 resolution;
 uniform float time;
+
+out vec4 BThack_FragColor;
 
 /*
 * @author Hazsi (kinda)
@@ -36,5 +38,5 @@ void main() {
         d += min(rz, 1.0);
     }
 
-    gl_FragColor = vec4(cl, 1.0);
+    BThack_FragColor = vec4(cl, 1.0);
 }

@@ -1,4 +1,4 @@
-#version 120
+#version 150
 #ifdef GL_ES
 precision highp float;
 #endif
@@ -7,6 +7,9 @@ uniform float time;
 uniform vec2 mouse;
 uniform vec2 resolution;
 uniform sampler2D texture;
+
+out vec4 BThack_FragColor;
+
 #define iGlobalTime time
 #define iTime time
 #define iMouse (mouse * resolution)
@@ -157,5 +160,5 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
 void main( void ) {
 	vec4 colo = vec4(0.0);
 	mainImage(colo, gl_FragCoord.xy);
-	gl_FragColor = colo;
+	BThack_FragColor = colo;
 }

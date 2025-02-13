@@ -1,4 +1,4 @@
-#version 120
+#version 150
 #ifdef GL_ES
 precision mediump float;
 #endif
@@ -24,6 +24,8 @@ precision mediump float;
 uniform float time;
 uniform vec2 mouse;
 uniform vec2 resolution;
+
+out vec4 BThack_FragColor;
 
 
 #define cloud 0.17
@@ -172,5 +174,5 @@ void main() {
 	backCol2.b = 0.5*mix(backCol2.g, backCol2.b, 0.8);
 	backCol2.g = 0.0;
 	backCol2.bg = mix(backCol2.gb, backCol2.bg, 0.5*(cos(time*0.01) + 1.0));
-	gl_FragColor = forCol2 + vec4(backCol2, 1.0);
+	BThack_FragColor = forCol2 + vec4(backCol2, 1.0);
 }

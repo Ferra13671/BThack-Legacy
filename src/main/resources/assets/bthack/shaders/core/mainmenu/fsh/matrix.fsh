@@ -1,4 +1,4 @@
-#version 120
+#version 150
 // modified from http://glsl.heroku.com/e#15125.0
 
 #ifdef GL_ES
@@ -7,6 +7,8 @@ precision mediump float;
 
 uniform float time;
 uniform vec2 resolution;
+
+out vec4 BThack_FragColor;
 
 vec2 rotate(vec2 p, float a)
 {
@@ -245,5 +247,5 @@ void main()
 
     vec3 col = pow(vec3(inten), vec3(8.0, 0.75, 8.25));
 
-    gl_FragColor = vec4(col, 1.0);
+    BThack_FragColor = vec4(col, 1.0);
 }

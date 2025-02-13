@@ -1,10 +1,12 @@
-#version 120
+#version 150
 #ifdef GL_ES
 precision highp float;
 #endif
 
 uniform float time;
 uniform vec2 resolution;
+
+out vec4 BThack_FragColor;
 
 const float COUNT = 10.0;
 
@@ -32,5 +34,5 @@ void main(void) {
     float temp = vertColor;//*(y-0.7);
     vec3 color = vec3(temp*0.9, temp*0.1, temp*0.1*abs(y-1.0)) * 0.7;
     color *= color.r+color.g+color.b;
-    gl_FragColor = vec4(color, 1.0);
+    BThack_FragColor = vec4(color, 1.0);
 }

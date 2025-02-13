@@ -1,4 +1,4 @@
-#version 120
+#version 150
 #extension GL_OES_standard_derivatives : enable
 
 precision highp float;
@@ -7,6 +7,8 @@ precision highp float;
 // glslsandbox uniforms
 uniform float time;
 uniform vec2 resolution;
+
+out vec4 BThack_FragColor;
 
 // shadertoy emulation
 const vec4 iMouse = vec4(0.);
@@ -248,5 +250,5 @@ void mainImage(out vec4 frag_col, in vec2 frag_coord) {
 
 void main(void)
 {
-    mainImage(gl_FragColor, gl_FragCoord.xy);
+    mainImage(BThack_FragColor, gl_FragCoord.xy);
 }

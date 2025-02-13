@@ -1,4 +1,4 @@
-#version 120
+#version 150
 #ifdef GL_ES
 precision mediump float;
 #endif
@@ -10,6 +10,8 @@ uniform sampler2D u_img_tex; // Use this for Image texture
 uniform sampler2D u_lay_tex; // A layer texture
 uniform sampler2D texture;
 uniform vec2 mouse;
+
+out vec4 BThack_FragColor;
 
 const float Pi = 100.;
 
@@ -26,5 +28,5 @@ void main(){
         p=newp;
     }
     vec3 col=vec3(color_intensity*sin(5.0*p.x)+color_intensity, color_intensity*sin(3.0*p.y)+color_intensity, color_intensity*sin(p.x+p.y)+color_intensity);
-    gl_FragColor=vec4(col, 1);
+    BThack_FragColor=vec4(col, 1);
 }

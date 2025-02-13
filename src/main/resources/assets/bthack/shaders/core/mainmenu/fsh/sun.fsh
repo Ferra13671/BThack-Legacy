@@ -1,4 +1,4 @@
-#version 120
+#version 150
 /*
  * Original shader from: https://www.shadertoy.com/view/XdXBDf
  */
@@ -10,6 +10,8 @@ precision mediump float;
 // glslsandbox uniforms
 uniform float time;
 uniform vec2 resolution;
+
+out vec4 BThack_FragColor;
 
 // shadertoy emulation
 #define iTime time
@@ -243,6 +245,6 @@ mat3    Rot3Y(float a) {
 
 void main(void)
 {
-    mainImage(gl_FragColor, gl_FragCoord.xy);
-    gl_FragColor.a = 1.;
+    mainImage(BThack_FragColor, gl_FragCoord.xy);
+    BThack_FragColor.a = 1.;
 }

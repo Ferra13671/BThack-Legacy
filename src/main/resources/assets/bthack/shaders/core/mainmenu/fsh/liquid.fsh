@@ -1,4 +1,4 @@
-#version 120
+#version 150
 #extension GL_OES_standard_derivatives : enable
 
 // Parts stolen from: https://gist.github.com/patriciogonzalezvivo/670c22f3966e662d2f83
@@ -10,6 +10,8 @@ precision mediump float;
 
 uniform float time;
 uniform vec2 resolution;
+
+out vec4 BThack_FragColor;
 
 #define PI 3.1416
 #define screenWidth resolution.x
@@ -69,5 +71,5 @@ void main()
         p=newp;
     }
     vec3 col=vec3(cos(p.x+p.y+3.)*.5+.75, sin(p.x+p.y+6.)*.5+.35, (sin(p.x+p.y+9.)+cos(p.x+p.y+12.))*.45+.25);
-    gl_FragColor=vec4(col*col, 1.0);
+    BThack_FragColor=vec4(col*col, 1.0);
 }

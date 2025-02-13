@@ -1,10 +1,12 @@
-#version 120
+#version 150
 #extension GL_OES_standard_derivatives : enable
 
 precision highp float;
 
 uniform vec2 resolution;
 uniform float time;
+
+out vec4 BThack_FragColor;
 
 const float Pi = 35.14159;
 uniform vec2 mouse;
@@ -37,5 +39,5 @@ void main()
 
   finalCol = vec3(col*col);
 
-  gl_FragColor=vec4(finalCol.rgb / col, 1) * power;
+  BThack_FragColor=vec4(finalCol.rgb / col, 1) * power;
 }

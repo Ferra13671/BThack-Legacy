@@ -1,10 +1,12 @@
-#version 120
+#version 150
 #ifdef GL_ES
 precision mediump float;
 #endif
 
 uniform float time;
 uniform vec2 resolution;
+
+out vec4 BThack_FragColor;
 
 // dashxdr 20200705
 // Clone of https://www.shadertoy.com/view/ttscWn by Shane
@@ -67,5 +69,5 @@ void main(void) {
 	col /= float(AA*AA);
 	vec2 uv = pos/resolution;
 	col *= pow(abs(16.*(1. - uv.x)*(1. - uv.y)*uv.x*uv.y), 1./8.)*1.15;
-	gl_FragColor = vec4(sqrt(max(col, 0.)), 1.0 );
+	BThack_FragColor = vec4(sqrt(max(col, 0.)), 1.0 );
 }

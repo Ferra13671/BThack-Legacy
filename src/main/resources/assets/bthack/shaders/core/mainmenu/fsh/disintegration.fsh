@@ -1,4 +1,4 @@
-#version 120
+#version 150
 #extension GL_OES_standard_derivatives : enable
 
 precision highp float;
@@ -10,9 +10,11 @@ uniform float time;
 uniform vec2 resolution;
 uniform float alpha;
 
-varying vec3 pos;
-varying vec3 normal;
-varying vec4 tex_coord;
+out vec4 BThack_FragColor;
+
+in vec3 pos;
+in vec3 normal;
+in vec4 tex_coord;
 
 
 vec3 firePalette(float i){
@@ -133,6 +135,6 @@ void main() {
 	//vec3 rgb = hsv2rgb(vec3(position.x + position.y + (time / 5.0), 0.4, 1));
 	//vec4 rgba = vec4(rgb.xyz, 255);
 
-    gl_FragColor = vec4(sqrt(clamp(col, 0., 1.)) , 1);
-    // gl_FragColor = vec4(1, 1, 1, 0.3);
+    BThack_FragColor = vec4(sqrt(clamp(col, 0., 1.)) , 1);
+    // BThack_FragColor = vec4(1, 1, 1, 0.3);
 }

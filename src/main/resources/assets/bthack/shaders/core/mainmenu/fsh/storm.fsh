@@ -1,4 +1,4 @@
-#version 120
+#version 150
 /*
  * Original shader from: https://www.shadertoy.com/view/wsBGDW
  */
@@ -11,6 +11,8 @@ precision mediump float;
 uniform float time;
 uniform vec2 resolution;
 uniform vec2 mouse;
+
+out vec4 BThack_FragColor;
 
 // shadertoy emulation
 #define iTime time
@@ -258,5 +260,5 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
 void main(void)
 {
     iMouse = vec4(mouse * resolution, 0., 0.);
-    mainImage(gl_FragColor, gl_FragCoord.xy);
+    mainImage(BThack_FragColor, gl_FragCoord.xy);
 }

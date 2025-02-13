@@ -1,4 +1,4 @@
-#version 120
+#version 150
 #ifdef GL_ES
 precision mediump float;
 #endif
@@ -8,6 +8,8 @@ const int MAX_ITER = 60;
 uniform float time;
 uniform vec2 mouse;
 uniform vec2 resolution;
+
+out vec4 BThack_FragColor;
 
 #define pi 3.14159265359
 
@@ -86,5 +88,5 @@ void main()
     rayDir=rotateY(rayDir, 4.0*(mouse.x-0.5));
     vec3 cameraOrigin = vec3(0, 0, time);
 
-    gl_FragColor = vec4(intersect(cameraOrigin, rayDir), 1.0);
+    BThack_FragColor = vec4(intersect(cameraOrigin, rayDir), 1.0);
 }

@@ -1,4 +1,4 @@
-#version 120
+#version 150
 #ifdef GL_ES
 precision mediump float;
 #endif
@@ -7,6 +7,8 @@ precision mediump float;
 uniform float time;
 uniform vec2 resolution;
 uniform sampler2D texture;
+
+out vec4 BThack_FragColor;
 
 // shadertoy globals
 float iTime = 9.8;
@@ -175,5 +177,5 @@ void main(void)
     iTime = time;
     iResolution = vec3(resolution, 11.9);
 
-    mainImage(gl_FragColor, gl_FragCoord.xy);
+    mainImage(BThack_FragColor, gl_FragCoord.xy);
 }

@@ -1,4 +1,4 @@
-#version 120
+#version 150
 // http://glslsandbox.com/e#25857.0
 // MORE NEON HACK TIME FROM THE 80'S
 
@@ -16,9 +16,11 @@ uniform float time;
 uniform vec2 mouse;
 uniform vec2 resolution;
 
+out vec4 BThack_FragColor;
+
 void glow(float d) {
     float br = 0.0015 * resolution.y;
-    gl_FragColor.rgb += vec3(0.15, 0.15, 0.45) * br / d;
+    BThack_FragColor.rgb += vec3(0.15, 0.15, 0.45) * br / d;
 }
 
 void line(vec2 a, vec2 l) {
@@ -69,7 +71,7 @@ float rand(int seed) {
 }
 
 void main() {
-    gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
+    BThack_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
 
     // Horizontal grid lines
     float y = 0.0;

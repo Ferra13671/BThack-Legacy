@@ -1,10 +1,12 @@
-#version 120
+#version 150
 #extension GL_OES_standard_derivatives : enable
 
 precision highp float;
 
 uniform float time;
 uniform vec2 resolution;
+
+out vec4 BThack_FragColor;
 
 // License CC0: Sea and moon
 //  Tinkering with the colors of an old shaders to make it a better fit for windows terminal
@@ -189,5 +191,5 @@ void main() {
 
   vec3 col = render(ro, rd);
 
-  gl_FragColor = vec4(col,1.0);
+  BThack_FragColor = vec4(col,1.0);
 }

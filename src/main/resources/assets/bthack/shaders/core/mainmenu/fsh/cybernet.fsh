@@ -1,10 +1,12 @@
-#version 120
+#version 150
 #extension GL_OES_standard_derivatives : enable
 
 precision highp float;
 
 uniform float time;
 uniform vec2 resolution;
+
+out vec4 BThack_FragColor;
 
 const float speed = 0.06;
 const float bright = 0.3;
@@ -93,5 +95,5 @@ void main( void ) {
 	col = m*base;
 	col-=Y*base;
 	//col = fd.x>0.48||fd.y>0.48?vec3(1,0,0):col;
-	gl_FragColor = vec4( col, 1.0 );
+	BThack_FragColor = vec4( col, 1.0 );
 }

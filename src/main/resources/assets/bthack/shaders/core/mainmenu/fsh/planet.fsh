@@ -1,10 +1,12 @@
-#version 120
+#version 150
 #extension GL_OES_standard_derivatives : enable
 
 precision highp float;
 
 uniform float time;
 uniform vec2 resolution;
+
+out vec4 BThack_FragColor;
 
 // Planet Shadertoy. Created by Reinder Nijhoff 2015
 // @reindernijhoff
@@ -1363,5 +1365,5 @@ void main() {
 
     col *= 0.8 + 0.4 * pow(1.0 * uv.x * uv.y * (1.0 - uv.x) * (1.0 - uv.y), 0.1);
 
-    gl_FragColor = vec4(col, 1.0);
+    BThack_FragColor = vec4(col, 1.0);
 }

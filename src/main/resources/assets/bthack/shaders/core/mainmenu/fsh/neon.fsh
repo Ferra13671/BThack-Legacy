@@ -1,4 +1,4 @@
-#version 120
+#version 150
 #ifdef GL_ES
 precision mediump float;
 #endif
@@ -6,6 +6,8 @@ precision mediump float;
 // glslsandbox uniforms
 uniform float time;
 uniform vec2 resolution;
+
+out vec4 BThack_FragColor;
 
 // shadertoy emulation
 #define iTime time
@@ -38,6 +40,6 @@ void mainImage(out vec4 O, vec2 C)
 
 void main(void)
 {
-    mainImage(gl_FragColor, gl_FragCoord.xy);
-    gl_FragColor.a = 1.;
+    mainImage(BThack_FragColor, gl_FragCoord.xy);
+    BThack_FragColor.a = 1.;
 }

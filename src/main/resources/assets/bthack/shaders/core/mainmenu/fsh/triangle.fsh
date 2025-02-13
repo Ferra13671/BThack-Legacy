@@ -1,4 +1,4 @@
-#version 120
+#version 150
 // ... and lo, Man created gods in his own image.
 #ifdef GL_ES
 precision mediump float;
@@ -8,6 +8,8 @@ precision mediump float;
 
 uniform float time;
 uniform vec2 resolution;
+
+out vec4 BThack_FragColor;
 
 
 
@@ -169,6 +171,6 @@ void main(void) {
 
 
 
-    gl_FragColor = vec4(finalColor, 1.0);
+    BThack_FragColor = vec4(finalColor, 1.0);
 
 }

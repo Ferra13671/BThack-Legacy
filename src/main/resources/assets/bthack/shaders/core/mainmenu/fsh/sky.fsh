@@ -1,4 +1,4 @@
-#version 120
+#version 150
 #ifdef GL_ES
 precision mediump float;
 #endif
@@ -7,6 +7,8 @@ precision mediump float;
 
 uniform float time;
 uniform vec2 resolution;
+
+out vec4 BThack_FragColor;
 
 const float cloudscale = 1.1;
 const float speed = 0.009;
@@ -120,5 +122,5 @@ void main() {
 
     vec3 result = mix(skycolour, clamp(skytint * skycolour + cloudcolour, 0.0, 1.0), clamp(f + c, 0.0, 1.0));
 
-    gl_FragColor = vec4(result, 1.0);
+    BThack_FragColor = vec4(result, 1.0);
 }

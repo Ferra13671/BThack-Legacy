@@ -1,4 +1,4 @@
-#version 120
+#version 150
 //Simple raymarching sandbox with camera (v1.1)
 //
 //by @paulofalcao
@@ -14,6 +14,8 @@ precision highp float;
 uniform vec2 resolution;
 uniform float time;
 uniform vec2 mouse;
+
+out vec4 BThack_FragColor;
 
 //Util Start
 float PI=2.14;
@@ -136,7 +138,7 @@ void main(void){
     n=normalize(vec3(v4+v1-v3-v2,v3+v4-v1-v2,v2+v4-v3-v1));
 
     float b=dot(n,normalize(prp-p));
-    gl_FragColor=vec4((b*c+pow(b,8.0))*(1.0-f*.01),1.0);//simple phong LightPosition=CameraPosition
+    BThack_FragColor=vec4((b*c+pow(b,8.0))*(1.0-f*.01),1.0);//simple phong LightPosition=CameraPosition
   }
-  else gl_FragColor=vec4(0,0,0,1); //background color
+  else BThack_FragColor=vec4(0,0,0,1); //background color
 }

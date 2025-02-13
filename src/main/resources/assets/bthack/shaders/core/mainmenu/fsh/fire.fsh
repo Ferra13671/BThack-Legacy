@@ -1,4 +1,4 @@
-#version 120
+#version 150
 /*
  * Original shader from: https://www.shadertoy.com/view/4ttGWM
  */
@@ -10,6 +10,7 @@ precision mediump float;
 // glslsandbox uniforms
 uniform float time;
 uniform vec2 resolution;
+out vec4 BThack_FragColor;
 const vec3 c1 = vec3(0.5, 0.0, 0.1);
 const vec3 c2 = vec3(0.9, 0.1, 0.0);
 const vec3 c3 = vec3(0.2, 0.1, 0.7);
@@ -82,5 +83,5 @@ fragColor = vec4(color.x, color.y, color.z, alpha);
 
 void main(void)
 {
-    mainImage(gl_FragColor, gl_FragCoord.xy);
+    mainImage(BThack_FragColor, gl_FragCoord.xy);
 }

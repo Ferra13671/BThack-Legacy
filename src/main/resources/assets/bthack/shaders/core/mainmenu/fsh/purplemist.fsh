@@ -1,4 +1,4 @@
-#version 120
+#version 150
 #ifdef GL_ES
 precision mediump float;
 #endif
@@ -10,6 +10,8 @@ uniform float     time;
 uniform float     alpha;
 uniform vec2      speed;
 uniform float     shift;
+
+out vec4 BThack_FragColor;
 
 
 float rand(vec2 n) {
@@ -51,6 +53,6 @@ void main() {
     vec2 r = vec2(fbm(p + q + time * speed.x - p.x - p.y), fbm(p + q - time * speed.y));
     vec3 c = mix(c1, c2, fbm(p + r)) + mix(c3, c4, r.x) - mix(c5, c6, r.y);
     float grad = gl_FragCoord.y / resolution.y;
-    gl_FragColor = vec4(c * cos(shift * gl_FragCoord.y / resolution.y), 1.0);
-    gl_FragColor.xyz *= 1.0-grad;
+    BThack_FragColor = vec4(c * cos(shift * gl_FragCoord.y / resolution.y), 1.0);
+    BThack_FragColor.xyz *= 1.0-grad;
 }

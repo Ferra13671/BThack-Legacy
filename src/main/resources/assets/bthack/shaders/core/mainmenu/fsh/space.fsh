@@ -1,11 +1,12 @@
-#version 120
+#version 150
 #ifdef GL_ES
 precision mediump float;
 #endif
 
 uniform float time;
-
 uniform vec2 resolution;
+
+out vec4 BThack_FragColor;
 
 
 
@@ -73,5 +74,5 @@ void main()
     vec3 rnd2 = nrand3(seed2);
     starcolor += vec4(pow(rnd2.y, 40.0));
 
-    gl_FragColor = mix(freqs[3]-.5, 1., 1.0) * vec4(1.5*freqs[2] * t * t* t, 1.2*freqs[1] * t * t, freqs[3]*t, 1.0) +c2+starcolor;
+    BThack_FragColor = mix(freqs[3]-.5, 1., 1.0) * vec4(1.5*freqs[2] * t * t* t, 1.2*freqs[1] * t * t, freqs[3]*t, 1.0) +c2+starcolor;
 }

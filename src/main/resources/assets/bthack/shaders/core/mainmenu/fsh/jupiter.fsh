@@ -1,4 +1,4 @@
-#version 120
+#version 150
 #ifdef GL_ES
 precision mediump float;
 #endif
@@ -6,12 +6,14 @@ precision mediump float;
 uniform vec2 resolution;
 uniform float time;
 
+out vec4 BThack_FragColor;
+
 const float color_intensity = 0.45;
 
 const float Pi = 3.14159;
 
 void main(){
-    gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
+    BThack_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
     vec2 p=(2.0*gl_FragCoord.xy-resolution)/max(resolution.x, resolution.y);
     for (int i=1;i<64;i++)
     {
@@ -21,5 +23,5 @@ void main(){
         p=newp;
     }
     vec3 col=vec3(sin(p.x+p.y)*.5+.5, sin(p.x+p.y+6.)*.5+.5, sin(p.x+p.y+12.)*.5+.5);
-    gl_FragColor=vec4(col, 1.0);
+    BThack_FragColor=vec4(col, 1.0);
 }
