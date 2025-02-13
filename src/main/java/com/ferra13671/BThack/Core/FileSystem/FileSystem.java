@@ -26,7 +26,7 @@ public final class FileSystem {
         registerFolder("Modules", "");
         registerFolder("Themes", "");
         registerFolder("ColourThemes", "/Themes");
-        registerFolder("ActionBot", "");
+        registerFolder("ActionBotConfigs", "");
         registerFolder("DefaultConfig", "/ActionBot");
         registerFolder("Wallpapers", "");
         registerFolder("Configs", "");
@@ -36,12 +36,12 @@ public final class FileSystem {
         registerFile("Friends", "Social/Friends", FileType.TXT);
         registerFile("Enemies", "Social/Enemies", FileType.TXT);
         registerFile("Spammer", "Spammer", FileType.TXT);
-        registerFile("ConfigInfo", "ActionBot", FileType.TXT);
         registerFile("CurrentConfig", "Modules", FileType.TXT);
         registerFile("Frames", "", FileType.JSON);
         registerFile("ClientInfo", "", FileType.JSON);
         registerFile("Waypoints", "", FileType.JSON);
         registerFile("Macros", "", FileType.JSON);
+        registerFile("Default", "ActionBotConfigs", FileType.JSON);
     }
 
     public static void registerFile(String name, String path, FileType typeFile) throws IOException {

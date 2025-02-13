@@ -23,7 +23,6 @@ import com.ferra13671.BThack.api.Utils.DataList.DataLists;
 import com.ferra13671.BThack.impl.Modules.MISC.AutoAuth;
 import com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.ActionBotConfig;
 import com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.ActionBotTask;
-import com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.Utils.ActionBotTaskData;
 import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
 import com.ferra13671.TextureUtils.GLTexture;
 import com.ferra13671.TextureUtils.PathMode;
@@ -32,13 +31,10 @@ import net.minecraft.util.math.Vec3d;
 import org.apache.commons.io.FilenameUtils;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
-import static com.ferra13671.BThack.Core.FileSystem.ConfigSystem.ConfigUtils.*;
 import static com.ferra13671.BThack.Core.FileSystem.JsonUtils.*;
 
 public final class ConfigSystem {
@@ -382,84 +378,41 @@ public final class ConfigSystem {
 
 
     public static void saveActionBotTasks() throws IOException {
-        Path configInfoFile = Paths.get("BThack/ActionBot/ConfigInfo.txt");
+        ConfigUtils.saveInJson("Default", "ActionBotConfigs", jsonObject -> {
+            ArrayList<ActionBotTask> tasks = new ArrayList<>(ActionBotConfig.tasks);
+            tasks.remove(ActionBotConfig.startTask);
+            tasks.remove(ActionBotConfig.endTask);
 
-        BufferedWriter writer = Files.newBufferedWriter(configInfoFile, StandardCharsets.UTF_8);
-        ArrayList<ActionBotTask> tasks = new ArrayList<>(ActionBotConfig.tasks);
-        tasks.remove(ActionBotConfig.startTask);
-        tasks.remove(ActionBotConfig.endTask);
+            JsonArray jsonList = new JsonArray();
+            for (ActionBotTask task : tasks) {
+                JsonObject taskObject = new JsonObject();
+                add(taskObject, "Type", task.mode);
+                task.save(taskObject);
 
-        int taskNumber = 1;
-
-        boolean m = false;
-
-        for (ActionBotTask task : tasks) {
-            String fileName = taskNumber + ". " + task.getName();
-
-            registerFiles(fileName, "ActionBot/DefaultConfig");
-
-            OutputStreamWriter fileOutputStreamWriter = new OutputStreamWriter(Files.newOutputStream(Paths.get("BThack/ActionBot/DefaultConfig/" + fileName + ".json")), StandardCharsets.UTF_8);
-
-            JsonObject taskObject = new JsonObject();
-
-
-            add(taskObject, "Mode", task.mode);
-            task.save(taskObject);
-
-
-            if (!m) {
-                writer.write(fileName);
-                m = true;
-            } else {
-                writer.write(System.lineSeparator() + fileName);
+                jsonList.add(taskObject);
             }
-
-            taskNumber++;
-
-            String jsonString = gson.toJson(JsonParser.parseString(taskObject.toString()));
-            fileOutputStreamWriter.write(jsonString);
-            fileOutputStreamWriter.close();
-        }
-
-        writer.close();
+            add(jsonObject, "Tasks", jsonList);
+        });
     }
 
     public static void loadActionBotTasks() throws IOException {
-        Path configInfoFile = Paths.get("BThack/ActionBot/ConfigInfo.txt");
-
         ActionBotConfig.tasks.add(ActionBotConfig.startTask);
-        if (Files.exists(configInfoFile)) {
-
-            BufferedReader readerConfigInfo = Files.newBufferedReader(configInfoFile, StandardCharsets.UTF_8);
-            String line = readerConfigInfo.readLine();
-
-            ArrayList<String> tasksNames = new ArrayList<>();
-
-            while (line != null) {
-                tasksNames.add(line);
-                line = readerConfigInfo.readLine();
-            }
-
-            readerConfigInfo.close();
-
-            for (String taskName : tasksNames) {
-                Path taskPath = Paths.get("BThack/ActionBot/DefaultConfig/" + taskName + ".json");
-
-                if (Files.exists(taskPath)) {
-                    InputStream inputStream = Files.newInputStream(taskPath);
-
-                    JsonObject taskObject = JsonParser.parseReader(new InputStreamReader(inputStream)).getAsJsonObject();
-
-                    if (!_null(taskObject, "Mode")) {
-                        for (ActionBotTaskData data : ActionBotConfig.getFullActionBotTasks()) {
-                            if (data.getTask().mode.equals(taskObject.get("Mode").getAsString())) {
-                                data.getTask().load(taskObject);
-                            }
-                        }
+        ConfigUtils.loadFromJson("Default", "ActionBotConfigs", jsonObject -> {
+            if (!_null(jsonObject, "Tasks")) {
+                JsonArray jsonList = jsonObject.get("Tasks").getAsJsonArray();
+                jsonList.asList().forEach(jsonElement -> {
+                    JsonObject taskObject = jsonElement.getAsJsonObject();
+                    if (!_null(taskObject, "Type")) {
+                        String mode = taskObject.get("Type").getAsString();
+                        ActionBotConfig.getFullActionBotTasks().forEach(actionBotTaskData -> {
+                            if (actionBotTaskData.getTask().mode.equals(mode))
+                                actionBotTaskData.getTask().load(taskObject);
+                        });
                     }
-                }
+                });
             }
-        }
+                }
+        , () -> {});
         ActionBotConfig.tasks.add(ActionBotConfig.endTask);
     }
 
