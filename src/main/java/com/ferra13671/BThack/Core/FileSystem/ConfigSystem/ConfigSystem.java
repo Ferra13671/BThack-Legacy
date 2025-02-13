@@ -321,21 +321,6 @@ public final class ConfigSystem {
                 }, () -> {});
             }
         }
-
-        loadOldHudInfo();
-    }
-
-    /** Will need to remove this in the next versions */
-    @Deprecated
-    private static void loadOldHudInfo() throws IOException {
-        ConfigUtils.loadFromJson("HUD", "Modules", jsonObject -> {
-            for (Module module : Client.getModulesInCategory(Categories.HUD)) {
-                HudComponent hudComponent = (HudComponent) module;
-                JsonObject settingsObject = jsonObject.get("Settings").getAsJsonObject();
-                if (!_null(settingsObject, hudComponent.getName()))
-                    hudComponent.setToggled(settingsObject.get(hudComponent.getName()).getAsBoolean());
-            }
-        }, () -> {});
     }
 
     public static void saveClans() throws IOException {
@@ -379,8 +364,7 @@ public final class ConfigSystem {
 
                             Clan clan = Clan.of(clanName, r, g, b);
 
-                            if (_null(clanOject, "Members")) loadClanMembersOld(clan);
-                            else {
+                            if (!_null(clanOject, "Members")) {
                                 JsonArray list = clanOject.get("Members").getAsJsonArray();
                                 clan.getMembers().addAll(list.asList().stream().map(JsonElement::getAsString).toList());
                             }
@@ -394,32 +378,6 @@ public final class ConfigSystem {
         }
 
         ClanSettingsBuilder.reloadSettings();
-    }
-
-    /** The old method of loading clan members */
-    @Deprecated
-    public static void loadClanMembersOld(Clan clan) throws IOException {
-        File clanMembersFolder = new File(Paths.get("BThack/Social/Clans/" + clan.getName() + "_Members").toUri());
-        File[] clanMembers = clanMembersFolder.listFiles();
-
-        if (clanMembers != null) {
-            for (File memberFile : clanMembers) {
-                if (memberFile.isFile()) {
-                    if (Objects.equals(FilenameUtils.getExtension(memberFile.getName()), "json")) {
-                        String memberName = memberFile.getName();
-                        InputStream memberInputStream = Files.newInputStream(Paths.get("BThack/Social/Clans/" + clan.getName() + "_Members/" + memberName));
-                        JsonObject memberObject = JsonParser.parseReader(new InputStreamReader(memberInputStream)).getAsJsonObject();
-
-                        if (memberObject.get("name") != null) {
-                            String member = memberObject.get("name").getAsString();
-                            clan.getMembers().add(member);
-                        }
-
-                        memberInputStream.close();
-                    }
-                }
-            }
-        }
     }
 
 
