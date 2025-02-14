@@ -9,8 +9,6 @@ import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import net.minecraft.util.Identifier;
 
 public class CustomCape extends Module {
-    private static final Cape bthackCape = Cape.fromIdentifier(Identifier.of("bthack", "bthack_cape.png"));
-    public static final Identifier BThack_Cape = Identifier.of("bthack", "bthack_cape.png");
 
     public CustomCape() {
         super("CustomCape",
@@ -21,6 +19,7 @@ public class CustomCape extends Module {
         );
 
         allowRemapKeyCode = false;
+        allowRemapVisible = false;
         visible = false;
     }
 
