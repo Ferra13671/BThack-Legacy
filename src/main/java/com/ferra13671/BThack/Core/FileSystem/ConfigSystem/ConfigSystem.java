@@ -12,6 +12,7 @@ import com.ferra13671.BThack.api.Gui.MainMenu.SelectWallpaper.Wallpaper;
 import com.ferra13671.BThack.api.HudComponent.HudComponent;
 import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Cape.Cape;
+import com.ferra13671.BThack.api.Managers.managers.Cape.CapeManager;
 import com.ferra13671.BThack.api.Managers.managers.Macros.Macro;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.*;
 import com.ferra13671.BThack.api.Managers.managers.Waypoint.Waypoint;
@@ -22,7 +23,6 @@ import com.ferra13671.BThack.api.Social.Clans.Clan;
 import com.ferra13671.BThack.api.Social.Clans.ClanManager;
 import com.ferra13671.BThack.api.Social.Clans.ClanSettingsBuilder;
 import com.ferra13671.BThack.api.Utils.DataList.DataLists;
-import com.ferra13671.BThack.impl.Commands.CustomCapeCommand;
 import com.ferra13671.BThack.impl.Modules.MISC.AutoAuth;
 import com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.ActionBotConfig;
 import com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.ActionBotTask;
@@ -618,8 +618,6 @@ public final class ConfigSystem {
                 if (!_null(capeInfoObject, "dataPath")) dataPath = capeInfoObject.get("dataPath").getAsString();
                 if (!_null(capeInfoObject, "type")) dataType = ClientInfo.CapeDataType.valueOf(capeInfoObject.get("type").getAsString());
                 Client.clientInfo.setCapeInfo(new ClientInfo.CapeInfo(dataPath, dataType));
-            } else {
-                Client.clientInfo.setCapeInfo(new ClientInfo.CapeInfo("", ClientInfo.CapeDataType.NONE));
             }
             }
         ,() -> {});

@@ -1,6 +1,7 @@
 package com.ferra13671.BThack.Core.Client;
 
 import com.ferra13671.BThack.BThack;
+import com.ferra13671.BThack.api.Managers.managers.Cape.CapeManager;
 import com.ferra13671.BThack.api.Managers.managers.ColourTheme.ColorTheme;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.TextureUtils.GLTexture;
@@ -15,7 +16,7 @@ public final class ClientInfo implements Mc {
     private String font = "default";
     private String currentConfigName = "";
     private ColorTheme colorTheme;
-    private CapeInfo capeInfo;
+    private CapeInfo capeInfo = CapeManager.DEFAULT_CAPE_INFO;
 
     ClientInfo() {}
 

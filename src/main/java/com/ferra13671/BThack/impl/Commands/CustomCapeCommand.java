@@ -5,6 +5,7 @@ import com.ferra13671.BThack.Core.Client.ClientInfo;
 import com.ferra13671.BThack.Core.FileSystem.ConfigSystem.ConfigSystem;
 import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Cape.Cape;
+import com.ferra13671.BThack.api.Managers.managers.Cape.CapeManager;
 import com.ferra13671.BThack.api.Managers.managers.Command.AbstractCommand;
 import com.ferra13671.BThack.api.Managers.managers.Command.Arguments;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
@@ -34,7 +35,7 @@ public class CustomCapeCommand extends AbstractCommand {
         builder.then(literal("set")
                 .then(literal("default").executes(context -> {
                     Managers.CAPE_MANAGER.setCape(Cape.fromIdentifier(Identifier.of("bthack", "bthack_cape.png")));
-                    Client.clientInfo.setCapeInfo(new ClientInfo.CapeInfo("", ClientInfo.CapeDataType.NONE));
+                    Client.clientInfo.setCapeInfo(CapeManager.DEFAULT_CAPE_INFO);
                     try {
                         ConfigSystem.saveClientInfo();
                     } catch (IOException ignored) {}
