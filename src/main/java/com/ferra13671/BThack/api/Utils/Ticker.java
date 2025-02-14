@@ -7,7 +7,7 @@ public final class Ticker {
         time = -1;
     }
 
-    public float getPassedTime() {
+    public long getPassedTime() {
         return System.currentTimeMillis() - this.time;
     }
 

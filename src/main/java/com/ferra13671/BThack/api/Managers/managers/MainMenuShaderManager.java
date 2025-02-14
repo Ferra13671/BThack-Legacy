@@ -1,6 +1,7 @@
 package com.ferra13671.BThack.api.Managers.managers;
 
 import com.ferra13671.BThack.BThack;
+import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.api.Events.DisconnectEvent;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Utils.Initializable;
@@ -10,6 +11,7 @@ import com.ferra13671.MegaEvents.Base.EventSubscriber;
 
 public class MainMenuShaderManager implements Initializable, Mc {
     private final Ticker shaderTicker = new Ticker();
+    private long passedTime = 0;
     private MainMenuShader shader;
     private Runnable postResetAction;
 
@@ -47,14 +49,16 @@ public class MainMenuShaderManager implements Initializable, Mc {
 
     public void resetShaderTime() {
         shaderTicker.reset();
+        passedTime = 0;
         if (postResetAction != null) postResetAction.run();
     }
 
-    public float getShaderTime() {
-        return getShaderTime(1);
+    public void update() {
+        passedTime += (long) (shaderTicker.getPassedTime() * ModuleList.menuShader.speed.getValue());
+        shaderTicker.reset();
     }
 
-    public float getShaderTime(float speed) {
-        return (shaderTicker.getPassedTime() / 1000) * speed;
+    public float getShaderTime() {
+        return passedTime / 1000f;
     }
 }

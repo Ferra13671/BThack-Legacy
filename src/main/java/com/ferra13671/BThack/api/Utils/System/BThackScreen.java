@@ -120,6 +120,8 @@ public class BThackScreen extends Screen implements Mc {
             float width = mc.getWindow().getScaledWidth();
             float height = mc.getWindow().getScaledHeight();
 
+            Managers.MAIN_MENU_SHADER_MANAGER.update();
+
             Managers.MAIN_MENU_SHADER_MANAGER.getMainMenuShader().use();
             Managers.MAIN_MENU_SHADER_MANAGER.getMainMenuShader().setParameters(mouseX, mouseY, width, height, Managers.MAIN_MENU_SHADER_MANAGER.getShaderTime());
             BThackRender.drawShader(Managers.MAIN_MENU_SHADER_MANAGER.getMainMenuShader(), 0, 0, width, height);

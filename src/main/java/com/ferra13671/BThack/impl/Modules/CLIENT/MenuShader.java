@@ -4,6 +4,7 @@ import com.ferra13671.BTbot.api.Utils.Generate.NumberGenerator;
 import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.Setting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Shader.MainMenu.MainMenuShader;
@@ -18,6 +19,8 @@ public class MenuShader extends Module {
     public final BooleanSetting random = new BooleanSetting("Random", this, false);
     public final ModeSetting shader = new ModeSetting("Sh", this, getShaderList(), () -> !random.getValue()).defaultValue("bubble");
 
+    public final NumberSetting speed = new NumberSetting("Speed", this, 1, 0.1, 3, false);
+
     public MenuShader() {
         super("MenuShader",
                 "lang.module.MenuShader",
@@ -31,7 +34,9 @@ public class MenuShader extends Module {
 
         initSettings(
                 random,
-                shader
+                shader,
+
+                speed
         );
 
         Managers.MAIN_MENU_SHADER_MANAGER.setPostResetAction(() -> {
