@@ -26,11 +26,11 @@ import java.util.Arrays;
 
 public final class ModuleList {
     //CLIENT
-    public static BThackCape bthackCape;
     public static BThackMainMenu bthackMainMenu;
     public static ChatNotifications chatNotifications;
     public static ClickGui clickGui;
     public static ClientSettings clientSettings;
+    public static CustomCape customCape;
     public static CustomFont customFont;
     public static DiscordRPC discordRPC;
     public static FPSReducer fpsReducer;
@@ -223,11 +223,11 @@ public final class ModuleList {
 
 
         //CLIENT
-        bthackCape = register(new BThackCape());
         bthackMainMenu = register(new BThackMainMenu());
         chatNotifications = register(new ChatNotifications());
         clickGui = register(new ClickGui());
         clientSettings = register(new ClientSettings());
+        customCape = register(new CustomCape());
         customFont = register(new CustomFont());
         discordRPC = register(new DiscordRPC());
         fpsReducer = register(new FPSReducer());

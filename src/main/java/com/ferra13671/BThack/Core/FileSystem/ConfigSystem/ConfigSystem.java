@@ -2,6 +2,7 @@ package com.ferra13671.BThack.Core.FileSystem.ConfigSystem;
 
 import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.Core.Client.Client;
+import com.ferra13671.BThack.Core.Client.ClientInfo;
 import com.ferra13671.BThack.Core.FileSystem.FileSystem;
 import com.ferra13671.BThack.api.Category.Categories;
 import com.ferra13671.BThack.api.Gui.ClickGui.component.Frame;
@@ -10,6 +11,7 @@ import com.ferra13671.BThack.api.Gui.MainMenu.SelectWallpaper.SelectWallpaperScr
 import com.ferra13671.BThack.api.Gui.MainMenu.SelectWallpaper.Wallpaper;
 import com.ferra13671.BThack.api.HudComponent.HudComponent;
 import com.ferra13671.BThack.api.Managers.Managers;
+import com.ferra13671.BThack.api.Managers.managers.Cape.Cape;
 import com.ferra13671.BThack.api.Managers.managers.Macros.Macro;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.*;
 import com.ferra13671.BThack.api.Managers.managers.Waypoint.Waypoint;
@@ -20,6 +22,7 @@ import com.ferra13671.BThack.api.Social.Clans.Clan;
 import com.ferra13671.BThack.api.Social.Clans.ClanManager;
 import com.ferra13671.BThack.api.Social.Clans.ClanSettingsBuilder;
 import com.ferra13671.BThack.api.Utils.DataList.DataLists;
+import com.ferra13671.BThack.impl.Commands.CustomCapeCommand;
 import com.ferra13671.BThack.impl.Modules.MISC.AutoAuth;
 import com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.ActionBotConfig;
 import com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.ActionBotTask;
@@ -31,6 +34,8 @@ import net.minecraft.util.math.Vec3d;
 import org.apache.commons.io.FilenameUtils;
 
 import java.io.*;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
@@ -592,6 +597,10 @@ public final class ConfigSystem {
             add(jsonObject, "prefix", Client.clientInfo.getChatPrefix());
             add(jsonObject, "wallpaper", Client.clientInfo.getWallpaper());
             add(jsonObject, "font", Client.clientInfo.getFont());
+            JsonObject capeInfoObject = new JsonObject();
+            add(capeInfoObject, "dataPath", Client.clientInfo.getCapeInfo().dataPath());
+            add(capeInfoObject, "type", Client.clientInfo.getCapeInfo().dataType().name());
+            add(jsonObject, "capeInfo", capeInfoObject);
         });
     }
 
@@ -602,8 +611,40 @@ public final class ConfigSystem {
             if (!_null(jsonObject, "font")) Client.clientInfo.setFont(jsonObject.get("font").getAsString());
             if (!Client.clientInfo.getWallpaper().equals("default") && Files.exists(Paths.get("BThack/Wallpapers/" + Client.clientInfo.getWallpaper())))
                 BThackMainMenuScreen.mainMenuTexture = GLTexture.fromPath("BThack/Wallpapers/" + Client.clientInfo.getWallpaper(), PathMode.OUTSIDEJAR, GLTexture.ColorMode.RGBA);
-                }
+            if (!_null(jsonObject, "capeInfo")) {
+                JsonObject capeInfoObject = jsonObject.get("capeInfo").getAsJsonObject();
+                String dataPath = "";
+                ClientInfo.CapeDataType dataType = ClientInfo.CapeDataType.NONE;
+                if (!_null(capeInfoObject, "dataPath")) dataPath = capeInfoObject.get("dataPath").getAsString();
+                if (!_null(capeInfoObject, "type")) dataType = ClientInfo.CapeDataType.valueOf(capeInfoObject.get("type").getAsString());
+                Client.clientInfo.setCapeInfo(new ClientInfo.CapeInfo(dataPath, dataType));
+            } else {
+                Client.clientInfo.setCapeInfo(new ClientInfo.CapeInfo("", ClientInfo.CapeDataType.NONE));
+            }
+            }
         ,() -> {});
+        loadCape();
+    }
+
+    public static void loadCape() {
+        switch (Client.clientInfo.getCapeInfo().dataType()) {
+            case FILE -> {
+                try {
+                    InputStream stream = Files.newInputStream(Paths.get(Client.clientInfo.getCapeInfo().dataPath()));
+                    Managers.CAPE_MANAGER.setCape(Cape.fromInputStream(stream));
+                } catch (IOException e) {
+                    BThack.error(e.getMessage());
+                }
+            }
+            case URL -> {
+                try {
+                    InputStream stream = new URI(Client.clientInfo.getCapeInfo().dataPath()).toURL().openStream();
+                    Managers.CAPE_MANAGER.setCape(Cape.fromInputStream(stream));
+                } catch (IOException | URISyntaxException e) {
+                    BThack.error(e.getMessage());
+                }
+            }
+        }
     }
 
     private static final Set<String> imageFormats = new HashSet<>(Arrays.asList(

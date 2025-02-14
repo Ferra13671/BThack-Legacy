@@ -1,8 +1,7 @@
 package com.ferra13671.BThack.mixins;
 
-import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.api.Interfaces.Mc;
-import com.ferra13671.BThack.impl.Modules.CLIENT.BThackCape;
+import com.ferra13671.BThack.api.Managers.Managers;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.client.network.PlayerListEntry;
 import net.minecraft.client.util.SkinTextures;
@@ -20,9 +19,9 @@ public class MixinPlayerListEntry implements Mc {
 
     @Inject(method = "getSkinTextures", at = @At("TAIL"), cancellable = true)
     private void hookGetSkinTextures(CallbackInfoReturnable<SkinTextures> cir) {
-        if (ModuleList.bthackCape.isEnabled() && profile.getName().equals(mc.player.getGameProfile().getName())) {
+        if (Managers.CAPE_MANAGER.isEnabled() && profile.getName().equals(mc.player.getGameProfile().getName())) {
             SkinTextures t = cir.getReturnValue();
-            SkinTextures customCapeTexture = new SkinTextures(t.texture(), t.textureUrl(), BThackCape.BThack_Cape, BThackCape.BThack_Cape, t.model(), t.secure());
+            SkinTextures customCapeTexture = new SkinTextures(t.texture(), t.textureUrl(), Managers.CAPE_MANAGER.getCape().getTexture(), Managers.CAPE_MANAGER.getCape().getTexture(), t.model(), t.secure());
             cir.setReturnValue(customCapeTexture);
         }
     }

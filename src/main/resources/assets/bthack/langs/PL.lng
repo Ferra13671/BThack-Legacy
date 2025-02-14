@@ -1,9 +1,9 @@
 //CLIENT
-"lang.module.BThackCape": Zastępuje pelerynę i elytry gracza peleryną i elytrami z klienta BThack.
 "lang.module.BThackMainMenu": Zastępuje klasyczne menu główne Minecrafta menu głównym z BThack.
 "lang.module.ChatNotifications": Umożliwia klientowi wysyłanie różnych wiadomości do pokoju rozmów.
 "lang.module.ClickGui": Gui z wyborem i konfiguracją modułów.
 "lang.module.ClientSettings": Różne personalizacje klienta.
+"lang.module.CustomCape": Umożliwia wyświetlenie niestandardowego płaszcza.
 "lang.module.CustomFont": Umożliwia BThack renderowanie niestandardowej czcionki.
 "lang.module.DiscordRPC": Otrzymujesz aktywność BThack.
 "lang.module.FPSReducer": Ogranicza fps, jeśli gra jest nieostra.
@@ -251,6 +251,7 @@
 "lang.argument.File.exception": Plik '%s' nie został znaleziony lub nie spełnia warunków.
 "lang.argument.Waypoint.exception": Waypoint '%s' nie istnieje.
 "lang.argument.KeyBind.exception": Klawisz '%s' nie istnieje.
+"lang.argument.Macro.exception": Makro '%s' nie istnieje.
 
 
 //Commands
@@ -289,7 +290,7 @@
 "lang.command.CustomFont.description": Umożliwia wybranie niestandardowej czcionki z folderu lub ustawienie czcionki domyślnej.
 "lang.command.Waypoint.description": Dodaje, usuwa, modyfikuje waypoint lub wyświetla listę waypointów.
 "lang.command.Macro.description": Dodaje, usuwa, modyfikuje makro lub wyświetla listę makrosów.
-"lang.argument.Macro.exception": Makro '%s' nie istnieje.
+"lang.command.CustomCape.description": Ustawia niestandardową peleryna domyślnie lub za pomocą pliku lub linku.
 
 
 "lang.command.ClanList.message2":   Uczestnicy:

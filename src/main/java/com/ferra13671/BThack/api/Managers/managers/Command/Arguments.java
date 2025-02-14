@@ -29,6 +29,7 @@ import net.minecraft.network.packet.Packet;
 import net.minecraft.registry.Registries;
 import net.minecraft.text.Text;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -420,6 +421,12 @@ public class Arguments {
         @Override
         public Collection<String> getExamples() {
             return examples;
+        }
+    };
+    public static Supplier<ArgumentType<String>> CAPE_FILE = () -> new FileArgument("BThack/CustomCapes/") {
+        @Override
+        public boolean checkFileName(String name) {
+            return name.endsWith(".png");
         }
     };
 

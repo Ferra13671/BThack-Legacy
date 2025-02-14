@@ -41,6 +41,7 @@
     "accessor.IDrawContext",
     "accessor.IGameRenderer",
     "accessor.IMinecraftClient",
+    "accessor.INativeImage",
     "accessor.IProjection",
     "accessor.IScreen",
     "entity.MixinClientPlayerEntity",

@@ -15,6 +15,7 @@ public final class ClientInfo implements Mc {
     private String font = "default";
     private String currentConfigName = "";
     private ColorTheme colorTheme;
+    private CapeInfo capeInfo;
 
     ClientInfo() {}
 
@@ -55,6 +56,10 @@ public final class ClientInfo implements Mc {
         return font;
     }
 
+    public CapeInfo getCapeInfo() {
+        return capeInfo;
+    }
+
     //set
     public void setChatPrefix(String chatPrefix) {
         this.chatPrefix = chatPrefix;
@@ -74,5 +79,16 @@ public final class ClientInfo implements Mc {
 
     public void setFont(String font) {
         this.font = font;
+    }
+
+    public void setCapeInfo(CapeInfo capeInfo) {
+        this.capeInfo = capeInfo;
+    }
+
+    public record CapeInfo(String dataPath, CapeDataType dataType) {}
+    public enum CapeDataType {
+        NONE,
+        FILE,
+        URL
     }
 }

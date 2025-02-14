@@ -1,10 +1,10 @@
 //MODULE
 //CLIENT
-"lang.module.BThackCape": Replaces the player's cape and elites with the cape and elites from the BThack client.
 "lang.module.BThackMainMenu": Replaces the classic main menu of minecraft with the main menu from BThack.
 "lang.module.ChatNotifications": Allows the client to send various messages to the chat.
 "lang.module.ClickGui": Gui with selection and configuration of modules.
 "lang.module.ClientSettings": Various client settings.
+"lang.module.CustomCape": Allows you to see a custom cape.
 "lang.module.CustomFont": Allows BThack to render a custom font.
 "lang.module.DiscordRPC": You get BThack activity.
 "lang.module.FPSReducer": Limits fps if the game is unfocused.
@@ -292,6 +292,7 @@
 "lang.command.CustomFont.description": Allows you to select a custom font from a folder or set the default font.
 "lang.command.Waypoint.description": Adds, deletes, modifies a waypoint or shows a list of waypoints.
 "lang.command.Macro.description": Adds, deletes, modifies a macro or shows a list of macros.
+"lang.command.CustomCape.description": Sets a custom cape by default or by using a file or link.
 
 
 "lang.command.ClanList.message2":   Members:

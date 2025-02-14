@@ -31,6 +31,7 @@ public final class FileSystem {
         registerFolder("Wallpapers", "");
         registerFolder("Configs", "");
         registerFolder("Fonts", "");
+        registerFolder("CustomCapes", "");
         registerFile("AutoAuthPasswords", "", FileType.JSON);
         registerFile("VersionInfo", "", FileType.JSON);
         registerFile("Friends", "Social/Friends", FileType.TXT);

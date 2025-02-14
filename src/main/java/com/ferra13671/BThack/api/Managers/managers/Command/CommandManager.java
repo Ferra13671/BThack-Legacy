@@ -67,6 +67,7 @@ public class CommandManager implements Initializable {
         register(new CustomFontCommand());
         register(new WaypointCommand());
         register(new MacroCommand());
+        register(new CustomCapeCommand());
 
         register(new HClipCommand());
         register(new VClipCommand());
