@@ -9,6 +9,7 @@ import com.ferra13671.BThack.api.Events.Block.AttackBlockEvent;
 import com.ferra13671.BThack.api.Events.Block.UseBlockEvent;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Events.Render.RenderWorldLastEvent;
+import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Destroy.DestroyManager;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ColorSetting;
@@ -24,7 +25,6 @@ import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
-import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 import net.minecraft.network.packet.c2s.play.UpdateSelectedSlotC2SPacket;
 import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.util.Hand;
@@ -46,7 +46,6 @@ public class PacketMine extends Module {
     public final BooleanSetting visibleBreaking = new BooleanSetting("Visible Breaking", this, false, () -> page.getValue().equals("General"));
     public final BooleanSetting packetRotate = new BooleanSetting("Packet Rotate", this, false, () -> page.getValue().equals("General"));
     public final BooleanSetting clientDestroy = new BooleanSetting("Client Destroy", this, false, () -> page.getValue().equals("General"));
-    public final BooleanSetting extraPackets = new BooleanSetting("Extra Packets", this, false, () -> page.getValue().equals("General"));
 
     public final BooleanSetting removeIfUse = new BooleanSetting("Remove If Use", this, true, () -> page.getValue().equals("General"));
     public final BooleanSetting stopPackets = new BooleanSetting("Stop Packets", this, true, () -> removeIfUse.getValue() && page.getValue().equals("General"));
@@ -93,7 +92,6 @@ public class PacketMine extends Module {
                 visibleBreaking,
                 packetRotate,
                 clientDestroy,
-                extraPackets,
 
                 removeIfUse,
                 stopPackets,
@@ -461,13 +459,10 @@ public class PacketMine extends Module {
 
         try {
             if (!breakingBlock.startDestroying) {
-                if (extraPackets.getValue()) {
-                    mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.Full(mc.player.getX(), mc.player.getY(), mc.player.getZ(), mc.player.yaw, mc.player.pitch, true));
-                }
 
                 if (instaRebreak.getValue() && breakedPos != null && breakedPos.equals(breakingBlock.blockPos)){
                     breakingBlock.currentDestroyProgress = 1;
-                    mc.player.networkHandler.sendPacket(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.STOP_DESTROY_BLOCK, breakingBlock.blockPos, AimBotUtils.getInvertedFacingEntity(mc.player), 0));
+                    stopDestroyBlock(breakingBlock.blockPos);
                 } else {
                     startDestroyBlock(breakingBlock.blockPos);
                     if (swingHand.getValue()) mc.player.swingHand(Hand.MAIN_HAND);
@@ -488,14 +483,10 @@ public class PacketMine extends Module {
                     return false;
                 }
 
-                if (extraPackets.getValue()) {
-                    mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.Full(mc.player.getX(), mc.player.getY(), mc.player.getZ(), mc.player.yaw, mc.player.pitch, true));
-                }
-
                 if (clientDestroy.getValue())
                     mc.interactionManager.breakBlock(breakingBlock.blockPos);
 
-                mc.player.networkHandler.sendPacket(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.ABORT_DESTROY_BLOCK, breakingBlock.blockPos, Direction.DOWN));
+                Managers.NETWORK_MANAGER.sendSequencePacket(id -> new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.ABORT_DESTROY_BLOCK, breakingBlock.blockPos, Direction.DOWN, id));
                 stopDestroyBlock(breakingBlock.blockPos);
 
                 packetRemoveItem();
@@ -529,11 +520,11 @@ public class PacketMine extends Module {
     }
 
     private void startDestroyBlock(BlockPos blockPos) {
-        mc.player.networkHandler.sendPacket(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.START_DESTROY_BLOCK, blockPos, AimBotUtils.getInvertedFacingEntity(mc.player), 0));
+        Managers.NETWORK_MANAGER.sendSequencePacket(id -> new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.START_DESTROY_BLOCK, blockPos, AimBotUtils.getInvertedFacingEntity(mc.player), id));
     }
 
     private void stopDestroyBlock(BlockPos blockPos) {
-        mc.player.networkHandler.sendPacket(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.STOP_DESTROY_BLOCK, blockPos, AimBotUtils.getInvertedFacingEntity(mc.player), 0));
+        Managers.NETWORK_MANAGER.sendSequencePacket(id -> new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.STOP_DESTROY_BLOCK, blockPos, AimBotUtils.getInvertedFacingEntity(mc.player), id));
     }
 
     private final List<Vec3i> autoCityVectors = Arrays.asList(
