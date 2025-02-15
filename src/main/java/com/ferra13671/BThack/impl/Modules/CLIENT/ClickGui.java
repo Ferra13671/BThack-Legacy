@@ -43,6 +43,9 @@ public class ClickGui extends OneActionModule {
     public final BooleanSetting blur = new BooleanSetting("Blur", this, true);
     public final NumberSetting blurStrength = new NumberSetting("Blur Strength", this, 4, 1.1, 20, false, blur::getValue);
 
+    public final BooleanSetting snow = new BooleanSetting("Snow", this, true, Client.clientInfo::isWinter);
+    public final NumberSetting snowSpeed = new NumberSetting("Snow Speed", this, 1, 0.3, 2, false, () -> Client.clientInfo.isWinter() && snow.getValue());
+
     public final BooleanSetting shouldPause = new BooleanSetting("Should Pause", this, true);
 
     public final NumberSetting guiScale = new NumberSetting("Gui Scale", this, 1, 0.5, 1.5, false, () -> false);
@@ -73,6 +76,9 @@ public class ClickGui extends OneActionModule {
 
                 blur,
                 blurStrength,
+
+                snow,
+                snowSpeed,
 
                 shouldPause,
 

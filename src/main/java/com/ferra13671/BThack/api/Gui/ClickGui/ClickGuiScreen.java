@@ -1,9 +1,11 @@
 package com.ferra13671.BThack.api.Gui.ClickGui;
 
+import com.ferra13671.BThack.Core.Client.Client;
 import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.Core.FileSystem.ConfigSystem.ConfigSystem;
 import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Font.FontUtils;
+import com.ferra13671.BThack.Core.Render.Utils.BThackRenderUtils;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Animation.Animation;
 import com.ferra13671.BThack.api.Animation.Easing;
@@ -16,6 +18,8 @@ import com.ferra13671.BThack.api.Gui.ClickGui.component.components.setting.setti
 import com.ferra13671.BThack.api.Gui.Config.LoadConfigScreen;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Module.Module;
+import com.ferra13671.BThack.api.Shader.ShaderTicker;
+import com.ferra13671.BThack.api.Shader.Shaders;
 import com.ferra13671.BThack.api.Utils.Data;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.Utils.System.BThackScreen;
@@ -41,6 +45,7 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
     private final Animation descriptionAnimation = new Animation(Easing.LINEAR, 500);
     private final Data<Slider> writingSlider = new Data<>();
     private final Ticker ticker = new Ticker();
+    private final ShaderTicker snowTicker = new ShaderTicker();
 
     public ClickGuiScreen() {
         super(Text.of("ClickGui"));
@@ -65,6 +70,7 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
     public void onDisplayed() {
         ModuleList.clickGui.updateColorTheme();
         for (Frame frame : frames) frame.resetFrameAnimation();
+        snowTicker.reset();
     }
 
     @Override
@@ -113,6 +119,13 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
 
         if (ModuleList.clickGui.blur.getValue()) {
             ClickGui.renderBlur(partialTicks);
+        }
+
+        if (Client.clientInfo.isWinter() && ModuleList.clickGui.snow.getValue()) {
+            BThackRenderUtils.applyBlend();
+            snowTicker.update((float) ModuleList.clickGui.snowSpeed.getValue());
+            Shaders.INSTANCE.SNOW.setParameters(mouseX, mouseY, mc.getWindow().getWidth(), mc.getWindow().getHeight(), snowTicker.getPassedTime() / 1000f);
+            BThackRender.drawShader(Shaders.INSTANCE.SNOW, 0, 0, mc.getWindow().getScaledWidth(), mc.getWindow().getScaledHeight());
         }
 
         if (ticker.passed(50)) {

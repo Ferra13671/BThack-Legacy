@@ -17,6 +17,7 @@ public final class ClientInfo implements Mc {
     private String currentConfigName = "";
     private ColorTheme colorTheme;
     private CapeInfo capeInfo = CapeManager.DEFAULT_CAPE_INFO;
+    private boolean isWinter = false;
 
     ClientInfo() {}
 
@@ -61,6 +62,10 @@ public final class ClientInfo implements Mc {
         return capeInfo;
     }
 
+    public boolean isWinter() {
+        return isWinter;
+    }
+
     //set
     public void setChatPrefix(String chatPrefix) {
         this.chatPrefix = chatPrefix;
@@ -84,6 +89,10 @@ public final class ClientInfo implements Mc {
 
     public void setCapeInfo(CapeInfo capeInfo) {
         this.capeInfo = capeInfo;
+    }
+
+    public void setWinter(boolean winter) {
+        isWinter = winter;
     }
 
     public record CapeInfo(String dataPath, CapeDataType dataType) {}

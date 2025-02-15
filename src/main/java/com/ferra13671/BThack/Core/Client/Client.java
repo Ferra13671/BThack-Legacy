@@ -14,6 +14,7 @@ import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.DataList.DataLists;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.*;
 
 public final class Client implements Mc {
@@ -40,6 +41,9 @@ public final class Client implements Mc {
         InitializeHelper.initLibraries();
 
         InitializeHelper.initSystems();
+
+        int month = LocalDate.now().getMonth().getValue();
+        clientInfo.setWinter(month == 12 || month == 1 || month == 2);
 
         inited = true;
     }
