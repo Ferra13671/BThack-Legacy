@@ -45,7 +45,7 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
     private final Animation descriptionAnimation = new Animation(Easing.LINEAR, 500);
     private final Data<Slider> writingSlider = new Data<>();
     private final Ticker ticker = new Ticker();
-    private final ShaderTicker snowTicker = new ShaderTicker();
+    public final ShaderTicker snowTicker = new ShaderTicker();
 
     public ClickGuiScreen() {
         super(Text.of("ClickGui"));

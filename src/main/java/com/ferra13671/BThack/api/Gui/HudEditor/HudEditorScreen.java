@@ -5,6 +5,7 @@ import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.Core.FileSystem.ConfigSystem.ConfigSystem;
 import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Font.FontUtils;
+import com.ferra13671.BThack.Core.Render.Utils.BThackRenderUtils;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Category.Categories;
 import com.ferra13671.BThack.api.Gui.ClickGui.ClickGuiScreen;
@@ -15,9 +16,11 @@ import com.ferra13671.BThack.api.Gui.ClickGui.component.components.setting.setti
 import com.ferra13671.BThack.api.Gui.HudEditor.Utils.HudComponentButton;
 import com.ferra13671.BThack.api.HudComponent.HudComponent;
 import com.ferra13671.BThack.api.Module.Module;
+import com.ferra13671.BThack.api.Shader.Shaders;
 import com.ferra13671.BThack.api.Utils.Data;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.Utils.System.BThackScreen;
+import com.ferra13671.BThack.api.Utils.System.BThackScreens;
 import com.ferra13671.BThack.api.Utils.Ticker;
 import com.ferra13671.BThack.impl.Modules.CLIENT.ClickGui;
 import com.google.common.collect.Sets;
@@ -48,6 +51,7 @@ public class HudEditorScreen extends BThackScreen {
     public void onDisplayed() {
         ModuleList.clickGui.updateColorTheme();
         frame.resetFrameAnimation();
+        BThackScreens.CLICK_GUI.snowTicker.reset();
     }
 
     @Override
@@ -60,6 +64,13 @@ public class HudEditorScreen extends BThackScreen {
     public void render(DrawContext guiGraphics, int mouseX, int mouseY, float partialTicks) {
         if (ModuleList.clickGui.blur.getValue()) {
             ClickGui.renderBlur(partialTicks);
+        }
+
+        if (Client.clientInfo.isWinter() && ModuleList.clickGui.snow.getValue()) {
+            BThackRenderUtils.applyBlend();
+            BThackScreens.CLICK_GUI.snowTicker.update((float) ModuleList.clickGui.snowSpeed.getValue());
+            Shaders.INSTANCE.SNOW.setParameters(mouseX, mouseY, mc.getWindow().getWidth(), mc.getWindow().getHeight(), BThackScreens.CLICK_GUI.snowTicker.getPassedTime() / 1000f);
+            BThackRender.drawShader(Shaders.INSTANCE.SNOW, 0, 0, mc.getWindow().getScaledWidth(), mc.getWindow().getScaledHeight());
         }
 
         BThackRender.draw4ColorRect( 0, 0, mc.getWindow().getScaledWidth(), mc.getWindow().getScaledHeight(), BACKGROUND_TABLE_COLOR, BACKGROUND_TABLE_COLOR, ColorUtils.fastRGBA(161,0, 255, 128), ColorUtils.fastRGBA(255, 0, 0, 128));
