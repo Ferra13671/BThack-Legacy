@@ -292,6 +292,7 @@
 "lang.command.Waypoint.description": Добавляет, удаляет, изменяет вейпоинт или показывает список вейпоинтов.
 "lang.command.Macro.description": Добавляет, удаляет, изменяет макрос или показывает список макросов.
 "lang.command.CustomCape.description": Устанавливает пользовательский плащ по умолчанию или с помощью файла или ссылки.
+"lang.command.OpenFolder.description": Открывает папку конфигурации BThack.
 
 
 "lang.command.ClanList.message2":   Участники:

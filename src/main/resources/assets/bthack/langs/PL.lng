@@ -291,6 +291,7 @@
 "lang.command.Waypoint.description": Dodaje, usuwa, modyfikuje waypoint lub wyświetla listę waypointów.
 "lang.command.Macro.description": Dodaje, usuwa, modyfikuje makro lub wyświetla listę makrosów.
 "lang.command.CustomCape.description": Ustawia niestandardową peleryna domyślnie lub za pomocą pliku lub linku.
+"lang.command.OpenFolder.description": Otwiera folder konfiguracji BThack.
 
 
 "lang.command.ClanList.message2":   Uczestnicy:
