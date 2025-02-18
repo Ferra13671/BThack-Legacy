@@ -7,7 +7,6 @@ import com.ferra13671.BThack.api.Events.PacketEvent;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.Setting;
-import com.ferra13671.BThack.api.Managers.managers.Thread.ThreadManager;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.InventoryUtils;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
@@ -53,11 +52,8 @@ public class TridentDupe extends Module {
     public void onChangeSetting(Setting setting) {
         if (isEnabled()) {
             if (autoInventory.getValue()) {
-                ThreadManager.startNewThread(thread -> {
-                    mc.options.inventoryKey.setPressed(true);
-                    thread.sleepThread(100);
-                    mc.options.inventoryKey.setPressed(false);
-                });
+                if (mc.currentScreen != null) pc.closeScreen();
+                mc.setScreen(new InventoryScreen(mc.player));
             }
         }
     }
@@ -87,15 +83,12 @@ public class TridentDupe extends Module {
             return;
         }
 
-        super.onEnable();
-
         if (autoInventory.getValue()) {
-            ThreadManager.startNewThread(thread -> {
-                mc.options.inventoryKey.setPressed(true);
-                thread.sleepThread(100);
-                mc.options.inventoryKey.setPressed(false);
-            });
+            if (mc.currentScreen != null) mc.setScreen(null);
+            mc.setScreen(new InventoryScreen(mc.player));
         }
+
+        super.onEnable();
 
         scheduledTasks.clear();
         dupe();
