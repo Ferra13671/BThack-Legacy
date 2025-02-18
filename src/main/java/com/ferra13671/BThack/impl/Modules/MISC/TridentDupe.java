@@ -6,19 +6,17 @@ import com.ferra13671.BThack.api.Events.GuiOpenEvent;
 import com.ferra13671.BThack.api.Events.PacketEvent;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.Setting;
+import com.ferra13671.BThack.api.Managers.managers.Thread.ThreadManager;
 import com.ferra13671.BThack.api.Module.Module;
+import com.ferra13671.BThack.api.Utils.InventoryUtils;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
-import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
-import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.client.gui.screen.DisconnectedScreen;
-import net.minecraft.item.ItemStack;
+import net.minecraft.client.gui.screen.ingame.InventoryScreen;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.*;
 import net.minecraft.screen.slot.SlotActionType;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Pair;
 import net.minecraft.util.math.BlockPos;
@@ -31,6 +29,9 @@ public class TridentDupe extends Module {
     public final NumberSetting delay = new NumberSetting("Delay", this, 9, 1, 20, true);
     public final BooleanSetting dropTridents = new BooleanSetting("Drop Tridents", this, false);
 
+    public final BooleanSetting firstSlotTrident = new BooleanSetting("First Slot Trident", this, true);
+    public final BooleanSetting autoInventory = new BooleanSetting("Auto Inventory", this, true);
+
     public TridentDupe() {
         super("TridentDupe",
                 "lang.module.TridentDupe",
@@ -41,8 +42,24 @@ public class TridentDupe extends Module {
 
         initSettings(
                 delay,
-                dropTridents
+                dropTridents,
+
+                firstSlotTrident,
+                autoInventory
         );
+    }
+
+    @Override
+    public void onChangeSetting(Setting setting) {
+        if (isEnabled()) {
+            if (autoInventory.getValue()) {
+                ThreadManager.startNewThread(thread -> {
+                    mc.options.inventoryKey.setPressed(true);
+                    thread.sleepThread(100);
+                    mc.options.inventoryKey.setPressed(false);
+                });
+            }
+        }
     }
 
     @EventSubscriber(priority = Integer.MAX_VALUE)
@@ -60,8 +77,6 @@ public class TridentDupe extends Module {
         if (!cancel)
             return;
 
-        MutableText packetStr = Text.literal(event.getPacket().toString()).formatted(Formatting.WHITE);
-
         event.cancel();
     }
 
@@ -74,24 +89,13 @@ public class TridentDupe extends Module {
 
         super.onEnable();
 
-        for (int i = 0; i < 9; i++)
-        {
-            if (mc.player.getInventory().getStack((i)).getItem() == Items.TRIDENT)
-            {
-                Integer currentHotbarDamage = mc.player.getInventory().getStack((i)).getDamage();
-
-            }
+        if (autoInventory.getValue()) {
+            ThreadManager.startNewThread(thread -> {
+                mc.options.inventoryKey.setPressed(true);
+                thread.sleepThread(100);
+                mc.options.inventoryKey.setPressed(false);
+            });
         }
-
-        PlayerInteractItemC2SPacket pckt = new PlayerInteractItemC2SPacket(Hand.MAIN_HAND, 10, -57.0f, 66.29f);
-
-        Int2ObjectMap<ItemStack> modifiedStacks = new Int2ObjectOpenHashMap<>();
-
-        modifiedStacks.put(3,  mc.player.getInventory().getStack(mc.player.getInventory().selectedSlot));
-        modifiedStacks.put(36,  mc.player.getInventory().getStack(mc.player.getInventory().selectedSlot));
-
-        ClickSlotC2SPacket packet = new ClickSlotC2SPacket(0, 15, 0, 0, SlotActionType.SWAP,
-                new ItemStack(Items.AIR), modifiedStacks);
 
         scheduledTasks.clear();
         dupe();
@@ -136,6 +140,14 @@ public class TridentDupe extends Module {
 
     @EventSubscriber
     public void onTick(ClientTickEvent e) {
+        if (firstSlotTrident.getValue()) {
+            if (mc.player.getInventory().selectedSlot != 0) InventoryUtils.swapItem(mc.player.getInventory().selectedSlot);
+            if (mc.player.getInventory().getStack(0).getItem() == Items.TRIDENT) return;
+            int trident = InventoryUtils.findItem(Items.TRIDENT);
+            if (trident == -1) return;
+            InventoryUtils.swapItemOnInventory(0, trident);
+        }
+
         long currentTime = System.currentTimeMillis();
         {
             Iterator<Pair<Long, Runnable>> iterator = scheduledTasks.iterator();
@@ -168,6 +180,9 @@ public class TridentDupe extends Module {
 
     @EventSubscriber
     public void onGui(GuiOpenEvent e) {
+        if (autoInventory.getValue()) {
+            if (e.getScreen() == null || !(e.getScreen() instanceof InventoryScreen)) setToggled(false);
+        }
         if (e.getScreen() instanceof DisconnectedScreen) {
             setToggled(false);
         }
