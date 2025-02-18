@@ -69,6 +69,7 @@
 "lang.module.Timer": Speeds up/slows down game ticks.
 "lang.module.TopperRadar": Warns you if there is a topper nearby.
 "lang.module.TrashThrower": Throws selected trash out of inventory.
+"lang.module.TridentDupe": Automatically dupes the trident. (Patched on latest version of paper as of 16 Feb, 2025; Patched on 2b2t.org 18 Feb, 2025)
 "lang.module.VisualRange": Notifies you when one enters or leaves your visual range.
 
 //MOVEMENT

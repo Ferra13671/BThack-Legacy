@@ -68,6 +68,7 @@
 "lang.module.Timer": Przyspiesza/spowalnia tiki gry.
 "lang.module.TopperRadar": Ostrzega, jeśli w pobliżu znajduje się topper.
 "lang.module.TrashThrower": Wyrzuca wybrane śmieci z ekwipunku.
+"lang.module.TridentDupe": Automatycznie duplikuje trójząb. (Załatane w najnowszej wersji paper od 16 lutego 2025 r.; Załatane na 2b2t.org 18 lutego 2025 r.)
 "lang.module.VisualRange": Powiadamia o wejściu lub zejściu osoby z linii wzroku.
 
 //MOVEMENT

@@ -95,6 +95,7 @@ public final class ModuleList {
     public static Timer timer;
     public static TopperRadar topperRadar;
     public static TrashThrower trashThrower;
+    public static TridentDupe tridentDupe;
     public static VisualRange visualRange;
 
     //MOVEMENT
@@ -292,6 +293,7 @@ public final class ModuleList {
         timer = register(new Timer());
         topperRadar = register(new TopperRadar());
         trashThrower = register(new TrashThrower());
+        tridentDupe = register(new TridentDupe());
         visualRange = register(new VisualRange());
 
         //MOVEMENT
