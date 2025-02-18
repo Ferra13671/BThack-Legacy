@@ -8,12 +8,10 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetti
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.Setting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.InventoryUtils;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.client.gui.screen.DisconnectedScreen;
 import net.minecraft.client.gui.screen.ingame.InventoryScreen;
-import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.*;
 import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.util.Hand;
@@ -28,7 +26,6 @@ public class TridentDupe extends Module {
     public final NumberSetting delay = new NumberSetting("Delay", this, 9, 1, 20, true);
     public final BooleanSetting dropTridents = new BooleanSetting("Drop Tridents", this, false);
 
-    public final BooleanSetting firstSlotTrident = new BooleanSetting("First Slot Trident", this, true);
     public final BooleanSetting autoInventory = new BooleanSetting("Auto Inventory", this, true);
 
     public TridentDupe() {
@@ -43,7 +40,6 @@ public class TridentDupe extends Module {
                 delay,
                 dropTridents,
 
-                firstSlotTrident,
                 autoInventory
         );
     }
@@ -133,13 +129,6 @@ public class TridentDupe extends Module {
 
     @EventSubscriber
     public void onTick(ClientTickEvent e) {
-        if (firstSlotTrident.getValue()) {
-            if (mc.player.getInventory().selectedSlot != 0) InventoryUtils.swapItem(mc.player.getInventory().selectedSlot);
-            if (mc.player.getInventory().getStack(0).getItem() == Items.TRIDENT) return;
-            int trident = InventoryUtils.findItem(Items.TRIDENT);
-            if (trident == -1) return;
-            InventoryUtils.swapItemOnInventory(0, trident);
-        }
 
         long currentTime = System.currentTimeMillis();
         {
