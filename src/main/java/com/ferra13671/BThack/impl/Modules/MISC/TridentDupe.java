@@ -28,7 +28,7 @@ import java.util.*;
 
 public class TridentDupe extends Module {
 
-    public final NumberSetting delay = new NumberSetting("Delay", this, 5, 1, 20, true);
+    public final NumberSetting delay = new NumberSetting("Delay", this, 9, 1, 20, true);
     public final BooleanSetting dropTridents = new BooleanSetting("Drop Tridents", this, false);
 
     public TridentDupe() {
