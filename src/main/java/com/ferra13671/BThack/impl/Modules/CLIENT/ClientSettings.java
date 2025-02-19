@@ -16,6 +16,7 @@ public class ClientSettings extends Module {
 
     public final BooleanSetting startSound = new BooleanSetting("Start Sound", this, true);
     public final ModeSetting language = new ModeSetting("Language", this, new ArrayList<>(LanguageSystem.getLoadedLangs()));
+    public final ModeSetting chatName = new ModeSetting("Chat Name", this, Arrays.asList("Simple", "Full"));
     public final ModeSetting friendColor = new ModeSetting("Friend Color", this, Arrays.asList(
             "GREEN",
             "YELLOW",
@@ -64,6 +65,7 @@ public class ClientSettings extends Module {
         initSettings(
                 startSound,
                 language,
+                chatName,
                 friendColor,
                 enemyColor,
                 ownColor
