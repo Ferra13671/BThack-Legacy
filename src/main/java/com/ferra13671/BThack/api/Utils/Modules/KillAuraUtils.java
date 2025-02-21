@@ -17,7 +17,6 @@ import net.minecraft.entity.passive.GolemEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket;
-import net.minecraft.network.packet.c2s.play.PlayerInputC2SPacket;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.Vec3d;
 
@@ -66,21 +65,13 @@ public final class KillAuraUtils implements Mc {
                 }
             }
             case VANILLA -> AimBotUtils.rotate(rotations[0], rotations[1]);
-            case GRIM -> {
-                //mc.player.networkHandler.sendPacket(new PlayerInputC2SPacket(mc.player.input.movementSideways, mc.player.input.movementForward, mc.player.input.jumping, mc.player.input.sneaking));
-                //GrimUtils.sendPostActionGrimPackets();
-                //mc.player.networkHandler.sendPacket(new PlayerInputC2SPacket(mc.player.input.movementSideways, mc.player.input.movementForward, mc.player.input.jumping, mc.player.input.sneaking));
-                GrimUtils.sendPreActionGrimPackets(rotations[0], rotations[1]);
-                //mc.player.networkHandler.sendPacket(new PlayerInputC2SPacket(mc.player.input.movementSideways, mc.player.input.movementForward, mc.player.input.jumping, mc.player.input.sneaking));
-            }
+            case GRIM -> GrimUtils.sendPreActionGrimPackets(rotations[0], rotations[1]);
         }
     }
 
     public static void postAttackRotate(RotateMode rotateMode) {
-        if (rotateMode == RotateMode.GRIM) {
-            mc.player.networkHandler.sendPacket(new PlayerInputC2SPacket(mc.player.input.movementSideways, mc.player.input.movementForward, mc.player.input.jumping, mc.player.input.sneaking));
+        if (rotateMode == RotateMode.GRIM)
             GrimUtils.sendPostActionGrimPackets();
-        }
     }
 
     public static PlayerEntity filterPlayers(double range, boolean friends, boolean teammates, boolean clanManager, String clanMode, String targetClan, Predicate<Entity> extraFilter) {
