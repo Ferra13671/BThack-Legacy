@@ -8,7 +8,7 @@ import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 public class BThackMainMenu extends Module {
 
     public final BooleanSetting screenChangeAnimation = new BooleanSetting("Screen Change Animation", this, true);
-    public final NumberSetting animationSpeed = new NumberSetting("Anim. Speed", this, 1, 0.5, 3, false);
+    public final NumberSetting animationSpeed = new NumberSetting("Anim. Speed", this, 1, 0.5, 3, false, screenChangeAnimation::getValue);
 
     public BThackMainMenu() {
         super("BThackMainMenu",
