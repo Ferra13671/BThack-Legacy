@@ -2,9 +2,9 @@ package com.ferra13671.BThack.api.Animation;
 
 import com.ferra13671.BThack.api.Interfaces.Mc;
 
-public class Animation implements Mc {
+public class Animation implements Mc, Cloneable {
     private final Easing easing;
-    private final int millis;
+    private int millis;
 
     private long startMillis;
 
@@ -33,11 +33,20 @@ public class Animation implements Mc {
         return millis;
     }
 
+    public void setMillis(int millis) {
+        this.millis = millis;
+    }
+
     public long getStartMillis() {
         return startMillis;
     }
 
     public long getPassedMillis() {
         return System.currentTimeMillis() - startMillis;
+    }
+
+    @Override
+    public Animation clone() {
+        return new Animation(easing, millis);
     }
 }

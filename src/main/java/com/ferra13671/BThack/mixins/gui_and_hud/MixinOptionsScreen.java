@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.mixins.gui_and_hud;
 
-import com.ferra13671.BThack.api.Gui.TransitionScreen;
 import com.ferra13671.BThack.api.Gui.MainMenu.BThackMainMenuScreen;
+import com.ferra13671.BThack.api.Utils.System.BThackScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.option.OptionsScreen;
 import net.minecraft.text.Text;
@@ -24,7 +24,7 @@ public class MixinOptionsScreen extends Screen {
     public void modifyClose(CallbackInfo ci) {
         if (parent instanceof BThackMainMenuScreen) {
             ci.cancel();
-            client.setScreen(new TransitionScreen(() -> this, () -> parent));
+            BThackScreen.changeScreen(this, parent);
         }
     }
 }

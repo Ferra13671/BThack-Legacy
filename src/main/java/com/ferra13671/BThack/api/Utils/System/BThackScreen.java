@@ -135,10 +135,24 @@ public class BThackScreen extends Screen implements Mc {
     }
 
     public void changeScreen(Screen screen, Animation animation) {
-        mc.setScreen(new TransitionScreen(() -> this, () -> screen, animation));
+        changeScreen(this, screen, animation);
+    }
+
+    public static void changeScreen(Screen currentScreen, Screen nextScreen, Animation animation) {
+        if (ModuleList.bthackMainMenu.screenChangeAnimation.getValue())
+            mc.setScreen(new TransitionScreen(() -> currentScreen, () -> nextScreen, animation));
+        else
+            mc.setScreen(nextScreen);
     }
 
     public void changeScreen(Screen screen) {
-        changeScreen(screen, TransitionScreen.STANDARD_FLIP_ANIMATION);
+        changeScreen(this, screen);
+    }
+
+    public static void changeScreen(Screen currentScreen, Screen nextScreen) {
+        if (ModuleList.bthackMainMenu.screenChangeAnimation.getValue())
+            mc.setScreen(new TransitionScreen(() -> currentScreen, () -> nextScreen, TransitionScreen.STANDARD_FLIP_ANIMATION));
+        else
+            mc.setScreen(nextScreen);
     }
 }

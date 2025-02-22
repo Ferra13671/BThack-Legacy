@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.api.Gui;
 
+import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Animation.Animation;
@@ -25,12 +26,9 @@ public class TransitionScreen extends BThackScreen {
         super(Text.of("Transition"));
         currentScreen = oldScreen;
         this.newScreen = newScreen;
-        this.flipAnimation = flipAnimation;
+        this.flipAnimation = flipAnimation.clone();
+        this.flipAnimation.setMillis((int) (this.flipAnimation.getMillis() / ModuleList.bthackMainMenu.animationSpeed.getValue()));
         this.flipAnimation.reset();
-    }
-
-    public TransitionScreen(Supplier<Screen> oldScreen, Supplier<Screen> newScreen) {
-        this(oldScreen, newScreen, STANDARD_FLIP_ANIMATION);
     }
 
     public void changeNewScreen(Supplier<Screen> newScreen) {
