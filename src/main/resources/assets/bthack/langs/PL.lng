@@ -41,7 +41,8 @@
 //MISC
 "lang.module.ActiveSpawnerDetect": Określa, czy gracz znajdował się w przeszłości w pobliżu mob spoutera.
 "lang.module.AntiHunger": Zmniejsza utratę głodu podczas ruchu.
-"lang.module.AutoAuth": Automatyczne logowanie/rejestracja przy użyciu hasła w pliku AutoAuthPassword.txt.
+"lang.module.Auto2FA": Automatycznie wysyła kod 2fa, jeśli zażąda tego serwer.
+"lang.module.AutoAuth": Automatyczne logowanie/rejestracja.
 "lang.module.Breaker": Automatycznie wydobywa wybrane bloki.
 "lang.module.CleanMemory": Czyści pamięć RAM po włączeniu zasilania.
 "lang.module.CreeperRadar": Ostrzega, jeśli w pobliżu znajduje się creeper.
@@ -253,6 +254,7 @@
 "lang.argument.Waypoint.exception": Waypoint '%s' nie istnieje.
 "lang.argument.KeyBind.exception": Klawisz '%s' nie istnieje.
 "lang.argument.Macro.exception": Makro '%s' nie istnieje.
+"lang.argument.2FAPlayer.exception": Klucz 2fa dla pseudonimu '%s' nie istnieje.
 
 
 //Commands
@@ -293,6 +295,7 @@
 "lang.command.Macro.description": Dodaje, usuwa, modyfikuje makro lub wyświetla listę makrosów.
 "lang.command.CustomCape.description": Ustawia niestandardową peleryna domyślnie lub za pomocą pliku lub linku.
 "lang.command.OpenFolder.description": Otwiera folder konfiguracji BThack.
+"lang.command.Auto2FA.description": Dodaje/usuwa klucz 2fa dla określonego pseudonimu.
 
 
 "lang.command.ClanList.message2":   Uczestnicy:
@@ -343,6 +346,9 @@
 "lang.command.Macro.added": Макрос '%s' został pomyślnie dodany.
 "lang.command.Macro.removed": Макрос '%s' został pomyślnie usunięty.
 "lang.command.Macro.changedValue": [Macro: %s]%s wartość %s została zmieniona na: %s.
+"lang.command.Auto2FA.successfulSave": Klucz 2fa został pomyślnie zapisany dla pseudonimu: %s!
+"lang.command.Auto2FA.successfulRewrite": Klucz 2fa został pomyślnie nadpisany dla pseudonimu: %s!
+"lang.command.Auto2FA.successfulRemove": 2fa klucz został pomyślnie usunięty dla pseudonimu: %s!
 
 "lang.command.List.listCleared": Lista %s została wyczyszczona!
 

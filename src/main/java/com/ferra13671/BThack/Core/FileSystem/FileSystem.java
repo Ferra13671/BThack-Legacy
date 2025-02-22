@@ -33,6 +33,7 @@ public final class FileSystem {
         registerFolder("Fonts", "");
         registerFolder("CustomCapes", "");
         registerFile("AutoAuthPasswords", "", FileType.JSON);
+        registerFile("2FAKeys", "", FileType.JSON);
         registerFile("VersionInfo", "", FileType.JSON);
         registerFile("Friends", "Social/Friends", FileType.TXT);
         registerFile("Enemies", "Social/Enemies", FileType.TXT);

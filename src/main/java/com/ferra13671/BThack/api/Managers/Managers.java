@@ -10,6 +10,7 @@ import com.ferra13671.BThack.api.Managers.managers.Macros.MacrosManager;
 import com.ferra13671.BThack.api.Managers.managers.Memory.MemoryManager;
 import com.ferra13671.BThack.api.Managers.managers.Setting.SettingsManager;
 import com.ferra13671.BThack.api.Managers.managers.TravelChange.TravelChangeManager;
+import com.ferra13671.BThack.api.Managers.managers.TwoFAManager;
 import com.ferra13671.BThack.api.Managers.managers.Waypoint.WaypointManager;
 
 public class Managers {
@@ -31,4 +32,5 @@ public class Managers {
     public static final MacrosManager MACROS_MANAGER = new MacrosManager();
     public static final BuildManager BUILD_MANAGER = new BuildManager();
     public static final CapeManager CAPE_MANAGER = new CapeManager();
+    public static final TwoFAManager TWOFA_MANAGER = new TwoFAManager();
 }

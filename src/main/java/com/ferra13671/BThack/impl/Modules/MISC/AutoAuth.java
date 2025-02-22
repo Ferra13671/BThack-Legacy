@@ -9,8 +9,6 @@ import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.ChatUtils;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
-import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
-import net.minecraft.client.network.PlayerListEntry;
 import net.minecraft.network.packet.s2c.play.GameMessageS2CPacket;
 import net.minecraft.util.Formatting;
 
@@ -41,7 +39,7 @@ public class AutoAuth extends Module {
     @Override
     public void onEnable() {
         super.onEnable();
-        ChatUtils.sendMessage(Formatting.GRAY + "Use: " + Client.clientInfo.getChatPrefix() + "autoAuth [[add] [player_name] [password]] / [[remove] [player_name]]");
+        ChatUtils.sendMessage(Formatting.GRAY + "Use: " + Client.clientInfo.getChatPrefix() + "autoAuth");
     }
 
     @EventSubscriber
@@ -51,13 +49,13 @@ public class AutoAuth extends Module {
             String password = passwords.get(mc.getSession().getUsername());
             if (text.contains("/reg") || text.contains("/register")) {
                 if (antiFake.getValue())
-                    if (isFake(text)) return;
+                    if (ChatUtils.isNotServerMessage(text)) return;
                 sendCommandAction("/reg " + password);
                 return;
             }
             if (text.contains("/l") || text.contains("/login")) {
                 if (antiFake.getValue())
-                    if (isFake(text)) return;
+                    if (ChatUtils.isNotServerMessage(text)) return;
                 sendCommandAction("/l " + password);
             }
         }
@@ -72,27 +70,4 @@ public class AutoAuth extends Module {
         });
     }
 
-    /**
-     * Checks if this message is fake(Written by a player/personal message)
-     */
-    public boolean isFake(String message) {
-        if (message.contains(LanguageSystem.translate("lang.module.AutoAuth.ruWord", "RU")) || message.contains("whispers") || message.contains("whispering")) return true;
-        if (mc.player != null) {
-            if (mc.player.networkHandler.getPlayerList().size() > 1) {
-                for (PlayerListEntry info : mc.player.networkHandler.getPlayerList()) {
-                    String playerName = getPlayerName(info);
-                    if (playerName.length() > 3) {
-                        if (message.contains("<" + playerName + ">")) return true;
-                        if (!playerName.equals(mc.getSession().getUsername()))
-                            if (message.contains(playerName)) return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
-    public String getPlayerName(PlayerListEntry networkPlayerInfoIn) {
-        return networkPlayerInfoIn.getDisplayName() != null ? networkPlayerInfoIn.getDisplayName().getString() : networkPlayerInfoIn.getProfile().getName();
-    }
 }

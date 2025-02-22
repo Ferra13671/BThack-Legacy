@@ -178,6 +178,34 @@ public class Arguments {
             return examples;
         }
     };
+    public static final Supplier<ArgumentType<String>> TWOFA_PLAYERS = () -> new ArgumentType<>() {
+        private static final Collection<String> examples = List.of("bebra_tyan", "player123");
+
+        @Override
+        public String parse(StringReader reader) throws CommandSyntaxException {
+            String name = reader.readString();
+
+            String player = Managers.TWOFA_MANAGER.getNames().stream()
+                    .filter(name::equals)
+                    .findFirst()
+                    .orElse(null);
+            if (player == null)
+                throw new DynamicCommandExceptionType(
+                        n -> Text.literal(String.format(LanguageSystem.translate("lang.argument.2FAPlayer.exception"), name))
+                ).create(reader.readString());
+            return player;
+        }
+
+        @Override
+        public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
+            return CommandSource.suggestMatching(Managers.TWOFA_MANAGER.getNames(), builder);
+        }
+
+        @Override
+        public Collection<String> getExamples() {
+            return examples;
+        }
+    };
     public static Supplier<ArgumentType<String>> SOCIAL_ADD(SocialManager manager) {
         return () -> new SocialAddArgument(manager);
     }

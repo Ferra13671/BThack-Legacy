@@ -12,7 +12,6 @@ import com.ferra13671.BThack.api.Gui.MainMenu.SelectWallpaper.Wallpaper;
 import com.ferra13671.BThack.api.HudComponent.HudComponent;
 import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Cape.Cape;
-import com.ferra13671.BThack.api.Managers.managers.Cape.CapeManager;
 import com.ferra13671.BThack.api.Managers.managers.Macros.Macro;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.*;
 import com.ferra13671.BThack.api.Managers.managers.Waypoint.Waypoint;
@@ -62,6 +61,7 @@ public final class ConfigSystem {
             saveClientInfo();
             saveWaypoints();
             saveMacros();
+            save2FAKeys();
         } catch (IOException e) {
             BThack.error(e.getMessage());
         }
@@ -84,6 +84,7 @@ public final class ConfigSystem {
             loadClientInfo();
             loadWaypoints();
             loadMacros();
+            load2FAKeys();
         } catch (IOException e) {
             BThack.error(e.getMessage());
         }
@@ -525,6 +526,13 @@ public final class ConfigSystem {
         , () -> {});
     }
 
+    public static void save2FAKeys() throws IOException {
+        Managers.TWOFA_MANAGER.save();
+    }
+
+    public static void load2FAKeys() throws IOException {
+        Managers.TWOFA_MANAGER.load();
+    }
 
     public static void loadColourThemes() throws IOException {
         //Default themes
