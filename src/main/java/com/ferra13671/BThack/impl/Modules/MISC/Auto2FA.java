@@ -16,7 +16,7 @@ import net.minecraft.util.Formatting;
 public class Auto2FA extends Module {
 
     public final BooleanSetting autoToggle = new BooleanSetting("AutoToggle", this, false);
-    public final NumberSetting delay = new NumberSetting("Delay", this, 1000, 500, 5000, true);
+    public final NumberSetting delay = new NumberSetting("Delay", this, 5000, 5000, 10000, true);
     public final BooleanSetting antiFake = new BooleanSetting("AntiFake", this, true);
 
     public Auto2FA() {

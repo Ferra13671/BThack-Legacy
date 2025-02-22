@@ -45,7 +45,7 @@ public class TwoFAManager implements Initializable {
             if (!JsonUtils._null(jsonObject, "keys")) {
                 JsonArray keys = jsonObject.getAsJsonArray("keys").getAsJsonArray();
                 keys.asList().forEach(jsonElement -> {
-                    JsonObject keyObject = jsonObject.getAsJsonObject();
+                    JsonObject keyObject = jsonElement.getAsJsonObject();
                     if (!JsonUtils.equalsNull(keyObject, "nickname", "key"))
                         twoFAKeys.put(keyObject.get("nickname").getAsString(), keyObject.get("key").getAsString());
                 });
