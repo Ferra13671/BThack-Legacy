@@ -1,10 +1,10 @@
 package com.ferra13671.BThack.impl.Commands;
 
 import com.ferra13671.BThack.Core.FileSystem.ConfigSystem.ConfigSystem;
+import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Command.AbstractCommand;
 import com.ferra13671.BThack.api.Managers.managers.Command.Arguments;
 import com.ferra13671.BThack.api.Utils.ChatUtils;
-import com.ferra13671.BThack.impl.Modules.MISC.AutoAuth;
 import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.minecraft.command.CommandSource;
@@ -23,8 +23,8 @@ public class AutoAuthCommand extends AbstractCommand {
             String playerName = context.getArgument("player name", String.class);
             String password = context.getArgument("password", String.class);
 
-            String text = (AutoAuth.passwords.containsKey(playerName) ? LanguageSystem.translate("lang.command.AutoAuth.successfulRewrite") : LanguageSystem.translate("lang.command.AutoAuth.successfulSave"));
-            AutoAuth.passwords.put(playerName, password);
+            String text = (Managers.AUTO_AUTH_MANAGER.contains(playerName) ? LanguageSystem.translate("lang.command.AutoAuth.successfulRewrite") : LanguageSystem.translate("lang.command.AutoAuth.successfulSave"));
+            Managers.AUTO_AUTH_MANAGER.put(playerName, password);
             try {
                 ConfigSystem.saveAutoAuthPasswords();
             } catch (IOException ignored) {}
@@ -34,7 +34,7 @@ public class AutoAuthCommand extends AbstractCommand {
         builder.then(literal("remove").then(arg("player name", Arguments.AUTO_AUTH_PLAYERS).executes(context -> {
             String playerName = context.getArgument("player name", String.class);
 
-            AutoAuth.passwords.remove(playerName);
+            Managers.AUTO_AUTH_MANAGER.remove(playerName);
             try {
                 ConfigSystem.saveAutoAuthPasswords();
             } catch (IOException ignored) {}

@@ -2,6 +2,7 @@ package com.ferra13671.BThack.impl.Modules.MISC;
 
 import com.ferra13671.BThack.Core.Client.Client;
 import com.ferra13671.BThack.api.Events.PacketEvent;
+import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Managers.managers.Thread.ThreadManager;
@@ -12,10 +13,7 @@ import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.network.packet.s2c.play.GameMessageS2CPacket;
 import net.minecraft.util.Formatting;
 
-import java.util.HashMap;
-
 public class AutoAuth extends Module {
-    public static final HashMap<String, String> passwords = new HashMap<>();
 
     public final BooleanSetting autoToggle = new BooleanSetting("AutoToggle", this, false);
     public final NumberSetting delay = new NumberSetting("Delay", this, 1000, 500, 5000, true);
@@ -46,7 +44,8 @@ public class AutoAuth extends Module {
     public void onPacketReceive(PacketEvent.Receive e) {
         if (e.getPacket() instanceof GameMessageS2CPacket packet) {
             String text = packet.content().getString().toLowerCase();
-            String password = passwords.get(mc.getSession().getUsername());
+            String password = Managers.AUTO_AUTH_MANAGER.getPassword(mc.getSession().getUsername());
+            if (password == null) return;
             if (text.contains("/reg") || text.contains("/register")) {
                 if (antiFake.getValue())
                     if (ChatUtils.isNotServerMessage(text)) return;

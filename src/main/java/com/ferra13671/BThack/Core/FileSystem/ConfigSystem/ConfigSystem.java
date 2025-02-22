@@ -423,24 +423,11 @@ public final class ConfigSystem {
     }
 
     public static void saveAutoAuthPasswords() throws IOException {
-        ConfigUtils.saveInJson("AutoAuthPasswords", "", jsonObject -> {
-            JsonArray jsonElements = new JsonArray();
-            AutoAuth.passwords.forEach((playerName, password) -> {
-                JsonObject info = new JsonObject();
-                add(info, playerName, password);
-                jsonElements.add(info);
-            });
-            add(jsonObject, "info", jsonElements);
-        });
+        Managers.AUTO_AUTH_MANAGER.save();
     }
 
     public static void loadAutoAuthPasswords() throws IOException {
-        ConfigUtils.loadFromJson("AutoAuthPasswords", "", jsonObject -> {
-            if (_null(jsonObject, "info")) return;
-            for (JsonElement jsonElement : jsonObject.get("info").getAsJsonArray().asList()) {
-                jsonElement.getAsJsonObject().asMap().forEach((playerName, password) -> AutoAuth.passwords.put(playerName, password.getAsString()));
-            }
-        }, () -> {});
+        Managers.AUTO_AUTH_MANAGER.load();
     }
 
     public static void saveWaypoints() throws IOException {

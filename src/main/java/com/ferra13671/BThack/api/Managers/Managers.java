@@ -33,4 +33,5 @@ public class Managers {
     public static final BuildManager BUILD_MANAGER = new BuildManager();
     public static final CapeManager CAPE_MANAGER = new CapeManager();
     public static final TwoFAManager TWOFA_MANAGER = new TwoFAManager();
+    public static final AutoAuthManager AUTO_AUTH_MANAGER = new AutoAuthManager();
 }

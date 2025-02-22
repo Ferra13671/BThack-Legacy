@@ -157,7 +157,7 @@ public class Arguments {
         public String parse(StringReader reader) throws CommandSyntaxException {
             String name = reader.readString();
 
-            String player = AutoAuth.passwords.keySet().stream()
+            String player = Managers.AUTO_AUTH_MANAGER.getNames().stream()
                     .filter(name::equals)
                     .findFirst()
                     .orElse(null);
@@ -170,7 +170,7 @@ public class Arguments {
 
         @Override
         public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
-            return CommandSource.suggestMatching(AutoAuth.passwords.keySet(), builder);
+            return CommandSource.suggestMatching(Managers.AUTO_AUTH_MANAGER.getNames(), builder);
         }
 
         @Override
