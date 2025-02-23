@@ -210,7 +210,8 @@ public abstract class MixinClientPlayerInteractionManager implements ModifyClien
                         blockBreakingCooldown = getBreakDelay(5);
                     }
 
-                    client.world.setBlockBreakingInfo(client.player.getId(), currentBreakingPos, getBlockBreakingProgress());
+                    if (currentBreakingPos != null)
+                        client.world.setBlockBreakingInfo(client.player.getId(), currentBreakingPos, getBlockBreakingProgress());
                     cir.setReturnValue(true);
                 }
             } else {
