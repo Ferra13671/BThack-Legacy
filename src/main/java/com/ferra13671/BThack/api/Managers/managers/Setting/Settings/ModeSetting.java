@@ -72,7 +72,7 @@ public class ModeSetting extends Setting {
     }
 
     public ModeSetting defaultValue(String value) {
-        for (int i = 0; i < options.size() - 1; i++) {
+        for (int i = 0; i < options.size(); i++) {
             if (options.get(i).equals(value)) {
                 setValue(value);
                 setIndex(i);
