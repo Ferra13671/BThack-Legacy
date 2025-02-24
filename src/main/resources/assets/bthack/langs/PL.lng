@@ -69,6 +69,7 @@
 "lang.module.Timer": Przyspiesza/spowalnia tiki gry.
 "lang.module.TopperRadar": Ostrzega, jeśli w pobliżu znajduje się topper.
 "lang.module.TrashThrower": Wyrzuca wybrane śmieci z ekwipunku.
+"lang.module.TreeCutter": Wyodrębnia całe drzewo naraz. (Działa w połączeniu z PacketMine)
 "lang.module.TridentDupe": Automatycznie duplikuje trójząb. (Załatane w najnowszej wersji paper od 16 lutego 2025 r.; Załatane na 2b2t.org 18 lutego 2025 r.)
 "lang.module.VisualRange": Powiadamia o wejściu lub zejściu osoby z linii wzroku.
 
@@ -221,6 +222,7 @@
 "lang.module.ExtraTab.futurePresentMessage": Ponieważ korzystasz z klienta Future, nie możesz używać tego modułu!
 "lang.module.AutoMend.toggleMessage": Wszystkie items naprawione, wyłączanie.
 "lang.module.LongJump.ItemsNotFound": W ekwipunku nie ma żadnych elytra lub fajerwerków.
+"lang.module.TreeCutter.ConveyorNotEnabled": Ustawienie 'Conveyor Mode' nie jest włączone w PacketMine. Należy je włączyć przed włączeniem modułu.
 
 
 //Screens

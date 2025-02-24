@@ -70,6 +70,7 @@
 "lang.module.Timer": Speeds up/slows down game ticks.
 "lang.module.TopperRadar": Warns you if there is a topper nearby.
 "lang.module.TrashThrower": Throws selected trash out of inventory.
+"lang.module.TreeCutter": Mines the whole tree at once. (Works in conjunction with PacketMine)
 "lang.module.TridentDupe": Automatically dupes the trident. (Patched on latest version of paper as of 16 Feb, 2025; Patched on 2b2t.org 18 Feb, 2025)
 "lang.module.VisualRange": Notifies you when one enters or leaves your visual range.
 
@@ -222,6 +223,7 @@
 "lang.module.ExtraTab.futurePresentMessage": Because you are using Future client you cannot use this module!
 "lang.module.AutoMend.toggleMessage": All items repaired, disabling.
 "lang.module.LongJump.ItemsNotFound": Not found elytra or fireworks in your inventory.
+"lang.module.TreeCutter.ConveyorNotEnabled": The 'Conveyor Mode' setting is not enabled in PacketMine. Enable it before enabling the module.
 
 
 

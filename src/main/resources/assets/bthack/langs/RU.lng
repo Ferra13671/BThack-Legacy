@@ -69,6 +69,7 @@
 "lang.module.Timer": Ускоряет/замедляет игровые тики.
 "lang.module.TopperRadar": Предупреждает, если поблизости находится топпер.
 "lang.module.TrashThrower": Выбрасывает выбранный мусор из инвентаря.
+"lang.module.TreeCutter": Добывает все дерево сразу. (Работает в сочетании с PacketMine)
 "lang.module.TridentDupe": Автоматически дюпает трезубец. (Исправлено в последней версии пейпера 16 февраля 2025 года; исправлено на 2b2t.org 18 февраля 2025 года)
 "lang.module.VisualRange": Уведомляет вас, когда человек входит или выходит из зоны видимости.
 
@@ -222,6 +223,7 @@
 "lang.module.ExtraTab.futurePresentMessage": Поскольку вы используете Future клиент, вы не можете использовать этот модуль!
 "lang.module.AutoMend.toggleMessage": Все предметы отремонтированы, выключение.
 "lang.module.LongJump.ItemsNotFound": В вашем инвентаре не обнаружены элитры или фейерверки.
+"lang.module.TreeCutter.ConveyorNotEnabled": Настройка 'Conveyor Mode' не включена в PacketMine. Включите ее перед включением модуля.
 
 
 //Screens

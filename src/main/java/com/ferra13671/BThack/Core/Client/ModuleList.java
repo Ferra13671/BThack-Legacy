@@ -96,6 +96,7 @@ public final class ModuleList {
     public static Timer timer;
     public static TopperRadar topperRadar;
     public static TrashThrower trashThrower;
+    public static TreeCutter treeCutter;
     public static TridentDupe tridentDupe;
     public static VisualRange visualRange;
 
@@ -295,6 +296,7 @@ public final class ModuleList {
         timer = register(new Timer());
         topperRadar = register(new TopperRadar());
         trashThrower = register(new TrashThrower());
+        treeCutter = register(new TreeCutter());
         tridentDupe = register(new TridentDupe());
         visualRange = register(new VisualRange());
 

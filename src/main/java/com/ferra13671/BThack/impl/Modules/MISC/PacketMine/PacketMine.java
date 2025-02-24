@@ -182,6 +182,8 @@ public class PacketMine extends Module {
             packetRemoveItem();
         doubleFast = true;
         firstSkip = true;
+
+        ModuleList.treeCutter.setToggled(false);
     }
 
     @EventSubscriber(priority = Integer.MAX_VALUE)
@@ -582,7 +584,7 @@ public class PacketMine extends Module {
         mc.player.networkHandler.sendPacket(new UpdateSelectedSlotC2SPacket(mc.player.getInventory().selectedSlot));
     }
 
-    private boolean conveyorContains(BlockPos pos) {
+    public boolean conveyorContains(BlockPos pos) {
         for (BreakingBlock breakingBlock : conveyorBlocks) {
             if (breakingBlock.blockPos.equals(pos))
                 return true;
