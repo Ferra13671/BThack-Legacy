@@ -11,7 +11,7 @@ plugins {
  */
 project.ext.withBaritone = WithBaritone.YES
 // The version of BThack to be used both in the file name and within BThack
-project.ext.version = "1.6.2"
+project.ext.version = "1.6.3"
 
 version = project.ext.version + (project.ext.withBaritone == WithBaritone.YES ? "" : "-NoBaritone")
 group = "com.ferra13671"
