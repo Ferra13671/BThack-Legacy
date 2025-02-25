@@ -13,5 +13,6 @@ public class Textures {
 
     //Gifs
     public static final GLGif CAIPIRINHA = GLGif.fromInputStream(Textures.class.getClassLoader().getResourceAsStream("assets/bthack/gifs/caipirinha.gif"), GLGif.DecompileMode.DELTAS, 150);
-    public static final GLGif CUTIE = GLGif.fromInputStream(Textures.class.getClassLoader().getResourceAsStream("assets/bthack/gifs/cutie.gif"), GLGif.DecompileMode.DELTAS, 50);
+    public static final GLGif CUTIE1 = GLGif.fromInputStream(Textures.class.getClassLoader().getResourceAsStream("assets/bthack/gifs/cutie.gif"), GLGif.DecompileMode.DELTAS, 50);
+    public static final GLGif CUTIE2 = GLGif.fromInputStream(Textures.class.getClassLoader().getResourceAsStream("assets/bthack/gifs/cutie2.gif"), GLGif.DecompileMode.DELTAS, 100);
 }
