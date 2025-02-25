@@ -234,11 +234,13 @@
 "lang.screen.Mainmenu.Quit": Quit
 "lang.screen.Mainmenu.SetWallpaper": Set Wallpaper
 "lang.screen.SelectWallpaper.Confirm": Confirm
-"lang.screen.OutdatedVersion.message1": Your version of BThack is already out of date. (Your version:%s. New version:%s)
-"lang.screen.OutdatedVersion.message2": Do you want to update to the new version or stay on this one?
-"lang.screen.ExitAndUpdate": Exit and update
-"lang.screen.Don'tShowUntilNext": Don't show again until the next release
-"lang.screen.Don'tShowAll": Don't show again for all releases
+"lang.screen.OutdatedVersion.helloMessage": Hi, we've found a new update for you!
+"lang.screen.OutdatedVersion.Current": Current: %s
+"lang.screen.OutdatedVersion.New": New: %s
+"lang.screen.OutdatedVersion.UpdateMessage": Want to upgrade to a new version?
+"lang.screen.OutdatedVersion.Yes": Yes
+"lang.screen.OutdatedVersion.No": No
+"lang.screen.OutdatedVersion.AlwaysNo": Don't ask anymore
 
 
 //Command Arguments

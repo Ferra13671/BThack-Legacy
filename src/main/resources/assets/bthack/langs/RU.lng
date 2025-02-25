@@ -233,11 +233,13 @@
 "lang.screen.Mainmenu.Quit": Выйти
 "lang.screen.Mainmenu.SetWallpaper": Выбрать обои
 "lang.screen.SelectWallpaper.Confirm": Подтвердить
-"lang.screen.OutdatedVersion.message1": Ваша версия BThack уже устарела. (Ваша версия:%s. Новая версия:%s)
-"lang.screen.OutdatedVersion.message2": Хотите ли вы перейти на новую версию или остаться на этой?
-"lang.screen.ExitAndUpdate": Выйти и обновить
-"lang.screen.Don'tShowUntilNext": Не показывать до следующего релиза
-"lang.screen.Don'tShowAll": Не показывать снова для всех релизов
+"lang.screen.OutdatedVersion.helloMessage": Привет, мы нашли для вас новое обновление!
+"lang.screen.OutdatedVersion.Current": Текущее: %s
+"lang.screen.OutdatedVersion.New": Новое: %s
+"lang.screen.OutdatedVersion.UpdateMessage": Хотите перейти на новую версию?
+"lang.screen.OutdatedVersion.Yes": Да
+"lang.screen.OutdatedVersion.No": Нет
+"lang.screen.OutdatedVersion.AlwaysNo": Больше не спрашивать
 
 
 //Command Arguments

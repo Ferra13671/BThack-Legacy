@@ -232,11 +232,13 @@
 "lang.screen.Mainmenu.Quit": Wyjdź
 "lang.screen.Mainmenu.SetWallpaper": Wybierz tapetę
 "lang.screen.SelectWallpaper.Confirm": Potwierdzenie
-"lang.screen.OutdatedVersion.message1": Twoja wersja BThack jest już nieaktualna. (Twoja wersja:%s. Nowa wersja:%s)
-"lang.screen.OutdatedVersion.message2": Czy chcesz uaktualnić do nowej wersji, czy pozostać przy obecnej?
-"lang.screen.ExitAndUpdate": Wyjdź i odśwież
-"lang.screen.Don'tShowUntilNext": Nie będą wyświetlane do następnego wydania
-"lang.screen.Don'tShowAll": Nie pokazuj ponownie dla wszystkich wydań
+"lang.screen.OutdatedVersion.helloMessage": Cześć, znaleźliśmy dla was nową aktualizację!
+"lang.screen.OutdatedVersion.Current": Bieżący: %s
+"lang.screen.OutdatedVersion.New": Nowa: %s
+"lang.screen.OutdatedVersion.UpdateMessage": Czy chcesz uaktualnić do nowej wersji?
+"lang.screen.OutdatedVersion.Yes": Tak
+"lang.screen.OutdatedVersion.No": Nie
+"lang.screen.OutdatedVersion.AlwaysNo": Nie pytaj więcej
 
 
 //Command Arguments

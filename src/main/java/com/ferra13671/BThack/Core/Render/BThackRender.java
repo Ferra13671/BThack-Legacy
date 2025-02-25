@@ -176,11 +176,20 @@ public final class BThackRender implements Mc {
 
     public static void drawOutlineRect(float x1, float y1, float x2, float y2, float depth, int color) {
         Drawers.RECT.begin(color);
-        Drawers.RECT.draw(x1,y1, x1 + depth, y2);
-        Drawers.RECT.draw(x1 + depth, y2 - depth, x2, y2);
-        Drawers.RECT.draw(x2, y2 - depth, x2 - depth, y1);
-        Drawers.RECT.draw(x1 + depth, y1, x2 - depth, y1 + depth);
+        Drawers.RECT.draw(x1,y1, x1 + depth, y2); //left
+        Drawers.RECT.draw(x1 + depth, y2 - depth, x2, y2); //down
+        Drawers.RECT.draw(x2, y2 - depth, x2 - depth, y1); //right
+        Drawers.RECT.draw(x1 + depth, y1, x2 - depth, y1 + depth); //up
         Drawers.RECT.end();
+    }
+
+    public static void drawVerticalGradientOutlineRect(float x1, float y1, float x2, float y2, float depth, int upColor, int downColor) {
+        BThackRender.drawRect(x1 + depth, y1, x2 - depth, y1 + depth, upColor); //up
+        BThackRender.drawRect(x1 + depth, y2 - depth, x2, y2, downColor); //down
+        Drawers.GRADIENT_RECT.begin();
+        Drawers.GRADIENT_RECT.draw(x1,y1, x1 + depth, y2, upColor, downColor, GradientRectDrawer.GradientMode.VERTICAL); //left
+        Drawers.GRADIENT_RECT.draw(x2 - depth, y1, x2, y2 - depth, upColor, downColor, GradientRectDrawer.GradientMode.VERTICAL); //down
+        Drawers.GRADIENT_RECT.end();
     }
 
     public static void drawSquare(float x1, float y1, float size, int color) {
