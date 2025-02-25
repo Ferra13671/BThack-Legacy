@@ -11,20 +11,24 @@ import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Vec3d;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.ModifyArgs;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 @Mixin(FireworkRocketEntity.class)
 public class MixinFireWorkRocketEntity implements Mc {
 
     @Shadow private int life;
 
+    @Shadow @Nullable private LivingEntity shooter;
+
     @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/projectile/FireworkRocketEntity;updateRotation()V", shift = At.Shift.AFTER), cancellable = true)
-    public void modifyRocketTick(CallbackInfo ci) {
+    public void modifyTick(CallbackInfo ci) {
         FireworkRocketEntity rocketEntity = ((FireworkRocketEntity) (Object) this);
         FireworkTickEvent event = new FireworkTickEvent(rocketEntity);
         BThack.EVENT_BUS.activate(event);
@@ -39,13 +43,18 @@ public class MixinFireWorkRocketEntity implements Mc {
         }
     }
 
-    @Redirect(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;getRotationVector()Lnet/minecraft/util/math/Vec3d;", ordinal = 0))
-    public Vec3d modifyGetRotationVector(LivingEntity instance) {
-        if (instance != mc.player) return instance.getRotationVector();
 
-        PlayerTraverRotEvent event = new PlayerTraverRotEvent(instance.yaw, instance.pitch, true);
+    @ModifyArgs(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;setVelocity(Lnet/minecraft/util/math/Vec3d;)V", ordinal = 0))
+    public void modifySetVelocity(Args args) {
+        if (shooter != mc.player) return;
+
+        PlayerTraverRotEvent event = new PlayerTraverRotEvent(shooter.yaw, shooter.pitch, true);
         BThack.EVENT_BUS.activate(event);
-        return instance.getRotationVector(event.pitch, event.yaw);
+
+        Vec3d vec3d = shooter.getRotationVector(event.pitch, event.yaw);
+        Vec3d vec3d2 = shooter.getVelocity();
+
+        args.set(0, vec3d2.add(vec3d.x * 0.1 + (vec3d.x * 1.5 - vec3d2.x) * 0.5, vec3d.y * 0.1 + (vec3d.y * 1.5 - vec3d2.y) * 0.5, vec3d.z * 0.1 + (vec3d.z * 1.5 - vec3d2.z) * 0.5));
     }
 
     @Inject(method = "explodeAndRemove", at = @At("HEAD"))
