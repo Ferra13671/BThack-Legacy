@@ -1,9 +1,9 @@
-package com.ferra13671.BThack.api.Managers.managers;
+package com.ferra13671.BThack.api.Managers.managers.TwoFA;
 
-import com.atlassian.onetime.core.TOTPGenerator;
-import com.atlassian.onetime.model.TOTPSecret;
 import com.ferra13671.BThack.Core.FileSystem.ConfigSystem.ConfigUtils;
 import com.ferra13671.BThack.Core.FileSystem.JsonUtils;
+import com.ferra13671.BThack.api.Managers.managers.TwoFA.TOTP.TOTPGenerator;
+import com.ferra13671.BThack.api.Managers.managers.TwoFA.TOTP.TotpSecret;
 import com.ferra13671.BThack.api.Utils.Initializable;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -23,7 +23,7 @@ public class TwoFAManager implements Initializable {
 
     public String getCode(String name) {
         if (twoFAKeys.containsKey(name)) {
-            return totpGenerator.generateCurrent(TOTPSecret.Companion.fromBase32EncodedString(twoFAKeys.get(name))).getValue();
+            return totpGenerator.generateCurrent(TotpSecret.fromBase32EncodedString(twoFAKeys.get(name))).value();
         } else return null;
     }
 

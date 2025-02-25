@@ -10,7 +10,7 @@ import com.ferra13671.BThack.api.Managers.managers.Macros.MacrosManager;
 import com.ferra13671.BThack.api.Managers.managers.Memory.MemoryManager;
 import com.ferra13671.BThack.api.Managers.managers.Setting.SettingsManager;
 import com.ferra13671.BThack.api.Managers.managers.TravelChange.TravelChangeManager;
-import com.ferra13671.BThack.api.Managers.managers.TwoFAManager;
+import com.ferra13671.BThack.api.Managers.managers.TwoFA.TwoFAManager;
 import com.ferra13671.BThack.api.Managers.managers.Waypoint.WaypointManager;
 
 public class Managers {
