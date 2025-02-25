@@ -42,7 +42,7 @@ The cheat client also has a plugin system that allows you to add your own module
 <details>
   <summary>How do I find out about existing commands?</summary>
 
-  > Use the `$commandlist` command to display the entire list of available commands in the chat.
+  > Use the `$help` command to display the entire list of available commands in the chat.
 </details>
 
 <details>
