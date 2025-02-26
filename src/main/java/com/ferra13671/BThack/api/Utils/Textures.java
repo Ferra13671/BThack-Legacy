@@ -10,6 +10,7 @@ public class Textures {
     public static final GLTexture PL_FLAG = GLTexture.fromPath("assets/bthack/flags/pl_flag.png", PathMode.INSIDEJAR, GLTexture.ColorMode.RGBA);
     public static final GLTexture BTHACK_LOGO = GLTexture.fromPath("assets/bthack/bthacklogo.png", PathMode.INSIDEJAR, GLTexture.ColorMode.RGBA);
     public static final GLTexture CHIBI1 = GLTexture.fromPath("assets/bthack/chibi/chibi1.png", PathMode.INSIDEJAR, GLTexture.ColorMode.RGBA);
+    public static final GLTexture CHIBI2 = GLTexture.fromPath("assets/bthack/chibi/chibi2.png", PathMode.INSIDEJAR, GLTexture.ColorMode.RGBA);
 
     //Gifs
     public static final GLGif CAIPIRINHA = GLGif.fromInputStream(Textures.class.getClassLoader().getResourceAsStream("assets/bthack/gifs/caipirinha.gif"), GLGif.DecompileMode.DELTAS, 150);
