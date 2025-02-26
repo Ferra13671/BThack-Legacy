@@ -1,7 +1,6 @@
 package com.ferra13671.BThack.impl.Modules.RENDER;
 
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
-import com.ferra13671.BThack.api.Events.LightmapGammaColorEvent;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
@@ -57,23 +56,17 @@ public class FullBright extends Module {
         arrayListInfo = mode.getValue();
     }
 
-    @EventSubscriber(priority = Integer.MAX_VALUE)
-    public void onGammaColor(LightmapGammaColorEvent e) {
-        if (!mode.getValue().equals("Gamma")) {
-            return;
-        } else {
-            if (hasAppliedNightVision) {
-                if (mc.player.hasStatusEffect(StatusEffects.NIGHT_VISION))
-                    mc.player.removeStatusEffect(StatusEffects.NIGHT_VISION);
-                else
-                    hasAppliedNightVision = false;
-            }
+    public int getGammaColor() {
+        if (hasAppliedNightVision) {
+            if (mc.player.hasStatusEffect(StatusEffects.NIGHT_VISION))
+                mc.player.removeStatusEffect(StatusEffects.NIGHT_VISION);
+            else
+                hasAppliedNightVision = false;
         }
-        e.setCancelled(true);
         if (customColor.getValue())
-            e.gammaColor = new Color((int) blue.getValue(), (int) green.getValue(), (int) red.getValue()).hashCode();
+            return new Color((int) blue.getValue(), (int) green.getValue(), (int) red.getValue()).hashCode();
         else
-            e.gammaColor = -1;
+            return  -1;
     }
 
     @EventSubscriber
