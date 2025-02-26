@@ -7,15 +7,13 @@ import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Events.Render.RenderHudPreEvent;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Gui.HudEditor.HudEditorScreen;
-import com.ferra13671.BThack.api.HudComponent.HudComponent;
+import com.ferra13671.BThack.api.Module.HudComponent;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.Utils.SpeedMathThread;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
-import com.ferra13671.TextureUtils.GLTexture;
-import com.ferra13671.TextureUtils.PathMode;
 
 public class HUD extends Module {
 

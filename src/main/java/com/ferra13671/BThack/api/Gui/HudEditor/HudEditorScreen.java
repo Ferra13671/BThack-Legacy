@@ -14,7 +14,7 @@ import com.ferra13671.BThack.api.Gui.ClickGui.component.Frame;
 import com.ferra13671.BThack.api.Gui.ClickGui.component.components.ModuleButton;
 import com.ferra13671.BThack.api.Gui.ClickGui.component.components.setting.settings.Slider;
 import com.ferra13671.BThack.api.Gui.HudEditor.Utils.HudComponentButton;
-import com.ferra13671.BThack.api.HudComponent.HudComponent;
+import com.ferra13671.BThack.api.Module.HudComponent;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Shader.Shaders;
 import com.ferra13671.BThack.api.Utils.Data;
