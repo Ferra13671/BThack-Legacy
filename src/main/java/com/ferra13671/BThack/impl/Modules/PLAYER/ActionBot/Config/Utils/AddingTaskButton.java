@@ -2,7 +2,7 @@ package com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.Utils;
 
 import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
-import com.ferra13671.BThack.api.Utils.System.buttons.Button;
+import com.ferra13671.BThack.api.GuiSystem.buttons.Button;
 
 public class AddingTaskButton extends Button {
     public boolean selected = false;

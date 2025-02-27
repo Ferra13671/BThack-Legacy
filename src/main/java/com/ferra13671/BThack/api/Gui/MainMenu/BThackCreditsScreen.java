@@ -3,9 +3,9 @@ package com.ferra13671.BThack.api.Gui.MainMenu;
 import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Utils.DesktopUtils;
-import com.ferra13671.BThack.api.Utils.System.BThackScreen;
-import com.ferra13671.BThack.api.Utils.System.BThackScreens;
-import com.ferra13671.BThack.api.Utils.System.buttons.Button;
+import com.ferra13671.BThack.api.GuiSystem.Screen.BThackScreen;
+import com.ferra13671.BThack.api.GuiSystem.BThackScreens;
+import com.ferra13671.BThack.api.GuiSystem.buttons.Button;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.text.Text;
 

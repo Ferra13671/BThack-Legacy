@@ -10,7 +10,7 @@ import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.*;
 import com.ferra13671.BThack.api.Module.OneActionModule;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
-import com.ferra13671.BThack.api.Utils.System.BThackScreens;
+import com.ferra13671.BThack.api.GuiSystem.BThackScreens;
 import com.ferra13671.BThack.mixins.accessor.IGameRenderer;
 import net.minecraft.client.gl.PostEffectProcessor;
 

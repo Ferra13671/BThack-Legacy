@@ -8,6 +8,7 @@ import com.ferra13671.BThack.Core.FileSystem.ConfigSystem.ConfigUtils;
 import com.ferra13671.BThack.Core.FileSystem.FileSystem;
 import com.ferra13671.BThack.Core.FileSystem.JsonUtils;
 import com.ferra13671.BThack.Core.Render.BThackRender;
+import com.ferra13671.BThack.api.GuiSystem.BThackWidgets;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Plugin.Plugin;
 import com.ferra13671.BThack.api.Plugin.PluginSystem;
@@ -15,7 +16,7 @@ import com.ferra13671.BThack.api.Social.SocialManager;
 import com.ferra13671.BThack.api.Social.SocialManagers;
 import com.ferra13671.BThack.api.SoundSystem.Sounds;
 import com.ferra13671.BThack.api.SoundSystem.yaw.TinySound;
-import com.ferra13671.BThack.api.Utils.System.BThackScreens;
+import com.ferra13671.BThack.api.GuiSystem.BThackScreens;
 import com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.ActionBotConfig;
 import com.ferra13671.MegaEvents.Base.IEventBus;
 import com.ferra13671.MegaEvents.Base.UpdatedEventBus;
@@ -172,6 +173,7 @@ public final class BThack implements ClientModInitializer, Mc {
             throw new RuntimeException();
         }
 
+        BThackWidgets.init();
         BThackScreens.init();
 
         BThack.initDebug("Starting loading the config...");

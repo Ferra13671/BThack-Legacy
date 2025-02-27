@@ -2,11 +2,11 @@ package com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config;
 
 import com.ferra13671.BThack.api.Gui.ActionBot.AbstractTaskGui;
 import com.ferra13671.BThack.api.Gui.ActionBot.ActionBotConfigGui;
-import com.ferra13671.BThack.api.Utils.System.BThackScreen;
-import com.ferra13671.BThack.api.Utils.System.buttons.ModeButton;
-import com.ferra13671.BThack.api.Utils.System.buttons.NumberFrameButton;
-import com.ferra13671.BThack.api.Utils.System.buttons.SwitchButton;
-import com.ferra13671.BThack.api.Utils.System.buttons.TextFrameButton;
+import com.ferra13671.BThack.api.GuiSystem.Screen.BThackScreen;
+import com.ferra13671.BThack.api.GuiSystem.buttons.ModeButton;
+import com.ferra13671.BThack.api.GuiSystem.buttons.NumberFrameButton;
+import com.ferra13671.BThack.api.GuiSystem.buttons.SwitchButton;
+import com.ferra13671.BThack.api.GuiSystem.buttons.TextFrameButton;
 import com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.ActionBotTasks.*;
 import com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.Utils.ActionBotTaskData;
 import com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.Utils.TaskButton;
@@ -56,7 +56,7 @@ public class ActionBotConfig {
 
     public static void removeActionTaskFromList() {
         tasks.remove(endTask);
-        tasks.remove(tasks.size() - 1);
+        tasks.removeLast();
         tasks.add(endTask);
     }
 

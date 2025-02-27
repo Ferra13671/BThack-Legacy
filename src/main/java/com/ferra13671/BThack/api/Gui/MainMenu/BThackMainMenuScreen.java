@@ -7,11 +7,13 @@ import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Animation.Animation;
 import com.ferra13671.BThack.api.Animation.Easing;
+import com.ferra13671.BThack.api.GuiSystem.BThackWidgets;
 import com.ferra13671.BThack.api.Managers.Managers;
+import com.ferra13671.BThack.api.Managers.managers.Thread.ThreadManager;
 import com.ferra13671.BThack.api.Utils.DesktopUtils;
-import com.ferra13671.BThack.api.Utils.System.BThackScreen;
-import com.ferra13671.BThack.api.Utils.System.BThackScreens;
-import com.ferra13671.BThack.api.Utils.System.buttons.Button;
+import com.ferra13671.BThack.api.GuiSystem.Screen.BThackScreen;
+import com.ferra13671.BThack.api.GuiSystem.BThackScreens;
+import com.ferra13671.BThack.api.GuiSystem.buttons.Button;
 import com.ferra13671.BThack.api.Utils.Textures;
 import com.ferra13671.TextureUtils.GLTexture;
 import net.minecraft.client.gui.DrawContext;
@@ -21,6 +23,7 @@ import net.minecraft.client.gui.screen.world.SelectWorldScreen;
 import net.minecraft.text.Text;
 
 public class BThackMainMenuScreen extends BThackScreen {
+    public static boolean firstOpened = true;
     public static GLTexture mainMenuTexture = Client.clientInfo.getDefaultMainMenuImage();
 
     public BThackMainMenuScreen() {
@@ -31,7 +34,22 @@ public class BThackMainMenuScreen extends BThackScreen {
 
     @Override
     public void onDisplayed() {
-        BThack.instance.versionInfo.setFirstLaunched(false);
+        if (firstOpened) {
+            ThreadManager.startNewThread(thread -> {
+                thread.sleepThread(1300);
+                if (BThack.instance.versionInfo.isFirstLaunched())
+                    widgetManage.addWidget(BThackWidgets.LANGUAGE_SELECTOR);
+                BThack.instance.versionInfo.setFirstLaunched(false);
+                if (BThack.instance.versionInfo.isOutdated()) {
+                    if (BThack.instance.versionInfo.isNeedShowAgainAllReleases()) {
+                        if (BThack.instance.versionInfo.isNeedShowAgainOneRelease()) {
+                            widgetManage.addWidget(BThackWidgets.OUTDATED_VERSION);
+                        }
+                    }
+                }
+            });
+            firstOpened = false;
+        }
 
         init();
         buttons.forEach(button -> button.setAllowUpdate(true));
@@ -51,6 +69,7 @@ public class BThackMainMenuScreen extends BThackScreen {
 
     @Override
     protected void init() {
+        super.init();
         buttons.clear();
 
         int baseButtonsX = mc.getWindow().getScaledWidth() / 7;

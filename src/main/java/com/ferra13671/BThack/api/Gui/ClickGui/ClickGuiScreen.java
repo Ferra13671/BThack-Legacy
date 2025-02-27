@@ -22,10 +22,10 @@ import com.ferra13671.BThack.api.Shader.ShaderTicker;
 import com.ferra13671.BThack.api.Shader.Shaders;
 import com.ferra13671.BThack.api.Utils.Data;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
-import com.ferra13671.BThack.api.Utils.System.BThackScreen;
-import com.ferra13671.BThack.api.Utils.System.buttons.Button;
-import com.ferra13671.BThack.api.Utils.System.buttons.SliderButton;
-import com.ferra13671.BThack.api.Utils.System.buttons.TextFrameButton;
+import com.ferra13671.BThack.api.GuiSystem.Screen.BThackScreen;
+import com.ferra13671.BThack.api.GuiSystem.buttons.Button;
+import com.ferra13671.BThack.api.GuiSystem.buttons.SliderButton;
+import com.ferra13671.BThack.api.GuiSystem.buttons.TextFrameButton;
 import com.ferra13671.BThack.api.Utils.Ticker;
 import com.ferra13671.BThack.impl.Modules.CLIENT.ClickGui;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -75,6 +75,7 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
 
     @Override
     public void init() {
+        super.init();
         buttons.clear();
 
         int scWidth = mc.getWindow().getScaledWidth();
@@ -88,9 +89,7 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
                 }));
         buttons.add(Button.of(1,
                 scWidth - 50, scHeight - 40, 40, 10, "Save Config")
-                .withAction(buttonClickInfo -> {
-                    startSaving = true;
-                }));
+                .withAction(buttonClickInfo -> startSaving = true));
         buttons.add(new TextFrameButton(8,
                 scWidth - 70, scHeight - 65, 60, 10));
         buttons.add(Button.of(9
@@ -191,7 +190,7 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
     public boolean mouseClicked(double mouseX, double mouseY, int mouseButton) {
         for(Frame frame : frames) {
             if (!frame.updateClick(mouseX, mouseY, mouseButton)) {
-                Frame temp = frames.get(0);
+                Frame temp = frames.getFirst();
                 frames.set(0, frame);
                 frames.set(frame.id, temp);
                 temp.id = frame.id;

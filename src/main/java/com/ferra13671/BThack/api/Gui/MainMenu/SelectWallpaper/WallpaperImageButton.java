@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.api.Gui.MainMenu.SelectWallpaper;
 
-import com.ferra13671.BThack.api.Utils.System.buttons.ButtonWithOffset;
+import com.ferra13671.BThack.api.GuiSystem.buttons.ButtonWithOffset;
 
 public class WallpaperImageButton extends ButtonWithOffset {
     public final Wallpaper wallpaper;

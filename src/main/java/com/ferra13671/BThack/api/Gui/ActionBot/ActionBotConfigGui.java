@@ -2,12 +2,12 @@ package com.ferra13671.BThack.api.Gui.ActionBot;
 
 import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
-import com.ferra13671.BThack.api.Utils.System.BThackScreen;
+import com.ferra13671.BThack.api.GuiSystem.Screen.BThackScreen;
 import com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.ActionBotConfig;
 import com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.ActionBotTask;
 import com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.Utils.ActionBotTaskData;
 import com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.Utils.TaskButton;
-import com.ferra13671.BThack.api.Utils.System.buttons.Button;
+import com.ferra13671.BThack.api.GuiSystem.buttons.Button;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.util.Window;
@@ -40,6 +40,7 @@ public class ActionBotConfigGui extends BThackScreen {
 
     @Override
     public void init() {
+        super.init();
         buttons.clear();
         selectedTask = null;
 

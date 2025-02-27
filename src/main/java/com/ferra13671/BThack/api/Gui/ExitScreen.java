@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.api.Gui;
 
-import com.ferra13671.BThack.api.Utils.System.BThackScreen;
+import com.ferra13671.BThack.api.GuiSystem.Screen.BThackScreen;
 import com.ferra13671.BThack.api.Utils.Ticker;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.text.Text;

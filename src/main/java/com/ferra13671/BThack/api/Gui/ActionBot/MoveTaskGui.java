@@ -3,9 +3,9 @@ package com.ferra13671.BThack.api.Gui.ActionBot;
 import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Font.FontUtils;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
-import com.ferra13671.BThack.api.Utils.System.BThackScreen;
-import com.ferra13671.BThack.api.Utils.System.buttons.Button;
-import com.ferra13671.BThack.api.Utils.System.buttons.NumberFrameButton;
+import com.ferra13671.BThack.api.GuiSystem.Screen.BThackScreen;
+import com.ferra13671.BThack.api.GuiSystem.buttons.Button;
+import com.ferra13671.BThack.api.GuiSystem.buttons.NumberFrameButton;
 import com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.ActionBotConfig;
 import com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.Utils.TaskButton;
 import net.minecraft.client.gui.DrawContext;
@@ -23,6 +23,7 @@ public class MoveTaskGui extends BThackScreen {
 
     @Override
     public void init() {
+        super.init();
         this.buttons.clear();
 
         this.buttons.add(new NumberFrameButton(1, (scaledResolution.getScaledWidth() / 2), (int) ((scaledResolution.getScaledHeight() / 2) - (heightFactor * 2.5)), (int) (widthFactor * 8.5), (int) heightFactor));
@@ -32,7 +33,7 @@ public class MoveTaskGui extends BThackScreen {
                     if (number <= 0) number = 1;
 
                     ActionBotConfig.tasks.remove(this.taskButton.getId());
-                    ActionBotConfig.tasks.add((int) Math.max(Math.min(ActionBotConfig.tasks.size() - 2, number), 1), taskButton.task);
+                    ActionBotConfig.tasks.add(Math.max(Math.min(ActionBotConfig.tasks.size() - 2, number), 1), taskButton.task);
 
                     mc.setScreen(new ActionBotConfigGui());
                 }));

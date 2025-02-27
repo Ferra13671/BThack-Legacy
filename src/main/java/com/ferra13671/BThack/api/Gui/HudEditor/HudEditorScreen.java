@@ -19,8 +19,8 @@ import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Shader.Shaders;
 import com.ferra13671.BThack.api.Utils.Data;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
-import com.ferra13671.BThack.api.Utils.System.BThackScreen;
-import com.ferra13671.BThack.api.Utils.System.BThackScreens;
+import com.ferra13671.BThack.api.GuiSystem.Screen.BThackScreen;
+import com.ferra13671.BThack.api.GuiSystem.BThackScreens;
 import com.ferra13671.BThack.api.Utils.Ticker;
 import com.ferra13671.BThack.impl.Modules.CLIENT.ClickGui;
 import com.google.common.collect.Sets;
@@ -56,6 +56,7 @@ public class HudEditorScreen extends BThackScreen {
 
     @Override
     public void init() {
+        super.init();
         for (Module module : Client.getModulesInCategory(Categories.HUD))
             hudComponentButtons.add(new HudComponentButton(0, (HudComponent) module));
     }

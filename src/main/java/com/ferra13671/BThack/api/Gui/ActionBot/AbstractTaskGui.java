@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.api.Gui.ActionBot;
 
-import com.ferra13671.BThack.api.Utils.System.BThackScreen;
-import com.ferra13671.BThack.api.Utils.System.buttons.Button;
+import com.ferra13671.BThack.api.GuiSystem.Screen.BThackScreen;
+import com.ferra13671.BThack.api.GuiSystem.buttons.Button;
 import com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.ActionBotConfig;
 import com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.ActionBotTask;
 import com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.Utils.TaskButton;
@@ -31,6 +31,7 @@ public abstract class AbstractTaskGui extends BThackScreen {
 
     @Override
     protected void init() {
+        super.init();
         widthFactor = scaledResolution.getScaledWidth() / 37D;
         heightFactor = scaledResolution.getScaledHeight() / 30D;
 

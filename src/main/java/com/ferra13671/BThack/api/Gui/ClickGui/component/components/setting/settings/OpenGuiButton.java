@@ -10,7 +10,7 @@ import com.ferra13671.BThack.api.Gui.ClickGui.component.components.setting.Abstr
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.GuiButtonSetting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.System.BThackScreen;
+import com.ferra13671.BThack.api.GuiSystem.Screen.BThackScreen;
 
 public class OpenGuiButton extends AbstractSetting implements Mc {
 
