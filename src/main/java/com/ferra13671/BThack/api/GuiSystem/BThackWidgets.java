@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.api.GuiSystem;
 
-import com.ferra13671.BThack.api.Gui.MainMenu.LanguageSelectorWidget;
-import com.ferra13671.BThack.api.Gui.MainMenu.OutdatedVersionWidget;
+import com.ferra13671.BThack.api.Gui.Widget.LanguageSelectorWidget;
+import com.ferra13671.BThack.api.Gui.Widget.OutdatedVersionWidget;
 
 public class BThackWidgets {
     private static boolean inited = false;

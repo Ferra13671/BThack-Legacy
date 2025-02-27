@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config;
 
-import com.ferra13671.BThack.api.Gui.ActionBot.AbstractTaskGui;
-import com.ferra13671.BThack.api.Gui.ActionBot.ActionBotConfigGui;
+import com.ferra13671.BThack.api.Gui.Screen.ActionBot.AbstractTaskGui;
+import com.ferra13671.BThack.api.Gui.Screen.ActionBot.ActionBotConfigGui;
 import com.ferra13671.BThack.api.GuiSystem.Screen.BThackScreen;
 import com.ferra13671.BThack.api.GuiSystem.buttons.ModeButton;
 import com.ferra13671.BThack.api.GuiSystem.buttons.NumberFrameButton;
@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.ferra13671.BThack.api.Gui.ActionBot.ActionBotConfigGui.*;
+import static com.ferra13671.BThack.api.Gui.Screen.ActionBot.ActionBotConfigGui.*;
 
 public class ActionBotConfig {
     public static final ActionBotTask startTask = new ActionBotTask("Start") {

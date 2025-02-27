@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.mixins.gui_and_hud;
 
-import com.ferra13671.BThack.api.Gui.MainMenu.BThackMainMenuScreen;
+import com.ferra13671.BThack.api.Gui.Screen.MainMenu.BThackMainMenuScreen;
 import com.ferra13671.BThack.api.GuiSystem.Screen.BThackScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.multiplayer.MultiplayerScreen;

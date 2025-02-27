@@ -5,7 +5,7 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetti
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.GuiButtonSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
-import com.ferra13671.BThack.api.Gui.ActionBot.ActionBotConfigGui;
+import com.ferra13671.BThack.api.Gui.Screen.ActionBot.ActionBotConfigGui;
 
 public class ActionBot extends Module {
 

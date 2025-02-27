@@ -51,12 +51,12 @@ public class WidgetManage implements Mc {
                     return;
                 }
                 case OPENED -> {
-                    if (widget.widgetAnimation.getPassedMillis() >= WIDGET_ANIMATION_TIME)
+                    if (widget.widgetAnimation.getPassedMillis() >= widget.animTime)
                         if (!widget.allowUpdate)
                             widget.setAllowUpdate(true);
                 }
                 case CLOSED -> {
-                    if (widget.widgetAnimation.getPassedMillis() >= WIDGET_ANIMATION_TIME) {
+                    if (widget.widgetAnimation.getPassedMillis() >= widget.animTime) {
                         widgets.remove(widget);
                         return;
                     }
@@ -109,14 +109,18 @@ public class WidgetManage implements Mc {
 
 
     public static class WidgetInfo {
+        private final int animTime;
         private final ScreenWidget screenWidget;
-        private final Animation widgetAnimation = new Animation(Easing.BACK_IN_OUT, WIDGET_ANIMATION_TIME);
-        private final Animation backgroundAnimation = new Animation(Easing.LINEAR, WIDGET_ANIMATION_TIME);
+        private final Animation widgetAnimation;
+        private final Animation backgroundAnimation;
         private WidgetStatus status = WidgetStatus.NOT_OPENED;
         private boolean allowUpdate = false;
 
         public WidgetInfo(ScreenWidget screenWidget) {
             this.screenWidget = screenWidget;
+            animTime = (int) (WIDGET_ANIMATION_TIME * screenWidget.animationSpeed);
+            widgetAnimation = new Animation(Easing.BACK_IN_OUT, animTime);
+            backgroundAnimation = new Animation(Easing.LINEAR, animTime);
         }
 
         public void setStatus(WidgetStatus status) {

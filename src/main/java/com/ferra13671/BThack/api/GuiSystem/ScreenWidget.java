@@ -7,6 +7,7 @@ import com.ferra13671.BThack.api.GuiSystem.Screen.BThackScreen;
 import net.minecraft.text.Text;
 
 public class ScreenWidget extends BThackScreen {
+    public final float animationSpeed;
     private final float width;
     private final float height;
 
@@ -17,10 +18,11 @@ public class ScreenWidget extends BThackScreen {
 
     public boolean needClose = false;
 
-    public ScreenWidget(float width, float height) {
+    public ScreenWidget(float width, float height, float animationSpeed) {
         super(Text.of("Widget-" + NumberGenerator.generateInt(10000, 99999)));
         this.width = width;
         this.height = height;
+        this.animationSpeed = animationSpeed;
     }
 
     @Override

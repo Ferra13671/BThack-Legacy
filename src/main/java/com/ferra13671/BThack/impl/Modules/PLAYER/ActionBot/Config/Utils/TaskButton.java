@@ -8,7 +8,7 @@ import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.GuiSystem.buttons.Button;
 import com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.ActionBotTask;
 
-import static com.ferra13671.BThack.api.Gui.ActionBot.ActionBotConfigGui.*;
+import static com.ferra13671.BThack.api.Gui.Screen.ActionBot.ActionBotConfigGui.*;
 
 public class TaskButton extends Button {
     private boolean selected;
