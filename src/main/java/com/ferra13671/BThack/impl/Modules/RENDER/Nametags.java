@@ -32,6 +32,7 @@ public class Nametags extends Module {
 
     public final BooleanSetting items = new BooleanSetting("Items", this, true);
     public final NumberSetting iSize = new NumberSetting("ISize", this, 1, 0.5, 2, false, items::getValue);
+    public final BooleanSetting itemName = new BooleanSetting("Item Name", this, true, items::getValue);
 
     public Nametags() {
         super("Nametags",
@@ -47,7 +48,8 @@ public class Nametags extends Module {
                 pSize,
 
                 items,
-                iSize
+                iSize,
+                itemName
         );
     }
 
@@ -74,7 +76,8 @@ public class Nametags extends Module {
         cords[1] /= (float) iSize.getValue();
 
         BThackRender.drawItem(BThackRender.guiGraphics, itemEntity.getStack(), (int) cords[0] - 8, (int) cords[1] - 18, null, true);
-        BThackRender.drawCenteredString(itemEntity.getName().getString(), cords[0], cords[1], -1, FontRenderManager.DrawMode.SMALL);
+        if (itemName.getValue())
+            BThackRender.drawCenteredString(itemEntity.getName().getString(), cords[0], cords[1], -1, FontRenderManager.DrawMode.SMALL);
 
         BThackRender.guiGraphics.getMatrices().pop();
     }
