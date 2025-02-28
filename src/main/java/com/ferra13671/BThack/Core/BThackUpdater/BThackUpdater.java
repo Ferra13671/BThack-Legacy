@@ -47,7 +47,7 @@ public class BThackUpdater implements LanguageAdapter {
                 fileOutputStream.close();
                 Files.delete(UPDATE_DATA_PATH);
                 BThack.log("The BThack update has been fully finalized!");
-                JOptionPane.showMessageDialog(null, "The second stage of the update is complete, restart your minecraft.");
+                JOptionPane.showMessageDialog(null, "The second stage of the update is complete, restart your minecraft.", "BThack Updater", JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception e) {
                 BThack.error(e.getMessage());
             }

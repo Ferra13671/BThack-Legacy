@@ -62,7 +62,7 @@ public class UpdateWidget extends ScreenWidget {
 
             BThackRender.drawCenteredString(LanguageSystem.translate("lang.widget.Update.Started.text3"), x, y, -1, FontRenderManager.DrawMode.SMALL);
 
-            BThackRender.drawCenteredString(LanguageSystem.translate("lang.widget.Update.Started.text4") + " " + updaterThread.getDownloadedMBytes() + "Mb.", x, yDown - 10, -1, FontRenderManager.DrawMode.NORMAL_BOLD);
+            BThackRender.drawCenteredString(String.format(LanguageSystem.translate("lang.widget.Update.Started.text4") + " %sMb.", updaterThread.getDownloadedMBytes()), x, yDown - 10, -1, FontRenderManager.DrawMode.NORMAL_BOLD);
         };
     }
 

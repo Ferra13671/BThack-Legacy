@@ -7,8 +7,10 @@ import java.io.*;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.text.DecimalFormat;
 
 public class UpdaterThread extends BThackThread {
+    private static final DecimalFormat decimal = new DecimalFormat("0.00");
 
     private final URL url;
     private final Path filePath;
@@ -67,7 +69,7 @@ public class UpdaterThread extends BThackThread {
     }
 
     public String getDownloadedMBytes() {
-        return "" + (downloadedBytes / 1024 / 1024);
+        return decimal.format(downloadedBytes / 1024f / 1024f);
     }
 
     public UpdateState getUpdateState() {
