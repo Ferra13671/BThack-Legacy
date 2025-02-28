@@ -3,8 +3,8 @@ package com.ferra13671.BThack.api.Utils;
 import com.ferra13671.BTbot.api.Utils.Generate.NumberGenerator;
 import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.Core.Client.ModuleList;
+import com.ferra13671.BThack.Core.DeviceSystem;
 import com.ferra13671.BThack.api.Interfaces.Mc;
-import com.ferra13671.BThack.api.SoundSystem.yaw.TinySound;
 import com.ferra13671.DiscordRPC.DiscordEventHandlers;
 import com.ferra13671.DiscordRPC.DiscordRPC;
 import com.ferra13671.DiscordRPC.DiscordRichPresence;
@@ -21,9 +21,7 @@ public final class DiscordUtils implements Mc {
     private static boolean inited = false;
 
     public static void init() {
-        if (!TinySound.isInitialized()) {
-            return;
-        }
+        if (DeviceSystem.getLaunchDevice() == DeviceSystem.LaunchDevice.PHONE) return;
 
         try {
             discordRPC = DiscordRPC.INSTANCE;

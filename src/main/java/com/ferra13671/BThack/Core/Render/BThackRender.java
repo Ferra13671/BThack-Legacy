@@ -3,6 +3,7 @@ package com.ferra13671.BThack.Core.Render;
 import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.Core.Client.Client;
 import com.ferra13671.BThack.Core.Client.ModuleList;
+import com.ferra13671.BThack.Core.DeviceSystem;
 import com.ferra13671.BThack.Core.FileSystem.ConfigSystem.ConfigUtils;
 import com.ferra13671.BThack.Core.Render.Box.BThackBoxRender;
 import com.ferra13671.BThack.Core.Render.Drawers.*;
@@ -45,7 +46,7 @@ public final class BThackRender implements Mc {
     public static MatrixStack worldMatrixStack = new MatrixStack();
     public static final BThackBoxRender boxRender = new BThackBoxRender();
     public static final BThackLineRender lineRender = new BThackLineRender();
-    public static final Font defaultFont = FontUtils.createFontNoThrow(ConfigUtils.newInputStream("assets/bthack/fonts/defaultFont.ttf", PathMode.INSIDEJAR), 17);
+    public static Font defaultFont;
 
     public static FontRenderManager fontRenderManager;
 
@@ -57,10 +58,13 @@ public final class BThackRender implements Mc {
         if (inited) return;
         boxRender.init();
         RenderSystem.recordRenderCall(() -> Shaders.INSTANCE = new Shaders());
-        try {
-            reloadFontRenderManager();
-        } catch (Exception e) {
-            BThack.error(e.getMessage());
+        if (DeviceSystem.getLaunchDevice() == DeviceSystem.LaunchDevice.PC) {
+            try {
+                defaultFont = FontUtils.createFontNoThrow(ConfigUtils.newInputStream("assets/bthack/fonts/defaultFont.ttf", PathMode.INSIDEJAR), 17);
+                reloadFontRenderManager();
+            } catch (Exception e) {
+                BThack.error(e.getMessage());
+            }
         }
         inited = true;
     }
@@ -226,7 +230,7 @@ public final class BThackRender implements Mc {
 
         if (text == null || text.isEmpty()) return;
 
-        if (!ModuleList.customFont.isEnabled()) {
+        if (ModuleList.customFont == null || !ModuleList.customFont.isEnabled()) {
             guiGraphics.getMatrices().push();
             float size = drawMode.getSize();
             if (size != 1f)
@@ -254,7 +258,7 @@ public final class BThackRender implements Mc {
     }
 
     public static void drawCenteredString(String text, float x1, float y1, int color, FontRenderManager.DrawMode drawMode) {
-        drawString(text, (x1 - (FontUtils.getTextWidth(text, drawMode) / (drawMode == FontRenderManager.DrawMode.NORMAL || drawMode == FontRenderManager.DrawMode.NORMAL_BOLD || ModuleList.customFont.isEnabled() ? 2f : 2.85714f))), y1, color, true, drawMode);
+        drawString(text, (x1 - (FontUtils.getTextWidth(text, drawMode) / (drawMode == FontRenderManager.DrawMode.NORMAL || drawMode == FontRenderManager.DrawMode.NORMAL_BOLD || (ModuleList.customFont != null && ModuleList.customFont.isEnabled()) ? 2f : 2.85714f))), y1, color, true, drawMode);
     }
 
     /**

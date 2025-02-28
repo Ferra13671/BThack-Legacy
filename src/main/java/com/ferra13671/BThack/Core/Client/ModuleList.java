@@ -1,6 +1,7 @@
 package com.ferra13671.BThack.Core.Client;
 
 import com.ferra13671.BThack.BThack;
+import com.ferra13671.BThack.Core.DeviceSystem;
 import com.ferra13671.BThack.Core.FileSystem.ConfigSystem.ConfigSystem;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Plugin.Plugin;
@@ -231,7 +232,7 @@ public final class ModuleList {
         clickGui = register(new ClickGui());
         clientSettings = register(new ClientSettings());
         customCape = register(new CustomCape());
-        customFont = register(new CustomFont());
+        if(DeviceSystem.getLaunchDevice() == DeviceSystem.LaunchDevice.PC) customFont = register(new CustomFont());
         discordRPC = register(new DiscordRPC());
         fpsReducer = register(new FPSReducer());
         HUD = register(new HUD());

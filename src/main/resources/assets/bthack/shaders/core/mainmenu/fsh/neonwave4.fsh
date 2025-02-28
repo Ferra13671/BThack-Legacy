@@ -1,8 +1,6 @@
 #version 150
-#ifdef GL_FRAGMENT_PRECISION_HIGH
-	precision highp float;
-#else
-	precision mediump float;
+#ifdef GL_ES
+precision mediump float;
 #endif
 
 uniform float time;

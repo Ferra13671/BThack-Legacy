@@ -4,12 +4,9 @@
  * License Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License.
  * Contact: tdmaav@gmail.com
  */
-
-#ifdef GL_FRAGMENT_PRECISION_HIGH
-precision highp float;
-#else
-precision mediump float;
-#endif
+ #ifdef GL_ES
+ precision mediump float;
+ #endif
 
 uniform float time;
 uniform vec2 resolution;

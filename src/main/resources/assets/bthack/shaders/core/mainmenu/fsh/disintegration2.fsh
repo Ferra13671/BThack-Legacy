@@ -1,7 +1,7 @@
 #version 150
-#extension GL_OES_standard_derivatives : enable
-
-precision highp float;
+#ifdef GL_ES
+precision mediump float;
+#endif
 
 // https://github.com/jewbob
 uniform sampler2D texture;

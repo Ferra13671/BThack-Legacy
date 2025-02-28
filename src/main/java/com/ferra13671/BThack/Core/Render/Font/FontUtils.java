@@ -13,23 +13,23 @@ public final class FontUtils implements Mc {
 
 
     public static float getTextWidth(String text) {
-        if (ModuleList.customFont.isEnabled()) return BThackRender.fontRenderManager.normalFontRenderer.getStringWidth(text);
+        if (ModuleList.customFont != null && ModuleList.customFont.isEnabled()) return BThackRender.fontRenderManager.normalFontRenderer.getStringWidth(text);
         else return mc.textRenderer.getWidth(text);
     }
 
     public static float getTextWidth(String text, FontRenderManager.DrawMode drawMode) {
-        if (ModuleList.customFont.isEnabled()) {
+        if (ModuleList.customFont != null && ModuleList.customFont.isEnabled()) {
             return BThackRender.fontRenderManager.fontRendererOf(drawMode).getStringWidth(text);
         } else return mc.textRenderer.getWidth(text);
     }
 
     public static float getTextHeight(String text) {
-        if (ModuleList.customFont.isEnabled()) return BThackRender.fontRenderManager.normalFontRenderer.getStringHeight(text) / 2;
+        if (ModuleList.customFont != null && ModuleList.customFont.isEnabled()) return BThackRender.fontRenderManager.normalFontRenderer.getStringHeight(text) / 2;
         else return mc.textRenderer.fontHeight;
     }
 
     public static float getTextHeight(String text, FontRenderManager.DrawMode drawMode) {
-        if (ModuleList.customFont.isEnabled()) {
+        if (ModuleList.customFont != null && ModuleList.customFont.isEnabled()) {
             return BThackRender.fontRenderManager.fontRendererOf(drawMode).getStringHeight(text) / 2;
         } else return mc.textRenderer.fontHeight;
     }

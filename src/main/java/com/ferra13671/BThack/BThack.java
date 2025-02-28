@@ -7,6 +7,7 @@ import com.ferra13671.BThack.Core.FileSystem.ConfigSystem.ConfigSystem;
 import com.ferra13671.BThack.Core.FileSystem.ConfigSystem.ConfigUtils;
 import com.ferra13671.BThack.Core.FileSystem.FileSystem;
 import com.ferra13671.BThack.Core.FileSystem.JsonUtils;
+import com.ferra13671.BThack.Core.DeviceSystem;
 import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.api.GuiSystem.BThackWidgets;
 import com.ferra13671.BThack.api.Interfaces.Mc;
@@ -92,6 +93,7 @@ public final class BThack implements ClientModInitializer, Mc {
         logBThackLogo();
 
         initLog("BThack initialization has begun. Your nickname: " + mc.getSession().getUsername());
+        DeviceSystem.check();
 
         PluginSystem.loadPlugins();
 
