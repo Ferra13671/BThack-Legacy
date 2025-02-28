@@ -11,6 +11,7 @@ public class ScreenWidget extends BThackScreen {
     private final float width;
     private final float height;
 
+    protected BThackScreen parent;
     protected float xLeft = 0;
     protected float yUp = 0;
     protected float xRight = 0;
@@ -23,6 +24,10 @@ public class ScreenWidget extends BThackScreen {
         this.width = width;
         this.height = height;
         this.animationSpeed = animationSpeed;
+    }
+
+    public void setParent(BThackScreen parent) {
+        this.parent = parent;
     }
 
     @Override

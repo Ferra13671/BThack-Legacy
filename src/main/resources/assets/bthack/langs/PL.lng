@@ -232,13 +232,25 @@
 "lang.screen.Mainmenu.Quit": Wyjdź
 "lang.screen.Mainmenu.SetWallpaper": Wybierz tapetę
 "lang.screen.SelectWallpaper.Confirm": Potwierdzenie
-"lang.screen.OutdatedVersion.helloMessage": Cześć, znaleźliśmy dla was nową aktualizację!
-"lang.screen.OutdatedVersion.Current": Bieżący: %s
-"lang.screen.OutdatedVersion.New": Nowa: %s
-"lang.screen.OutdatedVersion.UpdateMessage": Czy chcesz uaktualnić do nowej wersji?
-"lang.screen.OutdatedVersion.Yes": Tak
-"lang.screen.OutdatedVersion.No": Nie
-"lang.screen.OutdatedVersion.AlwaysNo": Nie pytaj więcej
+
+//Widgets
+"lang.widget.OutdatedVersion.helloMessage": Cześć, znaleźliśmy dla was nową aktualizację!
+"lang.widget.OutdatedVersion.Current": Bieżący: %s
+"lang.widget.OutdatedVersion.New": Nowa: %s
+"lang.widget.OutdatedVersion.UpdateMessage": Czy chcesz uaktualnić do nowej wersji?
+"lang.widget.OutdatedVersion.Yes": Tak
+"lang.widget.OutdatedVersion.No": Nie
+"lang.widget.OutdatedVersion.AlwaysNo": Nie pytaj więcej
+"lang.widget.Update.Started.text1": Pobieranie nowej wersji BThack z Github.
+"lang.widget.Update.Started.text2": Nie wyłączaj Internetu, aby uniknąć błędów.
+"lang.widget.Update.Started.text3": Jeśli Internet jest niestabilny, w programie mogą wystąpić błędy.
+"lang.widget.Update.Started.text4": Downloaded:
+"lang.widget.Update.Successful.text1": Pierwsza faza aktualizacji została pomyślnie zakończona!
+"lang.widget.Update.Successful.text2": Uruchom ponownie Minecrafta, aby rozpocząć drugi etap aktualizacji.
+"lang.widget.Update.Failed.text1": Wystąpił błąd podczas pobierania nowej wersji.
+"lang.widget.Update.Failed.text2": Sprawdź połączenie internetowe i spróbuj ponownie.
+"lang.widget.Update.Failed.tryAgain": Spróbować ponownie
+"lang.widget.Update.Failed.close": Zamknij
 
 
 //Command Arguments

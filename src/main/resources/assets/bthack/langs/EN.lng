@@ -234,13 +234,25 @@
 "lang.screen.Mainmenu.Quit": Quit
 "lang.screen.Mainmenu.SetWallpaper": Set Wallpaper
 "lang.screen.SelectWallpaper.Confirm": Confirm
-"lang.screen.OutdatedVersion.helloMessage": Hi, we've found a new update for you!
-"lang.screen.OutdatedVersion.Current": Current: %s
-"lang.screen.OutdatedVersion.New": New: %s
-"lang.screen.OutdatedVersion.UpdateMessage": Want to upgrade to a new version?
-"lang.screen.OutdatedVersion.Yes": Yes
-"lang.screen.OutdatedVersion.No": No
-"lang.screen.OutdatedVersion.AlwaysNo": Don't ask anymore
+
+//Widgets
+"lang.widget.OutdatedVersion.helloMessage": Hi, we've found a new update for you!
+"lang.widget.OutdatedVersion.Current": Current: %s
+"lang.widget.OutdatedVersion.New": New: %s
+"lang.widget.OutdatedVersion.UpdateMessage": Want to upgrade to a new version?
+"lang.widget.OutdatedVersion.Yes": Yes
+"lang.widget.OutdatedVersion.No": No
+"lang.widget.OutdatedVersion.AlwaysNo": Don't ask anymore
+"lang.widget.Update.Started.text1": Downloading the new version of BThack from Github.
+"lang.widget.Update.Started.text2": Do not disconnect the internet to prevent errors.
+"lang.widget.Update.Started.text3": The program may experience errors if the internet is unstable.
+"lang.widget.Update.Started.text4": Downloaded:
+"lang.widget.Update.Successful.text1": The first stage of the update has been successfully completed!
+"lang.widget.Update.Successful.text2": Restart minecraft to start the second stage of the upgrade.
+"lang.widget.Update.Failed.text1": An error occurred when downloading the new version.
+"lang.widget.Update.Failed.text2": Check your internet connection and try again.
+"lang.widget.Update.Failed.tryAgain": Try again
+"lang.widget.Update.Failed.close": Close
 
 
 //Command Arguments

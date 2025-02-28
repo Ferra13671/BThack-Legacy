@@ -41,7 +41,6 @@ import java.util.*;
 import static com.ferra13671.BThack.Core.FileSystem.JsonUtils.*;
 
 public final class ConfigSystem {
-    static final Gson gson = (new GsonBuilder()).setPrettyPrinting().create();
 
     public static void saveConfig() {
         try {

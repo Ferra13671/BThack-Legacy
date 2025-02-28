@@ -15,9 +15,15 @@ public class WidgetManage implements Mc {
     private static final int WIDGET_ANIMATION_TIME = 1000;
 
     public final List<WidgetInfo> widgets = new ArrayList<>();
+    private final BThackScreen parent;
+
+    public WidgetManage(BThackScreen parent) {
+        this.parent = parent;
+    }
 
     public void addWidget(ScreenWidget screenWidget) {
         widgets.add(new WidgetInfo(screenWidget));
+        screenWidget.setParent(parent);
         screenWidget.init();
     }
 

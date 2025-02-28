@@ -21,7 +21,7 @@ public class BThackScreen extends Screen implements Mc {
     public static final int BACKGROUND_TABLE_COLOR = ColorUtils.fastRGBA(0,0,0,40);
 
     public ArrayList<Button> buttons = new ArrayList<>();
-    public final WidgetManage widgetManage = new WidgetManage();
+    public final WidgetManage widgetManage = new WidgetManage(this);
 
     public Button activeButton = Button.of(Integer.MIN_VALUE, -100, -100, 1, 1, "nullButton");
 

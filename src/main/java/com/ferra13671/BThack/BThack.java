@@ -1,6 +1,7 @@
 package com.ferra13671.BThack;
 
 import com.ferra13671.BTbot.api.Utils.Controller.ClientPlayerController;
+import com.ferra13671.BThack.Core.BThackUpdater.BThackUpdater;
 import com.ferra13671.BThack.Core.Client.Client;
 import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.Core.FileSystem.ConfigSystem.ConfigSystem;
@@ -9,6 +10,7 @@ import com.ferra13671.BThack.Core.FileSystem.FileSystem;
 import com.ferra13671.BThack.Core.FileSystem.JsonUtils;
 import com.ferra13671.BThack.Core.DeviceSystem;
 import com.ferra13671.BThack.Core.Render.BThackRender;
+import com.ferra13671.BThack.Core.ShutdownSystem;
 import com.ferra13671.BThack.api.GuiSystem.BThackWidgets;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Plugin.Plugin;
@@ -41,6 +43,7 @@ public final class BThack implements ClientModInitializer, Mc {
     public final String MC_VERSION;
     public final String VERSION;
     private InitStage initStage = InitStage.NOT_INITED;
+    private final boolean withBaritone;
     public final ClientPlayerController playerController = new ClientPlayerController();
 
     public static BThack instance;
@@ -52,6 +55,7 @@ public final class BThack implements ClientModInitializer, Mc {
     public BThack() {
         ModMetadata mod = FabricLoader.getInstance().getModContainer("bthack").get().getMetadata();
         MC_VERSION = mod.getCustomValue("mcVersion").getAsString();
+        withBaritone = !mod.getVersion().getFriendlyString().equals("-NoBaritone");
         VERSION = mod.getVersion().getFriendlyString();
     }
 
@@ -75,6 +79,10 @@ public final class BThack implements ClientModInitializer, Mc {
 
     public static boolean isFuturePresent() {
         return FabricLoader.getInstance().getModContainer("future").isPresent();
+    }
+
+    public boolean withBaritone() {
+        return withBaritone;
     }
 
     @Override
@@ -189,7 +197,8 @@ public final class BThack implements ClientModInitializer, Mc {
 
         BThackRender.init();
 
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+        ShutdownSystem.init();
+        ShutdownSystem.addShutdownHook(() -> {
             ModuleList.timer.setToggled(false);
             ConfigSystem.saveConfig();
             try {
@@ -199,7 +208,7 @@ public final class BThack implements ClientModInitializer, Mc {
             }
             BThack.instance.saveVersionInfo();
             BThack.log("Config Saved!");
-        }));
+        });
 
         PluginSystem.getLoadedPlugins().forEach(Plugin::postInit);
 

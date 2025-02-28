@@ -233,13 +233,25 @@
 "lang.screen.Mainmenu.Quit": Выйти
 "lang.screen.Mainmenu.SetWallpaper": Выбрать обои
 "lang.screen.SelectWallpaper.Confirm": Подтвердить
-"lang.screen.OutdatedVersion.helloMessage": Привет, мы нашли для вас новое обновление!
-"lang.screen.OutdatedVersion.Current": Текущее: %s
-"lang.screen.OutdatedVersion.New": Новое: %s
-"lang.screen.OutdatedVersion.UpdateMessage": Хотите перейти на новую версию?
-"lang.screen.OutdatedVersion.Yes": Да
-"lang.screen.OutdatedVersion.No": Нет
-"lang.screen.OutdatedVersion.AlwaysNo": Больше не спрашивать
+
+//Widgets
+"lang.widget.OutdatedVersion.helloMessage": Привет, мы нашли для вас новое обновление!
+"lang.widget.OutdatedVersion.Current": Текущее: %s
+"lang.widget.OutdatedVersion.New": Новое: %s
+"lang.widget.OutdatedVersion.UpdateMessage": Хотите перейти на новую версию?
+"lang.widget.OutdatedVersion.Yes": Да
+"lang.widget.OutdatedVersion.No": Нет
+"lang.widget.OutdatedVersion.AlwaysNo": Больше не спрашивать
+"lang.widget.Update.Started.text1": Загрузка новой версии BThack с Github.
+"lang.widget.Update.Started.text2": Не отключайте интернет во избежание ошибок.
+"lang.widget.Update.Started.text3": При нестабильной работе интернета в программе могут возникать ошибки.
+"lang.widget.Update.Started.text4": Загружено:
+"lang.widget.Update.Successful.text1": Первый этап обновления был успешно завершен!
+"lang.widget.Update.Successful.text2": Перезапустите minecraft, чтобы начать второй этап обновления.
+"lang.widget.Update.Failed.text1": При загрузке новой версии произошла ошибка.
+"lang.widget.Update.Failed.text2": Проверьте подключение к Интернету и повторите попытку.
+"lang.widget.Update.Failed.tryAgain": Попробовать снова
+"lang.widget.Update.Failed.close": Закрыть
 
 
 //Command Arguments
