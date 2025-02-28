@@ -25,6 +25,7 @@ import com.ferra13671.BThack.api.Utils.DataList.DataLists;
 import com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.ActionBotConfig;
 import com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.ActionBotTask;
 import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
+import com.ferra13671.TextureUtils.GLGif;
 import com.ferra13671.TextureUtils.GLTexture;
 import com.ferra13671.TextureUtils.PathMode;
 import com.google.gson.*;
@@ -577,8 +578,9 @@ public final class ConfigSystem {
         if (files != null) {
             for (File file : files) {
                 if (file.isFile()) {
-                    if (imageFormats.contains(FilenameUtils.getExtension(file.getName()))) {
-                        SelectWallpaperScreen.wallpapers.add(new Wallpaper(file.getName(), GLTexture.fromPath("BThack/Wallpapers/" + file.getName(), PathMode.OUTSIDEJAR, GLTexture.ColorMode.RGBA)));
+                    switch (FilenameUtils.getExtension(file.getName())) {
+                        case "png", "jpg" -> SelectWallpaperScreen.wallpapers.add(new Wallpaper(file.getName(), GLTexture.fromPath("BThack/Wallpapers/" + file.getName(), PathMode.OUTSIDEJAR, GLTexture.ColorMode.RGBA)));
+                        case "gif" -> SelectWallpaperScreen.wallpapers.add(new Wallpaper(file.getName(), GLGif.fromFile(Paths.get("BThack/Wallpapers/" + file.getName()).toFile(), GLGif.DecompileMode.FULL, 100)));
                     }
                 }
             }
@@ -602,8 +604,12 @@ public final class ConfigSystem {
             if (!_null(jsonObject, "prefix")) Client.clientInfo.setChatPrefix(jsonObject.get("prefix").getAsString());
             if (!_null(jsonObject, "wallpaper")) Client.clientInfo.setWallpaper(jsonObject.get("wallpaper").getAsString());
             if (!_null(jsonObject, "font")) Client.clientInfo.setFont(jsonObject.get("font").getAsString());
-            if (!Client.clientInfo.getWallpaper().equals("default") && Files.exists(Paths.get("BThack/Wallpapers/" + Client.clientInfo.getWallpaper())))
-                BThackMainMenuScreen.mainMenuTexture = GLTexture.fromPath("BThack/Wallpapers/" + Client.clientInfo.getWallpaper(), PathMode.OUTSIDEJAR, GLTexture.ColorMode.RGBA);
+            if (!Client.clientInfo.getWallpaper().equals("default") && Files.exists(Paths.get("BThack/Wallpapers/" + Client.clientInfo.getWallpaper()))) {
+                switch (FilenameUtils.getExtension(Client.clientInfo.getWallpaper())) {
+                    case "png", "jpg" -> BThackMainMenuScreen.mainMenuTexture = GLTexture.fromPath("BThack/Wallpapers/" + Client.clientInfo.getWallpaper(), PathMode.OUTSIDEJAR, GLTexture.ColorMode.RGBA);
+                    case "gif" -> BThackMainMenuScreen.mainMenuTexture = GLGif.fromFile(Paths.get("BThack/Wallpapers/" + Client.clientInfo.getWallpaper()).toFile(), GLGif.DecompileMode.FULL, 100);
+                }
+            }
             if (!_null(jsonObject, "capeInfo")) {
                 JsonObject capeInfoObject = jsonObject.get("capeInfo").getAsJsonObject();
                 String dataPath = "";
@@ -637,10 +643,6 @@ public final class ConfigSystem {
             }
         }
     }
-
-    private static final Set<String> imageFormats = new HashSet<>(Arrays.asList(
-            "png", "jpg", "gif"
-    ));
 
     public static void loadLanguages() {
         LanguageSystem.loadTranslations(ConfigUtils.newInputStream("assets/bthack/langs/EN.lng", PathMode.INSIDEJAR), "EN");

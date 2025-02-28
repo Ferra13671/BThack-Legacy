@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.api.Gui.Screen.MainMenu.SelectWallpaper;
 
 
-import com.ferra13671.TextureUtils.GLTexture;
+import com.ferra13671.TextureUtils.GlTex;
 
-public record Wallpaper(String filename, GLTexture texture) {
+public record Wallpaper(String filename, GlTex texture) {
 }

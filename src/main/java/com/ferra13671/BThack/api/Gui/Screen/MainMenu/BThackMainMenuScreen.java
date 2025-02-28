@@ -15,7 +15,7 @@ import com.ferra13671.BThack.api.GuiSystem.Screen.BThackScreen;
 import com.ferra13671.BThack.api.GuiSystem.BThackScreens;
 import com.ferra13671.BThack.api.GuiSystem.buttons.Button;
 import com.ferra13671.BThack.api.Utils.Textures;
-import com.ferra13671.TextureUtils.GLTexture;
+import com.ferra13671.TextureUtils.GlTex;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.multiplayer.MultiplayerScreen;
 import net.minecraft.client.gui.screen.option.OptionsScreen;
@@ -24,7 +24,7 @@ import net.minecraft.text.Text;
 
 public class BThackMainMenuScreen extends BThackScreen {
     public static boolean firstOpened = true;
-    public static GLTexture mainMenuTexture = Client.clientInfo.getDefaultMainMenuImage();
+    public static GlTex mainMenuTexture = Client.clientInfo.getDefaultMainMenuImage();
 
     public BThackMainMenuScreen() {
         super(Text.of("BThack Main Menu"));
