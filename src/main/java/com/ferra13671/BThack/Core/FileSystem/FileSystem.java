@@ -28,7 +28,6 @@ public final class FileSystem {
         registerFolder("ColourThemes", "/Themes");
         registerFolder("ActionBotConfigs", "");
         registerFolder("DefaultConfig", "/ActionBot");
-        registerFolder("Wallpapers", "");
         registerFolder("Configs", "");
         registerFolder("Fonts", "");
         registerFolder("CustomCapes", "");
