@@ -1,7 +1,7 @@
 # 1.21.1-1.6.3 Changes
 ## Modules added:
 - Auto2FA
-      TreeCutter
+- TreeCutter
 ## Modules modified:
 - TotemPopNotifier
 - ClientSettings
