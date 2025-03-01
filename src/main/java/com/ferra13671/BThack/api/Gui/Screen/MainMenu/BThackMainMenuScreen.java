@@ -1,7 +1,6 @@
 package com.ferra13671.BThack.api.Gui.Screen.MainMenu;
 
 import com.ferra13671.BThack.BThack;
-import com.ferra13671.BThack.Core.Client.Client;
 import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
@@ -15,7 +14,6 @@ import com.ferra13671.BThack.api.GuiSystem.Screen.BThackScreen;
 import com.ferra13671.BThack.api.GuiSystem.BThackScreens;
 import com.ferra13671.BThack.api.GuiSystem.buttons.Button;
 import com.ferra13671.BThack.api.Utils.Textures;
-import com.ferra13671.TextureUtils.GlTex;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.multiplayer.MultiplayerScreen;
 import net.minecraft.client.gui.screen.option.OptionsScreen;
@@ -24,7 +22,6 @@ import net.minecraft.text.Text;
 
 public class BThackMainMenuScreen extends BThackScreen {
     public static boolean firstOpened = true;
-    public static GlTex mainMenuTexture = Client.clientInfo.getDefaultMainMenuImage();
 
     public BThackMainMenuScreen() {
         super(Text.of("BThack Main Menu"));
@@ -94,8 +91,6 @@ public class BThackMainMenuScreen extends BThackScreen {
         buttons.add(Button.of(6, 32, mc.getWindow().getScaledHeight() - 34,
                 30, 10,
                 "Donate").withAction(buttonClickInfo -> DesktopUtils.openURI("https://www.donationalerts.com/r/bebra_tyan")));
-        buttons.add(Button.of(7, mc.getWindow().getScaledWidth() - 40, 12, 38, 10, "lang.screen.Mainmenu.SetWallpaper")
-                .withAction(buttonClickInfo -> actionAfterClicking(() -> changeScreen(BThackScreens.SELECT_WALLPAPER))));
 
         buttons.add(Button.of(8, 102, mc.getWindow().getScaledHeight() - 12, 38, 10, "ClickGui")
                 .withAction(buttonClickInfo -> {

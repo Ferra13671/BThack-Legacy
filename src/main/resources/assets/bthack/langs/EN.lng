@@ -232,8 +232,6 @@
 "lang.screen.Mainmenu.Multiplayer": Multiplayer
 "lang.screen.Mainmenu.Options": Options
 "lang.screen.Mainmenu.Quit": Quit
-"lang.screen.Mainmenu.SetWallpaper": Set Wallpaper
-"lang.screen.SelectWallpaper.Confirm": Confirm
 
 //Widgets
 "lang.widget.OutdatedVersion.helloMessage": Hi, we've found a new update for you!

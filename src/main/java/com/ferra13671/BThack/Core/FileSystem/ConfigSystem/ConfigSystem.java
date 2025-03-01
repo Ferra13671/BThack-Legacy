@@ -6,9 +6,6 @@ import com.ferra13671.BThack.Core.Client.ClientInfo;
 import com.ferra13671.BThack.Core.FileSystem.FileSystem;
 import com.ferra13671.BThack.api.Category.Categories;
 import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.Frame;
-import com.ferra13671.BThack.api.Gui.Screen.MainMenu.BThackMainMenuScreen;
-import com.ferra13671.BThack.api.Gui.Screen.MainMenu.SelectWallpaper.SelectWallpaperScreen;
-import com.ferra13671.BThack.api.Gui.Screen.MainMenu.SelectWallpaper.Wallpaper;
 import com.ferra13671.BThack.api.Module.HudComponent;
 import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Cape.Cape;
@@ -25,8 +22,6 @@ import com.ferra13671.BThack.api.Utils.DataList.DataLists;
 import com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.ActionBotConfig;
 import com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.ActionBotTask;
 import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
-import com.ferra13671.TextureUtils.GLGif;
-import com.ferra13671.TextureUtils.GLTexture;
 import com.ferra13671.TextureUtils.PathMode;
 import com.google.gson.*;
 import net.minecraft.util.math.Vec3d;
@@ -566,31 +561,9 @@ public final class ConfigSystem {
         }
     }
 
-    public static void refreshWallpapers() {
-        for (Wallpaper wallpaper : SelectWallpaperScreen.wallpapers) {
-            if (wallpaper.texture().getTexId() != Client.clientInfo.getDefaultMainMenuImage().getTexId())
-                wallpaper.texture().delete();
-        }
-        SelectWallpaperScreen.wallpapers.clear();
-
-        File imagesFolder = Paths.get("BThack/Wallpapers").toFile();
-        File[] files = imagesFolder.listFiles();
-        if (files != null) {
-            for (File file : files) {
-                if (file.isFile()) {
-                    switch (FilenameUtils.getExtension(file.getName())) {
-                        case "png", "jpg" -> SelectWallpaperScreen.wallpapers.add(new Wallpaper(file.getName(), GLTexture.fromPath("BThack/Wallpapers/" + file.getName(), PathMode.OUTSIDEJAR, GLTexture.ColorMode.RGBA)));
-                        case "gif" -> SelectWallpaperScreen.wallpapers.add(new Wallpaper(file.getName(), GLGif.fromFile(Paths.get("BThack/Wallpapers/" + file.getName()).toFile(), GLGif.DecompileMode.FULL, 100)));
-                    }
-                }
-            }
-        }
-    }
-
     public static void saveClientInfo() throws IOException {
         ConfigUtils.saveInJson("ClientInfo", "", jsonObject -> {
             add(jsonObject, "prefix", Client.clientInfo.getChatPrefix());
-            add(jsonObject, "wallpaper", Client.clientInfo.getWallpaper());
             add(jsonObject, "font", Client.clientInfo.getFont());
             JsonObject capeInfoObject = new JsonObject();
             add(capeInfoObject, "dataPath", Client.clientInfo.getCapeInfo().dataPath());
@@ -602,14 +575,7 @@ public final class ConfigSystem {
     public static void loadClientInfo() throws IOException {
         ConfigUtils.loadFromJson("ClientInfo", "", jsonObject -> {
             if (!_null(jsonObject, "prefix")) Client.clientInfo.setChatPrefix(jsonObject.get("prefix").getAsString());
-            if (!_null(jsonObject, "wallpaper")) Client.clientInfo.setWallpaper(jsonObject.get("wallpaper").getAsString());
             if (!_null(jsonObject, "font")) Client.clientInfo.setFont(jsonObject.get("font").getAsString());
-            if (!Client.clientInfo.getWallpaper().equals("default") && Files.exists(Paths.get("BThack/Wallpapers/" + Client.clientInfo.getWallpaper()))) {
-                switch (FilenameUtils.getExtension(Client.clientInfo.getWallpaper())) {
-                    case "png", "jpg" -> BThackMainMenuScreen.mainMenuTexture = GLTexture.fromPath("BThack/Wallpapers/" + Client.clientInfo.getWallpaper(), PathMode.OUTSIDEJAR, GLTexture.ColorMode.RGBA);
-                    case "gif" -> BThackMainMenuScreen.mainMenuTexture = GLGif.fromFile(Paths.get("BThack/Wallpapers/" + Client.clientInfo.getWallpaper()).toFile(), GLGif.DecompileMode.FULL, 100);
-                }
-            }
             if (!_null(jsonObject, "capeInfo")) {
                 JsonObject capeInfoObject = jsonObject.get("capeInfo").getAsJsonObject();
                 String dataPath = "";

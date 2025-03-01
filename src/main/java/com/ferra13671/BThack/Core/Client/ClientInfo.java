@@ -4,15 +4,11 @@ import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.api.Managers.managers.Cape.CapeManager;
 import com.ferra13671.BThack.api.Managers.managers.ColourTheme.ColorTheme;
 import com.ferra13671.BThack.api.Interfaces.Mc;
-import com.ferra13671.TextureUtils.GLTexture;
-import com.ferra13671.TextureUtils.PathMode;
 
 public final class ClientInfo implements Mc {
     private String name = "BThack " + BThack.instance.VERSION + " | " + mc.getSession().getUsername();
     private final String cName = "BThack " + BThack.instance.VERSION;
-    private final GLTexture defaultMainMenuImage = GLTexture.fromPath("assets/bthack/bthack_mainmenu.jpg", PathMode.INSIDEJAR, GLTexture.ColorMode.RGBA);
     private String chatPrefix = "$";
-    private String wallpaper = "default";
     private String font = "default";
     private String currentConfigName = "";
     private ColorTheme colorTheme;
@@ -34,10 +30,6 @@ public final class ClientInfo implements Mc {
         return cName;
     }
 
-    public GLTexture getDefaultMainMenuImage() {
-        return defaultMainMenuImage;
-    }
-
     public String getChatPrefix() {
         return chatPrefix;
     }
@@ -48,10 +40,6 @@ public final class ClientInfo implements Mc {
 
     public ColorTheme getColorTheme() {
         return colorTheme;
-    }
-
-    public String getWallpaper() {
-        return wallpaper;
     }
 
     public String getFont() {
@@ -77,10 +65,6 @@ public final class ClientInfo implements Mc {
 
     public void setColorTheme(ColorTheme colorTheme) {
         this.colorTheme = colorTheme;
-    }
-
-    public void setWallpaper(String wallpaper) {
-        this.wallpaper = wallpaper;
     }
 
     public void setFont(String font) {

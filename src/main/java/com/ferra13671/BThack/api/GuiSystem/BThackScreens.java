@@ -5,7 +5,6 @@ import com.ferra13671.BThack.api.Gui.Screen.ExitScreen;
 import com.ferra13671.BThack.api.Gui.Screen.HudEditor.HudEditorScreen;
 import com.ferra13671.BThack.api.Gui.Screen.MainMenu.BThackCreditsScreen;
 import com.ferra13671.BThack.api.Gui.Screen.MainMenu.BThackMainMenuScreen;
-import com.ferra13671.BThack.api.Gui.Screen.MainMenu.SelectWallpaper.SelectWallpaperScreen;
 
 public class BThackScreens {
     private static boolean inited = false;
@@ -14,7 +13,6 @@ public class BThackScreens {
     public static BThackMainMenuScreen BTHACK_MAIN_MENU;
     public static HudEditorScreen HUD_EDITOR;
     public static BThackCreditsScreen BTHACK_CREDITS;
-    public static SelectWallpaperScreen SELECT_WALLPAPER;
     public static ExitScreen EXIT;
 
 
@@ -25,7 +23,6 @@ public class BThackScreens {
         BTHACK_MAIN_MENU = new BThackMainMenuScreen();
         HUD_EDITOR = new HudEditorScreen();
         BTHACK_CREDITS = new BThackCreditsScreen();
-        SELECT_WALLPAPER = new SelectWallpaperScreen();
         EXIT = new ExitScreen();
 
         inited = true;

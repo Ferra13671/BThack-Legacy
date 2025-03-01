@@ -6,12 +6,10 @@ import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Animation.Animation;
 import com.ferra13671.BThack.api.Gui.Screen.TransitionScreen;
-import com.ferra13671.BThack.api.Gui.Screen.MainMenu.BThackMainMenuScreen;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.GuiSystem.buttons.Button;
-import com.ferra13671.TextureUtils.GLGif;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
@@ -150,8 +148,7 @@ public class BThackScreen extends Screen implements Mc {
             Managers.MAIN_MENU_SHADER_MANAGER.getMainMenuShader().setParameters(mouseX, mouseY, width, height, Managers.MAIN_MENU_SHADER_MANAGER.getShaderTime());
             BThackRender.drawShader(Managers.MAIN_MENU_SHADER_MANAGER.getMainMenuShader(), 0, 0, width, height);
         } else {
-            if (BThackMainMenuScreen.mainMenuTexture instanceof GLGif glGif) glGif.update();
-            BThackRender.drawTextureRect(BThackMainMenuScreen.mainMenuTexture, 0, 0, mc.getWindow().getScaledWidth(), mc.getWindow().getScaledHeight());
+            ROTATING_PANORAMA_RENDERER.render(BThackRender.guiGraphics, this.width, this.height, 1.0F, 0.25f);
         }
     }
 

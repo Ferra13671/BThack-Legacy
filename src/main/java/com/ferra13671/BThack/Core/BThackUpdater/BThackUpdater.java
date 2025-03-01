@@ -6,10 +6,10 @@ import com.ferra13671.BThack.api.Utils.Data;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import net.fabricmc.loader.api.FabricLoader;
-import net.fabricmc.loader.api.LanguageAdapter;
-import net.fabricmc.loader.api.LanguageAdapterException;
-import net.fabricmc.loader.api.ModContainer;
+import net.fabricmc.loader.api.entrypoint.PreLaunchEntrypoint;
 import net.fabricmc.loader.impl.util.SystemProperties;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.io.*;
@@ -21,7 +21,8 @@ import java.util.EnumSet;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
-public class BThackUpdater implements LanguageAdapter {
+public class BThackUpdater implements PreLaunchEntrypoint {
+    private static final Logger logger = LoggerFactory.getLogger("BThackUpdater");
     public static final Path UPDATE_DATA_PATH = getDirectory0("BThack/UpdateData.jar");
 
     static {
@@ -30,12 +31,12 @@ public class BThackUpdater implements LanguageAdapter {
 
     public static void checkAndFinalizeUpdate() {
         if (Files.exists(UPDATE_DATA_PATH)) {
-            BThack.log("Start finalize BThack updating...");
+            logger.info("Start finalize BThack updating...");
             File bthackFile = findBThackFile();
             if (bthackFile == null) {
-                BThack.error("BThack file not found!");
+                logger.error("BThack file not found!");
                 return;
-            }
+            } else logger.info("BThack file found: {}", bthackFile.getName());
             try {
                 BufferedInputStream bufferedInputStream = new BufferedInputStream(Files.newInputStream(UPDATE_DATA_PATH));
                 FileOutputStream fileOutputStream = new FileOutputStream(bthackFile);
@@ -46,7 +47,7 @@ public class BThackUpdater implements LanguageAdapter {
                 bufferedInputStream.close();
                 fileOutputStream.close();
                 Files.delete(UPDATE_DATA_PATH);
-                BThack.log("The BThack update has been fully finalized!");
+                logger.info("The BThack update has been fully finalized!");
                 JOptionPane.showMessageDialog(null, "The second stage of the update is complete, restart your minecraft.", "BThack Updater", JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception e) {
                 BThack.error(e.getMessage());
@@ -102,7 +103,7 @@ public class BThackUpdater implements LanguageAdapter {
     }
 
     @Override
-    public <T> T create(ModContainer mod, String value, Class<T> type) throws LanguageAdapterException {
-        return null;
+    public void onPreLaunch() {
+
     }
 }
