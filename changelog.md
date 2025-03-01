@@ -1,3 +1,21 @@
+# 1.21.1-1.6.3 Changes
+## Modules added:
+- Auto2FA
+      TreeCutter
+## Modules modified:
+- TotemPopNotifier
+- ClientSettings
+- Nametags
+## HudComponents modified:
+- Companion
+## Added Commands:
+- $auto2FA --- Adds/removes a 2fa key for a specific nickname.
+## Other changes:
+- The screen system was heavily modified.
+- Fixed a problem with launching on phones.
+- BThackUpdater has been added, which can be used to install updates automatically.
+- The wallpaper system has been removed.
+
 # 1.21.1-1.6.2 Changes
 ### Modules added:
 - CustomCape
