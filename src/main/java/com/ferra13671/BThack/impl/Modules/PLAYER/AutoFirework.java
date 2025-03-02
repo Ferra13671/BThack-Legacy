@@ -54,6 +54,12 @@ public class AutoFirework extends Module {
     }
 
     @Override
+    protected void addToArrayList() {
+        if (mode.getValue().equals("Always"))
+            super.addToArrayList();
+    }
+
+    @Override
     public void onEnable() {
         if (nullCheck()) {
             toggle();
