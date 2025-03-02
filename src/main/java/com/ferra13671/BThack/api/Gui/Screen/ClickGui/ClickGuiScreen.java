@@ -7,8 +7,6 @@ import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Font.FontUtils;
 import com.ferra13671.BThack.Core.Render.Utils.BThackRenderUtils;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
-import com.ferra13671.BThack.api.Animation.Animation;
-import com.ferra13671.BThack.api.Animation.Easing;
 import com.ferra13671.BThack.api.Category.Categories;
 import com.ferra13671.BThack.api.Category.Category;
 import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.Component;
@@ -41,9 +39,8 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
     private final ArrayList<Frame> frames = new ArrayList<>();
     private boolean startSaving = false;
     private SliderButton guiScaleSlider;
-    private final Data<Module> descriptionModule = new Data<>();
-    private final Animation descriptionAnimation = new Animation(Easing.LINEAR, 500);
     private final Data<Slider> writingSlider = new Data<>();
+    private final ArrayList<DescriptionBar> descriptions = new ArrayList<>();
     private final Ticker ticker = new Ticker();
     public final ShaderTicker snowTicker = new ShaderTicker();
 
@@ -154,7 +151,13 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
         BThackRender.guiGraphics.getMatrices().scale((float) ModuleList.clickGui.guiScale.getValue(), (float) ModuleList.clickGui.guiScale.getValue(), 1);
         BThackRender.guiGraphics.getMatrices().translate(0, 0, 1);
 
-        ClickGuiRenderer.drawDescriptionBar(descriptionModule, descriptionAnimation);
+        descriptions.removeIf(DescriptionBar::needRemove);
+        BThackRender.guiGraphics.getMatrices().push();
+        descriptions.forEach(descriptionBar -> {
+            descriptionBar.render();
+            BThackRender.guiGraphics.getMatrices().translate(0, 0, 1);
+        });
+        BThackRender.guiGraphics.getMatrices().pop();
 
         BThackRender.guiGraphics.getMatrices().translate(0, 0, 1);
 
@@ -175,15 +178,18 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
 
     @Override
     public void mouseMoved(double mouseX, double mouseY) {
+        Module m = null;
         for (Frame frame : frames) {
             Module module = frame.getDescriptionModule(mouseX, mouseY);
             if (module != null) {
-                if (descriptionModule.get() == null) descriptionAnimation.reset();
-                descriptionModule.set(module);
-                return;
+                m = module;
+                if (descriptions.isEmpty() || descriptions.getFirst().getModule() != module) {
+                    if (!descriptions.isEmpty() && !descriptions.getFirst().isClosing()) descriptions.getFirst().close();
+                    descriptions.addFirst(new DescriptionBar(module));
+                }
             }
         }
-        descriptionModule.set(null);
+        if (m == null && !descriptions.isEmpty() && !descriptions.getFirst().isClosing()) descriptions.getFirst().close();
     }
 
     @Override
