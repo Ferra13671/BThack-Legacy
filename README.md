@@ -66,3 +66,9 @@ The cheat client also has a plugin system that allows you to add your own module
 
 ## Support
 If you have a bug or want to suggest a feature, create an issue on Github or contact me through the [Discord](https://discord.gg/vmX26ByYEX) server.
+
+## Images
+### ClickGUI
+![ClickGui](https://raw.githubusercontent.com/Ferra13671/BThack/1.21.1/Images/ClickGui.png)
+### HudEditor
+![HudEditor](https://raw.githubusercontent.com/Ferra13671/BThack/1.21.1/Images/HudEditor.png)
