@@ -16,6 +16,7 @@ import com.ferra13671.BThack.Core.Render.Utils.ScissorStack;
 import com.ferra13671.BThack.api.Shader.ShaderProgram;
 import com.ferra13671.BThack.api.Shader.Shaders;
 import com.ferra13671.BThack.api.Utils.RegionPos;
+import com.ferra13671.BThack.impl.HudComponents.ArrayListComponent;
 import com.ferra13671.BThack.mixins.accessor.IDrawContext;
 import com.ferra13671.TextureUtils.GlTex;
 import com.ferra13671.TextureUtils.PathMode;
@@ -74,6 +75,7 @@ public final class BThackRender implements Mc {
             fontRenderManager.close();
         if (Client.clientInfo.getFont().equals("default")) fontRenderManager = new FontRenderManager(defaultFont);
         else if (Files.exists(Paths.get("BThack/Fonts/" + Client.clientInfo.getFont()))) fontRenderManager = new FontRenderManager(FontUtils.createFont(ConfigUtils.newInputStream("BThack/Fonts/" + Client.clientInfo.getFont(), PathMode.OUTSIDEJAR), 17));
+        ArrayListComponent.updateSizes();
     }
 
     public static void trace(Vec3d vec3d, Matrix4f matrix, Vec3d start, float red, float green, float blue, float alpha, Vec3d regionVec) {

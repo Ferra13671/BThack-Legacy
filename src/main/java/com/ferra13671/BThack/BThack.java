@@ -1,7 +1,6 @@
 package com.ferra13671.BThack;
 
 import com.ferra13671.BTbot.api.Utils.Controller.ClientPlayerController;
-import com.ferra13671.BThack.Core.BThackUpdater.BThackUpdater;
 import com.ferra13671.BThack.Core.Client.Client;
 import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.Core.FileSystem.ConfigSystem.ConfigSystem;
@@ -174,6 +173,7 @@ public final class BThack implements ClientModInitializer, Mc {
             throw new RuntimeException(e);
         }
 
+        BThackRender.init();
         BThack.initDebug("Starting client initialization...");
         Client.startup();
         if (Client.inited) {
@@ -194,8 +194,6 @@ public final class BThack implements ClientModInitializer, Mc {
             BThack.initErr("There was an error when loading the config. Further work may occur with failures.");
             e.printStackTrace();
         }
-
-        BThackRender.init();
 
         ShutdownSystem.init();
         ShutdownSystem.addShutdownHook(() -> {

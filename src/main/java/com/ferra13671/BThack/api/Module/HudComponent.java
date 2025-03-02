@@ -51,6 +51,12 @@ public abstract class HudComponent extends Module {
         return (mc.getWindow().getScaledWidth() / 100f) * factor;
     }
 
+    @Override
+    protected final void addToArrayList() {}
+
+    @Override
+    protected final void removeFromArrayList() {}
+
     public float getY() {
         return this.y;
     }

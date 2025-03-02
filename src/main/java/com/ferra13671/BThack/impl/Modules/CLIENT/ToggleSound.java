@@ -17,7 +17,7 @@ public class ToggleSound extends Module {
 
         allowRemapKeyCode = false;
         allowRemapVisible = false;
-        visible = false;
+        setVisible(false);
 
         initSettings(
                 volume

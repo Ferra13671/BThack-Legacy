@@ -96,7 +96,7 @@ public final class ConfigSystem {
                 add(jsonObject, "Name", module.getName());
                 add(jsonObject, "Enabled", module.isEnabled());
                 add(jsonObject, "Bind", module.getKey());
-                add(jsonObject, "Visible", module.visible);
+                add(jsonObject, "Visible", module.isVisible());
 
                 if (Managers.SETTINGS_MANAGER.getSettingsByMod(module) != null) {
                     for (Setting s : Managers.SETTINGS_MANAGER.getSettingsByMod(module)) {
@@ -128,7 +128,7 @@ public final class ConfigSystem {
                 }
                 module.setToggled(jsonObject.get("Enabled").getAsBoolean());
                 module.setKey(jsonObject.get("Bind").getAsInt());
-                module.visible = jsonObject.get("Visible").getAsBoolean();
+                module.setVisible(jsonObject.get("Visible").getAsBoolean());
             }, () -> {
                 if (module.isAutoEnabled()) {
                     module.setToggled(true);
@@ -161,7 +161,7 @@ public final class ConfigSystem {
                 add(moduleObject, "Name", module.getName());
                 add(moduleObject, "Enabled", module.isEnabled());
                 add(moduleObject, "Bind", module.getKey());
-                add(moduleObject, "Visible", module.visible);
+                add(moduleObject, "Visible", module.isVisible());
 
                 if (Managers.SETTINGS_MANAGER.getSettingsByMod(module) != null) {
                     for (Setting s : Managers.SETTINGS_MANAGER.getSettingsByMod(module)) {
@@ -205,7 +205,7 @@ public final class ConfigSystem {
 
                             module.setQuietlyToggled(moduleObject.get("Enabled").getAsBoolean());
                             module.setKey(moduleObject.get("Bind").getAsInt());
-                            module.visible = moduleObject.get("Visible").getAsBoolean();
+                            module.setVisible(moduleObject.get("Visible").getAsBoolean());
                         }
                     }
 

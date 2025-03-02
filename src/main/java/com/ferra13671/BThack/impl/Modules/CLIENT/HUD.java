@@ -32,7 +32,7 @@ public class HUD extends Module {
 
         allowRemapKeyCode = false;
         allowRemapVisible = false;
-        visible = false;
+        setVisible(false);
 
         mc.getWindow().swapBuffers();
 

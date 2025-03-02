@@ -17,7 +17,7 @@ public class Visible extends Checkbox {
 
     @Override
     protected boolean needRenderGradient() {
-        return module.visible || animation.getEase() < 1;
+        return module.isVisible() || animation.getEase() < 1;
     }
 
     @Override
@@ -27,7 +27,7 @@ public class Visible extends Checkbox {
 
     @Override
     protected int getGradientColor() {
-        return ColorUtils.integrateAlpha(ClickGui.getClickGuiColor(true), (int) (255 * (module.visible ? animation.getEase() : 1 - animation.getEase())));
+        return ColorUtils.integrateAlpha(ClickGui.getClickGuiColor(true), (int) (255 * (module.isVisible() ? animation.getEase() : 1 - animation.getEase())));
     }
 
     @Override
@@ -47,7 +47,7 @@ public class Visible extends Checkbox {
     @Override
     public boolean mouseClicked(int mouseX, int mouseY, int button) {
         if (isMouseOnButton(mouseX, mouseY) && button == 0) {
-            module.visible = !module.visible;
+            module.setVisible(!module.isVisible());
             animation.reset();
         }
         return isMouseOnButton(mouseX, mouseY);

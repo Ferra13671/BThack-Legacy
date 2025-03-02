@@ -17,7 +17,7 @@ public class Macros extends Module {
         );
 
         allowRemapVisible = false;
-        visible = false;
+        setVisible(false);
         allowRemapKeyCode = false;
     }
 

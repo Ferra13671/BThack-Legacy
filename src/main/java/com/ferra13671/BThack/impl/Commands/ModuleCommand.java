@@ -27,8 +27,8 @@ public class ModuleCommand extends AbstractCommand {
         })).then(literal("visible").then(arg("visible", Arguments.BOOLEAN).executes(context -> {
             Module module = context.getArgument("module", Module.class);
             if (!module.allowRemapVisible) error(String.format(LanguageSystem.translate("lang.command.Module.notAllowedRemapVisible"), module.getName()));
-            else module.visible = context.getArgument("visible", Boolean.class);
-            sendMessage(Formatting.AQUA + LanguageSystem.translate(module.visible ? "lang.command.Module.visible" : "lang.command.Module.notVisible"));
+            else module.setVisible(context.getArgument("visible", Boolean.class));
+            sendMessage(Formatting.AQUA + LanguageSystem.translate(module.isVisible() ? "lang.command.Module.visible" : "lang.command.Module.notVisible"));
             return SUCCESFUL;
         }))).then(literal("reset").executes(context -> {
             final Module module = context.getArgument("module", Module.class);

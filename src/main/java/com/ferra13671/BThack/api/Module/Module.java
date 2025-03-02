@@ -10,6 +10,7 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.Setting;
 import com.ferra13671.BThack.api.SoundSystem.SoundSystem;
 import com.ferra13671.BThack.api.SoundSystem.Sounds;
 import com.ferra13671.BThack.api.Utils.ChatUtils;
+import com.ferra13671.BThack.impl.HudComponents.ArrayListComponent;
 import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.util.Formatting;
@@ -42,6 +43,10 @@ public class Module {
         this.autoEnabled = autoEnabled;
 
         pc = BThack.instance.playerController;
+    }
+
+    public String getArrayListName() {
+        return name + (arrayListInfo.isEmpty() ? "" : Formatting.GRAY + "[" + Formatting.WHITE +  arrayListInfo + Formatting.GRAY + "]");
     }
 
     public boolean isEnabled() {
@@ -106,6 +111,17 @@ public class Module {
         return "[" + this.name + "]";
     }
 
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+        if (this.visible) {
+            if (isEnabled()) ArrayListComponent.addModule(this);
+        } else ArrayListComponent.removeModule(this);
+    }
+
+    public boolean isVisible() {
+        return visible;
+    }
+
     public void sendNotification(String text) {
         if (ModuleList.chatNotifications.isEnabled() && ModuleList.chatNotifications.moduleMessages.getValue()) {
             ChatUtils.sendMessage(getChatName() + Formatting.GRAY + " " + text);
@@ -135,11 +151,21 @@ public class Module {
             sendToggleMessage();
             playOnSound();
             onEnable();
+            addToArrayList();
         } else {
             sendToggleMessage();
             playOffSound();
             onDisable();
+            removeFromArrayList();
         }
+    }
+
+    protected void addToArrayList() {
+        ArrayListComponent.addModule(this);
+    }
+
+    protected void removeFromArrayList() {
+        ArrayListComponent.removeModule(this);
     }
 
     public void setToggled(boolean toggled) {
@@ -149,10 +175,12 @@ public class Module {
             sendToggleMessage();
             playOnSound();
             onEnable();
+            addToArrayList();
         } else {
             sendToggleMessage();
             playOffSound();
             onDisable();
+            removeFromArrayList();
         }
     }
 

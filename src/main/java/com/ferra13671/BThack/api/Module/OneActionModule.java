@@ -42,6 +42,12 @@ public class OneActionModule extends Module {
     }
 
     @Override
+    protected final void addToArrayList() {}
+
+    @Override
+    protected final void removeFromArrayList() {}
+
+    @Override
     public void setToggled(boolean toggled) {
         this.toggled = toggled;
         if (this.toggled) {

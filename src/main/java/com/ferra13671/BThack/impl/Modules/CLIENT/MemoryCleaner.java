@@ -18,7 +18,7 @@ public class MemoryCleaner extends Module {
 
         allowRemapKeyCode = false;
         allowRemapVisible = false;
-        visible = false;
+        setVisible(false);
 
         initSettings(showMessages);
     }

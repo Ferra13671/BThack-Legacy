@@ -30,7 +30,7 @@ public class MenuShader extends Module {
         );
 
         allowRemapVisible = false;
-        visible = false;
+        setVisible(false);
 
         initSettings(
                 random,

@@ -60,7 +60,7 @@ public class ClientSettings extends Module {
 
         allowRemapKeyCode = false;
         allowRemapVisible = false;
-        visible = false;
+        setVisible(false);
 
         initSettings(
                 startSound,
@@ -71,6 +71,12 @@ public class ClientSettings extends Module {
                 ownColor
         );
     }
+
+    @Override
+    protected void addToArrayList() {}
+
+    @Override
+    protected void removeFromArrayList() {}
 
     @Override
     public void sendToggleMessage() {
