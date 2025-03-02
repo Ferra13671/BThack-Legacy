@@ -34,5 +34,6 @@ public class MixinTitleScreen implements Mc {
 
         if (ModuleList.bthackMainMenu.isEnabled())
             mc.setScreen(BThackScreens.BTHACK_MAIN_MENU);
+        else BThackMainMenuScreen.firstOpened = false;
     }
 }
