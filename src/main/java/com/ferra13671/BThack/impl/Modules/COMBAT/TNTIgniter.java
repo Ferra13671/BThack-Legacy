@@ -44,7 +44,7 @@ public class TNTIgniter extends Module {
     public void onTick(ClientTickEvent e) {
         if (nullCheck()) return;
 
-        List<BlockPos> poses = BlockUtils.getAllInBox(mc.player.getBlockPos(), (int) range.getValue()).stream().
+        List<BlockPos> poses = BlockUtils.getSphere(mc.player.getBlockPos(), (float) range.getValue(), (float) range.getValue(), false, true, 0).stream().
                 filter(pos -> mc.world.getBlockState(pos).getBlock() instanceof TntBlock).toList();
         
         for (BlockPos pos : poses) {

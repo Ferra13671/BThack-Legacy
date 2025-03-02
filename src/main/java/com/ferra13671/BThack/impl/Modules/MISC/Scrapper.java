@@ -30,7 +30,7 @@ public class Scrapper extends Module {
     public void onTick(ClientTickEvent e) {
         if (nullCheck() || DestroyManager.isDestroying) return;
 
-        List<BlockPos> poses = BlockUtils.getAllInBox(mc.player.getBlockPos(), 4).stream().filter(pos -> pos.getY() >= (int) mc.player.getY()).toList();
+        List<BlockPos> poses = BlockUtils.getSphere(mc.player.getBlockPos(), 4, 4, false, true, 0).stream().filter(pos -> pos.getY() >= (int) mc.player.getY()).toList();
         ArrayList<Vec3i> sch = new ArrayList<>(poses);
 
         thread3D = new DestroyThread3D();

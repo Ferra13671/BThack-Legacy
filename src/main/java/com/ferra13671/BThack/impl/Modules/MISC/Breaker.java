@@ -38,7 +38,7 @@ public class Breaker extends Module {
     public void onTick(ClientTickEvent e) {
         if (nullCheck() || DestroyManager.isDestroying) return;
 
-        List<BlockPos> blockPoses = BlockUtils.getAllInBox(mc.player.getBlockPos(), 4).stream().filter(this::check)
+        List<BlockPos> blockPoses = BlockUtils.getSphere(mc.player.getBlockPos(), 4, 4, false, true, 0).stream().filter(this::check)
                 .toList();
         List<Vec3i> schematic = new ArrayList<>();
         schematic.addAll(blockPoses);
