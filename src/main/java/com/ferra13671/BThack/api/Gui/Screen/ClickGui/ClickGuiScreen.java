@@ -113,9 +113,8 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
         RenderSystem.enableDepthTest();
         if (Module.nullCheck()) drawMainMenuWallpaper(mouseX, mouseY);
 
-        if (ModuleList.clickGui.blur.getValue()) {
+        if (ModuleList.clickGui.blur.getValue())
             ClickGui.renderBlur(partialTicks);
-        }
 
         if (Client.clientInfo.isWinter() && ModuleList.clickGui.snow.getValue()) {
             BThackRenderUtils.applyBlend();
@@ -132,21 +131,15 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
 
         boolean continueUpdate = true;
         for (Frame frame : frames) {
-            if (continueUpdate) {
-                if (frame.isMouseOnFrame(mouseX, mouseY)) {
-                    continueUpdate = false;
-                    frame.updateButtons(mouseX, mouseY);
-                } else if (frame.buttonHovered) frame.resetHovered();
-            } else {
-                if (frame.buttonHovered) frame.resetHovered();
-            }
+            if (continueUpdate && frame.isMouseOnFrame(mouseX, mouseY)) {
+                continueUpdate = false;
+                frame.updateButtons(mouseX, mouseY);
+            } else if (frame.buttonHovered) frame.resetHovered();
         }
 
-        if (writingSlider.get() != null) {
-            if (writingSlider.get().writing) {
-                BThackRender.drawString("New Value: " + writingSlider.get().textBuilder, (int) ((mc.getWindow().getScaledWidth() / 2f) - (FontUtils.getTextWidth("New Value: " + writingSlider.get().textBuilder) / 2)), (mc.getWindow().getScaledHeight() - 45), ColorUtils.WHITE);
-            }
-        }
+        if (writingSlider.get() != null && writingSlider.get().writing)
+            BThackRender.drawString("New Value: " + writingSlider.get().textBuilder, (int) ((mc.getWindow().getScaledWidth() / 2f) - (FontUtils.getTextWidth("New Value: " + writingSlider.get().textBuilder) / 2)), (mc.getWindow().getScaledHeight() - 45), ColorUtils.WHITE);
+
         BThackRender.guiGraphics.getMatrices().push();
         BThackRender.guiGraphics.getMatrices().scale((float) ModuleList.clickGui.guiScale.getValue(), (float) ModuleList.clickGui.guiScale.getValue(), 1);
         BThackRender.guiGraphics.getMatrices().translate(0, 0, 1);
@@ -248,16 +241,12 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
         }
 
         switch (keyCode) {
-            case KeyboardUtils.KEY_ESCAPE:
-                mc.setScreen(null);
-                break;
-            case KeyboardUtils.KEY_LEFT:
-            case KeyboardUtils.KEY_RIGHT:
-            case KeyboardUtils.KEY_UP:
-            case KeyboardUtils.KEY_DOWN:
+            case KeyboardUtils.KEY_ESCAPE -> mc.setScreen(null);
+            case KeyboardUtils.KEY_LEFT, KeyboardUtils.KEY_RIGHT, KeyboardUtils.KEY_UP, KeyboardUtils.KEY_DOWN -> {
                 for(Frame frame : frames) {
                     frame.moveFrame(keyCode);
                 }
+            }
         }
 
         return super.keyPressed(keyCode, scanCode, shift);
@@ -267,8 +256,6 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
     public boolean mouseReleased(double mouseX, double mouseY, int state) {
         for(Frame frame : frames) {
             frame.setDrag(false);
-        }
-        for(Frame frame : frames) {
             frame.updateRelease((int) mouseX, (int) mouseY, state);
         }
 

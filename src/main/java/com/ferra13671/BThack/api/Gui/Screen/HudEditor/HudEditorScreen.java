@@ -151,14 +151,8 @@ public class HudEditorScreen extends BThackScreen {
         }
 
         switch (keyCode) {
-            case KeyboardUtils.KEY_ESCAPE:
-                mc.setScreen(null);
-                break;
-            case KeyboardUtils.KEY_LEFT:
-            case KeyboardUtils.KEY_RIGHT:
-            case KeyboardUtils.KEY_UP:
-            case KeyboardUtils.KEY_DOWN:
-                frame.moveFrame(keyCode);
+            case KeyboardUtils.KEY_ESCAPE -> mc.setScreen(null);
+            case KeyboardUtils.KEY_LEFT, KeyboardUtils.KEY_RIGHT, KeyboardUtils.KEY_UP, KeyboardUtils.KEY_DOWN -> frame.moveFrame(keyCode);
         }
 
         return super.keyPressed(keyCode, scanCode, shift);

@@ -34,8 +34,8 @@ public class ModuleButton extends Component implements Mc {
 
 	private boolean isHovered;
 	private final ArrayList<AbstractSetting> settings = new ArrayList<>();
-	private float alphaDelta = 1;
-	private boolean alphaDeltaInverse = true;
+	private final Animation settingColorAnimation = new Animation(Easing.LINEAR, 1300);
+	private boolean scInvert = false;
 	private Animation settingAnimation = new Animation(Easing.CIRC_OUT, 500);
 	private final Animation toggleAnimation = new Animation(Easing.LINEAR, 250);
 	private double lastAnimFactor = 0;
@@ -49,13 +49,14 @@ public class ModuleButton extends Component implements Mc {
 		AbstractSetting setting;
 		if(Managers.SETTINGS_MANAGER.getSettingsByMod(module) != null) {
 			for(Setting s : Managers.SETTINGS_MANAGER.getSettingsByMod(module)){
-				setting = s instanceof ModeSetting set ? new ModeButton(set, this, opY, set.getIndex(), module) :
-					    	s instanceof NumberSetting set ? new Slider(set, this, opY, module) :
-								  s instanceof BooleanSetting set ? new Checkbox(set, this, opY, module) :
-										s instanceof KeyCodeSetting set ? new KeyCode(this, opY, set, module) :
-												s instanceof GuiButtonSetting set ? new OpenGuiButton(set, this, opY, module) :
-														s instanceof ColorSetting set ? new ColorPicker(set, this, opY, module) :
-																null;
+				setting =
+						s instanceof ModeSetting set ? new ModeButton(set, this, opY, set.getIndex(), module) :
+						s instanceof NumberSetting set ? new Slider(set, this, opY, module) :
+						s instanceof BooleanSetting set ? new Checkbox(set, this, opY, module) :
+						s instanceof KeyCodeSetting set ? new KeyCode(this, opY, set, module) :
+						s instanceof GuiButtonSetting set ? new OpenGuiButton(set, this, opY, module) :
+						s instanceof ColorSetting set ? new ColorPicker(set, this, opY, module) :
+						null;
 				settings.add(setting);
 				opY += setting.getHeight();
 			}
@@ -81,9 +82,8 @@ public class ModuleButton extends Component implements Mc {
 
 	@Override
 	public void updateDependencies(int offset) {
-		for (AbstractSetting comp : settings) {
+		for (AbstractSetting comp : settings)
 			comp.updateDependencies(0);
-		}
 
 		setOffInternal(offset);
 	}
@@ -116,64 +116,46 @@ public class ModuleButton extends Component implements Mc {
 
 		BThackRender.drawString(module.getName(), (parent.getX() + 5), (parent.getY() + offset + (BUTTON_HEIGHT / 2f) - (FontUtils.getTextHeight(module.getName())) / 2f), getModuleTextColor());
 
-		if (!settings.isEmpty()) {
+		if (!settings.isEmpty())
 			BThackRender.drawString(open ? "-" : "+", (parent.getX() + parent.getWidth() - 10), (parent.getY() + offset + 2), ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()));
-		}
 		if(renderOpen || open) {
 			if(!settings.isEmpty()) {
 				BThackRender.enableScissor(ClickGui.applyGuiScale(parent.getX()), ClickGui.applyGuiScale(parent.getY() + offset), ClickGui.applyGuiScale(parent.getWidth()), ClickGui.applyGuiScale(animatedSettingsHeight + BUTTON_HEIGHT));
-				//BThackRender.guiGraphics.getMatrices().translate(0, 0, -1);
 				for(AbstractSetting set : settings) {
-					if (set.getVisible()) {
+					if (set.getVisible())
 						set.renderComponent();
-					}
 				}
-				//BThackRender.guiGraphics.getMatrices().translate(0, 0, 1);
 				BThackRender.disableScissor();
-				if (ModuleList.clickGui.settingsOutline.getValue()) {
-					//BThackRender.guiGraphics.getMatrices().translate(0, 0, 4);
-					BThackRender.drawOutlineRect(parent.getX(), parent.getY() + offset, parent.getX() + parent.getWidth(), parent.getY() + offset + animatedSettingsHeight + BUTTON_HEIGHT, 1, ColorUtils.fastRGBA(255, 255, 255, Math.max(1, (int) (alphaDelta * 255))));
-					//BThackRender.guiGraphics.getMatrices().translate(0, 0, -4);
-				}
+				if (ModuleList.clickGui.settingsOutline.getValue())
+					BThackRender.drawOutlineRect(parent.getX(), parent.getY() + offset, parent.getX() + parent.getWidth(), parent.getY() + offset + animatedSettingsHeight + BUTTON_HEIGHT, 1, ColorUtils.fastRGBA(255, 255, 255, Math.max(1, (int) ((scInvert ? 1 - settingColorAnimation.getEase() : settingColorAnimation.getEase()) * 255))));
 			}
 		}
 	}
 
 	private int getModuleTextColor() {
-		if (ModuleList.clickGui.opacity.getValue() > 0.4) {
-			return ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor());
-		} else
-			return module.isEnabled() ? ClickGui.getClickGuiColor(true) : ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor());
+		return ModuleList.clickGui.opacity.getValue() > 0.4 ? ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()) : (module.isEnabled() ? ClickGui.getClickGuiColor(true) : ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()));
 	}
 
 	private void drawEnabledBackground(int alpha) {
 		alpha = (int) (alpha * (module.isEnabled() ? toggleAnimation.getEase() : 1 - toggleAnimation.getEase()));
 		BThackRender.drawRect(parent.getX(), parent.getY() + offset, parent.getX() + parent.getWidth(), parent.getY() + BUTTON_HEIGHT + offset,
-				isHovered ?
-						ColorUtils.integrateAlpha(
-								new Color(ClickGui.getClickGuiColor(true)).darker().hashCode()
-								, alpha
-						)
-						:
-						ColorUtils.integrateAlpha(
-								new Color(ClickGui.getClickGuiColor(true)).darker().darker().hashCode()
-								, alpha
-						)
+				ColorUtils.integrateAlpha(
+						isHovered ?
+								new Color(ClickGui.getClickGuiColor(true)).darker().hashCode() :
+								new Color(ClickGui.getClickGuiColor(true)).darker().darker().hashCode(),
+						alpha
+				)
 		);
 	}
 
 	private void drawNormalBackground(int alpha) {
 		BThackRender.drawRect(parent.getX(), parent.getY() + offset, parent.getX() + parent.getWidth(), parent.getY() + BUTTON_HEIGHT + offset,
-				isHovered ?
-						ColorUtils.integrateAlpha(
-								new Color(Client.clientInfo.getColorTheme().backgroundHoveredColor()).brighter().brighter().hashCode()
-								, alpha
-						)
-						:
-						ColorUtils.integrateAlpha(
-								new Color(Client.clientInfo.getColorTheme().backgroundColor()).darker().darker().hashCode()
-								, alpha
-						)
+				ColorUtils.integrateAlpha(
+						isHovered ?
+								new Color(Client.clientInfo.getColorTheme().backgroundHoveredColor()).brighter().brighter().hashCode() :
+								new Color(Client.clientInfo.getColorTheme().backgroundColor()).darker().darker().hashCode(),
+						alpha
+				)
 		);
 	}
 
@@ -184,9 +166,8 @@ public class ModuleButton extends Component implements Mc {
 		if(renderOpen || open) {
 			int height = 0;
 			for (AbstractSetting component : settings) {
-				if (component.getVisible()) {
+				if (component.getVisible())
 					height += component.getHeight();
-				}
 			}
 			height = open ? (int) (lastAnimFactor * height) : (int) (height - (lastAnimFactor * height));
 			animatedSettingsHeight = height;
@@ -214,9 +195,10 @@ public class ModuleButton extends Component implements Mc {
 	public void tick() {
 		if (settingAnimation.getPassedMillis() > settingAnimation.getMillis() + 50) if (renderOpen != open) renderOpen = open;
 		if (renderOpen) {
-			if (alphaDelta > 1) alphaDeltaInverse = true;
-			if (alphaDelta <= 0.3) alphaDeltaInverse = false;
-			alphaDelta += alphaDeltaInverse ? -0.03f : 0.03f;
+			if (settingColorAnimation.getEase() >= 1) {
+				scInvert = !scInvert;
+				settingColorAnimation.reset();
+			}
 		}
 	}
 
