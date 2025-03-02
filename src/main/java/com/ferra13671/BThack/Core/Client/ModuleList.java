@@ -19,7 +19,7 @@ import com.ferra13671.BThack.impl.Modules.PLAYER.*;
 import com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.ActionBot;
 import com.ferra13671.BThack.impl.Modules.PLAYER.Spammer.Spammer;
 import com.ferra13671.BThack.impl.Modules.RENDER.*;
-import com.ferra13671.BThack.impl.Modules.RENDER.HoleESP.HoleESP;
+import com.ferra13671.BThack.impl.Modules.RENDER.HoleESP;
 import com.ferra13671.BThack.impl.Modules.WORLD.*;
 
 import java.io.IOException;
