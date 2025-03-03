@@ -47,7 +47,7 @@ public class ArrayListComponent extends HudComponent {
     public static void addModule(Module module) {
         if (!module.isVisible()) return;
         ArrayListModule arrayListModule = new ArrayListComponent.ArrayListModule(module);
-        if (modules.contains(arrayListModule)) return;
+        modules.removeIf(alm -> alm.equals(arrayListModule));
         modules.add(arrayListModule);
         sort();
     }
