@@ -16,6 +16,7 @@ import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.Utils.Modules.AimBotUtils;
 import com.ferra13671.BThack.api.Utils.Modules.KillAuraUtils;
 import com.ferra13671.BThack.api.Utils.Ticker;
+import com.ferra13671.BThack.mixins.accessor.IMinecraftClient;
 import com.ferra13671.BThack.mixins.accessor.packet.IPlayerInputC2SPacket;
 import com.ferra13671.BThack.mixins.accessor.packet.IPlayerMoveC2SPacket;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
@@ -250,11 +251,11 @@ public class KillAura extends Module {
 
             if (players.getValue() && ent instanceof PlayerEntity player) {
                 if (KillAuraUtils.filterPlayer(player, friends.getValue(), teammates.getValue(), clanManager.getValue(), clanMode.getValue(), targetClan.getValue())) {
-                    KillAuraUtils.attack(ent, RotateMode.NONE, 0);
+                    ((IMinecraftClient) mc).attack();
                 }
             }
             if (entityFilter.test(ent)) {
-                KillAuraUtils.attack(ent, RotateMode.NONE, 0);
+                ((IMinecraftClient) mc).attack();
             }
 
             delayTicker.reset();
