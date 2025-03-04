@@ -74,7 +74,7 @@ public class TravelChangeManager implements Initializable, Mc {
     public void onTick(ClientTickEvent e) {
         if (Module.nullCheck()) return;
         if (!changers.isEmpty()) {
-            Float[] rots = changers.get(0).rotateGetter.get();
+            Float[] rots = changers.getFirst().rotateGetter.get();
             yaw = rots[0];
             pitch = rots[1];
         }
@@ -83,7 +83,7 @@ public class TravelChangeManager implements Initializable, Mc {
     @EventSubscriber
     public void onTravelRot(PlayerTraverRotEvent e) {
         if (!changers.isEmpty()) {
-            TravelChanger changer = changers.get(0);
+            TravelChanger changer = changers.getFirst();
             if (changer.needRewriteTravelRot && changer.needTravelChange.get()) {
                 e.yaw = yaw;
                 e.pitch = pitch;
@@ -109,9 +109,9 @@ public class TravelChangeManager implements Initializable, Mc {
     @EventSubscriber
     public void onUpdateVelocity(VelocityUpdateEvent e) {
         if (!changers.isEmpty()) {
-            if (!mc.player.isFallFlying() && changers.get(0).needTravelChange.get()) {
-                e.setVelocity(AimBotUtils.movementInputToVelocity(yaw, e.getMovementInput(), e.getSpeed()));
-                changers.get(0).preUpdateVelocityRunnable.run();
+            if (!mc.player.isFallFlying() && changers.getFirst().needTravelChange.get()) {
+                e.setVelocity(AimBotUtils.movementInputToVelocity(e.getMovementInput(), e.getSpeed(), yaw));
+                changers.getFirst().preUpdateVelocityRunnable.run();
             }
         }
     }

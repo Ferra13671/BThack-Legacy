@@ -86,7 +86,7 @@ public class AlignThread extends BThackThread implements Mc {
 
     @EventSubscriber
     public void onUpdateVelocity(VelocityUpdateEvent e) {
-        e.setVelocity(AimBotUtils.movementInputToVelocity(yaw, e.getMovementInput(), e.getSpeed()));
+        e.setVelocity(AimBotUtils.movementInputToVelocity(e.getMovementInput(), e.getSpeed(), yaw));
         GrimUtils.sendPreActionGrimPackets(yaw, mc.player.getPitch());
     }
 

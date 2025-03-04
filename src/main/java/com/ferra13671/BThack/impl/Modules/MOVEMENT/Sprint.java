@@ -13,6 +13,7 @@ import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.Utils.Modules.StrafeUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.client.input.KeyboardInput;
+import net.minecraft.entity.attribute.EntityAttributes;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -68,22 +69,19 @@ public class Sprint extends Module {
         if (nullCheck()) return;
 
         switch (mode.getValue()) {
-            case "Standard":
+            case "Standard" -> {
                 if (!mc.player.isSprinting()) {
                     try {
-                        if (needSprint()) {
+                        if (needSprint())
                             mc.player.setSprinting(true);
-                        }
                     } catch (Exception ignored) {}
                 }
-                break;
-            case "Legal":
-                mc.options.sprintKey.setPressed(!mc.player.isFallFlying());
-                break;
+            }
+            case "Legal" -> mc.options.sprintKey.setPressed(!mc.player.isFallFlying());
         }
 
         if (strafe.getValue()) {
-            strafeLogic();
+            yaw = StrafeUtils.getPlayerYawOnKeybindings();
             if (!Managers.TRAVEL_CHANGE_MANAGER.containsChanger(travelChanger)) Managers.TRAVEL_CHANGE_MANAGER.addChanger(travelChanger);
         } else if (Managers.TRAVEL_CHANGE_MANAGER.containsChanger(travelChanger)) Managers.TRAVEL_CHANGE_MANAGER.removeChanger(travelChanger);
     }
@@ -94,16 +92,9 @@ public class Sprint extends Module {
         if (!(mc.player.input instanceof KeyboardInput)) return;
 
         if (mc.options.forwardKey.isPressed() || mc.options.backKey.isPressed() || mc.options.leftKey.isPressed() || mc.options.rightKey.isPressed()) {
-            if (!mc.player.input.sneaking) {
-                mc.player.input.movementForward = 1;
-                mc.player.input.movementSideways = 0;
-            }
+            mc.player.input.movementForward = mc.player.isSneaking() ? (float) mc.player.getAttributeValue(EntityAttributes.PLAYER_SNEAKING_SPEED) : 1;
+            mc.player.input.movementSideways = 0;
         }
-    }
-
-    public void strafeLogic() {
-        float rots = StrafeUtils.getPlayerYawOnKeybindings();
-        yaw = rots;
     }
 
     public boolean needSprint() {
