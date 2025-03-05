@@ -18,7 +18,7 @@ version = project.ext.version + (project.ext.withBaritone ? "" : "-NoBaritone")
 group = "com.ferra13671"
 
 String getDevName() {
-    LocalDate localDate = LocalDate.now();
+    LocalDate localDate = LocalDate.now()
     return String.format("dev-%s.%S.%S.%S", localDate.getYear(), localDate.getMonth().getValue(), localDate.getDayOfMonth(), new SimpleDateFormat("k.mm").format(new Date()))
 }
 
