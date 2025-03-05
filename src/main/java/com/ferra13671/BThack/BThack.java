@@ -41,6 +41,7 @@ public final class BThack implements ClientModInitializer, Mc {
     public final VersionInfo versionInfo = new VersionInfo();
     public final String MC_VERSION;
     public final String VERSION;
+    private final String RELEASE_VERSION;
     private InitStage initStage = InitStage.NOT_INITED;
     private final boolean withBaritone;
     public final ClientPlayerController playerController = new ClientPlayerController();
@@ -56,6 +57,7 @@ public final class BThack implements ClientModInitializer, Mc {
         MC_VERSION = mod.getCustomValue("mcVersion").getAsString();
         withBaritone = !mod.getVersion().getFriendlyString().equals("-NoBaritone");
         VERSION = mod.getVersion().getFriendlyString();
+        RELEASE_VERSION = mod.getCustomValue("releaseVersion").getAsString();
     }
 
     public static void log(String message) {
@@ -218,7 +220,7 @@ public final class BThack implements ClientModInitializer, Mc {
     private void checkForOutdate() {
         try {
             String text = new BufferedReader(new InputStreamReader(new URI("https://raw.githubusercontent.com/Ferra13671/BThack/" + MC_VERSION + "/currentVersion.txt").toURL().openStream())).readLine();
-            if (!text.equals(VERSION)) {
+            if (!text.equals(RELEASE_VERSION)) {
                 versionInfo.setOutdated(true);
                 versionInfo.setNewVersion(text);
             }

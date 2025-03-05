@@ -31,7 +31,8 @@
         "modmenu.github_releases": "https://github.com/Ferra13671/BThack/releases"
       }
     },
-    "mcVersion": "${minecraft_version}"
+    "mcVersion": "${minecraft_version}",
+    "releaseVersion": "${minecraft_version}-${release_version}"
   },
   "accessWidener" : "bthack.accesswidener",
   "depends": {

@@ -1,23 +1,29 @@
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+
 plugins {
     id 'fabric-loom' version '1.7-SNAPSHOT'
     id 'maven-publish'
     id "com.github.johnrengelman.shadow" version "8.1.1"
 }
-/*
-   A switch that can be used to enable/disable Baritone integration in the jar file.
-   If:
-      YES --- Baritone will be integrated into the jar file.
-      NO --- Baritone will not be integrated into the jar file.
- */
-project.ext.withBaritone = WithBaritone.YES
-// The version of BThack to be used both in the file name and within BThack
-project.ext.version = "1.6.3"
 
-version = project.ext.version + (project.ext.withBaritone == WithBaritone.YES ? "" : "-NoBaritone")
+//A switch that can be used to enable/disable Baritone integration in the jar file.
+project.ext.withBaritone = true
+project.ext.devVersion = false
+// The version of BThack to be used both in the file name and within BThack
+project.ext.releaseVersion = "1.6.3"
+project.ext.version = project.ext.devVersion ? getDevName() : project.ext.releaseVersion
+
+version = project.ext.version + (project.ext.withBaritone ? "" : "-NoBaritone")
 group = "com.ferra13671"
 
+String getDevName() {
+    LocalDate localDate = LocalDate.now();
+    return String.format("dev-%s.%S.%S.%S", localDate.getYear(), localDate.getMonth().getValue(), localDate.getDayOfMonth(), new SimpleDateFormat("k.mm").format(new Date()))
+}
+
 void includeBaritone() {
-    if (project.ext.withBaritone == WithBaritone.YES) {
+    if (project.ext.withBaritone) {
         dependencies {
             modInclude "meteordevelopment:baritone:${project.baritone_version}-SNAPSHOT"
             library "dev.babbaj:nether-pathfinder:${nether_pathfinder_version}"
@@ -29,11 +35,6 @@ void includeBaritone() {
             modCompileOnly "meteordevelopment:baritone:${project.baritone_version}-SNAPSHOT"
         }
     }
-}
-
-enum WithBaritone {
-    YES,
-    NO
 }
 
 base {
@@ -119,16 +120,13 @@ processResources {
         expand "version": project.version,
                 "minecraft_version": project.minecraft_version,
                 "loader_version": project.loader_version,
-                "bthack_version": project.ext.version
+                "bthack_version": project.ext.version,
+                "release_version": project.ext.releaseVersion
     }
 }
 
 def targetJavaVersion = 21
 tasks.withType(JavaCompile).configureEach {
-    // ensure that the encoding is set to UTF-8, no matter what the system default is
-    // this fixes some edge cases with special characters not displaying correctly
-    // see http://yodaconditions.net/blog/fix-for-java-file-encoding-problems-with-gradle.html
-    // If Javadoc is generated, this must be specified in that task too.
     it.options.encoding = "UTF-8"
     if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
         it.options.release.set(targetJavaVersion)
@@ -140,9 +138,7 @@ java {
     if (JavaVersion.current() < javaVersion) {
         toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
     }
-    // Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
-    // if it is present.
-    // If you remove this line, sources will not be generated.
+
     withSourcesJar()
 }
 
@@ -165,12 +161,5 @@ publishing {
             from components.java
         }
     }
-
-    // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
-    repositories {
-        // Add repositories to publish to here.
-        // Notice: This block does NOT have the same function as the block in the top level.
-        // The repositories here will be used for publishing your artifact, not for
-        // retrieving dependencies.
-    }
+    repositories {}
 }
