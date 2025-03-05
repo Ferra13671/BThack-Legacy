@@ -29,7 +29,7 @@ public class TextRadarComponent extends HudComponent {
             if (maxWidth < FontUtils.getTextWidth(text)) {
                 maxWidth = FontUtils.getTextHeight(text);
             }
-            y += FontUtils.getTextHeight(text) + 1;
+            y += FontUtils.getTextHeight(text) + 4;
         }
 
         this.width = maxWidth;
