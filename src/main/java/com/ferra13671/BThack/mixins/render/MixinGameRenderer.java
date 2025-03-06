@@ -4,6 +4,7 @@ import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.api.Events.Render.RenderWorldLastEvent;
+import com.ferra13671.BThack.api.Shader.Shaders;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.GameRenderer;
@@ -58,5 +59,10 @@ public class MixinGameRenderer {
     public void modifyRenderNausea(DrawContext context, float distortionStrength, CallbackInfo ci) {
         if (ModuleList.noRender.isEnabled() && ModuleList.noRender.nausea.getValue())
             ci.cancel();
+    }
+
+    @Inject(method = "render", at = @At("HEAD"))
+    public void modifyRender(RenderTickCounter tickCounter, boolean tick, CallbackInfo ci) {
+        Shaders.INSTANCE.updateTime();
     }
 }

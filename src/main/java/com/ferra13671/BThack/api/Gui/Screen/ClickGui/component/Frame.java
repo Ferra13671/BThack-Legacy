@@ -13,6 +13,7 @@ import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.Module
 import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.setting.settings.Slider;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Module.Module;
+import com.ferra13671.BThack.api.Shader.Shaders;
 import com.ferra13671.BThack.api.Utils.Data;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.impl.Modules.CLIENT.ClickGui;
@@ -171,10 +172,9 @@ public class Frame implements Mc, Closeable {
 			}
 		}
 		if (ModuleList.clickGui.rainbow.getValue()) {
-			int type = (int) ModuleList.clickGui.rainbowSpeed.getValue();
-			BThackRender.drawHorizontalRainbowRect(x, y, x + FRAME_WIDTH, y + BAR_HEIGHT, type);
+			BThackRender.drawShader(Shaders.INSTANCE.X_RAINBOW, x, y, x + FRAME_WIDTH, y + BAR_HEIGHT);
 		} else {
-			BThackRender.drawRect(x, y, x + FRAME_WIDTH, y + BAR_HEIGHT, ModuleList.clickGui.customColor.getValue() ? ColorUtils.fastRGBA((int) ModuleList.clickGui.color.getValue().getRed(), (int) ModuleList.clickGui.color.getValue().getGreen(), (int) ModuleList.clickGui.color.getValue().getBlue(), 255) : ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().color()));
+			BThackRender.drawRect(x, y, x + FRAME_WIDTH, y + BAR_HEIGHT, ModuleList.clickGui.customColor.getValue() ? ColorUtils.fastRGBA(ModuleList.clickGui.color.getValue().getRed(), ModuleList.clickGui.color.getValue().getGreen(), ModuleList.clickGui.color.getValue().getBlue(), 255) : ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().color()));
 		}
 		if (ModuleList.clickGui.frameOutline.getValue())
 			BThackRender.drawOutlineRect(x, y, x + FRAME_WIDTH, y + BAR_HEIGHT, 1, BAR_OUTLINE_COLOR);

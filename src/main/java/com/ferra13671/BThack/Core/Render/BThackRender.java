@@ -10,8 +10,6 @@ import com.ferra13671.BThack.Core.Render.Drawers.*;
 import com.ferra13671.BThack.Core.Render.Font.FontRenderManager;
 import com.ferra13671.BThack.Core.Render.Font.FontUtils;
 import com.ferra13671.BThack.Core.Render.Line.BThackLineRender;
-import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
-import com.ferra13671.BThack.Core.Render.Utils.RainbowUtils;
 import com.ferra13671.BThack.Core.Render.Utils.ScissorStack;
 import com.ferra13671.BThack.api.Shader.ShaderProgram;
 import com.ferra13671.BThack.api.Shader.Shaders;
@@ -38,7 +36,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import static com.ferra13671.BThack.Core.Render.Utils.BThackRenderUtils.*;
-import static com.ferra13671.BThack.Core.Render.Utils.ColorUtils.*;
 
 public final class BThackRender implements Mc {
 
@@ -133,53 +130,6 @@ public final class BThackRender implements Mc {
         Drawers.CUSTOM_COLORS_RECT.end();
     }
 
-    public static void drawHorizontalRainbowRect(float x1, float y1, float x2, float y2, int rainbowType) {
-        float counter = 1;
-        float dX;
-        float tX = x1;
-        int delay = (int) RainbowUtils.getRainbowRectSpeed(rainbowType)[1];
-        float speed = RainbowUtils.getRainbowRectSpeed(rainbowType)[0];
-
-        float fX;
-
-        fX = x2 - x1;
-        fX /= 45;
-        dX = fX != 0 ? (int) Math.ceil(fX) : 0;
-
-        Tessellator tessellator = Tessellator.getInstance();
-        Shaders.INSTANCE.POSITION.use();
-        applyBlend();
-        Matrix4f matrix4f = guiGraphics.getMatrices().peek().getPositionMatrix();
-
-        while (tX != x2) {
-            if (x1 < x2) {
-                if (tX + dX > x2) {
-                    dX = x2 - tX;
-                }
-            } else {
-                if (tX + dX < x2) {
-                    dX = tX - x2;
-                }
-            }
-
-            int color = ColorUtils.rainbow((int)(counter * delay), speed);
-            float[] c = hashCodeToRGBA(color);
-
-            Shaders.INSTANCE.POSITION.setUniformValue("color", c[0], c[1], c[2], c[3]);
-            Drawers.RECT.beginBuffer(tessellator);
-
-            Drawers.RECT.vertex(matrix4f, tX, y1, 0);
-            Drawers.RECT.vertex(matrix4f, tX, y2, 0);
-            Drawers.RECT.vertex(matrix4f, tX + dX, y2, 0);
-            Drawers.RECT.vertex(matrix4f, tX + dX, y1, 0);
-
-            Drawers.RECT.endNoReset();
-
-            tX += dX;
-            counter++;
-        }
-    }
-
     public static void drawOutlineRect(float x1, float y1, float x2, float y2, float depth, int color) {
         Drawers.RECT.begin(color);
         Drawers.RECT.draw(x1,y1, x1 + depth, y2); //left
@@ -196,6 +146,15 @@ public final class BThackRender implements Mc {
         Drawers.GRADIENT_RECT.draw(x1,y1, x1 + depth, y2, upColor, downColor, GradientRectDrawer.GradientMode.VERTICAL); //left
         Drawers.GRADIENT_RECT.draw(x2 - depth, y1, x2, y2 - depth, upColor, downColor, GradientRectDrawer.GradientMode.VERTICAL); //down
         Drawers.GRADIENT_RECT.end();
+    }
+
+    public static void drawShaderOutlineRect(ShaderProgram shaderProgram, float x1, float y1, float x2, float y2, float depth) {
+        Drawers.SHADER_DRAWER.begin(shaderProgram);
+        Drawers.SHADER_DRAWER.draw(x1,y1, x1 + depth, y2); //left
+        Drawers.SHADER_DRAWER.draw(x1 + depth, y2 - depth, x2, y2); //down
+        Drawers.SHADER_DRAWER.draw(x2, y2 - depth, x2 - depth, y1); //right
+        Drawers.SHADER_DRAWER.draw(x1 + depth, y1, x2 - depth, y1 + depth); //up
+        Drawers.SHADER_DRAWER.end();
     }
 
     public static void drawSquare(float x1, float y1, float size, int color) {
@@ -279,23 +238,10 @@ public final class BThackRender implements Mc {
         Drawers.TEXTURE_RECT.end();
     }
 
-
-    /**
-     * THE SHADER MUST HAVE VERTEXFORMAT = VERTEXFORMATS.POSITION!!!!
-     */
     public static void drawShader(ShaderProgram shaderProgram, float x1, float y1, float x2, float y2) {
-        Matrix4f matrix4f = guiGraphics.getMatrices().peek().getPositionMatrix();
-
-        guiGraphics.getMatrices().push();
-        shaderProgram.use();
-        BufferBuilder bufferBuilder = Tessellator.getInstance().begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION);
-        bufferBuilder.vertex(matrix4f, x1, y2, 0.0f);
-        bufferBuilder.vertex(matrix4f, x2, y2, 0.0f);
-        bufferBuilder.vertex(matrix4f, x2, y1, 0.0f);
-        bufferBuilder.vertex(matrix4f, x1, y1, 0.0f);
-        draw(bufferBuilder.end());
-        shaderProgram.release();
-        guiGraphics.getMatrices().pop();
+        Drawers.SHADER_DRAWER.begin(shaderProgram);
+        Drawers.SHADER_DRAWER.draw(x1, y1, x2, y2);
+        Drawers.SHADER_DRAWER.end();
     }
 
     public static void drawItem(DrawContext context, ItemStack stack, int x, int y, String amountText, boolean onSlot) {

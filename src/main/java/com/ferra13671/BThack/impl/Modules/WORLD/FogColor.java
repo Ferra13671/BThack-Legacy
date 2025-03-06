@@ -37,7 +37,7 @@ public class FogColor extends Module {
 
     public Vec3d getFogColor() {
         if (rainbow.getValue()) {
-            Color color = new Color(ColorUtils.rainbowType(2));
+            Color color = new Color(ColorUtils.rainbow());
             return new Vec3d(color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f);
         } else
             return new Vec3d(fogColor.getValue().getRed() / 255d, fogColor.getValue().getGreen() / 255d, fogColor.getValue().getBlue() / 255d);

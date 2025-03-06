@@ -9,7 +9,6 @@ import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.FilledMapItem;
 import net.minecraft.item.ItemStack;
@@ -109,7 +108,7 @@ public class Tooltips extends Module {
     }
 
     private int getFrameColor() {
-        if (frameRainbow.getValue()) return ColorUtils.rainbow(100);
+        if (frameRainbow.getValue()) return ColorUtils.rainbow();
         else return ColorUtils.fastRGBA(frameColor.getValue().getRed(), frameColor.getValue().getGreen(), frameColor.getValue().getBlue(), 255);
     }
 }

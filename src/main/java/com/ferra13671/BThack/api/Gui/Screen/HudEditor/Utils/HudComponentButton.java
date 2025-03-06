@@ -30,9 +30,9 @@ public class HudComponentButton extends Button {
 
         if (isDragging) {
             if (hudComponent.width < 0)
-                BThackRender.drawOutlineRect((int) ((x + hudComponent.width) - 1), (int) ((y + hudComponent.height) - 1), x + 1, y + 1, 1, ColorUtils.rainbow(100));
+                BThackRender.drawOutlineRect((int) ((x + hudComponent.width) - 1), (int) ((y + hudComponent.height) - 1), x + 1, y + 1, 1, ColorUtils.rainbow());
             else
-                BThackRender.drawOutlineRect(x - 1, y - 1, (int) (x + hudComponent.width + 1), (int) (y + hudComponent.height + 1), 1, ColorUtils.rainbow(100));
+                BThackRender.drawOutlineRect(x - 1, y - 1, (int) (x + hudComponent.width + 1), (int) (y + hudComponent.height + 1), 1, ColorUtils.rainbow());
         }
 
         if (hovered) {

@@ -75,7 +75,7 @@ public class CS_Crosshair extends Module {
 
         Window window = mc.getWindow();
 
-        Color color = rainbow.getValue() ? new Color(ColorUtils.rainbow(100)) : colorSet.getValue();
+        Color color = rainbow.getValue() ? new Color(ColorUtils.rainbow()) : colorSet.getValue();
 
         BThackRender.guiGraphics.getMatrices().translate(window.getScaledWidth() / 2f, window.getScaledHeight() / 2f, 0);
         BThackRender.guiGraphics.getMatrices().peek().getPositionMatrix().rotate((float) Math.toRadians(rotate.getValue()), 0, 0, 1);

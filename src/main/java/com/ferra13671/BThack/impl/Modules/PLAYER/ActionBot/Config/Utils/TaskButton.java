@@ -34,7 +34,7 @@ public class TaskButton extends Button {
         BThackRender.drawString(this.text, (int) (this.getCenterX() - stringWidth), (int) ((heightFactor * 8) + ((heightFactor * offsetFactor) * offset) + (((heightFactor * offsetFactor) / 2) - (FontUtils.getTextHeight(text)))), ColorUtils.WHITE);
 
         if (selected) {
-            BThackRender.drawOutlineRect((int) (this.getCenterX() - (stringWidth * 1.2) - 1), (int) (this.getCenterY() - (heightFactor / 2) - 1), (int) (this.getCenterX() + (stringWidth * 1.2) + 1), (int) (this.getCenterY() + (heightFactor / 2) + 1), 1, ColorUtils.rainbow(100));
+            BThackRender.drawOutlineRect((int) (this.getCenterX() - (stringWidth * 1.2) - 1), (int) (this.getCenterY() - (heightFactor / 2) - 1), (int) (this.getCenterX() + (stringWidth * 1.2) + 1), (int) (this.getCenterY() + (heightFactor / 2) + 1), 1, ColorUtils.rainbow());
         }
 
         if (hovered) {

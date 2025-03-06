@@ -3,7 +3,6 @@ package com.ferra13671.BThack.impl.Modules.CLIENT;
 import com.ferra13671.BThack.Core.Client.Client;
 import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
-import com.ferra13671.BThack.Core.Render.Utils.RainbowUtils;
 import com.ferra13671.BThack.api.Animation.Easing;
 import com.ferra13671.BThack.api.Managers.managers.ColourTheme.ColorTheme;
 import com.ferra13671.BThack.api.Managers.Managers;
@@ -22,10 +21,9 @@ import java.util.Objects;
 public class ClickGui extends OneActionModule {
 
     public final ModeSetting activeTheme = new ModeSetting("Theme", this, getActiveThemeList());
-    public final BooleanSetting rainbow = new BooleanSetting("Rainbow", this, false);
+    public final BooleanSetting rainbow = new BooleanSetting("Rainbow", this, true);
     public final BooleanSetting customColor = new BooleanSetting("Custom Color", this, false, () -> !rainbow.getValue());
     public final ColorSetting color = new ColorSetting("ClickGui Color", this, new Color(25, 28, 255), () -> customColor.getValue() && !rainbow.getValue()).withBlockedAlpha();
-    public final NumberSetting rainbowSpeed = new NumberSetting("Rainbow speed", this, 2, 1, 4, true, rainbow::getValue);
 
     public final BooleanSetting frameOutline = new BooleanSetting("Frame Outline", this, true);
     public final BooleanSetting moduleOutline = new BooleanSetting("Module Outline", this, true);
@@ -63,7 +61,6 @@ public class ClickGui extends OneActionModule {
                 color,
                 customColor,
                 rainbow,
-                rainbowSpeed,
 
                 frameOutline,
                 moduleOutline,
@@ -151,11 +148,7 @@ public class ClickGui extends OneActionModule {
 
     public static int getClickGuiColor(boolean allowRainbow) {
         if (ModuleList.clickGui.rainbow.getValue() && allowRainbow) {
-            int rainbowType = (int) ModuleList.clickGui.rainbowSpeed.getValue();
-            float speed = RainbowUtils.getRainbowRectSpeed(rainbowType)[0];
-            int delay = (int) RainbowUtils.getRainbowRectSpeed(rainbowType)[1];
-
-            return ColorUtils.rainbow(delay, speed);
+            return ColorUtils.rainbow();
         } else if (ModuleList.clickGui.customColor.getValue()) {
             return new Color(ModuleList.clickGui.color.getValue().getRed(), ModuleList.clickGui.color.getValue().getGreen(), ModuleList.clickGui.color.getValue().getBlue()).getRGB();
         } else {

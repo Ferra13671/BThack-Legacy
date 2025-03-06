@@ -10,6 +10,7 @@ import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.settin
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
+import com.ferra13671.BThack.api.Shader.Shaders;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.impl.Modules.CLIENT.ClickGui;
 import com.google.common.collect.Sets;
@@ -59,8 +60,7 @@ public class Slider extends AbstractSetting implements Mc {
 		BThackRender.drawRect(parent.parent.getX() + 2, parent.parent.getY() + offset + 11, parent.parent.getX() + 100 - 2, parent.parent.getY() + offset + 15, Color.GRAY.darker().darker().darker().getRGB());
 
 		if (ModuleList.clickGui.rainbow.getValue()) {
-			int type = (int) ModuleList.clickGui.rainbowSpeed.getValue();
-			BThackRender.drawHorizontalRainbowRect(parent.parent.getX() + 2, parent.parent.getY() + offset + 11, parent.parent.getX() + 2 + (int) renderWidth, parent.parent.getY() + offset + 15, type);
+			BThackRender.drawShader(Shaders.INSTANCE.X_RAINBOW, parent.parent.getX() + 2, parent.parent.getY() + offset + 11, parent.parent.getX() + 2 + (int) renderWidth, parent.parent.getY() + offset + 15);
 		} else {
 			BThackRender.drawRect(parent.parent.getX() + 2, parent.parent.getY() + offset + 11, parent.parent.getX() + 2 + (int) renderWidth, parent.parent.getY() + offset + 15, ClickGui.getClickGuiColor(false));
 		}

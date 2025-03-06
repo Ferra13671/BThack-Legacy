@@ -104,14 +104,16 @@ public class Nametags extends Module {
 
     public void renderMiniPlayerNametag(float[] cords, PlayerEntity player) {
         float hp = player.getHealth();
-        float length = FontUtils.getTextWidth(player.getDisplayName().getString() + " " + (hp > 15 ? Formatting.GREEN : (hp > 8 ? Formatting.YELLOW : Formatting.RED)) + hp);
+        String text = player.getDisplayName().getString() + " " + (hp > 15 ? Formatting.GREEN : (hp > 8 ? Formatting.YELLOW : Formatting.RED)) + hp;
+        float length = FontUtils.getTextWidth(text, FontRenderManager.DrawMode.NORMAL_BOLD) + 5;
         float leftX = cords[0] - (length / 2) - 3;
-        float upY = cords[1] - 16;
+        float upY = cords[1] - FontUtils.getTextHeight(text, FontRenderManager.DrawMode.NORMAL_BOLD) - 10;
         float rightX = cords[0] + (length / 2) + 3;
         float downY = cords[1];
 
         drawBase(leftX, upY, rightX, downY);
-        drawName((SocialManagers.FRIENDS.contains(player) ? ClientSettings.getFriendColor() : (SocialManagers.ENEMIES.contains(player) ? ClientSettings.getEnemyColor() : "")) + player.getDisplayName().getString() + " " + (hp > 15 ? Formatting.GREEN : (hp > 8 ? Formatting.YELLOW : Formatting.RED)) + hp, leftX - 2, downY);
+        BThackRender.drawCenteredString((SocialManagers.FRIENDS.contains(player) ? ClientSettings.getFriendColor() : SocialManagers.ENEMIES.contains(player) ? ClientSettings.getEnemyColor() : "") + text, cords[0], downY - ((downY - upY) / 2f) - (FontUtils.getTextHeight(text, FontRenderManager.DrawMode.NORMAL_BOLD) / 2), -1, FontRenderManager.DrawMode.NORMAL_BOLD);
+        //BThackRender.drawString((SocialManagers.FRIENDS.contains(player) ? ClientSettings.getFriendColor() : SocialManagers.ENEMIES.contains(player) ? ClientSettings.getEnemyColor() : "") + text, leftX + 5, upY + 5, -1, true, FontRenderManager.DrawMode.NORMAL_BOLD);
     }
 
     public void renderNormalPlayerNametag(float[] cords, PlayerEntity player) {
@@ -159,7 +161,7 @@ public class Nametags extends Module {
 
     public void drawBase(float leftX, float upY, float rightX, float downY) {
         BThackRender.drawRect(leftX, upY, rightX, downY, ColorUtils.fastRGBA(0,0,0,150));
-        BThackRender.drawOutlineRect(leftX, upY, rightX, downY, 1.3f, ColorUtils.rainbow(100));
+        BThackRender.drawOutlineRect(leftX, upY, rightX, downY, 1.3f, ColorUtils.rainbow());
     }
 
     public void drawName(String name, float leftX, float downY) {

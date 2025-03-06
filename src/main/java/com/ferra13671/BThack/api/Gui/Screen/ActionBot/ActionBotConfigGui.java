@@ -141,7 +141,7 @@ public class ActionBotConfigGui extends BThackScreen {
 
 
         //Description
-        BThackRender.drawOutlineRect((int) widthFactor - 1, (int) (scaledResolution.getScaledHeight() - (heightFactor * 3)) - 1, (int) (scaledResolution.getScaledWidth() - (widthFactor * 10)) + 1, (int) (scaledResolution.getScaledHeight() - heightFactor) + 1, 1, ColorUtils.rainbow(100));
+        BThackRender.drawOutlineRect((int) widthFactor - 1, (int) (scaledResolution.getScaledHeight() - (heightFactor * 3)) - 1, (int) (scaledResolution.getScaledWidth() - (widthFactor * 10)) + 1, (int) (scaledResolution.getScaledHeight() - heightFactor) + 1, 1, ColorUtils.rainbow());
         BThackRender.drawRect((int) widthFactor, (int) (scaledResolution.getScaledHeight() - (heightFactor * 3)), (int) (scaledResolution.getScaledWidth() - (widthFactor * 10)), (int) (scaledResolution.getScaledHeight() - heightFactor), ColorUtils.BLACK);
 
         super.render(context, mouseX, mouseY, partialTicks);

@@ -16,6 +16,7 @@ import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.*;
 import com.ferra13671.BThack.api.Module.Module;
+import com.ferra13671.BThack.api.Shader.Shaders;
 import com.ferra13671.BThack.impl.Modules.CLIENT.ClickGui;
 
 import java.awt.*;
@@ -137,15 +138,21 @@ public class ModuleButton extends Component implements Mc {
 	}
 
 	private void drawEnabledBackground(int alpha) {
-		alpha = (int) (alpha * (module.isEnabled() ? toggleAnimation.getEase() : 1 - toggleAnimation.getEase()));
-		BThackRender.drawRect(parent.getX(), parent.getY() + offset, parent.getX() + parent.getWidth(), parent.getY() + BUTTON_HEIGHT + offset,
-				ColorUtils.integrateAlpha(
-						isHovered ?
-								new Color(ClickGui.getClickGuiColor(true)).darker().hashCode() :
-								new Color(ClickGui.getClickGuiColor(true)).darker().darker().hashCode(),
-						alpha
-				)
-		);
+		if (ModuleList.clickGui.rainbow.getValue()) {
+			float _alpha = (int) (alpha * (module.isEnabled() ? toggleAnimation.getEase() : 1 - toggleAnimation.getEase())) / 255f;
+			Shaders.INSTANCE.X_RAINBOW.setUniformValue("alpha", _alpha);
+			Shaders.INSTANCE.X_RAINBOW.setUniformValue("brightness", isHovered ? 0.8f : 0.5f);
+			BThackRender.drawShader(Shaders.INSTANCE.X_RAINBOW, parent.getX(), parent.getY() + offset, parent.getX() + parent.getWidth(), parent.getY() + BUTTON_HEIGHT + offset);
+		} else {
+			BThackRender.drawRect(parent.getX(), parent.getY() + offset, parent.getX() + parent.getWidth(), parent.getY() + BUTTON_HEIGHT + offset,
+					ColorUtils.integrateAlpha(
+							isHovered ?
+									new Color(ClickGui.getClickGuiColor(true)).darker().hashCode() :
+									new Color(ClickGui.getClickGuiColor(true)).darker().darker().hashCode(),
+							alpha
+					)
+			);
+		}
 	}
 
 	private void drawNormalBackground(int alpha) {

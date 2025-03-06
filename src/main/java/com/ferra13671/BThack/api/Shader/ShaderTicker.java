@@ -6,6 +6,10 @@ public class ShaderTicker {
     private final Ticker ticker = new Ticker();
     private long passedTime = 0;
 
+    public ShaderTicker() {
+        ticker.reset();
+    }
+
     public void reset() {
         passedTime = 0;
         ticker.reset();

@@ -65,7 +65,7 @@ public class Button implements Mc {
         BThackRender.drawString(getText(), (getCenterX() - (FontUtils.getTextWidth(getText()) / 2f)), (getCenterY() - (FontUtils.getTextHeight(getText()) / 2f)), -1, true, FontRenderManager.DrawMode.NORMAL_BOLD);
 
         if (selected)
-            BThackRender.drawOutlineRect(getCenterX() - getWidth(), getCenterY() - getHeight(), getCenterX() + getWidth(), getCenterY() + getHeight(), 1, ColorUtils.rainbow(100));
+            BThackRender.drawOutlineRect(getCenterX() - getWidth(), getCenterY() - getHeight(), getCenterX() + getWidth(), getCenterY() + getHeight(), 1, ColorUtils.rainbow());
     }
 
     protected void drawPlate(float animationDelta) {
