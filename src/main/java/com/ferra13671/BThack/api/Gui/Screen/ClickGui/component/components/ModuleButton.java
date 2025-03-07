@@ -24,7 +24,7 @@ import java.util.ArrayList;
 
 public class ModuleButton extends Component implements Mc {
 	public static final int OUTLINE_COLOR = ColorUtils.fastRGBA(0, 0, 0, 100);
-	public static final int BUTTON_HEIGHT = 12;
+	public static final int BUTTON_HEIGHT = 14;
 
 	public Module module;
 	public Frame parent;
