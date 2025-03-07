@@ -10,7 +10,7 @@ import com.ferra13671.BThack.api.Utils.Modules.AimBotUtils;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.Utils.Modules.KillAuraUtils;
 import com.ferra13671.BThack.api.Utils.Grim.GrimUtils;
-import com.ferra13671.BThack.impl.Modules.COMBAT.KillAura.RotateMode;
+import com.ferra13671.BThack.api.Utils.RotateMode;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import com.google.common.collect.Sets;
 import net.minecraft.entity.Entity;

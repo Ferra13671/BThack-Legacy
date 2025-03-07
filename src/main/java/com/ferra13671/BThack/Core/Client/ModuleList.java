@@ -11,7 +11,7 @@ import com.ferra13671.BThack.impl.HudComponents.*;
 import com.ferra13671.BThack.impl.HudComponents.OneTextComponents.*;
 import com.ferra13671.BThack.impl.Modules.CLIENT.*;
 import com.ferra13671.BThack.impl.Modules.COMBAT.*;
-import com.ferra13671.BThack.impl.Modules.COMBAT.KillAura.KillAura;
+import com.ferra13671.BThack.impl.Modules.COMBAT.KillAura;
 import com.ferra13671.BThack.impl.Modules.MISC.*;
 import com.ferra13671.BThack.impl.Modules.MISC.PacketMine.PacketMine;
 import com.ferra13671.BThack.impl.Modules.MOVEMENT.*;

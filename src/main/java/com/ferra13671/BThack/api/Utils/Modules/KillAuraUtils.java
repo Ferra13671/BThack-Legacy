@@ -8,9 +8,8 @@ import com.ferra13671.BThack.api.Social.Clans.Clan;
 import com.ferra13671.BThack.api.Social.Clans.ClanStatus;
 import com.ferra13671.BThack.api.Social.Clans.ClanManager;
 import com.ferra13671.BThack.api.Social.SocialManagers;
-import com.ferra13671.BThack.api.Utils.Grim.GrimUtils;
 import com.ferra13671.BThack.api.Utils.PlayerUtils;
-import com.ferra13671.BThack.impl.Modules.COMBAT.KillAura.RotateMode;
+import com.ferra13671.BThack.api.Utils.RotateMode;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.mob.*;
 import net.minecraft.entity.passive.GolemEntity;
@@ -42,7 +41,7 @@ public final class KillAuraUtils implements Mc {
         float[] rotations = AimBotUtils.rotations(rotateVector);
         preAttackRotate(rotateMode, rotations, packets);
         attackNoRotate(target);
-        postAttackRotate(rotateMode);
+        rotateMode.postRotate();
     }
 
     public static void attackNoRotate(Entity target) {
@@ -58,20 +57,10 @@ public final class KillAuraUtils implements Mc {
     }
 
     public static void preAttackRotate(RotateMode rotateMode, float[] rotations, int packets) {
-        switch (rotateMode) {
-            case PACKET -> {
-                for (int i = 0; i < packets; i++) {
-                    AimBotUtils.packetRotate(rotations[0], rotations[1]);
-                }
-            }
-            case VANILLA -> AimBotUtils.rotate(rotations[0], rotations[1]);
-            case GRIM -> GrimUtils.sendPreActionGrimPackets(rotations[0], rotations[1]);
-        }
-    }
-
-    public static void postAttackRotate(RotateMode rotateMode) {
-        if (rotateMode == RotateMode.GRIM)
-            GrimUtils.sendPostActionGrimPackets();
+        if (rotateMode == RotateMode.PACKET1)
+            for (int i = 0; i < packets; i++)
+                rotateMode.preRotate(rotations[0], rotations[1]);
+        else rotateMode.preRotate(rotations[0], rotations[1]);
     }
 
     public static PlayerEntity filterPlayers(double range, boolean friends, boolean teammates, boolean clanManager, String clanMode, String targetClan, Predicate<Entity> extraFilter) {

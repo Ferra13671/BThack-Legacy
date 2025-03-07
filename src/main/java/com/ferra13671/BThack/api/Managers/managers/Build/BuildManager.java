@@ -9,7 +9,7 @@ import com.ferra13671.BThack.api.Utils.Initializable;
 import com.ferra13671.BThack.api.Utils.InventoryUtils;
 import com.ferra13671.BThack.api.Utils.MathUtils;
 import com.ferra13671.BThack.api.Utils.Modules.AimBotUtils;
-import com.ferra13671.BThack.api.Utils.Grim.GrimUtils;
+import com.ferra13671.BThack.api.Utils.RotateMode;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import com.google.common.collect.Sets;
 import net.minecraft.block.*;
@@ -17,7 +17,6 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket;
 import net.minecraft.network.packet.c2s.play.HandSwingC2SPacket;
-import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -78,7 +77,12 @@ public class BuildManager implements Initializable, Mc {
         }
     }
 
+    @Deprecated
     public static void placeBlock(BlockPos pos) {
+        placeBlock(pos, RotateMode.GRIM);
+    }
+
+    public static void placeBlock(BlockPos pos, RotateMode rotateMode) {
         try {
             if (!mc.world.getBlockState(pos).isReplaceable()) return;
             BlockState block1 = mc.world.getBlockState(pos);
@@ -86,20 +90,21 @@ public class BuildManager implements Initializable, Mc {
             FacingBlock block = checkNearBlocksExtended(pos);
             if (block == null) return;
             BlockHitResult bhr;
-            bhr = new BlockHitResult(new Vec3d((double) block.pos().getX() + Math.random(), block.pos().getY() + 0.99f, (double) block.pos().getZ() + Math.random()), block.direction(), block.pos(), false);
+            bhr = new BlockHitResult(new Vec3d((double) block.pos().getX() + Math.random(), block.pos().getY() + 0.5f, (double) block.pos().getZ() + Math.random()), block.direction(), block.pos(), false);
 
             float[] rotations = AimBotUtils.rotations(bhr.getPos());
             boolean sneak = BuildManager.needSneak(mc.world.getBlockState(bhr.getBlockPos()).getBlock()) && !mc.player.isSneaking();
 
             if (sneak)
-                mc.player.networkHandler.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.PRESS_SHIFT_KEY));
+                Managers.NETWORK_MANAGER.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.PRESS_SHIFT_KEY));
 
-            Managers.NETWORK_MANAGER.sendPacketNoEvent(new PlayerMoveC2SPacket.Full(mc.player.getX(), mc.player.getY(), mc.player.getZ(), rotations[0], rotations[1], mc.player.isOnGround()));
+            rotateMode.preRotate(rotations[0], rotations[1]);
             mc.interactionManager.interactBlock(mc.player, Hand.MAIN_HAND, bhr);
-            mc.player.networkHandler.sendPacket(new HandSwingC2SPacket(Hand.MAIN_HAND));
+            Managers.NETWORK_MANAGER.sendPacket(new HandSwingC2SPacket(Hand.MAIN_HAND));
 
-            mc.player.networkHandler.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.RELEASE_SHIFT_KEY));
-            Managers.NETWORK_MANAGER.sendPacketNoEvent(new PlayerMoveC2SPacket.Full(mc.player.getX(), mc.player.getY(), mc.player.getZ(), mc.player.getYaw(), mc.player.getPitch(), mc.player.isOnGround()));
+            if (sneak)
+                Managers.NETWORK_MANAGER.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.RELEASE_SHIFT_KEY));
+            rotateMode.postRotate();
         } catch (Exception ignored) {}
     }
 
