@@ -118,7 +118,7 @@ public class ModuleButton extends Component implements Mc {
 		BThackRender.drawString(module.getName(), (parent.getX() + 5), (parent.getY() + offset + (BUTTON_HEIGHT / 2f) - (FontUtils.getTextHeight(module.getName())) / 2f), getModuleTextColor());
 
 		if (!settings.isEmpty())
-			BThackRender.drawString(open ? "-" : "+", (parent.getX() + parent.getWidth() - 10), (parent.getY() + offset + 2), ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()));
+			BThackRender.drawString(open ? "-" : "+", (parent.getX() + parent.getWidth() - 10), (parent.getY() + offset + (BUTTON_HEIGHT / 2f) - (FontUtils.getTextHeight("+") / 2f)), ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()));
 		if(renderOpen || open) {
 			if(!settings.isEmpty()) {
 				BThackRender.enableScissor(ClickGui.applyGuiScale(parent.getX()), ClickGui.applyGuiScale(parent.getY() + offset), ClickGui.applyGuiScale(parent.getWidth()), ClickGui.applyGuiScale(animatedSettingsHeight + BUTTON_HEIGHT));
@@ -141,14 +141,14 @@ public class ModuleButton extends Component implements Mc {
 		if (ModuleList.clickGui.rainbow.getValue()) {
 			float _alpha = (int) (alpha * (module.isEnabled() ? toggleAnimation.getEase() : 1 - toggleAnimation.getEase())) / 255f;
 			Shaders.INSTANCE.X_RAINBOW.setUniformValue("alpha", _alpha);
-			Shaders.INSTANCE.X_RAINBOW.setUniformValue("brightness", isHovered ? 0.8f : 0.5f);
+			Shaders.INSTANCE.X_RAINBOW.setUniformValue("brightness", isHovered ? 0.9f : 0.7f);
 			BThackRender.drawShader(Shaders.INSTANCE.X_RAINBOW, parent.getX(), parent.getY() + offset, parent.getX() + parent.getWidth(), parent.getY() + BUTTON_HEIGHT + offset);
 		} else {
 			BThackRender.drawRect(parent.getX(), parent.getY() + offset, parent.getX() + parent.getWidth(), parent.getY() + BUTTON_HEIGHT + offset,
 					ColorUtils.integrateAlpha(
 							isHovered ?
-									new Color(ClickGui.getClickGuiColor(true)).darker().hashCode() :
-									new Color(ClickGui.getClickGuiColor(true)).darker().darker().hashCode(),
+									new Color(ClickGui.getClickGuiColor(true)).hashCode() :
+									new Color(ClickGui.getClickGuiColor(true)).darker().hashCode(),
 							alpha
 					)
 			);
