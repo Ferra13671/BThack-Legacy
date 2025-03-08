@@ -19,6 +19,7 @@
     "entity.MixinEntity",
     "entity.MixinFireWorkRocketEntity",
     "entity.MixinLivingEntity",
+    "entity.MixinPlayerEntity",
     "world.MixinDimensionType",
     "world.MixinWorld",
     "xray.MixinAbstractBlock",

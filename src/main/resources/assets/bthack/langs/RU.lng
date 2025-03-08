@@ -88,6 +88,7 @@
 "lang.module.Flip": Поворачивает игрока на 180 градусов.
 "lang.module.GuiMove": Позволяет игроку ходить когда гуи открыто.
 "lang.module.Impulse": Импульс, который подается в направлении вашего взгляда.
+"lang.module.KeepSprint": Позволяет сохранять спринт после атаки.
 "lang.module.LevitationControl": Позволяет управлять левитацией.
 "lang.module.LongJump": Позволяет далеко прыгать.
 "lang.module.NinjaBridge": Автоматически строит мост в стиле NinjaBridge в том направлении, в котором вы смотрите.

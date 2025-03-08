@@ -89,6 +89,7 @@
 "lang.module.Flip": Rotates the player 180 degrees.
 "lang.module.GuiMove": Allows the player to move when the GUI is turned on.
 "lang.module.Impulse": An impulse is applied to you in the direction of your gaze.
+"lang.module.KeepSprint": Allows you to keep sprint after attack.
 "lang.module.LevitationControl": Allows you to control levitation.
 "lang.module.LongJump": Allows you to jump far.
 "lang.module.NinjaBridge": Automatically builds a NinjaBridge-style bridge in the direction you're facing.
