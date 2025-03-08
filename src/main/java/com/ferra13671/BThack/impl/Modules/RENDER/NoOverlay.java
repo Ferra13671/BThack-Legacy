@@ -16,7 +16,6 @@ public class NoOverlay extends Module {
     public final BooleanSetting vignette = new BooleanSetting("Vignette", this, true);
     public final BooleanSetting effects = new BooleanSetting("Effects", this, true);
     public final BooleanSetting scoreBoard = new BooleanSetting("ScoreBoard", this, false);
-    public final BooleanSetting unsecureServerWarn = new BooleanSetting("Unsecure Server Warn", this, true);
 
     public NoOverlay() {
         super("NoOverlay",
@@ -36,8 +35,7 @@ public class NoOverlay extends Module {
                 jumpBar,
                 vignette,
                 effects,
-                scoreBoard,
-                unsecureServerWarn
+                scoreBoard
         );
     }
 }

@@ -8,7 +8,6 @@ import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.ChatUtils;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
-import net.minecraft.network.packet.s2c.play.GameJoinS2CPacket;
 import net.minecraft.network.packet.s2c.play.PlayerPositionLookS2CPacket;
 import net.minecraft.util.Formatting;
 import org.jetbrains.annotations.NotNull;
@@ -58,10 +57,5 @@ public class MixinClientPlayNetworkHandler implements Mc {
 
             ci.cancel();
         }
-    }
-
-    @Inject(method = "onGameJoin", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/toast/SystemToast;create(Lnet/minecraft/client/MinecraftClient;Lnet/minecraft/client/toast/SystemToast$Type;Lnet/minecraft/text/Text;Lnet/minecraft/text/Text;)Lnet/minecraft/client/toast/SystemToast;", ordinal = 0, shift = At.Shift.BEFORE), cancellable = true)
-    public void modifyCreateSystemToast(GameJoinS2CPacket packet, CallbackInfo ci) {
-        if (ModuleList.noOverlay.isEnabled() && ModuleList.noOverlay.unsecureServerWarn.getValue()) ci.cancel();
     }
 }
