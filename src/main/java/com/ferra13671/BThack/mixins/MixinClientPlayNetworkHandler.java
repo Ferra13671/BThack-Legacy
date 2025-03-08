@@ -15,23 +15,24 @@ import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyArgs;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 @Mixin(ClientPlayNetworkHandler.class)
 public class MixinClientPlayNetworkHandler implements Mc {
 
-    @ModifyArgs(method = "onPlayerPositionLook", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;setYaw(F)V"))
-    public void modifySetYawOnOnPlayerPositionLook(Args args) {
+    @ModifyArg(method = "onPlayerPositionLook", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;setYaw(F)V"))
+    public float modifySetYawOnOnPlayerPositionLook(float yaw) {
         if (ModuleList.noSRotations.isEnabled())
-            args.set(0, mc.player.getYaw());
+            return mc.player.getYaw();
+        else return yaw;
     }
 
-    @ModifyArgs(method = "onPlayerPositionLook", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;setPitch(F)V"))
-    public void modifySetPitchOnOnPlayerPositionLook(Args args) {
+    @ModifyArg(method = "onPlayerPositionLook", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;setPitch(F)V"))
+    public float modifySetPitchOnOnPlayerPositionLook(float pitch) {
         if (ModuleList.noSRotations.isEnabled())
-            args.set(0, mc.player.getPitch());
+            return mc.player.getPitch();
+        else return pitch;
     }
 
     @Inject(method = "onPlayerPositionLook", at = @At("TAIL"))

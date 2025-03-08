@@ -10,14 +10,8 @@ import com.ferra13671.TextureUtils.GLTextureSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.Mouse;
 import net.minecraft.client.RunArgs;
-import net.minecraft.client.gui.screen.DeathScreen;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.screen.TitleScreen;
 import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.client.option.KeyBinding;
-import net.minecraft.client.render.BufferRenderer;
-import net.minecraft.client.sound.SoundManager;
-import net.minecraft.client.util.Window;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.world.tick.TickManager;
 import org.jetbrains.annotations.Nullable;
@@ -27,6 +21,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -40,17 +35,9 @@ public abstract class MixinMinecraftClient implements Mc {
 
     @Shadow @Final public Mouse mouse;
 
-    @Shadow @Final private Window window;
-
-    @Shadow public boolean skipGameRender;
-
-    @Shadow @Final private SoundManager soundManager;
-
-    @Shadow public abstract void updateWindowTitle();
-
-    @Shadow private boolean disconnecting;
-
     @Shadow @Nullable public ClientWorld world;
+
+    @Unique GuiOpenEvent lastEvent;
 
     @Inject(method = "<init>", at = @At("TAIL"))
     public void modifyMinecraftInit(RunArgs args, CallbackInfo ci) {
@@ -79,53 +66,20 @@ public abstract class MixinMinecraftClient implements Mc {
         cir.setReturnValue(millis * Managers.TICK_MANAGER.getTickModifier());
     }
 
-    @Inject(method = "setScreen", at = @At("HEAD"), cancellable = true)
-    public void modifySetScreen(Screen screen, CallbackInfo ci) {
+    @ModifyVariable(method = "setScreen", at = @At("HEAD"), ordinal = 0, argsOnly = true)
+    public Screen modifySetScreen1(Screen screen) {
         GuiOpenEvent event = new GuiOpenEvent(screen);
         BThack.EVENT_BUS.activate(event);
-        if (event.isCancelled()) {
-            ci.cancel();
-            return;
+        lastEvent = event;
+        return event.getScreen();
+    }
+
+    @Inject(method = "setScreen", at = @At("HEAD"), cancellable = true)
+    public void modifySetScreen2(Screen screen, CallbackInfo ci) {
+        if (lastEvent != null) {
+            if (lastEvent.isCancelled()) ci.cancel();
+            lastEvent = null;
         }
-        screen = event.getScreen();
-
-        if (currentScreen != null) {
-            currentScreen.removed();
-        }
-
-        if (screen == null && disconnecting) {
-            throw new IllegalStateException("Trying to return to in-game GUI during disconnection");
-        } else {
-            if (screen == null && this.world == null) {
-                screen = new TitleScreen();
-            } else if (screen == null && player.isDead()) {
-                if (player.showsDeathScreen()) {
-                    screen = new DeathScreen(null, world.getLevelProperties().isHardcore());
-                } else {
-                    player.requestRespawn();
-                }
-            }
-
-            currentScreen = screen;
-            if (currentScreen != null) {
-                currentScreen.onDisplayed();
-            }
-
-            BufferRenderer.reset();
-            if (screen != null) {
-                mouse.unlockCursor();
-                KeyBinding.unpressAll();
-                screen.init(mc, window.getScaledWidth(), window.getScaledHeight());
-                skipGameRender = false;
-            } else {
-                soundManager.resumeAll();
-                mouse.lockCursor();
-            }
-
-            updateWindowTitle();
-        }
-
-        ci.cancel();
     }
 
     @Unique
