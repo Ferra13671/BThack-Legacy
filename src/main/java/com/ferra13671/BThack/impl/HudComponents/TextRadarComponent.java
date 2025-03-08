@@ -19,17 +19,19 @@ public class TextRadarComponent extends HudComponent {
     public void render() {
         float y = 0;
         float maxWidth = 0;
+        int count = 0;
         for (PlayerEntity player : mc.world.getPlayers()) {
             if (player.getDisplayName().getString().equals(mc.player.getDisplayName().getString())) continue;
             String text = player.getDisplayName().getString() + " " + Formatting.GRAY + "[" + Formatting.WHITE + decimal.format(player.distanceTo(mc.player)) + "m." + Formatting.GRAY + "]";
 
-            drawText(text, (int) getX(), (int) (getY() + y));
+            drawText(text, (int) getX(), (int) (getY() + y), ArrayListComponent.INSTANCE.getArrayColor(count));
 
 
             if (maxWidth < FontUtils.getTextWidth(text)) {
                 maxWidth = FontUtils.getTextHeight(text);
             }
             y += FontUtils.getTextHeight(text) + 4;
+            count++;
         }
 
         this.width = maxWidth;

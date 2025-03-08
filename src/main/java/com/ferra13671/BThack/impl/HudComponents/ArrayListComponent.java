@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class ArrayListComponent extends HudComponent {
-    private static ArrayListComponent INSTANCE;
+    protected static ArrayListComponent INSTANCE;
 
     private final BooleanSetting drawRects = new BooleanSetting("Draw Rects", this, true);
     private final BooleanSetting backGround = new BooleanSetting("BackGround", this, true);
