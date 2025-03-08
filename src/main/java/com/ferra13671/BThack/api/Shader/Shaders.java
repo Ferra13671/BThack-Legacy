@@ -10,7 +10,7 @@ import net.minecraft.util.Identifier;
 
 public class Shaders implements Mc {
     public static Shaders INSTANCE;
-    private final ShaderTicker shaderTicker = new ShaderTicker();
+    public final ShaderTicker shaderTicker = new ShaderTicker();
     {
         BThack.EVENT_BUS.register(this);
     }

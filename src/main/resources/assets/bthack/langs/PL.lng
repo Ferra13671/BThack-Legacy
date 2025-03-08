@@ -175,6 +175,7 @@
 "lang.module.PhaseESP": Podświetla bloki, które można stopniowo wprowadzać.
 "lang.module.Radar": Radar wyświetlający podmioty znajdujące się w pobliżu.
 "lang.module.Search": Podkreśla właściwe bloki.
+"lang.module.Shaders": Renderuje shader podczas renderowania graczy, mobów i przedmiotów.
 "lang.module.Tooltips": Pokazuje zawartość shulkera.
 "lang.module.Tracers": Rysuje linie prowadzące do podmiotów.
 "lang.module.Waypoints": Umożliwia renderowanie waypointów.

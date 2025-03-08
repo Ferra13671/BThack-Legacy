@@ -1,3 +1,5 @@
+#version 150
+
 #ifdef GL_ES
 precision mediump float;
 #endif
@@ -6,6 +8,8 @@ uniform float time;
 uniform vec2 resolution;
 uniform float alpha;
 uniform float brightness;
+
+out vec4 fragColor;
 
 vec3 hsv2rgb(vec3 c)
 {
@@ -18,6 +22,6 @@ void main() {
 	float rainbowState = ceil(((time * 400.) + (100. + ((gl_FragCoord.x / resolution.x * 2400.) * 2.))) / 20.);
 	rainbowState = mod(rainbowState, 360.);
 
-	gl_FragColor = vec4(hsv2rgb(vec3((rainbowState / 360.), 0.6, brightness)), alpha);
+	fragColor = vec4(hsv2rgb(vec3((rainbowState / 360.), 0.6, brightness)), alpha);
 
 }

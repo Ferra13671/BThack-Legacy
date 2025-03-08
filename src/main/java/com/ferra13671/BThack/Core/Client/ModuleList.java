@@ -200,6 +200,7 @@ public final class ModuleList {
     public static PhaseESP phaseESP;
     public static Radar radar;
     public static Search search;
+    public static Shaders shaders;
     public static Tooltips tooltips;
     public static Tracers tracers;
     public static Waypoints waypoints;
@@ -400,6 +401,7 @@ public final class ModuleList {
         phaseESP = register(new PhaseESP());
         radar = register(new Radar());
         search = register(new Search());
+        shaders = register(new Shaders());
         tooltips = register(new Tooltips());
         tracers = register(new Tracers());
         waypoints = register(new Waypoints());

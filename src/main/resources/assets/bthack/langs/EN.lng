@@ -176,6 +176,7 @@
 "lang.module.PhaseESP": Highlights blocks that can be phase.
 "lang.module.Radar": A radar that displays entities that are near you.
 "lang.module.Search": Highlights the needed blocks.
+"lang.module.Shaders": Renders the shader when rendering players, mobs, and items.
 "lang.module.Tooltips": Shows the contents of the shulker.
 "lang.module.Tracers": Draws lines leading to entities.
 "lang.module.Waypoints": Allows rendering of waypoints.
