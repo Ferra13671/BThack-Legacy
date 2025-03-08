@@ -189,8 +189,10 @@ public class Module {
         this.toggled = toggled;
         if (this.toggled) {
             onEnable();
+            addToArrayList();
         } else {
             onDisable();
+            removeFromArrayList();
         }
     }
 
