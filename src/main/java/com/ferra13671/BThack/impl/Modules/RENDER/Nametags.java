@@ -7,9 +7,11 @@ import com.ferra13671.BThack.Core.Render.Utils.BThackRenderUtils;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Events.Render.RenderHudPreEvent;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ColorSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
+import com.ferra13671.BThack.api.Shader.Shaders;
 import com.ferra13671.BThack.api.Social.SocialManagers;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.impl.Modules.CLIENT.ClientSettings;
@@ -22,6 +24,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.math.Vec3d;
 
+import java.awt.*;
 import java.util.Arrays;
 
 public class Nametags extends Module {
@@ -29,6 +32,8 @@ public class Nametags extends Module {
     public final BooleanSetting players = new BooleanSetting("Players", this, true);
     public final ModeSetting playerMode = new ModeSetting("PMode", this, Arrays.asList("Mini", "Normal", "Full"));
     public final NumberSetting pSize = new NumberSetting("PSize", this, 0.7, 0.4, 2, false, players::getValue);
+    public final BooleanSetting rainbow = new BooleanSetting("Rainbow", this, true);
+    public final ColorSetting outlineColor = new ColorSetting("Outline Color", this, new Color(161, 0, 255), () -> !rainbow.getValue()).withBlockedAlpha();
 
     public final BooleanSetting items = new BooleanSetting("Items", this, true);
     public final NumberSetting iSize = new NumberSetting("ISize", this, 1, 0.5, 2, false, items::getValue);
@@ -46,6 +51,8 @@ public class Nametags extends Module {
                 players,
                 playerMode,
                 pSize,
+                rainbow,
+                outlineColor,
 
                 items,
                 iSize,
@@ -161,7 +168,9 @@ public class Nametags extends Module {
 
     public void drawBase(float leftX, float upY, float rightX, float downY) {
         BThackRender.drawRect(leftX, upY, rightX, downY, ColorUtils.fastRGBA(0,0,0,150));
-        BThackRender.drawOutlineRect(leftX, upY, rightX, downY, 1.3f, ColorUtils.rainbow());
+        if (rainbow.getValue())
+            BThackRender.drawShaderOutlineRect(Shaders.INSTANCE.X_RAINBOW, leftX, upY, rightX, downY, 1.5f);
+        else BThackRender.drawOutlineRect(leftX, upY, rightX, downY, 1.5f, outlineColor.getValue().hashCode());
     }
 
     public void drawName(String name, float leftX, float downY) {
