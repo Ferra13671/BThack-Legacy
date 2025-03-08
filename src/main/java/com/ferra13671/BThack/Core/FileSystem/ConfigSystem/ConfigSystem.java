@@ -178,11 +178,6 @@ public final class ConfigSystem {
     public static void loadConfigFile(String fileName) throws IOException {
         ConfigUtils.loadFromJson(fileName, "Configs",
                 jsonObject -> {
-                    try {
-                        saveConfigFile(Client.clientInfo.getCurrentConfigName());
-                    } catch (IOException e) {
-                        BThack.error(e.getMessage());
-                    }
 
                     for (Module module : Client.getAllModules()) {
                         if (jsonObject.get(module.getName()) != null) {
