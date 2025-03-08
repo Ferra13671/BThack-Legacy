@@ -150,7 +150,7 @@ public class KillAura extends Module {
 
     @EventSubscriber
     public void onPacket(PacketEvent.Send e) {
-        if (needPause()) return;
+        if (nullCheck() || needPause()) return;
         if (mode.getValue().equals("Aura")) {
             if (rotateMode.getValue().equals("Grim") || !instaAttack.getValue()) {
                 if (targetedEntity == null) {
