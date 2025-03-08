@@ -70,7 +70,8 @@ public class ArrayListComponent extends HudComponent {
         }
         modules = new CopyOnWriteArrayList<>(modules.stream().sorted((module1, module2) -> (int) ((module1.getLength() - module2.getLength()) * 100)).toList());
         Collections.reverse(modules);
-        INSTANCE.width = -(7 + newMaxLength);
+        if (INSTANCE != null)
+            INSTANCE.width = -(7 + newMaxLength);
     }
 
     @Override
