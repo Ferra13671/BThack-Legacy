@@ -70,7 +70,7 @@ public class MixinWorldRenderer {
 
     @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/OutlineVertexConsumerProvider;draw()V", shift = At.Shift.AFTER))
     public void modifyRenderBeforeOutlineRender(RenderTickCounter tickCounter, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer, LightmapTextureManager lightmapTextureManager, Matrix4f matrix4f, Matrix4f matrix4f2, CallbackInfo ci) {
-        if (ModuleList.shaders.isEnabled() && allowShader) {
+        if (ModuleList.shaders.isEnabled()) {
             if (!ModuleList.shaders.shaderInited) ModuleList.shaders.reloadShader();
             ModuleList.shaders.drawShader(tickCounter.getTickDelta(true));
             MinecraftClient.getInstance().getFramebuffer().beginWrite(false);
