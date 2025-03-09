@@ -21,7 +21,7 @@ public class LoadConfigScreen extends BThackScreen {
     private double maxYScroll;
 
     public LoadConfigScreen() {
-        super(Text.of("Load Config"));
+        super(Text.literal("Load Config"));
     }
 
     @Override

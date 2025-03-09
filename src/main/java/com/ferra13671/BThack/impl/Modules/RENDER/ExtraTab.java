@@ -46,19 +46,13 @@ public class ExtraTab extends Module {
     }
 
     public Text getModifiedPlayerName(String name) {
-        if (friends.getValue()) {
-            if (SocialManagers.FRIENDS.contains(name)) {
-                return Text.of(ClientSettings.getFriendColor() + name);
-            }
-        }
-        if (enemies.getValue()) {
-            if (SocialManagers.ENEMIES.contains(name)) {
-                return Text.of(ClientSettings.getEnemyColor() + name);
-            }
-        }
+        if (friends.getValue() && SocialManagers.FRIENDS.contains(name))
+            return Text.literal(ClientSettings.getFriendColor() + name);
+        if (enemies.getValue() && SocialManagers.ENEMIES.contains(name))
+            return Text.literal(ClientSettings.getEnemyColor() + name);
         if (mc.player.getDisplayName().getString().equals(name))
-            return Text.of(ClientSettings.getOwnColor() + name);
+            return Text.literal(ClientSettings.getOwnColor() + name);
 
-        return Text.of(name);
+        return Text.literal(name);
     }
 }

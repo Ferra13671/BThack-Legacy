@@ -16,13 +16,13 @@ public final class ChatUtils implements Mc {
 
     public static void sendMessage(String message) {
         if (mc.player == null) return;
-        mc.player.sendMessage(Text.of((ModuleList.clientSettings.chatName.getValue().equals("Full") ? prefixFull : prefixSimple) + message));
+        mc.player.sendMessage(Text.literal((ModuleList.clientSettings.chatName.getValue().equals("Full") ? prefixFull : prefixSimple) + message));
 
     }
 
     public static void sendMessage(String msg, SoundEvent soundEvent) {
         if (mc.player == null) return;
-        mc.player.sendMessage(Text.of((ModuleList.clientSettings.chatName.getValue().equals("Full") ? prefixFull : prefixSimple) + msg));
+        mc.player.sendMessage(Text.literal((ModuleList.clientSettings.chatName.getValue().equals("Full") ? prefixFull : prefixSimple) + msg));
         mc.player.playSound(soundEvent,1,1);
     }
 

@@ -67,7 +67,7 @@ public class AutoDisconnect extends Module {
         float playerHP = mc.player.getHealth();
         double minHP = minHealth.getValue();
         if (playerHP <= minHP) {
-            mc.player.networkHandler.onDisconnect(new DisconnectS2CPacket(Text.of("Your health has reached its minimum limit(" + minHP + "). You have been disconnected.  Your HP: " + playerHP)));
+            mc.player.networkHandler.onDisconnect(new DisconnectS2CPacket(Text.literal("Your health has reached its minimum limit(" + minHP + "). You have been disconnected.  Your HP: " + playerHP)));
             if (autoToggle.getValue()) {
                 toggle();
             }
@@ -80,13 +80,13 @@ public class AutoDisconnect extends Module {
 
             if (player.distanceTo(mc.player) < (float) range.getValue()) {
                 if (friends.getValue()) {
-                    mc.player.networkHandler.onDisconnect(new DisconnectS2CPacket(Text.of(getChatName() + " You were disconnected because a player was detected near you.")));
+                    mc.player.networkHandler.onDisconnect(new DisconnectS2CPacket(Text.literal(getChatName() + " You were disconnected because a player was detected near you.")));
                     if (autoToggle.getValue()) {
                         toggle();
                     }
                 } else {
                     if (!SocialManagers.FRIENDS.contains(player)) {
-                        mc.player.networkHandler.onDisconnect(new DisconnectS2CPacket(Text.of(getChatName() + " You were disconnected because a player was detected near you.")));
+                        mc.player.networkHandler.onDisconnect(new DisconnectS2CPacket(Text.literal(getChatName() + " You were disconnected because a player was detected near you.")));
                         if (autoToggle.getValue()) {
                             toggle();
                         }
@@ -98,7 +98,7 @@ public class AutoDisconnect extends Module {
 
     public void  ifHeightAction() {
         if (mc.player.getY() < minHeight.getValue()) {
-            mc.player.networkHandler.onDisconnect(new DisconnectS2CPacket(Text.of(String.format("Your position on Y was less than %s. You've been disconnected.", minHeight.getValue()))));
+            mc.player.networkHandler.onDisconnect(new DisconnectS2CPacket(Text.literal(String.format("Your position on Y was less than %s. You've been disconnected.", minHeight.getValue()))));
             if (autoToggle.getValue()) {
                 toggle();
             }

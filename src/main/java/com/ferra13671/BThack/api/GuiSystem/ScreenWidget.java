@@ -20,7 +20,7 @@ public class ScreenWidget extends BThackScreen {
     public boolean needClose = false;
 
     public ScreenWidget(float width, float height, float animationSpeed) {
-        super(Text.of("Widget-" + NumberGenerator.generateInt(10000, 99999)));
+        super(Text.literal("Widget-" + NumberGenerator.generateInt(10000, 99999)));
         this.width = width;
         this.height = height;
         this.animationSpeed = animationSpeed;

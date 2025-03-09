@@ -12,7 +12,7 @@ import net.minecraft.text.Text;
 public class BThackCreditsScreen extends BThackScreen {
 
     public BThackCreditsScreen() {
-        super(Text.of("CreditsScreen"));
+        super(Text.literal("CreditsScreen"));
     }
 
     @Override

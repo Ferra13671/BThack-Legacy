@@ -33,7 +33,7 @@ public class AddingTaskGui extends BThackScreen {
     protected static TaskButton substituteTask;
 
     public AddingTaskGui() {
-        super(Text.of("AddingTask"));
+        super(Text.literal("AddingTask"));
     }
 
 

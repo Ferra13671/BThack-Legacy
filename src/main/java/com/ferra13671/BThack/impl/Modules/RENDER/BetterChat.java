@@ -80,7 +80,7 @@ public class BetterChat extends Module {
             if (yourself.getValue()) {
                 if (packet.content().getString().contains(mc.player.getDisplayName().getString()) && !packet.content().getString().contains("<" + mc.player.getDisplayName().getString() + ">")) {
                     String text = Formatting.YELLOW + packet.content().getString();
-                    packet = new GameMessageS2CPacket(Text.of(text), packet.overlay());
+                    packet = new GameMessageS2CPacket(Text.literal(text), packet.overlay());
                     if (yourselfSound.getValue()) {
                         mc.player.playSound(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
                     }
@@ -92,7 +92,7 @@ public class BetterChat extends Module {
                 for (String string : SocialManagers.FRIENDS.getPlayers()) {
                     if (packet.content().getString().contains(string)) {
                         String text = packet.content().getString().replace(string, ClientSettings.getFriendColor() + string + (checked ? Formatting.YELLOW : Formatting.RESET));
-                        packet = new GameMessageS2CPacket(Text.of(text), packet.overlay());
+                        packet = new GameMessageS2CPacket(Text.literal(text), packet.overlay());
                     }
                 }
             }
@@ -100,7 +100,7 @@ public class BetterChat extends Module {
                 for (String string : SocialManagers.ENEMIES.getPlayers()) {
                     if (packet.content().getString().contains(string)) {
                         String text = packet.content().getString().replace(string, ClientSettings.getEnemyColor() + string + (checked ? Formatting.YELLOW : Formatting.RESET));
-                        packet = new GameMessageS2CPacket(Text.of(text), packet.overlay());
+                        packet = new GameMessageS2CPacket(Text.literal(text), packet.overlay());
                     }
                 }
             }
@@ -108,7 +108,7 @@ public class BetterChat extends Module {
             if (time.getValue()) {
                 if (packet.content().getString().startsWith("<")) {
                     String timeText = Formatting.GRAY + getSeparate1(0) + Formatting.WHITE + Client.getRealTime(timeFormat.getValue()) + Formatting.GRAY + getSeparate1(1) + getSeparate2() + Formatting.RESET;
-                    packet = new GameMessageS2CPacket(Text.of(timeText + packet.content().getString()), packet.overlay());
+                    packet = new GameMessageS2CPacket(Text.literal(timeText + packet.content().getString()), packet.overlay());
                 }
             }
 

@@ -24,7 +24,7 @@ public abstract class AbstractTaskGui extends BThackScreen {
 
 
     protected AbstractTaskGui(TaskButton instance, boolean edit) {
-        super(Text.of("Adding Task"));
+        super(Text.literal("Adding Task"));
         this.edit = edit;
         this.instance = instance;
     }

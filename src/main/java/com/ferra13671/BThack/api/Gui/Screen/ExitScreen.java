@@ -9,7 +9,7 @@ public class ExitScreen extends BThackScreen {
     private final Ticker delayTicker = new Ticker();
 
     public ExitScreen() {
-        super(Text.of("Exit"));
+        super(Text.literal("Exit"));
     }
 
     @Override

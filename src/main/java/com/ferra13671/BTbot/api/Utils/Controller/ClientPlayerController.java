@@ -58,7 +58,7 @@ public class ClientPlayerController implements PlayerController {
 
     @Override
     public void onDisconnect(String reason) {
-        mc.player.networkHandler.onDisconnect(new DisconnectS2CPacket(Text.of(reason)));
+        mc.player.networkHandler.onDisconnect(new DisconnectS2CPacket(Text.literal(reason)));
     }
 
     @Override

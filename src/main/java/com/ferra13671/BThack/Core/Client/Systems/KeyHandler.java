@@ -10,17 +10,16 @@ public class KeyHandler implements Mc {
 
     @EventSubscriber
     public void onKey(InputEvent.KeyInputEvent e) {
-        if (e.getAction() == InputEvent.KeyInputEvent.Action.PRESS) {
-            if (e.getKeyCode() != KeyboardUtils.RELEASE && mc.currentScreen == null) {
-                Client.keyPress(e.getKeyCode());
+        switch (e.getAction()) {
+            case PRESS -> {
+                if (e.getKeyCode() != KeyboardUtils.RELEASE && mc.currentScreen == null)
+                    Client.keyPress(e.getKeyCode());
+                if (!KeyboardUtils.getActiveKeys().contains(e.getKeyCode()))
+                    KeyboardUtils.addActiveKey(e.getKeyCode());
             }
-
-            if (!KeyboardUtils.getActiveKeys().contains(e.getKeyCode())) {
-                KeyboardUtils.addActiveKey(e.getKeyCode());
-            }
-        } else if (e.getAction() == InputEvent.KeyInputEvent.Action.RELEASE) {
-            if (KeyboardUtils.getActiveKeys().contains(e.getKeyCode())) {
-                KeyboardUtils.removeActiveKey(e.getKeyCode());
+            case RELEASE -> {
+                if (KeyboardUtils.getActiveKeys().contains(e.getKeyCode()))
+                    KeyboardUtils.removeActiveKey(e.getKeyCode());
             }
         }
     }

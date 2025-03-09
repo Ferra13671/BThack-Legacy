@@ -24,7 +24,7 @@ public class BThackMainMenuScreen extends BThackScreen {
     public static boolean firstOpened = true;
 
     public BThackMainMenuScreen() {
-        super(Text.of("BThack Main Menu"));
+        super(Text.literal("BThack Main Menu"));
 
         Managers.MAIN_MENU_SHADER_MANAGER.setMainMenuShader(ModuleList.menuShader.getShader());
     }

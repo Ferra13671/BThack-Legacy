@@ -17,7 +17,7 @@ public class MoveTaskGui extends BThackScreen {
     private final TaskButton taskButton;
 
     public MoveTaskGui(TaskButton taskButton) {
-        super(Text.of("MoveTask"));
+        super(Text.literal("MoveTask"));
         this.taskButton = taskButton;
     }
 

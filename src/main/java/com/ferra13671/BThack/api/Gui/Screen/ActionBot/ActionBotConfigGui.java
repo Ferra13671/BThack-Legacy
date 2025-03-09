@@ -35,7 +35,7 @@ public class ActionBotConfigGui extends BThackScreen {
     protected static TaskButton selectedTask = null;
 
     public ActionBotConfigGui() {
-        super(Text.of("ActionBot Config"));
+        super(Text.literal("ActionBot Config"));
     }
 
     @Override

@@ -23,7 +23,7 @@ public class TransitionScreen extends BThackScreen {
     private boolean invert = false;
 
     public TransitionScreen(Supplier<Screen> oldScreen, Supplier<Screen> newScreen, Animation flipAnimation) {
-        super(Text.of("Transition"));
+        super(Text.literal("Transition"));
         currentScreen = oldScreen;
         this.newScreen = newScreen;
         this.flipAnimation = flipAnimation.clone();

@@ -137,7 +137,7 @@ public class TopperRadar extends Module {
                             delay--;
                         }
 
-                        mc.player.networkHandler.onDisconnect(new DisconnectS2CPacket(Text.of(message)));
+                        mc.player.networkHandler.onDisconnect(new DisconnectS2CPacket(Text.literal(message)));
 
                         pause = false;
                     });

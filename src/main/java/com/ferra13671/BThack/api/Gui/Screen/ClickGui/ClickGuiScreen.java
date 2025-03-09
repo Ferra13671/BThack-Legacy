@@ -44,7 +44,7 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
     public final ShaderTicker snowTicker = new ShaderTicker();
 
     public ClickGuiScreen() {
-        super(Text.of("ClickGui"));
+        super(Text.literal("ClickGui"));
         int tempX = 0;
         int tempY = 0;
         int tempId = 0;
