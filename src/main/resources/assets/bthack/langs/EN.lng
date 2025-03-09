@@ -46,10 +46,7 @@
 "lang.module.AutoAuth": Automatically login/register;
 "lang.module.Breaker": Automatically mining selected blocks.
 "lang.module.CleanMemory": Clears RAM when turned on.
-"lang.module.CreeperRadar": Alerts you if there is a creeper nearby.
 "lang.module.DeathCamera": After you die, you can fly as with FreeCam.
-"lang.module.EnemyRadar": Alerts you if there is an enemy nearby.
-"lang.module.GameCrasher": Crashing your Minecraft, lol.
 "lang.module.HighwayBuilder": Automatically builds straight highways.
 "lang.module.InstaNuker": Instantly mines the blocks around you.
 "lang.module.ItemRandomizer": While the module is enabled, it randomly changes the current slot in the hotbar.
@@ -200,8 +197,6 @@
 
 
 //Module messages
-"lang.module.CreeperRadar.spotted": Creeper has been spotted!
-"lang.module.EnemyRadar.spotted": The enemy has been spotted! %sName: %s  %sHealth: %s  %sDirection: %s
 "lang.module.TopperRadar.spotted": The %stopper %shas been spotted! %sName: %s  %sHealth: %s  %sDirection: %s
 "lang.module.radars.disconnectCountdown": The countdown to disconnecting begins!
 "lang.module.radars.disconnectAfter": Disconnect after %s s.

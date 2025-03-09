@@ -45,10 +45,7 @@
 "lang.module.AutoAuth": Автоматический вход/регистрация.
 "lang.module.Breaker": Автоматически добывает выбранные блоки.
 "lang.module.CleanMemory": Очищает ОЗУ при включении.
-"lang.module.CreeperRadar": Предупреждает вас, если поблизости есть крипер.
 "lang.module.DeathCamera": После смерти вы сможете летать, как с FreeCam.
-"lang.module.EnemyRadar": Предупреждает вас, если поблизости есть враг.
-"lang.module.GameCrasher": Крашит твой Майнкрафт, лол.
 "lang.module.HighwayBuilder": Автоматически строит прямые магистрали.
 "lang.module.InstaNuker": Мгновенно добывает блоки вокруг вас.
 "lang.module.ItemRandomizer": Пока модуль включен, он случайно меняет текущий слот в хотбаре.
@@ -199,8 +196,6 @@
 
 
 //Module messages
-"lang.module.CreeperRadar.spotted": Крипер был замечен!
-"lang.module.EnemyRadar.spotted": Враг был замечен! %sName: %s  %sHealth: %s  %sDirection: %s
 "lang.module.TopperRadar.spotted": %sТоппер %sбыл замечен! %sName: %s  %sHealth: %s  %sDirection: %s
 "lang.module.radars.disconnectCountdown": Обратный отсчет до отключения начинается!
 "lang.module.radars.disconnectAfter": Отключение через %s секунд.

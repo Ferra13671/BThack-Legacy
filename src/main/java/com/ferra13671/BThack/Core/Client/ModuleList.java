@@ -74,10 +74,7 @@ public final class ModuleList {
     public static AutoAuth autoAuth;
     public static Breaker breaker;
     public static CleanMemory cleanMemory;
-    public static CreeperRadar creeperRadar;
     public static DeathCamera deathCamera;
-    public static EnemyRadar enemyRadar;
-    public static GameCrasher gameCrasher;
     public static HighwayBuilder highwayBuilder;
     public static InstaNuker instaNuker;
     public static ItemRandomizer itemRandomizer;
@@ -276,10 +273,7 @@ public final class ModuleList {
         autoAuth = register(new AutoAuth());
         breaker = register(new Breaker());
         cleanMemory = register(new CleanMemory());
-        creeperRadar = register(new CreeperRadar());
         deathCamera = register(new DeathCamera());
-        enemyRadar = register(new EnemyRadar());
-        gameCrasher = register(new GameCrasher());
         highwayBuilder = register(new HighwayBuilder());
         instaNuker = register(new InstaNuker());
         itemRandomizer = register(new ItemRandomizer());

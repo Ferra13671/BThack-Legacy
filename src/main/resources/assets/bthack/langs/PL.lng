@@ -45,10 +45,7 @@
 "lang.module.AutoAuth": Automatyczne logowanie/rejestracja.
 "lang.module.Breaker": Automatycznie wydobywa wybrane bloki.
 "lang.module.CleanMemory": Czyści pamięć RAM po włączeniu zasilania.
-"lang.module.CreeperRadar": Ostrzega, jeśli w pobliżu znajduje się creeper.
 "lang.module.DeathCamera": Po śmierci będziesz mógł latać, tak jak w FreeCam.
-"lang.module.EnemyRadar": Ostrzega, jeśli w pobliżu znajduje się wróg.
-"lang.module.GameCrasher": Powoduje awarię Minecrafta, lol.
 "lang.module.HighwayBuilder": Automatycznie buduje proste autostrady.
 "lang.module.InstaNuker": Natychmiast wydobywa bloki wokół ciebie.
 "lang.module.ItemRandomizer": Gdy moduł jest włączony, losowo zmienia bieżący slot na pasku skrótów.
@@ -199,8 +196,6 @@
 
 
 //Module messages
-"lang.module.CreeperRadar.spotted": Creeper został zauważony!
-"lang.module.EnemyRadar.spotted": Wróg został zauważony! %sName: %s  %sHealth: %s  %sDirection: %s
 "lang.module.TopperRadar.spotted": %sTopper %szostał zauważony! %sName: %s  %sHealth: %s  %sDirection: %s
 "lang.module.radars.disconnectCountdown": Rozpoczyna się odliczanie do wyłączenia!
 "lang.module.radars.disconnectAfter": Wyłączenie po %s sekundach.
