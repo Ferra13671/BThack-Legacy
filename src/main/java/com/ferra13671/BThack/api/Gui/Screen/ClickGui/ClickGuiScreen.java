@@ -34,7 +34,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class ClickGuiScreen extends BThackScreen implements Mc {
-    public static int descriptionY;
 
     private final ArrayList<Frame> frames = new ArrayList<>();
     private boolean startSaving = false;
@@ -160,8 +159,6 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
             frame.updatePosition((int) (mouseX / ModuleList.clickGui.guiScale.getValue()), (int) (mouseY / ModuleList.clickGui.guiScale.getValue()));
         }
         BThackRender.guiGraphics.getMatrices().pop();
-
-        descriptionY = (int) ((height - (height / 40)) / ModuleList.clickGui.guiScale.getValue());
     }
 
     @Override

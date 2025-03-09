@@ -8,7 +8,6 @@ import com.ferra13671.BThack.Core.Render.Font.FontUtils;
 import com.ferra13671.BThack.Core.Render.Utils.BThackRenderUtils;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Category.Categories;
-import com.ferra13671.BThack.api.Gui.Screen.ClickGui.ClickGuiScreen;
 import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.Component;
 import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.Frame;
 import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.ModuleButton;
@@ -101,8 +100,6 @@ public class HudEditorScreen extends BThackScreen {
         frame.renderFrame();
         frame.updatePosition((int) (mouseX / ModuleList.clickGui.guiScale.getValue()), (int) (mouseY / ModuleList.clickGui.guiScale.getValue()));
         BThackRender.guiGraphics.getMatrices().pop();
-
-        ClickGuiScreen.descriptionY = (int) ((height - (height / 40)) / ModuleList.clickGui.guiScale.getValue());
     }
 
     @Override
