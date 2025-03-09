@@ -63,10 +63,6 @@ public class DescriptionBar implements Closeable, Mc {
             BThackRender.drawString(module.getDescription(), 6, scaledHeight - 7 - (FontUtils.getTextHeight(module.getDescription()) / 2f), ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()), alpha));
             BThackRender.drawString("Plugin: " + pluginMod.plugin.pluginName, 6, scaledHeight - 19 - (FontUtils.getTextHeight(pluginMod.plugin.pluginName) / 2f), ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()), alpha));
 
-            //BThackRender.drawRect(1, ClickGuiScreen.descriptionY - 17, length, (ClickGuiScreen.descriptionY + 12), ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().backgroundColor()), alpha));
-            //BThackRender.drawShaderOutlineRect(Shaders.INSTANCE.X_RAINBOW, 1, ClickGuiScreen.descriptionY - 17, length, (ClickGuiScreen.descriptionY + 12), 1);
-            //BThackRender.drawString(module.getDescription(), 6, (ClickGuiScreen.descriptionY + 6) - (FontUtils.getTextHeight(module.getDescription()) / 2f), ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()), alpha));
-            //BThackRender.drawString("Plugin: " + pluginMod.plugin.pluginName, 6, (ClickGuiScreen.descriptionY - 6) - (FontUtils.getTextHeight(pluginMod.plugin.pluginName) / 2f), ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()), alpha));
             BThackRender.guiGraphics.getMatrices().pop();
         } else {
             float length = FontUtils.getTextWidth(module.getDescription()) + 10;
@@ -77,10 +73,7 @@ public class DescriptionBar implements Closeable, Mc {
             BThackRender.drawRect(1, scaledHeight - 18, length, scaledHeight -1, ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().backgroundColor()), alpha));
             BThackRender.drawShaderOutlineRect(Shaders.INSTANCE.X_RAINBOW, 1, scaledHeight - 18, length, scaledHeight -1, 1);
             BThackRender.drawString(module.getDescription(), 6, scaledHeight - 9.5f - (FontUtils.getTextHeight(module.getDescription()) / 2f), ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()), alpha));
-
-            //BThackRender.drawRect(1, ClickGuiScreen.descriptionY - 5, length, (ClickGuiScreen.descriptionY + 12), ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().backgroundColor()), alpha));
-            //BThackRender.drawShaderOutlineRect(Shaders.INSTANCE.X_RAINBOW, 1, ClickGuiScreen.descriptionY - 5, length, (ClickGuiScreen.descriptionY + 12), 1);
-            //BThackRender.drawString(module.getDescription(), 6, (ClickGuiScreen.descriptionY + 3.5f) - (FontUtils.getTextHeight(module.getDescription()) / 2f), ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()), alpha));
+            
             BThackRender.guiGraphics.getMatrices().pop();
         }
     }
