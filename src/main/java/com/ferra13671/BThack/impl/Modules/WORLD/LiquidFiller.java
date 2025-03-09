@@ -2,26 +2,20 @@ package com.ferra13671.BThack.impl.Modules.WORLD;
 
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Managers.managers.Build.BuildManager;
-import com.ferra13671.BThack.api.Managers.managers.Build.BuildThread3D;
-import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.BlockUtils;
-import com.ferra13671.BThack.api.Utils.Grim.GrimUtils;
 import com.ferra13671.BThack.api.Utils.InventoryUtils;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
-import com.ferra13671.BThack.api.Utils.Modules.AimBotUtils;
+import com.ferra13671.BThack.api.Utils.RotateMode;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FluidBlock;
 import net.minecraft.item.BlockItem;
-import net.minecraft.network.packet.c2s.play.PlayerInteractBlockC2SPacket;
-import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3i;
 
 import java.util.ArrayList;
@@ -30,18 +24,17 @@ import java.util.List;
 
 public class LiquidFiller extends Module {
 
-    public final NumberSetting range = new NumberSetting("Range", this, 4, 3, 7, false);
-    public final NumberSetting delayTicks = new NumberSetting("Delay Ticks", this, 1, 0, 5, true);
+    public final NumberSetting range = new NumberSetting("Range", this, 3, 3, 7, false);
+    public final NumberSetting placePerTick = new NumberSetting("Place per tick", this, 1, 1, 5, true);
     public final BooleanSetting water = new BooleanSetting("Water", this, true);
     public final BooleanSetting lava = new BooleanSetting("Lava", this, true);
     public final BooleanSetting other = new BooleanSetting("Other (Mods)", this, true);
 
     public final BooleanSetting rotate = new BooleanSetting("Rotate", this, false);
-    public final ModeSetting rotateMode = new ModeSetting("Rotate Mode", this, Arrays.asList("Packet", "Grim"), rotate::getValue);
+    public final ModeSetting rotateMode = new ModeSetting("Rotate Mode", this, Arrays.asList("Packet", "Grim"), rotate::getValue).defaultValue("Grim");
     public final BooleanSetting ignoreWalls = new BooleanSetting("Ignore Walls", this, true);
 
     public final ModeSetting swap = new ModeSetting("Swap", this, Arrays.asList("Client", "Packet"));
-    public final ModeSetting interact = new ModeSetting("Interact", this, Arrays.asList("Client", "Packet"));
 
     public LiquidFiller() {
         super("LiquidFiller",
@@ -53,7 +46,7 @@ public class LiquidFiller extends Module {
 
         initSettings(
                 range,
-                delayTicks,
+                placePerTick,
                 water,
                 lava,
                 other,
@@ -62,8 +55,7 @@ public class LiquidFiller extends Module {
                 rotateMode,
                 ignoreWalls,
 
-                swap,
-                interact
+                swap
         );
     }
 
@@ -95,42 +87,18 @@ public class LiquidFiller extends Module {
     }
 
     public void interactAction(List<Vec3i> sch) {
+        int places = 0;
         for (Vec3i pos : sch) {
+            if (places >= (int) placePerTick.getValue()) break;
             int slot = InventoryUtils.findItem(BlockItem.class);
             if (slot == -1) return;
+            if (mc.player.getInventory().getStack(mc.player.getInventory().selectedSlot).getItem() instanceof BlockItem) slot = mc.player.getInventory().selectedSlot;
             int oldSlot = mc.player.getInventory().selectedSlot;
 
             InventoryUtils.swapAction(oldSlot, slot, false, swap.getValue());
-            interactActionInternal(new BlockPos(pos));
+            BuildManager.placeBlock(new BlockPos(pos), RotateMode.valueOf(rotateMode.getValue().toUpperCase()));
             InventoryUtils.swapAction(oldSlot, slot, true, swap.getValue());
+            places++;
         }
-        BuildThread3D thread3D = new BuildThread3D();
-        thread3D.set3DSchematic((int) delayTicks.getValue(), sch, BlockPos.ORIGIN);
-        thread3D.start();
-    }
-
-    public void interactActionInternal(BlockPos pos) {
-        rotatePreAction(pos);
-        switch (interact.getValue()) {
-            case "Client" -> mc.interactionManager.interactBlock(mc.player, Hand.MAIN_HAND, BuildManager.getHitResult(pos, false, Direction.UP));
-            case "Packet" -> Managers.NETWORK_MANAGER.sendPacket(new PlayerInteractBlockC2SPacket(Hand.MAIN_HAND, BuildManager.getHitResult(pos, false, Direction.UP), 0));
-        }
-        rotatePostAction();
-    }
-
-    public void rotatePreAction(BlockPos pos) {
-        if (rotate.getValue()) {
-            float[] rots = AimBotUtils.rotations(pos);
-            if (rotateMode.getValue().equals("Packet"))
-                AimBotUtils.packetRotate(rots[0], rots[1]);
-            else
-                GrimUtils.sendPreActionGrimPackets(rots[0], rots[1]);
-        }
-    }
-
-    public void rotatePostAction() {
-        if (rotate.getValue())
-            if (rotateMode.getValue().equals("Grim"))
-                GrimUtils.sendPostActionGrimPackets();
     }
 }
