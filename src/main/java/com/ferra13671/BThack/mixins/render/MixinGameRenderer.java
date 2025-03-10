@@ -4,24 +4,51 @@ import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.api.Events.Render.RenderWorldLastEvent;
+import com.ferra13671.BThack.api.IMixin.ModifyHeldItemRenderer;
 import com.ferra13671.BThack.api.Shader.Shaders;
+import com.ferra13671.BThack.mixins.accessor.IWorldRenderer;
 import com.llamalad7.mixinextras.sugar.Local;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.render.GameRenderer;
-import net.minecraft.client.render.RenderTickCounter;
+import net.minecraft.client.gui.hud.InGameOverlayRenderer;
+import net.minecraft.client.render.*;
+import net.minecraft.client.render.item.HeldItemRenderer;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.world.GameMode;
 import org.joml.Matrix4f;
 import org.lwjgl.opengl.GL11;
 import org.objectweb.asm.Opcodes;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(GameRenderer.class)
-public class MixinGameRenderer {
+public abstract class MixinGameRenderer {
+
+    @Shadow private boolean renderingPanorama;
+
+    @Shadow public abstract void loadProjectionMatrix(Matrix4f projectionMatrix);
+
+    @Shadow public abstract Matrix4f getBasicProjectionMatrix(double fov);
+
+    @Shadow protected abstract double getFov(Camera camera, float tickDelta, boolean changingFov);
+
+    @Shadow protected abstract void tiltViewWhenHurt(MatrixStack matrices, float tickDelta);
+
+    @Shadow @Final
+    MinecraftClient client;
+
+    @Shadow protected abstract void bobView(MatrixStack matrices, float tickDelta);
+
+    @Shadow @Final private LightmapTextureManager lightmapTextureManager;
+
+    @Shadow @Final public HeldItemRenderer firstPersonRenderer;
 
     @Inject(method = "renderWorld", at = @At(value = "FIELD", target = "Lnet/minecraft/client/render/GameRenderer;renderHand:Z", opcode = Opcodes.GETFIELD, ordinal = 0))
     private void modifyRenderHandOnRenderWorld(RenderTickCounter tickCounter, CallbackInfo ci, @Local(ordinal = 1) Matrix4f matrix4f2, @Local(ordinal = 1) float tickDelta) {
@@ -31,6 +58,20 @@ public class MixinGameRenderer {
         GL11.glEnable(GL11.GL_LINE_SMOOTH);
         RenderWorldLastEvent event = new RenderWorldLastEvent(BThackRender.worldMatrixStack);
         BThack.EVENT_BUS.activate(event);
+    }
+
+    @Inject(method = "renderWorld", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/profiler/Profiler;pop()V", shift = At.Shift.BEFORE))
+    public void modifyRenderWorldAfterRenderHand(RenderTickCounter tickCounter, CallbackInfo ci) {
+        if (ModuleList.shaders.isEnabled()) ModuleList.shaders.drawShader(tickCounter.getTickDelta(true));
+    }
+
+    @Inject(method = "renderHand", at = @At("RETURN"))
+    public void modifyRenderHand(Camera camera, float tickDelta, Matrix4f matrix4f, CallbackInfo ci) {
+        if (ModuleList.shaders.isEnabled() && ModuleList.shaders.hands.getValue()) {
+            renderShaderHand(camera, tickDelta);
+            ((IWorldRenderer) client.worldRenderer)._getBufferBuilders().getOutlineVertexConsumers().draw();
+            client.getFramebuffer().beginWrite(false);
+        }
     }
 
     @Inject(method = "bobView", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/MinecraftClient;getCameraEntity()Lnet/minecraft/entity/Entity;", shift = At.Shift.AFTER), cancellable = true)
@@ -64,5 +105,32 @@ public class MixinGameRenderer {
     @Inject(method = "render", at = @At("HEAD"))
     public void modifyRender(RenderTickCounter tickCounter, boolean tick, CallbackInfo ci) {
         Shaders.INSTANCE.updateTime();
+    }
+
+    public void renderShaderHand(Camera camera, float tickDelta) {
+        if (!renderingPanorama) {
+            loadProjectionMatrix(getBasicProjectionMatrix(getFov(camera, tickDelta, false)));
+            MatrixStack matrixStack = new MatrixStack();
+            matrixStack.push();
+            tiltViewWhenHurt(matrixStack, tickDelta);
+            if (client.options.getBobView().getValue()) {
+                bobView(matrixStack, tickDelta);
+            }
+
+            boolean bl = client.getCameraEntity() instanceof LivingEntity && ((LivingEntity) client.getCameraEntity()).isSleeping();
+            if (client.options.getPerspective().isFirstPerson() && !bl && !client.options.hudHidden && client.interactionManager.getCurrentGameMode() != GameMode.SPECTATOR) {
+                lightmapTextureManager.enable();
+                OutlineVertexConsumerProvider outlineVertexConsumerProvider = ((IWorldRenderer) client.worldRenderer)._getBufferBuilders().getOutlineVertexConsumers();
+                outlineVertexConsumerProvider.setColor(255, 255, 255, 255);
+                ((ModifyHeldItemRenderer) firstPersonRenderer).renderShaderItem(tickDelta, matrixStack, outlineVertexConsumerProvider, client.player, client.getEntityRenderDispatcher().getLight(client.player, tickDelta));
+                outlineVertexConsumerProvider.draw();
+                lightmapTextureManager.disable();
+            }
+
+            matrixStack.pop();
+            if (client.options.getPerspective().isFirstPerson() && !bl) {
+                InGameOverlayRenderer.renderOverlays(client, matrixStack);
+            }
+        }
     }
 }

@@ -46,6 +46,7 @@
     "accessor.IPostEffectPass",
     "accessor.IProjection",
     "accessor.IScreen",
+    "accessor.IWorldRenderer",
     "entity.MixinClientPlayerEntity",
     "gui_and_hud.MixinDeathScreen",
     "gui_and_hud.MixinHandledScreen",

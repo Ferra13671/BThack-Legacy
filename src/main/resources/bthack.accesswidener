@@ -47,3 +47,7 @@ accessible method net/minecraft/fluid/FlowableFluid isFlowBlocked (Lnet/minecraf
 #MobSpawnerLogic
 accessible field net/minecraft/block/spawner/MobSpawnerLogic spawnEntry Lnet/minecraft/block/spawner/MobSpawnerEntry;
 accessible field net/minecraft/block/spawner/MobSpawnerLogic spawnDelay I
+
+accessible class net/minecraft/client/render/item/HeldItemRenderer$HandRenderType
+accessible field net/minecraft/client/render/item/HeldItemRenderer$HandRenderType renderMainHand Z
+accessible field net/minecraft/client/render/item/HeldItemRenderer$HandRenderType renderOffHand Z

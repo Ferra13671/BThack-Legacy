@@ -8,6 +8,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.decoration.EndCrystalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.ColorHelper;
 import org.joml.Matrix4f;
@@ -72,7 +73,6 @@ public class MixinWorldRenderer {
     public void modifyRenderBeforeOutlineRender(RenderTickCounter tickCounter, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer, LightmapTextureManager lightmapTextureManager, Matrix4f matrix4f, Matrix4f matrix4f2, CallbackInfo ci) {
         if (ModuleList.shaders.isEnabled()) {
             if (!ModuleList.shaders.shaderInited) ModuleList.shaders.reloadShader();
-            ModuleList.shaders.drawShader(tickCounter.getTickDelta(true));
             MinecraftClient.getInstance().getFramebuffer().beginWrite(false);
         }
     }
@@ -81,10 +81,12 @@ public class MixinWorldRenderer {
     public boolean hasAllowedEntity(Entity entity) {
         boolean value = false;
         if (ModuleList.shaders.players.getValue() && entity instanceof PlayerEntity && entity != client.player) value = true;
+        if (ModuleList.shaders.self.getValue() && entity == client.player) value = true;
         if (ModuleList.shaders.items.getValue() && entity instanceof ItemEntity) value = true;
         if (ModuleList.shaders.hostiles.getValue() && KillAuraUtils.isHostile(entity)) value = true;
         if (ModuleList.shaders.golems.getValue() && KillAuraUtils.isGolem(entity)) value = true;
         if (ModuleList.shaders.passive.getValue() && KillAuraUtils.isPassive(entity)) value = true;
+        if (ModuleList.shaders.crystals.getValue() && entity instanceof EndCrystalEntity) value = true;
         return value;
     }
 }

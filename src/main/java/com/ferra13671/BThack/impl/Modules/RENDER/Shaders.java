@@ -26,7 +26,9 @@ public class Shaders extends Module {
     public final BooleanSetting hostiles = new BooleanSetting("Hostiles", this, true);
     public final BooleanSetting golems = new BooleanSetting("Golems", this, true);
     public final BooleanSetting passive = new BooleanSetting("Passive", this, true);
-    //public final BooleanSetting hands = new BooleanSetting("Hands", this, true);  TODO
+    public final BooleanSetting hands = new BooleanSetting("Hands", this, true);
+    public final BooleanSetting self = new BooleanSetting("Self", this, true);
+    public final BooleanSetting crystals = new BooleanSetting("Crystals", this, true);
 
     //Default
     public final ColorSetting fillColor = new ColorSetting("Fill Color", this, new Color(118, 13, 179, 90), () -> shaderMode.getValue().equals("Default"));
@@ -58,6 +60,9 @@ public class Shaders extends Module {
                 hostiles,
                 golems,
                 passive,
+                hands,
+                self,
+                crystals,
 
                 fillColor,
                 outlineColor,
