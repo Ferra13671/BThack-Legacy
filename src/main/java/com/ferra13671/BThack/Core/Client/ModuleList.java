@@ -40,7 +40,6 @@ public final class ModuleList {
     public static Macros macros;
     public static MemoryCleaner memoryCleaner;
     public static MenuShader menuShader;
-    public static ToggleSound toggleSound;
 
     //COMBAT
     public static AimBot aimBot;
@@ -239,7 +238,6 @@ public final class ModuleList {
         macros = register(new Macros());
         memoryCleaner = register(new MemoryCleaner());
         menuShader = register(new MenuShader());
-        toggleSound = register(new ToggleSound());
 
         //COMBAT
         aimBot = register(new AimBot());

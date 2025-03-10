@@ -3,6 +3,7 @@ package com.ferra13671.BThack.impl.Modules.CLIENT;
 import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Social.SocialManagers;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
@@ -15,6 +16,8 @@ import java.util.Arrays;
 public class ClientSettings extends Module {
 
     public final BooleanSetting startSound = new BooleanSetting("Start Sound", this, true);
+    public final BooleanSetting moduleToggleSound = new BooleanSetting("Module Toggle Sound", this, true);
+    public final NumberSetting soundVolume = new NumberSetting("Sound Volume", this, 1, 0.3, 2, false, moduleToggleSound::getValue);
     public final ModeSetting language = new ModeSetting("Language", this, new ArrayList<>(LanguageSystem.getLoadedLangs()));
     public final ModeSetting chatName = new ModeSetting("Chat Name", this, Arrays.asList("Simple", "Full"));
     public final ModeSetting friendColor = new ModeSetting("Friend Color", this, Arrays.asList(
@@ -64,6 +67,8 @@ public class ClientSettings extends Module {
 
         initSettings(
                 startSound,
+                moduleToggleSound,
+                soundVolume,
                 language,
                 chatName,
                 friendColor,

@@ -12,7 +12,6 @@
 "lang.module.Macros": Включает систему макросов.
 "lang.module.MemoryCleaner": Включение и настройка модуля очистки памяти.
 "lang.module.MenuShader": Включает рендеринг шейдеров в главном меню.
-"lang.module.ToggleSound": Воспроизводит звук при включении/выключении модулей.
 
 //COMBAT
 "lang.module.KillAura": Атакует сущностей в определенном радиусе.

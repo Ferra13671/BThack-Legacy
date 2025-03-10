@@ -77,13 +77,13 @@ public class Module {
     public void onChangeSetting(Setting setting) {}
 
     public void playOnSound() {
-        if (ModuleList.toggleSound.isEnabled())
-            SoundSystem.playSound(Sounds.MODULE_ON, (float) ModuleList.toggleSound.volume.getValue());
+        if (ModuleList.clientSettings.moduleToggleSound.getValue())
+            SoundSystem.playSound(Sounds.MODULE_ON, (float) ModuleList.clientSettings.soundVolume.getValue());
     }
 
     public void playOffSound() {
-        if (ModuleList.toggleSound.isEnabled())
-            SoundSystem.playSound(Sounds.MODULE_OFF, (float) ModuleList.toggleSound.volume.getValue());
+        if (ModuleList.clientSettings.moduleToggleSound.getValue())
+            SoundSystem.playSound(Sounds.MODULE_OFF, (float) ModuleList.clientSettings.soundVolume.getValue());
     }
 
 

@@ -12,7 +12,6 @@
 "lang.module.Macros": Zawiera systemu makrosów.
 "lang.module.MemoryCleaner": Włączanie i konfigurowanie modułu czyszczenia pamięci.
 "lang.module.MenuShader": Włącza renderowanie shaderów w menu głównym.
-"lang.module.ToggleSound": Odtwarza dźwięk po włączeniu/wyłączeniu modułów.
 
 //COMBAT
 "lang.module.KillAura": Atakuje graczy, zwierzęta i moby w określonym promieniu.
