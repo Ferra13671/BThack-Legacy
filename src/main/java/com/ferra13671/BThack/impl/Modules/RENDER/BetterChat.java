@@ -73,8 +73,7 @@ public class BetterChat extends Module {
     @EventSubscriber
     public void onPacketReceive(PacketEvent.Receive e) {
         if (nullCheck()) return;
-        if (e.getPacket() instanceof GameMessageS2CPacket) {
-            GameMessageS2CPacket packet = (GameMessageS2CPacket) e.getPacket();
+        if (e.getPacket() instanceof GameMessageS2CPacket packet) {
             boolean checked = false;
 
             if (yourself.getValue()) {
@@ -138,7 +137,7 @@ public class BetterChat extends Module {
         try {
             float fadeOffsetYScale = 0.8f; // scale * lineHeight
             float maxDisplacement = (float)lineHeight * fadeOffsetYScale;
-            long timestamp = messageTimestamps.get(0);
+            long timestamp = messageTimestamps.getFirst();
             long timeAlive = System.currentTimeMillis() - timestamp;
 
             if (timeAlive < fadeTime.getValue() && scrolledLines == 0) {
