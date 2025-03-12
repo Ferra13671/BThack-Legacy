@@ -25,7 +25,6 @@ public class WidgetManage implements Mc {
         widgets.add(new WidgetInfo(screenWidget));
         screenWidget.setParent(parent);
         screenWidget.init();
-        screenWidget.onDisplayed();
     }
 
     public void removeWidget(ScreenWidget screenWidget) {
@@ -37,11 +36,6 @@ public class WidgetManage implements Mc {
                 } else widgetInfo.setStatus(WidgetStatus.CLOSED);
             }
         }
-    }
-
-    public void onDisplayed() {
-        if (!widgets.isEmpty())
-            widgets.forEach(widgetInfo -> widgetInfo.screenWidget.onDisplayed());
     }
 
     public void init() {
@@ -60,6 +54,7 @@ public class WidgetManage implements Mc {
             switch (widget.status) {
                 case NOT_OPENED -> {
                     widget.setStatus(WidgetStatus.OPENED);
+                    widget.screenWidget.onDisplayed();
                     return;
                 }
                 case OPENED -> {

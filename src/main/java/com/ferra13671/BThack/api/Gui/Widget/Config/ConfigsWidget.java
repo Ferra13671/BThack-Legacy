@@ -40,7 +40,7 @@ public class ConfigsWidget extends ScreenWidget {
     public void onDisplayed() {
         super.onDisplayed();
         refreshConfigs();
-        configButtonsAnimation = new Animation(Easing.BACK_IN_OUT, 1050);
+        configButtonsAnimation = new Animation(Easing.BACK_IN_OUT, 1000);
         closing = false;
     }
 
