@@ -8,6 +8,9 @@ import com.ferra13671.BThack.api.Animation.Animation;
 import com.ferra13671.BThack.api.Animation.Easing;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.GuiSystem.ButtonClickInfo;
+import com.ferra13671.BThack.api.SoundSystem.Sound;
+import com.ferra13671.BThack.api.SoundSystem.SoundSystem;
+import com.ferra13671.BThack.api.SoundSystem.Sounds;
 import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
 
 import java.util.function.Consumer;
@@ -28,8 +31,10 @@ public class Button implements Mc {
     protected boolean hided = false;
     protected boolean allowUpdate = true;
     protected boolean selected = false;
-    private Consumer<ButtonClickInfo> clickConsumer = null;
-    private final Animation hoveredAnimation = new Animation(Easing.LINEAR, 200);
+    protected Consumer<ButtonClickInfo> clickConsumer = null;
+    protected final Animation hoveredAnimation = new Animation(Easing.LINEAR, 200);
+
+    protected Sound clickSound = Sounds.BUTTON_CLICK;
 
 
 
@@ -53,7 +58,10 @@ public class Button implements Mc {
         if (hovered != prevHovered) hoveredAnimation.reset();
     }
 
-    public void mouseClicked(int mouseX, int mouseY, int mouseButton) {}
+    public void mouseClicked(int mouseX, int mouseY, int mouseButton) {
+        if (isMouseOnButton(mouseX, mouseY))
+            SoundSystem.playSound(clickSound);
+    }
 
     public void mouseReleased(int mouseX, int mouseY, int mouseButton) {}
 
@@ -133,11 +141,19 @@ public class Button implements Mc {
         return selected;
     }
 
+    public boolean isOutline() {
+        return outline;
+    }
+
     public String getText() {
         if (text.startsWith("lang."))
             return LanguageSystem.translate(text);
         else
             return text;
+    }
+
+    public void setClickSound(Sound clickSound) {
+        this.clickSound = clickSound;
     }
 
     public void setCenterX(int centerX) {
@@ -166,6 +182,10 @@ public class Button implements Mc {
 
     public void setHided(boolean hided) {
         this.hided = hided;
+    }
+
+    public void setOutline(boolean outline) {
+        this.outline = outline;
     }
 
     public void setAllowUpdate(boolean allowUpdate) {

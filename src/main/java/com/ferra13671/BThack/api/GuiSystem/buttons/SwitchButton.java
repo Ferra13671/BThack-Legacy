@@ -22,6 +22,7 @@ public class SwitchButton extends Button {
 
     @Override
     public void mouseClicked(int mouseX, int mouseY, int mouseButton) {
+        super.mouseClicked(mouseX, mouseY, mouseButton);
         if (mouseButton == 0) {
             if (isMouseOnButton(mouseX, mouseY)) {
                 this.bVal = !this.bVal;

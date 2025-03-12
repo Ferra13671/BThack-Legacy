@@ -159,6 +159,15 @@ public class Frame implements Mc, Closeable {
 
 		boolean needScissor = frameAnimation.getEase() < 1;
 
+		if (ModuleList.clickGui.rainbow.getValue())
+			BThackRender.drawShader(Shaders.INSTANCE.X_RAINBOW, x, y, x + FRAME_WIDTH, y + BAR_HEIGHT);
+		else
+			BThackRender.drawRect(x, y, x + FRAME_WIDTH, y + BAR_HEIGHT, ModuleList.clickGui.customColor.getValue() ? ColorUtils.fastRGBA(ModuleList.clickGui.color.getValue().getRed(), ModuleList.clickGui.color.getValue().getGreen(), ModuleList.clickGui.color.getValue().getBlue(), 255) : ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().color()));
+		if (ModuleList.clickGui.frameOutline.getValue())
+			BThackRender.drawOutlineRect(x, y, x + FRAME_WIDTH, y + BAR_HEIGHT, 1, BAR_OUTLINE_COLOR);
+
+		BThackRender.drawString(frameName, x + (FRAME_WIDTH / 2f) - (FontUtils.getTextWidth(frameName) / 2f), y + (BAR_HEIGHT / 2f) - (FontUtils.getTextHeight(frameName) / 2f), ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()), true, FontRenderManager.DrawMode.NORMAL_BOLD);
+
 		if(open || frameAnimation.getEase() < 1) {
 			if(!buttons.isEmpty()) {
 				if (needScissor)
@@ -171,14 +180,6 @@ public class Frame implements Mc, Closeable {
 					BThackRender.disableScissor();
 			}
 		}
-		if (ModuleList.clickGui.rainbow.getValue()) {
-			BThackRender.drawShader(Shaders.INSTANCE.X_RAINBOW, x, y, x + FRAME_WIDTH, y + BAR_HEIGHT);
-		} else {
-			BThackRender.drawRect(x, y, x + FRAME_WIDTH, y + BAR_HEIGHT, ModuleList.clickGui.customColor.getValue() ? ColorUtils.fastRGBA(ModuleList.clickGui.color.getValue().getRed(), ModuleList.clickGui.color.getValue().getGreen(), ModuleList.clickGui.color.getValue().getBlue(), 255) : ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().color()));
-		}
-		if (ModuleList.clickGui.frameOutline.getValue())
-			BThackRender.drawOutlineRect(x, y, x + FRAME_WIDTH, y + BAR_HEIGHT, 1, BAR_OUTLINE_COLOR);
-		BThackRender.drawString(frameName, x + (FRAME_WIDTH / 2f) - (FontUtils.getTextWidth(frameName) / 2f), y + (BAR_HEIGHT / 2f) - (FontUtils.getTextHeight(frameName) / 2f), ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()), true, FontRenderManager.DrawMode.NORMAL_BOLD);
 	}
 	
 	public void refresh() {

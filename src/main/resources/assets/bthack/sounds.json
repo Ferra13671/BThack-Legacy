@@ -5,9 +5,9 @@
     ]
   },
 
-  "button_clicked": {
+  "button_click": {
     "sounds": [
-      "bthack:button_clicked"
+      "bthack:button_click"
     ]
   },
 
@@ -20,6 +20,12 @@
   "module_off": {
     "sounds": [
       "bthack:module_off"
+    ]
+  },
+
+  "config_saved_or_loaded": {
+    "sounds": [
+      "bthack:config_saved_or_loaded"
     ]
   }
 }

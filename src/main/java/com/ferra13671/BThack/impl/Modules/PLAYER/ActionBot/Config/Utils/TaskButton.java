@@ -71,6 +71,7 @@ public class TaskButton extends Button {
 
     @Override
     public void mouseClicked(int mouseX, int mouseY, int mouseButton) {
+        super.mouseClicked(mouseX, mouseY, mouseButton);
         if (mouseButton == 0) {
             selected = isMouseOnButton(mouseX, mouseY);
         }

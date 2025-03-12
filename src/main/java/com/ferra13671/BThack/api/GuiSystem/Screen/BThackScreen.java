@@ -94,6 +94,12 @@ public class BThackScreen extends Screen implements Mc {
     }
 
     @Override
+    public boolean mouseScrolled(double mouseX, double mouseY, double horizontalAmount, double verticalAmount) {
+        widgetManage.mouseScrolled(mouseX, mouseY, horizontalAmount, verticalAmount);
+        return false;
+    }
+
+    @Override
     public boolean charTyped(char chr, int modifiers) {
         if (widgetManage.widgets.isEmpty()) {
             for (Button button : buttons) {

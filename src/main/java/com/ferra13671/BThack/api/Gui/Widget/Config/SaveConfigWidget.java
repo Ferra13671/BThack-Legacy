@@ -1,0 +1,53 @@
+package com.ferra13671.BThack.api.Gui.Widget.Config;
+
+import com.ferra13671.BThack.Core.FileSystem.ConfigSystem.ConfigSystem;
+import com.ferra13671.BThack.api.GuiSystem.ScreenWidget;
+import com.ferra13671.BThack.api.GuiSystem.buttons.Button;
+import com.ferra13671.BThack.api.GuiSystem.buttons.TextFrameButton;
+import com.ferra13671.BThack.api.SoundSystem.Sounds;
+import com.ferra13671.BThack.api.Utils.KeyboardUtils;
+import net.minecraft.client.gui.DrawContext;
+
+import java.io.IOException;
+
+public class SaveConfigWidget extends ScreenWidget {
+
+    public SaveConfigWidget() {
+        super(110, 55, 1);
+    }
+
+    @Override
+    public void init() {
+        super.init();
+
+        buttons.clear();
+        buttons.add(new TextFrameButton(1, (int) xLeft + 55, (int) yUp + 15, 50, 10));
+        Button button = Button.of(2, (int) xLeft + 55, (int) yDown - 15, 50, 10, "Confirm")
+                .withAction(buttonClickInfo -> {
+                    try {
+                        ConfigSystem.saveConfigFile(getButtonFromId(1).getText());
+                    } catch (IOException ignored) {}
+                    close();
+                });
+        button.setClickSound(Sounds.CONFIG_SAVED_OR_LOADED);
+        buttons.add(button);
+    }
+
+    @Override
+    public void render(DrawContext context, int mouseX, int mouseY, float partialTicks) {
+        drawPlate();
+        super.render(context, mouseX, mouseY, partialTicks);
+    }
+
+    @Override
+    public boolean keyPressed(int keyCode, int scanCode, int shift) {
+        if (keyCode == KeyboardUtils.KEY_ESCAPE) close();
+        return super.keyPressed(keyCode, scanCode, shift);
+    }
+
+    @Override
+    public void close() {
+        super.close();
+        parent.widgetManage.addWidget(new ConfigsWidget());
+    }
+}

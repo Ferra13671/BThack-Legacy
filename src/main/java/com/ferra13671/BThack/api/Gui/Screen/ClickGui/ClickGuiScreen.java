@@ -13,7 +13,9 @@ import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.Component;
 import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.Frame;
 import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.ModuleButton;
 import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.setting.settings.Slider;
-import com.ferra13671.BThack.api.Gui.Screen.Config.LoadConfigScreen;
+import com.ferra13671.BThack.api.Gui.Widget.Config.ConfigsWidget;
+import com.ferra13671.BThack.api.GuiSystem.buttons.Button;
+import com.ferra13671.BThack.api.GuiSystem.buttons.ImageButton;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Shader.ShaderTicker;
@@ -21,22 +23,19 @@ import com.ferra13671.BThack.api.Shader.Shaders;
 import com.ferra13671.BThack.api.Utils.Data;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.GuiSystem.Screen.BThackScreen;
-import com.ferra13671.BThack.api.GuiSystem.buttons.Button;
 import com.ferra13671.BThack.api.GuiSystem.buttons.SliderButton;
-import com.ferra13671.BThack.api.GuiSystem.buttons.TextFrameButton;
+import com.ferra13671.BThack.api.Utils.Textures;
 import com.ferra13671.BThack.api.Utils.Ticker;
 import com.ferra13671.BThack.impl.Modules.CLIENT.ClickGui;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.text.Text;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class ClickGuiScreen extends BThackScreen implements Mc {
 
     private final ArrayList<Frame> frames = new ArrayList<>();
-    private boolean startSaving = false;
     private SliderButton guiScaleSlider;
     private final Data<Slider> writingSlider = new Data<>();
     private final ArrayList<DescriptionBar> descriptions = new ArrayList<>();
@@ -64,6 +63,7 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
 
     @Override
     public void onDisplayed() {
+        super.onDisplayed();
         ModuleList.clickGui.updateColorTheme();
         for (Frame frame : frames) frame.resetFrameAnimation();
         snowTicker.reset();
@@ -77,6 +77,10 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
         int scWidth = mc.getWindow().getScaledWidth();
         int scHeight = mc.getWindow().getScaledHeight();
 
+        buttons.add(new ImageButton(1, scWidth - 24, scHeight - 34, 20, 30, Textures.CONFIGS)
+                .withAction(buttonClickInfo -> widgetManage.addWidget(new ConfigsWidget())));
+
+        /*
         buttons.add(Button.of(0,
                 scWidth - 50, scHeight - 15, 40, 10, "Load Config")
                 .withAction(buttonClickInfo -> {
@@ -100,11 +104,10 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
                     button.setText("");
                 }));
 
+         */
+
         guiScaleSlider = new SliderButton(10, scWidth / 2, scHeight - 15, 50, 10, "Gui Scale", ModuleList.clickGui.guiScale.getValue(), 0.5, 1.5);
         buttons.add(guiScaleSlider);
-
-        getButtonFromId(8).setHided(!startSaving);
-        getButtonFromId(9).setHided(!startSaving);
     }
 
     @Override
@@ -126,7 +129,14 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
             for (Frame frame : frames) frame.tick();
             ticker.reset();
         }
-        super.render(guiGraphics, mouseX, mouseY, partialTicks);
+        for (Button button : buttons) {
+            if (!button.isHided()) {
+                if (widgetManage.widgets.isEmpty())
+                    button.updateButton(mouseX, mouseY);
+
+                button.renderButton();
+            }
+        }
 
         boolean continueUpdate = true;
         for (Frame frame : frames) {
@@ -159,15 +169,24 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
             frame.updatePosition((int) (mouseX / ModuleList.clickGui.guiScale.getValue()), (int) (mouseY / ModuleList.clickGui.guiScale.getValue()));
         }
         BThackRender.guiGraphics.getMatrices().pop();
+        if (!widgetManage.widgets.isEmpty()) {
+            BThackRender.guiGraphics.getMatrices().push();
+            BThackRender.guiGraphics.getMatrices().translate(0, 0, 200);
+            widgetManage.render(guiGraphics, mouseX, mouseY, partialTicks);
+            BThackRender.guiGraphics.getMatrices().pop();
+        }
     }
 
     @Override
     public void tick() {
+        super.tick();
         ModuleList.clickGui.guiScale.setValue(guiScaleSlider.value);
     }
 
     @Override
     public void mouseMoved(double mouseX, double mouseY) {
+        super.mouseMoved(mouseX, mouseY);
+        if (!widgetManage.widgets.isEmpty()) return;
         Module m = null;
         for (Frame frame : frames) {
             Module module = frame.getDescriptionModule(mouseX, mouseY);
@@ -184,20 +203,21 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int mouseButton) {
-        for(Frame frame : frames) {
-            if (!frame.updateClick(mouseX, mouseY, mouseButton)) {
-                Frame temp = frames.getFirst();
-                frames.set(0, frame);
-                frames.set(frame.id, temp);
-                temp.id = frame.id;
-                frame.id = 0;
-                checkCloseAfterClicking();
-                return false;
+        if (widgetManage.widgets.isEmpty()) {
+            for (Frame frame : frames) {
+                if (!frame.updateClick(mouseX, mouseY, mouseButton)) {
+                    Frame temp = frames.getFirst();
+                    frames.set(0, frame);
+                    frames.set(frame.id, temp);
+                    temp.id = frame.id;
+                    frame.id = 0;
+                    checkCloseAfterClicking();
+                    return false;
+                }
             }
         }
 
         super.mouseClicked(mouseX, mouseY, mouseButton);
-        if (activeButton.getId() == 1 || activeButton.getId() == 9) init();
 
         checkCloseAfterClicking();
         return false;
@@ -205,6 +225,8 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
 
     @Override
     public boolean mouseScrolled(double mouseX, double mouseY, double horizontalAmount, double verticalAmount) {
+        super.mouseScrolled(mouseX, mouseY, horizontalAmount, verticalAmount);
+        if (!widgetManage.widgets.isEmpty()) return false;
         for (Frame frame : frames)
             frame.moveFrame(horizontalAmount, verticalAmount);
         return false;
@@ -216,6 +238,9 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
 
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int shift) {
+        super.keyPressed(keyCode, scanCode, shift);
+        if (!widgetManage.widgets.isEmpty()) return false;
+
         for(Frame frame : frames) {
             if(frame.isOpen() && keyCode != 1) {
                 if(!frame.getButtons().isEmpty()) {
@@ -246,21 +271,25 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
             }
         }
 
-        return super.keyPressed(keyCode, scanCode, shift);
+        return false;
     }
 
     @Override
     public boolean mouseReleased(double mouseX, double mouseY, int state) {
+        super.mouseReleased(mouseX, mouseY, state);
+        if (!widgetManage.widgets.isEmpty()) return false;
+
         for(Frame frame : frames) {
             frame.setDrag(false);
             frame.updateRelease((int) mouseX, (int) mouseY, state);
         }
 
-        return super.mouseReleased(mouseX, mouseY, state);
+        return false;
     }
 
     @Override
     public void removed() {
+        super.removed();
         ConfigSystem.saveConfig();
         for (Frame frame : frames) {
             for (ModuleButton component : frame.buttons) {
@@ -274,5 +303,10 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
     @Override
     public boolean shouldPause() {
         return ModuleList.clickGui.shouldPause.getValue();
+    }
+
+    @Override
+    public boolean shouldCloseOnEsc() {
+        return widgetManage.widgets.isEmpty();
     }
 }

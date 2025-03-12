@@ -25,6 +25,7 @@ public class WidgetManage implements Mc {
         widgets.add(new WidgetInfo(screenWidget));
         screenWidget.setParent(parent);
         screenWidget.init();
+        screenWidget.onDisplayed();
     }
 
     public void removeWidget(ScreenWidget screenWidget) {
@@ -36,6 +37,11 @@ public class WidgetManage implements Mc {
                 } else widgetInfo.setStatus(WidgetStatus.CLOSED);
             }
         }
+    }
+
+    public void onDisplayed() {
+        if (!widgets.isEmpty())
+            widgets.forEach(widgetInfo -> widgetInfo.screenWidget.onDisplayed());
     }
 
     public void init() {
@@ -98,6 +104,13 @@ public class WidgetManage implements Mc {
         if (!widgets.isEmpty()) {
             WidgetInfo widget = widgets.getFirst();
             if (widget.allowUpdate) widget.screenWidget.keyPressed(keyCode, scanCode, shift);
+        }
+    }
+
+    public void mouseScrolled(double mouseX, double mouseY, double horizontalAmount, double verticalAmount) {
+        if (!widgets.isEmpty()) {
+            WidgetInfo widget = widgets.getFirst();
+            if (widget.allowUpdate) widget.screenWidget.mouseScrolled(mouseX, mouseY, horizontalAmount, verticalAmount);
         }
     }
 
