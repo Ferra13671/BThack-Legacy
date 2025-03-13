@@ -381,7 +381,7 @@ public final class ConfigSystem {
             JsonArray jsonList = new JsonArray();
             for (ActionBotTask task : tasks) {
                 JsonObject taskObject = new JsonObject();
-                add(taskObject, "Type", task.mode);
+                add(taskObject, "Mode", task.mode);
                 task.save(taskObject);
 
                 jsonList.add(taskObject);
@@ -397,8 +397,8 @@ public final class ConfigSystem {
                 JsonArray jsonList = jsonObject.get("Tasks").getAsJsonArray();
                 jsonList.asList().forEach(jsonElement -> {
                     JsonObject taskObject = jsonElement.getAsJsonObject();
-                    if (!_null(taskObject, "Type")) {
-                        String mode = taskObject.get("Type").getAsString();
+                    if (!_null(taskObject, "Mode")) {
+                        String mode = taskObject.get("Mode").getAsString();
                         ActionBotConfig.getFullActionBotTasks().forEach(actionBotTaskData -> {
                             if (actionBotTaskData.getTask().mode.equals(mode))
                                 actionBotTaskData.getTask().load(taskObject);
@@ -409,6 +409,7 @@ public final class ConfigSystem {
                 }
         , () -> {});
         ActionBotConfig.tasks.add(ActionBotConfig.endTask);
+        ActionBotConfig.tasks.forEach(task -> BThack.log(task.mode));
     }
 
     public static void saveAutoAuthPasswords() throws IOException {
