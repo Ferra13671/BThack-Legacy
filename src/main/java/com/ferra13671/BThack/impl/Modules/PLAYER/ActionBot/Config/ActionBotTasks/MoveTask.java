@@ -21,7 +21,6 @@ import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import net.minecraft.block.FlowerBlock;
-import net.minecraft.network.packet.c2s.play.PlayerInputC2SPacket;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -64,20 +63,15 @@ public class MoveTask extends ActionBotTask {
     private boolean jumping = false;
     private final TravelChanger travelChanger = new TravelChanger(1000,
             () -> new Float[]{yaw, mc.player.getPitch()},
-            () -> GrimUtils.sendPreActionGrimPackets(yaw, mc.player.getPitch()),
+            () -> GrimUtils.sendPreActionGrimPackets(Managers.TRAVEL_CHANGE_MANAGER.getYaw(), Managers.TRAVEL_CHANGE_MANAGER.getPitch()),
             () -> true
     );
 
     @EventSubscriber
     public void onInput(UpdateInputEvent e) {
-        if (moving) {
-            mc.player.input.movementForward = 1;
-        } else {
-            mc.player.input.movementForward = 0;
-        }
+        mc.player.input.movementForward = moving ? 1 : 0;
         mc.player.input.movementSideways = 0;
         mc.player.input.jumping = jumping;
-        Managers.NETWORK_MANAGER.sendPacket(new PlayerInputC2SPacket(mc.player.input.movementSideways, mc.player.input.movementForward, mc.player.input.jumping, mc.player.input.sneaking));
     }
 
     @Override
@@ -232,7 +226,6 @@ public class MoveTask extends ActionBotTask {
         moving = false;
         cancel = false;
         disableScaffold(scaffoldActivated);
-        Managers.NETWORK_MANAGER.sendPacket(new PlayerInputC2SPacket(mc.player.input.movementSideways, mc.player.input.movementForward, mc.player.input.jumping, mc.player.input.sneaking));
     }
 
 

@@ -26,7 +26,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.FlowerBlock;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
-import net.minecraft.network.packet.c2s.play.PlayerInputC2SPacket;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 
@@ -34,7 +33,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 
-// TODO : Add more checks
 public class TunnelTask extends ActionBotTask {
 
 
@@ -76,13 +74,8 @@ public class TunnelTask extends ActionBotTask {
 
     @EventSubscriber
     public void onInput(UpdateInputEvent e) {
-        if (moving) {
-            mc.player.input.movementForward = 1;
-        } else {
-            mc.player.input.movementForward = 0;
-        }
+        mc.player.input.movementForward = moving ? 1 : 0;
         mc.player.input.movementSideways = 0;
-        Managers.NETWORK_MANAGER.sendPacket(new PlayerInputC2SPacket(mc.player.input.movementSideways, mc.player.input.movementForward, mc.player.input.jumping, mc.player.input.sneaking));
     }
 
     @Override
@@ -283,7 +276,6 @@ public class TunnelTask extends ActionBotTask {
         moving = false;
         cancel = false;
         disableScaffold(scaffoldActivated);
-        Managers.NETWORK_MANAGER.sendPacket(new PlayerInputC2SPacket(mc.player.input.movementSideways, mc.player.input.movementForward, mc.player.input.jumping, mc.player.input.sneaking));
     }
 
 

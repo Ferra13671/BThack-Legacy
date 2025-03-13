@@ -45,6 +45,7 @@ public class ActionBot extends Module {
     public void onDisable() {
         if (nullCheck() || thread == null) {
             super.onDisable();
+            return;
         }
 
         thread.closeThread();
