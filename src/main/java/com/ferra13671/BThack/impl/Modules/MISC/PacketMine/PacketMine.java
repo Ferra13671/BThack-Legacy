@@ -29,7 +29,6 @@ import net.minecraft.network.packet.c2s.play.UpdateSelectedSlotC2SPacket;
 import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3i;
 
@@ -209,10 +208,8 @@ public class PacketMine extends Module {
         }
         if (e.blockHitResult.getBlockPos() == currentBreakingBlock.blockPos) {
             e.setCancelled(true);
-            if (stopPackets.getValue()) {
-                mc.player.networkHandler.sendPacket(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.ABORT_DESTROY_BLOCK, currentBreakingBlock.blockPos, Direction.DOWN));
-                mc.player.networkHandler.sendPacket(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.STOP_DESTROY_BLOCK, currentBreakingBlock.blockPos, AimBotUtils.getInvertedFacingEntity(mc.player), 0));
-            }
+            if (stopPackets.getValue())
+                Managers.NETWORK_MANAGER.sendPacket(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.STOP_DESTROY_BLOCK, currentBreakingBlock.blockPos, AimBotUtils.getInvertedFacingEntity(mc.player), 0));
 
             currentBreakingBlock = null;
         }
@@ -227,10 +224,8 @@ public class PacketMine extends Module {
                 conveyorBlocks.remove(0);
             }
             if (pos == currentBreakingBlock.blockPos) {
-                if (stopPackets.getValue()) {
-                    mc.player.networkHandler.sendPacket(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.ABORT_DESTROY_BLOCK, currentBreakingBlock.blockPos, Direction.DOWN));
-                    mc.player.networkHandler.sendPacket(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.STOP_DESTROY_BLOCK, currentBreakingBlock.blockPos, AimBotUtils.getInvertedFacingEntity(mc.player), 0));
-                }
+                if (stopPackets.getValue())
+                    Managers.NETWORK_MANAGER.sendPacket(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.STOP_DESTROY_BLOCK, currentBreakingBlock.blockPos, AimBotUtils.getInvertedFacingEntity(mc.player), 0));
                 currentBreakingBlock = null;
             }
         }
@@ -382,11 +377,9 @@ public class PacketMine extends Module {
     public void onTick(ClientTickEvent e) {
         if (nullCheck() || mc.isPaused()) return;
 
-        if (instaRebreak.getValue() && breakedPos != null){
-            if (!mc.world.isAir(breakedPos) && BlockUtils.canBreak(breakedPos) && currentBreakingBlock == null) {
+        if (instaRebreak.getValue() && breakedPos != null)
+            if (!mc.world.isAir(breakedPos) && BlockUtils.canBreak(breakedPos) && currentBreakingBlock == null)
                 updateBlockLimited(breakedPos);
-            }
-        }
 
         if ((!conveyorMode.getValue() || conveyorBlocks.isEmpty()) && currentBreakingBlock == null) doubleBlock = null;
 
@@ -396,9 +389,8 @@ public class PacketMine extends Module {
 
         if (conveyorBlocks.isEmpty()) firstSkip = true;
 
-        if (autoCityMode.getValue()) {
+        if (autoCityMode.getValue())
             autoCityAction();
-        }
 
 
         if (currentBreakingBlock == null) {
@@ -407,9 +399,8 @@ public class PacketMine extends Module {
             return;
         }
 
-        if (destroyDelta == 0) {
+        if (destroyDelta == 0)
             checkDestroyDelta();
-        }
 
 
         if (!updateBreak(currentBreakingBlock, true)) {
@@ -431,9 +422,8 @@ public class PacketMine extends Module {
 
                 breakedPos = currentBreakingBlock.blockPos;
                 currentBreakingBlock = null;
-                if (!conveyorBlocks.isEmpty()) {
+                if (!conveyorBlocks.isEmpty())
                     updateBlock(conveyorBlocks.get(0).blockPos);
-                }
             } else {
                 breakedPos = currentBreakingBlock.blockPos;
                 currentBreakingBlock = null;
@@ -488,7 +478,6 @@ public class PacketMine extends Module {
                 if (clientDestroy.getValue())
                     mc.interactionManager.breakBlock(breakingBlock.blockPos);
 
-                Managers.NETWORK_MANAGER.sendSequencePacket(id -> new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.ABORT_DESTROY_BLOCK, breakingBlock.blockPos, Direction.DOWN, id));
                 stopDestroyBlock(breakingBlock.blockPos);
 
                 packetRemoveItem();
@@ -565,12 +554,12 @@ public class PacketMine extends Module {
         int bestSlot = AutoTool.getBestSlot(mc.world.getBlockState(currentBreakingBlock.blockPos), inventoryMode.getValue() ? 36 : 8);
         if (bestSlot != -1) {
             if (bestSlot < 9) {
-                mc.player.networkHandler.sendPacket(new UpdateSelectedSlotC2SPacket(bestSlot));
+                Managers.NETWORK_MANAGER.sendPacket(new UpdateSelectedSlotC2SPacket(bestSlot));
             } else {
                 currentHotbarSlot = (int) hotbarSlot.getValue() - 1;
                 pc.packetClickSlot(0, bestSlot, currentHotbarSlot, SlotActionType.SWAP);
                 currentSlot = bestSlot;
-                mc.player.networkHandler.sendPacket(new UpdateSelectedSlotC2SPacket(currentHotbarSlot));
+                Managers.NETWORK_MANAGER.sendPacket(new UpdateSelectedSlotC2SPacket(currentHotbarSlot));
             }
         }
     }
@@ -581,7 +570,7 @@ public class PacketMine extends Module {
             currentSlot = -1;
             currentHotbarSlot = -1;
         }
-        mc.player.networkHandler.sendPacket(new UpdateSelectedSlotC2SPacket(mc.player.getInventory().selectedSlot));
+        Managers.NETWORK_MANAGER.sendPacket(new UpdateSelectedSlotC2SPacket(mc.player.getInventory().selectedSlot));
     }
 
     public boolean conveyorContains(BlockPos pos) {
