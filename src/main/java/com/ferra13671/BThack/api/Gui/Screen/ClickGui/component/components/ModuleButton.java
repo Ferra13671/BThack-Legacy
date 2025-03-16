@@ -142,6 +142,7 @@ public class ModuleButton extends Component implements Mc {
 			float _alpha = (int) (alpha * (module.isEnabled() ? toggleAnimation.getEase() : 1 - toggleAnimation.getEase())) / 255f;
 			Shaders.INSTANCE.X_RAINBOW.setUniformValue("alpha", _alpha);
 			Shaders.INSTANCE.X_RAINBOW.setUniformValue("brightness", isHovered ? 0.9f : 0.7f);
+			ModuleList.clickGui.prepareRainbowShader();
 			BThackRender.drawShader(Shaders.INSTANCE.X_RAINBOW, parent.getX(), parent.getY() + offset, parent.getX() + parent.getWidth(), parent.getY() + BUTTON_HEIGHT + offset);
 		} else {
 			BThackRender.drawRect(parent.getX(), parent.getY() + offset, parent.getX() + parent.getWidth(), parent.getY() + BUTTON_HEIGHT + offset,

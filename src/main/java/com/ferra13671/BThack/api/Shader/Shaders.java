@@ -28,6 +28,8 @@ public class Shaders implements Mc {
         public void release() {
             this.setUniformValue("alpha", 1f);
             this.setUniformValue("brightness", 1f);
+            this.setUniformValue("scale", 1f);
+            this.setUniformValue("speed", 1f);
             super.release();
         }
     };

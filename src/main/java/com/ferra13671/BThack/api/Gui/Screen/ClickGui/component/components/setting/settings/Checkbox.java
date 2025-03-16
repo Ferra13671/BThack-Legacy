@@ -37,6 +37,7 @@ public class Checkbox extends AbstractSetting {
 			if (ModuleList.clickGui.rainbow.getValue()) {
 				Shaders.INSTANCE.X_RAINBOW.setUniformValue("alpha", alpha / 255f);
 				Shaders.INSTANCE.X_RAINBOW.setUniformValue("brightness", 0.7f);
+				ModuleList.clickGui.prepareRainbowShader();
 				BThackRender.drawShader(Shaders.INSTANCE.X_RAINBOW, parent.parent.getX() + 1, parent.parent.getY() + offset, parent.parent.getX() + parent.parent.getWidth() - 1, parent.parent.getY() + offset + 15);
 			} else
 				BThackRender.drawRect(parent.parent.getX() + 1, parent.parent.getY() + offset, parent.parent.getX() + parent.parent.getWidth() - 1, parent.parent.getY() + offset + 15, ColorUtils.integrateAlpha(ClickGui.getClickGuiColor(true), alpha));

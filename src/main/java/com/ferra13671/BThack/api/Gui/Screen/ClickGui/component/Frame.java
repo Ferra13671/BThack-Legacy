@@ -159,9 +159,10 @@ public class Frame implements Mc, Closeable {
 
 		boolean needScissor = frameAnimation.getEase() < 1;
 
-		if (ModuleList.clickGui.rainbow.getValue())
+		if (ModuleList.clickGui.rainbow.getValue()) {
+			ModuleList.clickGui.prepareRainbowShader();
 			BThackRender.drawShader(Shaders.INSTANCE.X_RAINBOW, x, y, x + FRAME_WIDTH, y + BAR_HEIGHT);
-		else
+		} else
 			BThackRender.drawRect(x, y, x + FRAME_WIDTH, y + BAR_HEIGHT, ModuleList.clickGui.customColor.getValue() ? ColorUtils.fastRGBA(ModuleList.clickGui.color.getValue().getRed(), ModuleList.clickGui.color.getValue().getGreen(), ModuleList.clickGui.color.getValue().getBlue(), 255) : ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().color()));
 		if (ModuleList.clickGui.frameOutline.getValue())
 			BThackRender.drawOutlineRect(x, y, x + FRAME_WIDTH, y + BAR_HEIGHT, 1, BAR_OUTLINE_COLOR);

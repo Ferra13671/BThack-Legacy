@@ -8,6 +8,7 @@ import com.ferra13671.BThack.api.Managers.managers.ColourTheme.ColorTheme;
 import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.*;
 import com.ferra13671.BThack.api.Module.OneActionModule;
+import com.ferra13671.BThack.api.Shader.Shaders;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.GuiSystem.BThackScreens;
 import com.ferra13671.BThack.mixins.accessor.IGameRenderer;
@@ -22,6 +23,8 @@ public class ClickGui extends OneActionModule {
 
     public final ModeSetting activeTheme = new ModeSetting("Theme", this, getActiveThemeList());
     public final BooleanSetting rainbow = new BooleanSetting("Rainbow", this, true);
+    public final NumberSetting rainbowScale = new NumberSetting("Rainbow Scale", this, 1, 0.3, 4, false, rainbow::getValue);
+    public final NumberSetting rainbowSpeed = new NumberSetting("Rainbow Speed", this, 1, 0.3, 4, false, rainbow::getValue);
     public final BooleanSetting customColor = new BooleanSetting("Custom Color", this, false, () -> !rainbow.getValue());
     public final ColorSetting color = new ColorSetting("ClickGui Color", this, new Color(25, 28, 255), () -> customColor.getValue() && !rainbow.getValue()).withBlockedAlpha();
 
@@ -61,6 +64,8 @@ public class ClickGui extends OneActionModule {
                 color,
                 customColor,
                 rainbow,
+                rainbowScale,
+                rainbowSpeed,
 
                 frameOutline,
                 moduleOutline,
@@ -98,6 +103,11 @@ public class ClickGui extends OneActionModule {
             easingList.add(eas.name());
         }
         return easingList;
+    }
+
+    public void prepareRainbowShader() {
+        Shaders.INSTANCE.X_RAINBOW.setUniformValue("scale", (float) rainbowScale.getValue());
+        Shaders.INSTANCE.X_RAINBOW.setUniformValue("speed", (float) rainbowSpeed.getValue());
     }
 
     @Override
