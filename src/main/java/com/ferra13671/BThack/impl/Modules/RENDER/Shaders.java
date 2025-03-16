@@ -80,14 +80,12 @@ public class Shaders extends Module {
     public void drawShader(float tickDelta) {
         switch (shaderMode.getValue()) {
             case "Default" -> {
-                defaultShader.setUniformValue("lineWidth", (int) lineWidth.getValue());
                 defaultShader.setUniformValue("quality", (int) lineWidth.getValue());
                 defaultShader.setUniformValue("color", fillColor.getValue().getRed() / 255f, fillColor.getValue().getGreen() / 255f, fillColor.getValue().getBlue() / 255f, fillColor.getValue().getAlpha() / 255f);
                 defaultShader.setUniformValue("outlinecolor", outlineColor.getValue().getRed() / 255f, outlineColor.getValue().getGreen() / 255f, outlineColor.getValue().getBlue() / 255f, outlineColor.getValue().getAlpha() / 255f);
                 defaultShader.render(tickDelta);
             }
             case "Rainbow_xy" -> {
-                rainbowXYShader.setUniformValue("lineWidth", (int) lineWidth.getValue());
                 rainbowXYShader.setUniformValue("quality", (int) lineWidth.getValue());
                 rainbowXYShader.setUniformValue("scale", (float) (int) (scale.getValue() * 1000));
                 rainbowXYShader.setUniformValue("time", com.ferra13671.BThack.api.Shader.Shaders.INSTANCE.shaderTicker.getPassedTime() / 1000f);
@@ -100,7 +98,6 @@ public class Shaders extends Module {
                 rainbowXYShader.render(tickDelta);
             }
             case "Rainbow_x" -> {
-                rainbowXShader.setUniformValue("lineWidth", (int) lineWidth.getValue());
                 rainbowXShader.setUniformValue("quality", (int) lineWidth.getValue());
                 rainbowXShader.setUniformValue("scale", (float) (int) (scale.getValue() * 1000));
                 rainbowXShader.setUniformValue("time", com.ferra13671.BThack.api.Shader.Shaders.INSTANCE.shaderTicker.getPassedTime() / 1000f);
@@ -113,7 +110,6 @@ public class Shaders extends Module {
                 rainbowXShader.render(tickDelta);
             }
             case "Rainbow_y" -> {
-                rainbowYShader.setUniformValue("lineWidth", (int) lineWidth.getValue());
                 rainbowYShader.setUniformValue("quality", (int) lineWidth.getValue());
                 rainbowYShader.setUniformValue("scale", (float) (int) (scale.getValue() * 1000));
                 rainbowYShader.setUniformValue("time", com.ferra13671.BThack.api.Shader.Shaders.INSTANCE.shaderTicker.getPassedTime() / 1000f);

@@ -9,7 +9,6 @@ in vec2 texCoord;
 in vec2 oneTexel;
 out vec4 fragColor;
 uniform int quality;
-uniform int lineWidth;
 uniform float scale;
 uniform float time;
 uniform vec2 resolution;

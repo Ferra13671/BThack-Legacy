@@ -5,7 +5,6 @@ precision highp float;
 
 
 uniform float time;
-uniform vec2 resolution;
 
 out vec4 BThack_FragColor;
 

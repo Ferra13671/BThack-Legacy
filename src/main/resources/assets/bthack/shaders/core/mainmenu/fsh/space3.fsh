@@ -23,7 +23,6 @@ precision mediump float;
 #define transverseSpeed zoom
 uniform float time;
 uniform vec2 mouse;
-uniform vec2 resolution;
 
 out vec4 BThack_FragColor;
 

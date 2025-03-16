@@ -18,7 +18,6 @@
         { "name": "OutSize", "type": "float", "count": 2, "values": [1.0, 1.0]},
         { "name": "color", "type": "float", "count": 4, "values": [ 1.0, 1.0, 1.0, 1.0 ] },
         { "name": "outlinecolor", "type": "float", "count": 4, "values": [ 1.0, 1.0, 1.0, 1.0 ] },
-        { "name": "lineWidth", "type": "int", "count": 1, "values": [ 1.0] },
         { "name": "quality", "type": "int", "count": 1, "values": [ 1.0] }
     ]
 }

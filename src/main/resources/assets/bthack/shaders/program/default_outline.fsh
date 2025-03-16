@@ -11,7 +11,6 @@ uniform vec4 color;
 uniform vec4 outlinecolor;
 out vec4 fragColor;
 uniform int quality;
-uniform int lineWidth;
 
 uniform vec2 InSize;
 

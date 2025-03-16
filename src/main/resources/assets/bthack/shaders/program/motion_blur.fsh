@@ -6,8 +6,6 @@ uniform sampler2D PrevSampler;
 in vec2 texCoord;
 in vec2 oneTexel;
 
-uniform vec2 InSize;
-
 uniform float BlendFactor = 0.75;
 
 out vec4 fragColor;
