@@ -26,7 +26,7 @@ public class AutoAuthCommand extends AbstractCommand {
             String text = (Managers.AUTO_AUTH_MANAGER.contains(playerName) ? LanguageSystem.translate("lang.command.AutoAuth.successfulRewrite") : LanguageSystem.translate("lang.command.AutoAuth.successfulSave"));
             Managers.AUTO_AUTH_MANAGER.put(playerName, password);
             try {
-                ConfigSystem.saveAutoAuthPasswords();
+                Managers.AUTO_AUTH_MANAGER.save();
             } catch (IOException ignored) {}
             ChatUtils.sendMessage(Formatting.AQUA + String.format(text, playerName));
             return SUCCESFUL;
@@ -36,7 +36,7 @@ public class AutoAuthCommand extends AbstractCommand {
 
             Managers.AUTO_AUTH_MANAGER.remove(playerName);
             try {
-                ConfigSystem.saveAutoAuthPasswords();
+                Managers.AUTO_AUTH_MANAGER.save();
             } catch (IOException ignored) {}
             sendMessage(Formatting.AQUA + String.format(LanguageSystem.translate("lang.command.AutoAuth.successfulRemove"), playerName));
 

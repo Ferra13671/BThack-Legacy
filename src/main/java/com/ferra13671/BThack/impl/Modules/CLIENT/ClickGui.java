@@ -17,7 +17,6 @@ import net.minecraft.client.gl.PostEffectProcessor;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class ClickGui extends OneActionModule {
 
@@ -112,7 +111,7 @@ public class ClickGui extends OneActionModule {
 
     @Override
     public void onChangeSetting(Setting setting) {
-        updateColorTheme();
+        Managers.COLOR_THEME_MANAGER.updateColorTheme();
     }
 
     @Override
@@ -122,24 +121,11 @@ public class ClickGui extends OneActionModule {
 
     @Override
     public void onEnable() {
-        if (nullCheck()) {
-            toggle();
-            return;
-        }
+        if (nullCheck()) return;
 
         if (mc.currentScreen == null) {
             BThackScreens.CLICK_GUI.firstIgnore = true;
             mc.setScreen(BThackScreens.CLICK_GUI);
-        }
-
-        toggle();
-    }
-
-    public void updateColorTheme() {
-        for (ColorTheme theme : Managers.COLOR_THEME_MANAGER.getColorThemes()) {
-            if (Objects.equals(activeTheme.getValue(), theme.name())) {
-                Client.clientInfo.setColorTheme(theme);
-            }
         }
     }
 
@@ -157,13 +143,10 @@ public class ClickGui extends OneActionModule {
     }
 
     public static int getClickGuiColor(boolean allowRainbow) {
-        if (ModuleList.clickGui.rainbow.getValue() && allowRainbow) {
-            return ColorUtils.rainbow();
-        } else if (ModuleList.clickGui.customColor.getValue()) {
-            return new Color(ModuleList.clickGui.color.getValue().getRed(), ModuleList.clickGui.color.getValue().getGreen(), ModuleList.clickGui.color.getValue().getBlue()).getRGB();
-        } else {
-            return new Color(Client.clientInfo.getColorTheme().moduleEnabledColor()).hashCode();
-        }
+        if (ModuleList.clickGui.rainbow.getValue() && allowRainbow) return ColorUtils.rainbow();
+        else return (ModuleList.clickGui.customColor.getValue() ?
+                new Color(ModuleList.clickGui.color.getValue().getRed(), ModuleList.clickGui.color.getValue().getGreen(), ModuleList.clickGui.color.getValue().getBlue()) :
+                new Color(Client.clientInfo.getColorTheme().moduleEnabledColor())).getRGB();
     }
 
     public static float applyGuiScale(float cord) {

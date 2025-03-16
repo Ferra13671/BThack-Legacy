@@ -48,7 +48,6 @@ public class HudEditorScreen extends BThackScreen {
 
     @Override
     public void onDisplayed() {
-        ModuleList.clickGui.updateColorTheme();
         frame.resetFrameAnimation();
         BThackScreens.CLICK_GUI.snowTicker.reset();
     }

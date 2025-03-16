@@ -51,7 +51,7 @@ public final class ConfigSystem {
                 }
             });
             saveActionBotTasks();
-            saveAutoAuthPasswords();
+            Managers.AUTO_AUTH_MANAGER.save();
             saveClientInfo();
             saveWaypoints();
             saveMacros();
@@ -74,7 +74,7 @@ public final class ConfigSystem {
             });
             loadFrames();
             loadActionBotTasks();
-            loadAutoAuthPasswords();
+            Managers.AUTO_AUTH_MANAGER.load();
             loadClientInfo();
             loadWaypoints();
             loadMacros();
@@ -409,15 +409,6 @@ public final class ConfigSystem {
                 }
         , () -> {});
         ActionBotConfig.tasks.add(ActionBotConfig.endTask);
-        ActionBotConfig.tasks.forEach(task -> BThack.log(task.mode));
-    }
-
-    public static void saveAutoAuthPasswords() throws IOException {
-        Managers.AUTO_AUTH_MANAGER.save();
-    }
-
-    public static void loadAutoAuthPasswords() throws IOException {
-        Managers.AUTO_AUTH_MANAGER.load();
     }
 
     public static void saveWaypoints() throws IOException {

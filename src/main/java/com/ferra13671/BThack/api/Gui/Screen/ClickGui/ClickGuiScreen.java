@@ -64,7 +64,6 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
     @Override
     public void onDisplayed() {
         super.onDisplayed();
-        ModuleList.clickGui.updateColorTheme();
         for (Frame frame : frames) frame.resetFrameAnimation();
         snowTicker.reset();
     }
