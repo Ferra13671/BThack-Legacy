@@ -10,13 +10,10 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSettin
 import com.ferra13671.BThack.api.Managers.managers.TravelChange.TravelChanger;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Social.Clans.ClanSettingsBuilder;
+import com.ferra13671.BThack.api.Utils.*;
 import com.ferra13671.BThack.api.Utils.Grim.GrimUtils;
-import com.ferra13671.BThack.api.Utils.ItemUtils;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.Utils.Modules.AimBotUtils;
 import com.ferra13671.BThack.api.Utils.Modules.KillAuraUtils;
-import com.ferra13671.BThack.api.Utils.RotateMode;
-import com.ferra13671.BThack.api.Utils.Ticker;
 import com.ferra13671.BThack.mixins.accessor.IMinecraftClient;
 import com.ferra13671.BThack.mixins.accessor.packet.IPlayerInputC2SPacket;
 import com.ferra13671.BThack.mixins.accessor.packet.IPlayerMoveC2SPacket;
@@ -35,18 +32,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.function.Predicate;
 
+//TODO:
+// normal moveFix
 public class KillAura extends Module {
 
     public final ModeSetting mode = new ModeSetting("Mode", this, new ArrayList<>(Arrays.asList("Aura", "TriggerBot")));
     public final ModeSetting attackMode = new ModeSetting("AttackMode", this, new ArrayList<>(Arrays.asList("CoolDown", "Delay")));
     public final NumberSetting range = new NumberSetting("Range", this, 3.62, 1, 10, false, () -> mode.getValue().equals("Aura"));
-    public final ModeSetting rotateMode = new ModeSetting("RotateMode", this, new ArrayList<>(Arrays.asList("Packet", "Vanilla", "Grim", "None")), () -> !mode.getValue().equals("TriggerBot")).defaultValue("Grim");
+    public final BooleanSetting instaRotate = new BooleanSetting("Insta Rotate", this, false, () -> mode.getValue().equals("Aura"));
+    public final NumberSetting lockTicks = new NumberSetting("Lock Ticks", this, 5, 3, 10, true, () -> mode.getValue().equals("Aura") && !instaRotate.getValue());
+    public final BooleanSetting grim = new BooleanSetting("Grim", this, true);
+    public final ModeSetting rotateMode = new ModeSetting("RotateMode", this, new ArrayList<>(Arrays.asList("Packet", "Vanilla", "None")), () -> !mode.getValue().equals("TriggerBot") && !instaRotate.getValue()).defaultValue("Grim");
     public final NumberSetting packets = new NumberSetting("Packets", this, 1, 1, 5, true, () -> rotateMode.getValue().equals("Packet") && mode.getValue().equals("Aura"));
     public final NumberSetting delay = new NumberSetting("Delay(Second)", this, 1.4, 0.1, 4, false, () -> attackMode.getValue().equals("Delay"));
     public final NumberSetting postCooldown = new NumberSetting("Post Cooldown", this, 56, 0, 100, true, () -> attackMode.getValue().equals("CoolDown"));
-
-    public final BooleanSetting instaAttack = new BooleanSetting("Insta Attack", this, false, () -> mode.getValue().equals("Aura") && !mode.getValue().equals("Grim"));
-    public final NumberSetting lockTicks = new NumberSetting("Lock Ticks", this, 7, 3, 10, true, () -> mode.getValue().equals("Aura") && (mode.getValue().equals("Grim") || !instaAttack.getValue()));
 
     public final BooleanSetting players = new BooleanSetting("Players", this, true);
     public final BooleanSetting teammates = new BooleanSetting("Teammates", this, false);
@@ -77,13 +76,13 @@ public class KillAura extends Module {
                 mode,
                 attackMode,
                 range,
+                instaRotate,
+                lockTicks,
+                grim,
                 rotateMode,
                 packets,
                 delay,
                 postCooldown,
-
-                instaAttack,
-                lockTicks,
 
                 players,
                 teammates,
@@ -111,10 +110,11 @@ public class KillAura extends Module {
     private float[] rotations;
     private final TravelChanger travelChanger = new TravelChanger(5000,
             () -> new Float[]{rotations[0], rotations[1]},
-            () -> {if (rotateMode.getValue().equals("Grim")) GrimUtils.sendPreActionGrimPackets(Managers.TRAVEL_CHANGE_MANAGER.getYaw(), Managers.TRAVEL_CHANGE_MANAGER.getPitch());
+            () -> {if (grim.getValue()) GrimUtils.sendPreActionGrimPackets(Managers.TRAVEL_CHANGE_MANAGER.getYaw(), Managers.TRAVEL_CHANGE_MANAGER.getPitch());
             },
-            () -> rotations != null && !needPause() && mode.getValue().equals("Aura") && (rotateMode.getValue().equals("Grim") || !instaAttack.getValue()) && targetedEntity != null
+            () -> rotations != null && !needPause() && mode.getValue().equals("Aura") && !instaRotate.getValue() && targetedEntity != null
     );
+    private Entity prevAttackedEntity;
 
     @Override
     public void onEnable() {
@@ -146,13 +146,15 @@ public class KillAura extends Module {
             case "Aura" -> auraMode();
             case "TriggerBot" -> triggerBotMode();
         }
+
     }
+
 
     @EventSubscriber
     public void onPacket(PacketEvent.Send e) {
         if (nullCheck() || needPause()) return;
         if (mode.getValue().equals("Aura")) {
-            if (rotateMode.getValue().equals("Grim") || !instaAttack.getValue()) {
+            if (!instaRotate.getValue()) {
                 if (targetedEntity == null) {
                     if (rotations != null) {
                         rotations[0] = MathHelper.lerp(mc.getRenderTickCounter().getTickDelta(true), rotations[0], mc.player.getYaw());
@@ -195,36 +197,37 @@ public class KillAura extends Module {
     public void targetSearchAction() {
         Entity target = null;
         if (players.getValue())
-            target = KillAuraUtils.filterPlayers(range.getValue(), friends.getValue(), teammates.getValue(), clanManager.getValue(), clanMode.getValue(), targetClan.getValue());
+            target = KillAuraUtils.filterPlayers(range.getValue(), friends.getValue(), teammates.getValue(), clanManager.getValue(), clanMode.getValue(), targetClan.getValue(), entity -> !entity.isSpectator() && !((PlayerEntity) entity).isCreative());
 
         if (target == null)
             target = KillAuraUtils.filterEntity(range.getValue(), entityFilter);
 
-        if (target != null) {
+        if (target != null)
             targetedEntity = new Target(target, 0);
+        else {
+            targetedEntity = null;
+            prevAttackedEntity = null;
         }
     }
 
     public void attackTargetAction() {
         if (targetedEntity != null) {
             if (!Managers.TRAVEL_CHANGE_MANAGER.containsChanger(travelChanger)) Managers.TRAVEL_CHANGE_MANAGER.addChanger(travelChanger);
-            if (targetedEntity.lockTicks >= (int) lockTicks.getValue()) {
+            Vec3d rotateVector = targetedEntity.entity.getPos();
+            rotations = AimBotUtils.rotations(rotateVector);
+            if (instaRotate.getValue() || targetedEntity.lockTicks >= (int) lockTicks.getValue()) {
                 RotateMode rotateMode = getRotateMode();
                 KillAuraUtils.preAttackRotate(rotateMode, rotations, (int) packets.getValue());
                 KillAuraUtils.attackNoRotate(targetedEntity.entity);
-                //KillAuraUtils.postAttackRotate(rotateMode);
                 delayTicker.reset();
-                targetedEntity = null;
-                if (Managers.TRAVEL_CHANGE_MANAGER.containsChanger(travelChanger)) Managers.TRAVEL_CHANGE_MANAGER.removeChanger(travelChanger);
-            } else {
-                Vec3d rotateVector = targetedEntity.entity.getPos();
-                rotations = AimBotUtils.rotations(rotateVector);
-                KillAuraUtils.preAttackRotate(getRotateMode(), rotations, (int) packets.getValue());
-                if (rotateMode.getValue().equals("Grim") || !instaAttack.getValue()) {
-                    targetedEntity = new Target(targetedEntity.entity, targetedEntity.lockTicks + 1);
-                } else {
-                    targetedEntity = new Target(targetedEntity.entity, (int) lockTicks.getValue());
+                prevAttackedEntity = targetedEntity.entity;
+                if (mc.player.distanceTo(targetedEntity.entity) > range.getValue()) {
+                    targetedEntity = null;
+                    if (Managers.TRAVEL_CHANGE_MANAGER.containsChanger(travelChanger)) Managers.TRAVEL_CHANGE_MANAGER.removeChanger(travelChanger);
                 }
+            } else {
+                //KillAuraUtils.preAttackRotate(getRotateMode(), rotations, (int) packets.getValue());
+                targetedEntity = new Target(targetedEntity.entity, prevAttackedEntity == targetedEntity.entity ? (int) lockTicks.getValue() : targetedEntity.lockTicks + 1);
             }
         } else {
             if (Managers.TRAVEL_CHANGE_MANAGER.containsChanger(travelChanger)) Managers.TRAVEL_CHANGE_MANAGER.removeChanger(travelChanger);
@@ -268,7 +271,6 @@ public class KillAura extends Module {
         return switch (rotateMode.getValue()) {
             case "Packet" -> RotateMode.PACKET1;
             case "Vanilla" -> RotateMode.VANILLA;
-            case "Grim" -> RotateMode.GRIM;
             default -> RotateMode.NONE;
         };
     }
