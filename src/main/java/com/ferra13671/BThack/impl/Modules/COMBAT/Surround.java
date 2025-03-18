@@ -103,9 +103,11 @@ public class Surround extends Module {
 
         int count = 0;
         for (BlockPos blockPos : getBlockPoses()) {
-            if (BuildManager.pickUpPlaceBlocks(true, BuildManager.obsidians)) BuildManager.placeBlock(blockPos);
-            count++;
-            if (count >= blocksPerTick.getValue()) break;
+            if (mc.world.isAir(blockPos)) {
+                if (BuildManager.pickUpPlaceBlocks(true, BuildManager.obsidians)) BuildManager.placeBlock(blockPos);
+                count++;
+                if (count >= blocksPerTick.getValue()) break;
+            }
         }
     }
 
