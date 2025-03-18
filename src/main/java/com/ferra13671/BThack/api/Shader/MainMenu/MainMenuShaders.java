@@ -6,7 +6,7 @@ public final class MainMenuShaders {
 
     public static final MainMenuShader BLOBS = of("blobs");
     public static final MainMenuShader BLUEGRID = of("bluegrid");
-    public static final MainMenuShader BLUENEBULA = of("bluenebula", false);
+    public static final MainMenuShader BLUENEBULA = of("bluenebula");
     public static final MainMenuShader BLUEVORTEX = of("bluevortex");
     public static final MainMenuShader BOREALIS = of("borealis");
     public static final MainMenuShader BTHACK = of("bthack");
@@ -24,7 +24,7 @@ public final class MainMenuShaders {
     public static final MainMenuShader FIRE = of("fire");
     public static final MainMenuShader FIRE2 = of("fire2");
     public static final MainMenuShader JUMPINGPENIS = of("jumpingpenis");
-    public static final MainMenuShader JUPITER = of("jupiter", false);
+    public static final MainMenuShader JUPITER = of("jupiter");
     public static final MainMenuShader LIQUID = of("liquid");
     public static final MainMenuShader LMAO = of("lmao");
     public static final MainMenuShader MANDELBROT = of("mandelbrot");
@@ -162,10 +162,6 @@ public final class MainMenuShaders {
     }
 
     private static MainMenuShader of(String path) {
-        return of(path, true);
-    }
-
-    private static MainMenuShader of(String path, boolean needFixResolution) {
-        return MainMenuShader.of("mainmenu/info/" + path, needFixResolution);
+        return MainMenuShader.of("mainmenu/info/" + path);
     }
 }

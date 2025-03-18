@@ -33,7 +33,7 @@ public class Shaders implements Mc {
             super.release();
         }
     };
-    public final MainMenuShader SNOW = MainMenuShader.of("render/snow", true);
+    public final MainMenuShader SNOW = MainMenuShader.of("render/snow");
 
     @EventSubscriber
     public void onDisconnect(DisconnectEvent e) {

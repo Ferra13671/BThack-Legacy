@@ -12,41 +12,35 @@ public class MainMenuShader extends ShaderProgram implements Mc {
     private final Uniform2f resolution;
     private final Uniform2f mouse;
     private final Uniform1f time;
-    private final boolean needFixResolution;
 
-    public MainMenuShader(Identifier identifier, VertexFormat vertexFormat, boolean needFixResolution) {
+    public MainMenuShader(Identifier identifier, VertexFormat vertexFormat) {
         super(identifier, vertexFormat);
-        this.needFixResolution = needFixResolution;
         resolution = shader.findUniform2f("resolution");
         mouse = shader.findUniform2f("mouse");
         time = shader.findUniform1f("time");
     }
 
-    public boolean isNeedFixResolution() {
-        return needFixResolution;
-    }
-
     public void setParameters(float mouseX, float mouseY, float screenWidth, float screenHeight, float time) {
+        int guiScale = getGuiScale();
         if (resolution != null)
-            resolution.set(screenWidth * (needFixResolution ? 2 : 1), screenHeight * (needFixResolution ? 2 : 1));
+            resolution.set(screenWidth * guiScale, screenHeight * guiScale);
         if (mouse != null)
             mouse.set(mouseX / screenWidth, (screenHeight - 1.0f - mouseY) / screenHeight);
         if (this.time != null)
             this.time.set(time);
-        //setUniformValue("resolution", screenWidth * (needFixResolution ? 2 : 1), screenHeight * (needFixResolution ? 2 : 1));
-        //setUniformValue("mouse", mouseX / screenWidth, (screenHeight - 1.0f - mouseY) / screenHeight);
-        //setUniformValue("time", time);
+    }
+
+    private int getGuiScale() {
+        int value = mc.options.getGuiScale().getValue();
+        if (value <= 0) value = mc.getWindow().calculateScaleFactor(0, mc.forcesUnicodeFont());
+        return value;
     }
 
     public static MainMenuShader of(String name) {
-        return of("bthack", name, true);
+        return of("bthack", name);
     }
 
-    public static MainMenuShader of(String name, boolean needFixResolution) {
-        return of("bthack", name, needFixResolution);
-    }
-
-    public static MainMenuShader of(String nameSpace, String name, boolean needFixResolution) {
-        return new MainMenuShader(Identifier.of(nameSpace, name), VertexFormats.POSITION, needFixResolution);
+    public static MainMenuShader of(String nameSpace, String name) {
+        return new MainMenuShader(Identifier.of(nameSpace, name), VertexFormats.POSITION);
     }
 }
