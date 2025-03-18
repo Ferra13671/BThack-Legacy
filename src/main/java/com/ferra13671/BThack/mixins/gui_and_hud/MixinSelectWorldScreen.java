@@ -26,13 +26,13 @@ public class MixinSelectWorldScreen extends Screen {
     public void modifyClose(CallbackInfo ci) {
         if (parent instanceof BThackMainMenuScreen) {
             ci.cancel();
-            BThackScreen.changeScreen(this, parent);
+            BThackScreen.changeScreen(this, () -> parent);
         }
     }
 
     @Inject(method = "method_19939", at = @At("HEAD"), cancellable = true)
     public void modifyMethod_19939(ButtonWidget button, CallbackInfo ci) {
         ci.cancel();
-        BThackScreen.changeScreen(this, parent);
+        BThackScreen.changeScreen(this, () -> parent);
     }
 }

@@ -24,7 +24,7 @@ public class MixinMultiplayerScreen extends Screen {
     public void modifyClose(CallbackInfo ci) {
         if (parent instanceof BThackMainMenuScreen) {
             ci.cancel();
-            BThackScreen.changeScreen(this, parent);
+            BThackScreen.changeScreen(this, () -> parent);
         }
     }
 }

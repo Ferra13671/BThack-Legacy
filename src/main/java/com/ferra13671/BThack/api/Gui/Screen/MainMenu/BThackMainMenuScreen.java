@@ -74,20 +74,20 @@ public class BThackMainMenuScreen extends BThackScreen {
 
         buttons.add(Button.of(1, baseButtonsX, yCenter,
                 baseButtonsX - 5, 10,
-                "lang.screen.MainMenu.Singleplayer").withAction(buttonClickInfo -> actionAfterClicking(() -> changeScreen(new SelectWorldScreen(this)))));
+                "lang.screen.MainMenu.Singleplayer").withAction(buttonClickInfo -> actionAfterClicking(() -> changeScreen(() -> new SelectWorldScreen(this)))));
         buttons.add(Button.of(2, baseButtonsX, yCenter + 22,
                 baseButtonsX - 5, 10,
-                "lang.screen.Mainmenu.Multiplayer").withAction(buttonClickInfo -> actionAfterClicking(() -> changeScreen(new MultiplayerScreen(this)))));
+                "lang.screen.Mainmenu.Multiplayer").withAction(buttonClickInfo -> actionAfterClicking(() -> changeScreen(() -> new MultiplayerScreen(this)))));
         buttons.add(Button.of(3, baseButtonsX, yCenter + 44,
                 baseButtonsX - 5, 10,
-                "lang.screen.Mainmenu.Options").withAction(buttonClickInfo -> actionAfterClicking(() -> changeScreen(new OptionsScreen(this, mc.options)))));
+                "lang.screen.Mainmenu.Options").withAction(buttonClickInfo -> actionAfterClicking(() -> changeScreen(() -> new OptionsScreen(this, mc.options)))));
         buttons.add(Button.of(4, baseButtonsX, yCenter + 66,
                 baseButtonsX - 5, 10,
-                "lang.screen.Mainmenu.Quit").withAction(buttonClickInfo -> actionAfterClicking(() -> changeScreen(BThackScreens.EXIT, new Animation(Easing.LINEAR, 1000)))));
+                "lang.screen.Mainmenu.Quit").withAction(buttonClickInfo -> actionAfterClicking(() -> changeScreen(() -> BThackScreens.EXIT, new Animation(Easing.LINEAR, 1000)))));
 
         buttons.add(Button.of(5, 32, mc.getWindow().getScaledHeight() - 12,
                 30, 10,
-                "Credits").withAction(buttonClickInfo -> actionAfterClicking(() -> changeScreen(BThackScreens.BTHACK_CREDITS))));
+                "Credits").withAction(buttonClickInfo -> actionAfterClicking(() -> changeScreen(() -> BThackScreens.BTHACK_CREDITS))));
         buttons.add(Button.of(6, 32, mc.getWindow().getScaledHeight() - 34,
                 30, 10,
                 "Donate").withAction(buttonClickInfo -> DesktopUtils.openURI("https://www.donationalerts.com/r/bebra_tyan")));

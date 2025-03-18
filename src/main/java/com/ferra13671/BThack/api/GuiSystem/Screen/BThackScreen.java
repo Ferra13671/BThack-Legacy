@@ -15,6 +15,7 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
 
 import java.util.ArrayList;
+import java.util.function.Supplier;
 
 public class BThackScreen extends Screen implements Mc {
     public static final int BACKGROUND_TABLE_COLOR = ColorUtils.fastRGBA(0,0,0,40);
@@ -162,25 +163,25 @@ public class BThackScreen extends Screen implements Mc {
         return mc.getWindow().getScaledWidth() / 100;
     }
 
-    public void changeScreen(Screen screen, Animation animation) {
+    public void changeScreen(Supplier<Screen> screen, Animation animation) {
         changeScreen(this, screen, animation);
     }
 
-    public static void changeScreen(Screen currentScreen, Screen nextScreen, Animation animation) {
+    public static void changeScreen(Screen currentScreen, Supplier<Screen> nextScreen, Animation animation) {
         if (ModuleList.bthackMainMenu.screenChangeAnimation.getValue())
-            mc.setScreen(new TransitionScreen(() -> currentScreen, () -> nextScreen, animation));
+            mc.setScreen(new TransitionScreen(() -> currentScreen, nextScreen, animation));
         else
-            mc.setScreen(nextScreen);
+            mc.setScreen(nextScreen.get());
     }
 
-    public void changeScreen(Screen screen) {
+    public void changeScreen(Supplier<Screen> screen) {
         changeScreen(this, screen);
     }
 
-    public static void changeScreen(Screen currentScreen, Screen nextScreen) {
+    public static void changeScreen(Screen currentScreen, Supplier<Screen> nextScreen) {
         if (ModuleList.bthackMainMenu.screenChangeAnimation.getValue())
-            mc.setScreen(new TransitionScreen(() -> currentScreen, () -> nextScreen, TransitionScreen.STANDARD_FLIP_ANIMATION));
+            mc.setScreen(new TransitionScreen(() -> currentScreen, nextScreen, TransitionScreen.STANDARD_FLIP_ANIMATION));
         else
-            mc.setScreen(nextScreen);
+            mc.setScreen(nextScreen.get());
     }
 }

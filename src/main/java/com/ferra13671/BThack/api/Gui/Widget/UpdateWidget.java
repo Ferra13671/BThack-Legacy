@@ -78,7 +78,7 @@ public class UpdateWidget extends ScreenWidget {
             BThackRender.drawCenteredString(LanguageSystem.translate("lang.widget.Update.Successful.text2"), x, y, -1, FontRenderManager.DrawMode.NORMAL_BOLD);
         };
         buttons.add(Button.of(1, (int) xLeft + 150, (int) yDown - 15, 70, 10, "lang.screen.Mainmenu.Quit")
-                .withAction(buttonClickInfo -> actionAfterClicking(() -> changeScreen(BThackScreens.EXIT, new Animation(Easing.LINEAR, 1000))))
+                .withAction(buttonClickInfo -> actionAfterClicking(() -> changeScreen(() -> BThackScreens.EXIT, new Animation(Easing.LINEAR, 1000))))
         );
     }
 

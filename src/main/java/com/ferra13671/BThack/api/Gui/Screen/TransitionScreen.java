@@ -16,29 +16,19 @@ import java.util.function.Supplier;
 public class TransitionScreen extends BThackScreen {
     public static final Animation STANDARD_FLIP_ANIMATION = new Animation(Easing.LINEAR, 500);
 
-    private Supplier<Screen> newScreen;
+    private final Supplier<Screen> newScreen;
     private final Animation flipAnimation;
 
-    private Supplier<Screen> currentScreen;
+    private Screen currentScreen;
     private boolean invert = false;
 
     public TransitionScreen(Supplier<Screen> oldScreen, Supplier<Screen> newScreen, Animation flipAnimation) {
         super(Text.literal("Transition"));
-        currentScreen = oldScreen;
+        currentScreen = oldScreen.get();
         this.newScreen = newScreen;
         this.flipAnimation = flipAnimation.clone();
         this.flipAnimation.setMillis((int) (this.flipAnimation.getMillis() / ModuleList.bthackMainMenu.animationSpeed.getValue()));
         this.flipAnimation.reset();
-    }
-
-    public void changeNewScreen(Supplier<Screen> newScreen) {
-        if (currentScreen == this.newScreen) {
-            currentScreen = newScreen;
-            currentScreen.get().init(mc, mc.getWindow().getScaledWidth(), mc.getWindow().getScaledHeight());
-            ((IScreen) currentScreen.get())._init();
-            currentScreen.get().onDisplayed();
-        }
-        this.newScreen = newScreen;
     }
 
     @Override
@@ -49,7 +39,7 @@ public class TransitionScreen extends BThackScreen {
     @Override
     protected void init() {
         super.init();
-        ((IScreen) currentScreen.get())._init();
+        ((IScreen) currentScreen)._init();
     }
 
     @Override
@@ -64,7 +54,7 @@ public class TransitionScreen extends BThackScreen {
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float partialTicks) {
-        currentScreen.get().render(context, mouseX, mouseY, partialTicks);
+        currentScreen.render(context, mouseX, mouseY, partialTicks);
 
         double animationDelta = !invert ? flipAnimation.getEase() : 1 - flipAnimation.getEase();
 
@@ -80,11 +70,11 @@ public class TransitionScreen extends BThackScreen {
             if (!invert) {
                 invert = true;
                 flipAnimation.reset();
-                currentScreen = newScreen;
-                currentScreen.get().init(mc, mc.getWindow().getScaledWidth(), mc.getWindow().getScaledHeight());
-                ((IScreen) currentScreen.get())._init();
-                currentScreen.get().onDisplayed();
-            } else mc.setScreen(currentScreen.get());
+                currentScreen = newScreen.get();
+                currentScreen.init(mc, mc.getWindow().getScaledWidth(), mc.getWindow().getScaledHeight());
+                ((IScreen) currentScreen)._init();
+                currentScreen.onDisplayed();
+            } else mc.setScreen(newScreen.get());
         }
     }
 }

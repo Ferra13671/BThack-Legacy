@@ -30,7 +30,7 @@ public class BThackCreditsScreen extends BThackScreen {
 
 
         this.buttons.add(Button.of(10, mc.getWindow().getScaledWidth() / 2, mc.getWindow().getScaledHeight() - 22,
-                100, 10, "Back").withAction(buttonClickInfo -> actionAfterClicking(() -> changeScreen(BThackScreens.BTHACK_MAIN_MENU))));
+                100, 10, "Back").withAction(buttonClickInfo -> actionAfterClicking(() -> changeScreen(() -> BThackScreens.BTHACK_MAIN_MENU))));
     }
 
     @Override
@@ -44,6 +44,6 @@ public class BThackCreditsScreen extends BThackScreen {
 
     @Override
     public void close() {
-        changeScreen(BThackScreens.BTHACK_MAIN_MENU);
+        changeScreen(() -> BThackScreens.BTHACK_MAIN_MENU);
     }
 }
