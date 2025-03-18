@@ -27,7 +27,7 @@ public class AutoShear extends Module {
 
     public AutoShear() {
         super("AutoShear",
-                "",
+                "lang.module.AutoShear",
                 KeyboardUtils.RELEASE,
                 MCategory.WORLD,
                 false

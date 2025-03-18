@@ -181,6 +181,7 @@
 //WORLD
 "lang.module.AutoFarm": Автоматически собирает и сажает урожай.
 "lang.module.AutoFarmland": Автоматически вспахивает траву и землю рядом с вами.
+"lang.module.AutoShear": Автоматическая стрижка овец.
 "lang.module.AutoSign": Запоминает первый введенный текст и автоматически вставляет его в последующие разы.
 "lang.module.CloudsColor": Меняет цвет облаков.
 "lang.module.CustomDayTime": Устанавливает кастомное время дня.

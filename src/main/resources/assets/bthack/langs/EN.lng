@@ -182,6 +182,7 @@
 //WORLD
 "lang.module.AutoFarm": Automatically picks and plants the crop.
 "lang.module.AutoFarmland": Automatically plows the grass and dirt near you.
+"lang.module.AutoShear": Automatic sheep shearing.
 "lang.module.AutoSign": Memorizes the first text entered and automatically inserts it in subsequent times.
 "lang.module.CloudsColor": Changes the color of the clouds.
 "lang.module.CustomDayTime": Sets custom day time.
