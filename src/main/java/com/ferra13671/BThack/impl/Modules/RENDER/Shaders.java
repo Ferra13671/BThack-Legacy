@@ -13,10 +13,10 @@ import java.awt.*;
 import java.util.Arrays;
 
 public class Shaders extends Module {
-    public ManagedShaderEffect defaultShader = ShaderEffectManager.getInstance().manage(Identifier.of("bthack", "shaders/post/default_outline.json"));
-    public ManagedShaderEffect rainbowXShader = ShaderEffectManager.getInstance().manage(Identifier.of("bthack", "shaders/post/rainbowx_outline.json"));
-    public ManagedShaderEffect rainbowYShader = ShaderEffectManager.getInstance().manage(Identifier.of("bthack", "shaders/post/rainbowy_outline.json"));
-    public ManagedShaderEffect rainbowXYShader = ShaderEffectManager.getInstance().manage(Identifier.of("bthack", "shaders/post/rainbowxy_outline.json"));
+    public ManagedShaderEffect defaultShader;
+    public ManagedShaderEffect rainbowXShader;
+    public ManagedShaderEffect rainbowYShader;
+    public ManagedShaderEffect rainbowXYShader;
     public boolean shaderInited = false;
 
     public final ModeSetting shaderMode = new ModeSetting("Shader", this, Arrays.asList("Default", "Rainbow_xy", "Rainbow_x", "Rainbow_y"));
@@ -135,6 +135,11 @@ public class Shaders extends Module {
 
     public void reloadShader() {
         shaderInited = true;
+
+        defaultShader = ShaderEffectManager.getInstance().manage(Identifier.of("bthack", "shaders/post/default_outline.json"));
+        rainbowXShader = ShaderEffectManager.getInstance().manage(Identifier.of("bthack", "shaders/post/rainbowx_outline.json"));
+        rainbowYShader = ShaderEffectManager.getInstance().manage(Identifier.of("bthack", "shaders/post/rainbowy_outline.json"));
+        rainbowXYShader = ShaderEffectManager.getInstance().manage(Identifier.of("bthack", "shaders/post/rainbowxy_outline.json"));
 
         initShader(defaultShader);
         initShader(rainbowXShader);

@@ -10,6 +10,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.decoration.EndCrystalEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.math.ColorHelper;
 import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Final;
@@ -27,6 +28,12 @@ public class MixinWorldRenderer {
     @Shadow @Final private MinecraftClient client;
 
     @Unique boolean allowShader = false;
+
+    @Inject(method = "reload(Lnet/minecraft/resource/ResourceManager;)V", at = @At("TAIL"))
+    public void modifyReload(ResourceManager manager, CallbackInfo ci) {
+        ModuleList.shaders.shaderInited = false;
+        ModuleList.shaders.reloadShader();
+    }
 
     @Inject(method = "render", at = @At("HEAD"))
     private void beforeRender(RenderTickCounter tickCounter, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer, LightmapTextureManager lightmapTextureManager, Matrix4f positionMatrix, Matrix4f projectionMatrix, CallbackInfo ci) {
