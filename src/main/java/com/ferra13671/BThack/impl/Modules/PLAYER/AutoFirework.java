@@ -10,13 +10,11 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSettin
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.SoundSystem.SoundSystem;
 import com.ferra13671.BThack.api.SoundSystem.Sounds;
-import com.ferra13671.BThack.api.Utils.InventoryUtils;
-import com.ferra13671.BThack.api.Utils.ItemUtils;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
-import com.ferra13671.BThack.api.Utils.Ticker;
+import com.ferra13671.BThack.api.Utils.*;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.item.Items;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 
 import java.util.Arrays;
@@ -51,6 +49,18 @@ public class AutoFirework extends Module {
         if (mode.getValue().equals("Always"))
             if (ModuleList.clientSettings.moduleToggleSound.getValue())
                 SoundSystem.playSound(Sounds.MODULE_OFF, (float) ModuleList.clientSettings.soundVolume.getValue());
+    }
+
+    @Override
+    public void sendToggleMessage() {
+        if (ModuleList.chatNotifications.isEnabled() && ModuleList.chatNotifications.moduleToggle.getValue()) {
+            if (mode.getValue().equals("Always")) {
+                if (toggled)
+                    ChatUtils.sendMessage(this.getName() + ": " + Formatting.GREEN + "Enabled");
+                else
+                    ChatUtils.sendMessage(this.getName() + ": " + Formatting.RED + "Disabled");
+            } else if (toggled) ChatUtils.sendMessage(this.getName() + ": " + Formatting.YELLOW + "Toggled");
+        }
     }
 
     @Override
