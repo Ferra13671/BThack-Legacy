@@ -38,40 +38,58 @@ public class ElytraSwap extends OneActionModule {
 
         Item armor = mc.player.getInventory().getArmorStack(2).getItem();
         if (armor instanceof ElytraItem) {
-            for (int needSlot = 0; needSlot < 36; needSlot++) {
-                if (mc.player.getInventory().getStack(needSlot).getItem() instanceof ArmorItem armorItem) {
-                    if (armorItem.getSlotType() == EquipmentSlot.CHEST) {
-                        int item;
-                        if (needSlot < 9)
-                            item = needSlot + 36;
-                        else
-                            item = needSlot;
+            if (!equipChestplate()) removeChestplateOrElytra();
+        } else if (armor instanceof ArmorItem){
+            if (!equipElytra()) removeChestplateOrElytra();
+        } else if (!equipChestplate()) equipElytra();
+    }
 
-                        if (moveType.getValue().equals("Swap")) {
-                            pc.clickSlot(0, InventoryUtils.CHESTPLATE_SLOT, 0, SlotActionType.QUICK_MOVE);
-                            pc.clickSlot(0, item, 0, SlotActionType.QUICK_MOVE);
-                        } else {
-                            InventoryUtils.replaceItems(InventoryUtils.CHESTPLATE_SLOT, item);
-                        }
-                        toggle();
-                        break;
-                    }
-                }
-            }
-        } else {
-            for (int needSlot = 0; needSlot < 36; needSlot++) {
-                if (mc.player.getInventory().getStack(needSlot).getItem() instanceof ElytraItem) {
-                    int item;
-                    if (needSlot < 9)
-                        item = needSlot + 36;
-                    else
-                        item = needSlot;
+    private boolean equipChestplate() {
+        for (int needSlot = 0; needSlot < 36; needSlot++) {
+            if (mc.player.getInventory().getStack(needSlot).getItem() instanceof ArmorItem armorItem) {
+                if (armorItem.getSlotType() == EquipmentSlot.CHEST) {
+                    int item = needSlot < 9 ? needSlot + 36 : needSlot;
 
-                    InventoryUtils.replaceItems(InventoryUtils.CHESTPLATE_SLOT, item);
+                    if (moveType.getValue().equals("Swap")) {
+                        pc.clickSlot(0, InventoryUtils.CHESTPLATE_SLOT, 0, SlotActionType.QUICK_MOVE);
+                        pc.clickSlot(0, item, 0, SlotActionType.QUICK_MOVE);
+                    } else
+                        InventoryUtils.replaceItems(InventoryUtils.CHESTPLATE_SLOT, item);
                     toggle();
-                    break;
+                    return true;
                 }
             }
         }
+        return false;
+    }
+
+    private boolean equipElytra() {
+        for (int needSlot = 0; needSlot < 36; needSlot++) {
+            if (mc.player.getInventory().getStack(needSlot).getItem() instanceof ElytraItem) {
+                int item;
+                if (needSlot < 9)
+                    item = needSlot + 36;
+                else
+                    item = needSlot;
+
+                InventoryUtils.replaceItems(InventoryUtils.CHESTPLATE_SLOT, item);
+                toggle();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void removeChestplateOrElytra() {
+        int slot = InventoryUtils.findFreeSlot();
+        if (slot == -1) return;
+        int item = slot < 9 ? slot + 36 : slot;
+
+        if (moveType.getValue().equals("Swap")) {
+            pc.clickSlot(0, InventoryUtils.CHESTPLATE_SLOT, 0, SlotActionType.QUICK_MOVE);
+            pc.clickSlot(0, item, 0, SlotActionType.QUICK_MOVE);
+        } else
+            InventoryUtils.replaceItems(InventoryUtils.CHESTPLATE_SLOT, item);
+        toggle();
     }
 }
