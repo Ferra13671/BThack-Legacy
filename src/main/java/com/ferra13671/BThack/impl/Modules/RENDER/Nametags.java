@@ -10,6 +10,7 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetti
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ColorSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
+import com.ferra13671.BThack.api.Module.HudComponent;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Shader.Shaders;
 import com.ferra13671.BThack.api.Social.SocialManagers;
@@ -110,7 +111,7 @@ public class Nametags extends Module {
     }
 
     public void renderMiniPlayerNametag(float[] cords, PlayerEntity player) {
-        float hp = player.getHealth();
+        float hp = getHealth(player);
         String text = player.getDisplayName().getString() + " " + (hp > 15 ? Formatting.GREEN : (hp > 8 ? Formatting.YELLOW : Formatting.RED)) + hp;
         float length = FontUtils.getTextWidth(text, FontRenderManager.DrawMode.NORMAL_BOLD) + 5;
         float leftX = cords[0] - (length / 2) - 3;
@@ -187,8 +188,8 @@ public class Nametags extends Module {
         return startX;
     }
 
-    public void drawHP(float startX, float startY, LivingEntity entity) {
-        BThackRender.drawString("HP: " + (int) entity.getHealth(), startX, startY, -1);
+    public void drawHP(float startX, float startY, PlayerEntity entity) {
+        BThackRender.drawString("HP: " + (int) getHealth(entity), startX, startY, -1);
 
         float length = (((entity.getMaxHealth() - entity.getHealth()) / entity.getMaxHealth()) * 80);
 
@@ -216,5 +217,9 @@ public class Nametags extends Module {
         if (player.getMainHandStack() != null) {
             BThackRender.drawItem(BThackRender.guiGraphics, player.getMainHandStack(), (int) startX, (int) startY, null, false);
         }
+    }
+
+    public float getHealth(PlayerEntity entity) {
+        return Float.parseFloat(HudComponent.decimal.format(entity.getHealth() + entity.getAbsorptionAmount()));
     }
 }
