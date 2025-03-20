@@ -22,7 +22,7 @@ public class ModifyCamera extends Module {
 
     public final BooleanSetting rewriteRotation = new BooleanSetting("Rewrite Rotation", this, false);
     public final NumberSetting yaw = new NumberSetting("Camera Yaw", this, 0, -180, 180, false, rewriteRotation::getValue);
-    public final NumberSetting pitch = new NumberSetting("Camera Pitch", this, 0, -90, 90, false);
+    public final NumberSetting pitch = new NumberSetting("Camera Pitch", this, 0, -90, 90, false, rewriteRotation::getValue);
 
     public ModifyCamera() {
         super("ModifyCamera",
