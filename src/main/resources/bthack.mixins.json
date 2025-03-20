@@ -60,6 +60,7 @@
     "gui_and_hud.chat.MixinChatHud",
     "gui_and_hud.chat.MixinChatInputSuggestor",
     "gui_and_hud.chat.MixinChatScreen",
+    "input.MixinKeyBinding",
     "input.MixinKeyboard",
     "input.MixinMouse",
     "manager.MixinClientPlayerInteractionManager",
