@@ -19,6 +19,7 @@ import com.ferra13671.BThack.mixins.accessor.packet.IPlayerInputC2SPacket;
 import com.ferra13671.BThack.mixins.accessor.packet.IPlayerMoveC2SPacket;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ToolItem;
 import net.minecraft.network.packet.c2s.play.PlayerInputC2SPacket;
@@ -187,6 +188,15 @@ public class KillAura extends Module {
             return;
         }
         if (!delayPassed()) return;
+        if (targetedEntity != null) {
+            if (mc.player.distanceTo(targetedEntity.entity) > range.getValue() || targetedEntity.entity.isDead()) {
+                targetedEntity = null;
+                prevAttackedEntity = null;
+                if (Managers.TRAVEL_CHANGE_MANAGER.containsChanger(travelChanger))
+                    Managers.TRAVEL_CHANGE_MANAGER.removeChanger(travelChanger);
+            }
+        }
+
         if (targetedEntity == null || targetedEntity.lockTicks <= 0) {
             targetSearchAction();
         }
@@ -195,12 +205,12 @@ public class KillAura extends Module {
     }
 
     public void targetSearchAction() {
-        Entity target = null;
+        LivingEntity target = null;
         if (players.getValue())
             target = KillAuraUtils.filterPlayers(range.getValue(), friends.getValue(), teammates.getValue(), clanManager.getValue(), clanMode.getValue(), targetClan.getValue(), entity -> !entity.isSpectator() && !((PlayerEntity) entity).isCreative());
 
         if (target == null)
-            target = KillAuraUtils.filterEntity(range.getValue(), entityFilter);
+            target = (LivingEntity) KillAuraUtils.filterEntity(range.getValue(), entityFilter);
 
         if (target != null)
             targetedEntity = new Target(target, 0);
@@ -221,12 +231,7 @@ public class KillAura extends Module {
                 KillAuraUtils.attackNoRotate(targetedEntity.entity);
                 delayTicker.reset();
                 prevAttackedEntity = targetedEntity.entity;
-                if (mc.player.distanceTo(targetedEntity.entity) > range.getValue()) {
-                    targetedEntity = null;
-                    if (Managers.TRAVEL_CHANGE_MANAGER.containsChanger(travelChanger)) Managers.TRAVEL_CHANGE_MANAGER.removeChanger(travelChanger);
-                }
             } else {
-                //KillAuraUtils.preAttackRotate(getRotateMode(), rotations, (int) packets.getValue());
                 targetedEntity = new Target(targetedEntity.entity, prevAttackedEntity == targetedEntity.entity ? (int) lockTicks.getValue() : targetedEntity.lockTicks + 1);
             }
         } else {
@@ -293,5 +298,5 @@ public class KillAura extends Module {
         return false;
     }
 
-    public record Target(Entity entity, int lockTicks) {}
+    public record Target(LivingEntity entity, int lockTicks) {}
 }
