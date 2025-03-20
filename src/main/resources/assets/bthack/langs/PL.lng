@@ -307,6 +307,7 @@
 "lang.command.CustomCape.description": Ustawia niestandardową peleryna domyślnie lub za pomocą pliku lub linku.
 "lang.command.OpenFolder.description": Otwiera folder konfiguracji BThack.
 "lang.command.Auto2FA.description": Dodaje/usuwa klucz 2fa dla określonego pseudonimu.
+"lang.command.ClearChat.description": Czyści czat.
 
 
 "lang.command.ClanList.message2":   Uczestnicy:

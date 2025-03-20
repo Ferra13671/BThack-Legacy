@@ -309,6 +309,7 @@
 "lang.command.CustomCape.description": Sets a custom cape by default or by using a file or link.
 "lang.command.OpenFolder.description": Opens the BThack config folder.
 "lang.command.Auto2FA.description": Adds/removes a 2fa key for a specific nickname.
+"lang.command.ClearChat.description": Clears the chat.
 
 
 "lang.command.ClanList.message2":   Members:

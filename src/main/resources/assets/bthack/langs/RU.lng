@@ -308,6 +308,7 @@
 "lang.command.CustomCape.description": Устанавливает пользовательский плащ по умолчанию или с помощью файла или ссылки.
 "lang.command.OpenFolder.description": Открывает папку конфигурации BThack.
 "lang.command.Auto2FA.description": Добавляет/удаляет 2fa ключ для определенного ника.
+"lang.command.ClearChat.description": Очищает чат.
 
 
 "lang.command.ClanList.message2":   Участники:

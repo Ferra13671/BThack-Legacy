@@ -50,6 +50,7 @@ public class CommandManager implements Initializable {
         register(new EnemiesCommand());
 
         register(new CleanMemoryCommand());
+        register(new ClearChatCommand());
         register(new SoundReloadCommand());
         register(new DisableAllCommand());
         register(new ModuleCommand());
