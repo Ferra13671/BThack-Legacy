@@ -310,6 +310,7 @@
 "lang.command.OpenFolder.description": Opens the BThack config folder.
 "lang.command.Auto2FA.description": Adds/removes a 2fa key for a specific nickname.
 "lang.command.ClearChat.description": Clears the chat.
+"lang.command.AutoAuthList.description": Shows a list of AutoAuth nicknames and their assigned passwords.
 
 
 "lang.command.ClanList.message2":   Members:

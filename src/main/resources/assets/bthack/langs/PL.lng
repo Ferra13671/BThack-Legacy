@@ -308,6 +308,7 @@
 "lang.command.OpenFolder.description": Otwiera folder konfiguracji BThack.
 "lang.command.Auto2FA.description": Dodaje/usuwa klucz 2fa dla określonego pseudonimu.
 "lang.command.ClearChat.description": Czyści czat.
+"lang.command.AutoAuthList.description": Wyświetla listę pseudonimów AutoAuth i przypisanych do nich haseł.
 
 
 "lang.command.ClanList.message2":   Uczestnicy:

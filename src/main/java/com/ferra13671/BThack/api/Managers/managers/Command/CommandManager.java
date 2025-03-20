@@ -8,15 +8,12 @@ import com.ferra13671.BThack.api.Plugin.PluginSystem;
 import com.ferra13671.BThack.api.Plugin.PluginUtils;
 import com.ferra13671.BThack.api.Utils.DataList.DataLists;
 import com.ferra13671.BThack.impl.Commands.*;
+import com.ferra13671.BThack.impl.Commands.OtherList.*;
 import com.ferra13671.BThack.impl.Commands.Social.Clans.ClanMembersCommand;
 import com.ferra13671.BThack.impl.Commands.Social.Clans.ClanStatusCommand;
 import com.ferra13671.BThack.impl.Commands.Social.Clans.ClansCommand;
 import com.ferra13671.BThack.impl.Commands.Social.EnemiesCommand;
 import com.ferra13671.BThack.impl.Commands.Social.FriendsCommand;
-import com.ferra13671.BThack.impl.Commands.OtherList.ClansListCommand;
-import com.ferra13671.BThack.impl.Commands.OtherList.EnemyListCommand;
-import com.ferra13671.BThack.impl.Commands.OtherList.FriendListCommand;
-import com.ferra13671.BThack.impl.Commands.OtherList.PluginListCommand;
 import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientCommandSource;
@@ -77,6 +74,7 @@ public class CommandManager implements Initializable {
         register(new VClipCommand());
 
 
+        register(new AutoAuthListCommand());
         register(new FriendListCommand());
         register(new EnemyListCommand());
         register(new ClansListCommand());
