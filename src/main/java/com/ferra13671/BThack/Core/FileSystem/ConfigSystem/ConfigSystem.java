@@ -6,6 +6,7 @@ import com.ferra13671.BThack.Core.Client.ClientInfo;
 import com.ferra13671.BThack.Core.FileSystem.FileSystem;
 import com.ferra13671.BThack.api.Category.Categories;
 import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.Frame;
+import com.ferra13671.BThack.api.Managers.managers.Thread.ThreadManager;
 import com.ferra13671.BThack.api.Module.HudComponent;
 import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Cape.Cape;
@@ -40,8 +41,16 @@ public final class ConfigSystem {
     private static volatile boolean saving = false;
 
     public static boolean isSaving() {
-        BThack.log("" + saving);
         return saving;
+    }
+
+    public static void saveConfigThreaded() {
+        if (saving) return;
+        saving = true;
+
+        ThreadManager.startNewThread((thread -> saveConfig()));
+
+        saving = false;
     }
 
     public static void saveConfig() {
@@ -54,7 +63,7 @@ public final class ConfigSystem {
                 try {
                     dataList.saveInFile();
                 } catch (IOException e) {
-                    BThack.error(e.getMessage());
+                    e.printStackTrace();
                 }
             });
             saveActionBotTasks();
@@ -64,7 +73,7 @@ public final class ConfigSystem {
             saveMacros();
             save2FAKeys();
         } catch (IOException e) {
-            BThack.error(e.getMessage());
+            e.printStackTrace();
         }
         saving = false;
     }

@@ -17,7 +17,6 @@ import com.ferra13671.BThack.api.Gui.Widget.Config.ConfigsWidget;
 import com.ferra13671.BThack.api.GuiSystem.buttons.Button;
 import com.ferra13671.BThack.api.GuiSystem.buttons.ImageButton;
 import com.ferra13671.BThack.api.Interfaces.Mc;
-import com.ferra13671.BThack.api.Managers.managers.Thread.ThreadManager;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Shader.ShaderTicker;
 import com.ferra13671.BThack.api.Shader.Shaders;
@@ -253,7 +252,7 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
 
         if (keyCode == ModuleList.clickGui.getKey() || keyCode == KeyboardUtils.KEY_ESCAPE) {
             if (!firstIgnore) {
-                if (!ConfigSystem.isSaving()) ThreadManager.startNewThread((thread -> ConfigSystem.saveConfig()));
+                ConfigSystem.saveConfigThreaded();
                 mc.setScreen(null);
 
                 return true;
@@ -289,7 +288,6 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
     @Override
     public void removed() {
         super.removed();
-        if (!ConfigSystem.isSaving()) ThreadManager.startNewThread((thread -> ConfigSystem.saveConfig()));
         for (Frame frame : frames) {
             for (ModuleButton component : frame.buttons) {
                 component.open = false;
