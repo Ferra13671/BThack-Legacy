@@ -12,6 +12,11 @@ public final class ColorUtils {
     public static final int RED = fastRGBA(255, 0, 0, 255);
     public static final int GREEN = fastRGBA(0, 255, 0, 255);
 
+    public static int rainbow(long time) {
+        double rainbowState = Math.ceil(time / 20.0);
+        rainbowState %= 360;
+        return Color.getHSBColor((float) (rainbowState / 360.0f), 0.5f, 1f).getRGB();
+    }
 
     public static int rainbow() {
         double rainbowState = Math.ceil((System.currentTimeMillis() + 100) / 20.0);

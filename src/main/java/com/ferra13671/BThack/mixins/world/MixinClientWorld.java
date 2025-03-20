@@ -51,7 +51,7 @@ public abstract class MixinClientWorld extends World {
     @Inject(method = "getSkyColor", at = @At("HEAD"), cancellable = true)
     public void modifyGetSkyColor(Vec3d cameraPos, float tickDelta, CallbackInfoReturnable<Vec3d> cir) {
         if (ModuleList.skyColor.isEnabled())
-            cir.setReturnValue(new Vec3d(ModuleList.skyColor.skyColor.getValue().getRed() / 255.0f, ModuleList.skyColor.skyColor.getValue().getGreen() / 255.0f, ModuleList.skyColor.skyColor.getValue().getBlue() / 255.0f));
+            cir.setReturnValue(ModuleList.skyColor.getSkyColor());
     }
 
     @Inject(method = "getStarBrightness", at = @At("HEAD"), cancellable = true)
