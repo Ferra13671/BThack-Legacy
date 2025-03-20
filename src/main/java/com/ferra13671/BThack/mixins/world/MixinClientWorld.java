@@ -45,7 +45,7 @@ public abstract class MixinClientWorld extends World {
     @Inject(method = "getCloudsColor", at = @At("HEAD"), cancellable = true)
     public void modifyGetCloudColor(float p_getCloudColour_1_, CallbackInfoReturnable<Vec3d> cir) {
         if (ModuleList.cloudsColor.isEnabled())
-            cir.setReturnValue(new Vec3d(ModuleList.cloudsColor.cloudsColor.getValue().getRed() / 255d, ModuleList.cloudsColor.cloudsColor.getValue().getGreen() / 255d, ModuleList.cloudsColor.cloudsColor.getValue().getBlue() / 255d));
+            cir.setReturnValue(ModuleList.cloudsColor.getCloudsColor());
     }
 
     @Inject(method = "getSkyColor", at = @At("HEAD"), cancellable = true)
