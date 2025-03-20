@@ -37,8 +37,15 @@ import java.util.*;
 import static com.ferra13671.BThack.Core.FileSystem.JsonUtils.*;
 
 public final class ConfigSystem {
+    private static volatile boolean saving = false;
+
+    public static boolean isSaving() {
+        BThack.log("" + saving);
+        return saving;
+    }
 
     public static void saveConfig() {
+        saving = true;
         try {
             saveModules();
             saveFrames();
@@ -59,6 +66,7 @@ public final class ConfigSystem {
         } catch (IOException e) {
             BThack.error(e.getMessage());
         }
+        saving = false;
     }
 
     public static void loadConfig() {
