@@ -251,7 +251,7 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
             }
         }
 
-        if (keyCode == ModuleList.clickGui.getKey()) {
+        if (keyCode == ModuleList.clickGui.getKey() || keyCode == KeyboardUtils.KEY_ESCAPE) {
             if (!firstIgnore) {
                 if (!ConfigSystem.isSaving()) ThreadManager.startNewThread((thread -> ConfigSystem.saveConfig()));
                 mc.setScreen(null);
@@ -263,7 +263,6 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
         }
 
         switch (keyCode) {
-            case KeyboardUtils.KEY_ESCAPE -> mc.setScreen(null);
             case KeyboardUtils.KEY_LEFT, KeyboardUtils.KEY_RIGHT, KeyboardUtils.KEY_UP, KeyboardUtils.KEY_DOWN -> {
                 for(Frame frame : frames) {
                     frame.moveFrame(keyCode);
@@ -307,6 +306,6 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
 
     @Override
     public boolean shouldCloseOnEsc() {
-        return widgetManage.widgets.isEmpty();
+        return false;
     }
 }
