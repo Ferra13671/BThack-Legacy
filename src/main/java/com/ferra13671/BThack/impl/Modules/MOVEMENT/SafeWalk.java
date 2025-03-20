@@ -1,6 +1,7 @@
 package com.ferra13671.BThack.impl.Modules.MOVEMENT;
 
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
+import com.ferra13671.BThack.api.IMixin.ModifyKeyBinding;
 import com.ferra13671.BThack.api.Managers.managers.Build.BuildManager;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
@@ -48,7 +49,7 @@ public class SafeWalk extends Module {
 
         if (sneaking)
             sneaking = false;
-        mc.options.sneakKey.setPressed(KeyboardUtils.isKeyDown(mc.options.sneakKey.getDefaultKey().getCode()));
+        mc.options.sneakKey.setPressed(KeyboardUtils.isKeyDown(((ModifyKeyBinding) mc.options.sneakKey)._getBoundKey().getCode()));
     }
 
     @EventSubscriber
@@ -58,7 +59,7 @@ public class SafeWalk extends Module {
         if (BuildManager.ignoreBlocks.contains(mc.world.getBlockState(BlockPos.ofFloored(mc.player.getX(), mc.player.getY() - 0.2, mc.player.getZ())).getBlock())) {
             mc.options.sneakKey.setPressed(true);
         } else {
-            mc.options.sneakKey.setPressed(KeyboardUtils.isKeyDown(mc.options.sneakKey.getDefaultKey().getCode()));
+            mc.options.sneakKey.setPressed(KeyboardUtils.isKeyDown(((ModifyKeyBinding) mc.options.sneakKey)._getBoundKey().getCode()));
         }
     }
 
@@ -92,7 +93,7 @@ public class SafeWalk extends Module {
         if(sneaking)
             sneakKey.setPressed(true);
         else
-            sneakKey.setPressed(KeyboardUtils.isKeyDown(sneakKey.getDefaultKey().getCode()));
+            sneakKey.setPressed(KeyboardUtils.isKeyDown(((ModifyKeyBinding) sneakKey)._getBoundKey().getCode()));
 
         this.sneaking = sneaking;
     }
