@@ -12,11 +12,13 @@ import com.ferra13671.BThack.api.Utils.Modules.AimBotUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CropBlock;
+import net.minecraft.block.FarmlandBlock;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKeys;
@@ -35,6 +37,12 @@ public class AutoFarm extends Module {
 
     public final BooleanSetting fortuneFilter = new BooleanSetting("Fortune Filter", this, true);
 
+    public final BooleanSetting _break = new BooleanSetting("Break", this, true);
+
+    public final BooleanSetting plant = new BooleanSetting("Plant", this, true);
+    public final BooleanSetting logicPlant = new BooleanSetting("Logic Plant", this, true, plant::getValue);
+    public final ModeSetting plantCrop = new ModeSetting("Plant Crop", this, Arrays.asList("Wheat", "Potato", "Carrot", "Beetroot"), plant::getValue);
+
     public AutoFarm() {
         super("AutoFarm",
                 "lang.module.AutoFarm",
@@ -49,39 +57,54 @@ public class AutoFarm extends Module {
 
                 swap,
 
-                fortuneFilter
+                fortuneFilter,
+
+                _break,
+
+                plant,
+                logicPlant,
+                plantCrop
         );
     }
 
-    private HashMap<CropBlock, BlockPos> crops = new HashMap<>();
+    private HashMap<BlockPos, CropBlock> breakPoses = new HashMap<>();
+    private HashMap<BlockPos, Item> prevBreakPoses = new HashMap<>();
+
+    private HashMap<BlockPos, Item> plantPoses = new HashMap<>();
 
     @Override
     public void onEnable() {
         super.onEnable();
-        crops.clear();
+        breakPoses.clear();
     }
 
     @EventSubscriber
     public void onTick(ClientTickEvent e) {
         if (nullCheck()) return;
 
-        filterAction();
-        generalAction();
+        if (_break.getValue()) {
+            breakFilterAction();
+            breakAction();
+        }
+        if (plant.getValue()) {
+            plantFilterAction();
+            plantAction();
+        }
     }
 
-    public void filterAction() {
-        HashMap<CropBlock, BlockPos> temp = new HashMap<>();
+    public void breakFilterAction() {
+        breakPoses = new HashMap<>();
         for (BlockPos pos : BlockUtils.getSphere(mc.player.getBlockPos(), 4, 4, false, true, 0)) {
             BlockState state = mc.world.getBlockState(pos);
             if (state.getBlock() instanceof CropBlock block) {
-                if (block.getAge(state) >= block.getMaxAge()) temp.put(block, pos);
+                if (block.getAge(state) >= block.getMaxAge()) breakPoses.put(pos, block);
             }
         }
-        crops = temp;
     }
 
-    public void generalAction() {
-        crops.forEach((crop, pos) -> {
+    public void breakAction() {
+        prevBreakPoses = new HashMap<>();
+        breakPoses.forEach((pos, crop) -> {
             float[] rotations = AimBotUtils.rotations(pos.toCenterPos());
             GrimUtils.sendPreActionGrimPackets(rotations[0], rotations[1]);
             int slot = -1;
@@ -96,17 +119,40 @@ public class AutoFarm extends Module {
             if (slot != -1)
                 InventoryUtils.swapAction(prevSlot, slot, true, swap.getValue());
 
-            Item seedItem = crop.getPickStack(mc.world, pos, mc.world.getBlockState(pos)).getItem();
-            BlockPos tempPos = pos.add(0, -1, 0);
-            slot = InventoryUtils.findItem(seedItem);
-            if (mc.player.getInventory().getStack(mc.player.getInventory().selectedSlot).getItem() == seedItem) slot = mc.player.getInventory().selectedSlot;
+            prevBreakPoses.put(pos, crop.getPickStack(mc.world, pos, mc.world.getBlockState(pos)).getItem());
+        });
+    }
+
+    public void plantFilterAction() {
+        plantPoses = new HashMap<>();
+        for (BlockPos pos : BlockUtils.getSphere(mc.player.getBlockPos(), 4, 4, false, true, 0)) {
+            BlockState state = mc.world.getBlockState(pos);
+            if (state.getBlock() instanceof FarmlandBlock) {
+                BlockPos upPos = pos.add(0, 1, 0);
+                if (!mc.world.isAir(upPos)) continue;
+                if (logicPlant.getValue()) {
+                    if (prevBreakPoses.containsKey(upPos)) {
+                        plantPoses.put(upPos, prevBreakPoses.get(upPos));
+                        continue;
+                    }
+                }
+                plantPoses.put(upPos, getSeedItem());
+            }
+        }
+        prevBreakPoses.clear();
+    }
+
+    public void plantAction() {
+        plantPoses.forEach((pos, seed) -> {
+            int slot = InventoryUtils.findItem(seed);
+            if (mc.player.getInventory().getStack(mc.player.getInventory().selectedSlot).getItem() == seed) slot = mc.player.getInventory().selectedSlot;
             if (slot != -1) {
                 int oldSlot = mc.player.getInventory().selectedSlot;
                 if (oldSlot != slot)
                     InventoryUtils.swapAction(oldSlot, slot, false, swap.getValue());
-                rotations = AimBotUtils.rotations(tempPos.toCenterPos());
+                float[] rotations = AimBotUtils.rotations(pos.toCenterPos());
                 GrimUtils.sendPreActionGrimPackets(rotations[0], rotations[1]);
-                ItemUtils.useItemOnBlock(BuildManager.getHitResult(tempPos, false, Direction.UP));
+                ItemUtils.useItemOnBlock(BuildManager.getHitResult(pos, false, Direction.UP));
                 GrimUtils.sendPostActionGrimPackets();
                 if (oldSlot != slot)
                     InventoryUtils.swapAction(oldSlot, slot, true, swap.getValue());
@@ -130,5 +176,15 @@ public class AutoFarm extends Module {
             }
         }
         return bestSlot;
+    }
+
+    public Item getSeedItem() {
+        return switch (plantCrop.getValue()) {
+            case "Wheat" -> Items.WHEAT_SEEDS;
+            case "Potato" -> Items.POTATO;
+            case "Carrot" -> Items.CARROT;
+            case "Beetroot" -> Items.BEETROOT_SEEDS;
+            default -> null;
+        };
     }
 }
