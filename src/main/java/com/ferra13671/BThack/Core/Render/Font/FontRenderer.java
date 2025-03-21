@@ -16,7 +16,6 @@ import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.minecraft.client.render.*;
 import net.minecraft.client.util.math.MatrixStack;
 import org.joml.Matrix4f;
-import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
 import java.io.Closeable;
@@ -161,8 +160,6 @@ public class FontRenderer implements Closeable, Mc {
 
         BThackRenderUtils.applyBlend();
         RenderSystem.disableCull();
-        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR);
-        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_LINEAR);
 
         RenderSystem.setShader(GameRenderer::getPositionTexColorProgram);
         BufferBuilder bb;

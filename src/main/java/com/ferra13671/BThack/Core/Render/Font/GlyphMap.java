@@ -104,7 +104,7 @@ public class GlyphMap {
             g2d.drawString(String.valueOf(glyph.value()), glyph.u(), glyph.v() + fontMetrics.getAscent());
             glyphs.put(glyph.value(), glyph);
         }
-        TextureStorage.addTexture(textureKey, GLTexture.fromBufferedImage(bi));
+        TextureStorage.addTexture(textureKey, GLTexture.fromBufferedImage(bi, true));
         generated = true;
     }
 }
