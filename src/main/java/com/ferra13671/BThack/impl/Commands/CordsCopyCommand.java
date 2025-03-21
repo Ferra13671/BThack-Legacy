@@ -6,10 +6,6 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.minecraft.command.CommandSource;
 import net.minecraft.util.Formatting;
 
-import java.awt.*;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.StringSelection;
-
 public class CordsCopyCommand extends AbstractCommand {
     public CordsCopyCommand() {
         super("lang.command.CordsCopy.description", "cordsCopy");
@@ -19,9 +15,8 @@ public class CordsCopyCommand extends AbstractCommand {
     public void compile(LiteralArgumentBuilder<CommandSource> builder) {
         builder.executes(context -> {
             try {
-                Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-                clipboard.setContents(new StringSelection(String.format("%s %s %s", mc.player.getX(), mc.player.getY(), mc.player.getZ())), null);
-                sendMessage(Formatting.AQUA + "lang.command.CordsCopy.successfulMessage");
+                mc.keyboard.setClipboard(String.format("%s %s %s", (int) mc.player.getX(), (int) mc.player.getY(), (int) mc.player.getZ()));
+                sendMessage(Formatting.AQUA + LanguageSystem.translate("lang.command.CordsCopy.successfulMessage"));
             } catch (Exception e) {
                 error(LanguageSystem.translate("lang.command.CordsCopy.errorMessage"));
             }
