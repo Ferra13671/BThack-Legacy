@@ -57,7 +57,7 @@ public class WorldElements extends Module {
     @Override
     public void onChangeSetting(Setting setting) {
         if (isEnabled()) {
-            if (changeStars.getValue() && (setting == stars || setting == starsSeed)) ((ModifyWorldRenderer) mc.worldRenderer).generateStarsMap();
+            if (setting == stars || setting == starsSeed || setting == changeStars) ((ModifyWorldRenderer) mc.worldRenderer).generateStarsMap();
         }
     }
 
