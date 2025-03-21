@@ -79,32 +79,6 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
         buttons.add(new ImageButton(1, scWidth - 24, scHeight - 34, 20, 30, Textures.CONFIGS)
                 .withAction(buttonClickInfo -> widgetManage.addWidget(new ConfigsWidget())));
 
-        /*
-        buttons.add(Button.of(0,
-                scWidth - 50, scHeight - 15, 40, 10, "Load Config")
-                .withAction(buttonClickInfo -> {
-                    startSaving = false;
-                    mc.setScreen(new LoadConfigScreen());
-                }));
-        buttons.add(Button.of(1,
-                scWidth - 50, scHeight - 40, 40, 10, "Save Config")
-                .withAction(buttonClickInfo -> startSaving = true));
-        buttons.add(new TextFrameButton(8,
-                scWidth - 70, scHeight - 65, 60, 10));
-        buttons.add(Button.of(9
-                , scWidth - 150, scHeight - 40, 40, 10, "Confirm")
-                .withAction(buttonClickInfo -> {
-                    TextFrameButton button = (TextFrameButton) getButtonFromId(8);
-
-                    try {
-                        ConfigSystem.saveConfigFile(button.getText());
-                    } catch (IOException ignored) {}
-                    startSaving = false;
-                    button.setText("");
-                }));
-
-         */
-
         guiScaleSlider = new SliderButton(10, scWidth / 2, scHeight - 15, 50, 10, "Gui Scale", ModuleList.clickGui.guiScale.getValue(), 0.5, 1.5);
         buttons.add(guiScaleSlider);
     }
@@ -150,23 +124,19 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
 
         BThackRender.guiGraphics.getMatrices().push();
         BThackRender.guiGraphics.getMatrices().scale((float) ModuleList.clickGui.guiScale.getValue(), (float) ModuleList.clickGui.guiScale.getValue(), 1);
-        BThackRender.guiGraphics.getMatrices().translate(0, 0, 1);
-
-        descriptions.removeIf(DescriptionBar::needRemove);
-        BThackRender.guiGraphics.getMatrices().push();
-        descriptions.forEach(descriptionBar -> {
-            descriptionBar.render();
-            BThackRender.guiGraphics.getMatrices().translate(0, 0, 1);
-        });
-        BThackRender.guiGraphics.getMatrices().pop();
-
-        BThackRender.guiGraphics.getMatrices().translate(0, 0, 1);
 
         for (int i = frames.size() - 1; i > -1; i--) {
             Frame frame = frames.get(i);
             frame.renderFrame();
             frame.updatePosition((int) (mouseX / ModuleList.clickGui.guiScale.getValue()), (int) (mouseY / ModuleList.clickGui.guiScale.getValue()));
         }
+
+        descriptions.removeIf(DescriptionBar::needRemove);
+        descriptions.forEach(descriptionBar -> {
+            BThackRender.guiGraphics.getMatrices().translate(0, 0, 3);
+            descriptionBar.render();
+        });
+
         BThackRender.guiGraphics.getMatrices().pop();
         if (!widgetManage.widgets.isEmpty()) {
             BThackRender.guiGraphics.getMatrices().push();
