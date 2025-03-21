@@ -17,6 +17,7 @@ import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.*;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Shader.Shaders;
+import com.ferra13671.BThack.api.Utils.Textures;
 import com.ferra13671.BThack.impl.Modules.CLIENT.ClickGui;
 
 import java.awt.*;
@@ -118,7 +119,7 @@ public class ModuleButton extends Component implements Mc {
 		BThackRender.drawString(module.getName(), (parent.getX() + 5), (parent.getY() + offset + (BUTTON_HEIGHT / 2f) - (FontUtils.getTextHeight(module.getName())) / 2f), getModuleTextColor());
 
 		if (!settings.isEmpty())
-			BThackRender.drawString(open ? "-" : "+", (parent.getX() + parent.getWidth() - 10), (parent.getY() + offset + (BUTTON_HEIGHT / 2f) - (FontUtils.getTextHeight("+") / 2f)), ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()));
+			BThackRender.drawTextureRect(open ? Textures.HIDE : Textures.SHOW, parent.getX() + parent.getWidth() - BUTTON_HEIGHT, parent.getY() + offset, parent.getX() + parent.getWidth(), parent.getY() + offset + BUTTON_HEIGHT);
 		if(renderOpen || open) {
 			if(!settings.isEmpty()) {
 				BThackRender.enableScissor(ClickGui.applyGuiScale(parent.getX()), ClickGui.applyGuiScale(parent.getY() + offset), ClickGui.applyGuiScale(parent.getWidth()), ClickGui.applyGuiScale(animatedSettingsHeight + BUTTON_HEIGHT));

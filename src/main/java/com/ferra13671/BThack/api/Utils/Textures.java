@@ -13,6 +13,8 @@ public class Textures {
     public static final GLTexture CHIBI2 = GLTexture.fromPath("assets/bthack/chibi/chibi2.png", PathMode.INSIDEJAR, GLTexture.ColorMode.RGBA);
     public static final GLTexture CONFIGS = GLTexture.fromPath("assets/bthack/configs.png", PathMode.INSIDEJAR, GLTexture.ColorMode.RGBA);
     public static final GLTexture CONFIG_FILE = GLTexture.fromPath("assets/bthack/config_file.png", PathMode.INSIDEJAR, GLTexture.ColorMode.RGBA);
+    public static final GLTexture SHOW = GLTexture.fromPath("assets/bthack/show.png", PathMode.INSIDEJAR, GLTexture.ColorMode.RGBA);
+    public static final GLTexture HIDE = GLTexture.fromPath("assets/bthack/hide.png", PathMode.INSIDEJAR, GLTexture.ColorMode.RGBA);
 
     //Gifs
     public static final GLGif CAIPIRINHA = GLGif.fromInputStream(Textures.class.getClassLoader().getResourceAsStream("assets/bthack/gifs/caipirinha.gif"), GLGif.DecompileMode.DELTAS, 150);
