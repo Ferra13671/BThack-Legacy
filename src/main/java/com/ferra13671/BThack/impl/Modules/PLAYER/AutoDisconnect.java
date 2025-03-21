@@ -34,7 +34,7 @@ public class AutoDisconnect extends Module {
     public final NumberSetting minHeight = new NumberSetting("Min Height", this, 30, 0, 300, false, height::getValue);
 
     public final BooleanSetting totems = new BooleanSetting("Totems", this, false);
-    public final NumberSetting minTotems = new NumberSetting("Min Totems", this, 3, 2, 6, true, totems::getValue);
+    public final NumberSetting minTotems = new NumberSetting("Min Totems", this, 3, 1, 11, true, totems::getValue);
 
     public AutoDisconnect() {
         super("AutoDisconnect",
