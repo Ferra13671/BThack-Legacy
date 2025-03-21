@@ -56,8 +56,8 @@ public abstract class MixinClientWorld extends World {
 
     @Inject(method = "getStarBrightness", at = @At("HEAD"), cancellable = true)
     public void modifyStarBrightness(float f, CallbackInfoReturnable<Float> cir) {
-        if (ModuleList.worldElements.isEnabled())
-            cir.setReturnValue((float) ModuleList.worldElements.starBrightness.getValue());
+        if (ModuleList.worldElements.isEnabled() && ModuleList.worldElements.changeStars.getValue() && ModuleList.worldElements.starBrightness.getValue())
+            cir.setReturnValue((float) ModuleList.worldElements.starBright.getValue());
     }
 
     @Inject(method = "playSound(DDDLnet/minecraft/sound/SoundEvent;Lnet/minecraft/sound/SoundCategory;FFZJ)V", at = @At("HEAD"), cancellable = true)

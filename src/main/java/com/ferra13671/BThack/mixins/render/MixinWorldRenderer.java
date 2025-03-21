@@ -2,9 +2,11 @@ package com.ferra13671.BThack.mixins.render;
 
 import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.Core.Render.Utils.BThackRenderUtils;
+import com.ferra13671.BThack.api.IMixin.ModifyWorldRenderer;
 import com.ferra13671.BThack.api.Utils.Modules.KillAuraUtils;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gl.VertexBuffer;
 import net.minecraft.client.render.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
@@ -12,6 +14,7 @@ import net.minecraft.entity.decoration.EndCrystalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.math.ColorHelper;
+import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -21,13 +24,28 @@ import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(WorldRenderer.class)
-public class MixinWorldRenderer {
+public abstract class MixinWorldRenderer implements ModifyWorldRenderer {
 
     @Shadow @Final private BufferBuilderStorage bufferBuilders;
 
     @Shadow @Final private MinecraftClient client;
 
+    @Shadow @Nullable private VertexBuffer starsBuffer;
+
+    @Shadow protected abstract BuiltBuffer buildStarsBuffer(Tessellator tessellator);
+
     @Unique boolean allowShader = false;
+
+    @Override
+    public void generateStarsMap() {
+        if (starsBuffer != null)
+            starsBuffer.close();
+
+        starsBuffer = new VertexBuffer(VertexBuffer.Usage.STATIC);
+        starsBuffer.bind();
+        starsBuffer.upload(ModuleList.worldElements.isEnabled() && ModuleList.worldElements.changeStars.getValue() ? ModuleList.worldElements.buildStarsBuffer() : buildStarsBuffer(Tessellator.getInstance()));
+        VertexBuffer.unbind();
+    }
 
     @Inject(method = "reload(Lnet/minecraft/resource/ResourceManager;)V", at = @At("TAIL"))
     public void modifyReload(ResourceManager manager, CallbackInfo ci) {
