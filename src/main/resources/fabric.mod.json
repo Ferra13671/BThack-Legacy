@@ -10,7 +10,7 @@
     "issues": "https://github.com/Ferra13671/BThack/issues"
   },
   "license": "MIT",
-  "icon": "assets/bthack/bthack_icon.png",
+  "icon": "assets/bthack/textures/bthack_icon.png",
   "environment": "*",
   "entrypoints": {
     "client": [

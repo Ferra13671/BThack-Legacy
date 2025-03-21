@@ -8,7 +8,7 @@ public class CapeManager implements Initializable {
     public static final ClientInfo.CapeInfo DEFAULT_CAPE_INFO = new ClientInfo.CapeInfo("", ClientInfo.CapeDataType.NONE);
 
     private boolean enabled = true;
-    private Cape currentCape = Cape.fromIdentifier(Identifier.of("bthack", "bthack_cape.png"));
+    private Cape currentCape = Cape.fromIdentifier(Identifier.of("bthack", "textures/bthack_cape.png"));
 
     @Override
     public void init() {

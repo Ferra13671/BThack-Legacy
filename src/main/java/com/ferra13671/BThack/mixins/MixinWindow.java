@@ -52,7 +52,7 @@ public class MixinWindow implements Mc, ModifyWindow {
         }
         ci.cancel();
 
-        setWindowIcon(BThack.class.getResourceAsStream("/assets/bthack/bthack_icon.png"), BThack.class.getResourceAsStream("/assets/bthack/bthack_icon.png"));
+        setWindowIcon(BThack.class.getResourceAsStream("/assets/bthack/textures/bthack_icon.png"), BThack.class.getResourceAsStream("/assets/bthack/textures/bthack_icon.png"));
     }
 
     @Unique

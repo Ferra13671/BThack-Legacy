@@ -34,7 +34,7 @@ public class CustomCapeCommand extends AbstractCommand {
         }));
         builder.then(literal("set")
                 .then(literal("default").executes(context -> {
-                    Managers.CAPE_MANAGER.setCape(Cape.fromIdentifier(Identifier.of("bthack", "bthack_cape.png")));
+                    Managers.CAPE_MANAGER.setCape(Cape.fromIdentifier(Identifier.of("bthack", "textures/bthack_cape.png")));
                     Client.clientInfo.setCapeInfo(CapeManager.DEFAULT_CAPE_INFO);
                     try {
                         ConfigSystem.saveClientInfo();
