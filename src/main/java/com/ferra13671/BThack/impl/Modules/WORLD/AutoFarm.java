@@ -12,7 +12,14 @@ import com.ferra13671.BThack.api.Utils.Modules.AimBotUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CropBlock;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.registry.DynamicRegistryManager;
+import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 
@@ -26,6 +33,8 @@ public class AutoFarm extends Module {
 
     public final ModeSetting swap = new ModeSetting("Swap", this, Arrays.asList("Packet", "Client"));
 
+    public final BooleanSetting fortuneFilter = new BooleanSetting("Fortune Filter", this, true);
+
     public AutoFarm() {
         super("AutoFarm",
                 "lang.module.AutoFarm",
@@ -38,7 +47,9 @@ public class AutoFarm extends Module {
                 rotate,
                 rotateMode,
 
-                swap
+                swap,
+
+                fortuneFilter
         );
     }
 
@@ -73,38 +84,51 @@ public class AutoFarm extends Module {
         crops.forEach((crop, pos) -> {
             float[] rotations = AimBotUtils.rotations(pos.toCenterPos());
             GrimUtils.sendPreActionGrimPackets(rotations[0], rotations[1]);
+            int slot = -1;
+            int prevSlot = -1;
+            if (fortuneFilter.getValue()) slot = findBestItem();
+            if (slot != -1) {
+                prevSlot = mc.player.getInventory().selectedSlot;
+                InventoryUtils.swapAction(prevSlot, slot, false, swap.getValue());
+            }
             ((ModifyClientPlayerInteractionManager) mc.interactionManager).attackBlockNoEvent(pos, Direction.UP);
             mc.world.breakBlock(pos, false);
+            if (slot != -1)
+                InventoryUtils.swapAction(prevSlot, slot, true, swap.getValue());
 
             Item seedItem = crop.getPickStack(mc.world, pos, mc.world.getBlockState(pos)).getItem();
             BlockPos tempPos = pos.add(0, -1, 0);
-            int slot = InventoryUtils.findItem(seedItem);
+            slot = InventoryUtils.findItem(seedItem);
             if (mc.player.getInventory().getStack(mc.player.getInventory().selectedSlot).getItem() == seedItem) slot = mc.player.getInventory().selectedSlot;
             if (slot != -1) {
                 int oldSlot = mc.player.getInventory().selectedSlot;
                 if (oldSlot != slot)
-                    InventoryUtils.swapAction(oldSlot, slot, false, "Packet");
+                    InventoryUtils.swapAction(oldSlot, slot, false, swap.getValue());
                 rotations = AimBotUtils.rotations(tempPos.toCenterPos());
                 GrimUtils.sendPreActionGrimPackets(rotations[0], rotations[1]);
                 ItemUtils.useItemOnBlock(BuildManager.getHitResult(tempPos, false, Direction.UP));
                 GrimUtils.sendPostActionGrimPackets();
                 if (oldSlot != slot)
-                    InventoryUtils.swapAction(oldSlot, slot, true, "Packet");
+                    InventoryUtils.swapAction(oldSlot, slot, true, swap.getValue());
             }
         });
     }
 
-    public void rotatePre(float[] rots) {
-        if (rotate.getValue()) {
-            switch (rotateMode.getValue()) {
-                case "Grim" -> GrimUtils.sendPreActionGrimPackets(rots[0], rots[1]);
-                case "Packet" -> AimBotUtils.packetRotate(rots[0], rots[1]);
+    public int findBestItem() {
+        double bestScore = -1;
+        int bestSlot = -1;
+
+        for (int i = 0; i < 36; i++) {
+            ItemStack itemStack = mc.player.getInventory().getStack(i);
+
+            DynamicRegistryManager dynamicRegistryManager = mc.world.getRegistryManager();
+            Registry<Enchantment> enchs = dynamicRegistryManager.get(RegistryKeys.ENCHANTMENT);
+            double score = enchs.getEntry(Enchantments.FORTUNE).map(entry -> EnchantmentHelper.getLevel(entry, itemStack)).orElse(0);
+            if (score > bestScore) {
+                bestScore = score;
+                bestSlot = i;
             }
         }
-    }
-
-    public void rotatePost() {
-        if (rotate.getValue())
-            if (rotateMode.getValue().equals("Grim")) GrimUtils.sendPostActionGrimPackets();
+        return bestSlot;
     }
 }
