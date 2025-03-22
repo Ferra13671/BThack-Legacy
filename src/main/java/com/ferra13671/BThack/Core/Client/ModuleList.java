@@ -167,7 +167,6 @@ public final class ModuleList {
     public static XCarry xCarry;
 
     //RENDER
-    public static Africa africa;
     public static AntiHazard antiHazard;
     public static AttackTrace attackTrace;
     public static BetterChat betterChat;
@@ -365,7 +364,6 @@ public final class ModuleList {
         xCarry = register(new XCarry());
 
         //RENDER
-        africa = register(new Africa());
         antiHazard = register(new AntiHazard());
         attackTrace = register(new AttackTrace());
         betterChat = register(new BetterChat());
