@@ -10,17 +10,17 @@ import net.minecraft.util.Arm;
 
 public class HandTweaks extends Module {
 
-    public final NumberSetting lHandX = new NumberSetting("LHand X", this, 0, -2.0, 2.0, false);
-    public final NumberSetting lHandY = new NumberSetting("LHand Y", this, 0, -2.0, 2.0, false);
-    public final NumberSetting lHandZ = new NumberSetting("LHand Z", this, -1.2, -2.0, 2.0, false);
+    public final NumberSetting lHandX = new NumberSetting("LHand X", this, -0.63, -2.0, 2.0, false);
+    public final NumberSetting lHandY = new NumberSetting("LHand Y", this, -0.08, -2.0, 2.0, false);
+    public final NumberSetting lHandZ = new NumberSetting("LHand Z", this, -0.67, -2.0, 2.0, false);
     public final NumberSetting lHandYaw = new NumberSetting("LHand Yaw", this, 0, -100, 100, true);
     public final NumberSetting lHandPitch = new NumberSetting("LHand Pitch", this, 0, -100, 100, true);
     public final NumberSetting lHandRoll = new NumberSetting("LHand Roll", this, 0, -100, 100, true);
     public final BooleanSetting lArmAlso = new BooleanSetting("LArm Also", this, true);
 
-    public final NumberSetting rHandX = new NumberSetting("RHand X", this, 0, -2.0, 2.0, false);
-    public final NumberSetting rHandY = new NumberSetting("RHand Y", this, 0, -2.0, 2.0, false);
-    public final NumberSetting rHandZ = new NumberSetting("RHand Z", this, -1.2, -2.0, 2.0, false);
+    public final NumberSetting rHandX = new NumberSetting("RHand X", this, 0.63, -2.0, 2.0, false);
+    public final NumberSetting rHandY = new NumberSetting("RHand Y", this, -0.08, -2.0, 2.0, false);
+    public final NumberSetting rHandZ = new NumberSetting("RHand Z", this, -0.67, -2.0, 2.0, false);
     public final NumberSetting rHandYaw = new NumberSetting("RHand Yaw", this, 0, -100, 100, true);
     public final NumberSetting rHandPitch = new NumberSetting("RHand Pitch", this, 0, -100, 100, true);
     public final NumberSetting rHandRoll = new NumberSetting("RHand Roll", this, 0, -100, 100, true);
