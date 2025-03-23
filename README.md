@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://raw.githubusercontent.com/Ferra13671/BThack/1.21.1/src/main/resources/assets/bthack/bthacklogo.png" style="width: 69%" alt="logo">
+    <img src="https://raw.githubusercontent.com/Ferra13671/BThack/1.21.1/src/main/resources/assets/bthack/textures/bthacklogo.png" style="width: 69%" alt="logo">
 </p>
 
 ![All Downloads](https://img.shields.io/github/downloads/Ferra13671/BThack/total)
