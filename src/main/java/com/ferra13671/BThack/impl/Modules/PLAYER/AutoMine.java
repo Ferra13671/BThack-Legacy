@@ -79,6 +79,10 @@ public class AutoMine extends Module {
     @Override
     public void onEnable() {
         super.onEnable();
+        if (nullCheck()) {
+            toggle();
+            return;
+        }
         reMineAction();
     }
 
