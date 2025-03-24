@@ -161,7 +161,7 @@ public class Shaders extends Module {
         shaderInited = true;
 
         defaultShader = ShaderEffectManager.getInstance().manage(Identifier.of("bthack", "shaders/post/default_outline.json"));
-        gradientShader = ShaderEffectManager.getInstance().manage(Identifier.of("bthack", "shaders/post/gradientxy_outline.json"));
+        gradientShader = ShaderEffectManager.getInstance().manage(Identifier.of("bthack", "shaders/post/gradient1_outline.json"));
         rainbowXShader = ShaderEffectManager.getInstance().manage(Identifier.of("bthack", "shaders/post/rainbowx_outline.json"));
         rainbowYShader = ShaderEffectManager.getInstance().manage(Identifier.of("bthack", "shaders/post/rainbowy_outline.json"));
         rainbowXYShader = ShaderEffectManager.getInstance().manage(Identifier.of("bthack", "shaders/post/rainbowxy_outline.json"));
