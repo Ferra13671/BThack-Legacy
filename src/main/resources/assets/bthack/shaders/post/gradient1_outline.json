@@ -6,7 +6,7 @@
 	],
 	"passes": [
 		{
-			"name": "bthack:gradientxy_outline",
+			"name": "bthack:gradient1_outline",
 			"intarget": "bufIn",
 			"outtarget": "swap",
 			"uniforms": []

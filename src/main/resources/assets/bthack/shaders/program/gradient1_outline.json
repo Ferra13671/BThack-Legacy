@@ -5,7 +5,7 @@
         "dstrgb": "1-srcalpha"
     },
     "vertex": "sobel",
-    "fragment": "bthack:gradientxy_outline",
+    "fragment": "bthack:gradient1_outline",
     "attributes": [
         "Position"
     ],

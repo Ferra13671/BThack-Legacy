@@ -40,8 +40,8 @@ public class Shaders extends Module {
     public final ColorSetting color2 = new ColorSetting("Color2", this, new Color(42, 0, 67), () -> shaderMode.getValue().equals("Gradient")).withBlockedAlpha();
 
     //Rainbow
-    public final NumberSetting brightness = new NumberSetting("Brightness", this, 1, 0.1, 1, false, () -> !shaderMode.getValue().equals("Default") && !shaderMode.getValue().equals("Gradient"));
-    public final NumberSetting saturation = new NumberSetting("Saturation", this, 0.6, 0, 1, false, () -> !shaderMode.getValue().equals("Default") && !shaderMode.getValue().equals("Gradient"));
+    public final NumberSetting brightness = new NumberSetting("Brightness", this, 1, 0.1, 1, false, () -> shaderMode.getValue().equals("Rainbow_xy") || shaderMode.getValue().equals("Rainbow_x") || shaderMode.getValue().equals("Rainbow_y"));
+    public final NumberSetting saturation = new NumberSetting("Saturation", this, 0.6, 0, 1, false, () -> shaderMode.getValue().equals("Rainbow_xy") || shaderMode.getValue().equals("Rainbow_x") || shaderMode.getValue().equals("Rainbow_y"));
 
     //Gradient & Rainbow
     public final NumberSetting speed = new NumberSetting("Speed", this, 1, 0.5, 5, false, () -> !shaderMode.getValue().equals("Default"));
