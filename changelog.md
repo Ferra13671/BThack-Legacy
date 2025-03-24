@@ -1,3 +1,53 @@
+# 1.21.1-1.7.1 Changes
+- Fixed Shaders bug after reloading resources
+- Fixed a bug with AutoFirework toggling notification
+- Fixed bug of ElytraSwap work
+- Fixed problem with permanent block taking when Surround is running
+- Fixed a problem with FOV change slider rendering when BThackMainMenu is enabled
+- Nametags can now display additional player health
+- Fixed MenuShader renderer with guiScale not equal to 2
+- Fixed a bug in GuiMove that it only responded to default keybinds
+- Fixed SaveWalk working with Shift and LegitShift mode if the sneaking keybind is not set by default
+- Fixed a bug that caused the 'Camera Pitch' setting in the 'ModifyCamera' module to not be hidden if the 'Rewrite Rotation' setting was disabled
+- Fixed minor game freezes after closing ClickGui
+- Fixed a bug that sometimes caused the pause screen to open after closing ClickGui using the Esc button
+- Fixed $cordsCopy command
+- Now the description is rendered on top of ClickGui instead of behind it
+
+- Added 'Rainbow Speed' and 'Rainbow Scale' settings in ClickGui
+- Added description of AutoShear module
+- Added 'Chat' and 'ClickGui' settings in GuiMove
+- Added 'Rainbow' and 'Rainbow Speed' settings to SkyColor module
+- Added 'Rainbow Speed' setting to FogColor module
+- Added 'Rainbow' and 'Rainbow Speed' settings to CloudsColor module
+- Added 'Totems' setting to AutoDisconnect module
+- Added $clearChat command
+- Added $autoAuthList command
+- Added 'Stars' and 'Stars Seed' settings to WorldElements module
+- Added Gradient shader to Shaders module
+
+- Changed rotation settings in KillAura
+- Modified AutoFarm module
+- Removed Africa module
+
+
+# 1.21.1-1.7 Changes
+- Modified ArrayList HudComponent
+- Modified animation of module description in ClickGui
+- Changed rainbow rendering in ClickGui
+- Increased the size of modules in ClickGui
+- Modified rendering of Tooltips
+- Added Shaders module
+- Added KeepSprint module
+- Modified outline renderer in Nametags
+- Removed cringe modules(GameCrasher, EnemyRadar, CreeperRadar)
+- Fixed module description rendering position when ClickGui is resized
+- Fixed LiquidFiller module
+- Changed sounds of enabling/disabling modules
+- Changed startup sound
+- Changed system of saving/loading configs in ClickGui
+- Fixed default PacketMine on 2b2t.org.ru
+
 # 1.21.1-1.6.3 Changes
 ## Modules added:
 - Auto2FA
