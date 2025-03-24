@@ -139,8 +139,8 @@ public class ModuleButton extends Component implements Mc {
 	}
 
 	private void drawEnabledBackground(int alpha) {
+		float _alpha = (int) (alpha * (module.isEnabled() ? toggleAnimation.getEase() : 1 - toggleAnimation.getEase())) / 255f;
 		if (ModuleList.clickGui.rainbow.getValue()) {
-			float _alpha = (int) (alpha * (module.isEnabled() ? toggleAnimation.getEase() : 1 - toggleAnimation.getEase())) / 255f;
 			Shaders.INSTANCE.X_RAINBOW.setUniformValue("alpha", _alpha);
 			Shaders.INSTANCE.X_RAINBOW.setUniformValue("brightness", isHovered ? 0.9f : 0.7f);
 			ModuleList.clickGui.prepareRainbowShader();
@@ -151,7 +151,7 @@ public class ModuleButton extends Component implements Mc {
 							isHovered ?
 									new Color(ClickGui.getClickGuiColor(true)).hashCode() :
 									new Color(ClickGui.getClickGuiColor(true)).darker().hashCode(),
-							alpha
+							(int) (_alpha * 255)
 					)
 			);
 		}
