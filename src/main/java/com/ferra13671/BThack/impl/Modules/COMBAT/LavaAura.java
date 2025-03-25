@@ -10,7 +10,6 @@ import com.ferra13671.BThack.api.Social.Clans.ClanSettingsBuilder;
 import com.ferra13671.BThack.api.Utils.*;
 import com.ferra13671.BThack.api.Utils.Grim.GrimUtils;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
-import com.ferra13671.BThack.api.Utils.Modules.AimBotUtils;
 import com.ferra13671.BThack.api.Utils.Modules.KillAuraUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.block.Blocks;
@@ -128,7 +127,7 @@ public class LavaAura extends Module {
                 swapAction(oldSlot, slot, false);
                 Vec3d vec3d = new Vec3d(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
                 vec3d.y = pos.getY() - 0.4;
-                float[] rots = AimBotUtils.rotations(vec3d);
+                float[] rots = RotateUtils.rotations(vec3d);
                 GrimUtils.sendPreActionGrimPackets(rots[0], rots[1]);
                 ItemUtils.useItem(Hand.MAIN_HAND, false, rots[0], rots[1]);
                 GrimUtils.sendPostActionGrimPackets();
@@ -147,7 +146,7 @@ public class LavaAura extends Module {
         BlockPos pos = BlockPos.ofFloored(entity.getX(), entity.getY(), entity.getZ());
         Vec3d vec3d = new Vec3d(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
         vec3d.y = pos.getY() - 0.4;
-        float[] rots = AimBotUtils.rotations(vec3d);
+        float[] rots = RotateUtils.rotations(vec3d);
         GrimUtils.sendPreActionGrimPackets(rots[0], rots[1]);
         ItemUtils.useItem(Hand.MAIN_HAND, false, rots[0], rots[1]);
         GrimUtils.sendPostActionGrimPackets();

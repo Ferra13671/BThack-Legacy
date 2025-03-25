@@ -8,11 +8,7 @@ import com.ferra13671.BThack.api.Managers.managers.Thread.IThread;
 import com.ferra13671.BThack.api.Managers.managers.Thread.ThreadClosedException;
 import com.ferra13671.BThack.api.Managers.managers.Thread.ThreadManager;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.ChatUtils;
-import com.ferra13671.BThack.api.Utils.InventoryUtils;
-import com.ferra13671.BThack.api.Utils.ItemUtils;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
-import com.ferra13671.BThack.api.Utils.Modules.AimBotUtils;
+import com.ferra13671.BThack.api.Utils.*;
 import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.BlockItem;
@@ -68,7 +64,7 @@ public class NinjaBridge extends Module {
             //    stop();
             //}
 
-            int yaw = AimBotUtils.getRoundedToCornersEntityRotation(mc.player);
+            int yaw = RotateUtils.getRoundedToCornersEntityRotation(mc.player);
             float pitch = 77.7f;
 
             while (isEnabled()) {

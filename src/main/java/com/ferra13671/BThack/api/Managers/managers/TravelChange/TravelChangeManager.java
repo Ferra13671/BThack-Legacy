@@ -1,17 +1,16 @@
 package com.ferra13671.BThack.api.Managers.managers.TravelChange;
 
 import com.ferra13671.BThack.BThack;
-import com.ferra13671.BThack.api.Events.ClientTickEvent;
-import com.ferra13671.BThack.api.Events.PacketEvent;
-import com.ferra13671.BThack.api.Events.Player.PlayerTraverRotEvent;
-import com.ferra13671.BThack.api.Events.Player.VelocityUpdateEvent;
+import com.ferra13671.BThack.api.Events.Camera.RotateCameraEvent;
+import com.ferra13671.BThack.api.Events.Player.ChangePlayerLookEvent;
+import com.ferra13671.BThack.api.Events.Player.PlayerTravelEvent;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Utils.Initializable;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.Modules.AimBotUtils;
-import com.ferra13671.BThack.mixins.accessor.packet.IPlayerMoveC2SPacket;
+import com.ferra13671.BThack.api.Utils.RotateUtils;
+import com.ferra13671.BThack.impl.Modules.PLAYER.FreeCam;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
-import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
+import net.minecraft.util.math.Vec2f;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -30,8 +29,9 @@ public class TravelChangeManager implements Initializable, Mc {
      */
 
     private final List<TravelChanger> changers = new CopyOnWriteArrayList<>();
-    private float yaw;
-    private float pitch;
+    private final FreeCam.FreeCamData freeCamData = new FreeCam.FreeCamData();
+    private float lastYaw;
+    private float lastPitch;
 
     @Override
     public void init() {
@@ -50,6 +50,10 @@ public class TravelChangeManager implements Initializable, Mc {
         if (changers.contains(changer)) {
             changers.remove(changer);
             filterChangers();
+            if (!Module.nullCheck()) {
+                mc.player.yaw = RotateUtils.getCameraYaw();
+                mc.player.pitch = RotateUtils.getCameraPitch();
+            }
         }
     }
 
@@ -62,57 +66,30 @@ public class TravelChangeManager implements Initializable, Mc {
         Collections.reverse(changers);
     }
 
-    public float getYaw() {
-        return yaw;
+    public float getLastYaw() {
+        return lastYaw;
     }
 
-    public float getPitch() {
-        return pitch;
+    public float getLastPitch() {
+        return lastPitch;
     }
 
     @EventSubscriber
-    public void onTick(ClientTickEvent e) {
-        if (Module.nullCheck()) return;
+    public void onCameraRotate(RotateCameraEvent e) {
+        if (!changers.isEmpty())
+            e.setRotation(new Vec2f(freeCamData.yaw, freeCamData.pitch));
+    }
+
+    @EventSubscriber
+    public void onChangePlayer(ChangePlayerLookEvent e) {
         if (!changers.isEmpty()) {
+            e.cancel();
+            freeCamData.changeLookDirection(e.cursorDeltaX, e.cursorDeltaY);
             Float[] rots = changers.getFirst().rotateGetter.get();
-            yaw = rots[0];
-            pitch = rots[1];
-        }
-    }
-
-    @EventSubscriber
-    public void onTravelRot(PlayerTraverRotEvent e) {
-        if (!changers.isEmpty()) {
-            TravelChanger changer = changers.getFirst();
-            if (changer.needRewriteTravelRot && changer.needTravelChange.get()) {
-                e.yaw = yaw;
-                e.pitch = pitch;
-            }
-        }
-    }
-
-    @EventSubscriber
-    public void onPacketSend(PacketEvent.Send e) {
-        if (!changers.isEmpty()) {
-            if (e.getPacket() instanceof PlayerMoveC2SPacket packet && (packet instanceof PlayerMoveC2SPacket.Full || packet instanceof PlayerMoveC2SPacket.LookAndOnGround)) {
-                IPlayerMoveC2SPacket iPacket = (IPlayerMoveC2SPacket) packet;
-                if (iPacket._getYaw() == mc.player.getYaw() && iPacket._getPitch() == mc.player.getPitch()) {
-                    if (changers.getFirst().needTravelChange.get()) {
-                        iPacket.setYaw(yaw);
-                        iPacket.setPitch(pitch);
-                    }
-                }
-            }
-        }
-    }
-
-    @EventSubscriber
-    public void onUpdateVelocity(VelocityUpdateEvent e) {
-        if (!changers.isEmpty()) {
-            if (!mc.player.isFallFlying() && changers.getFirst().needTravelChange.get()) {
-                e.setVelocity(AimBotUtils.movementInputToVelocity(e.getMovementInput(), e.getSpeed(), yaw));
-                changers.getFirst().preUpdateVelocityRunnable.run();
-            }
+            lastYaw = rots[0];
+            lastPitch = rots[1];
+            mc.player.setYaw(lastYaw);
+            mc.player.setPitch(lastPitch);
         }
     }
 }

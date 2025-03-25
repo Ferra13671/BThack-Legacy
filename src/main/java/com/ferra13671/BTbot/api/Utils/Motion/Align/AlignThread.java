@@ -9,7 +9,7 @@ import com.ferra13671.BThack.api.Managers.managers.Thread.BThackThread;
 import com.ferra13671.BThack.api.Managers.managers.Thread.ThreadClosedException;
 import com.ferra13671.BThack.api.Managers.managers.TravelChange.TravelChanger;
 import com.ferra13671.BThack.api.Utils.Grim.GrimUtils;
-import com.ferra13671.BThack.api.Utils.Modules.AimBotUtils;
+import com.ferra13671.BThack.api.Utils.RotateUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.util.math.Vec3d;
 
@@ -72,7 +72,7 @@ public class AlignThread extends BThackThread implements Mc {
     }
 
     private void rotate() {
-        yaw = AimBotUtils.rotations(new Vec3d(needX, mc.player.getY(), needZ))[0];
+        yaw = RotateUtils.rotations(new Vec3d(needX, mc.player.getY(), needZ))[0];
     }
 
     private boolean check() {

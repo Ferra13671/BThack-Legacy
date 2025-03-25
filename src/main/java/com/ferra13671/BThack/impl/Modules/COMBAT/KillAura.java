@@ -12,7 +12,6 @@ import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Social.Clans.ClanSettingsBuilder;
 import com.ferra13671.BThack.api.Utils.*;
 import com.ferra13671.BThack.api.Utils.Grim.GrimUtils;
-import com.ferra13671.BThack.api.Utils.Modules.AimBotUtils;
 import com.ferra13671.BThack.api.Utils.Modules.KillAuraUtils;
 import com.ferra13671.BThack.mixins.accessor.IMinecraftClient;
 import com.ferra13671.BThack.mixins.accessor.packet.IPlayerInputC2SPacket;
@@ -111,7 +110,7 @@ public class KillAura extends Module {
     private float[] rotations;
     private final TravelChanger travelChanger = new TravelChanger(5000,
             () -> new Float[]{rotations[0], rotations[1]},
-            () -> {if (grim.getValue()) GrimUtils.sendPreActionGrimPackets(Managers.TRAVEL_CHANGE_MANAGER.getYaw(), Managers.TRAVEL_CHANGE_MANAGER.getPitch());
+            () -> {if (grim.getValue()) GrimUtils.sendPreActionGrimPackets(Managers.TRAVEL_CHANGE_MANAGER.getLastYaw(), Managers.TRAVEL_CHANGE_MANAGER.getLastPitch());
             },
             () -> rotations != null && !needPause() && mode.getValue().equals("Aura") && !instaRotate.getValue() && targetedEntity != null
     );
@@ -224,7 +223,7 @@ public class KillAura extends Module {
         if (targetedEntity != null) {
             if (!Managers.TRAVEL_CHANGE_MANAGER.containsChanger(travelChanger)) Managers.TRAVEL_CHANGE_MANAGER.addChanger(travelChanger);
             Vec3d rotateVector = targetedEntity.entity.getPos();
-            rotations = AimBotUtils.rotations(rotateVector);
+            rotations = RotateUtils.rotations(rotateVector);
             if (instaRotate.getValue() || targetedEntity.lockTicks >= (int) lockTicks.getValue()) {
                 RotateMode rotateMode = getRotateMode();
                 KillAuraUtils.preAttackRotate(rotateMode, rotations, (int) packets.getValue());

@@ -4,7 +4,6 @@ import baritone.api.BaritoneAPI;
 import baritone.api.pathing.goals.GoalXZ;
 import baritone.api.utils.BlockOptionalMetaLookup;
 import com.ferra13671.BThack.api.Interfaces.Mc;
-import com.ferra13671.BThack.api.Utils.Modules.AimBotUtils;
 import net.minecraft.block.Block;
 import net.minecraft.util.math.ChunkPos;
 
@@ -18,7 +17,7 @@ public final class BaritoneUtils implements Mc {
         ChunkPos chunkPos = mc.player.getChunkPos();
         if (!mc.world.isChunkLoaded(chunkPos.x, chunkPos.z)) return;
 
-        byte[] moveF = AimBotUtils.getCordFactorFromDirection(mc.player);
+        byte[] moveF = RotateUtils.getCordFactorFromDirection(mc.player);
         int x = (int) mc.player.getX() + moveF[0] * border;
         int z = (int) mc.player.getZ() + moveF[1] * border;
 

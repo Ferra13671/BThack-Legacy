@@ -7,13 +7,8 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetti
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.BlockUtils;
+import com.ferra13671.BThack.api.Utils.*;
 import com.ferra13671.BThack.api.Utils.Grim.GrimUtils;
-import com.ferra13671.BThack.api.Utils.InventoryUtils;
-import com.ferra13671.BThack.api.Utils.ItemUtils;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
-import com.ferra13671.BThack.api.Utils.Modules.AimBotUtils;
-import com.ferra13671.BThack.api.Utils.Ticker;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -137,9 +132,9 @@ public class AutoFarmland extends Module {
 
     public void rotatePreAction(BlockPos pos) {
         if (rotate.getValue()) {
-            float[] rots = AimBotUtils.rotations(pos);
+            float[] rots = RotateUtils.rotations(pos);
             if (rotateMode.getValue().equals("Packet"))
-                AimBotUtils.packetRotate(rots[0], rots[1]);
+                RotateUtils.packetRotate(rots[0], rots[1]);
             else
                 GrimUtils.sendPreActionGrimPackets(rots[0], rots[1]);
         }

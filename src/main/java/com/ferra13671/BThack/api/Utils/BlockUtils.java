@@ -1,7 +1,6 @@
 package com.ferra13671.BThack.api.Utils;
 
 import com.ferra13671.BThack.api.Interfaces.Mc;
-import com.ferra13671.BThack.api.Utils.Modules.AimBotUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ChestBlock;
@@ -102,7 +101,7 @@ public final class BlockUtils implements Mc {
     }
 
     public static boolean hasLineOfSight(Vec3d to) {
-        return raycast(AimBotUtils.getEyesPos(), to)
+        return raycast(RotateUtils.getEyesPos(), to)
                 .getType() == HitResult.Type.MISS;
     }
 

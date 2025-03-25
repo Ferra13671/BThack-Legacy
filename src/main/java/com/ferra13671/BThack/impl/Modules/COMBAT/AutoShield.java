@@ -2,9 +2,9 @@ package com.ferra13671.BThack.impl.Modules.COMBAT;
 
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.Modules.AimBotUtils;
 import com.ferra13671.BThack.api.Utils.ItemUtils;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
+import com.ferra13671.BThack.api.Utils.RotateUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
@@ -48,7 +48,7 @@ public class AutoShield extends Module {
         if (arrow != null) {
             if (mc.player.getOffHandStack() != null) {
                 if (mc.player.getOffHandStack().getItem() instanceof ShieldItem) {
-                    float yaw = AimBotUtils.rotations(arrow)[0];
+                    float yaw = RotateUtils.rotations(arrow)[0];
                     mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.LookAndOnGround(yaw, mc.player.pitch, mc.player.onGround));
 
                     //I don't know why but without it, minecraft doesn't want to recognize that the shield is activated

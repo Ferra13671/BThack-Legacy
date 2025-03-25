@@ -3,13 +3,13 @@ package com.ferra13671.BThack.mixins.entity;
 import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.api.Events.Entity.SetVelocityEvent;
+import com.ferra13671.BThack.api.Events.Player.SetPlayerPitchEvent;
+import com.ferra13671.BThack.api.Events.Player.SetPlayerYawEvent;
 import com.ferra13671.BThack.api.Events.Player.VelocityUpdateEvent;
 import com.ferra13671.BThack.api.Events.Player.ChangePlayerLookEvent;
 import com.ferra13671.BThack.api.Interfaces.Mc;
-import com.ferra13671.BThack.api.Utils.Modules.NoRotateMathUtils;
 import com.ferra13671.MegaEvents.Base.Event;
 import net.minecraft.entity.Entity;
-import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.*;
 import net.minecraft.world.World;
@@ -73,8 +73,11 @@ public abstract class MixinEntity implements Mc {
     @SuppressWarnings("ConstantConditions")
     public void modifySetYaw(float yaw, CallbackInfo ci) {
         if ((Object) this != mc.player) return;
-        if (ModuleList.noRotate.isEnabled()) {
-            this.yaw = NoRotateMathUtils.getNearestYawAxis(mc.player);
+        SetPlayerYawEvent event = new SetPlayerYawEvent(yaw);
+        BThack.EVENT_BUS.activate(event);
+        if (event.isCancelled()) return;
+        if (event.getYaw() != yaw) {
+            this.yaw = event.getYaw();
             ci.cancel();
         }
     }
@@ -83,11 +86,12 @@ public abstract class MixinEntity implements Mc {
     @SuppressWarnings("ConstantConditions")
     public void modifySetPitch(float pitch, CallbackInfo ci) {
         if ((Object) this != mc.player) return;
-        if (ModuleList.noRotate.isEnabled()) {
-            if (ModuleList.noRotate.blockPitch.getValue()) {
-                mc.player.pitch = NoRotateMathUtils.getNearestPitchAxis(mc.player);
-                ci.cancel();
-            }
+        SetPlayerPitchEvent event = new SetPlayerPitchEvent(pitch);
+        BThack.EVENT_BUS.activate(event);
+        if (event.isCancelled()) return;
+        if (event.getPitch() != pitch) {
+            this.yaw = event.getPitch();
+            ci.cancel();
         }
     }
 
@@ -97,19 +101,6 @@ public abstract class MixinEntity implements Mc {
         BThack.EVENT_BUS.activate(event);
         if (event.isCancelled())
             ci.cancel();
-    }
-
-    @Inject(method = "setFlag", at = @At("HEAD"), cancellable = true)
-    @SuppressWarnings("ConstantConditions")
-    public void modifySetFlag(int index, boolean value, CallbackInfo ci) {
-        if ((Object) this != mc.player) return;
-        if (ModuleList.elytraFlight.isEnabled()) {
-            if (index == 7 && !value) {
-                this.setFlag(7, true);
-                mc.player.networkHandler.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.START_FALL_FLYING));
-                ci.cancel();
-            }
-        }
     }
 
     @Inject(method = "pushAwayFrom", at = @At("HEAD"), cancellable = true)

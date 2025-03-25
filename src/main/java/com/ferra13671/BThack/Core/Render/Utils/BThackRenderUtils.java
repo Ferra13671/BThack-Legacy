@@ -1,9 +1,9 @@
 package com.ferra13671.BThack.Core.Render.Utils;
 
 import com.ferra13671.BThack.api.Interfaces.Mc;
-import com.ferra13671.BThack.api.Utils.Modules.AimBotUtils;
 import com.ferra13671.BThack.api.Utils.Modules.StrafeUtils;
 import com.ferra13671.BThack.api.Utils.RegionPos;
+import com.ferra13671.BThack.api.Utils.RotateUtils;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gl.ShaderProgram;
@@ -49,7 +49,7 @@ public final class BThackRenderUtils implements Mc {
             To avoid this problem, the coordinates will be converted to a closer distance so that the method returns the correct values.
          */
         if (Math.abs(deltaX) > 700 || Math.abs(deltaY) > 700 || Math.abs(deltaZ) > 700) {
-            float[] rots = AimBotUtils.rotations(pos);
+            float[] rots = RotateUtils.rotations(pos);
             double[] newPoses = StrafeUtils.getMoveFactors(rots[0]);
             rots[1] = (float) Math.toRadians(rots[1]);
             newPoses = new double[]{newPoses[0] * Math.cos(rots[1]), -Math.sin(rots[1]), newPoses[1] * Math.cos(rots[1])};

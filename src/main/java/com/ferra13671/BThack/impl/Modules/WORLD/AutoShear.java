@@ -7,8 +7,8 @@ import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.Grim.GrimUtils;
 import com.ferra13671.BThack.api.Utils.InventoryUtils;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
-import com.ferra13671.BThack.api.Utils.Modules.AimBotUtils;
 import com.ferra13671.BThack.api.Utils.Modules.KillAuraUtils;
+import com.ferra13671.BThack.api.Utils.RotateUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.SheepEntity;
@@ -70,11 +70,11 @@ public class AutoShear extends Module {
     }
 
     public void rotatePre(Entity entity) {
-        float[] rots = AimBotUtils.rotations(entity);
+        float[] rots = RotateUtils.rotations(entity);
         if (rotate.getValue()) {
             switch (rotateMode.getValue()) {
                 case "Grim" -> GrimUtils.sendPreActionGrimPackets(rots[0], rots[1]);
-                case "Packet" -> AimBotUtils.packetRotate(rots[0], rots[1]);
+                case "Packet" -> RotateUtils.packetRotate(rots[0], rots[1]);
             }
         }
     }

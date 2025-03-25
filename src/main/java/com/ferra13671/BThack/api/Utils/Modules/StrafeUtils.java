@@ -2,11 +2,12 @@ package com.ferra13671.BThack.api.Utils.Modules;
 
 
 import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.RotateUtils;
 
 public final class StrafeUtils implements Mc {
 
     public static float getPlayerYawOnInput() {
-        float yaw = mc.player.getYaw();
+        float yaw = RotateUtils.getCameraYaw();
         float strafe = 45;
         if (mc.player.input.movementForward < 0) {
             strafe = -45;
@@ -27,7 +28,7 @@ public final class StrafeUtils implements Mc {
     }
 
     public static float getPlayerYawOnKeybindings() {
-        float yaw = mc.player.getYaw();
+        float yaw = RotateUtils.getCameraYaw();
         float strafe = 45;
         if (mc.options.backKey.isPressed()) {
             strafe = -45;

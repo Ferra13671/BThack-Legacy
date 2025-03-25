@@ -14,7 +14,7 @@ import com.ferra13671.BThack.api.Managers.managers.Thread.ThreadClosedException;
 import com.ferra13671.BThack.api.Managers.managers.TravelChange.TravelChanger;
 import com.ferra13671.BThack.api.Utils.ChatUtils;
 import com.ferra13671.BThack.api.Utils.Grim.GrimUtils;
-import com.ferra13671.BThack.api.Utils.Modules.AimBotUtils;
+import com.ferra13671.BThack.api.Utils.RotateUtils;
 import com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.ActionBotConfig;
 import com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.ActionBotTask;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
@@ -63,7 +63,7 @@ public class MoveTask extends ActionBotTask {
     private boolean jumping = false;
     private final TravelChanger travelChanger = new TravelChanger(1000,
             () -> new Float[]{yaw, mc.player.getPitch()},
-            () -> GrimUtils.sendPreActionGrimPackets(Managers.TRAVEL_CHANGE_MANAGER.getYaw(), Managers.TRAVEL_CHANGE_MANAGER.getPitch()),
+            () -> GrimUtils.sendPreActionGrimPackets(Managers.TRAVEL_CHANGE_MANAGER.getLastYaw(), Managers.TRAVEL_CHANGE_MANAGER.getLastPitch()),
             () -> true
     );
 
@@ -101,7 +101,7 @@ public class MoveTask extends ActionBotTask {
 
             while (toFarX() || toFarZ()) {
                 thread.checkThreadStopped();
-                yaw = AimBotUtils.rotations(new Vec3d(tempX, mc.player.getY(), tempZ))[0];
+                yaw = RotateUtils.rotations(new Vec3d(tempX, mc.player.getY(), tempZ))[0];
                 moving = !DestroyManager.isDestroying || type != Type.Through_Obstacles;
 
                 if (scaffold) {
@@ -122,8 +122,8 @@ public class MoveTask extends ActionBotTask {
                         case Through_Obstacles:
                             moving = false;
                             if (!DestroyManager.isDestroying) {
-                                double x = mc.player.getX() + AimBotUtils.getCordFactorFromDirection((int) yaw)[0];
-                                double z = mc.player.getZ() + AimBotUtils.getCordFactorFromDirection((int) yaw)[1];
+                                double x = mc.player.getX() + RotateUtils.getCordFactorFromDirection((int) yaw)[0];
+                                double z = mc.player.getZ() + RotateUtils.getCordFactorFromDirection((int) yaw)[1];
                                 double y = mc.player.getY() + 0.5;
                                 BlockPos blockPos = BlockPos.ofFloored(x, y, z);
                                 if (BuildManager.ignoreBlocks.contains(mc.world.getBlockState(blockPos).getBlock()) || mc.world.isAir(blockPos) || mc.world.getBlockState(blockPos).getBlock() instanceof FlowerBlock) {

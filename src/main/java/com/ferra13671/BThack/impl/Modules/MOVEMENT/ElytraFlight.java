@@ -14,11 +14,9 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSettin
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.Setting;
 import com.ferra13671.BThack.api.Managers.managers.TravelChange.TravelChanger;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
+import com.ferra13671.BThack.api.Utils.*;
 import com.ferra13671.BThack.api.Utils.Modules.StrafeUtils;
 import com.ferra13671.BThack.api.Utils.Grim.GrimUtils;
-import com.ferra13671.BThack.api.Utils.PlayerUtils;
-import com.ferra13671.BThack.api.Utils.Ticker;
 import com.ferra13671.BThack.impl.Modules.PLAYER.AutoFirework;
 import com.ferra13671.BThack.mixins.accessor.entity.IEntity;
 import com.ferra13671.BThack.mixins.accessor.entity.ILivingEntity;
@@ -56,6 +54,7 @@ public class ElytraFlight extends Module {
     public final BooleanSetting strafing = new BooleanSetting("Strafing", this, true, () -> mode.getValue().equals("Bounce"));
     public final BooleanSetting groundTakeoffFix = new BooleanSetting("Ground Takeoff Fix", this, true, () -> mode.getValue().equals("Bounce"));
     public final NumberSetting takeoffTime = new NumberSetting("Takeoff Time", this, 100, 50, 500, true, () -> mode.getValue().equals("Bounce"));
+    public final BooleanSetting grimV2 = new BooleanSetting("Grim V2", this, true, () -> mode.getValue().equals("Bounce"));
 
     public final BooleanSetting autoWalk = new BooleanSetting("Auto Walk", this, true, () -> mode.getValue().equals("Bounce"));
     public final BooleanSetting autoJump = new BooleanSetting("Auto Jump", this, true, () -> mode.getValue().equals("Bounce"));
@@ -171,6 +170,7 @@ public class ElytraFlight extends Module {
                 strafing,
                 groundTakeoffFix,
                 takeoffTime,
+                grimV2,
                 autoWalk,
                 autoJump,
                 abusePitch,
@@ -271,8 +271,6 @@ public class ElytraFlight extends Module {
 
     //Bounce fields
     public static boolean fireworkUsed = false;
-    public float bouncePitch;
-    public float bounceYaw;
     public Ticker takeoffTicker;
 
     //Firework fields
@@ -318,11 +316,11 @@ public class ElytraFlight extends Module {
 
     public final TravelChanger travelChanger = new TravelChanger(1000000,
             () -> switch (ModuleList.elytraFlight.mode.getValue()) {
-                case "Bounce" -> new Float[]{bounceYaw, bouncePitch};
+                case "Bounce" -> new Float[]{bounceYawRotate(RotateUtils.getCameraYaw()), bouncePitchRotate(RotateUtils.getCameraPitch())};
                 case "Firework" -> getFireworkModeRots();
-                case "Pitch40" -> new Float[]{mc.player.getYaw(), (ModuleList.elytraFlight.travelMode.getValue().equals("Rewrite") ? pitch40pitch : mc.player.getPitch())};
-                case "Auto Glide" -> new Float[]{mc.player.getYaw(), getAutoGlidePitch()};
-                default -> new Float[]{mc.player.getYaw(), mc.player.getPitch()};
+                case "Pitch40" -> new Float[]{RotateUtils.getCameraYaw(), (ModuleList.elytraFlight.travelMode.getValue().equals("Rewrite") ? pitch40pitch : RotateUtils.getCameraPitch())};
+                case "Auto Glide" -> new Float[]{RotateUtils.getCameraYaw(), getAutoGlidePitch()};
+                default -> new Float[]{RotateUtils.getCameraYaw(), RotateUtils.getCameraPitch()};
             },
             () -> {},
             () -> true
@@ -354,8 +352,6 @@ public class ElytraFlight extends Module {
 
         super.onEnable();
         fireworkUsed = false;
-        bouncePitch = mc.player.getPitch();
-        bounceYaw = mc.player.getYaw();
         takeoffTicker = new Ticker();
         if (groundTakeoffFix.getValue()) {
             if (mc.player.isOnGround()) {
@@ -412,17 +408,6 @@ public class ElytraFlight extends Module {
         super.onDisable();
 
         if (nullCheck()) return;
-
-        // Bounce Disable
-        mc.player.input.jumping = false;
-        mc.player.input.sneaking = false;
-
-        mc.player.setSneaking(false);
-        mc.player.networkHandler.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.RELEASE_SHIFT_KEY));
-
-        mc.options.sprintKey.setPressed(false);
-        mc.player.setSprinting(false);
-        mc.player.networkHandler.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.STOP_SPRINTING));
 
         fireworkUsed = false;
         /////////
@@ -534,8 +519,13 @@ public class ElytraFlight extends Module {
                 }
             }
             case "Bounce" -> {
-                if (mc.player.isOnGround()) {
-                    if (!mc.player.lastOnGround) sendBounceGrimPacket();
+                switch (alwaysPress.getValue()) {
+                    case "Sprint", "Multi" -> {
+                        if (!mc.player.isSprinting() && mc.player.isOnGround()) {
+                            mc.player.networkHandler.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.START_SPRINTING));
+                            mc.player.setSprinting(true);
+                        }
+                    }
                 }
             }
         }
@@ -576,25 +566,6 @@ public class ElytraFlight extends Module {
     @SuppressWarnings("ConstantConditions")
     public void bounceMode() {
         ((ILivingEntity) mc.player).setJumpingCooldown(0);
-        IEntity player = (IEntity) mc.player;
-
-        bounceYaw = bounceYawRotate(mc.player.getYaw());
-        bouncePitch = bouncePitchRotate(mc.player.getPitch());
-
-        switch (alwaysPress.getValue()) {
-            case "Sprint", "Multi" -> {
-                if (!mc.player.isSprinting()) {
-                    mc.player.networkHandler.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.START_SPRINTING));
-                    mc.player.setSprinting(true);
-                }
-            }
-        }
-
-        if (!player.invokeGetFlag(7)) {
-            player.invokeSetFlag(7, true);
-            mc.player.networkHandler.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.START_FALL_FLYING));
-            sendBounceGrimPacket();
-        }
 
         if (fireworkStart.getValue()) {
             if (!fireworkUsed) {
@@ -603,6 +574,12 @@ public class ElytraFlight extends Module {
                 }
                 fireworkUsed = true;
             }
+        }
+
+        if (!mc.player.isFallFlying()) {
+            mc.player.startFallFlying();
+            mc.player.networkHandler.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.START_FALL_FLYING));
+            sendBounceGrimPacket();
         }
 
         //Ground takeoff fix
@@ -654,7 +631,8 @@ public class ElytraFlight extends Module {
     }
 
     public void sendBounceGrimPacket() {
-        GrimUtils.sendPreActionGrimPackets(bounceYaw, bouncePitch);
+        if (grimV2.getValue())
+            GrimUtils.sendPreActionGrimPackets(Managers.TRAVEL_CHANGE_MANAGER.getLastYaw(), Managers.TRAVEL_CHANGE_MANAGER.getLastPitch());
     }
     //-----------------------------//
 
@@ -772,18 +750,18 @@ public class ElytraFlight extends Module {
             pitchingDown = true;
         }
 
-        if (!pitchingDown && mc.player.getPitch() > -40) {
+        if (!pitchingDown && pitch40pitch > -40) {
             pitch40pitch -= (float) pitchSpeed.getValue();
 
             if (pitch40pitch < -40) pitch40pitch = -40;
-        } else if (pitchingDown && mc.player.getPitch() < 40) {
+        } else if (pitchingDown && pitch40pitch < 40) {
             pitch40pitch += (float) pitchSpeed.getValue();
 
             if (pitch40pitch > 40) pitch40pitch = 40;
         }
 
         if (travelMode.getValue().equals("Rewrite"))
-            GrimUtils.sendPreActionGrimPackets(mc.player.getYaw(), pitch40pitch);
+            GrimUtils.sendPreActionGrimPackets(RotateUtils.getCameraYaw(), pitch40pitch);
         else
             mc.player.setPitch(pitch40pitch);
     }

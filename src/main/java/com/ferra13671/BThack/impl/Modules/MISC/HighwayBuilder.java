@@ -18,7 +18,7 @@ import com.ferra13671.BThack.api.Managers.managers.Thread.ThreadManager;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.ChatUtils;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
-import com.ferra13671.BThack.api.Utils.Modules.AimBotUtils;
+import com.ferra13671.BThack.api.Utils.RotateUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
 import net.minecraft.block.Blocks;
@@ -97,7 +97,7 @@ public class HighwayBuilder extends Module {
     public void onEnable() {
         super.onEnable();
         ThreadManager.startNewThread("HighwayThread", thread -> {
-            highwayYaw = AimBotUtils.getAbsDirection(mc.player);
+            highwayYaw = RotateUtils.getAbsDirection(mc.player);
 
             alignAction(thread);
 
@@ -108,7 +108,7 @@ public class HighwayBuilder extends Module {
                     thread.sleepThread((int) actDelay.getValue());
                 }
 
-                byte[] moveFactor = AimBotUtils.getCordFactorFromDirection(highwayYaw);
+                byte[] moveFactor = RotateUtils.getCordFactorFromDirection(highwayYaw);
 
                 waterAndLavaCheckAction(thread);
 

@@ -5,10 +5,7 @@ import com.ferra13671.BThack.api.IMixin.ModifyClientPlayerInteractionManager;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.BlockUtils;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
-import com.ferra13671.BThack.api.Utils.MathUtils;
-import com.ferra13671.BThack.api.Utils.Modules.AimBotUtils;
+import com.ferra13671.BThack.api.Utils.*;
 import com.ferra13671.BThack.api.Utils.Grim.GrimUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.block.*;
@@ -51,7 +48,7 @@ public class Lawnmower extends Module {
                 .orElse(null);
 
         if (positions != null) {
-            float[] rotations = AimBotUtils.rotations(positions.toCenterPos());
+            float[] rotations = RotateUtils.rotations(positions.toCenterPos());
 
             GrimUtils.sendPreActionGrimPackets(rotations[0], rotations[1]);
             ((ModifyClientPlayerInteractionManager) mc.interactionManager).attackBlockNoEvent(positions, Direction.UP);

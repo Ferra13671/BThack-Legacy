@@ -11,7 +11,6 @@ import com.ferra13671.BThack.api.SoundSystem.Sounds;
 import com.ferra13671.BThack.api.Utils.*;
 import com.ferra13671.BThack.api.Utils.Grim.GrimUtils;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
-import com.ferra13671.BThack.api.Utils.Modules.AimBotUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.item.Items;
 import net.minecraft.util.math.BlockPos;
@@ -107,7 +106,7 @@ public class PearlPhase extends Module {
                         }
                     }
                     if (minPos != null) {
-                        pearlPhaseAction(AimBotUtils.rotations(minPos)[0]);
+                        pearlPhaseAction(RotateUtils.rotations(minPos)[0]);
                         if (autoToggle.getValue())
                             setToggled(false);
                         ticker.reset();

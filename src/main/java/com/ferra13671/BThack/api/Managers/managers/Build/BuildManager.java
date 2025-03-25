@@ -5,11 +5,7 @@ import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.Initializable;
-import com.ferra13671.BThack.api.Utils.InventoryUtils;
-import com.ferra13671.BThack.api.Utils.MathUtils;
-import com.ferra13671.BThack.api.Utils.Modules.AimBotUtils;
-import com.ferra13671.BThack.api.Utils.RotateMode;
+import com.ferra13671.BThack.api.Utils.*;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import com.google.common.collect.Sets;
 import net.minecraft.block.*;
@@ -92,7 +88,7 @@ public class BuildManager implements Initializable, Mc {
             BlockHitResult bhr;
             bhr = new BlockHitResult(new Vec3d((double) block.pos().getX() + Math.random(), block.pos().getY() + 0.5f, (double) block.pos().getZ() + Math.random()), block.direction(), block.pos(), false);
 
-            float[] rotations = AimBotUtils.rotations(bhr.getPos());
+            float[] rotations = RotateUtils.rotations(bhr.getPos());
             boolean sneak = BuildManager.needSneak(mc.world.getBlockState(bhr.getBlockPos()).getBlock()) && !mc.player.isSneaking();
 
             if (sneak)

@@ -19,7 +19,6 @@ import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Social.SocialManagers;
 import com.ferra13671.BThack.api.Utils.*;
 import com.ferra13671.BThack.api.Utils.Grim.GrimUtils;
-import com.ferra13671.BThack.api.Utils.Modules.AimBotUtils;
 import com.ferra13671.BThack.impl.Modules.PLAYER.AutoTool;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.entity.player.PlayerEntity;
@@ -215,7 +214,7 @@ public class PacketMine extends Module {
         if (e.blockHitResult.getBlockPos() == currentBreakingBlock.blockPos) {
             e.setCancelled(true);
             if (stopPackets.getValue())
-                Managers.NETWORK_MANAGER.sendPacket(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.STOP_DESTROY_BLOCK, currentBreakingBlock.blockPos, AimBotUtils.getInvertedFacingEntity(mc.player), 0));
+                Managers.NETWORK_MANAGER.sendPacket(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.STOP_DESTROY_BLOCK, currentBreakingBlock.blockPos, RotateUtils.getInvertedFacingEntity(mc.player), 0));
 
             setCurrentBreakingBlock(null);
         }
@@ -231,7 +230,7 @@ public class PacketMine extends Module {
             }
             if (pos == currentBreakingBlock.blockPos) {
                 if (stopPackets.getValue())
-                    Managers.NETWORK_MANAGER.sendPacket(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.STOP_DESTROY_BLOCK, currentBreakingBlock.blockPos, AimBotUtils.getInvertedFacingEntity(mc.player), 0));
+                    Managers.NETWORK_MANAGER.sendPacket(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.STOP_DESTROY_BLOCK, currentBreakingBlock.blockPos, RotateUtils.getInvertedFacingEntity(mc.player), 0));
                 setCurrentBreakingBlock(null);
             }
         }
@@ -449,7 +448,7 @@ public class PacketMine extends Module {
         }
 
         if (packetRotate.getValue()) {
-            float[] rot = AimBotUtils.rotations(breakingBlock.blockPos);
+            float[] rot = RotateUtils.rotations(breakingBlock.blockPos);
 
             GrimUtils.sendPreActionGrimPackets(rot[0], rot[1]);
         }
@@ -520,11 +519,11 @@ public class PacketMine extends Module {
     }
 
     private void startDestroyBlock(BlockPos blockPos) {
-        Managers.NETWORK_MANAGER.sendSequencePacket(id -> new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.START_DESTROY_BLOCK, blockPos, AimBotUtils.getInvertedFacingEntity(mc.player), id));
+        Managers.NETWORK_MANAGER.sendSequencePacket(id -> new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.START_DESTROY_BLOCK, blockPos, RotateUtils.getInvertedFacingEntity(mc.player), id));
     }
 
     private void stopDestroyBlock(BlockPos blockPos) {
-        Managers.NETWORK_MANAGER.sendSequencePacket(id -> new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.STOP_DESTROY_BLOCK, blockPos, AimBotUtils.getInvertedFacingEntity(mc.player), id));
+        Managers.NETWORK_MANAGER.sendSequencePacket(id -> new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.STOP_DESTROY_BLOCK, blockPos, RotateUtils.getInvertedFacingEntity(mc.player), id));
     }
 
     private final List<Vec3i> autoCityVectors = Arrays.asList(

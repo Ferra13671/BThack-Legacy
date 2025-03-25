@@ -99,7 +99,7 @@ public abstract class MixinClientPlayerEntity extends AbstractClientPlayerEntity
     @Inject(method = "tickMovement", at = @At("HEAD"))
     @SuppressWarnings("ConstantConditions")
     public void modifyTickMovement(CallbackInfo ci) {
-        if (ModuleList.elytraFlight.isEnabled() && ModuleList.elytraFlight.mode.equals("1.12.2 Control")) {
+        if (ModuleList.elytraFlight.isEnabled() && ModuleList.elytraFlight.mode.getValue().equals("1.12.2 Control")) {
             if (ModuleList.elytraFlight.travelPacket != null) {
                 if (ModuleList.elytraFlight.travelPacket.rotate()) {
                     client.getNetworkHandler().sendPacket(new PlayerMoveC2SPacket.LookAndOnGround(ModuleList.elytraFlight.travelPacket.rot().x, ModuleList.elytraFlight.travelPacket.rot().y, client.player.isOnGround()));

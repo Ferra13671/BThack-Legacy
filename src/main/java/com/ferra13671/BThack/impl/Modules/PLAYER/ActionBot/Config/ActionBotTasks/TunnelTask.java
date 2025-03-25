@@ -16,7 +16,7 @@ import com.ferra13671.BThack.api.Managers.managers.TravelChange.TravelChanger;
 import com.ferra13671.BThack.api.Utils.ChatUtils;
 import com.ferra13671.BThack.api.Utils.Grim.GrimUtils;
 import com.ferra13671.BThack.api.Utils.InventoryUtils;
-import com.ferra13671.BThack.api.Utils.Modules.AimBotUtils;
+import com.ferra13671.BThack.api.Utils.RotateUtils;
 import com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.ActionBotConfig;
 import com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.ActionBotTask;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
@@ -105,7 +105,7 @@ public class TunnelTask extends ActionBotTask {
             while (toFarX() || toFarZ()) {
                 thread.checkThreadStopped();
 
-                yaw = AimBotUtils.rotations(new Vec3d(tempX, mc.player.getY(), tempZ))[0];
+                yaw = RotateUtils.rotations(new Vec3d(tempX, mc.player.getY(), tempZ))[0];
                 moving = !DestroyManager.isDestroying;
 
                 if (!ModuleList.scaffold.isEnabled()) {
@@ -126,11 +126,11 @@ public class TunnelTask extends ActionBotTask {
                 }
 
                 if (!mc.player.horizontalCollision) {
-                    x = mc.player.getX() + (AimBotUtils.getCordFactorFromDirection((int) yaw)[0]);
-                    z = mc.player.getZ() + (AimBotUtils.getCordFactorFromDirection((int) yaw)[1]);
+                    x = mc.player.getX() + (RotateUtils.getCordFactorFromDirection((int) yaw)[0]);
+                    z = mc.player.getZ() + (RotateUtils.getCordFactorFromDirection((int) yaw)[1]);
                 } else {
-                    x = mc.player.getX() + (AimBotUtils.getCordFactorFromDirection((int) yaw)[0]);
-                    z = mc.player.getZ() + (AimBotUtils.getCordFactorFromDirection((int) yaw)[1]);
+                    x = mc.player.getX() + (RotateUtils.getCordFactorFromDirection((int) yaw)[0]);
+                    z = mc.player.getZ() + (RotateUtils.getCordFactorFromDirection((int) yaw)[1]);
                 }
 
                 blockPos1 = BlockPos.ofFloored(x, y, z);
@@ -192,9 +192,9 @@ public class TunnelTask extends ActionBotTask {
     }
 
     private boolean checkLava() {
-        double x = mc.player.getX() + (AimBotUtils.getCordFactorFromDirection((int) yaw)[0] * 2);
+        double x = mc.player.getX() + (RotateUtils.getCordFactorFromDirection((int) yaw)[0] * 2);
         double y = mc.player.getY() + 0.5;
-        double z = mc.player.getZ() + (AimBotUtils.getCordFactorFromDirection((int) yaw)[1] * 2);
+        double z = mc.player.getZ() + (RotateUtils.getCordFactorFromDirection((int) yaw)[1] * 2);
 
         ArrayList<BlockPos> blockPosData = new ArrayList<>(Arrays.asList(
                 BlockPos.ofFloored(x, y, z),

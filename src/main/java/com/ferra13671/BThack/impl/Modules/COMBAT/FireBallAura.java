@@ -5,12 +5,9 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetti
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.InventoryUtils;
-import com.ferra13671.BThack.api.Utils.Modules.AimBotUtils;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
+import com.ferra13671.BThack.api.Utils.*;
 import com.ferra13671.BThack.api.Utils.Modules.KillAuraUtils;
 import com.ferra13671.BThack.api.Utils.Grim.GrimUtils;
-import com.ferra13671.BThack.api.Utils.RotateMode;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import com.google.common.collect.Sets;
 import net.minecraft.entity.Entity;
@@ -86,7 +83,7 @@ public class FireBallAura extends Module {
 
     public void preRotate(Entity entity) {
         if (rotate.getValue()) {
-            float[] rots = AimBotUtils.rotations(entity);
+            float[] rots = RotateUtils.rotations(entity);
             switch (rotateMode.getValue()) {
                 case "Packet" ->
                         mc.player.networkHandler.sendPacket(

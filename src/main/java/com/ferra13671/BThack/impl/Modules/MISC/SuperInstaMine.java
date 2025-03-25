@@ -7,10 +7,7 @@ import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.BlockUtils;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
-import com.ferra13671.BThack.api.Utils.MathUtils;
-import com.ferra13671.BThack.api.Utils.Modules.AimBotUtils;
+import com.ferra13671.BThack.api.Utils.*;
 import com.ferra13671.BThack.impl.Modules.PLAYER.AutoTool;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.block.BlockState;
@@ -135,9 +132,9 @@ public class SuperInstaMine extends Module {
 
     public void sendPacket(PlayerActionC2SPacket.Action action, BlockPos pos) {
         if (sequence.getValue())
-            Managers.NETWORK_MANAGER.sendSequencePacket(id -> new PlayerActionC2SPacket(action, pos, AimBotUtils.getInvertedFacingEntity(mc.player), id));
+            Managers.NETWORK_MANAGER.sendSequencePacket(id -> new PlayerActionC2SPacket(action, pos, RotateUtils.getInvertedFacingEntity(mc.player), id));
         else
-            Managers.NETWORK_MANAGER.sendPacket(new PlayerActionC2SPacket(action, pos, AimBotUtils.getInvertedFacingEntity(mc.player)));
+            Managers.NETWORK_MANAGER.sendPacket(new PlayerActionC2SPacket(action, pos, RotateUtils.getInvertedFacingEntity(mc.player)));
     }
 
     public void addBlocks(BlockPos pos, int length, int extraWidth, int extraHeight) {

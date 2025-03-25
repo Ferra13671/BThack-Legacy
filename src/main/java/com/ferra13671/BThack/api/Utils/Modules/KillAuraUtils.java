@@ -10,12 +10,12 @@ import com.ferra13671.BThack.api.Social.Clans.ClanManager;
 import com.ferra13671.BThack.api.Social.SocialManagers;
 import com.ferra13671.BThack.api.Utils.PlayerUtils;
 import com.ferra13671.BThack.api.Utils.RotateMode;
+import com.ferra13671.BThack.api.Utils.RotateUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.mob.*;
 import net.minecraft.entity.passive.GolemEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.Vec3d;
 
@@ -38,7 +38,7 @@ public final class KillAuraUtils implements Mc {
         rotateVector.x += NumberGenerator.generateDouble(-(xLength / 3), xLength / 3);
         rotateVector.y += NumberGenerator.generateDouble(-(yLength / 3), yLength / 3);
         rotateVector.z += NumberGenerator.generateDouble(-(zLength / 3), zLength / 3);
-        float[] rotations = AimBotUtils.rotations(rotateVector);
+        float[] rotations = RotateUtils.rotations(rotateVector);
         preAttackRotate(rotateMode, rotations, packets);
         attackNoRotate(target);
         rotateMode.postRotate();

@@ -1,9 +1,13 @@
 package com.ferra13671.BThack.impl.Modules.MOVEMENT;
 
 
+import com.ferra13671.BThack.api.Events.Player.SetPlayerPitchEvent;
+import com.ferra13671.BThack.api.Events.Player.SetPlayerYawEvent;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
+import com.ferra13671.BThack.api.Utils.Modules.NoRotateMathUtils;
+import com.ferra13671.MegaEvents.Base.EventSubscriber;
 
 public class NoRotate extends Module {
 
@@ -22,15 +26,13 @@ public class NoRotate extends Module {
         );
     }
 
-    /*
     @EventSubscriber
-    public void onUpdate(TickEvent.ClientTickEvent e) {
-        if (nullCheck()) return;
-
-        mc.player.yaw = NoRotateMathUtil.RotateYawMath(mc.player);
-        if (getCheckbox(this.name, "BlockPitchRotate"))
-            mc.player.pitch = NoRotateMathUtil.RotatePitchMath(mc.player);
+    public void onSetYaw(SetPlayerYawEvent e) {
+        e.setYaw(NoRotateMathUtils.getNearestYawAxis(mc.player));
     }
 
-     */
+    @EventSubscriber
+    public void onSetPitch(SetPlayerPitchEvent e) {
+        e.setPitch(NoRotateMathUtils.getNearestPitchAxis(mc.player));
+    }
 }

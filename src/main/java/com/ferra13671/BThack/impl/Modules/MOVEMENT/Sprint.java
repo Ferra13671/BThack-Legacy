@@ -11,6 +11,7 @@ import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.Grim.GrimUtils;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.Utils.Modules.StrafeUtils;
+import com.ferra13671.BThack.api.Utils.RotateUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.client.input.KeyboardInput;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -38,8 +39,8 @@ public class Sprint extends Module {
     }
     private float yaw;
     private final TravelChanger travelChanger = new TravelChanger(500,
-            () -> new Float[]{yaw, mc.player.getPitch()},
-            () -> GrimUtils.sendPreActionGrimPackets(Managers.TRAVEL_CHANGE_MANAGER.getYaw(), Managers.TRAVEL_CHANGE_MANAGER.getPitch()),
+            () -> new Float[]{yaw, RotateUtils.getCameraPitch()},
+            () -> GrimUtils.sendPreActionGrimPackets(Managers.TRAVEL_CHANGE_MANAGER.getLastYaw(), Managers.TRAVEL_CHANGE_MANAGER.getLastPitch()),
             () -> true
     );
 
@@ -55,7 +56,7 @@ public class Sprint extends Module {
 
         arrayListInfo = mode.getValue() + (strafe.getValue() ? ": strafe" : "");
 
-        if (!nullCheck()) yaw = mc.player.getYaw();
+        if (!nullCheck()) yaw = RotateUtils.getCameraYaw();
     }
 
     @Override

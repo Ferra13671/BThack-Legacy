@@ -7,6 +7,7 @@ import com.ferra13671.BThack.api.Events.Player.PlayerJumpEvent;
 import com.ferra13671.BThack.api.Events.Player.PlayerTravelEvent;
 import com.ferra13671.BThack.api.Events.Player.PlayerTraverRotEvent;
 import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.MegaEvents.Base.Event;
 import net.minecraft.entity.Entity;
@@ -15,6 +16,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MovementType;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -47,6 +49,8 @@ public abstract class MixinLivingEntity extends Entity implements Mc {
 
     @Shadow public abstract double getAttributeValue(RegistryEntry<EntityAttribute> attribute);
 
+    @Shadow public abstract boolean isFallFlying();
+
     @Inject(method = "isBaby", at = @At("HEAD"), cancellable = true)
     public void modifyIsBaby(CallbackInfoReturnable<Boolean> cir) {
         if (!Module.nullCheck())
@@ -78,7 +82,7 @@ public abstract class MixinLivingEntity extends Entity implements Mc {
     }
 
     @Inject(method = "travel", at = @At("HEAD"), cancellable = true)
-    public void modifyTick(CallbackInfo ci) {
+    public void modifyTravelPre(CallbackInfo ci) {
         if ((Object) this != mc.player) return;
         Event event = new PlayerTravelEvent();
         BThack.EVENT_BUS.activate(event);

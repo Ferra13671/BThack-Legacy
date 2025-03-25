@@ -6,7 +6,7 @@ import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Interfaces.Pc;
 import com.ferra13671.BThack.api.Utils.Initializable;
-import com.ferra13671.BThack.api.Utils.Modules.AimBotUtils;
+import com.ferra13671.BThack.api.Utils.RotateUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
@@ -33,16 +33,16 @@ public class DestroyManager implements Initializable, Mc, Pc {
         }
 
 
-        float[] rots = AimBotUtils.rotations(currentBlockPos);
+        float[] rots = RotateUtils.rotations(currentBlockPos);
 
         try {
             if (!pc.isBreakingBlock() && !isInteractDestroying) {
-                if (pc.startBlockBreaking(currentBlockPos, AimBotUtils.getInvertedFacing(rots[0], rots[1], true))) {
+                if (pc.startBlockBreaking(currentBlockPos, RotateUtils.getInvertedFacing(rots[0], rots[1], true))) {
                     mc.player.swingHand(Hand.MAIN_HAND);
                 }
                 isInteractDestroying = true;
             } else {
-                if (pc.updateBlockBreaking(currentBlockPos, AimBotUtils.getInvertedFacing(rots[0], rots[1], true))) {
+                if (pc.updateBlockBreaking(currentBlockPos, RotateUtils.getInvertedFacing(rots[0], rots[1], true))) {
                     mc.player.swingHand(Hand.MAIN_HAND);
                 }
             }

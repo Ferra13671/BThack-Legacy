@@ -8,7 +8,6 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.*;
 import com.ferra13671.BThack.api.Utils.Grim.GrimUtils;
-import com.ferra13671.BThack.api.Utils.Modules.AimBotUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CropBlock;
@@ -105,7 +104,7 @@ public class AutoFarm extends Module {
     public void breakAction() {
         prevBreakPoses = new HashMap<>();
         breakPoses.forEach((pos, crop) -> {
-            float[] rotations = AimBotUtils.rotations(pos.toCenterPos());
+            float[] rotations = RotateUtils.rotations(pos.toCenterPos());
             GrimUtils.sendPreActionGrimPackets(rotations[0], rotations[1]);
             int slot = -1;
             int prevSlot = -1;
@@ -150,7 +149,7 @@ public class AutoFarm extends Module {
                 int oldSlot = mc.player.getInventory().selectedSlot;
                 if (oldSlot != slot)
                     InventoryUtils.swapAction(oldSlot, slot, false, swap.getValue());
-                float[] rotations = AimBotUtils.rotations(pos.toCenterPos());
+                float[] rotations = RotateUtils.rotations(pos.toCenterPos());
                 GrimUtils.sendPreActionGrimPackets(rotations[0], rotations[1]);
                 ItemUtils.useItemOnBlock(BuildManager.getHitResult(pos, false, Direction.UP));
                 GrimUtils.sendPostActionGrimPackets();

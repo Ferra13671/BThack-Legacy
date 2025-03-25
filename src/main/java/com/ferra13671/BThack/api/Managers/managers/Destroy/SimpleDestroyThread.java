@@ -4,7 +4,7 @@ import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.api.Managers.managers.Build.BuildManager;
 import com.ferra13671.BThack.api.Managers.managers.Thread.ThreadClosedException;
 import com.ferra13671.BThack.api.Utils.BlockUtils;
-import com.ferra13671.BThack.api.Utils.Modules.AimBotUtils;
+import com.ferra13671.BThack.api.Utils.RotateUtils;
 import com.ferra13671.BThack.impl.Modules.PLAYER.AutoTool;
 import net.minecraft.util.math.BlockPos;
 
@@ -25,7 +25,7 @@ public class SimpleDestroyThread extends AbstractDestroyThread {
         DestroyManager.isDestroying = true;
 
         if (ModuleList.packetMine.isEnabled()) {
-            pc.startBlockBreaking(pos, AimBotUtils.getInvertedFacingEntity(mc.player));
+            pc.startBlockBreaking(pos, RotateUtils.getInvertedFacingEntity(mc.player));
             Thread.yield();
         }
 

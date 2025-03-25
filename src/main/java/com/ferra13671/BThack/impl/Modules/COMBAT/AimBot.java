@@ -8,9 +8,9 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Social.Clans.ClanSettingsBuilder;
-import com.ferra13671.BThack.api.Utils.Modules.AimBotUtils;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.Utils.Modules.KillAuraUtils;
+import com.ferra13671.BThack.api.Utils.RotateUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
@@ -72,11 +72,11 @@ public class AimBot extends Module {
         Entity entity = KillAuraUtils.filterEntity(ModuleList.aimBot.range.getValue());
 
         if (ModuleList.aimBot.players.getValue() && player != null && KillAuraUtils.canBeSeeTarget(ModuleList.aimBot.ignoreWalls, player)) {
-            AimBotUtils.rotateToEntity(player);
+            RotateUtils.rotateToEntity(player);
         }
         if (ModuleList.aimBot.mobs.getValue()) {
             if (entity != null && KillAuraUtils.canBeSeeTarget(ModuleList.aimBot.ignoreWalls, entity) && entity.isAlive() && !(entity instanceof ItemEntity)) {
-                AimBotUtils.rotateToEntity(entity);
+                RotateUtils.rotateToEntity(entity);
             }
         }
     }

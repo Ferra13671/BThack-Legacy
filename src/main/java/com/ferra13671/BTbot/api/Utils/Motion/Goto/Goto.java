@@ -3,7 +3,7 @@ package com.ferra13671.BTbot.api.Utils.Motion.Goto;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Managers.managers.Thread.BThackThread;
 import com.ferra13671.BThack.api.Managers.managers.Thread.ThreadClosedException;
-import com.ferra13671.BThack.api.Utils.Modules.AimBotUtils;
+import com.ferra13671.BThack.api.Utils.RotateUtils;
 import net.minecraft.util.math.Vec3d;
 
 public class Goto extends BThackThread implements Mc {
@@ -52,7 +52,7 @@ public class Goto extends BThackThread implements Mc {
             checkThreadStopped();
             moving = true;
 
-            mc.player.yaw = AimBotUtils.rotations(new Vec3d(needX, mc.player.getY(), needZ))[0];
+            mc.player.yaw = RotateUtils.rotations(new Vec3d(needX, mc.player.getY(), needZ))[0];
             mc.player.input.movementForward = 1;
 
             if (mc.player.horizontalCollision) {

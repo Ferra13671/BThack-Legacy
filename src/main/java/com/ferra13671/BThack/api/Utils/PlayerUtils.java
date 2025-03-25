@@ -1,7 +1,6 @@
 package com.ferra13671.BThack.api.Utils;
 
 import com.ferra13671.BThack.api.Interfaces.Mc;
-import com.ferra13671.BThack.api.Utils.Modules.AimBotUtils;
 import com.ferra13671.BThack.mixins.accessor.entity.IEntity;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.block.BlockState;
@@ -51,7 +50,7 @@ public final class PlayerUtils implements Mc {
     }
 
     public static boolean canEntityBeSeen(Entity entity, Entity target) {
-        return BlockUtils.hasLineOfSight(AimBotUtils.getEyesPos(entity), target.getBoundingBox().getCenter());
+        return BlockUtils.hasLineOfSight(RotateUtils.getEyesPos(entity), target.getBoundingBox().getCenter());
     }
 
     public static float getEntitySpeed(Entity entity) {
