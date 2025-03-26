@@ -32,22 +32,24 @@ public abstract class MixinHandledScreen<T extends ScreenHandler> extends Screen
     private void hookDrawMouseoverTooltip(DrawContext context, int x, int y, CallbackInfo ci) {
         if (focusedSlot == null)
             return;
+        if (ModuleList.tooltips.isEnabled()) {
 
-        ItemStack itemStack = focusedSlot.getStack();
+            ItemStack itemStack = focusedSlot.getStack();
 
-        if (itemStack.getItem() == Items.FILLED_MAP && ModuleList.tooltips.maps.getValue()) {
-            ci.cancel();
-            ModuleList.tooltips.renderMapTooltip(context, focusedSlot.getStack(), x, y - 30);
-            return;
-        }
+            if (ModuleList.tooltips.maps.getValue() && itemStack.getItem() == Items.FILLED_MAP) {
+                ci.cancel();
+                ModuleList.tooltips.renderMapTooltip(context, focusedSlot.getStack(), x, y - 30);
+                return;
+            }
 
-        if (ModuleList.tooltips.isEnabled() && ModuleList.tooltips.shulkers.getValue() && itemStack.contains(DataComponentTypes.CONTAINER)) {
-            ContainerComponent compoundTag = itemStack.get(DataComponentTypes.CONTAINER);
-            if (compoundTag == null) return;
-            if (compoundTag.stream().toList().isEmpty()) return;
-            ci.cancel();
+            if (ModuleList.tooltips.shulkers.getValue() && itemStack.contains(DataComponentTypes.CONTAINER)) {
+                ContainerComponent compoundTag = itemStack.get(DataComponentTypes.CONTAINER);
+                if (compoundTag == null) return;
+                if (compoundTag.stream().toList().isEmpty()) return;
+                ci.cancel();
 
-            ModuleList.tooltips.renderShulkerTooltip(itemStack, compoundTag.stream().toList(), x + 6, y - 33);
+                ModuleList.tooltips.renderShulkerTooltip(itemStack, compoundTag.stream().toList(), x + 6, y - 33);
+            }
         }
     }
 }
