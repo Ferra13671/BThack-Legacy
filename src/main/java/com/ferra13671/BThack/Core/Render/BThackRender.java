@@ -15,7 +15,6 @@ import com.ferra13671.BThack.api.Shader.ShaderProgram;
 import com.ferra13671.BThack.api.Shader.Shaders;
 import com.ferra13671.BThack.api.Utils.RegionPos;
 import com.ferra13671.BThack.impl.HudComponents.ArrayListComponent;
-import com.ferra13671.BThack.mixins.accessor.IDrawContext;
 import com.ferra13671.TextureUtils.GlTex;
 import com.ferra13671.TextureUtils.PathMode;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -40,7 +39,7 @@ import static com.ferra13671.BThack.Core.Render.Utils.BThackRenderUtils.*;
 public final class BThackRender implements Mc {
 
     public static final VertexConsumerProvider.Immediate bufferSource = mc.getBufferBuilders().getEntityVertexConsumers();
-    public static final DrawContext guiGraphics = new DrawContext(mc, bufferSource);
+    protected static final DrawContext guiGraphics = new DrawContext(mc, bufferSource);
     public static MatrixStack worldMatrixStack = new MatrixStack();
     public static final BThackBoxRender boxRender = new BThackBoxRender();
     public static final BThackLineRender lineRender = new BThackLineRender();
@@ -65,6 +64,10 @@ public final class BThackRender implements Mc {
             }
         }
         inited = true;
+    }
+
+    public static DrawContext getGuiGraphics() {
+        return guiGraphics;
     }
 
     public static void reloadFontRenderManager() throws Exception {
@@ -100,7 +103,7 @@ public final class BThackRender implements Mc {
     }
 
     public static void drawLine(float x1, float y1, float x2, float y2, float width, int color) {
-        Matrix4f matrix4f = guiGraphics.getMatrices().peek().getPositionMatrix();
+        Matrix4f matrix4f = BThackMatrix.peek().getPositionMatrix();
 
         width = width / 2;
 
@@ -163,7 +166,7 @@ public final class BThackRender implements Mc {
 
 
     public static void drawTriangle(float x, float y, float size, float theta, int color) {
-        Matrix4f matrix4f = guiGraphics.getMatrices().peek().getPositionMatrix();
+        Matrix4f matrix4f = BThackMatrix.peek().getPositionMatrix();
 
         double radians = Math.toRadians(theta);
 
@@ -192,14 +195,14 @@ public final class BThackRender implements Mc {
         if (text == null || text.isEmpty()) return;
 
         if (ModuleList.customFont == null || !ModuleList.customFont.isEnabled()) {
-            guiGraphics.getMatrices().push();
+            BThackMatrix.push();
             float size = drawMode.getSize();
             if (size != 1f)
-                guiGraphics.getMatrices().scale(size, size, size);
-            mc.textRenderer.draw(text, x * (1 / size), y * (1 / size), color, shadow, guiGraphics.getMatrices().peek().getPositionMatrix(), ((IDrawContext) guiGraphics).getVertexConsumers(), TextRenderer.TextLayerType.NORMAL, 0, 15728880, mc.textRenderer.isRightToLeft());
+                BThackMatrix.scale(size, size, size);
+            mc.textRenderer.draw(text, x * (1 / size), y * (1 / size), color, shadow, BThackMatrix.peek().getPositionMatrix(), bufferSource, TextRenderer.TextLayerType.NORMAL, 0, 15728880, mc.textRenderer.isRightToLeft());
             guiGraphics.draw();
             resetShader();
-            guiGraphics.getMatrices().pop();
+            BThackMatrix.pop();
         } else {
             RenderSystem.enableDepthTest();
             fontRenderManager.draw(text, x, y, color, shadow, drawMode);
@@ -244,17 +247,17 @@ public final class BThackRender implements Mc {
         Drawers.SHADER_DRAWER.end();
     }
 
-    public static void drawItem(DrawContext context, ItemStack stack, int x, int y, String amountText, boolean onSlot) {
-        drawItem(context, stack, x, y, amountText, onSlot, 1);
+    public static void drawItem(ItemStack stack, int x, int y, String amountText, boolean onSlot) {
+        drawItem(stack, x, y, amountText, onSlot, 1);
     }
 
-    public static void drawItem(DrawContext context, ItemStack stack, int x, int y, String amountText, boolean onSlot, float size) {
-        context.getMatrices().push();
-        context.getMatrices().scale(size, size, 1);
-        context.drawItem(stack, x, y);
+    public static void drawItem(ItemStack stack, int x, int y, String amountText, boolean onSlot, float size) {
+        BThackMatrix.push();
+        BThackMatrix.scale(size, size, 1);
+        guiGraphics.drawItem(stack, x, y);
         if (onSlot)
-            context.drawItemInSlot(mc.textRenderer, stack, x, y, amountText);
-        context.getMatrices().pop();
+            guiGraphics.drawItemInSlot(mc.textRenderer, stack, x, y, amountText);
+        BThackMatrix.pop();
     }
 
     public static void enableScissor(int x, int y, int width, int height) {

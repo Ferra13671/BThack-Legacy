@@ -2,6 +2,7 @@ package com.ferra13671.BThack.impl.HudComponents;
 
 import com.ferra13671.BThack.Core.Client.Client;
 import com.ferra13671.BThack.Core.Client.ModuleList;
+import com.ferra13671.BThack.Core.Render.BThackMatrix;
 import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Font.FontUtils;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
@@ -124,9 +125,8 @@ public class ArrayListComponent extends HudComponent {
         }
 
         public void render(float x, float y, int count) {
-            BThackRender.guiGraphics.getMatrices().push();
-            double xOffset = (closing ? moveAnimation.getEase() : 1 - moveAnimation.getEase()) * length;
-            BThackRender.guiGraphics.getMatrices().translate(xOffset, 0, 0);
+            BThackMatrix.push();
+            BThackMatrix.translate((float) (closing ? moveAnimation.getEase() : 1 - moveAnimation.getEase()) * length, 0, 0);
 
             double alpha = closing ? (1 - alphaAnimation.getEase()) : alphaAnimation.getEase();
             int arrayColor = ColorUtils.integrateAlpha(INSTANCE.getArrayColor(count), (int) (255 * alpha));
@@ -137,7 +137,7 @@ public class ArrayListComponent extends HudComponent {
                 BThackRender.drawRect(x - 2, y, x, y + 10, arrayColor);
             BThackRender.drawString(lastText, (int) (x - 4 - length), (int) (y + 5 - (height / 2)), ColorUtils.integrateAlpha(arrayColor, (int) (255 * alpha)));
 
-            BThackRender.guiGraphics.getMatrices().pop();
+            BThackMatrix.pop();
         }
 
         public void update() {

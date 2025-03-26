@@ -3,6 +3,7 @@ package com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.setti
 
 import com.ferra13671.BThack.Core.Client.Client;
 import com.ferra13671.BThack.Core.Client.ModuleList;
+import com.ferra13671.BThack.Core.Render.BThackMatrix;
 import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.ModuleButton;
@@ -31,12 +32,12 @@ public class ModeButton extends AbstractSetting {
 		float scale = getTextScale(text);
 
 		if (scale != 1) {
-			BThackRender.guiGraphics.getMatrices().push();
-			BThackRender.guiGraphics.getMatrices().scale(scale, scale, 1);
+			BThackMatrix.push();
+			BThackMatrix.scale(scale, scale, 1);
 		}
 		BThackRender.drawString(text, (parent.parent.getX() + 2) / scale, (parent.parent.getY() + offset + 4) / scale, ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()));
 		if (scale != 1)
-			BThackRender.guiGraphics.getMatrices().pop();
+			BThackMatrix.pop();
 	}
 
 	private float getTextScale(String text) {

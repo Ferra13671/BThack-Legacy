@@ -32,7 +32,7 @@ public class FontRenderManager implements Closeable {
     }
 
     public void draw(String text, float x, float y, int color, boolean shadow, DrawMode drawMode) {
-        fontRendererOf(drawMode).draw(BThackRender.guiGraphics.getMatrices(), text, x, y, color, shadow);
+        fontRendererOf(drawMode).draw(BThackRender.getGuiGraphics().getMatrices(), text, x, y, color, shadow);
     }
 
     public FontRenderer fontRendererOf(DrawMode drawMode) {

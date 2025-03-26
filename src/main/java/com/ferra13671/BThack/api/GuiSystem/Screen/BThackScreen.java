@@ -155,7 +155,7 @@ public class BThackScreen extends Screen implements Mc {
             Managers.MAIN_MENU_SHADER_MANAGER.getMainMenuShader().setParameters(mouseX, mouseY, width, height, Managers.MAIN_MENU_SHADER_MANAGER.getShaderTime());
             BThackRender.drawShader(Managers.MAIN_MENU_SHADER_MANAGER.getMainMenuShader(), 0, 0, width, height);
         } else {
-            ROTATING_PANORAMA_RENDERER.render(BThackRender.guiGraphics, this.width, this.height, 1.0F, 0.25f);
+            ROTATING_PANORAMA_RENDERER.render(BThackRender.getGuiGraphics(), this.width, this.height, 1.0F, 0.25f);
         }
     }
 

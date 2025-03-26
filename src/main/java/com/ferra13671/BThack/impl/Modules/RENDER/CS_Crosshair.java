@@ -1,6 +1,7 @@
 package com.ferra13671.BThack.impl.Modules.RENDER;
 
 
+import com.ferra13671.BThack.Core.Render.BThackMatrix;
 import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Events.Entity.AttackEntityEvent;
@@ -71,14 +72,14 @@ public class CS_Crosshair extends Module {
         if (!movable.getValue())
             spread = 0;
 
-        BThackRender.guiGraphics.getMatrices().push();
+        BThackMatrix.push();
 
         Window window = mc.getWindow();
 
         Color color = rainbow.getValue() ? new Color(ColorUtils.rainbow()) : colorSet.getValue();
 
-        BThackRender.guiGraphics.getMatrices().translate(window.getScaledWidth() / 2f, window.getScaledHeight() / 2f, 0);
-        BThackRender.guiGraphics.getMatrices().peek().getPositionMatrix().rotate((float) Math.toRadians(rotate.getValue()), 0, 0, 1);
+        BThackMatrix.translate(window.getScaledWidth() / 2f, window.getScaledHeight() / 2f, 0);
+        BThackMatrix.peek().getPositionMatrix().rotate((float) Math.toRadians(rotate.getValue()), 0, 0, 1);
 
         if (centerRect.getValue())
             BThackRender.drawRect((int)-height.getValue(), (int)- height.getValue(), (int)height.getValue(), (int)height.getValue(), color.hashCode());
@@ -95,14 +96,14 @@ public class CS_Crosshair extends Module {
         if (rightRect.getValue())
             BThackRender.drawRect((int)(0 + height.getValue() + distance.getValue() + spread), (int)(0 - height.getValue()), (int)(0 + height.getValue() + distance.getValue() + width.getValue() + spread), (int)(0 + height.getValue()), color.hashCode());
 
-        BThackRender.guiGraphics.getMatrices().peek().getPositionMatrix().rotate((float) -Math.toRadians(rotate.getValue()), 0, 0, 1);
-        BThackRender.guiGraphics.getMatrices().translate(-(window.getScaledWidth() / 2f), -(window.getScaledHeight() / 2f), 0);
+        BThackMatrix.peek().getPositionMatrix().rotate((float) -Math.toRadians(rotate.getValue()), 0, 0, 1);
+        BThackMatrix.translate(-(window.getScaledWidth() / 2f), -(window.getScaledHeight() / 2f), 0);
 
         spread -= (float) scatterSpeed.getValue();
         if (spread < 0)
             spread = 0;
 
-        BThackRender.guiGraphics.getMatrices().pop();
+        BThackMatrix.pop();
     }
 
     @EventSubscriber

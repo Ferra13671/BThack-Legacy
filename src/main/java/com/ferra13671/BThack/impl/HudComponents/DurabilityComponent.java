@@ -47,8 +47,8 @@ public class DurabilityComponent extends HudComponent {
             case "Full 2":
                 text = "Left     : " + Formatting.WHITE + ItemUtils.getItemDurability(mc.player.getOffHandStack()) + Formatting.RESET + "  Right     :" + Formatting.WHITE + ItemUtils.getItemDurability(mc.player.getInventory().getMainHandStack());
                 drawText(text, (int) getX(), (int) getY());
-                BThackRender.drawItem(BThackRender.guiGraphics, mc.player.getOffHandStack(), (int) (getX() + FontUtils.getTextWidth("Left") + 1), (int) getY() - 5, null, false);
-                BThackRender.drawItem(BThackRender.guiGraphics, mc.player.getInventory().getMainHandStack(), (int) (getX() + FontUtils.getTextWidth("Left     : " + Formatting.WHITE + ItemUtils.getItemDurability(mc.player.getOffHandStack()) + Formatting.RESET + "  Right") + 1), (int) getY() - 5, null, false);
+                BThackRender.drawItem(mc.player.getOffHandStack(), (int) (getX() + FontUtils.getTextWidth("Left") + 1), (int) getY() - 5, null, false);
+                BThackRender.drawItem(mc.player.getInventory().getMainHandStack(), (int) (getX() + FontUtils.getTextWidth("Left     : " + Formatting.WHITE + ItemUtils.getItemDurability(mc.player.getOffHandStack()) + Formatting.RESET + "  Right") + 1), (int) getY() - 5, null, false);
                 this.width = FontUtils.getTextWidth(text);
                 this.height = FontUtils.getTextHeight(text);
                 break;

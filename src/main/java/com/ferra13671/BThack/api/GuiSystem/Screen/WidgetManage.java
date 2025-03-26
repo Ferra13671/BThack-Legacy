@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.api.GuiSystem.Screen;
 
+import com.ferra13671.BThack.Core.Render.BThackMatrix;
 import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Animation.Animation;
@@ -111,13 +112,13 @@ public class WidgetManage implements Mc {
 
     public void render(DrawContext context, int mouseX, int mouseY, float partialTicks) {
         if (!widgets.isEmpty() && widgets.getFirst().status != WidgetStatus.NOT_OPENED) {
-            BThackRender.guiGraphics.getMatrices().push();
+            BThackMatrix.push();
             WidgetInfo widget = widgets.getFirst();
-            BThackRender.guiGraphics.getMatrices().translate(0, 0, 3);
+            BThackMatrix.translate(0, 0, 3);
             BThackRender.drawVerticalGradientRect(0, 0, mc.getWindow().getScaledWidth(), mc.getWindow().getScaledHeight(), ColorUtils.TRANSPARENT, ColorUtils.fastRGBA(0, 0, 0, (int) (180 * (1 -widget.getEase(widget.backgroundAnimation)))));
-            BThackRender.guiGraphics.getMatrices().translate(0, widget.getEase(widget.widgetAnimation) * ((mc.getWindow().getScaledHeight() / 2d) + widget.screenWidget.getHeight()), 0);
+            BThackMatrix.translate(0, (float) (widget.getEase(widget.widgetAnimation) * ((mc.getWindow().getScaledHeight() / 2d) + widget.screenWidget.getHeight())), 0);
             widget.screenWidget.render(context, mouseX, mouseY, partialTicks);
-            BThackRender.guiGraphics.getMatrices().pop();
+            BThackMatrix.pop();
         }
     }
 

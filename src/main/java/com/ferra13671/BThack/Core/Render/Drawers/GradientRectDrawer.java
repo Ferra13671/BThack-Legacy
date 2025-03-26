@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.Core.Render.Drawers;
 
-import com.ferra13671.BThack.Core.Render.BThackRender;
+import com.ferra13671.BThack.Core.Render.BThackMatrix;
 import com.ferra13671.BThack.Core.Render.Utils.BThackRenderUtils;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.render.VertexFormat;
@@ -34,7 +34,7 @@ public class GradientRectDrawer extends Drawer {
     }
 
     public void draw(float x1, float y1, float x2, float y2, int startColor, int endColor, GradientMode gradientMode) {
-        draw(x1, y1, x2, y2, startColor, endColor, BThackRender.guiGraphics.getMatrices().peek().getPositionMatrix(), gradientMode);
+        draw(x1, y1, x2, y2, startColor, endColor, BThackMatrix.peek().getPositionMatrix(), gradientMode);
     }
 
     public void end() {

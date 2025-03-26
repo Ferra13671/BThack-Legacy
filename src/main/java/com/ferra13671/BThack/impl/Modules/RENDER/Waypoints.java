@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.impl.Modules.RENDER;
 
+import com.ferra13671.BThack.Core.Render.BThackMatrix;
 import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Font.FontRenderManager;
 import com.ferra13671.BThack.Core.Render.Font.FontUtils;
@@ -44,7 +45,7 @@ public class Waypoints extends Module {
 
         String currentServer = mc.isInSingleplayer() ? "SinglePlayer" : mc.getNetworkHandler().getServerInfo().address;
 
-        BThackRender.guiGraphics.getMatrices().push();
+        BThackMatrix.push();
         if (mc.world.getRegistryKey() == World.OVERWORLD || (convertOverworld.getValue() && mc.world.getRegistryKey() == World.NETHER)) {
             Managers.WAYPOINT_MANAGER.getOverworldWaypoints().forEach(waypoint -> {
                 if (!waypoint.isVisible()) return;
@@ -79,11 +80,11 @@ public class Waypoints extends Module {
                 drawWaypoint(position, waypoint);
             });
         }
-        BThackRender.guiGraphics.getMatrices().pop();
+        BThackMatrix.pop();
     }
 
     private void drawWaypoint(Vec3d position, Waypoint waypoint) {
-        BThackRender.guiGraphics.getMatrices().translate(0, 0, 1);
+        BThackMatrix.translate(0, 0, 1);
         float[] pos = BThackRenderUtils.worldPosToScreenXY(position, false);
         if (pos == null) return;
 

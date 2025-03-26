@@ -39,7 +39,6 @@
     "MixinWindow",
     "accessor.IAbstractSignEditScreen",
     "accessor.IClientWorld",
-    "accessor.IDrawContext",
     "accessor.IGameRenderer",
     "accessor.IMinecraftClient",
     "accessor.INativeImage",

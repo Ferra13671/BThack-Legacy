@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.Core.Render.Drawers;
 
-import com.ferra13671.BThack.Core.Render.BThackRender;
+import com.ferra13671.BThack.Core.Render.BThackMatrix;
 import com.ferra13671.BThack.Core.Render.Utils.BThackRenderUtils;
 import com.ferra13671.TextureUtils.GlTex;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -32,7 +32,7 @@ public class TextureRectDrawer extends Drawer {
     }
 
     public void draw(float x1, float y1, float x2, float y2) {
-        draw(x1, y1, x2, y2, BThackRender.guiGraphics.getMatrices().peek().getPositionMatrix());
+        draw(x1, y1, x2, y2, BThackMatrix.peek().getPositionMatrix());
     }
 
     public void end() {

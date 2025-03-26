@@ -2,6 +2,7 @@ package com.ferra13671.BThack.api.Gui.Screen.ClickGui.component;
 
 import com.ferra13671.BThack.Core.Client.Client;
 import com.ferra13671.BThack.Core.Client.ModuleList;
+import com.ferra13671.BThack.Core.Render.BThackMatrix;
 import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Font.FontRenderManager;
 import com.ferra13671.BThack.Core.Render.Font.FontUtils;
@@ -155,7 +156,7 @@ public class Frame implements Mc, Closeable {
 	}
 	
 	public void renderFrame() {
-		BThackRender.guiGraphics.getMatrices().translate(0,0, 1);
+		BThackMatrix.translate(0,0, 1);
 
 		boolean needScissor = frameAnimation.getEase() < 1;
 
@@ -176,7 +177,7 @@ public class Frame implements Mc, Closeable {
 				for(Component component : buttons) {
 					component.renderComponent();
 				}
-				BThackRender.guiGraphics.getMatrices().translate(0, 0, -1);
+				BThackMatrix.translate(0, 0, -1);
 				if (needScissor)
 					BThackRender.disableScissor();
 			}

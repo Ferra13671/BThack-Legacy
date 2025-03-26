@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.impl.Modules.RENDER;
 
+import com.ferra13671.BThack.Core.Render.BThackMatrix;
 import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Font.FontRenderManager;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
@@ -51,9 +52,8 @@ public class Tooltips extends Module {
     public void renderShulkerTooltip(ItemStack itemStack, List<ItemStack> stacks, int x, int y) {
         if (stacks.isEmpty()) return;
 
-        BThackRender.guiGraphics.getMatrices().push();
-
-        BThackRender.guiGraphics.getMatrices().translate(0f, 0f, 600f);
+        BThackMatrix.push();
+        BThackMatrix.translate(0f, 0f, 600f);
 
         BThackRender.drawVerticalGradientOutlineRect(x + 7, y - 22, x + 159, y + 49, 1, ColorUtils.WHITE, ColorUtils.fastRGBA(120, 120, 120, 255));
         if (frameRainbow.getValue())
@@ -69,11 +69,11 @@ public class Tooltips extends Module {
             int offsetX = x + (slot % 9) * 16 + 11;
             int offsetY = y + (slot / 9) * 16 - 3;
 
-            BThackRender.drawItem(BThackRender.guiGraphics, stack, offsetX, offsetY, null, true);
+            BThackRender.drawItem(stack, offsetX, offsetY, null, true);
             slot++;
         }
 
-        BThackRender.guiGraphics.getMatrices().pop();
+        BThackMatrix.pop();
     }
 
     public void renderMapTooltip(DrawContext context, ItemStack stack, int x, int y) {
@@ -96,19 +96,18 @@ public class Tooltips extends Module {
             context.getMatrices().translate(x + 16, y - 4, z);
             context.getMatrices().scale((float) scale, (float) scale, 0);
 
-            BThackRender.guiGraphics.getMatrices().push();
-
-            BThackRender.guiGraphics.getMatrices().translate(0f, 0f, 600f);
+            BThackMatrix.push();
+            BThackMatrix.translate(0f, 0f, 600f);
             BThackRender.drawVerticalGradientRect(x1, y1 - 10, x2, y2, ColorUtils.fastRGBA(5, 5, 5, (int) backGroundAlpha.getValue()), ColorUtils.fastRGBA(100, 100, 100, (int) backGroundAlpha.getValue()));
             if (frameRainbow.getValue())
                 BThackRender.drawShaderOutlineRect(Shaders.INSTANCE.X_RAINBOW,x1, y1 - 10, x2, y2, 1);
             else
                 BThackRender.drawOutlineRect(x1, y1 - 10, x2, y2, 1, getFrameColor()); //yea
 
-            BThackRender.guiGraphics.getMatrices().scale(0.75f, 0.75f, 0.75f);
+            BThackMatrix.scale(0.75f, 0.75f, 0.75f);
             BThackRender.drawString(stack.getItem().getName().getString(), (int) ((x1 + 5) * 1.3333), (int) ((y1 - 5) * 1.3333), -1, true, FontRenderManager.DrawMode.NORMAL_BOLD);
 
-            BThackRender.guiGraphics.getMatrices().pop();
+            BThackMatrix.pop();
 
             mc.gameRenderer.getMapRenderer().draw(context.getMatrices(), BThackRender.bufferSource, stack.get(DataComponentTypes.MAP_ID), mapState, false, 0xF000F0);
         }

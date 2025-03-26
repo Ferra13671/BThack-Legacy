@@ -3,6 +3,7 @@ package com.ferra13671.BThack.api.Gui.Screen.ClickGui;
 import com.ferra13671.BThack.Core.Client.Client;
 import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.Core.FileSystem.ConfigSystem.ConfigSystem;
+import com.ferra13671.BThack.Core.Render.BThackMatrix;
 import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Font.FontUtils;
 import com.ferra13671.BThack.Core.Render.Utils.BThackRenderUtils;
@@ -122,8 +123,8 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
         if (writingSlider.get() != null && writingSlider.get().writing)
             BThackRender.drawString("New Value: " + writingSlider.get().textBuilder, (int) ((mc.getWindow().getScaledWidth() / 2f) - (FontUtils.getTextWidth("New Value: " + writingSlider.get().textBuilder) / 2)), (mc.getWindow().getScaledHeight() - 45), ColorUtils.WHITE);
 
-        BThackRender.guiGraphics.getMatrices().push();
-        BThackRender.guiGraphics.getMatrices().scale((float) ModuleList.clickGui.guiScale.getValue(), (float) ModuleList.clickGui.guiScale.getValue(), 1);
+        BThackMatrix.push();
+        BThackMatrix.scale((float) ModuleList.clickGui.guiScale.getValue(), (float) ModuleList.clickGui.guiScale.getValue(), 1);
 
         for (int i = frames.size() - 1; i > -1; i--) {
             Frame frame = frames.get(i);
@@ -133,16 +134,16 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
 
         descriptions.removeIf(DescriptionBar::needRemove);
         descriptions.forEach(descriptionBar -> {
-            BThackRender.guiGraphics.getMatrices().translate(0, 0, 3);
+            BThackMatrix.translate(0, 0, 3);
             descriptionBar.render();
         });
 
-        BThackRender.guiGraphics.getMatrices().pop();
+        BThackMatrix.pop();
         if (!widgetManage.widgets.isEmpty()) {
-            BThackRender.guiGraphics.getMatrices().push();
-            BThackRender.guiGraphics.getMatrices().translate(0, 0, 200);
+            BThackMatrix.push();
+            BThackMatrix.translate(0, 0, 200);
             widgetManage.render(guiGraphics, mouseX, mouseY, partialTicks);
-            BThackRender.guiGraphics.getMatrices().pop();
+            BThackMatrix.pop();
         }
     }
 

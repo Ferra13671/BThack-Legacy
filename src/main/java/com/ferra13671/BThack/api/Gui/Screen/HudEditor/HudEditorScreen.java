@@ -3,6 +3,7 @@ package com.ferra13671.BThack.api.Gui.Screen.HudEditor;
 import com.ferra13671.BThack.Core.Client.Client;
 import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.Core.FileSystem.ConfigSystem.ConfigSystem;
+import com.ferra13671.BThack.Core.Render.BThackMatrix;
 import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Font.FontUtils;
 import com.ferra13671.BThack.Core.Render.Utils.BThackRenderUtils;
@@ -94,11 +95,11 @@ public class HudEditorScreen extends BThackScreen {
 
         frame.updateButtons(mouseX, mouseY);
 
-        BThackRender.guiGraphics.getMatrices().push();
-        BThackRender.guiGraphics.getMatrices().scale((float) ModuleList.clickGui.guiScale.getValue(), (float) ModuleList.clickGui.guiScale.getValue(), 1);
+        BThackMatrix.push();
+        BThackMatrix.scale((float) ModuleList.clickGui.guiScale.getValue(), (float) ModuleList.clickGui.guiScale.getValue(), 1);
         frame.renderFrame();
         frame.updatePosition((int) (mouseX / ModuleList.clickGui.guiScale.getValue()), (int) (mouseY / ModuleList.clickGui.guiScale.getValue()));
-        BThackRender.guiGraphics.getMatrices().pop();
+        BThackMatrix.pop();
     }
 
     @Override

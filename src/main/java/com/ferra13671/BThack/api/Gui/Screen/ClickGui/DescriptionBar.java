@@ -2,6 +2,7 @@ package com.ferra13671.BThack.api.Gui.Screen.ClickGui;
 
 import com.ferra13671.BThack.Core.Client.Client;
 import com.ferra13671.BThack.Core.Client.ModuleList;
+import com.ferra13671.BThack.Core.Render.BThackMatrix;
 import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Font.FontUtils;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
@@ -49,13 +50,13 @@ public class DescriptionBar implements Closeable, Mc {
 
         int scaledHeight = (int) (mc.getWindow().getScaledHeight() / ModuleList.clickGui.guiScale.getValue());
 
-        BThackRender.guiGraphics.getMatrices().push();
+        BThackMatrix.push();
         if (module instanceof PluginModule pluginMod) {
             float pluginNameLength = FontUtils.getTextWidth("Plugin: " + pluginMod.plugin.pluginName) + 10;
             float descriptionLength = FontUtils.getTextWidth(module.getDescription()) + 10;
             float length = Math.max(pluginNameLength, descriptionLength);
 
-            BThackRender.guiGraphics.getMatrices().translate(-((1 - moveAnimation.getEase()) * length), 0, 0);
+            BThackMatrix.translate((float) -((1 - moveAnimation.getEase()) * length), 0, 0);
 
             BThackRender.drawRect(1, scaledHeight - 30, length, scaledHeight -1, ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().backgroundColor()), alpha));
             BThackRender.drawShaderOutlineRect(Shaders.INSTANCE.X_RAINBOW, 1, scaledHeight - 30, length, scaledHeight -1, 1);
@@ -64,12 +65,12 @@ public class DescriptionBar implements Closeable, Mc {
         } else {
             float length = FontUtils.getTextWidth(module.getDescription()) + 10;
 
-            BThackRender.guiGraphics.getMatrices().translate(-((1 - moveAnimation.getEase()) * length), 0, 0);
+            BThackMatrix.translate((float) -((1 - moveAnimation.getEase()) * length), 0, 0);
 
             BThackRender.drawRect(1, scaledHeight - 18, length, scaledHeight -1, ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().backgroundColor()), alpha));
             BThackRender.drawShaderOutlineRect(Shaders.INSTANCE.X_RAINBOW, 1, scaledHeight - 18, length, scaledHeight -1, 1);
             BThackRender.drawString(module.getDescription(), 6, scaledHeight - 9.5f - (FontUtils.getTextHeight(module.getDescription()) / 2f), ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()), alpha));
         }
-        BThackRender.guiGraphics.getMatrices().pop();
+        BThackMatrix.pop();
     }
 }

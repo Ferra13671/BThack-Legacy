@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.impl.Modules.RENDER;
 
+import com.ferra13671.BThack.Core.Render.BThackMatrix;
 import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Font.FontRenderManager;
 import com.ferra13671.BThack.Core.Render.Font.FontUtils;
@@ -79,26 +80,26 @@ public class Nametags extends Module {
         float[] cords = BThackRenderUtils.worldPosToScreenXY(getNametagPos(itemEntity, 0), false);
         if (cords == null) return;
 
-        BThackRender.guiGraphics.getMatrices().push();
-        BThackRender.guiGraphics.getMatrices().scale((float) iSize.getValue(), (float) iSize.getValue(), 1);
+        BThackMatrix.push();
+        BThackMatrix.scale((float) iSize.getValue(), (float) iSize.getValue(), 1);
         cords[0] /= (float) iSize.getValue();
         cords[1] /= (float) iSize.getValue();
 
-        BThackRender.drawItem(BThackRender.guiGraphics, itemEntity.getStack(), (int) cords[0] - 8, (int) cords[1] - 18, null, true);
+        BThackRender.drawItem(itemEntity.getStack(), (int) cords[0] - 8, (int) cords[1] - 18, null, true);
         if (itemName.getValue())
             BThackRender.drawCenteredString(itemEntity.getName().getString(), cords[0], cords[1], -1, FontRenderManager.DrawMode.SMALL);
 
-        BThackRender.guiGraphics.getMatrices().pop();
+        BThackMatrix.pop();
     }
 
     public void renderPlayerNametag(PlayerEntity player) {
         float[] cords = BThackRenderUtils.worldPosToScreenXY(getNametagPos(player, player.getHeight() + 0.3f), false);
         if (cords == null) return;
 
-        BThackRender.guiGraphics.getMatrices().push();
-        BThackRender.guiGraphics.getMatrices().translate(1,1,600);
+        BThackMatrix.push();
+        BThackMatrix.translate(1,1,600);
 
-        BThackRender.guiGraphics.getMatrices().scale((float) pSize.getValue(), (float) pSize.getValue(), 1);
+        BThackMatrix.scale((float) pSize.getValue(), (float) pSize.getValue(), 1);
         cords[0] /= (float) pSize.getValue();
         cords[1] /= (float) pSize.getValue();
 
@@ -108,7 +109,7 @@ public class Nametags extends Module {
             case "Full" -> renderFullPlayerNametag(cords, player);
         }
 
-        BThackRender.guiGraphics.getMatrices().pop();
+        BThackMatrix.pop();
     }
 
     public void renderMiniPlayerNametag(float[] cords, PlayerEntity player) {
@@ -182,7 +183,7 @@ public class Nametags extends Module {
     public float drawArmor(float startX, float startY, LivingEntity entity) {
         for (ItemStack stack : entity.getArmorItems()) {
             if (stack != null) {
-                BThackRender.drawItem(BThackRender.guiGraphics, stack, (int) startX, (int) startY, null, true);
+                BThackRender.drawItem(stack, (int) startX, (int) startY, null, true);
             }
             startX += 20;
         }
@@ -208,7 +209,7 @@ public class Nametags extends Module {
         BThackRender.drawString("L: ", startX, startY + 5, -1, false);
         startX += 12;
         if (player.getOffHandStack() != null) {
-            BThackRender.drawItem(BThackRender.guiGraphics, player.getOffHandStack(), (int) startX, (int) startY, null, true);
+            BThackRender.drawItem(player.getOffHandStack(), (int) startX, (int) startY, null, true);
         }
 
         startX += 30;
@@ -216,7 +217,7 @@ public class Nametags extends Module {
         BThackRender.drawString("R: ", startX, startY + 5, -1, false);
         startX += 12;
         if (player.getMainHandStack() != null) {
-            BThackRender.drawItem(BThackRender.guiGraphics, player.getMainHandStack(), (int) startX, (int) startY, null, false);
+            BThackRender.drawItem(player.getMainHandStack(), (int) startX, (int) startY, null, false);
         }
     }
 

@@ -1,6 +1,7 @@
 package com.ferra13671.BThack.api.Gui.Screen;
 
 import com.ferra13671.BThack.Core.Client.ModuleList;
+import com.ferra13671.BThack.Core.Render.BThackMatrix;
 import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Animation.Animation;
@@ -58,10 +59,10 @@ public class TransitionScreen extends BThackScreen {
 
         double animationDelta = !invert ? flipAnimation.getEase() : 1 - flipAnimation.getEase();
 
-        BThackRender.guiGraphics.getMatrices().push();
-        BThackRender.guiGraphics.getMatrices().translate(0, 0, 9000);
+        BThackMatrix.push();
+        BThackMatrix.translate(0, 0, 9000);
         BThackRender.drawRect(0, 0, mc.getWindow().getScaledWidth(), mc.getWindow().getScaledHeight(), ColorUtils.integrateAlpha(ColorUtils.BLACK, (int) (animationDelta * 255)));
-        BThackRender.guiGraphics.getMatrices().pop();
+        BThackMatrix.pop();
     }
 
     @Override

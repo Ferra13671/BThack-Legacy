@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.impl.HudComponents;
 
+import com.ferra13671.BThack.Core.Render.BThackMatrix;
 import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Font.FontRenderManager;
 import com.ferra13671.BThack.Core.Render.Font.FontUtils;
@@ -54,7 +55,7 @@ public class ArmorComponent extends HudComponent {
                     maxWidth = FontUtils.getTextWidth(text);
                 }
 
-                BThackRender.drawItem(BThackRender.guiGraphics, armorStack, (int) getX(), (int) getY() + y, null, false);
+                BThackRender.drawItem(armorStack, (int) getX(), (int) getY() + y, null, false);
                 BThackRender.drawString(text, (int) getX() + 20, (int) getY() + y, ColorUtils.fastRGBA(armorStack.getItemBarColor()));
                 BThackRender.drawRect((int) getX() + 20, (int) (getY() + y + 2 + FontUtils.getTextHeight(text)), (int) getX() + 20 + 50, (int) (getY() + y + FontUtils.getTextHeight(text) + 5), ColorUtils.BLACK);
                 if (ItemUtils.getItemDurabilityInPercentages(armorStack) > 0)
@@ -74,7 +75,7 @@ public class ArmorComponent extends HudComponent {
         for (int i = 3; i > -1; i--) {
             ItemStack armorStack = mc.player.getInventory().armor.get(i);
             if (armorStack.getItem() != Items.AIR) {
-                BThackRender.drawItem(BThackRender.guiGraphics, armorStack, (int) (getX() + x), (int) (getY() + 3), null, false);
+                BThackRender.drawItem(armorStack, (int) (getX() + x), (int) (getY() + 3), null, false);
             }
 
             x += 20;
@@ -82,7 +83,7 @@ public class ArmorComponent extends HudComponent {
 
         x = 0;
 
-        BThackRender.guiGraphics.getMatrices().push();
+        BThackMatrix.push();
         for (int i = 3; i > -1; i--) {
             ItemStack armorStack = mc.player.getInventory().armor.get(i);
 
@@ -92,7 +93,7 @@ public class ArmorComponent extends HudComponent {
 
             x += 20;
         }
-        BThackRender.guiGraphics.getMatrices().pop();
+        BThackMatrix.pop();
 
         this.height = 23;
         this.width = x;
