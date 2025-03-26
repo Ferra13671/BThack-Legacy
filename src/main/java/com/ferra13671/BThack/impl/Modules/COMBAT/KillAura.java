@@ -40,6 +40,7 @@ public class KillAura extends Module {
     public final NumberSetting range = new NumberSetting("Range", this, 3.62, 1, 10, false, () -> mode.getValue().equals("Aura"));
     public final BooleanSetting instaRotate = new BooleanSetting("Insta Rotate", this, false, () -> mode.getValue().equals("Aura"));
     public final BooleanSetting alwaysRotate = new BooleanSetting("Always Rotate", this, true, () -> mode.getValue().equals("Aura") && !instaRotate.getValue());
+    public final NumberSetting rotateDelay = new NumberSetting("Rotate Delay", this, 150, 0, 500, true, () -> mode.getValue().equals("Aura") && !instaRotate.getValue() && !alwaysRotate.getValue());
     public final NumberSetting lockTicks = new NumberSetting("Lock Ticks", this, 5, 3, 10, true, () -> mode.getValue().equals("Aura") && !instaRotate.getValue());
     public final BooleanSetting grim = new BooleanSetting("Grim", this, true);
     public final ModeSetting rotateMode = new ModeSetting("RotateMode", this, new ArrayList<>(Arrays.asList("Packet", "Vanilla", "None")), () -> !mode.getValue().equals("TriggerBot") && instaRotate.getValue()).defaultValue("Grim");
@@ -78,6 +79,7 @@ public class KillAura extends Module {
                 range,
                 instaRotate,
                 alwaysRotate,
+                rotateDelay,
                 lockTicks,
                 grim,
                 rotateMode,
@@ -224,7 +226,7 @@ public class KillAura extends Module {
     public void attackTargetAction() {
         if (targetedEntity != null) {
             if (!Managers.TRAVEL_CHANGE_MANAGER.containsChanger(travelChanger)) Managers.TRAVEL_CHANGE_MANAGER.addChanger(travelChanger);
-            if (updateRotTicker.passed(100)) {
+            if (updateRotTicker.passed((int) rotateDelay.getValue())) {
                 rotations = RotateUtils.rotations(targetedEntity.entity);
                 updateRotTicker.reset();
             }
