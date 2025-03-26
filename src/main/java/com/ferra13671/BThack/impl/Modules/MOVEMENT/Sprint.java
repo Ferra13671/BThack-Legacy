@@ -52,7 +52,6 @@ public class Sprint extends Module {
     @Override
     public void onEnable() {
         super.onEnable();
-        Managers.TRAVEL_CHANGE_MANAGER.addChanger(travelChanger);
 
         arrayListInfo = mode.getValue() + (strafe.getValue() ? ": strafe" : "");
 

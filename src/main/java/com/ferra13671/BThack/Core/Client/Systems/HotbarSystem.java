@@ -5,6 +5,7 @@ import com.ferra13671.BThack.api.Events.DisconnectEvent;
 import com.ferra13671.BThack.api.Events.Entity.EntityDeathEvent;
 import com.ferra13671.BThack.api.Events.PacketEvent;
 import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.network.packet.c2s.play.UpdateSelectedSlotC2SPacket;
 import net.minecraft.network.packet.s2c.play.UpdateSelectedSlotS2CPacket;
@@ -22,6 +23,7 @@ public class HotbarSystem implements Mc {
 
     @EventSubscriber
     public void onReceive(PacketEvent.Receive e) {
+        if (Module.nullCheck()) return;
         if (e.getPacket() instanceof UpdateSelectedSlotS2CPacket packet) {
             if (ModuleList.noServerSlot.isEnabled()) {
                 currentSlot = mc.player.getInventory().selectedSlot;
