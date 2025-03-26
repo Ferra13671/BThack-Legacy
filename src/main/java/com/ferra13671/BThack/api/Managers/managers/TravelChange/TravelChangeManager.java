@@ -3,8 +3,8 @@ package com.ferra13671.BThack.api.Managers.managers.TravelChange;
 import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.api.Events.Camera.RotateCameraEvent;
 import com.ferra13671.BThack.api.Events.Player.ChangePlayerLookEvent;
-import com.ferra13671.BThack.api.Events.Player.PlayerTravelEvent;
 import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.ChatUtils;
 import com.ferra13671.BThack.api.Utils.Initializable;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.RotateUtils;
@@ -43,6 +43,8 @@ public class TravelChangeManager implements Initializable, Mc {
         if (!changers.contains(changer)) {
             changers.add(changer);
             filterChangers();
+            freeCamData.yaw = mc.player.getYaw();
+            freeCamData.pitch = mc.player.getPitch();
         }
     }
 
@@ -76,8 +78,9 @@ public class TravelChangeManager implements Initializable, Mc {
 
     @EventSubscriber
     public void onCameraRotate(RotateCameraEvent e) {
-        if (!changers.isEmpty())
+        if (!changers.isEmpty()) {
             e.setRotation(new Vec2f(freeCamData.yaw, freeCamData.pitch));
+        }
     }
 
     @EventSubscriber
