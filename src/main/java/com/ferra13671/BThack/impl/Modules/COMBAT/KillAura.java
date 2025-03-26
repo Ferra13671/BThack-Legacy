@@ -226,7 +226,7 @@ public class KillAura extends Module {
     public void attackTargetAction() {
         if (targetedEntity != null) {
             if (!Managers.TRAVEL_CHANGE_MANAGER.containsChanger(travelChanger)) Managers.TRAVEL_CHANGE_MANAGER.addChanger(travelChanger);
-            if (updateRotTicker.passed((int) rotateDelay.getValue())) {
+            if (alwaysRotate.getValue() || updateRotTicker.passed((int) rotateDelay.getValue())) {
                 rotations = RotateUtils.rotations(targetedEntity.entity);
                 updateRotTicker.reset();
             }
