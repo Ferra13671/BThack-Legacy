@@ -59,7 +59,7 @@ public class BThackMainMenuScreen extends BThackScreen {
 
         BThackRender.drawHorizontalGradientRect(0,0, mc.getWindow().getScaledWidth(), mc.getWindow().getScaledHeight(), ColorUtils.fastRGBA(0,0,0, 80), ColorUtils.TRANSPARENT);
 
-        BThackRender.drawTextureRect(Textures.BTHACK_LOGO, 20, 20, 20 + 138 * 2, 20 + 72 * 2);
+        BThackRender.drawTextureRect(Textures.BTHACK_LOGO, (mc.getWindow().getScaledWidth() / 2f) - 138, (mc.getWindow().getScaledHeight() / 2f) - 72 - 75, (mc.getWindow().getScaledWidth() / 2f) + 138, (mc.getWindow().getScaledHeight() / 2f) +72 - 75);
 
         super.render(context, mouseX, mouseY, partialTicks);
     }
@@ -69,30 +69,25 @@ public class BThackMainMenuScreen extends BThackScreen {
         super.init();
         buttons.clear();
 
-        int baseButtonsX = mc.getWindow().getScaledWidth() / 7;
+        int xCenter = mc.getWindow().getScaledWidth() / 2;
         int yCenter = mc.getWindow().getScaledHeight() / 2;
 
-        buttons.add(Button.of(1, baseButtonsX, yCenter,
-                baseButtonsX - 5, 10,
+        buttons.add(Button.of(1, xCenter, yCenter,
+                100, 10,
                 "lang.screen.MainMenu.Singleplayer").withAction(buttonClickInfo -> actionAfterClicking(() -> changeScreen(() -> new SelectWorldScreen(this)))));
-        buttons.add(Button.of(2, baseButtonsX, yCenter + 22,
-                baseButtonsX - 5, 10,
+        buttons.add(Button.of(2, xCenter, yCenter + 22,
+                100, 10,
                 "lang.screen.Mainmenu.Multiplayer").withAction(buttonClickInfo -> actionAfterClicking(() -> changeScreen(() -> new MultiplayerScreen(this)))));
-        buttons.add(Button.of(3, baseButtonsX, yCenter + 44,
-                baseButtonsX - 5, 10,
+        buttons.add(Button.of(3, xCenter, yCenter + 44,
+                100, 10,
                 "lang.screen.Mainmenu.Options").withAction(buttonClickInfo -> actionAfterClicking(() -> changeScreen(() -> new OptionsScreen(this, mc.options)))));
-        buttons.add(Button.of(4, baseButtonsX, yCenter + 66,
-                baseButtonsX - 5, 10,
-                "lang.screen.Mainmenu.Quit").withAction(buttonClickInfo -> actionAfterClicking(() -> changeScreen(() -> BThackScreens.EXIT, new Animation(Easing.LINEAR, 1000)))));
-
-        buttons.add(Button.of(5, 32, mc.getWindow().getScaledHeight() - 12,
-                30, 10,
+        buttons.add(Button.of(5, xCenter - 51, yCenter + 66,
+                49, 10,
                 "Credits").withAction(buttonClickInfo -> actionAfterClicking(() -> changeScreen(() -> BThackScreens.BTHACK_CREDITS))));
-        buttons.add(Button.of(6, 32, mc.getWindow().getScaledHeight() - 34,
-                30, 10,
+        buttons.add(Button.of(6, xCenter + 51, yCenter + 66,
+                49, 10,
                 "Donate").withAction(buttonClickInfo -> DesktopUtils.openURI("https://www.donationalerts.com/r/bebra_tyan")));
-
-        buttons.add(Button.of(8, 102, mc.getWindow().getScaledHeight() - 12, 38, 10, "ClickGui")
+        buttons.add(Button.of(8, xCenter, yCenter + 88, 100, 10, "ClickGui")
                 .withAction(buttonClickInfo -> {
                     buttons.forEach(button -> {
                         button.setAllowUpdate(false);
@@ -100,6 +95,9 @@ public class BThackMainMenuScreen extends BThackScreen {
                     });
                     mc.setScreen(BThackScreens.CLICK_GUI);
                 }));
+        buttons.add(Button.of(4, xCenter, yCenter + 110,
+                100, 10,
+                "lang.screen.Mainmenu.Quit").withAction(buttonClickInfo -> actionAfterClicking(() -> changeScreen(() -> BThackScreens.EXIT, new Animation(Easing.LINEAR, 1000)))));
     }
 
     @Override
