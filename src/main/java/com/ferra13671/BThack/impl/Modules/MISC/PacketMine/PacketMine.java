@@ -129,6 +129,7 @@ public class PacketMine extends Module {
     public BreakingBlock currentBreakingBlock;
     private float destroyDelta = 0;
     private int breakDelay = 5;
+    private boolean itemRemoved = true;
 
     //Conveyor Mode
     public final ArrayList<BreakingBlock> conveyorBlocks = new ArrayList<>();
@@ -226,7 +227,7 @@ public class PacketMine extends Module {
         }
         if (conveyorBlocks.size() >= conveyorLimit.getValue() + 1) {
             if (conveyorMode.getValue()) {
-                conveyorBlocks.remove(0);
+                conveyorBlocks.removeFirst();
             }
             if (pos == currentBreakingBlock.blockPos) {
                 if (stopPackets.getValue())
@@ -382,6 +383,11 @@ public class PacketMine extends Module {
     public void onTick(ClientTickEvent e) {
         if (nullCheck() || mc.isPaused()) return;
 
+        if (!itemRemoved) {
+            packetRemoveItem();
+            itemRemoved = true;
+        }
+
         if (instaRebreak.getValue() && breakedPos != null)
             if (!mc.world.isAir(breakedPos) && BlockUtils.canBreak(breakedPos) && currentBreakingBlock == null)
                 updateBlockLimited(breakedPos);
@@ -414,6 +420,7 @@ public class PacketMine extends Module {
         if (!updateBreak(currentBreakingBlock, true)) {
 
             packetRemoveItem();
+            itemRemoved = false;
 
             if (conveyorMode.getValue()) {
                 for (BreakingBlock breakingBlock : conveyorBlocks) {
@@ -423,7 +430,7 @@ public class PacketMine extends Module {
                     }
                 }
                 if (!firstSkip) {
-                    conveyorBlocks.remove(0);
+                    conveyorBlocks.removeFirst();
                 } else {
                     firstSkip = false;
                 }
@@ -431,7 +438,7 @@ public class PacketMine extends Module {
                 breakedPos = currentBreakingBlock.blockPos;
                 setCurrentBreakingBlock(null);
                 if (!conveyorBlocks.isEmpty())
-                    updateBlock(conveyorBlocks.get(0).blockPos);
+                    updateBlock(conveyorBlocks.getFirst().blockPos);
             } else {
                 breakedPos = currentBreakingBlock.blockPos;
                 setCurrentBreakingBlock(null);
@@ -487,8 +494,6 @@ public class PacketMine extends Module {
                     mc.interactionManager.breakBlock(breakingBlock.blockPos);
 
                 stopDestroyBlock(breakingBlock.blockPos);
-
-                packetRemoveItem();
 
 
                 if (reset) destroyDelta = 0;
