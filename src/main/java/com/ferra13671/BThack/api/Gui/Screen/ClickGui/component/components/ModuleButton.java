@@ -118,7 +118,7 @@ public class ModuleButton extends Component implements Mc {
 
 		BThackRender.drawString(module.getName(), (parent.getX() + 5), (parent.getY() + offset + (BUTTON_HEIGHT / 2f) - (FontUtils.getTextHeight(module.getName())) / 2f), getModuleTextColor());
 
-		if (!settings.isEmpty())
+		if (ModuleList.clickGui.arrows.getValue() && !settings.isEmpty())
 			BThackRender.drawTextureRect(open ? Textures.HIDE : Textures.SHOW, parent.getX() + parent.getWidth() - BUTTON_HEIGHT, parent.getY() + offset, parent.getX() + parent.getWidth(), parent.getY() + offset + BUTTON_HEIGHT);
 		if(renderOpen || open) {
 			if(!settings.isEmpty()) {

@@ -27,6 +27,8 @@ public class ClickGui extends OneActionModule {
     public final BooleanSetting customColor = new BooleanSetting("Custom Color", this, false, () -> !rainbow.getValue());
     public final ColorSetting color = new ColorSetting("ClickGui Color", this, new Color(25, 28, 255), () -> customColor.getValue() && !rainbow.getValue()).withBlockedAlpha();
 
+    public final BooleanSetting arrows = new BooleanSetting("Arrows", this, true);
+
     public final BooleanSetting frameOutline = new BooleanSetting("Frame Outline", this, true);
     public final BooleanSetting moduleOutline = new BooleanSetting("Module Outline", this, true);
     public final BooleanSetting settingsOutline = new BooleanSetting("Settings Outline", this, true);
@@ -65,6 +67,8 @@ public class ClickGui extends OneActionModule {
                 rainbow,
                 rainbowScale,
                 rainbowSpeed,
+
+                arrows,
 
                 frameOutline,
                 moduleOutline,
