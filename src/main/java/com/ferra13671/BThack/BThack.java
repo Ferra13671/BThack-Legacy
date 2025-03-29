@@ -37,40 +37,40 @@ import java.lang.reflect.Modifier;
 import java.net.URI;
 
 public final class BThack implements ClientModInitializer, Mc {
+    public static final Logger LOGGER = LoggerFactory.getLogger("BThack");
+    public static final IEventBus EVENT_BUS = new UpdatedEventBus();
+    public static final String APP_ID = "1221431287852826676";
 
     public final VersionInfo versionInfo = new VersionInfo();
     public final String MC_VERSION;
     public final String VERSION;
     private final String RELEASE_VERSION;
-    private InitStage initStage = InitStage.NOT_INITED;
     private final boolean withBaritone;
     public final ClientPlayerController playerController = new ClientPlayerController();
 
-    public static BThack instance;
+    private InitStage initStage = InitStage.NOT_INITED;
 
-    public static final Logger logger = LoggerFactory.getLogger("BThack");
-    public static final IEventBus EVENT_BUS = new UpdatedEventBus();
-    public static final String APP_ID = "1221431287852826676";
+    public static BThack instance;
 
     public BThack() {
         ModMetadata mod = FabricLoader.getInstance().getModContainer("bthack").get().getMetadata();
         MC_VERSION = mod.getCustomValue("mcVersion").getAsString();
-        withBaritone = !mod.getVersion().getFriendlyString().equals("-NoBaritone");
+        withBaritone = !mod.getVersion().getFriendlyString().contains("-NoBaritone");
         VERSION = mod.getVersion().getFriendlyString();
         RELEASE_VERSION = mod.getCustomValue("releaseVersion").getAsString();
     }
 
     public static void log(String message) {
-        logger.info(message);
+        LOGGER.info(message);
     }
 
     public static void error(String message) {
-        logger.error(message);
+        LOGGER.error(message);
     }
 
     public static void debug(String message) {
         if (instance.versionInfo.isSendDebug())
-            logger.info("[DEBUG] {}", message);
+            LOGGER.info("[DEBUG] {}", message);
     }
 
     public static boolean isBaritonePresent() {
