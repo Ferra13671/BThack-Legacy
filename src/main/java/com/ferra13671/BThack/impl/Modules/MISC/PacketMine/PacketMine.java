@@ -18,7 +18,6 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSettin
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Social.SocialManagers;
 import com.ferra13671.BThack.api.Utils.*;
-import com.ferra13671.BThack.api.Utils.Grim.GrimUtils;
 import com.ferra13671.BThack.impl.Modules.PLAYER.AutoTool;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.entity.player.PlayerEntity;
@@ -40,10 +39,7 @@ public class PacketMine extends Module {
 
     public final ModeSetting page = new ModeSetting("Page", this, new ArrayList<>(Arrays.asList("General", "Render")));
 
-    public final BooleanSetting swingHand = new BooleanSetting("Swing Hand", this, false, () -> page.getValue().equals("General"));
-    public final BooleanSetting visibleBreaking = new BooleanSetting("Visible Breaking", this, false, () -> page.getValue().equals("General"));
-    public final BooleanSetting packetRotate = new BooleanSetting("Packet Rotate", this, false, () -> page.getValue().equals("General"));
-    public final BooleanSetting clientDestroy = new BooleanSetting("Client Destroy", this, false, () -> page.getValue().equals("General"));
+    public final BooleanSetting swingHand = new BooleanSetting("Swing Hand", this, true, () -> page.getValue().equals("General"));
 
     public final BooleanSetting removeIfUse = new BooleanSetting("Remove If Use", this, true, () -> page.getValue().equals("General"));
     public final BooleanSetting stopPackets = new BooleanSetting("Stop Packets", this, true, () -> removeIfUse.getValue() && page.getValue().equals("General"));
@@ -89,9 +85,6 @@ public class PacketMine extends Module {
                 page,
 
                 swingHand,
-                visibleBreaking,
-                packetRotate,
-                clientDestroy,
 
                 removeIfUse,
                 stopPackets,
@@ -388,9 +381,12 @@ public class PacketMine extends Module {
             itemRemoved = true;
         }
 
-        if (instaRebreak.getValue() && breakedPos != null)
-            if (!mc.world.isAir(breakedPos) && BlockUtils.canBreak(breakedPos) && currentBreakingBlock == null)
+        if (instaRebreak.getValue() && breakedPos != null) {
+            if (!mc.world.isAir(breakedPos) && BlockUtils.canBreak(breakedPos) && currentBreakingBlock == null) {
                 updateBlockLimited(breakedPos);
+                breakDelay = 0; //For InstaRebreak, the break delay doesn't make sense
+            }
+        }
 
         if ((!conveyorMode.getValue() || conveyorBlocks.isEmpty()) && currentBreakingBlock == null) doubleBlock = null;
 
@@ -454,44 +450,14 @@ public class PacketMine extends Module {
             return false;
         }
 
-        if (packetRotate.getValue()) {
-            float[] rot = RotateUtils.rotations(breakingBlock.blockPos);
-
-            GrimUtils.sendPreActionGrimPackets(rot[0], rot[1]);
-        }
-
         if (reset && currentSlot == -1) {
             packetEquipItem();
         }
 
         try {
-            if (!breakingBlock.startDestroying) {
+            if (breakingBlock.currentDestroyProgress == 1) {
 
-                if (instaRebreak.getValue() && breakedPos != null && breakedPos.equals(breakingBlock.blockPos)){
-                    breakingBlock.currentDestroyProgress = 1;
-                    stopDestroyBlock(breakingBlock.blockPos);
-                } else {
-                    startDestroyBlock(breakingBlock.blockPos);
-                    if (swingHand.getValue()) mc.player.swingHand(Hand.MAIN_HAND);
-                }
-                breakingBlock.startDestroying = true;
-            } else {
-                if (swingHand.getValue()) mc.player.swingHand(Hand.MAIN_HAND);
-                breakingBlock.prevDestroyProgress = breakingBlock.currentDestroyProgress;
-                breakingBlock.currentDestroyProgress += getDestroyDelta();
-                if (visibleBreaking.getValue()) mc.world.setBlockBreakingInfo(mc.player.getId(), breakingBlock.blockPos, (int)(breakingBlock.currentDestroyProgress * 10.0F));
-
-            }
-            if (breakingBlock.currentDestroyProgress >= 1) {
-                breakingBlock.currentDestroyProgress = 1;
-
-                if (instaRebreak.getValue() && breakedPos != null && breakedPos.equals(breakingBlock.blockPos)){
-                    packetRemoveItem();
-                    return false;
-                }
-
-                if (clientDestroy.getValue())
-                    mc.interactionManager.breakBlock(breakingBlock.blockPos);
+                if (instaRebreak.getValue() && breakedPos != null && breakedPos.equals(breakingBlock.blockPos)) return false;
 
                 stopDestroyBlock(breakingBlock.blockPos);
 
@@ -502,11 +468,28 @@ public class PacketMine extends Module {
                     doubleBlock = currentBreakingBlock;
                 } else {
                     if (doubleBlock != null && conveyorMode.getValue() && doubleMode.getValue() && switchToOld.getValue()) {
+                        if (swingHand.getValue()) mc.player.swingHand(Hand.MAIN_HAND);
                         startDestroyBlock(doubleBlock.blockPos);
                         stopDestroyBlock(doubleBlock.blockPos);
                     }
                 }
                 return false;
+            }
+            if (!breakingBlock.startDestroying) {
+
+                if (instaRebreak.getValue() && breakedPos != null && breakedPos.equals(breakingBlock.blockPos)){
+                    breakingBlock.currentDestroyProgress = 1;
+                    if (swingHand.getValue()) mc.player.swingHand(Hand.MAIN_HAND);
+                    stopDestroyBlock(breakingBlock.blockPos);
+                } else {
+                    if (swingHand.getValue()) mc.player.swingHand(Hand.MAIN_HAND);
+                    startDestroyBlock(breakingBlock.blockPos);
+                }
+                breakingBlock.startDestroying = true;
+            } else {
+                breakingBlock.prevDestroyProgress = breakingBlock.currentDestroyProgress;
+                breakingBlock.currentDestroyProgress += getDestroyDelta();
+                if (breakingBlock.currentDestroyProgress >= 1) breakingBlock.currentDestroyProgress = 1;
             }
         } catch (Exception ignored) {}
 
