@@ -9,6 +9,8 @@ import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.Module
 import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.setting.AbstractSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.KeyCodeSetting;
 import com.ferra13671.BThack.api.Module.Module;
+import com.ferra13671.BThack.api.SoundSystem.SoundSystem;
+import com.ferra13671.BThack.api.SoundSystem.Sounds;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 
 public class KeyCode extends AbstractSetting {
@@ -47,6 +49,7 @@ public class KeyCode extends AbstractSetting {
         if (!getVisible()) return false;
 
         if(isMouseOnButton(mouseX, mouseY) && button == 0) {
+            SoundSystem.playSound(Sounds.GUI_TYPING);
             binding = !binding;
         }
 
@@ -62,10 +65,12 @@ public class KeyCode extends AbstractSetting {
                 set.setValue(0);
                 set.module.onChangeSetting(set);
                 binding = false;
+                SoundSystem.playSound(Sounds.GUI_TYPING);
             } else if (key != KeyboardUtils.KEY_ESCAPE) {
                 set.setValue(key);
                 set.module.onChangeSetting(set);
                 binding = false;
+                SoundSystem.playSound(Sounds.GUI_TYPING);
             }
         }
     }

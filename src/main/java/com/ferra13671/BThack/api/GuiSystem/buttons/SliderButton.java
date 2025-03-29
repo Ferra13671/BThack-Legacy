@@ -5,6 +5,9 @@ import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Font.FontRenderManager;
 import com.ferra13671.BThack.Core.Render.Font.FontUtils;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
+import com.ferra13671.BThack.api.SoundSystem.SoundSystem;
+import com.ferra13671.BThack.api.SoundSystem.Sounds;
+import com.ferra13671.BThack.api.Utils.Ticker;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -16,7 +19,8 @@ public class SliderButton extends Button {
     public final double min;
     public final double max;
 
-    private double renderWidth;
+    private double renderWidth = -1;
+    private final Ticker soundTicker = new Ticker();
 
     public SliderButton(int id, int x, int y, int width, int height, String text, double defaultValue, double min, double max) {
         super(id, x, y, width, height, text);
@@ -44,7 +48,14 @@ public class SliderButton extends Button {
         double diff = ((mouseX - x) / (getWidth() * 2d)) * 100;
         diff = Math.max(0, Math.min(100, diff));
 
+        double prevRenderWidth = renderWidth;
+
         renderWidth = (getWidth() * 2) * ((value - min) / (max - min));
+
+        if (prevRenderWidth != renderWidth && prevRenderWidth != -1 && soundTicker.passed(50)) {
+            SoundSystem.playSound(renderWidth > prevRenderWidth ? Sounds.GUI_SLIDER_UP : Sounds.GUI_SLIDER_DOWN);
+            soundTicker.reset();
+        }
 
         if (dragging) {
             if (diff == 0) {

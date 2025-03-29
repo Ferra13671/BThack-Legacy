@@ -11,6 +11,8 @@ import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.settin
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Shader.Shaders;
+import com.ferra13671.BThack.api.SoundSystem.SoundSystem;
+import com.ferra13671.BThack.api.SoundSystem.Sounds;
 import com.ferra13671.BThack.impl.Modules.CLIENT.ClickGui;
 
 public class Checkbox extends AbstractSetting {
@@ -75,6 +77,7 @@ public class Checkbox extends AbstractSetting {
 			set.setValue(!set.getValue());
 			set.module.onChangeSetting(set);
 			animation.reset();
+			SoundSystem.playSound(set.getValue() ? Sounds.GUI_CHECKBOX_ENABLE : Sounds.GUI_CHECKBOX_DISABLE);
 		}
 
 		return isMouseOnButton(mouseX, mouseY);

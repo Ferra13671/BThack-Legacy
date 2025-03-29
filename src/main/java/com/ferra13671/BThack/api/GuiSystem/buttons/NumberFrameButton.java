@@ -4,7 +4,10 @@ import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Font.FontRenderManager;
 import com.ferra13671.BThack.Core.Render.Font.FontUtils;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
+import com.ferra13671.BThack.api.SoundSystem.SoundSystem;
+import com.ferra13671.BThack.api.SoundSystem.Sounds;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
+import com.ferra13671.BThack.api.Utils.Ticker;
 import com.google.common.collect.Sets;
 
 import java.util.Set;
@@ -12,6 +15,8 @@ import java.util.Set;
 public class NumberFrameButton extends Button {
     private final StringBuilder textBuilder = new StringBuilder();
     private boolean isDouble = false;
+
+    private final Ticker soundTicker = new Ticker();
 
     private final Set<String> keys = Sets.newHashSet(
             "1","2","3","4","5","6","7","8","9","0"
@@ -40,6 +45,10 @@ public class NumberFrameButton extends Button {
                 if (Character.toString(textBuilder.charAt(textBuilder.length() - 1)).equals("."))
                     isDouble = false;
                 textBuilder.deleteCharAt(textBuilder.length() - 1);
+                if (soundTicker.passed(50)) {
+                    SoundSystem.playSound(Sounds.GUI_TYPING);
+                    soundTicker.reset();
+                }
             }
         }
     }
@@ -52,6 +61,10 @@ public class NumberFrameButton extends Button {
 
         if (symbol.equals("-")) {
             if (textBuilder.isEmpty()) {
+                if (soundTicker.passed(50)) {
+                    SoundSystem.playSound(Sounds.GUI_TYPING);
+                    soundTicker.reset();
+                }
                 textBuilder.append(_char);
             }
             return;
@@ -59,6 +72,10 @@ public class NumberFrameButton extends Button {
 
         if (keys.contains(symbol)) {
             if (FontUtils.getTextWidth(textBuilder.toString()) < ((this.getWidth() * 2) - ((this.getWidth() * 2) * 0.1))) {
+                if (soundTicker.passed(50)) {
+                    SoundSystem.playSound(Sounds.GUI_TYPING);
+                    soundTicker.reset();
+                }
                 textBuilder.append(_char);
             }
             return;
@@ -67,6 +84,10 @@ public class NumberFrameButton extends Button {
         if (symbol.equals(".")) {
             if (!isDouble && FontUtils.getTextWidth(textBuilder.toString()) < ((this.getWidth() * 2) - ((this.getWidth() * 2) * 0.1)) && !textBuilder.isEmpty()) {
                 textBuilder.append(_char);
+                if (soundTicker.passed(50)) {
+                    SoundSystem.playSound(Sounds.GUI_TYPING);
+                    soundTicker.reset();
+                }
                 isDouble = true;
             }
         }

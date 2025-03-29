@@ -7,6 +7,8 @@ import com.ferra13671.BThack.api.Animation.Animation;
 import com.ferra13671.BThack.api.Animation.Easing;
 import com.ferra13671.BThack.api.GuiSystem.ScreenWidget;
 import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.SoundSystem.SoundSystem;
+import com.ferra13671.BThack.api.SoundSystem.Sounds;
 import net.minecraft.client.gui.DrawContext;
 
 import java.util.ArrayList;
@@ -49,6 +51,7 @@ public class WidgetManage implements Mc {
             WidgetInfo widget = widgets.getFirst();
             if (widget.screenWidget.needClose) {
                 widget.setStatus(WidgetStatus.CLOSED);
+                widget.soundPlayed = false;
                 widget.screenWidget.needClose = false;
                 return;
             }
@@ -59,11 +62,19 @@ public class WidgetManage implements Mc {
                     return;
                 }
                 case OPENED -> {
+                    if (!widget.soundPlayed && ((double) widget.widgetAnimation.getPassedMillis() / widget.animTime) > 0.3) {
+                        SoundSystem.playSound(Sounds.GUI_WIDGET_SHOW, 0.3f);
+                        widget.soundPlayed = true;
+                    }
                     if (widget.widgetAnimation.getPassedMillis() >= widget.animTime)
                         if (!widget.allowUpdate)
                             widget.setAllowUpdate(true);
                 }
                 case CLOSED -> {
+                    if (!widget.soundPlayed && ((double) widget.widgetAnimation.getPassedMillis() / widget.animTime) > 0.2) {
+                        SoundSystem.playSound(Sounds.GUI_WIDGET_HIDE, 0.3f);
+                        widget.soundPlayed = true;
+                    }
                     if (widget.widgetAnimation.getPassedMillis() >= widget.animTime) {
                         widgets.remove(widget);
                         return;
@@ -130,6 +141,7 @@ public class WidgetManage implements Mc {
         private final Animation backgroundAnimation;
         private WidgetStatus status = WidgetStatus.NOT_OPENED;
         private boolean allowUpdate = false;
+        private boolean soundPlayed = false;
 
         public WidgetInfo(ScreenWidget screenWidget) {
             this.screenWidget = screenWidget;

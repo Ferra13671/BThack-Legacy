@@ -11,7 +11,10 @@ import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Shader.Shaders;
+import com.ferra13671.BThack.api.SoundSystem.SoundSystem;
+import com.ferra13671.BThack.api.SoundSystem.Sounds;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
+import com.ferra13671.BThack.api.Utils.Ticker;
 import com.ferra13671.BThack.impl.Modules.CLIENT.ClickGui;
 import com.google.common.collect.Sets;
 
@@ -43,7 +46,8 @@ public class Slider extends AbstractSetting implements Mc {
 			KeyboardUtils.KEY_9
 	);
 
-	private double renderWidth;
+	private double renderWidth = -1;
+	private final Ticker soundTicker = new Ticker();
 
 	public Slider(NumberSetting option, ModuleButton button, int offset, Module module) {
 		super(offset, button, module, option);
@@ -81,7 +85,14 @@ public class Slider extends AbstractSetting implements Mc {
 		double diff = ((mouseX - 1 - ClickGui.applyGuiScale(x)) / (getWidth() * 2)) * 100;
 		diff = Math.max(0, Math.min(100, diff));
 
+		double prevRenderWidth = renderWidth;
+
 		renderWidth = (100 - 4) * ((set.getValue() - min) / (max - min));
+
+		if (prevRenderWidth != renderWidth && prevRenderWidth != -1 && soundTicker.passed(50)) {
+			SoundSystem.playSound(renderWidth > prevRenderWidth ? Sounds.GUI_SLIDER_UP : Sounds.GUI_SLIDER_DOWN);
+			soundTicker.reset();
+		}
 
 		if (dragging) {
 			if (diff == 0) {

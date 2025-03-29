@@ -8,6 +8,8 @@ import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.ModuleButton;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Shader.Shaders;
+import com.ferra13671.BThack.api.SoundSystem.SoundSystem;
+import com.ferra13671.BThack.api.SoundSystem.Sounds;
 import com.ferra13671.BThack.impl.Modules.CLIENT.ClickGui;
 
 public class Visible extends Checkbox {
@@ -68,6 +70,7 @@ public class Visible extends Checkbox {
         if (isMouseOnButton(mouseX, mouseY) && button == 0) {
             module.setVisible(!module.isVisible());
             animation.reset();
+            SoundSystem.playSound(module.isVisible() ? Sounds.GUI_CHECKBOX_ENABLE : Sounds.GUI_CHECKBOX_DISABLE);
         }
         return isMouseOnButton(mouseX, mouseY);
     }

@@ -4,12 +4,16 @@ import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Font.FontRenderManager;
 import com.ferra13671.BThack.Core.Render.Font.FontUtils;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
+import com.ferra13671.BThack.api.SoundSystem.SoundSystem;
+import com.ferra13671.BThack.api.SoundSystem.Sounds;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
+import com.ferra13671.BThack.api.Utils.Ticker;
 
 public class TextFrameButton extends Button {
     private StringBuilder textBuilder = new StringBuilder();
 
     private boolean selected = false;
+    private final Ticker soundTicker = new Ticker();
 
 
     public TextFrameButton(int id, int centerX, int centerY, int width, int height) {
@@ -33,6 +37,10 @@ public class TextFrameButton extends Button {
         if (key == KeyboardUtils.KEY_BACKSPACE) {
             if (!textBuilder.isEmpty()) {
                 textBuilder.deleteCharAt(textBuilder.length() - 1);
+                if (soundTicker.passed(50)) {
+                    SoundSystem.playSound(Sounds.GUI_TYPING);
+                    soundTicker.reset();
+                }
             }
         }
     }
@@ -44,6 +52,10 @@ public class TextFrameButton extends Button {
 
         if (FontUtils.getTextWidth(textBuilder.toString()) < ((this.getWidth() * 2) - ((this.getWidth() * 2) * 0.1))) {
             textBuilder.append(_char);
+            if (soundTicker.passed(50)) {
+                SoundSystem.playSound(Sounds.GUI_TYPING);
+                soundTicker.reset();
+            }
         }
     }
 

@@ -10,6 +10,8 @@ import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.Module
 import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.setting.AbstractSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Module.Module;
+import com.ferra13671.BThack.api.SoundSystem.SoundSystem;
+import com.ferra13671.BThack.api.SoundSystem.Sounds;
 
 public class ModeButton extends AbstractSetting {
 
@@ -76,6 +78,7 @@ public class ModeButton extends AbstractSetting {
 
 			set.setValue(set.getOptions().get(set.getIndex()));
 			set.module.onChangeSetting(set);
+			SoundSystem.playSound(Sounds.GUI_CHECKBOX_ENABLE);
 		}
 
 		return isMouseOnButton(mouseX, mouseY);

@@ -27,5 +27,47 @@
     "sounds": [
       "bthack:config_saved_or_loaded"
     ]
+  },
+
+  "gui_slider_down": {
+    "sounds": [
+      "bthack:gui_slider_down"
+    ]
+  },
+
+  "gui_slider_up": {
+    "sounds": [
+      "bthack:gui_slider_up"
+    ]
+  },
+
+  "gui_typing": {
+    "sounds": [
+      "bthack:gui_typing"
+    ]
+  },
+
+  "gui_widget_show": {
+    "sounds": [
+      "bthack:gui_widget_show"
+    ]
+  },
+
+  "gui_widget_hide": {
+    "sounds": [
+      "bthack:gui_widget_hide"
+    ]
+  },
+
+  "gui_checkbox_enable": {
+    "sounds": [
+      "bthack:gui_checkbox_enable"
+    ]
+  },
+
+  "gui_checkbox_disable": {
+    "sounds": [
+      "bthack:gui_checkbox_disable"
+    ]
   }
 }

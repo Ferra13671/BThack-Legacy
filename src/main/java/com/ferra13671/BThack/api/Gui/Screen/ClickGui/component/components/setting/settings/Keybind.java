@@ -7,6 +7,8 @@ import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.ModuleButton;
 import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.setting.AbstractSetting;
+import com.ferra13671.BThack.api.SoundSystem.SoundSystem;
+import com.ferra13671.BThack.api.SoundSystem.Sounds;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 
 public class Keybind extends AbstractSetting {
@@ -45,7 +47,7 @@ public class Keybind extends AbstractSetting {
 	@Override
 	public boolean mouseClicked(int mouseX, int mouseY, int button) {
 		if(isMouseOnButton(mouseX, mouseY) && button == 0) {
-			this.binding = !this.binding;
+			binding = !binding;
 		}
 
 		return isMouseOnButton(mouseX, mouseY);
@@ -53,13 +55,15 @@ public class Keybind extends AbstractSetting {
 	
 	@Override
 	public void keyTyped(int key) {
-		if (this.binding) {
+		if (binding) {
 			if (key == KeyboardUtils.KEY_DELETE) {
-				this.parent.module.setKey(0);
-				this.binding = false;
+				parent.module.setKey(0);
+				binding = false;
+				SoundSystem.playSound(Sounds.GUI_TYPING);
 			} else if (key != KeyboardUtils.KEY_ESCAPE) {
-				this.parent.module.setKey(key);
-				this.binding = false;
+				parent.module.setKey(key);
+				binding = false;
+				SoundSystem.playSound(Sounds.GUI_TYPING);
 			}
 		}
 	}
