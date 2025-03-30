@@ -24,6 +24,7 @@ import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -107,6 +108,7 @@ public abstract class MixinGameRenderer {
         Shaders.INSTANCE.updateTime();
     }
 
+    @Unique
     public void renderShaderHand(Camera camera, float tickDelta) {
         if (!renderingPanorama) {
             loadProjectionMatrix(getBasicProjectionMatrix(getFov(camera, tickDelta, false)));
@@ -123,7 +125,6 @@ public abstract class MixinGameRenderer {
                 OutlineVertexConsumerProvider outlineVertexConsumerProvider = ((IWorldRenderer) client.worldRenderer)._getBufferBuilders().getOutlineVertexConsumers();
                 outlineVertexConsumerProvider.setColor(255, 255, 255, 255);
                 ((ModifyHeldItemRenderer) firstPersonRenderer).renderShaderItem(tickDelta, matrixStack, outlineVertexConsumerProvider, client.player, client.getEntityRenderDispatcher().getLight(client.player, tickDelta));
-                outlineVertexConsumerProvider.draw();
                 lightmapTextureManager.disable();
             }
 
