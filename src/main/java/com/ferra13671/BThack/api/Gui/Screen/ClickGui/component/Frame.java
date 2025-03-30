@@ -104,8 +104,13 @@ public class Frame implements Mc, Closeable {
 		buttonHovered = false;
 	}
 
-	public void resetFrameAnimation() {
+	public void resetAnimationIgnoreOpen() {
 		frameAnimation.reset();
+	}
+
+	public void resetAnimation() {
+		if (isOpen())
+			frameAnimation.reset();
 	}
 
 	/**
@@ -128,9 +133,8 @@ public class Frame implements Mc, Closeable {
 		}
 		if(isWithinHeader((int) mouseX, (int) mouseY) && mouseButton == 1) {
 			setOpen(!isOpen());
-			resetFrameAnimation();
+			resetAnimationIgnoreOpen();
 			if (isOpen()) refresh();
-			else height = BAR_HEIGHT;
 			return false;
 		}
         return !isMouseOnFrame((int) mouseX, (int) mouseY);
@@ -261,7 +265,7 @@ public class Frame implements Mc, Closeable {
 
 	public boolean isMouseOnFrame(int mouseX, int mouseY) {
 		return mouseX >= ClickGui.applyGuiScale(x) && mouseX <= ClickGui.applyGuiScale(x + FRAME_WIDTH) &&
-				mouseY >= ClickGui.applyGuiScale(y) && mouseY <= ClickGui.applyGuiScale(y + height);
+				mouseY >= ClickGui.applyGuiScale(y) && mouseY <= ClickGui.applyGuiScale(y + (frameAnimation.getPassedMillis() > frameAnimation.getMillis() ? height : (height * (float) (isOpen() ? frameAnimation.getEase() : 1 - frameAnimation.getEase()))));
 	}
 
 	public static List<Frame> getGlobalFrames() {

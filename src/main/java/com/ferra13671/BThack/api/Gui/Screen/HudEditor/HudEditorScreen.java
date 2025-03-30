@@ -49,7 +49,7 @@ public class HudEditorScreen extends BThackScreen {
 
     @Override
     public void onDisplayed() {
-        frame.resetFrameAnimation();
+        frame.resetAnimation();
         BThackScreens.CLICK_GUI.snowTicker.reset();
     }
 

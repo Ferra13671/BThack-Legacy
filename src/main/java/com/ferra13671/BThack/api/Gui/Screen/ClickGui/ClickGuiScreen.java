@@ -65,7 +65,7 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
     @Override
     public void onDisplayed() {
         super.onDisplayed();
-        for (Frame frame : frames) frame.resetFrameAnimation();
+        for (Frame frame : frames) frame.resetAnimation();
         snowTicker.reset();
     }
 
