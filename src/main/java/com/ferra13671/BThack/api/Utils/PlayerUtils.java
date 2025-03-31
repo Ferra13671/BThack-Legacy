@@ -112,8 +112,16 @@ public final class PlayerUtils implements Mc {
         return entity.getPos();
     }
 
+    public static boolean isInOverworld() {
+        return getDimension().equals("overworld");
+    }
+
     public static boolean isInNether() {
-        return getDimension().equals("nether");
+        return getDimension().equals("the_nether");
+    }
+
+    public static boolean isInEnd() {
+        return getDimension().equals("the_end");
     }
 
     public static String getDimension() {

@@ -290,7 +290,7 @@ public class NewChunks extends Module {
             boolean chunkIsBeingUpdated = false;
             ChunkSection[] sections = chunk.getSectionArray();
 
-            if (overworldOldCheck.getValue() && PlayerUtils.getDimension().equals("overworld") && chunk.getStatus().isAtLeast(ChunkStatus.FULL) && !chunk.isEmpty()) {
+            if (overworldOldCheck.getValue() && PlayerUtils.isInOverworld() && chunk.getStatus().isAtLeast(ChunkStatus.FULL) && !chunk.isEmpty()) {
                 boolean foundAnyOre = false;
                 boolean isNewOverworldGeneration = false;
 
@@ -313,10 +313,10 @@ public class NewChunks extends Module {
                 if (foundAnyOre && !isNewOverworldGeneration) isOldGeneration = true;
             }
 
-            if (netherOldCheck.getValue() && PlayerUtils.getDimension().equals("nether") && chunk.getStatus().isAtLeast(ChunkStatus.FULL) && !chunk.isEmpty())
+            if (netherOldCheck.getValue() && PlayerUtils.isInNether() && chunk.getStatus().isAtLeast(ChunkStatus.FULL) && !chunk.isEmpty())
                 if (!isOldGeneration && !isNewNetherGeneration(sections)) isOldGeneration = true;
 
-            if (endOldCheck.getValue() && PlayerUtils.getDimension().equals("end") && chunk.getStatus().isAtLeast(ChunkStatus.FULL) && !chunk.isEmpty()) {
+            if (endOldCheck.getValue() && PlayerUtils.isInEnd() && chunk.getStatus().isAtLeast(ChunkStatus.FULL) && !chunk.isEmpty()) {
                 ChunkSection section = chunk.getSection(0);
                 ReadableContainer<RegistryEntry<Biome>> biomesContainer = section.getBiomeContainer();
                 if (biomesContainer instanceof PalettedContainer<RegistryEntry<Biome>> biomesPaletteContainer) {
@@ -365,26 +365,26 @@ public class NewChunks extends Module {
                                     BlockState blockPaletteEntry = blockStatePalette.get(i2);
 
                                     if (i2 == 0 && blockPaletteEntry.getBlock() == Blocks.AIR) {
-                                        if (loops == 0 && !PlayerUtils.getDimension().equals("end"))
+                                        if (loops == 0 && !PlayerUtils.isInEnd())
                                             firstChunkAppearsNew = true;
-                                        if (!PlayerUtils.getDimension().equals("nether") && !PlayerUtils.getDimension().equals("end"))
+                                        if (!PlayerUtils.isInNether() && !PlayerUtils.isInEnd())
                                             isNewSection++;
                                     }
-                                    if (i2 == 1 && (blockPaletteEntry.getBlock() == Blocks.WATER || blockPaletteEntry.getBlock() == Blocks.STONE || blockPaletteEntry.getBlock() == Blocks.GRASS_BLOCK || blockPaletteEntry.getBlock() == Blocks.SNOW_BLOCK) && !PlayerUtils.getDimension().equals("nether") && !PlayerUtils.getDimension().equals("end"))
+                                    if (i2 == 1 && (blockPaletteEntry.getBlock() == Blocks.WATER || blockPaletteEntry.getBlock() == Blocks.STONE || blockPaletteEntry.getBlock() == Blocks.GRASS_BLOCK || blockPaletteEntry.getBlock() == Blocks.SNOW_BLOCK) && !PlayerUtils.isInNether() && !PlayerUtils.isInEnd())
                                         isNewSection++;
-                                    if (i2 == 2 && (blockPaletteEntry.getBlock() == Blocks.SNOW_BLOCK || blockPaletteEntry.getBlock() == Blocks.DIRT || blockPaletteEntry.getBlock() == Blocks.POWDER_SNOW) && !PlayerUtils.getDimension().equals("nether") && !PlayerUtils.getDimension().equals("end"))
+                                    if (i2 == 2 && (blockPaletteEntry.getBlock() == Blocks.SNOW_BLOCK || blockPaletteEntry.getBlock() == Blocks.DIRT || blockPaletteEntry.getBlock() == Blocks.POWDER_SNOW) && !PlayerUtils.isInNether() && !PlayerUtils.isInEnd())
                                         isNewSection++;
-                                    if (loops == 4 && blockPaletteEntry.getBlock() == Blocks.BEDROCK && !PlayerUtils.getDimension().equals("nether") && !PlayerUtils.getDimension().equals("end")) {
+                                    if (loops == 4 && blockPaletteEntry.getBlock() == Blocks.BEDROCK && !PlayerUtils.isInNether() && !PlayerUtils.isInEnd()) {
                                         if (beingUpdatedSearch.getValue())
                                             chunkIsBeingUpdated = true;
                                     }
-                                    if (blockPaletteEntry.getBlock() == Blocks.AIR && (PlayerUtils.getDimension().equals("nether") || PlayerUtils.getDimension().equals("end")))
+                                    if (blockPaletteEntry.getBlock() == Blocks.AIR && (PlayerUtils.isInNether() || PlayerUtils.isInEnd()))
                                         isBeingUpdatedSection++;
                                 }
                                 if (isBeingUpdatedSection >= 2) oldChunkQuantifier++;
                                 if (isNewSection >= 2) newChunkQuantifier++;
                             }
-                            if (PlayerUtils.getDimension().equals("end")) {
+                            if (PlayerUtils.isInEnd()) {
                                 ReadableContainer<RegistryEntry<Biome>> biomesContainer = section.getBiomeContainer();
                                 if (biomesContainer instanceof PalettedContainer<RegistryEntry<Biome>> biomesPaletteContainer) {
                                     Palette<RegistryEntry<Biome>> biomePalette = biomesPaletteContainer.data.palette();
@@ -398,22 +398,22 @@ public class NewChunks extends Module {
                     }
 
                     if (loops > 0) {
-                        if (beingUpdatedSearch.getValue() && (PlayerUtils.getDimension().equals("nether") || PlayerUtils.getDimension().equals("end"))) {
+                        if (beingUpdatedSearch.getValue() && (PlayerUtils.isInNether() || PlayerUtils.isInEnd())) {
                             if ((((double) oldChunkQuantifier / loops) * 100) >= 25) chunkIsBeingUpdated = true; //oldPercentage >= 25
-                        } else if (!PlayerUtils.getDimension().equals("nether") && !PlayerUtils.getDimension().equals("end")){
+                        } else if (!PlayerUtils.isInNether() && !PlayerUtils.isInEnd()){
                             if ((((double) newChunkQuantifier / loops) * 100) >= 51) isNewChunk = true; //percentage >= 51
                         }
                     }
                 } catch (Exception ex) {
-                    if (beingUpdatedSearch.getValue() && (PlayerUtils.getDimension().equals("nether") || PlayerUtils.getDimension().equals("end"))) {
+                    if (beingUpdatedSearch.getValue() && (PlayerUtils.isInNether() || PlayerUtils.isInEnd())) {
                         if ((((double) oldChunkQuantifier / loops) * 100) >= 25) chunkIsBeingUpdated = true; //oldPercentage >= 25
-                    } else if (!PlayerUtils.getDimension().equals("nether") && !PlayerUtils.getDimension().equals("end")) {
+                    } else if (!PlayerUtils.isInNether() && !PlayerUtils.isInEnd()) {
                         if ((((double) newChunkQuantifier / loops) * 100) >= 51) isNewChunk = true; //percentage >= 51
                     }
                 }
 
                 if (firstChunkAppearsNew) isNewChunk = true;
-                if (isNewChunk && !chunkIsBeingUpdated && ((PlayerUtils.getDimension().equals("end")) ? isNewChunk : !isOldGeneration)) {
+                if (isNewChunk && !chunkIsBeingUpdated && ((PlayerUtils.isInEnd()) ? isNewChunk : !isOldGeneration)) {
                     if (addChunkWithCheck(oldPos, newChunks)) return;
                 } else if (!isNewChunk && !chunkIsBeingUpdated && isOldGeneration) {
                     if (addChunkWithCheck(oldPos, oldGenerationOldChunks)) return;

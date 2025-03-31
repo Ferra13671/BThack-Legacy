@@ -46,13 +46,13 @@ public class Waypoints extends Module {
         String currentServer = mc.isInSingleplayer() ? "SinglePlayer" : mc.getNetworkHandler().getServerInfo().address;
 
         BThackMatrix.push();
-        if (PlayerUtils.getDimension().equals("overworld") || (convertOverworld.getValue() && PlayerUtils.getDimension().equals("nether"))) {
+        if (PlayerUtils.isInOverworld() || (convertOverworld.getValue() && PlayerUtils.isInNether())) {
             Managers.WAYPOINT_MANAGER.getOverworldWaypoints().forEach(waypoint -> {
                 if (!waypoint.isVisible()) return;
                 if (!waypoint.getServer().equals(currentServer)) return;
                 Vec3d position = new Vec3d(waypoint.getPosition().getX(), waypoint.getPosition().getY(), waypoint.getPosition().getZ());
 
-                if (convertOverworld.getValue() && PlayerUtils.getDimension().equals("nether")) {
+                if (convertOverworld.getValue() && PlayerUtils.isInNether()) {
                     position.x /= 8;
                     position.z /= 8;
                 }
@@ -60,19 +60,19 @@ public class Waypoints extends Module {
                 drawWaypoint(position, waypoint);
             });
         }
-        if (PlayerUtils.getDimension().equals("end")) {
+        if (PlayerUtils.isInEnd()) {
             Managers.WAYPOINT_MANAGER.getEndWaypoints().forEach(waypoint -> {
                 if (!waypoint.isVisible()) return;
                 if (!waypoint.getServer().equals(currentServer)) return;
                 drawWaypoint(waypoint.getPosition(), waypoint);
             });
         }
-        if (PlayerUtils.getDimension().equals("nether") || (convertNether.getValue() && PlayerUtils.getDimension().equals("overworld"))) {
+        if (PlayerUtils.isInNether() || (convertNether.getValue() && PlayerUtils.isInOverworld())) {
             Managers.WAYPOINT_MANAGER.getNetherWaypoints().forEach(waypoint -> {
                 if (!waypoint.isVisible()) return;
                 if (!waypoint.getServer().equals(currentServer)) return;
                 Vec3d position = new Vec3d(waypoint.getPosition().getX(), waypoint.getPosition().getY(), waypoint.getPosition().getZ());
-                if (convertNether.getValue() && PlayerUtils.getDimension().equals("overworld")) {
+                if (convertNether.getValue() && PlayerUtils.isInOverworld()) {
                     position.x *= 8;
                     position.z *= 8;
                 }

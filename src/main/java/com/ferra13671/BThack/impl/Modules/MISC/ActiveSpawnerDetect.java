@@ -196,7 +196,7 @@ public class ActiveSpawnerDetect extends Module {
                                 }
                                 scannedPositions.add(pos);
                             } else if (spawner.getLogic().spawnDelay != 20) {
-                                if (PlayerUtils.getDimension().equals("nether") && spawner.getLogic().spawnDelay == 0) return;
+                                if (PlayerUtils.isInNether() && spawner.getLogic().spawnDelay == 0) return;
                                 if (chatFeedback.getValue()) {
                                     if (monster != null){
                                         if (monster.contains("zombie") || monster.contains("skeleton") || monster.contains(":spider")) {
