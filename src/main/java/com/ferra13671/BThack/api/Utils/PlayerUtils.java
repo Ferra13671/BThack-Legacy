@@ -113,7 +113,11 @@ public final class PlayerUtils implements Mc {
     }
 
     public static boolean isInNether() {
-        return mc.world.getRegistryKey() == World.NETHER;
+        return getDimension().equals("nether");
+    }
+
+    public static String getDimension() {
+        return mc.world.getRegistryKey().getValue().getPath();
     }
 
     public static boolean isMoving() {

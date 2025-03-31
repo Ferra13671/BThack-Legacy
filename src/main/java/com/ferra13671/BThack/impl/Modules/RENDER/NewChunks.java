@@ -11,6 +11,7 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
+import com.ferra13671.BThack.api.Utils.PlayerUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -21,13 +22,11 @@ import net.minecraft.network.packet.c2s.play.AcknowledgeChunksC2SPacket;
 import net.minecraft.network.packet.s2c.play.BlockUpdateS2CPacket;
 import net.minecraft.network.packet.s2c.play.ChunkDataS2CPacket;
 import net.minecraft.network.packet.s2c.play.ChunkDeltaUpdateS2CPacket;
-import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeKeys;
 import net.minecraft.world.chunk.*;
@@ -206,7 +205,7 @@ public class NewChunks extends Module {
             Blocks.SOUL_SOIL,
             Blocks.SOUL_FIRE
     ));
-    private RegistryKey<World> prevDimension;
+    private String prevDimension;
 
     @Override
     public void onEnable() {
@@ -221,10 +220,10 @@ public class NewChunks extends Module {
             setToggled(false);
             return;
         }
-        if (!mc.world.getRegistryKey().equals(prevDimension)) {
+        if (!PlayerUtils.getDimension().equals(prevDimension)) {
             clearChunks();
         }
-        prevDimension = mc.world.getRegistryKey();
+        prevDimension = PlayerUtils.getDimension();
     }
 
     @EventSubscriber
@@ -291,7 +290,7 @@ public class NewChunks extends Module {
             boolean chunkIsBeingUpdated = false;
             ChunkSection[] sections = chunk.getSectionArray();
 
-            if (overworldOldCheck.getValue() && mc.world.getRegistryKey() == World.OVERWORLD && chunk.getStatus().isAtLeast(ChunkStatus.FULL) && !chunk.isEmpty()) {
+            if (overworldOldCheck.getValue() && PlayerUtils.getDimension().equals("overworld") && chunk.getStatus().isAtLeast(ChunkStatus.FULL) && !chunk.isEmpty()) {
                 boolean foundAnyOre = false;
                 boolean isNewOverworldGeneration = false;
 
@@ -314,10 +313,10 @@ public class NewChunks extends Module {
                 if (foundAnyOre && !isNewOverworldGeneration) isOldGeneration = true;
             }
 
-            if (netherOldCheck.getValue() && mc.world.getRegistryKey() == World.NETHER && chunk.getStatus().isAtLeast(ChunkStatus.FULL) && !chunk.isEmpty())
+            if (netherOldCheck.getValue() && PlayerUtils.getDimension().equals("nether") && chunk.getStatus().isAtLeast(ChunkStatus.FULL) && !chunk.isEmpty())
                 if (!isOldGeneration && !isNewNetherGeneration(sections)) isOldGeneration = true;
 
-            if (endOldCheck.getValue() && mc.world.getRegistryKey() == World.END && chunk.getStatus().isAtLeast(ChunkStatus.FULL) && !chunk.isEmpty()) {
+            if (endOldCheck.getValue() && PlayerUtils.getDimension().equals("end") && chunk.getStatus().isAtLeast(ChunkStatus.FULL) && !chunk.isEmpty()) {
                 ChunkSection section = chunk.getSection(0);
                 ReadableContainer<RegistryEntry<Biome>> biomesContainer = section.getBiomeContainer();
                 if (biomesContainer instanceof PalettedContainer<RegistryEntry<Biome>> biomesPaletteContainer) {
@@ -366,26 +365,26 @@ public class NewChunks extends Module {
                                     BlockState blockPaletteEntry = blockStatePalette.get(i2);
 
                                     if (i2 == 0 && blockPaletteEntry.getBlock() == Blocks.AIR) {
-                                        if (loops == 0 && mc.world.getRegistryKey() != World.END)
+                                        if (loops == 0 && !PlayerUtils.getDimension().equals("end"))
                                             firstChunkAppearsNew = true;
-                                        if (mc.world.getRegistryKey() != World.NETHER && mc.world.getRegistryKey() != World.END)
+                                        if (!PlayerUtils.getDimension().equals("nether") && !PlayerUtils.getDimension().equals("end"))
                                             isNewSection++;
                                     }
-                                    if (i2 == 1 && (blockPaletteEntry.getBlock() == Blocks.WATER || blockPaletteEntry.getBlock() == Blocks.STONE || blockPaletteEntry.getBlock() == Blocks.GRASS_BLOCK || blockPaletteEntry.getBlock() == Blocks.SNOW_BLOCK) && mc.world.getRegistryKey() != World.NETHER && mc.world.getRegistryKey() != World.END)
+                                    if (i2 == 1 && (blockPaletteEntry.getBlock() == Blocks.WATER || blockPaletteEntry.getBlock() == Blocks.STONE || blockPaletteEntry.getBlock() == Blocks.GRASS_BLOCK || blockPaletteEntry.getBlock() == Blocks.SNOW_BLOCK) && !PlayerUtils.getDimension().equals("nether") && !PlayerUtils.getDimension().equals("end"))
                                         isNewSection++;
-                                    if (i2 == 2 && (blockPaletteEntry.getBlock() == Blocks.SNOW_BLOCK || blockPaletteEntry.getBlock() == Blocks.DIRT || blockPaletteEntry.getBlock() == Blocks.POWDER_SNOW) && mc.world.getRegistryKey() != World.NETHER && mc.world.getRegistryKey() != World.END)
+                                    if (i2 == 2 && (blockPaletteEntry.getBlock() == Blocks.SNOW_BLOCK || blockPaletteEntry.getBlock() == Blocks.DIRT || blockPaletteEntry.getBlock() == Blocks.POWDER_SNOW) && !PlayerUtils.getDimension().equals("nether") && !PlayerUtils.getDimension().equals("end"))
                                         isNewSection++;
-                                    if (loops == 4 && blockPaletteEntry.getBlock() == Blocks.BEDROCK && mc.world.getRegistryKey() != World.NETHER && mc.world.getRegistryKey() != World.END) {
+                                    if (loops == 4 && blockPaletteEntry.getBlock() == Blocks.BEDROCK && !PlayerUtils.getDimension().equals("nether") && !PlayerUtils.getDimension().equals("end")) {
                                         if (beingUpdatedSearch.getValue())
                                             chunkIsBeingUpdated = true;
                                     }
-                                    if (blockPaletteEntry.getBlock() == Blocks.AIR && (mc.world.getRegistryKey() == World.NETHER || mc.world.getRegistryKey() == World.END))
+                                    if (blockPaletteEntry.getBlock() == Blocks.AIR && (PlayerUtils.getDimension().equals("nether") || PlayerUtils.getDimension().equals("end")))
                                         isBeingUpdatedSection++;
                                 }
                                 if (isBeingUpdatedSection >= 2) oldChunkQuantifier++;
                                 if (isNewSection >= 2) newChunkQuantifier++;
                             }
-                            if (mc.world.getRegistryKey() == World.END) {
+                            if (PlayerUtils.getDimension().equals("end")) {
                                 ReadableContainer<RegistryEntry<Biome>> biomesContainer = section.getBiomeContainer();
                                 if (biomesContainer instanceof PalettedContainer<RegistryEntry<Biome>> biomesPaletteContainer) {
                                     Palette<RegistryEntry<Biome>> biomePalette = biomesPaletteContainer.data.palette();
@@ -399,22 +398,22 @@ public class NewChunks extends Module {
                     }
 
                     if (loops > 0) {
-                        if (beingUpdatedSearch.getValue() && (mc.world.getRegistryKey() == World.NETHER || mc.world.getRegistryKey() == World.END)) {
+                        if (beingUpdatedSearch.getValue() && (PlayerUtils.getDimension().equals("nether") || PlayerUtils.getDimension().equals("end"))) {
                             if ((((double) oldChunkQuantifier / loops) * 100) >= 25) chunkIsBeingUpdated = true; //oldPercentage >= 25
-                        } else if (mc.world.getRegistryKey() != World.NETHER && mc.world.getRegistryKey() != World.END){
+                        } else if (!PlayerUtils.getDimension().equals("nether") && !PlayerUtils.getDimension().equals("end")){
                             if ((((double) newChunkQuantifier / loops) * 100) >= 51) isNewChunk = true; //percentage >= 51
                         }
                     }
                 } catch (Exception ex) {
-                    if (beingUpdatedSearch.getValue() && (mc.world.getRegistryKey() == World.NETHER || mc.world.getRegistryKey() == World.END)) {
+                    if (beingUpdatedSearch.getValue() && (PlayerUtils.getDimension().equals("nether") || PlayerUtils.getDimension().equals("end"))) {
                         if ((((double) oldChunkQuantifier / loops) * 100) >= 25) chunkIsBeingUpdated = true; //oldPercentage >= 25
-                    } else if (mc.world.getRegistryKey() != World.NETHER && mc.world.getRegistryKey() != World.END) {
+                    } else if (!PlayerUtils.getDimension().equals("nether") && !PlayerUtils.getDimension().equals("end")) {
                         if ((((double) newChunkQuantifier / loops) * 100) >= 51) isNewChunk = true; //percentage >= 51
                     }
                 }
 
                 if (firstChunkAppearsNew) isNewChunk = true;
-                if (isNewChunk && !chunkIsBeingUpdated && ((mc.world.getRegistryKey() == World.END) ? isNewChunk : !isOldGeneration)) {
+                if (isNewChunk && !chunkIsBeingUpdated && ((PlayerUtils.getDimension().equals("end")) ? isNewChunk : !isOldGeneration)) {
                     if (addChunkWithCheck(oldPos, newChunks)) return;
                 } else if (!isNewChunk && !chunkIsBeingUpdated && isOldGeneration) {
                     if (addChunkWithCheck(oldPos, oldGenerationOldChunks)) return;

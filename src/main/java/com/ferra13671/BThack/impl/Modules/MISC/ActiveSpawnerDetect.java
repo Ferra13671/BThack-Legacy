@@ -14,6 +14,7 @@ import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.BlockUtils;
 import com.ferra13671.BThack.api.Utils.ChatUtils;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
+import com.ferra13671.BThack.api.Utils.PlayerUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import com.google.common.collect.Sets;
 import net.minecraft.block.Block;
@@ -27,7 +28,6 @@ import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.ChunkPos;
-import net.minecraft.world.World;
 import net.minecraft.world.chunk.WorldChunk;
 
 import java.awt.*;
@@ -196,7 +196,7 @@ public class ActiveSpawnerDetect extends Module {
                                 }
                                 scannedPositions.add(pos);
                             } else if (spawner.getLogic().spawnDelay != 20) {
-                                if (mc.world.getRegistryKey() == World.NETHER && spawner.getLogic().spawnDelay == 0) return;
+                                if (PlayerUtils.getDimension().equals("nether") && spawner.getLogic().spawnDelay == 0) return;
                                 if (chatFeedback.getValue()) {
                                     if (monster != null){
                                         if (monster.contains("zombie") || monster.contains("skeleton") || monster.contains(":spider")) {

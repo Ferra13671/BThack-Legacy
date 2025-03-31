@@ -14,9 +14,9 @@ import com.ferra13671.BThack.api.Managers.managers.Waypoint.Waypoint;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.Utils.MathUtils;
+import com.ferra13671.BThack.api.Utils.PlayerUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
 
 public class Waypoints extends Module {
 
@@ -46,13 +46,13 @@ public class Waypoints extends Module {
         String currentServer = mc.isInSingleplayer() ? "SinglePlayer" : mc.getNetworkHandler().getServerInfo().address;
 
         BThackMatrix.push();
-        if (mc.world.getRegistryKey() == World.OVERWORLD || (convertOverworld.getValue() && mc.world.getRegistryKey() == World.NETHER)) {
+        if (PlayerUtils.getDimension().equals("overworld") || (convertOverworld.getValue() && PlayerUtils.getDimension().equals("nether"))) {
             Managers.WAYPOINT_MANAGER.getOverworldWaypoints().forEach(waypoint -> {
                 if (!waypoint.isVisible()) return;
                 if (!waypoint.getServer().equals(currentServer)) return;
                 Vec3d position = new Vec3d(waypoint.getPosition().getX(), waypoint.getPosition().getY(), waypoint.getPosition().getZ());
 
-                if (convertOverworld.getValue() && mc.world.getRegistryKey() == World.NETHER) {
+                if (convertOverworld.getValue() && PlayerUtils.getDimension().equals("nether")) {
                     position.x /= 8;
                     position.z /= 8;
                 }
@@ -60,19 +60,19 @@ public class Waypoints extends Module {
                 drawWaypoint(position, waypoint);
             });
         }
-        if (mc.world.getRegistryKey() == World.END) {
+        if (PlayerUtils.getDimension().equals("end")) {
             Managers.WAYPOINT_MANAGER.getEndWaypoints().forEach(waypoint -> {
                 if (!waypoint.isVisible()) return;
                 if (!waypoint.getServer().equals(currentServer)) return;
                 drawWaypoint(waypoint.getPosition(), waypoint);
             });
         }
-        if (mc.world.getRegistryKey() == World.NETHER || (convertNether.getValue() && mc.world.getRegistryKey() == World.OVERWORLD)) {
+        if (PlayerUtils.getDimension().equals("nether") || (convertNether.getValue() && PlayerUtils.getDimension().equals("overworld"))) {
             Managers.WAYPOINT_MANAGER.getNetherWaypoints().forEach(waypoint -> {
                 if (!waypoint.isVisible()) return;
                 if (!waypoint.getServer().equals(currentServer)) return;
                 Vec3d position = new Vec3d(waypoint.getPosition().getX(), waypoint.getPosition().getY(), waypoint.getPosition().getZ());
-                if (convertNether.getValue() && mc.world.getRegistryKey() == World.OVERWORLD) {
+                if (convertNether.getValue() && PlayerUtils.getDimension().equals("overworld")) {
                     position.x *= 8;
                     position.z *= 8;
                 }
