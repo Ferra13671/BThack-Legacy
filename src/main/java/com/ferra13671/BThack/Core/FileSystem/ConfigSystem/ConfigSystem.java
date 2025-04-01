@@ -40,10 +40,6 @@ import static com.ferra13671.BThack.Core.FileSystem.JsonUtils.*;
 public final class ConfigSystem {
     private static volatile boolean saving = false;
 
-    public static boolean isSaving() {
-        return saving;
-    }
-
     public static void saveConfigThreaded() {
         if (saving) return;
         saving = true;
@@ -244,7 +240,7 @@ public final class ConfigSystem {
                 add(frameObject, "y", frame.getY());
                 add(frameObject, "opened", frame.isOpen());
 
-                add(jsonObject, frame.getFrameName(), frameObject);
+                add(jsonObject, frame.getFrameName().toLowerCase(), frameObject);
             }
         });
     }
@@ -252,7 +248,7 @@ public final class ConfigSystem {
     public static void loadFrames() throws IOException {
         ConfigUtils.loadFromJson("Frames", "", jsonObject -> {
             for (Frame frame : Frame.getGlobalFrames()) {
-                JsonElement jsonElement = jsonObject.get(frame.getFrameName());
+                JsonElement jsonElement = jsonObject.get(frame.getFrameName().toLowerCase());
                 if (jsonElement == null) return;
                 JsonObject settingObject = jsonElement.getAsJsonObject();
                 if (settingObject == null) return;

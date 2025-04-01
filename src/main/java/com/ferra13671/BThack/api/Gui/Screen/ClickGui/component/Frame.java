@@ -19,6 +19,7 @@ import com.ferra13671.BThack.api.Utils.Data;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.impl.Modules.CLIENT.ClickGui;
 
+import java.awt.*;
 import java.io.Closeable;
 import java.util.ArrayList;
 import java.util.List;
@@ -163,21 +164,29 @@ public class Frame implements Mc, Closeable {
 		BThackMatrix.translate(0,0, 1);
 
 		boolean needScissor = frameAnimation.getEase() < 1;
+		float renderHeight = needScissor ? (float) (height * (open ? frameAnimation.getEase() : 1 - frameAnimation.getEase())) : open ? height : BAR_HEIGHT;
 
 		if (ModuleList.clickGui.rainbow.getValue()) {
 			ModuleList.clickGui.prepareRainbowShader();
 			BThackRender.drawShader(Shaders.INSTANCE.X_RAINBOW, x, y, x + FRAME_WIDTH, y + BAR_HEIGHT);
 		} else
 			BThackRender.drawRect(x, y, x + FRAME_WIDTH, y + BAR_HEIGHT, ModuleList.clickGui.customColor.getValue() ? ColorUtils.fastRGBA(ModuleList.clickGui.color.getValue().getRed(), ModuleList.clickGui.color.getValue().getGreen(), ModuleList.clickGui.color.getValue().getBlue(), 255) : ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().color()));
-		if (ModuleList.clickGui.frameOutline.getValue())
-			BThackRender.drawOutlineRect(x, y, x + FRAME_WIDTH, y + BAR_HEIGHT, 1, BAR_OUTLINE_COLOR);
+		if (ModuleList.clickGui.frameOutline.getValue()) {
+			if (ModuleList.clickGui.rainbow.getValue()) {
+				//Shaders.INSTANCE.X_RAINBOW.setUniformValue("brightness", 0.4f);
+				ModuleList.clickGui.prepareRainbowShader();
+				BThackRender.drawShaderOutlineRect(Shaders.INSTANCE.X_RAINBOW, x - 1, y - 1, x + FRAME_WIDTH + 1, y + renderHeight + 1, 1);
+			} else {
+				BThackRender.drawOutlineRect(x - 1, y - 1, x + FRAME_WIDTH + 1, y + renderHeight + 1, 1, ClickGui.getClickGuiColor(true));
+			}
+		}
 
 		BThackRender.drawString(frameName, x + (FRAME_WIDTH / 2f) - (FontUtils.getTextWidth(frameName) / 2f), y + (BAR_HEIGHT / 2f) - (FontUtils.getTextHeight(frameName) / 2f), ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()), true, FontRenderManager.DrawMode.NORMAL_BOLD);
 
 		if(open || frameAnimation.getEase() < 1) {
 			if(!buttons.isEmpty()) {
 				if (needScissor)
-					BThackRender.enableScissor(ClickGui.applyGuiScale(x), ClickGui.applyGuiScale(y + BAR_HEIGHT), ClickGui.applyGuiScale(FRAME_WIDTH), (int) ClickGui.applyGuiScale((float) (height * (open ? frameAnimation.getEase() : 1 - frameAnimation.getEase()))));
+					BThackRender.enableScissor(ClickGui.applyGuiScale(x), ClickGui.applyGuiScale(y + BAR_HEIGHT), ClickGui.applyGuiScale(FRAME_WIDTH), (int) ClickGui.applyGuiScale(renderHeight));
 				for(Component component : buttons) {
 					component.renderComponent();
 				}

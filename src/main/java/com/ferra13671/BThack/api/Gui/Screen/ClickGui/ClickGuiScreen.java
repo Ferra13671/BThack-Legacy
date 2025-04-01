@@ -45,8 +45,8 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
 
     public ClickGuiScreen() {
         super(Text.literal("ClickGui"));
-        int tempX = 0;
-        int tempY = 0;
+        int tempX = 20;
+        int tempY = 20;
         int tempId = 0;
         for (Category category : Categories.getCategories()) {
             Frame frame = new Frame(category, writingSlider);
@@ -55,7 +55,7 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
             frame.setY(tempY);
             frame.setX(tempX);
             frames.add(frame);
-            tempX += 100;
+            tempX += 105;
             frame.refresh();
             frame.updateDependencies();
         }
