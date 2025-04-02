@@ -102,13 +102,6 @@ public class ModuleButton extends Component implements Mc {
 
 	@Override
 	public void renderComponent() {
-		if (settingAnimation.getPassedMillis() <= settingAnimation.getMillis() + 50) {
-			lastAnimFactor = settingAnimation.getEase();
-			parent.refresh();
-		} else if (lastAnimFactor != 1) {
-			lastAnimFactor = 1;
-			parent.refresh();
-		}
 
 		int alpha = (int) (255 * ModuleList.clickGui.opacity.getValue());
 		if (!module.isEnabled() || toggleAnimation.getEase() < 1) drawNormalBackground(alpha);
@@ -186,6 +179,16 @@ public class ModuleButton extends Component implements Mc {
 		return BUTTON_HEIGHT;
 	}
 
+	public void updateAnim() {
+		if (settingAnimation.getPassedMillis() <= settingAnimation.getMillis() + 50) {
+			lastAnimFactor = settingAnimation.getEase();
+			parent.refresh();
+		} else if (lastAnimFactor != 1) {
+			lastAnimFactor = 1;
+			parent.refresh();
+		}
+	}
+
 	@Override
 	public boolean updateComponent(int mouseX, int mouseY) {
 		if (isMouseOnButton(mouseX, mouseY) && !isHovered) {
@@ -223,6 +226,7 @@ public class ModuleButton extends Component implements Mc {
 					settingAnimation = new Animation(ClickGui.getCurrentEasing(), (int) ModuleList.clickGui.animationTime.getValue());
 					open = !open;
 					settingAnimation.reset();
+					lastAnimFactor = 0;
 					parent.refresh();
 				}
 			}

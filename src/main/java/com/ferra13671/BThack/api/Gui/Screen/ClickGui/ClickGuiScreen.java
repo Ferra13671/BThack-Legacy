@@ -114,6 +114,8 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
 
         boolean continueUpdate = true;
         for (Frame frame : frames) {
+            for (ModuleButton moduleButton : frame.buttons)
+                moduleButton.updateAnim();
             if (continueUpdate && frame.isMouseOnFrame(mouseX, mouseY)) {
                 continueUpdate = false;
                 frame.updateButtons(mouseX, mouseY);

@@ -19,15 +19,14 @@ import com.ferra13671.BThack.api.Utils.Data;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.impl.Modules.CLIENT.ClickGui;
 
-import java.awt.*;
 import java.io.Closeable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Frame implements Mc, Closeable {
 	public static final int BAR_HEIGHT = 12;
 	public static final int FRAME_WIDTH = 100;
-	public static final int BAR_OUTLINE_COLOR = ColorUtils.fastRGBA(0, 0, 0, 100);
 	private static final List<Frame> GLOBAL_FRAMES = new ArrayList<>();
 
 	public int id;
@@ -40,6 +39,7 @@ public class Frame implements Mc, Closeable {
 	public int dragX = 0;
 	public int dragY = 0;
 	public int height;
+	public float renderHeight;
 	public boolean buttonHovered = false;
 	private final Animation frameAnimation = new Animation(Easing.CUBIC_OUT, 500);
 
@@ -164,7 +164,7 @@ public class Frame implements Mc, Closeable {
 		BThackMatrix.translate(0,0, 1);
 
 		boolean needScissor = frameAnimation.getEase() < 1;
-		float renderHeight = needScissor ? (float) (height * (open ? frameAnimation.getEase() : 1 - frameAnimation.getEase())) : open ? height : BAR_HEIGHT;
+		renderHeight = needScissor ? (float) (height * (open ? frameAnimation.getEase() : 1 - frameAnimation.getEase())) : open ? height : 0;
 
 		if (ModuleList.clickGui.rainbow.getValue()) {
 			ModuleList.clickGui.prepareRainbowShader();
@@ -175,9 +175,9 @@ public class Frame implements Mc, Closeable {
 			if (ModuleList.clickGui.rainbow.getValue()) {
 				//Shaders.INSTANCE.X_RAINBOW.setUniformValue("brightness", 0.4f);
 				ModuleList.clickGui.prepareRainbowShader();
-				BThackRender.drawShaderOutlineRect(Shaders.INSTANCE.X_RAINBOW, x - 1, y - 1, x + FRAME_WIDTH + 1, y + renderHeight + 1, 1);
+				BThackRender.drawShaderOutlineRect(Shaders.INSTANCE.X_RAINBOW, x - 1, y - 1, x + FRAME_WIDTH + 1, y + renderHeight + BAR_HEIGHT + 1, 1);
 			} else {
-				BThackRender.drawOutlineRect(x - 1, y - 1, x + FRAME_WIDTH + 1, y + renderHeight + 1, 1, ClickGui.getClickGuiColor(true));
+				BThackRender.drawOutlineRect(x - 1, y - 1, x + FRAME_WIDTH + 1, y + renderHeight + BAR_HEIGHT + 1, 1, ClickGui.getClickGuiColor(true));
 			}
 		}
 
@@ -203,7 +203,7 @@ public class Frame implements Mc, Closeable {
 			comp.setOff(off);
 			off += comp.getHeight();
 		}
-		height = off;
+		height = off - BAR_HEIGHT;
 	}
 
 	public void updateDependencies() {
@@ -212,7 +212,7 @@ public class Frame implements Mc, Closeable {
 			comp.updateDependencies(off);
 			off += comp.getHeight();
 		}
-		height = off;
+		height = off - BAR_HEIGHT;
 	}
 
 	public void tick() {
@@ -274,7 +274,7 @@ public class Frame implements Mc, Closeable {
 
 	public boolean isMouseOnFrame(int mouseX, int mouseY) {
 		return mouseX >= ClickGui.applyGuiScale(x) && mouseX <= ClickGui.applyGuiScale(x + FRAME_WIDTH) &&
-				mouseY >= ClickGui.applyGuiScale(y) && mouseY <= ClickGui.applyGuiScale(y + (frameAnimation.getPassedMillis() > frameAnimation.getMillis() ? height : (height * (float) (isOpen() ? frameAnimation.getEase() : 1 - frameAnimation.getEase()))));
+				mouseY >= ClickGui.applyGuiScale(y) && mouseY <= ClickGui.applyGuiScale(y + renderHeight + BAR_HEIGHT);
 	}
 
 	public static List<Frame> getGlobalFrames() {
