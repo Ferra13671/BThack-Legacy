@@ -33,7 +33,7 @@ public class Blink extends Module {
         super("Blink",
                 "lang.module.Blink",
                 KeyboardUtils.RELEASE,
-                MCategory.MISC,
+                MCategory.MOVEMENT,
                 false
         );
 
@@ -111,7 +111,7 @@ public class Blink extends Module {
 
         arrayListInfo = (ticker.getPassedTime() / 1000) + "s.";
 
-        if (ticker.passed(maxTime.getValue())) {
+        if (ticker.passed(maxTime.getValue() * 1000)) {
             sendPackets();
             ticker.reset();
         }
