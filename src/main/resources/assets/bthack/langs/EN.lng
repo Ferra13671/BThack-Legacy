@@ -57,7 +57,6 @@
 "lang.module.OpenedGuiInfo": Sends information about the opened screen.
 "lang.module.PacketCanceller": Cancels receiving or sending some packets.
 "lang.module.PacketMine": Automatically breaks the block using packets.
-"lang.module.PingSpoof": Simulates a bad ping.
 "lang.module.PistonSoundDelay": Reduces annoying pistons sounds when used near a lag machine.
 "lang.module.PortalGod": When you are in the portal, you can open the GUI.
 "lang.module.Replanish": Automatically replenishes items in the hotbar.
@@ -74,6 +73,7 @@
 "lang.module.AntiAFK": Action randomizer to simulate player activity.
 "lang.module.AutoJump": Automatic jumps.
 "lang.module.AutoWalk": Automatically walks forward.
+"lang.module.Blink": Creates packet delay.
 "lang.module.CameraRotator": Rotates the camera :/
 "lang.module.CustomFriction": Changes the friction level of blocks.
 "lang.module.ElytraFastClose": Instantly closes the elytres after touching the floor.

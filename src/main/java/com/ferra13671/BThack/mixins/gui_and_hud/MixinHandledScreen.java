@@ -38,7 +38,7 @@ public abstract class MixinHandledScreen<T extends ScreenHandler> extends Screen
 
             if (ModuleList.tooltips.maps.getValue() && itemStack.getItem() == Items.FILLED_MAP) {
                 ci.cancel();
-                ModuleList.tooltips.renderMapTooltip(context, focusedSlot.getStack(), x, y - 30);
+                ModuleList.tooltips.renderMapTooltip(context, itemStack, x, y - 30);
                 return;
             }
 

@@ -56,7 +56,6 @@
 "lang.module.OpenedGuiInfo": Отправляет информацию о открытом гуи.
 "lang.module.PacketCanceller": Отменяет прием или отправку некоторых пакетов.
 "lang.module.PacketMine": Автоматически ломает блок при помощи пакетов.
-"lang.module.PingSpoof": Имитирует плохой пинг.
 "lang.module.PistonSoundDelay": Уменьшает раздражающий звук поршней при использовании рядом с лаг машиной.
 "lang.module.PortalGod": Когда вы находитесь в портале, вы можете открывать GUI.
 "lang.module.Replanish": Автоматически пополняет предметы в хотбаре.
@@ -73,6 +72,7 @@
 "lang.module.AntiAFK": Рандомизатор действий для имитации активности игрока.
 "lang.module.AutoJump": Автоматически прыгает.
 "lang.module.AutoWalk": Автоматически идет вперед.
+"lang.module.Blink": Создает задержку пакетов.
 "lang.module.CameraRotator": Вращает камеру :/
 "lang.module.CustomFriction": Изменяет уровень трения блоков.
 "lang.module.ElytraFastClose": Моментально закрывает элитры после прикосновения с полом.

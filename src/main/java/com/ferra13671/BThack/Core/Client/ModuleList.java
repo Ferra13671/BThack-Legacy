@@ -85,7 +85,6 @@ public final class ModuleList {
     public static OpenedGuiInfo openedGuiInfo;
     public static PacketCanceller packetCanceller;
     public static PacketMine packetMine;
-    public static PingSpoof pingSpoof;
     public static PistonSoundDelay pistonSoundDelay;
     public static PortalGod portalGod;
     public static Scrapper scrapper;
@@ -101,6 +100,7 @@ public final class ModuleList {
     public static AntiAFK antiAFK;
     public static AutoJump autoJump;
     public static AutoWalk autoWalk;
+    public static Blink blink;
     public static CameraRotator cameraRotator;
     public static CustomFriction customFriction;
     public static ElytraFastClose elytraFastClose;
@@ -282,7 +282,6 @@ public final class ModuleList {
         openedGuiInfo = register(new OpenedGuiInfo());
         packetCanceller = register(new PacketCanceller());
         packetMine = register(new PacketMine());
-        pingSpoof = register(new PingSpoof());
         pistonSoundDelay = register(new PistonSoundDelay());
         portalGod = register(new PortalGod());
         scrapper = register(new Scrapper());
@@ -298,6 +297,7 @@ public final class ModuleList {
         antiAFK = register(new AntiAFK());
         autoJump = register(new AutoJump());
         autoWalk = register(new AutoWalk());
+        blink = register(new Blink());
         cameraRotator = register(new CameraRotator());
         customFriction = register(new CustomFriction());
         elytraFastClose = register(new ElytraFastClose());

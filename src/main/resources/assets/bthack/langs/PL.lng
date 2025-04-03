@@ -56,7 +56,6 @@
 "lang.module.OpenedGuiInfo": Wysyła informacje o otwartym GUI.
 "lang.module.PacketCanceller": Anuluje odbieranie lub wysyłanie niektórych pakietów.
 "lang.module.PacketMine": Automatycznie rozbija blok przy użyciu pakietów.
-"lang.module.PingSpoof": Symuluje zły ping.
 "lang.module.PistonSoundDelay": Redukuje irytujący dźwięk tłoków, gdy jest używany obok Lag Machine.
 "lang.module.PortalGod": Gdy jesteś w portalu, możesz otworzyć GUI.
 "lang.module.Replanish": Automatycznie uzupełnia elementy na pasku skrótów.
@@ -73,6 +72,7 @@
 "lang.module.AntiAFK": Randomizator akcji symulujący aktywność gracza.
 "lang.module.AutoJump": Automatycznie skacze.
 "lang.module.AutoWalk": Automatycznie idzie do przodu.
+"lang.module.Blink": Powoduje opóźnienie pakietów.
 "lang.module.CameraRotator": Obraca kamerę :/
 "lang.module.CustomFriction": Zmienia poziom tarcia bloków.
 "lang.module.ElytraFastClose": Natychmiast zamyka elytrę po dotknięciu podłogi.
