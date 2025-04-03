@@ -113,7 +113,7 @@ public class Lawnmower extends Module {
             breakedBoxes.forEach((pos, animation) -> {
                 if (animation.getEase() >= 1) removePoses.add(pos);
             });
-            if (!removePoses.isEmpty()) removePoses.forEach(removePoses::remove);
+            if (!removePoses.isEmpty()) removePoses.forEach(breakedBoxes::remove);
         }
     }
 
