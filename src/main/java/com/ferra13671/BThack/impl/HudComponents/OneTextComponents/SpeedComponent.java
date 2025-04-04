@@ -9,7 +9,7 @@ public class SpeedComponent extends AbstractOneTextComponent {
     public SpeedComponent() {
         super("Speed",
                 5,
-                105,
+                130,
                 true
         );
     }

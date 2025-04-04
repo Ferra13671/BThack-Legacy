@@ -11,7 +11,7 @@ public class GappleCountComponent extends AbstractOneTextComponent {
     public GappleCountComponent() {
         super("GappleCount",
                 5,
-                245,
+                265,
                 false
         );
     }

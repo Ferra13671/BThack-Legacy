@@ -1,6 +1,8 @@
 package com.ferra13671.BThack.impl.HudComponents;
 
 
+import com.ferra13671.BThack.Core.Render.BThackRender;
+import com.ferra13671.BThack.Core.Render.Font.FontRenderManager;
 import com.ferra13671.BThack.Core.Render.Font.FontUtils;
 import com.ferra13671.BThack.api.Module.HudComponent;
 import com.ferra13671.BThack.api.Utils.PlayerUtils;
@@ -11,7 +13,7 @@ public class CoordinatesComponent extends HudComponent {
     public CoordinatesComponent() {
         super("Coordinates",
                 5,
-                57,
+                62,
                 true
         );
     }
@@ -23,8 +25,10 @@ public class CoordinatesComponent extends HudComponent {
     public void render() {
         if (nullCheck()) return;
 
-        drawText(xyz1, (int) getX(), (int) getY());
-        drawText(xyz2, (int) getX(), (int) (getY() + 9.3f));
+        BThackRender.drawHudPlate(getX(), getY(), getX() + width, getY() + height);
+
+        drawText(xyz1, (int) getX() + 3, (int) getY() + 3);
+        drawText(xyz2, (int) getX() + 3, (int) (getY() + FontUtils.getTextHeight(xyz1, FontRenderManager.DrawMode.NORMAL_BOLD) + 7));
     }
 
     @Override
@@ -48,7 +52,7 @@ public class CoordinatesComponent extends HudComponent {
         xyz1 = "XYZ: " + Formatting.WHITE + overWorldX + " " + Math.round(mc.player.getY()) + " " + overWorldZ;
         xyz2 = "Nether: " + Formatting.WHITE + netherX + " " + Math.round(mc.player.getY()) + " " + netherZ;
 
-        this.width = Math.max(FontUtils.getTextWidth(xyz1), FontUtils.getTextWidth(xyz2));
-        this.height = FontUtils.getTextHeight(xyz1) * 2.2f;
+        width = Math.max(FontUtils.getTextWidth(xyz1, FontRenderManager.DrawMode.NORMAL_BOLD), FontUtils.getTextWidth(xyz2, FontRenderManager.DrawMode.NORMAL_BOLD)) + 6;
+        height = (FontUtils.getTextHeight(xyz1, FontRenderManager.DrawMode.NORMAL_BOLD) + FontUtils.getTextHeight(xyz2, FontRenderManager.DrawMode.NORMAL_BOLD)) + 10;
     }
 }

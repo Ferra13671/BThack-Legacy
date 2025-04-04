@@ -1,6 +1,7 @@
 package com.ferra13671.BThack.impl.HudComponents;
 
 import com.ferra13671.BThack.Core.Render.BThackRender;
+import com.ferra13671.BThack.Core.Render.Font.FontRenderManager;
 import com.ferra13671.BThack.Core.Render.Font.FontUtils;
 import com.ferra13671.BThack.api.Module.HudComponent;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
@@ -16,7 +17,7 @@ public class DurabilityComponent extends HudComponent {
     public DurabilityComponent() {
         super("Durability",
                 5,
-                215,
+                220,
                 false
         );
 
@@ -31,27 +32,15 @@ public class DurabilityComponent extends HudComponent {
     public void render() {
         String text;
 
-        switch (mode.getValue()) {
-            case "Normal":
-                text = "Durability: " + Formatting.WHITE + ItemUtils.getItemDurability(mc.player.getInventory().getMainHandStack());
-                drawText(text, (int) getX(), (int) getY());
-                this.width = FontUtils.getTextWidth(text);
-                this.height = FontUtils.getTextHeight(text);
-                break;
-            case "Full 1":
-                text = "Left HandD: " + Formatting.WHITE + ItemUtils.getItemDurability(mc.player.getOffHandStack()) + Formatting.RESET + "  Right HandD: " + Formatting.WHITE + ItemUtils.getItemDurability(mc.player.getInventory().getMainHandStack());
-                drawText(text, (int) getX(), (int) getY());
-                this.width = FontUtils.getTextWidth(text);
-                this.height = FontUtils.getTextHeight(text);
-                break;
-            case "Full 2":
-                text = "Left     : " + Formatting.WHITE + ItemUtils.getItemDurability(mc.player.getOffHandStack()) + Formatting.RESET + "  Right     :" + Formatting.WHITE + ItemUtils.getItemDurability(mc.player.getInventory().getMainHandStack());
-                drawText(text, (int) getX(), (int) getY());
-                BThackRender.drawItem(mc.player.getOffHandStack(), (int) (getX() + FontUtils.getTextWidth("Left") + 1), (int) getY() - 5, null, false);
-                BThackRender.drawItem(mc.player.getInventory().getMainHandStack(), (int) (getX() + FontUtils.getTextWidth("Left     : " + Formatting.WHITE + ItemUtils.getItemDurability(mc.player.getOffHandStack()) + Formatting.RESET + "  Right") + 1), (int) getY() - 5, null, false);
-                this.width = FontUtils.getTextWidth(text);
-                this.height = FontUtils.getTextHeight(text);
-                break;
+        BThackRender.drawHudPlate(getX(), getY(), getX() + width, getY() + height);
+
+        if (mode.getValue().equals("Full 1")) {
+            text = "Left HandD: " + Formatting.WHITE + ItemUtils.getItemDurability(mc.player.getOffHandStack()) + Formatting.RESET + "  Right HandD: " + Formatting.WHITE + ItemUtils.getItemDurability(mc.player.getInventory().getMainHandStack());
+        } else {
+            text = "Durability: " + Formatting.WHITE + ItemUtils.getItemDurability(mc.player.getInventory().getMainHandStack());
         }
+        drawText(text, (int) getX() + 3, (int) getY() + 3);
+        width = FontUtils.getTextWidth(text, FontRenderManager.DrawMode.NORMAL_BOLD) + 6;
+        height = FontUtils.getTextHeight(text, FontRenderManager.DrawMode.NORMAL_BOLD) + 6;
     }
 }

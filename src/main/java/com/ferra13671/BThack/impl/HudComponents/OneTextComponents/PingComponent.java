@@ -13,7 +13,7 @@ public class PingComponent extends AbstractOneTextComponent {
     public PingComponent() {
         super("Ping",
                 5,
-                115,
+                145,
                 true
         );
 

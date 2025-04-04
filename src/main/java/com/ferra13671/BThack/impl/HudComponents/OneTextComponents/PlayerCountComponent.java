@@ -8,7 +8,7 @@ public class PlayerCountComponent extends AbstractOneTextComponent {
     public PlayerCountComponent() {
         super("PlayerCount",
                 5,
-                135,
+                175,
                 true
         );
     }

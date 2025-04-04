@@ -12,7 +12,7 @@ public class CrystalCountComponent extends AbstractOneTextComponent {
     public CrystalCountComponent() {
         super("CrystalCount",
                 5,
-                225,
+                235,
                 false
         );
     }

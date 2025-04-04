@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.api.Shader.MainMenu;
 
+import com.ferra13671.BThack.Core.Render.Utils.BThackRenderUtils;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Shader.ShaderProgram;
 import org.ladysnake.satin.api.managed.uniform.Uniform1f;
@@ -21,19 +22,13 @@ public class MainMenuShader extends ShaderProgram implements Mc {
     }
 
     public void setParameters(float mouseX, float mouseY, float screenWidth, float screenHeight, float time) {
-        int guiScale = getGuiScale();
+        int guiScale = BThackRenderUtils.getGuiScale();
         if (resolution != null)
             resolution.set(screenWidth * guiScale, screenHeight * guiScale);
         if (mouse != null)
             mouse.set(mouseX / screenWidth, (screenHeight - 1.0f - mouseY) / screenHeight);
         if (this.time != null)
             this.time.set(time);
-    }
-
-    private int getGuiScale() {
-        int value = mc.options.getGuiScale().getValue();
-        if (value <= 0) value = mc.getWindow().calculateScaleFactor(0, mc.forcesUnicodeFont());
-        return value;
     }
 
     public static MainMenuShader of(String name) {

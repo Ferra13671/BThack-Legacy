@@ -10,11 +10,14 @@ import com.ferra13671.BThack.Core.Render.Drawers.*;
 import com.ferra13671.BThack.Core.Render.Font.FontRenderManager;
 import com.ferra13671.BThack.Core.Render.Font.FontUtils;
 import com.ferra13671.BThack.Core.Render.Line.BThackLineRender;
+import com.ferra13671.BThack.Core.Render.Utils.BThackRenderUtils;
+import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.Core.Render.Utils.ScissorStack;
 import com.ferra13671.BThack.api.Shader.ShaderProgram;
 import com.ferra13671.BThack.api.Shader.Shaders;
 import com.ferra13671.BThack.api.Utils.RegionPos;
 import com.ferra13671.BThack.impl.HudComponents.ArrayListComponent;
+import com.ferra13671.BThack.impl.Modules.CLIENT.HUD;
 import com.ferra13671.TextureUtils.GlTex;
 import com.ferra13671.TextureUtils.PathMode;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -100,6 +103,36 @@ public final class BThackRender implements Mc {
         Drawers.RECT.begin(color);
         Drawers.RECT.draw(x1, y1, x2, y2, matrix4f);
         Drawers.RECT.end();
+    }
+
+    public static void drawRoundedRect(float x1, float y1, float x2, float y2, float radius, int color) {
+        float[] rgba = ColorUtils.hashCodeToRGBA(color);
+        Matrix4f matrix = BThackMatrix.peek().getPositionMatrix();
+        BThackRenderUtils.resetShader();
+        BufferBuilder bufferBuilder = Tessellator.getInstance().begin(VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION_COLOR);
+        float[][] map = new float[][]{new float[]{x2 - radius, y2 - radius, radius}, new float[]{x2 - radius, y1 + radius, radius}, new float[]{x1 + radius, y1 + radius, radius}, new float[]{x1 + radius, y2 - radius, radius}};
+        for (int i = 0; i < 4; i++) {
+            float[] current = map[i];
+            double rad = current[2];
+            for (double r = i * 90d; r < (360 / 4d + i * 90d); r += (90 / 10f)) {
+                float rad1 = (float) Math.toRadians(r);
+                float sin = (float) (Math.sin(rad1) * rad);
+                float cos = (float) (Math.cos(rad1) * rad);
+                bufferBuilder.vertex(matrix, current[0] + sin, current[1] + cos, 0.0F).color(rgba[0], rgba[1], rgba[2], rgba[3]);
+            }
+            float rad1 = (float) Math.toRadians((360 / 4d + i * 90d));
+            float sin = (float) (Math.sin(rad1) * rad);
+            float cos = (float) (Math.cos(rad1) * rad);
+            bufferBuilder.vertex(matrix, current[0] + sin, current[1] + cos, 0.0F).color(rgba[0], rgba[1], rgba[2], rgba[3]);
+        }
+        BThackRenderUtils.drawNoReset(bufferBuilder.end());
+    }
+
+    public static void drawHudPlate(float x1, float y1, float x2, float y2) {
+        BThackRenderUtils.applyBlend();
+        drawRoundedRect(x1, y1, x2, y2, 2.5f, HUD.getHUDColor());
+        float step = 1f / BThackRenderUtils.getGuiScale();
+        drawRoundedRect(x1 + step, y1 + step, x2 - step, y2 - step, 2.5f, ColorUtils.fastRGBA(0, 0, 0, 190));
     }
 
     public static void drawLine(float x1, float y1, float x2, float y2, float width, int color) {

@@ -12,7 +12,7 @@ public class EXPCountComponent extends AbstractOneTextComponent {
     public EXPCountComponent() {
         super("EXPCount",
                 5,
-                235,
+                250,
                 false
         );
     }

@@ -8,7 +8,7 @@ public class RotationComponent extends AbstractOneTextComponent {
     public RotationComponent() {
         super("Rotation",
                 5,
-                75,
+                85,
                 true
         );
     }

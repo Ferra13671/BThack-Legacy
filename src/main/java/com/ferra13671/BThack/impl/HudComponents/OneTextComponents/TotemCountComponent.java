@@ -12,7 +12,7 @@ public class TotemCountComponent extends AbstractOneTextComponent {
     public TotemCountComponent() {
         super("TotemCount",
                 5,
-                255,
+                280,
                 false
         );
     }

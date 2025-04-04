@@ -9,7 +9,7 @@ public class TPSComponent extends AbstractOneTextComponent {
     public TPSComponent() {
         super("TPS",
                 5,
-                125,
+                160,
                 true
         );
     }

@@ -1,7 +1,6 @@
 package com.ferra13671.BThack.impl.HudComponents;
 
 import com.ferra13671.BThack.Core.Render.BThackRender;
-import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Module.HudComponent;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import net.minecraft.client.MinecraftClient;
@@ -24,16 +23,15 @@ public class InventoryComponent extends HudComponent {
                 outlineAlpha
         );
 
-        this.width = 144;
-        this.height = 48;
+        this.width = 145 + 6;
+        this.height = 49 + 6;
     }
 
     @Override
     public void render() {
         if (nullCheck()) return;
 
-        BThackRender.drawRect((int) getX() - 3, (int) getY() - 3, (int) (getX() + width) + 3, (int) (getY() + height) + 3, ColorUtils.fastRGBA(20, 20, 20, (int) backGroundAlpha.getValue()));
-        BThackRender.drawOutlineRect((int) getX() - 4, (int) getY() - 4, (int) (getX() + width) + 4, (int) (getY() + height) + 4, 1, ColorUtils.fastRGBA(255, 255, 255, (int) outlineAlpha.getValue()));
+        BThackRender.drawHudPlate(getX(), getY(), getX() + width, getY() + height);
 
         for (int i = 0; i < 27; i++) {
             ItemStack itemStack = mc.player.getInventory().main.get(i + 9);
@@ -41,7 +39,7 @@ public class InventoryComponent extends HudComponent {
             int offsetX = (int) getX() + (i % 9) * 16;
             int offsetY = (int) getY() + (i / 9) * 16;
 
-            BThackRender.drawItem(itemStack, offsetX, offsetY, null, true);
+            BThackRender.drawItem(itemStack, offsetX + 3, offsetY + 3, null, true);
         }
     }
 }

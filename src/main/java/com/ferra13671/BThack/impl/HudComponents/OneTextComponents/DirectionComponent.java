@@ -9,7 +9,7 @@ public class DirectionComponent extends AbstractOneTextComponent {
     public DirectionComponent() {
         super("Direction",
                 5,
-                85,
+                100,
                 true
         );
     }

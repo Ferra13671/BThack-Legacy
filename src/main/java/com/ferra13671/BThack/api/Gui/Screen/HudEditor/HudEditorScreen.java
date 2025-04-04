@@ -93,6 +93,8 @@ public class HudEditorScreen extends BThackScreen {
             }
         }
 
+        for (ModuleButton moduleButton : frame.buttons)
+            moduleButton.updateAnim();
         frame.updateButtons(mouseX, mouseY);
 
         BThackMatrix.push();

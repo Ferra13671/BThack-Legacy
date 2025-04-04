@@ -9,7 +9,7 @@ public class MinecraftTimeComponent extends AbstractOneTextComponent {
     public MinecraftTimeComponent() {
         super("MinecraftTime",
                 MinecraftClient.getInstance().getWindow().getScaledWidth() / 2f,
-                20,
+                25,
                 true
         );
     }

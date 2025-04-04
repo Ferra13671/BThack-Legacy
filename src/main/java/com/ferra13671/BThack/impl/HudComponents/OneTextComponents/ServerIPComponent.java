@@ -13,7 +13,7 @@ public class ServerIPComponent extends AbstractOneTextComponent {
     public ServerIPComponent() {
         super("ServerIP",
                 5,
-                95,
+                115,
                 true
         );
 

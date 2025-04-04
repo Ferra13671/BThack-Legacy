@@ -1,5 +1,7 @@
 package com.ferra13671.BThack.impl.HudComponents;
 
+import com.ferra13671.BThack.Core.Render.BThackRender;
+import com.ferra13671.BThack.Core.Render.Font.FontRenderManager;
 import com.ferra13671.BThack.Core.Render.Font.FontUtils;
 import com.ferra13671.BThack.api.Module.HudComponent;
 
@@ -13,14 +15,15 @@ public abstract class AbstractOneTextComponent extends HudComponent {
 
     @Override
     public void render() {
-        drawText(text, (int) getX(), (int) getY());
+        BThackRender.drawHudPlate(getX(), getY(), getX() + width, getY() + height);
+        drawText(text, (int) getX() + 3, (int) getY() + 3);
     }
 
     @Override
     public void tick() {
         text = getText();
-        width = FontUtils.getTextWidth(text);
-        height = FontUtils.getTextHeight(text);
+        width = FontUtils.getTextWidth(text, FontRenderManager.DrawMode.NORMAL_BOLD) + 6;
+        height = FontUtils.getTextHeight(text, FontRenderManager.DrawMode.NORMAL_BOLD) + 6;
     }
 
     public abstract String getText();

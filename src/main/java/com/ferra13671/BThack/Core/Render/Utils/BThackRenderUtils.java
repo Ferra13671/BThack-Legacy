@@ -105,6 +105,12 @@ public final class BThackRenderUtils implements Mc {
         RenderSystem.blendFunc(GlStateManager.SrcFactor.SRC_ALPHA, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA);
     }
 
+    public static int getGuiScale() {
+        int value = mc.options.getGuiScale().getValue();
+        if (value <= 0) value = mc.getWindow().calculateScaleFactor(0, mc.forcesUnicodeFont());
+        return value;
+    }
+
     public static BlockPos getCameraBlockPos() {
         Camera camera = mc.getBlockEntityRenderDispatcher().camera;
         if(camera == null)
