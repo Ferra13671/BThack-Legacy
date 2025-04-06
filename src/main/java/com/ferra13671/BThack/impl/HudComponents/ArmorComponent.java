@@ -86,6 +86,6 @@ public class ArmorComponent extends HudComponent {
         }
 
         height = 22;
-        width = x + 6;
+        width = x + 3;
     }
 }
