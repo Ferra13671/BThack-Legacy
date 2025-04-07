@@ -1,0 +1,23 @@
+{
+  "blend": {
+    "func": "add",
+    "srcrgb": "srcalpha",
+    "dstrgb": "1-srcalpha"
+  },
+  "vertex": "position",
+  "fragment": "bthack:render/rounded_rect_with_outline",
+  "attributes": [],
+  "samplers": [
+  ],
+  "uniforms": [
+    { "name": "ModelViewMat", "type": "matrix4x4", "count": 16, "values": [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ] },
+    { "name": "ProjMat", "type": "matrix4x4", "count": 16, "values": [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ] },
+    { "name": "resolution",  "type": "float", "count": 2,  "values": [1.0, 1.0]},
+    { "name": "position",  "type": "float", "count": 2,  "values": [1.0, 1.0]},
+    { "name": "size",  "type": "float", "count": 2,  "values": [1.0, 1.0]},
+    { "name": "radius",  "type": "float", "count": 1,  "values": [1.0]},
+    { "name": "color",  "type": "float", "count": 4,  "values": [1.0, 1.0, 1.0, 1.0] },
+    { "name": "outlineColor",  "type": "float", "count": 4,  "values": [1.0, 1.0, 1.0, 1.0] },
+    { "name": "depth",  "type": "float", "count": 1,  "values": [1.0]}
+  ]
+}

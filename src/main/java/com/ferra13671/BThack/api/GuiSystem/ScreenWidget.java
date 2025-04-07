@@ -50,8 +50,7 @@ public class ScreenWidget extends BThackScreen {
     }
 
     protected void drawPlate() {
-        BThackRender.drawRect(xLeft, yUp, xRight, yDown, ColorUtils.fastRGBA(0, 0, 0, 150));
-        BThackRender.drawVerticalGradientOutlineRect(xLeft, yUp, xRight, yDown, 1.5f, ColorUtils.WHITE, ColorUtils.fastRGBA(150, 150, 150, 255));
+        BThackRender.drawRoundedRectWithOutline(xLeft, yUp, xRight, yDown, 10f, ColorUtils.fastRGBA(0, 0, 0, 150), -1, 1.5f);
     }
 
     public float getWidth() {

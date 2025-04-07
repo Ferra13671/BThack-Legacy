@@ -16,6 +16,9 @@ public class Shaders implements Mc {
     }
 
     public final ShaderProgram POSITION = ShaderProgram.of("render/position", VertexFormats.POSITION);
+
+    public final ShaderProgram ROUNDED_RECT = ShaderProgram.of("render/rounded_rect", VertexFormats.POSITION);
+    public final ShaderProgram ROUNDED_RECT_WITH_OUTLINE = ShaderProgram.of("render/rounded_rect_with_outline", VertexFormats.POSITION);
     public final ShaderProgram X_RAINBOW = new ShaderProgram(Identifier.of("bthack", "render/x_rainbow"), VertexFormats.POSITION) {
         @Override
         public void use() {

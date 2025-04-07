@@ -30,9 +30,9 @@ public class NumberFrameButton extends Button {
 
     @Override
     public void renderButton() {
-        BThackRender.drawRect(this.getCenterX() - this.getWidth(), this.getCenterY() - this.getHeight(), this.getCenterX() + this.getWidth(), this.getCenterY() + this.getHeight(), RECT_COLOR);
+        drawPlate(getAnimationDelta());
 
-        BThackRender.drawString(textBuilder.toString(), this.getCenterX() - this.getWidth() + 3, this.getCenterY() - (FontUtils.getTextHeight(getText()) / 2f), ColorUtils.WHITE, true, FontRenderManager.DrawMode.NORMAL_BOLD);
+        BThackRender.drawString(textBuilder.toString(), getCenterX() - getWidth() + 3, getCenterY() - (FontUtils.getTextHeight(getText()) / 2f), ColorUtils.WHITE, true, FontRenderManager.DrawMode.NORMAL_BOLD);
     }
 
 

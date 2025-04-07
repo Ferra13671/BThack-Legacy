@@ -132,8 +132,7 @@ public class ConfigsWidget extends ScreenWidget {
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float partialTicks) {
-        BThackRender.drawRect(xLeft, yUp, xRight, yDown, ColorUtils.fastRGBA(0, 0, 0, 150));
-        BThackRender.drawOutlineRect(xLeft, yUp, xRight, yDown, 1.5f, ColorUtils.WHITE);
+        drawPlate();
         Drawers.RECT.begin(-1);
         Drawers.RECT.draw(xLeft, yDown - 56.5f, xRight, yDown - 55);
         Drawers.RECT.end();
@@ -203,19 +202,10 @@ public class ConfigsWidget extends ScreenWidget {
 
         @Override
         public void renderButton() {
-            float animationDelta = getAnimationDelta();
-            if (!hovered && hoveredAnimation.getEase() >= 1)
-                BThackRender.drawRect(getCenterX() - width, getCenterY() - height, getCenterX() + width, getCenterY() + height, RECT_COLOR);
-            else
-                BThackRender.drawRect(getCenterX() - width - 1, getCenterY() - height - animationDelta, getCenterX() + width + animationDelta, getCenterY() + height + 1, RECT_COLOR);
+            drawPlate(getAnimationDelta());
 
-            if (outline && !selected)
-                BThackRender.drawOutlineRect(getCenterX() - getWidth() - (animationDelta * 2), getCenterY() - getHeight() - (animationDelta * 2), getCenterX() + getWidth() + (animationDelta * 2), getCenterY() + getHeight() + (animationDelta * 2), 1, -1);
             BThackRender.drawTextureRect(Textures.CONFIG_FILE, getCenterX() - textureSize, getCenterY() - getHeight() + 3, getCenterX() + textureSize + 3, getCenterY() + textureSize);
             BThackRender.drawString(getText(), getCenterX() - (FontUtils.getTextWidth(getText()) / 2f), getCenterY() + (getHeight() - 3 - FontUtils.getTextHeight(getText())), -1, true, FontRenderManager.DrawMode.NORMAL_BOLD);
-
-            if (selected)
-                BThackRender.drawOutlineRect(getCenterX() - getWidth(), getCenterY() - getHeight(), getCenterX() + getWidth(), getCenterY() + getHeight(), 1, ColorUtils.rainbow());
         }
     }
 }

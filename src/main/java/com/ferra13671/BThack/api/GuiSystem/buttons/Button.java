@@ -68,21 +68,17 @@ public class Button implements Mc {
     public void renderButton() {
         float animationDelta = getAnimationDelta();
         drawPlate(animationDelta);
-        if (outline && !selected)
-            BThackRender.drawOutlineRect(getCenterX() - getWidth() - (animationDelta * 2), getCenterY() - getHeight() - (animationDelta * 2), getCenterX() + getWidth() + (animationDelta * 2), getCenterY() + getHeight() + (animationDelta * 2), 1, -1);
         BThackRender.drawString(getText(), (getCenterX() - (FontUtils.getTextWidth(getText()) / 2f)), (getCenterY() - (FontUtils.getTextHeight(getText()) / 2f)), -1, true, FontRenderManager.DrawMode.NORMAL_BOLD);
-
-        if (selected)
-            BThackRender.drawOutlineRect(getCenterX() - getWidth(), getCenterY() - getHeight(), getCenterX() + getWidth(), getCenterY() + getHeight(), 1, ColorUtils.rainbow());
     }
 
     protected void drawPlate(float animationDelta) {
+        animationDelta *= 2;
         if (!hovered && hoveredAnimation.getEase() >= 1) {
-            BThackRender.drawRect(getCenterX() - width, getCenterY() - height, getCenterX() + width, getCenterY() + height, RECT_COLOR);
+            BThackRender.drawRoundedRectWithOutline(getCenterX() - width, getCenterY() - height, getCenterX() + width, getCenterY() + height, 10f, RECT_COLOR, selected ? ColorUtils.rainbow() : -1, 1);
         } else {
-            BThackRender.drawRect(getCenterX() - width - 1, getCenterY() - height - animationDelta, getCenterX() + width + animationDelta, getCenterY() + height + 1, RECT_COLOR);
+            BThackRender.drawRoundedRectWithOutline(getCenterX() - width - animationDelta, getCenterY() - height - animationDelta, getCenterX() + width + animationDelta, getCenterY() + height + animationDelta, 10f, RECT_COLOR, selected ? ColorUtils.rainbow() : -1, 1);
 
-            drawHoveredLight(animationDelta);
+            drawHoveredLight(animationDelta / 2);
         }
     }
 
@@ -182,10 +178,6 @@ public class Button implements Mc {
 
     public void setHided(boolean hided) {
         this.hided = hided;
-    }
-
-    public void setOutline(boolean outline) {
-        this.outline = outline;
     }
 
     public void setAllowUpdate(boolean allowUpdate) {
