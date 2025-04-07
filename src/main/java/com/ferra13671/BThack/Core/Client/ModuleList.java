@@ -438,6 +438,7 @@ public final class ModuleList {
                 new TPSComponent(),
                 new PlayerCountComponent(),
                 new InventoryComponent(),
+                new KeyBindsComponent(),
                 new ArmorComponent(),
                 new RealTimeComponent(),
                 new MinecraftTimeComponent(),
