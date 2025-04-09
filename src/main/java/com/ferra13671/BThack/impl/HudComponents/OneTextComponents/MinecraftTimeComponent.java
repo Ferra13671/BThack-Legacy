@@ -22,7 +22,7 @@ public class MinecraftTimeComponent extends AbstractOneTextComponent {
                 hours -= 24;
             }
         }
-        int minutes = (int) (((mc.world.getTimeOfDay() / 1000d) - hours) * 10);
+        int minutes = (int) (((mc.world.getTimeOfDay() / 1000d) - hours) * 60);
         if (minutes > 59) {
             if (minutes == 60)
                 minutes = 0;
