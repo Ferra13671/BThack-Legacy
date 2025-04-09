@@ -115,8 +115,8 @@ public final class KillAuraUtils implements Mc {
         return !isHostile(entity) && !isPassive(entity) && !isGolem(entity) && entity instanceof MobEntity;
     }
 
-    public static Predicate<Entity> createEntityFilter(BooleanSetting hostiles, BooleanSetting passive, BooleanSetting golems, BooleanSetting otherMobs) {
-        return entity -> (hostiles.getValue() && isHostile(entity)) || (passive.getValue() && isPassive(entity)) || (golems.getValue() && isGolem(entity)) || (otherMobs.getValue() && isOtherMob(entity));
+    public static Predicate<Entity> createEntityFilter(BooleanSetting hostiles, BooleanSetting passive, BooleanSetting golems, BooleanSetting otherMobs, BooleanSetting ignoreWalls) {
+        return entity -> canBeSeeTarget(ignoreWalls, entity) && ((hostiles.getValue() && isHostile(entity)) || (passive.getValue() && isPassive(entity)) || (golems.getValue() && isGolem(entity)) || (otherMobs.getValue() && isOtherMob(entity)));
     }
 
     public static boolean isFriend(PlayerEntity player, BooleanSetting friends) {

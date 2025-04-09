@@ -2,7 +2,6 @@ package com.ferra13671.BThack.impl.Modules.COMBAT;
 
 import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
-import com.ferra13671.BThack.api.Events.PacketEvent;
 import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
@@ -14,33 +13,27 @@ import com.ferra13671.BThack.api.Utils.*;
 import com.ferra13671.BThack.api.Utils.Grim.GrimUtils;
 import com.ferra13671.BThack.api.Utils.Modules.KillAuraUtils;
 import com.ferra13671.BThack.mixins.accessor.IMinecraftClient;
-import com.ferra13671.BThack.mixins.accessor.packet.IPlayerInputC2SPacket;
-import com.ferra13671.BThack.mixins.accessor.packet.IPlayerMoveC2SPacket;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ToolItem;
-import net.minecraft.network.packet.c2s.play.PlayerInputC2SPacket;
-import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
-import net.minecraft.util.math.MathHelper;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.function.Predicate;
 
-//TODO:
-// normal moveFix
 public class KillAura extends Module {
 
     public final ModeSetting mode = new ModeSetting("Mode", this, new ArrayList<>(Arrays.asList("Aura", "TriggerBot")));
     public final ModeSetting attackMode = new ModeSetting("AttackMode", this, new ArrayList<>(Arrays.asList("CoolDown", "Delay")));
     public final NumberSetting range = new NumberSetting("Range", this, 3.62, 1, 10, false, () -> mode.getValue().equals("Aura"));
     public final BooleanSetting instaRotate = new BooleanSetting("Insta Rotate", this, false, () -> mode.getValue().equals("Aura"));
-    public final BooleanSetting alwaysRotate = new BooleanSetting("Always Rotate", this, true, () -> mode.getValue().equals("Aura") && !instaRotate.getValue());
-    public final NumberSetting rotateDelay = new NumberSetting("Rotate Delay", this, 150, 0, 500, true, () -> mode.getValue().equals("Aura") && !instaRotate.getValue() && !alwaysRotate.getValue());
+    public final ModeSetting rotateMath = new ModeSetting("Rotate Math", this, Arrays.asList("New", "Old", "Always"), () -> mode.getValue().equals("Aura") && !instaRotate.getValue());
+    public final NumberSetting targetRotateDelay = new NumberSetting("Target Rot. Delay", this, 150, 0, 500, true, () -> mode.getValue().equals("Aura") && !instaRotate.getValue() && !rotateMath.getValue().equals("Always"));
+    public final NumberSetting rotateStep = new NumberSetting("Rotate Step", this, 0.6125, 0.35, 0.8, false, () -> mode.getValue().equals("Aura") && !instaRotate.getValue() && rotateMath.getValue().equals("New"));
     public final NumberSetting lockTicks = new NumberSetting("Lock Ticks", this, 5, 3, 10, true, () -> mode.getValue().equals("Aura") && !instaRotate.getValue());
     public final BooleanSetting grim = new BooleanSetting("Grim", this, true);
     public final ModeSetting rotateMode = new ModeSetting("RotateMode", this, new ArrayList<>(Arrays.asList("Packet", "Vanilla", "None")), () -> !mode.getValue().equals("TriggerBot") && instaRotate.getValue()).defaultValue("Grim");
@@ -78,8 +71,9 @@ public class KillAura extends Module {
                 attackMode,
                 range,
                 instaRotate,
-                alwaysRotate,
-                rotateDelay,
+                rotateMath,
+                targetRotateDelay,
+                rotateStep,
                 lockTicks,
                 grim,
                 rotateMode,
@@ -109,13 +103,16 @@ public class KillAura extends Module {
     private Predicate<Entity> entityFilter;
 
     private final Ticker delayTicker = new Ticker();
+    private final Ticker deleteTravelTicker = new Ticker();
+    private boolean travelCancelled = true;
     public Target targetedEntity;
-    private float[] rotations;
+    private float[] targetRotation;
+    private float[] currentRotation;
     private final TravelChanger travelChanger = new TravelChanger(5000,
-            () -> new Float[]{rotations[0], rotations[1]},
+            () -> new Float[]{currentRotation[0], currentRotation[1]},
             () -> {if (grim.getValue()) GrimUtils.sendPreActionGrimPackets(Managers.TRAVEL_CHANGE_MANAGER.getLastYaw(), Managers.TRAVEL_CHANGE_MANAGER.getLastPitch());
             },
-            () -> rotations != null && !needPause() && mode.getValue().equals("Aura") && !instaRotate.getValue() && targetedEntity != null
+            () -> currentRotation != null && !needPause() && mode.getValue().equals("Aura") && !instaRotate.getValue() && targetedEntity != null
     );
     private Entity prevAttackedEntity;
 
@@ -126,7 +123,7 @@ public class KillAura extends Module {
         super.onEnable();
         delayTicker.reset();
         targetedEntity = null;
-        entityFilter = KillAuraUtils.createEntityFilter(hostiles, passive, golems, otherMobs);
+        entityFilter = KillAuraUtils.createEntityFilter(hostiles, passive, golems, otherMobs, ignoreWalls);
     }
 
     @Override
@@ -154,37 +151,6 @@ public class KillAura extends Module {
 
     }
 
-
-
-    @EventSubscriber
-    public void onPacket(PacketEvent.Send e) {
-        if (nullCheck() || needPause()) return;
-        if (mode.getValue().equals("Aura")) {
-            if (!instaRotate.getValue()) {
-                if (targetedEntity == null) {
-                    if (rotations != null) {
-                        rotations[0] = MathHelper.lerp(0.5f, rotations[0], RotateUtils.getCameraYaw());
-                        rotations[1] = MathHelper.lerp(0.5f, rotations[1], RotateUtils.getCameraPitch());
-                        if (e.getPacket() instanceof PlayerInputC2SPacket) {
-                            IPlayerInputC2SPacket packet = (IPlayerInputC2SPacket) e.getPacket();
-                            changeInput(packet);
-                        }
-                        if (e.getPacket() instanceof PlayerMoveC2SPacket) {
-                            IPlayerMoveC2SPacket packet = (IPlayerMoveC2SPacket) e.getPacket();
-                            packet.setYaw(rotations[0]);
-                            packet.setPitch(rotations[1]);
-                        }
-                        rotations = null;
-                    }
-                } else {
-                    if (e.getPacket() instanceof PlayerInputC2SPacket) {
-                        IPlayerInputC2SPacket packet = (IPlayerInputC2SPacket) e.getPacket();
-                        changeInput(packet);
-                    }
-                }
-            }
-        }
-    }
     //---------Aura---------//
     public void auraMode() {
         if (!mc.player.isAlive()) {
@@ -193,14 +159,16 @@ public class KillAura extends Module {
         }
         if (targetedEntity != null) {
             if (mc.player.distanceTo(targetedEntity.entity) > range.getValue() || targetedEntity.entity.isDead()) {
+                if (!travelCancelled) {
+                    deleteTravelTicker.reset();
+                    travelCancelled = true;
+                }
                 targetedEntity = null;
                 prevAttackedEntity = null;
-                if (Managers.TRAVEL_CHANGE_MANAGER.containsChanger(travelChanger))
-                    Managers.TRAVEL_CHANGE_MANAGER.removeChanger(travelChanger);
             }
         }
 
-        if (targetedEntity == null || targetedEntity.lockTicks <= 0 && (delayPassed() && alwaysRotate.getValue())) {
+        if (targetedEntity == null || targetedEntity.lockTicks <= 0 && (delayPassed() && rotateMath.getValue().equals("Always"))) {
             targetSearchAction();
         }
 
@@ -215,9 +183,14 @@ public class KillAura extends Module {
         if (target == null)
             target = (LivingEntity) KillAuraUtils.filterEntity(range.getValue(), entityFilter);
 
-        if (target != null)
+        if (target != null) {
             targetedEntity = new Target(target, 0);
-        else {
+            travelCancelled = false;
+        } else {
+            if (!travelCancelled) {
+                deleteTravelTicker.reset();
+                travelCancelled = true;
+            }
             targetedEntity = null;
             prevAttackedEntity = null;
         }
@@ -226,15 +199,24 @@ public class KillAura extends Module {
     public void attackTargetAction() {
         if (targetedEntity != null) {
             if (!Managers.TRAVEL_CHANGE_MANAGER.containsChanger(travelChanger)) Managers.TRAVEL_CHANGE_MANAGER.addChanger(travelChanger);
-            if (alwaysRotate.getValue() || updateRotTicker.passed((int) rotateDelay.getValue())) {
-                rotations = RotateUtils.rotations(targetedEntity.entity);
+            if (rotateMath.getValue().equals("Always") || updateRotTicker.passed((int) targetRotateDelay.getValue())) {
+                targetRotation = RotateUtils.rotations(targetedEntity.entity);
                 updateRotTicker.reset();
+            }
+            switch (rotateMath.getValue()) {
+                case "Old", "Always" -> currentRotation = targetRotation;
+                case "New" -> {
+                    if (currentRotation != null) {
+                        currentRotation[0] += (targetRotation[0] - currentRotation[0]) * (float) rotateStep.getValue();
+                        currentRotation[1] += (targetRotation[1] - currentRotation[1]) * (float) rotateStep.getValue();
+                    } else currentRotation = new float[]{RotateUtils.getCameraYaw(), RotateUtils.getCameraPitch()};
+                }
             }
             if (!delayPassed()) return;
             if (instaRotate.getValue() || targetedEntity.lockTicks >= (int) lockTicks.getValue()) {
                 if (instaRotate.getValue()) {
                     RotateMode rotateMode = getRotateMode();
-                    KillAuraUtils.preAttackRotate(rotateMode, rotations, (int) packets.getValue());
+                    KillAuraUtils.preAttackRotate(rotateMode, currentRotation, (int) packets.getValue());
                 }
                 KillAuraUtils.attackNoRotate(targetedEntity.entity);
                 delayTicker.reset();
@@ -243,18 +225,15 @@ public class KillAura extends Module {
                 targetedEntity = new Target(targetedEntity.entity, prevAttackedEntity == targetedEntity.entity ? (int) lockTicks.getValue() : targetedEntity.lockTicks + 1);
             }
         } else {
-            if (Managers.TRAVEL_CHANGE_MANAGER.containsChanger(travelChanger)) Managers.TRAVEL_CHANGE_MANAGER.removeChanger(travelChanger);
+            if (travelCancelled && (deleteTravelTicker.passed(200) || !rotateMath.getValue().equals("New"))) {
+                if (Managers.TRAVEL_CHANGE_MANAGER.containsChanger(travelChanger))
+                    Managers.TRAVEL_CHANGE_MANAGER.removeChanger(travelChanger);
+                currentRotation = null;
+            } else {
+                currentRotation[0] += (RotateUtils.getCameraYaw() - currentRotation[0]) * (float) rotateStep.getValue();
+                currentRotation[1] += (RotateUtils.getCameraPitch() - currentRotation[1]) * (float) rotateStep.getValue();
+            }
         }
-    }
-
-    public void changeInput(IPlayerInputC2SPacket packet) {
-        float forward = packet._getForward();
-        float sideways = packet._getSideways();
-        float delta = (mc.player.getYaw() - rotations[0]) * MathHelper.RADIANS_PER_DEGREE;
-        float cos = MathHelper.cos(delta);
-        float sin = MathHelper.sin(delta);
-        packet._setSideways(Math.round(sideways * cos - forward * sin));
-        packet._setForward(Math.round(forward * cos + sideways * sin));
     }
     //----------------------//
 
