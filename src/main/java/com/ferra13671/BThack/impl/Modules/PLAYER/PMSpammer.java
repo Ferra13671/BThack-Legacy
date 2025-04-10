@@ -90,7 +90,6 @@ public class PMSpammer extends Module {
                         if (Files.exists(path)) {
                             BufferedReader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8);
                             String line = reader.readLine();
-                            String tempLine = antiSpam.getValue() ? genAntiSpam() + space + line + space + genAntiSpam() : line;
 
                             if (m != 1) {
                                 for (int i = 1; i < m; i++) {
@@ -100,6 +99,7 @@ public class PMSpammer extends Module {
                             }
                             if (line != null) {
                                 Set<PlayerListEntry> playerInfos = new HashSet<>(mc.player.networkHandler.getPlayerList());
+                                String tempLine = antiSpam.getValue() ? genAntiSpam() + space + line + space + genAntiSpam() : line;
 
                                 for (PlayerListEntry info : playerInfos) {
                                     if (!ModuleList.pmSpammer.isEnabled())

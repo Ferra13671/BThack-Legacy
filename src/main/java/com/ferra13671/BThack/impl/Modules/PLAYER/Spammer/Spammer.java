@@ -81,7 +81,6 @@ public class Spammer extends Module {
                     if (Files.exists(path)) {
                         BufferedReader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8);
                         String line = reader.readLine();
-                        String tempLine = antiSpam.getValue() ? genAntiSpam() + space + line + space + genAntiSpam() : line;
 
                         switch (spamMode.getValue()) {
                             case "InOrder" -> {
@@ -91,6 +90,7 @@ public class Spammer extends Module {
                                             line = reader.readLine();
                                     }
                                 }
+                                String tempLine = antiSpam.getValue() ? genAntiSpam() + space + line + space + genAntiSpam() : line;
                                 if (line != null) {
                                     ChatUtils.sendChatMessage(tempLine);
                                     m = m + 1;
@@ -102,12 +102,14 @@ public class Spammer extends Module {
                             case "Random" -> {
                                 readTXT.read();
                                 int randomValue = NumberGenerator.generateInt(1, readTXT.value);
+                                String tempLine = antiSpam.getValue() ? genAntiSpam() + space + line + space + genAntiSpam() : line;
                                 if (randomValue == 1)
                                     ChatUtils.sendChatMessage(tempLine);
                                 else {
                                     for (int i = 1; i < randomValue; i++) {
                                         line = reader.readLine();
                                     }
+                                    tempLine = antiSpam.getValue() ? genAntiSpam() + space + line + space + genAntiSpam() : line;
                                     if (line != null)
                                         ChatUtils.sendChatMessage(tempLine);
                                 }
