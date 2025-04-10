@@ -19,7 +19,6 @@ import java.util.ArrayList;
 public class ActionBotConfigGui extends BThackScreen {
     public static double widthFactor = 0;
     public static double heightFactor = 0;
-    public static final int menuColor = ColorUtils.fastRGBA(85, 85, 85, 255);
     public static Window scaledResolution;
     public static final ArrayList<TaskButton> taskButtons = new ArrayList<>();
     protected static short page = 0;
@@ -103,7 +102,7 @@ public class ActionBotConfigGui extends BThackScreen {
 
         //Menu
         BThackRender.drawOutlineRect((int) widthFactor - 1, (int) (heightFactor * 7) - 1, (int) (widthFactor * 27) + 1, (int) (scaledResolution.getScaledHeight() - (heightFactor * 4)) + 1, 1, ColorUtils.WHITE);
-        BThackRender.drawRect((int) widthFactor, (int) (heightFactor * 7), (int) (widthFactor * 27), (int) (scaledResolution.getScaledHeight() - (heightFactor * 4)), menuColor);
+        BThackRender.drawRect((int) widthFactor, (int) (heightFactor * 7), (int) (widthFactor * 27), (int) (scaledResolution.getScaledHeight() - (heightFactor * 4)), Constants.SCREEN_ACTIONBOT_MENU_COLOR);
 
         int offset = 0;
 

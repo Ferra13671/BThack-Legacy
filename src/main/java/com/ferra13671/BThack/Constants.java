@@ -28,9 +28,11 @@ public final class Constants {
     public static final int CLICKGUI_FRAME_WIDTH = 100;
     public static final int CLICKGUI_BUTTON_OUTLINE_COLOR = ColorUtils.fastRGBA(0, 0, 0, 100);
     public static final int CLICKGUI_BUTTON_HEIGHT = 14;
+    public static final int CLICKGUI_SLIDER_ROUND_TO_PLACE_VALUE = 2;
 
     public static final int SCREEN_BACKGROUND_TABLE_COLOR = ColorUtils.fastRGBA(0,0,0,40);
     public static final double SCREEN_ACTIONBOT_TASK_OFFSET_FACTOR = 1.5;
+    public static final int SCREEN_ACTIONBOT_MENU_COLOR = ColorUtils.fastRGBA(85, 85, 85, 255);
 
     public static final int FONT_RENDERER_DEFAULT_PAGE_SIZE = 256;
     public static final int FONT_RENDERER_DEFAULT_PADDING_BETWEEN_CHARS = 5;

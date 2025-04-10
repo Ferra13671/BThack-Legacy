@@ -100,7 +100,7 @@ public class Slider extends AbstractSetting implements Mc {
 				set.setValue(min);
 				set.module.onChangeSetting(set);
 			} else {
-				set.setValue(roundToPlace(((diff / 100) * (max - min) + min), 2));
+				set.setValue(roundToPlace(((diff / 100) * (max - min) + min)));
 				set.module.onChangeSetting(set);
 			}
 		}
@@ -112,12 +112,9 @@ public class Slider extends AbstractSetting implements Mc {
 		return ClickGui.applyGuiScale(50 - 2);
 	}
 
-	private static double roundToPlace(double value, int places) {
-		if (places < 0) {
-			throw new IllegalArgumentException();
-		}
+	public static double roundToPlace(double value) {
 		BigDecimal bd = new BigDecimal(value);
-		bd = bd.setScale(places, RoundingMode.HALF_UP);
+		bd = bd.setScale(Constants.CLICKGUI_SLIDER_ROUND_TO_PLACE_VALUE, RoundingMode.HALF_UP);
 		return bd.doubleValue();
 	}
 

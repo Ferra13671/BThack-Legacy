@@ -15,9 +15,9 @@ import com.ferra13671.BThack.api.Utils.Modules.KillAuraUtils;
 import com.ferra13671.BThack.api.Utils.RotateUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
+import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ArmorMaterials;
 import net.minecraft.item.ItemStack;
@@ -27,7 +27,6 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class TopperRadar extends Module {
@@ -66,7 +65,7 @@ public class TopperRadar extends Module {
         );
     }
 
-    private final ArrayList<PlayerEntity> reportedToppers = new ArrayList<>();
+    private final ArrayList<AbstractClientPlayerEntity> reportedToppers = new ArrayList<>();
     protected boolean pause = false;
 
     @EventSubscriber
@@ -75,7 +74,7 @@ public class TopperRadar extends Module {
 
         arrayListInfo = autoDisconnect.getValue() ? "AutoDisconnect" : "";
 
-        for (PlayerEntity player : mc.world.getPlayers()) {
+        for (AbstractClientPlayerEntity player : mc.world.getPlayers()) {
             if (player == mc.player || reportedToppers.contains(player)) continue;
             if (!friends.getValue()) {
                 if (SocialManagers.FRIENDS.contains(player)) continue;

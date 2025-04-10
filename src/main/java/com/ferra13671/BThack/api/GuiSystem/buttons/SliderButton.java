@@ -5,13 +5,11 @@ import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Font.FontRenderManager;
 import com.ferra13671.BThack.Core.Render.Font.FontUtils;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
+import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.setting.settings.Slider;
 import com.ferra13671.BThack.api.SoundSystem.SoundSystem;
 import com.ferra13671.BThack.api.SoundSystem.Sounds;
 import com.ferra13671.BThack.Constants;
 import com.ferra13671.BThack.api.Utils.Ticker;
-
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 public class SliderButton extends Button {
 
@@ -62,15 +60,9 @@ public class SliderButton extends Button {
             if (diff == 0) {
                 value = min;
             } else {
-                value = roundToPlace(((diff / 100) * (max - min) + min), 2);
+                value = Slider.roundToPlace(((diff / 100) * (max - min) + min));
             }
         }
-    }
-
-    private static double roundToPlace(double value, int places) {
-        BigDecimal bd = new BigDecimal(value);
-        bd = bd.setScale(places, RoundingMode.HALF_UP);
-        return bd.doubleValue();
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.api.Gui.Screen.ClickGui;
 
+import com.ferra13671.BThack.Constants;
 import com.ferra13671.BThack.Core.Client.Client;
 import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.Core.FileSystem.ConfigSystem.ConfigSystem;
@@ -55,7 +56,7 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
             frame.setY(tempY);
             frame.setX(tempX);
             frames.add(frame);
-            tempX += 105;
+            tempX += Constants.CLICKGUI_FRAME_WIDTH + 5;
             frame.refresh();
         }
         ticker.reset();
