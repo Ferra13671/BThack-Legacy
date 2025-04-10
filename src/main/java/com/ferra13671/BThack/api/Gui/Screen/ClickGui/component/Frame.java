@@ -15,18 +15,16 @@ import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.settin
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Shader.Shaders;
+import com.ferra13671.BThack.Constants;
 import com.ferra13671.BThack.api.Utils.Data;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.impl.Modules.CLIENT.ClickGui;
 
 import java.io.Closeable;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class Frame implements Mc, Closeable {
-	public static final int BAR_HEIGHT = 12;
-	public static final int FRAME_WIDTH = 100;
 	private static final List<Frame> GLOBAL_FRAMES = new ArrayList<>();
 
 	public int id;
@@ -51,12 +49,12 @@ public class Frame implements Mc, Closeable {
 		this.writingSlider = writingSlider;
 
 		frameName = name;
-		int tY = BAR_HEIGHT;
+		int tY = Constants.CLICKGUI_BAR_HEIGHT;
 
 		for(Module mod : modules) {
 			ModuleButton button = new ModuleButton(mod, this, tY);
 			buttons.add(button);
-			tY += BAR_HEIGHT;
+			tY += Constants.CLICKGUI_BAR_HEIGHT;
 		}
 	}
 	
@@ -168,25 +166,24 @@ public class Frame implements Mc, Closeable {
 
 		if (ModuleList.clickGui.rainbow.getValue()) {
 			ModuleList.clickGui.prepareRainbowShader();
-			BThackRender.drawShader(Shaders.INSTANCE.X_RAINBOW, x, y, x + FRAME_WIDTH, y + BAR_HEIGHT);
+			BThackRender.drawShader(Shaders.INSTANCE.X_RAINBOW, x, y, x + Constants.CLICKGUI_FRAME_WIDTH, y + Constants.CLICKGUI_BAR_HEIGHT);
 		} else
-			BThackRender.drawRect(x, y, x + FRAME_WIDTH, y + BAR_HEIGHT, ModuleList.clickGui.customColor.getValue() ? ColorUtils.fastRGBA(ModuleList.clickGui.color.getValue().getRed(), ModuleList.clickGui.color.getValue().getGreen(), ModuleList.clickGui.color.getValue().getBlue(), 255) : ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().color()));
+			BThackRender.drawRect(x, y, x + Constants.CLICKGUI_FRAME_WIDTH, y + Constants.CLICKGUI_BAR_HEIGHT, ModuleList.clickGui.customColor.getValue() ? ColorUtils.fastRGBA(ModuleList.clickGui.color.getValue().getRed(), ModuleList.clickGui.color.getValue().getGreen(), ModuleList.clickGui.color.getValue().getBlue(), 255) : ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().color()));
 		if (ModuleList.clickGui.frameOutline.getValue()) {
 			if (ModuleList.clickGui.rainbow.getValue()) {
-				//Shaders.INSTANCE.X_RAINBOW.setUniformValue("brightness", 0.4f);
 				ModuleList.clickGui.prepareRainbowShader();
-				BThackRender.drawShaderOutlineRect(Shaders.INSTANCE.X_RAINBOW, x - 1, y - 1, x + FRAME_WIDTH + 1, y + renderHeight + BAR_HEIGHT + 1, 1);
+				BThackRender.drawShaderOutlineRect(Shaders.INSTANCE.X_RAINBOW, x - 1, y - 1, x + Constants.CLICKGUI_FRAME_WIDTH + 1, y + renderHeight + Constants.CLICKGUI_BAR_HEIGHT + 1, 1);
 			} else {
-				BThackRender.drawOutlineRect(x - 1, y - 1, x + FRAME_WIDTH + 1, y + renderHeight + BAR_HEIGHT + 1, 1, ClickGui.getClickGuiColor(true));
+				BThackRender.drawOutlineRect(x - 1, y - 1, x + Constants.CLICKGUI_FRAME_WIDTH + 1, y + renderHeight + Constants.CLICKGUI_BAR_HEIGHT + 1, 1, ClickGui.getClickGuiColor(true));
 			}
 		}
 
-		BThackRender.drawString(frameName, x + (FRAME_WIDTH / 2f) - (FontUtils.getTextWidth(frameName) / 2f), y + (BAR_HEIGHT / 2f) - (FontUtils.getTextHeight(frameName) / 2f), ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()), true, FontRenderManager.DrawMode.NORMAL_BOLD);
+		BThackRender.drawString(frameName, x + (Constants.CLICKGUI_FRAME_WIDTH / 2f) - (FontUtils.getTextWidth(frameName) / 2f), y + (Constants.CLICKGUI_BAR_HEIGHT / 2f) - (FontUtils.getTextHeight(frameName) / 2f), ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()), true, FontRenderManager.DrawMode.NORMAL_BOLD);
 
 		if(open || frameAnimation.getEase() < 1) {
 			if(!buttons.isEmpty()) {
 				if (needScissor)
-					BThackRender.enableScissor(ClickGui.applyGuiScale(x), ClickGui.applyGuiScale(y + BAR_HEIGHT), ClickGui.applyGuiScale(FRAME_WIDTH), (int) ClickGui.applyGuiScale(renderHeight));
+					BThackRender.enableScissor(ClickGui.applyGuiScale(x), ClickGui.applyGuiScale(y + Constants.CLICKGUI_BAR_HEIGHT), ClickGui.applyGuiScale(Constants.CLICKGUI_FRAME_WIDTH), (int) ClickGui.applyGuiScale(renderHeight));
 				for(Component component : buttons) {
 					component.renderComponent();
 				}
@@ -198,21 +195,12 @@ public class Frame implements Mc, Closeable {
 	}
 	
 	public void refresh() {
-		int off = BAR_HEIGHT;
+		int off = Constants.CLICKGUI_BAR_HEIGHT;
 		for(Component comp : buttons) {
-			comp.setOff(off);
+			comp.refresh(off);
 			off += comp.getHeight();
 		}
-		height = off - BAR_HEIGHT;
-	}
-
-	public void updateDependencies() {
-		int off = BAR_HEIGHT;
-		for(Component comp : buttons) {
-			comp.updateDependencies(off);
-			off += comp.getHeight();
-		}
-		height = off - BAR_HEIGHT;
+		height = off - Constants.CLICKGUI_BAR_HEIGHT;
 	}
 
 	public void tick() {
@@ -233,10 +221,6 @@ public class Frame implements Mc, Closeable {
 	
 	public int getY() {
 		return y;
-	}
-	
-	public int getWidth() {
-		return FRAME_WIDTH;
 	}
 	
 	public void updatePosition(int mouseX, int mouseY) {
@@ -268,13 +252,13 @@ public class Frame implements Mc, Closeable {
 	}
 	
 	public boolean isWithinHeader(int mouseX, int mouseY) {
-        return mouseX >= ClickGui.applyGuiScale(x) && mouseX <= ClickGui.applyGuiScale(x + FRAME_WIDTH) &&
-				mouseY >= ClickGui.applyGuiScale(y) && mouseY <= ClickGui.applyGuiScale(y + BAR_HEIGHT);
+        return mouseX >= ClickGui.applyGuiScale(x) && mouseX <= ClickGui.applyGuiScale(x + Constants.CLICKGUI_FRAME_WIDTH) &&
+				mouseY >= ClickGui.applyGuiScale(y) && mouseY <= ClickGui.applyGuiScale(y + Constants.CLICKGUI_BAR_HEIGHT);
     }
 
 	public boolean isMouseOnFrame(int mouseX, int mouseY) {
-		return mouseX >= ClickGui.applyGuiScale(x) && mouseX <= ClickGui.applyGuiScale(x + FRAME_WIDTH) &&
-				mouseY >= ClickGui.applyGuiScale(y) && mouseY <= ClickGui.applyGuiScale(y + renderHeight + BAR_HEIGHT);
+		return mouseX >= ClickGui.applyGuiScale(x) && mouseX <= ClickGui.applyGuiScale(x + Constants.CLICKGUI_FRAME_WIDTH) &&
+				mouseY >= ClickGui.applyGuiScale(y) && mouseY <= ClickGui.applyGuiScale(y + renderHeight + Constants.CLICKGUI_BAR_HEIGHT);
 	}
 
 	public static List<Frame> getGlobalFrames() {

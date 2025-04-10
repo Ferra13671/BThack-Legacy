@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.impl.HudComponents.OneTextComponents;
 
+import com.ferra13671.BThack.Constants;
 import com.ferra13671.BThack.impl.HudComponents.AbstractOneTextComponent;
 import net.minecraft.util.Formatting;
 
@@ -26,7 +27,7 @@ public class RotationComponent extends AbstractOneTextComponent {
         }
 
 
-        return "Yaw: " + Formatting.WHITE + decimal.format(preYaw) + Formatting.RESET + " " +
-                "Pitch: " + Formatting.WHITE + decimal.format(mc.player.getPitch());
+        return "Yaw: " + Formatting.WHITE + Constants.DECIMAL_FORMAT.format(preYaw) + Formatting.RESET + " " +
+                "Pitch: " + Formatting.WHITE + Constants.DECIMAL_FORMAT.format(mc.player.getPitch());
     }
 }

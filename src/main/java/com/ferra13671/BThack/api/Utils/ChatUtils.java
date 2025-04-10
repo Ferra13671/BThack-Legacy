@@ -1,28 +1,23 @@
 package com.ferra13671.BThack.api.Utils;
 
-import com.ferra13671.BThack.Core.Client.Client;
-import com.ferra13671.BThack.Core.Client.ModuleList;
+import com.ferra13671.BThack.Constants;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
 import net.minecraft.client.network.PlayerListEntry;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
 
 public final class ChatUtils implements Mc {
 
-    private static final String prefixFull = "[" + Formatting.BLUE + Client.clientInfo.getCName() + Formatting.RESET + "] ";
-    private static final String prefixSimple = "[" + Formatting.BLUE + "BThack" + Formatting.RESET + "] ";
-
     public static void sendMessage(String message) {
         if (mc.player == null) return;
-        mc.player.sendMessage(Text.literal((ModuleList.clientSettings.chatName.getValue().equals("Full") ? prefixFull : prefixSimple) + message));
+        mc.player.sendMessage(Text.literal(Constants.BTHACK_PREFIX + message));
 
     }
 
     public static void sendMessage(String msg, SoundEvent soundEvent) {
         if (mc.player == null) return;
-        mc.player.sendMessage(Text.literal((ModuleList.clientSettings.chatName.getValue().equals("Full") ? prefixFull : prefixSimple) + msg));
+        mc.player.sendMessage(Text.literal(Constants.BTHACK_PREFIX + msg));
         mc.player.playSound(soundEvent,1,1);
     }
 

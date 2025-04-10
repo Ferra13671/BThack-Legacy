@@ -13,6 +13,7 @@ import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Shader.Shaders;
 import com.ferra13671.BThack.api.SoundSystem.SoundSystem;
 import com.ferra13671.BThack.api.SoundSystem.Sounds;
+import com.ferra13671.BThack.Constants;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.Utils.Ticker;
 import com.ferra13671.BThack.impl.Modules.CLIENT.ClickGui;
@@ -52,13 +53,13 @@ public class Slider extends AbstractSetting implements Mc {
 	public Slider(NumberSetting option, ModuleButton button, int offset, Module module) {
 		super(offset, button, module, option);
 		set = option;
-		x = button.parent.getX() + button.parent.getWidth();
+		x = button.parent.getX() + Constants.CLICKGUI_FRAME_WIDTH;
 		y = button.parent.getY() + button.offset;
 	}
 
 	@Override
 	public void renderComponent() {
-		BThackRender.drawRect(parent.parent.getX(), parent.parent.getY() + offset, parent.parent.getX() + parent.parent.getWidth(), parent.parent.getY() + offset + 15, ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().backgroundColor()), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))));
+		BThackRender.drawRect(parent.parent.getX(), parent.parent.getY() + offset, parent.parent.getX() + Constants.CLICKGUI_FRAME_WIDTH, parent.parent.getY() + offset + 15, ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().backgroundColor()), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))));
 
 		//BThackRender.drawRect(parent.parent.getX(), parent.parent.getY() + offset, parent.parent.getX(), parent.parent.getY() + offset + 15, new Color(Client.clientInfo.getColorTheme().getBackgroundFontColour()).hashCode());
 		BThackRender.drawRect(parent.parent.getX() + 2, parent.parent.getY() + offset + 11, parent.parent.getX() + 100 - 2, parent.parent.getY() + offset + 15, Color.GRAY.darker().darker().darker().getRGB());
@@ -195,12 +196,12 @@ public class Slider extends AbstractSetting implements Mc {
 	}
 
 	private boolean isMouseOnButtonD(int x, int y) {
-		return x > ClickGui.applyGuiScale(this.x) && x < ClickGui.applyGuiScale(this.x + (parent.parent.getWidth() / 2f + 1)) &&
+		return x > ClickGui.applyGuiScale(this.x) && x < ClickGui.applyGuiScale(this.x + (Constants.CLICKGUI_FRAME_WIDTH / 2f + 1)) &&
 				y > ClickGui.applyGuiScale(this.y) && y < ClickGui.applyGuiScale(this.y + 15);
 	}
 
 	private boolean isMouseOnButtonI(int x, int y) {
-		return x > ClickGui.applyGuiScale(this.x + parent.parent.getWidth() / 2f) && x < ClickGui.applyGuiScale(this.x + parent.parent.getWidth()) &&
+		return x > ClickGui.applyGuiScale(this.x + Constants.CLICKGUI_FRAME_WIDTH / 2f) && x < ClickGui.applyGuiScale(this.x + Constants.CLICKGUI_FRAME_WIDTH) &&
 				y > ClickGui.applyGuiScale(this.y) && y < ClickGui.applyGuiScale(this.y + 15);
 	}
 

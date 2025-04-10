@@ -20,16 +20,11 @@ public class Component {
 		
 	}
 	
-	public void setOff(int newOff) {
+	public void refresh(int newOff) {
 		
 	}
 	
 	public int getHeight() {
 		return 0;
 	}
-
-
-
-
-	public void updateDependencies(int offset) {}
 }

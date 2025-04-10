@@ -15,8 +15,6 @@ import net.minecraft.text.Text;
 import java.util.function.Supplier;
 
 public class TransitionScreen extends BThackScreen {
-    public static final Animation STANDARD_FLIP_ANIMATION = new Animation(Easing.LINEAR, 500);
-
     private final Supplier<Screen> newScreen;
     private final Animation flipAnimation;
 

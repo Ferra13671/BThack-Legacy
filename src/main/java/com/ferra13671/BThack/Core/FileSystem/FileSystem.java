@@ -1,6 +1,7 @@
 package com.ferra13671.BThack.Core.FileSystem;
 
 import com.ferra13671.BThack.BThack;
+import com.ferra13671.BThack.Constants;
 import com.ferra13671.BThack.Core.FileSystem.ConfigSystem.ConfigUtils;
 import com.google.gson.*;
 
@@ -14,7 +15,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public final class FileSystem {
-    private static final Gson gson = (new GsonBuilder()).setPrettyPrinting().create();
 
     public static void start() throws IOException {
 
@@ -89,7 +89,7 @@ public final class FileSystem {
         coloursObject.add("arrayListColor", new JsonPrimitive(0x191CFF));
 
         colourThemeObject.add("Colours", coloursObject);
-        String jsonString = gson.toJson(JsonParser.parseString(colourThemeObject.toString()));
+        String jsonString = Constants.GSON.toJson(JsonParser.parseString(colourThemeObject.toString()));
         fileOutputStreamWriter.write(jsonString);
         fileOutputStreamWriter.close();
     }

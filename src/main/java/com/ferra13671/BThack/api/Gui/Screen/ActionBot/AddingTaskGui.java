@@ -6,6 +6,7 @@ import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Font.FontUtils;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.GuiSystem.Screen.BThackScreen;
+import com.ferra13671.BThack.Constants;
 import com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.ActionBotConfig;
 import com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.ActionBotTask;
 import com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.Utils.ActionBotTaskData;
@@ -64,7 +65,7 @@ public class AddingTaskGui extends BThackScreen {
     public void render(DrawContext context, int mouseX, int mouseY, float partialTicks) {
         drawBackGround(mouseX, mouseY);
 
-        BThackRender.drawRect(getX100P() * 25, 20, (scaledResolution.getScaledWidth() - 10), (scaledResolution.getScaledHeight() - 50), BACKGROUND_TABLE_COLOR);
+        BThackRender.drawRect(getX100P() * 25, 20, (scaledResolution.getScaledWidth() - 10), (scaledResolution.getScaledHeight() - 50), Constants.SCREEN_BACKGROUND_TABLE_COLOR);
         BThackRender.drawString(taskName, ((scaledResolution.getScaledWidth() - 60) - FontUtils.getTextWidth(taskName)), 25, ColorUtils.WHITE);
 
         short offset = 0;

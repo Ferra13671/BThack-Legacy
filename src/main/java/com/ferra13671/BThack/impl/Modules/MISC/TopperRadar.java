@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.impl.Modules.MISC;
 
+import com.ferra13671.BThack.Constants;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
@@ -113,8 +114,7 @@ public class TopperRadar extends Module {
             }
 
             if (armorMatches >= amount.getValue()) {
-                String pattern = "#0.0";
-                String health = new DecimalFormat(pattern).format(player.getHealth());
+                String health = Constants.DECIMAL_FORMAT.format(player.getHealth());
 
                 String message = Formatting.GOLD + String.format(LanguageSystem.translate("lang.module.TopperRadar.spotted"), Formatting.RED, Formatting.GOLD, Formatting.AQUA, Formatting.WHITE + player.getDisplayName().getString(), Formatting.AQUA, Formatting.WHITE + health, Formatting.AQUA, Formatting.WHITE + RotateUtils.getDirection(player));
 

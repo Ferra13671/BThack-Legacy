@@ -1,17 +1,15 @@
 package com.ferra13671.BThack.Core.BThackUpdater;
 
 import com.ferra13671.BThack.BThack;
+import com.ferra13671.BThack.Constants;
 import com.ferra13671.BThack.api.Managers.managers.Thread.BThackThread;
 
 import java.io.*;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.text.DecimalFormat;
 
 public class UpdaterThread extends BThackThread {
-    private static final DecimalFormat decimal = new DecimalFormat("0.00");
-
     private final URL url;
     private final Path filePath;
 
@@ -69,7 +67,7 @@ public class UpdaterThread extends BThackThread {
     }
 
     public String getDownloadedMBytes() {
-        return decimal.format(downloadedBytes / 1024f / 1024f);
+        return Constants.DECIMAL_FORMAT.format(downloadedBytes / 1024f / 1024f);
     }
 
     public UpdateState getUpdateState() {

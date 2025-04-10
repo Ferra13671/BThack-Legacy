@@ -32,13 +32,9 @@ public abstract class AbstractSetting extends Component {
     public abstract void renderComponent();
 
     @Override
-    public void setOff(int newOff) {
+    public void refresh(int newOff) {
         offset = newOff;
-    }
-
-    @Override
-    public void updateDependencies(int offset) {
-        if (op.dependence != null)
+        if (op != null && op.dependence != null)
             setVisible(op.dependence.get());
     }
 

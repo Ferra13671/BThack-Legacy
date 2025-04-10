@@ -11,14 +11,12 @@ import com.ferra13671.BThack.api.GuiSystem.ButtonClickInfo;
 import com.ferra13671.BThack.api.SoundSystem.Sound;
 import com.ferra13671.BThack.api.SoundSystem.SoundSystem;
 import com.ferra13671.BThack.api.SoundSystem.Sounds;
+import com.ferra13671.BThack.Constants;
 import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
 
 import java.util.function.Consumer;
 
 public class Button implements Mc {
-    public static final int RECT_COLOR = ColorUtils.fastRGBA(0, 0, 0, 76);
-    public static final int HOVERED_LIGHT_COLOR = ColorUtils.fastRGBA(255,255,255, 178);
-
     private final int id;
 
     protected int centerX;
@@ -74,17 +72,17 @@ public class Button implements Mc {
     protected void drawPlate(float animationDelta) {
         animationDelta *= 2;
         if (!hovered && hoveredAnimation.getEase() >= 1) {
-            BThackRender.drawRoundedRectWithOutline(getCenterX() - width, getCenterY() - height, getCenterX() + width, getCenterY() + height, 10f, RECT_COLOR, selected ? ColorUtils.rainbow() : -1, 1);
+            BThackRender.drawRoundedRectWithOutline(getCenterX() - width, getCenterY() - height, getCenterX() + width, getCenterY() + height, 10f, Constants.GUISYSTEM_BUTTON_RECT_COLOR, selected ? ColorUtils.rainbow() : -1, 1);
         } else {
-            BThackRender.drawRoundedRectWithOutline(getCenterX() - width - animationDelta, getCenterY() - height - animationDelta, getCenterX() + width + animationDelta, getCenterY() + height + animationDelta, 10f, RECT_COLOR, selected ? ColorUtils.rainbow() : -1, 1);
+            BThackRender.drawRoundedRectWithOutline(getCenterX() - width - animationDelta, getCenterY() - height - animationDelta, getCenterX() + width + animationDelta, getCenterY() + height + animationDelta, 10f, Constants.GUISYSTEM_BUTTON_RECT_COLOR, selected ? ColorUtils.rainbow() : -1, 1);
 
             drawHoveredLight(animationDelta / 2);
         }
     }
 
     protected void drawHoveredLight(float animationDelta) {
-        BThackRender.drawHorizontalGradientRect((int)(getCenterX() - (width * 0.8 * animationDelta)), getCenterY() + height - 4, getCenterX(), getCenterY() + height - 2, ColorUtils.TRANSPARENT, ColorUtils.integrateAlpha(HOVERED_LIGHT_COLOR, (int) (animationDelta * 255)));
-        BThackRender.drawHorizontalGradientRect(getCenterX(), getCenterY() + height - 4, (int)(getCenterX() + (width * 0.8 * animationDelta)), getCenterY() + height - 2, ColorUtils.integrateAlpha(HOVERED_LIGHT_COLOR, (int) (animationDelta * 255)), ColorUtils.TRANSPARENT);
+        BThackRender.drawHorizontalGradientRect((int)(getCenterX() - (width * 0.8 * animationDelta)), getCenterY() + height - 4, getCenterX(), getCenterY() + height - 2, ColorUtils.TRANSPARENT, ColorUtils.integrateAlpha(Constants.GUISYSTEM_BUTTON_HOVERED_LIGHT_COLOR, (int) (animationDelta * 255)));
+        BThackRender.drawHorizontalGradientRect(getCenterX(), getCenterY() + height - 4, (int)(getCenterX() + (width * 0.8 * animationDelta)), getCenterY() + height - 2, ColorUtils.integrateAlpha(Constants.GUISYSTEM_BUTTON_HOVERED_LIGHT_COLOR, (int) (animationDelta * 255)), ColorUtils.TRANSPARENT);
     }
 
     public float getAnimationDelta() {

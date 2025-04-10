@@ -4,6 +4,7 @@ import com.ferra13671.BTbot.api.Utils.Generate.StringGenerator;
 import com.ferra13671.BThack.Core.Render.Utils.BThackRenderUtils;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.Constants;
 import com.ferra13671.BThack.api.Utils.MathUtils;
 import com.ferra13671.TextureUtils.TextureStorage;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -45,8 +46,6 @@ public class FontRenderer implements Closeable, Mc {
         put('E', 0xFFFF55);
         put('F', 0xFFFFFF);
     }};
-    private static final int DEFAULT_PAGE_SIZE = 256;
-    private static final int DEFAULT_PADDING_BETWEEN_CHARS = 5;
 
     private static final ExecutorService ASYNC_WORKER = Executors.newCachedThreadPool();
     private final Object2ObjectMap<String, ObjectList<DrawEntry>> GLYPH_PAGE_CACHE = new Object2ObjectOpenHashMap<>();
@@ -71,7 +70,7 @@ public class FontRenderer implements Closeable, Mc {
     }
 
     public FontRenderer(Font font, float sizePx) {
-        this(font, sizePx / 2, DEFAULT_PAGE_SIZE, DEFAULT_PADDING_BETWEEN_CHARS, null);
+        this(font, sizePx / 2, Constants.FONT_RENDERER_DEFAULT_PAGE_SIZE, Constants.FONT_RENDERER_DEFAULT_PADDING_BETWEEN_CHARS, null);
     }
 
     private int floorNearestMulN(int x) {

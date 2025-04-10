@@ -37,9 +37,7 @@ import java.lang.reflect.Modifier;
 import java.net.URI;
 
 public final class BThack implements ClientModInitializer, Mc {
-    public static final Logger LOGGER = LoggerFactory.getLogger("BThack");
     public static final IEventBus EVENT_BUS = new UpdatedEventBus();
-    public static final String APP_ID = "1221431287852826676";
 
     public final VersionInfo versionInfo = new VersionInfo();
     public final String MC_VERSION;
@@ -61,16 +59,16 @@ public final class BThack implements ClientModInitializer, Mc {
     }
 
     public static void log(String message) {
-        LOGGER.info(message);
+        Constants.BTHACK_LOGGER.info(message);
     }
 
     public static void error(String message) {
-        LOGGER.error(message);
+        Constants.BTHACK_LOGGER.error(message);
     }
 
     public static void debug(String message) {
         if (instance.versionInfo.isSendDebug())
-            LOGGER.info("[DEBUG] {}", message);
+            Constants.BTHACK_LOGGER.info("[DEBUG] {}", message);
     }
 
     public static boolean isBaritonePresent() {

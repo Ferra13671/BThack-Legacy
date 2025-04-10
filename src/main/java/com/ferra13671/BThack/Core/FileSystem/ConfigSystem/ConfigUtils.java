@@ -1,9 +1,8 @@
 package com.ferra13671.BThack.Core.FileSystem.ConfigSystem;
 
+import com.ferra13671.BThack.Constants;
 import com.ferra13671.BThack.Core.FileSystem.FileSystem;
 import com.ferra13671.TextureUtils.PathMode;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -15,7 +14,6 @@ import java.nio.file.Paths;
 import java.util.function.Consumer;
 
 public final class ConfigUtils {
-    public static final Gson gson = (new GsonBuilder()).setPrettyPrinting().create();
 
     public static void registerFiles(String name, String path) throws IOException {
         Path p = Paths.get("BThack/" + path + "/" + name + ".json");
@@ -32,7 +30,7 @@ public final class ConfigUtils {
     }
 
     public static String jsonToString(JsonObject object) {
-        return gson.toJson(JsonParser.parseString(object.toString()));
+        return Constants.GSON.toJson(JsonParser.parseString(object.toString()));
     }
 
     public static InputStream newInputStream(String path, PathMode pathMode) {

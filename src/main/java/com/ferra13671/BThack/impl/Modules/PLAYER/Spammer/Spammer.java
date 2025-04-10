@@ -8,6 +8,7 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSettin
 import com.ferra13671.BThack.api.Managers.managers.Thread.ThreadManager;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.ChatUtils;
+import com.ferra13671.BThack.Constants;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 
 import java.io.BufferedReader;
@@ -18,7 +19,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Random;
 
 public class Spammer extends Module {
 
@@ -57,7 +57,6 @@ public class Spammer extends Module {
         );
     }
 
-    private final Random random = new Random();
     private final ReadTXT readTXT = new ReadTXT();
 
     public int m = 1;
@@ -142,7 +141,7 @@ public class Spammer extends Module {
                     int a = (int) (delay.getValue() * 1000);
 
                     if (delaySpread.getValue()) {
-                        if (!random.nextBoolean()) {
+                        if (!Constants.RANDOM.nextBoolean()) {
                             a = (int) (a * NumberGenerator.generateFloat(1, 1f + (float) spreadRange.getValue()));
                         } else {
                             a = (int) (a * NumberGenerator.generateFloat((float) spreadRange.getValue(), 1));

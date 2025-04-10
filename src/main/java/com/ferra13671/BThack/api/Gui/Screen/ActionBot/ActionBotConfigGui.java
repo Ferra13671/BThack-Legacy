@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.api.Gui.Screen.ActionBot;
 
+import com.ferra13671.BThack.Constants;
 import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.GuiSystem.Screen.BThackScreen;
@@ -18,20 +19,10 @@ import java.util.ArrayList;
 public class ActionBotConfigGui extends BThackScreen {
     public static double widthFactor = 0;
     public static double heightFactor = 0;
-
     public static final int menuColor = ColorUtils.fastRGBA(85, 85, 85, 255);
-
-
-    public static final double offsetFactor = 1.5;
-
     public static Window scaledResolution;
-
-
     public static final ArrayList<TaskButton> taskButtons = new ArrayList<>();
-
-
     protected static short page = 0;
-
     protected static TaskButton selectedTask = null;
 
     public ActionBotConfigGui() {
@@ -127,7 +118,7 @@ public class ActionBotConfigGui extends BThackScreen {
             }
             ActionBotTask task = ActionBotConfig.tasks.get(i + (page * 12));
             if (i < 11 && !task.getName().equals("End"))
-                BThackRender.drawRect((int) ((widthFactor * 9) - 1), (int) (heightFactor * 8  + ((heightFactor * offsetFactor) * offset)), (int) ((widthFactor * 9) + 1), (int) (((heightFactor * 8) + ((heightFactor * offsetFactor) * offset)) + ((heightFactor * offsetFactor))), ColorUtils.WHITE);
+                BThackRender.drawRect((int) ((widthFactor * 9) - 1), (int) (heightFactor * 8  + ((heightFactor * Constants.SCREEN_ACTIONBOT_TASK_OFFSET_FACTOR) * offset)), (int) ((widthFactor * 9) + 1), (int) (((heightFactor * 8) + ((heightFactor * Constants.SCREEN_ACTIONBOT_TASK_OFFSET_FACTOR) * offset)) + ((heightFactor * Constants.SCREEN_ACTIONBOT_TASK_OFFSET_FACTOR))), ColorUtils.WHITE);
 
 
             TaskButton taskButton = taskButtons.get(i + (page * 12));

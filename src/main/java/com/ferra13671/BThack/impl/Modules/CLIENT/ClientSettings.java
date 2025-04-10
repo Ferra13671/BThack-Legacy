@@ -19,7 +19,6 @@ public class ClientSettings extends Module {
     public final BooleanSetting moduleToggleSound = new BooleanSetting("Module Toggle Sound", this, true);
     public final NumberSetting soundVolume = new NumberSetting("Sound Volume", this, 1, 0.3, 2, false, moduleToggleSound::getValue);
     public final ModeSetting language = new ModeSetting("Language", this, new ArrayList<>(LanguageSystem.getLoadedLangs()));
-    public final ModeSetting chatName = new ModeSetting("Chat Name", this, Arrays.asList("Simple", "Full"));
     public final ModeSetting friendColor = new ModeSetting("Friend Color", this, Arrays.asList(
             "GREEN",
             "YELLOW",
@@ -70,7 +69,6 @@ public class ClientSettings extends Module {
                 moduleToggleSound,
                 soundVolume,
                 language,
-                chatName,
                 friendColor,
                 enemyColor,
                 ownColor

@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.impl.Modules.RENDER;
 
+import com.ferra13671.BThack.Constants;
 import com.ferra13671.BThack.Core.Render.BThackMatrix;
 import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Font.FontRenderManager;
@@ -92,7 +93,7 @@ public class Waypoints extends Module {
         BThackRender.drawCenteredString(Character.toString(waypoint.getName().charAt(0)), pos[0], pos[1] - (FontUtils.getTextHeight(Character.toString(waypoint.getName().charAt(0)), FontRenderManager.DrawMode.NORMAL_BOLD) / 2), -1, FontRenderManager.DrawMode.NORMAL_BOLD);
         pos[1] = pos[1] + 6 + (FontUtils.getTextHeight(waypoint.getName()) / 2);
         BThackRender.drawCenteredString(waypoint.getName(), pos[0], pos[1], -1);
-        String text = "(" + HudComponent.decimal.format(MathUtils.getDistance(mc.player.getPos(), position)) + "m.)";
+        String text = "(" + Constants.DECIMAL_FORMAT.format(MathUtils.getDistance(mc.player.getPos(), position)) + "m.)";
         BThackRender.drawCenteredString(text, pos[0], pos[1] + 6 + (FontUtils.getTextHeight(text, FontRenderManager.DrawMode.SMALL) / 2), -1, FontRenderManager.DrawMode.SMALL);
     }
 }

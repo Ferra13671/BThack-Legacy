@@ -6,8 +6,6 @@ import com.ferra13671.BThack.api.Category.Categories;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.impl.Modules.CLIENT.HUD;
 
-import java.text.DecimalFormat;
-
 public abstract class HudComponent extends Module {
     private float x; //Left edge
     private float y; //Upper edge
@@ -22,8 +20,6 @@ public abstract class HudComponent extends Module {
 
     public float width;  //Right
     public float height; //Down
-
-    public static final DecimalFormat decimal = new DecimalFormat("0.00");
 
     public HudComponent(String name, float x, float y, boolean autoToggled) {
         super(name, "", KeyboardUtils.RELEASE, Categories.HUD, autoToggled);

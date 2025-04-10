@@ -57,7 +57,6 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
             frames.add(frame);
             tempX += 105;
             frame.refresh();
-            frame.updateDependencies();
         }
         ticker.reset();
     }

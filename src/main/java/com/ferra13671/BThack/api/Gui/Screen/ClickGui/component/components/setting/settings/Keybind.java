@@ -9,6 +9,7 @@ import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.Module
 import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.setting.AbstractSetting;
 import com.ferra13671.BThack.api.SoundSystem.SoundSystem;
 import com.ferra13671.BThack.api.SoundSystem.Sounds;
+import com.ferra13671.BThack.Constants;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 
 public class Keybind extends AbstractSetting {
@@ -19,20 +20,15 @@ public class Keybind extends AbstractSetting {
 		super(offset, button, null, null);
 
 
-		this.x = button.parent.getX() + button.parent.getWidth();
+		this.x = button.parent.getX() + Constants.CLICKGUI_FRAME_WIDTH;
 		this.y = button.parent.getY() + button.offset;
 	}
 	
 	@Override
 	public void renderComponent() {
-		BThackRender.drawRect(parent.parent.getX(), parent.parent.getY() + offset, parent.parent.getX() + parent.parent.getWidth(), parent.parent.getY() + offset + 15, this.hovered ? ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().backgroundHoveredColor()), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))) : ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().backgroundColor()), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))));
+		BThackRender.drawRect(parent.parent.getX(), parent.parent.getY() + offset, parent.parent.getX() + Constants.CLICKGUI_FRAME_WIDTH, parent.parent.getY() + offset + 15, this.hovered ? ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().backgroundHoveredColor()), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))) : ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().backgroundColor()), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))));
 
 		BThackRender.drawString(binding ? "< PRESS KEY >" : ("Key: " + KeyboardUtils.getKeyName(this.parent.module.getKey())), parent.parent.getX() + 2, parent.parent.getY() + offset + 4, ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()));
-	}
-
-	@Override
-	public void updateDependencies(int offset) {
-		//no action
 	}
 	
 	@Override

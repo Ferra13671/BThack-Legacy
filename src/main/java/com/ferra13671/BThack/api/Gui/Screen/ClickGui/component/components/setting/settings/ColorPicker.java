@@ -13,6 +13,7 @@ import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.settin
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ColorSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Shader.Shaders;
+import com.ferra13671.BThack.Constants;
 import com.ferra13671.BThack.api.Utils.MathUtils;
 import com.ferra13671.BThack.impl.Modules.CLIENT.ClickGui;
 import net.minecraft.client.render.Tessellator;
@@ -145,7 +146,7 @@ public class ColorPicker extends AbstractSetting {
 
     @Override
     public void renderComponent() {
-        BThackRender.drawRect(parent.parent.getX(), parent.parent.getY() + offset, parent.parent.getX() + (parent.parent.getWidth()), parent.parent.getY() + offset + getHeight(), ColorUtils.integrateAlpha(new Color(Client.clientInfo.getColorTheme().backgroundColor()).hashCode(), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))));
+        BThackRender.drawRect(parent.parent.getX(), parent.parent.getY() + offset, parent.parent.getX() + (Constants.CLICKGUI_FRAME_WIDTH), parent.parent.getY() + offset + getHeight(), ColorUtils.integrateAlpha(new Color(Client.clientInfo.getColorTheme().backgroundColor()).hashCode(), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))));
         BThackRender.drawString(set.getName(), parent.parent.getX() + 2, parent.parent.getY() + offset + 2, ColorUtils.WHITE);
 
         Drawers.GRADIENT_RECT.begin();
@@ -180,7 +181,7 @@ public class ColorPicker extends AbstractSetting {
             drawAlphaCrosshair();
 
         BThackRender.drawString("R:" + rgbColor.getRed() + " G:" + rgbColor.getGreen() + " B:" + rgbColor.getBlue() + " A:" + rgbColor.getAlpha(), parent.parent.getX() + 2, colorRect.getEndY() + 4, -1, true, FontRenderManager.DrawMode.SMALL);
-        BThackRender.drawRect(parent.parent.getX() + (parent.parent.getWidth()) - 12, parent.parent.getY() + offset + 2, parent.parent.getX() + (parent.parent.getWidth()) - 2, parent.parent.getY() + offset + 12, rgbColor.hashCode());
+        BThackRender.drawRect(parent.parent.getX() + Constants.CLICKGUI_FRAME_WIDTH - 12, parent.parent.getY() + offset + 2, parent.parent.getX() + Constants.CLICKGUI_FRAME_WIDTH - 2, parent.parent.getY() + offset + 12, rgbColor.hashCode());
     }
 
     private void drawColorCrosshair() {

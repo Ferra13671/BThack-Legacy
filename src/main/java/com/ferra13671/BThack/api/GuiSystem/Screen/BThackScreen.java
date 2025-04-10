@@ -10,6 +10,7 @@ import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.GuiSystem.buttons.Button;
+import com.ferra13671.BThack.Constants;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
@@ -18,8 +19,6 @@ import java.util.ArrayList;
 import java.util.function.Supplier;
 
 public class BThackScreen extends Screen implements Mc {
-    public static final int BACKGROUND_TABLE_COLOR = ColorUtils.fastRGBA(0,0,0,40);
-
     public ArrayList<Button> buttons = new ArrayList<>();
     public final WidgetManage widgetManage = new WidgetManage(this);
 
@@ -141,7 +140,7 @@ public class BThackScreen extends Screen implements Mc {
 
     public void drawBackGround(int mouseX, int mouseY) {
         if (Module.nullCheck()) drawMainMenuWallpaper(mouseX, mouseY);
-        BThackRender.draw4ColorRect( 0, 0, mc.getWindow().getScaledWidth(), mc.getWindow().getScaledHeight(), BACKGROUND_TABLE_COLOR, BACKGROUND_TABLE_COLOR, ColorUtils.fastRGBA(161,0, 255, 255), ColorUtils.fastRGBA(255, 0, 0, 255));
+        BThackRender.draw4ColorRect( 0, 0, mc.getWindow().getScaledWidth(), mc.getWindow().getScaledHeight(), Constants.SCREEN_BACKGROUND_TABLE_COLOR, Constants.SCREEN_BACKGROUND_TABLE_COLOR, ColorUtils.fastRGBA(161,0, 255, 255), ColorUtils.fastRGBA(255, 0, 0, 255));
     }
 
     public void drawMainMenuWallpaper(float mouseX, float mouseY) {
@@ -180,7 +179,7 @@ public class BThackScreen extends Screen implements Mc {
 
     public static void changeScreen(Screen currentScreen, Supplier<Screen> nextScreen) {
         if (ModuleList.bthackMainMenu.screenChangeAnimation.getValue())
-            mc.setScreen(new TransitionScreen(() -> currentScreen, nextScreen, TransitionScreen.STANDARD_FLIP_ANIMATION));
+            mc.setScreen(new TransitionScreen(() -> currentScreen, nextScreen, Constants.STANDARD_FLIP_ANIMATION));
         else
             mc.setScreen(nextScreen.get());
     }

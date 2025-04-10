@@ -2,6 +2,7 @@ package com.ferra13671.BThack.api.Utils;
 
 import com.ferra13671.BTbot.api.Utils.Generate.NumberGenerator;
 import com.ferra13671.BThack.BThack;
+import com.ferra13671.BThack.Constants;
 import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.Core.DeviceSystem;
 import com.ferra13671.BThack.api.Interfaces.Mc;
@@ -38,7 +39,7 @@ public final class DiscordUtils implements Mc {
 
         DiscordEventHandlers handlers = new DiscordEventHandlers();
 
-        discordRPC.Discord_Initialize(BThack.APP_ID, handlers, true, "");
+        discordRPC.Discord_Initialize(Constants.BTHACK_APP_ID, handlers, true, "");
 
         String imageKey = "bthack_icon";
 

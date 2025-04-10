@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.impl.Modules.RENDER;
 
+import com.ferra13671.BThack.Constants;
 import com.ferra13671.BThack.Core.Render.BThackMatrix;
 import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Font.FontRenderManager;
@@ -26,12 +27,9 @@ import net.minecraft.util.Formatting;
 import net.minecraft.util.math.Vec3d;
 
 import java.awt.*;
-import java.text.DecimalFormat;
 import java.util.Arrays;
 
 public class Nametags extends Module {
-    private final DecimalFormat decimalFormat = new DecimalFormat("#.##");
-
     public final BooleanSetting players = new BooleanSetting("Players", this, true);
     public final ModeSetting playerMode = new ModeSetting("PMode", this, Arrays.asList("Mini", "Normal", "Full"));
     public final NumberSetting pSize = new NumberSetting("PSize", this, 0.7, 0.4, 2, false, players::getValue);
@@ -114,7 +112,7 @@ public class Nametags extends Module {
 
     public void renderMiniPlayerNametag(float[] cords, PlayerEntity player) {
         float hp = getHealth(player);
-        String text = player.getDisplayName().getString() + " " + (hp > 15 ? Formatting.GREEN : (hp > 8 ? Formatting.YELLOW : Formatting.RED)) + decimalFormat.format(hp);
+        String text = player.getDisplayName().getString() + " " + (hp > 15 ? Formatting.GREEN : (hp > 8 ? Formatting.YELLOW : Formatting.RED)) + Constants.DECIMAL_FORMAT.format(hp);
         float length = FontUtils.getTextWidth(text, FontRenderManager.DrawMode.NORMAL_BOLD) + 5;
         float leftX = cords[0] - (length / 2) - 3;
         float upY = cords[1] - FontUtils.getTextHeight(text, FontRenderManager.DrawMode.NORMAL_BOLD) - 10;
@@ -191,7 +189,7 @@ public class Nametags extends Module {
     }
 
     public void drawHP(float startX, float startY, PlayerEntity entity) {
-        BThackRender.drawString("HP: " + decimalFormat.format(getHealth(entity)), startX, startY, -1);
+        BThackRender.drawString("HP: " + Constants.DECIMAL_FORMAT.format(getHealth(entity)), startX, startY, -1);
 
         float length = (((entity.getMaxHealth() - entity.getHealth()) / entity.getMaxHealth()) * 80);
 

@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.impl.HudComponents;
 
+import com.ferra13671.BThack.Constants;
 import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Font.FontRenderManager;
 import com.ferra13671.BThack.Core.Render.Font.FontUtils;
@@ -28,7 +29,7 @@ public class TextRadarComponent extends HudComponent {
 
         for (PlayerEntity player : mc.world.getPlayers()) {
             if (player.getDisplayName().getString().equals(mc.player.getDisplayName().getString())) continue;
-            String text = player.getDisplayName().getString() + " " + Formatting.GRAY + "[" + Formatting.WHITE + decimal.format(player.distanceTo(mc.player)) + "m." + Formatting.GRAY + "]";
+            String text = player.getDisplayName().getString() + " " + Formatting.GRAY + "[" + Formatting.WHITE + Constants.DECIMAL_FORMAT.format(player.distanceTo(mc.player)) + "m." + Formatting.GRAY + "]";
 
             BThackRender.drawString(text, (int) getX() + 3, (int) (getY() + y + 3), ArrayListComponent.INSTANCE.getArrayColor(count), true, FontRenderManager.DrawMode.SMALL_BOLD);
 

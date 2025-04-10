@@ -11,6 +11,7 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.KeyCodeSetti
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.SoundSystem.SoundSystem;
 import com.ferra13671.BThack.api.SoundSystem.Sounds;
+import com.ferra13671.BThack.Constants;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 
 public class KeyCode extends AbstractSetting {
@@ -22,13 +23,13 @@ public class KeyCode extends AbstractSetting {
     public KeyCode(ModuleButton button, int offset, KeyCodeSetting option, Module module) {
         super(offset, button, module, option);
         set = option;
-        x = button.parent.getX() + button.parent.getWidth();
+        x = button.parent.getX() + Constants.CLICKGUI_FRAME_WIDTH;
         y = button.parent.getY() + button.offset;
     }
 
     @Override
     public void renderComponent() {
-        BThackRender.drawRect(parent.parent.getX(), parent.parent.getY() + offset, parent.parent.getX() + parent.parent.getWidth(), parent.parent.getY() + offset + 15, this.hovered ? ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().backgroundHoveredColor()), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))) : ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().backgroundColor()), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))));
+        BThackRender.drawRect(parent.parent.getX(), parent.parent.getY() + offset, parent.parent.getX() + Constants.CLICKGUI_FRAME_WIDTH, parent.parent.getY() + offset + 15, this.hovered ? ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().backgroundHoveredColor()), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))) : ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().backgroundColor()), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))));
 
         BThackRender.drawString(binding ? "< PRESS KEY >" : (op.getName() + ": " + KeyboardUtils.getKeyName(set.getValue())), parent.parent.getX() + 2, parent.parent.getY() + offset + 4, ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()));
     }

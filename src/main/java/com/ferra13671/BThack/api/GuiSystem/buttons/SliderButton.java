@@ -7,6 +7,7 @@ import com.ferra13671.BThack.Core.Render.Font.FontUtils;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.SoundSystem.SoundSystem;
 import com.ferra13671.BThack.api.SoundSystem.Sounds;
+import com.ferra13671.BThack.Constants;
 import com.ferra13671.BThack.api.Utils.Ticker;
 
 import java.math.BigDecimal;
@@ -31,7 +32,7 @@ public class SliderButton extends Button {
 
     @Override
     public void renderButton() {
-        BThackRender.drawRect(getCenterX() - getWidth(), getCenterY() - getHeight(), getCenterX() + getWidth(), getCenterY() + getHeight(), RECT_COLOR);
+        BThackRender.drawRect(getCenterX() - getWidth(), getCenterY() - getHeight(), getCenterX() + getWidth(), getCenterY() + getHeight(), Constants.GUISYSTEM_BUTTON_RECT_COLOR);
 
         BThackRender.drawRect(getCenterX() - getWidth(), getCenterY() - getHeight(), getCenterX() - getWidth() + (int) renderWidth, getCenterY() + getHeight(), ColorUtils.fastRGBA(255,255,255,100));
 

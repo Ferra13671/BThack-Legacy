@@ -9,6 +9,7 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Managers.managers.Thread.ThreadManager;
 import com.ferra13671.BThack.api.Module.Module;
+import com.ferra13671.BThack.Constants;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.impl.Modules.PLAYER.Spammer.ReadTXT;
 import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
@@ -63,8 +64,6 @@ public class PMSpammer extends Module {
     }
 
     protected final ReadTXT readTXT = new ReadTXT();
-
-    private final Random random = new Random();
 
     private int m = 1;
 
@@ -122,7 +121,7 @@ public class PMSpammer extends Module {
                                     sendMessage("/w " + playerName + " " + tempLine);
                                     long a = (long) (delay.getValue() * 1000);
                                     if (delaySpread.getValue()) {
-                                        if (!random.nextBoolean()) {
+                                        if (!Constants.RANDOM.nextBoolean()) {
                                             a = (long) (a * NumberGenerator.generateFloat(1, 1f + (float) spreadRange.getValue()));
                                         } else {
                                             a = (long) (a * NumberGenerator.generateFloat((float) spreadRange.getValue(), 1));
@@ -140,7 +139,7 @@ public class PMSpammer extends Module {
                                 thread.stopOnException();
                             long a = (long) (delay.getValue() * 1000);
                             if (delaySpread.getValue()) {
-                                if (!random.nextBoolean()) {
+                                if (!Constants.RANDOM.nextBoolean()) {
                                     a = (long) (a * NumberGenerator.generateFloat(1, 1f + (float) spreadRange.getValue()));
                                 } else {
                                     a = (long) (a * NumberGenerator.generateFloat((float) spreadRange.getValue(), 1));
@@ -186,7 +185,7 @@ public class PMSpammer extends Module {
                                     sendMessage("/w " + playerName + " " + tempLine);
                                     long a = (long) (delay.getValue() * 1000);
                                     if (delaySpread.getValue()) {
-                                        if (!random.nextBoolean()) {
+                                        if (!Constants.RANDOM.nextBoolean()) {
                                             a = (long) (a * NumberGenerator.generateFloat(1, 1f + (float) spreadRange.getValue()));
                                         } else {
                                             a = (long) (a * NumberGenerator.generateFloat((float) spreadRange.getValue(), 1));
@@ -200,7 +199,7 @@ public class PMSpammer extends Module {
                                 thread.stopOnException();
                             long a = (long) (delay.getValue() * 1000);
                             if (delaySpread.getValue()) {
-                                if (!random.nextBoolean()) {
+                                if (!Constants.RANDOM.nextBoolean()) {
                                     a = (long) (a * NumberGenerator.generateFloat(1, 1f + (float) spreadRange.getValue()));
                                 } else {
                                     a = (long) (a * NumberGenerator.generateFloat((float) spreadRange.getValue(), 1));
