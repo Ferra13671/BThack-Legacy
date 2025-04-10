@@ -70,85 +70,56 @@ public class Spammer extends Module {
 
         ThreadManager.startNewThread(thread -> {
             Path path = Paths.get("BThack/Spammer/Spammer.txt");
+            long delayInMillis = (long) (delay.getValue() * 1000);
 
             while (isEnabled()) {
                 try {
                     this.arrayListInfo = spamMode.getValue();
 
-                    String space = "";
-                    for (int i = 0; i < (int) aSpamSpace.getValue(); i++) {
-                        space = space + " ";
-                    }
+                    String space = " ".repeat(Math.max(0, (int) aSpamSpace.getValue()));
 
                     if (Files.exists(path)) {
                         BufferedReader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8);
                         String line = reader.readLine();
+                        String tempLine = antiSpam.getValue() ? genAntiSpam() + space + line + space + genAntiSpam() : line;
 
                         switch (spamMode.getValue()) {
-                            case "InOrder":
+                            case "InOrder" -> {
                                 if (m != 1) {
                                     for (int i = 1; i < m; i++) {
-                                        if (line != null) {
+                                        if (line != null)
                                             line = reader.readLine();
-                                        }
                                     }
                                 }
                                 if (line != null) {
-                                    String tempLine;
-                                    if (antiSpam.getValue()) {
-                                        tempLine = genAntiSpam() + space + line + space + genAntiSpam();
-                                    } else {
-                                        tempLine = line;
-                                    }
                                     ChatUtils.sendChatMessage(tempLine);
                                     m = m + 1;
                                 } else {
                                     m = 1;
                                     continue;
                                 }
-                                break;
-                            case "Random":
+                            }
+                            case "Random" -> {
                                 readTXT.read();
                                 int randomValue = NumberGenerator.generateInt(1, readTXT.value);
-                                if (randomValue == 1) {
-                                    String tempLine;
-                                    if (antiSpam.getValue()) {
-                                        tempLine = genAntiSpam() + space + line + space + genAntiSpam();
-                                    } else {
-                                        tempLine = line;
-                                    }
+                                if (randomValue == 1)
                                     ChatUtils.sendChatMessage(tempLine);
-                                }
                                 else {
                                     for (int i = 1; i < randomValue; i++) {
                                         line = reader.readLine();
                                     }
-                                    if (line != null) {
-                                        String tempLine = "";
-                                        if (antiSpam.getValue()) {
-                                            tempLine = genAntiSpam() + space + line + space + genAntiSpam();
-                                        } else {
-                                            tempLine = line;
-                                        }
+                                    if (line != null)
                                         ChatUtils.sendChatMessage(tempLine);
-                                    }
                                 }
-                                break;
+                            }
                         }
                         reader.close();
                     }
 
-                    int a = (int) (delay.getValue() * 1000);
-
-                    if (delaySpread.getValue()) {
-                        if (!Constants.RANDOM.nextBoolean()) {
-                            a = (int) (a * NumberGenerator.generateFloat(1, 1f + (float) spreadRange.getValue()));
-                        } else {
-                            a = (int) (a * NumberGenerator.generateFloat((float) spreadRange.getValue(), 1));
-                        }
-                    }
-
-                    thread.sleepThread(a);
+                    thread.sleepThread(
+                            delaySpread.getValue() ?
+                                    (int) (!Constants.RANDOM.nextBoolean() ? (delayInMillis * NumberGenerator.generateFloat(1, 1f + (float) spreadRange.getValue()))
+                                            : (delayInMillis * NumberGenerator.generateFloat((float) spreadRange.getValue(), 1))) : delayInMillis);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
