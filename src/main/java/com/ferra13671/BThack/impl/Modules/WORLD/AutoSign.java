@@ -2,6 +2,7 @@ package com.ferra13671.BThack.impl.Modules.WORLD;
 
 import com.ferra13671.BThack.api.Events.GuiOpenEvent;
 import com.ferra13671.BThack.api.Events.PacketEvent;
+import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
@@ -49,7 +50,7 @@ public class AutoSign extends Module {
 
         SignBlockEntity sign = ((IAbstractSignEditScreen) e.getScreen()).getSign();
 
-        mc.player.networkHandler.sendPacket(new UpdateSignC2SPacket(sign.getPos(), true, text[0], text[1], text[2], text[3]));
+        Managers.NETWORK_MANAGER.sendPacket(new UpdateSignC2SPacket(sign.getPos(), true, text[0], text[1], text[2], text[3]));
 
         if (closeScreen.getValue())
             e.setCancelled(true);

@@ -1,6 +1,7 @@
 package com.ferra13671.BThack.impl.Modules.COMBAT;
 
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
+import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.ItemUtils;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
@@ -49,7 +50,7 @@ public class AutoShield extends Module {
             if (mc.player.getOffHandStack() != null) {
                 if (mc.player.getOffHandStack().getItem() instanceof ShieldItem) {
                     float yaw = RotateUtils.rotations(arrow)[0];
-                    mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.LookAndOnGround(yaw, mc.player.pitch, mc.player.onGround));
+                    Managers.NETWORK_MANAGER.sendPacket(new PlayerMoveC2SPacket.LookAndOnGround(yaw, mc.player.pitch, mc.player.onGround));
 
                     //I don't know why but without it, minecraft doesn't want to recognize that the shield is activated
                     mc.options.useKey.setPressed(true);

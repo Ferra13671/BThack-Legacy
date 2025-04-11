@@ -10,7 +10,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.input.Input;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
-import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.MovementType;
@@ -36,8 +35,6 @@ public abstract class MixinClientPlayerEntity extends AbstractClientPlayerEntity
     @Shadow @Final protected MinecraftClient client;
 
     @Shadow public Input input;
-
-    @Shadow @Final public ClientPlayNetworkHandler networkHandler;
 
     @Shadow protected int ticksLeftToDoubleTapSprint;
 
@@ -102,7 +99,7 @@ public abstract class MixinClientPlayerEntity extends AbstractClientPlayerEntity
         if (ModuleList.elytraFlight.isEnabled() && ModuleList.elytraFlight.mode.getValue().equals("1.12.2 Control")) {
             if (ModuleList.elytraFlight.travelPacket != null) {
                 if (ModuleList.elytraFlight.travelPacket.rotate()) {
-                    client.getNetworkHandler().sendPacket(new PlayerMoveC2SPacket.LookAndOnGround(ModuleList.elytraFlight.travelPacket.rot().x, ModuleList.elytraFlight.travelPacket.rot().y, client.player.isOnGround()));
+                    Managers.NETWORK_MANAGER.sendPacket(new PlayerMoveC2SPacket.LookAndOnGround(ModuleList.elytraFlight.travelPacket.rot().x, ModuleList.elytraFlight.travelPacket.rot().y, client.player.isOnGround()));
                 }
                 client.player.ticksSinceLastPositionPacketSent++;
             }

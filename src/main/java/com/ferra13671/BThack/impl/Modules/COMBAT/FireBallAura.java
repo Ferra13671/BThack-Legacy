@@ -1,6 +1,7 @@
 package com.ferra13671.BThack.impl.Modules.COMBAT;
 
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
+import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
@@ -86,7 +87,7 @@ public class FireBallAura extends Module {
             float[] rots = RotateUtils.rotations(entity);
             switch (rotateMode.getValue()) {
                 case "Packet" ->
-                        mc.player.networkHandler.sendPacket(
+                        Managers.NETWORK_MANAGER.sendPacket(
                                 new PlayerMoveC2SPacket.LookAndOnGround(rots[0], rots[1], mc.player.onGround)
                         );
                 case "Grim" -> GrimUtils.sendPreActionGrimPackets(rots[0], rots[1]);
@@ -98,7 +99,7 @@ public class FireBallAura extends Module {
         if (rotate.getValue()) {
             switch (rotateMode.getValue()) {
                 case "Packet" ->
-                        mc.player.networkHandler.sendPacket(
+                        Managers.NETWORK_MANAGER.sendPacket(
                                 new PlayerMoveC2SPacket.LookAndOnGround(oldYaw, oldPitch, mc.player.onGround)
                         );
                 case "Grim" -> GrimUtils.sendPostActionGrimPackets();

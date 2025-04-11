@@ -2,6 +2,7 @@ package com.ferra13671.BThack.api.Utils;
 
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Interfaces.Pc;
+import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Thread.ThreadManager;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -22,7 +23,7 @@ public final class InventoryUtils implements Mc, Pc {
     }
 
     public static void packetSwapItem(int needSlot) {
-        mc.player.networkHandler.sendPacket(new UpdateSelectedSlotC2SPacket(needSlot));
+        Managers.NETWORK_MANAGER.sendPacket(new UpdateSelectedSlotC2SPacket(needSlot));
     }
 
     public static void swapItemOnInventory(int needHotbarSlot, int inventorySlot) {

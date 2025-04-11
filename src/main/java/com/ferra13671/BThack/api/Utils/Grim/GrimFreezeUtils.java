@@ -3,6 +3,7 @@ package com.ferra13671.BThack.api.Utils.Grim;
 import com.ferra13671.BThack.api.Events.PacketEvent;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.c2s.common.CommonPongC2SPacket;
@@ -38,11 +39,11 @@ public final class GrimFreezeUtils implements Mc {
         if (freezeMillis <= 0) {
             if (!packetList.isEmpty()) {
                 for (CommonPongC2SPacket p : packetList) {
-                    mc.getNetworkHandler().sendPacket(p);
+                    Managers.NETWORK_MANAGER.sendPacket(p);
                 }
                 packetList.clear();
                 for (Packet<?> packet : packets) {
-                    mc.getNetworkHandler().sendPacket(packet);
+                    Managers.NETWORK_MANAGER.sendPacket(packet);
                 }
             }
         }

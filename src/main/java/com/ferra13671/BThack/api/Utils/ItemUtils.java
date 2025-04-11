@@ -1,6 +1,7 @@
 package com.ferra13671.BThack.api.Utils;
 
 import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Build.BuildManager;
 import net.minecraft.block.*;
 import net.minecraft.component.DataComponentTypes;
@@ -27,7 +28,7 @@ public final class ItemUtils implements Mc {
     public static void useItem(Hand hand, boolean swing, float yaw, float pitch) {
         if (swing)
             mc.player.swingHand(hand);
-        mc.player.networkHandler.sendPacket(new PlayerInteractItemC2SPacket(hand, 0, yaw, pitch));
+        Managers.NETWORK_MANAGER.sendPacket(new PlayerInteractItemC2SPacket(hand, 0, yaw, pitch));
     }
 
     public static void useItem(Item item, boolean swing, float yaw, float pitch) {

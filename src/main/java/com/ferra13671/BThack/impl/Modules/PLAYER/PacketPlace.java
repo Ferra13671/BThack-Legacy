@@ -2,6 +2,7 @@ package com.ferra13671.BThack.impl.Modules.PLAYER;
 
 
 import com.ferra13671.BThack.api.Events.Block.UseBlockEvent;
+import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Managers.managers.Thread.ThreadManager;
@@ -40,12 +41,12 @@ public class PacketPlace extends Module {
 
             for (int i = 0; i < sendPackets.getValue().intValue(); i++) {
                 if (shifting.getValue())
-                    mc.player.networkHandler.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.PRESS_SHIFT_KEY));
+                    Managers.NETWORK_MANAGER.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.PRESS_SHIFT_KEY));
 
-                mc.player.networkHandler.sendPacket(new PlayerInteractBlockC2SPacket(Hand.MAIN_HAND, e.getBlockHitResult(), 0));
+                Managers.NETWORK_MANAGER.sendPacket(new PlayerInteractBlockC2SPacket(Hand.MAIN_HAND, e.getBlockHitResult(), 0));
 
                 if (shifting.getValue())
-                    mc.player.networkHandler.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.RELEASE_SHIFT_KEY));
+                    Managers.NETWORK_MANAGER.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.RELEASE_SHIFT_KEY));
 
                 thread.sleepThread(5);
             }

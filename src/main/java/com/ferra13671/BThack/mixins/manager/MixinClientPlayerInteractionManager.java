@@ -6,10 +6,10 @@ import com.ferra13671.BThack.api.Events.Block.AttackBlockEvent;
 import com.ferra13671.BThack.api.Events.Block.UseBlockEvent;
 import com.ferra13671.BThack.api.Events.Entity.AttackEntityEvent;
 import com.ferra13671.BThack.api.IMixin.ModifyClientPlayerInteractionManager;
+import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.MegaEvents.Base.Event;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerInteractionManager;
 import net.minecraft.client.network.SequencedPacketCreator;
@@ -68,8 +68,6 @@ public abstract class MixinClientPlayerInteractionManager implements ModifyClien
     @Shadow public abstract int getBlockBreakingProgress();
 
     @Shadow public abstract boolean attackBlock(BlockPos pos, Direction direction);
-
-    @Shadow @Final private ClientPlayNetworkHandler networkHandler;
 
     @Shadow private ItemStack selectedStack;
 
@@ -133,7 +131,7 @@ public abstract class MixinClientPlayerInteractionManager implements ModifyClien
                 getBreakDelay(5);
             } else if (!breakingBlock || !isCurrentlyBreaking(pos)) {
                 if (breakingBlock)
-                    networkHandler.sendPacket(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.ABORT_DESTROY_BLOCK, currentBreakingPos, direction));
+                    Managers.NETWORK_MANAGER.sendPacket(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.ABORT_DESTROY_BLOCK, currentBreakingPos, direction));
 
                 blockState = client.world.getBlockState(pos);
                 client.getTutorialManager().onBlockBreaking(client.world, pos, blockState, 0.0F);

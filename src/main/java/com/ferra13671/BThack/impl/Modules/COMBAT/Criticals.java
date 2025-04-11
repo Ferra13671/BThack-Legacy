@@ -2,6 +2,7 @@ package com.ferra13671.BThack.impl.Modules.COMBAT;
 
 import com.ferra13671.BThack.api.Events.Entity.AttackEntityEvent;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
+import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
@@ -41,35 +42,35 @@ public class Criticals extends Module {
 
         switch (mode.getValue()) {
             case "Packet":
-                mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY() + 0.1f, mc.player.getZ(), false));
-                mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY(), mc.player.getZ(), false));
+                Managers.NETWORK_MANAGER.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY() + 0.1f, mc.player.getZ(), false));
+                Managers.NETWORK_MANAGER.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY(), mc.player.getZ(), false));
 
                 mc.player.fallDistance = 1;
                 mc.player.onGround = false;
 
-                mc.player.networkHandler.sendPacket(PlayerInteractEntityC2SPacket.attack(e.getEntity(), mc.player.isSneaking()));
+                Managers.NETWORK_MANAGER.sendPacket(PlayerInteractEntityC2SPacket.attack(e.getEntity(), mc.player.isSneaking()));
                 mc.player.attack(e.getEntity());
                 mc.player.resetLastAttackedTicks();
 
-                mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.OnGroundOnly(mc.player.onGround));
+                Managers.NETWORK_MANAGER.sendPacket(new PlayerMoveC2SPacket.OnGroundOnly(mc.player.onGround));
                 mc.player.addCritParticles(e.getEntity());
                 break;
             case "Bypass":
-                mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY() + 0.1625, mc.player.getZ(), false));
-                mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY(), mc.player.getZ(), false));
-                mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY() + 4.0E-6, mc.player.getZ(), false));
-                mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY(), mc.player.getZ(), false));
-                mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY() + 1.0E-6, mc.player.getZ(), false));
-                mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY(), mc.player.getZ(), false));
+                Managers.NETWORK_MANAGER.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY() + 0.1625, mc.player.getZ(), false));
+                Managers.NETWORK_MANAGER.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY(), mc.player.getZ(), false));
+                Managers.NETWORK_MANAGER.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY() + 4.0E-6, mc.player.getZ(), false));
+                Managers.NETWORK_MANAGER.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY(), mc.player.getZ(), false));
+                Managers.NETWORK_MANAGER.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY() + 1.0E-6, mc.player.getZ(), false));
+                Managers.NETWORK_MANAGER.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY(), mc.player.getZ(), false));
 
                 mc.player.fallDistance = 1;
                 mc.player.onGround = false;
 
-                mc.player.networkHandler.sendPacket(PlayerInteractEntityC2SPacket.attack(e.getEntity(), mc.player.isSneaking()));
+                Managers.NETWORK_MANAGER.sendPacket(PlayerInteractEntityC2SPacket.attack(e.getEntity(), mc.player.isSneaking()));
                 mc.player.attack(e.getEntity());
                 mc.player.resetLastAttackedTicks();
 
-                mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.OnGroundOnly(mc.player.onGround));
+                Managers.NETWORK_MANAGER.sendPacket(new PlayerMoveC2SPacket.OnGroundOnly(mc.player.onGround));
                 mc.player.addCritParticles(e.getEntity());
                 break;
                 /*

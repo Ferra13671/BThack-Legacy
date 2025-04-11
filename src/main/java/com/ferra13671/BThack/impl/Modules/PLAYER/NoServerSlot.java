@@ -1,6 +1,7 @@
 package com.ferra13671.BThack.impl.Modules.PLAYER;
 
 import com.ferra13671.BThack.api.Events.PacketEvent;
+import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
@@ -23,7 +24,7 @@ public class NoServerSlot extends Module {
         if (nullCheck()) return;
         if (event.getPacket() instanceof UpdateSelectedSlotS2CPacket) {
             event.cancel();
-            mc.player.networkHandler.sendPacket(new UpdateSelectedSlotC2SPacket(mc.player.getInventory().selectedSlot));
+            Managers.NETWORK_MANAGER.sendPacket(new UpdateSelectedSlotC2SPacket(mc.player.getInventory().selectedSlot));
         }
     }
 }

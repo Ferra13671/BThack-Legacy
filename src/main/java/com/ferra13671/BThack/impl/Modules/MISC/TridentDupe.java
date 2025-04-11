@@ -4,6 +4,7 @@ import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Events.DisconnectEvent;
 import com.ferra13671.BThack.api.Events.GuiOpenEvent;
 import com.ferra13671.BThack.api.Events.PacketEvent;
+import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.Setting;
@@ -103,7 +104,7 @@ public class TridentDupe extends Module {
             mc.interactionManager.clickSlot(mc.player.currentScreenHandler.syncId, 3, 0, SlotActionType.SWAP, mc.player);
 
             PlayerActionC2SPacket packet2 = new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.RELEASE_USE_ITEM, BlockPos.ORIGIN, Direction.DOWN, 0);
-            mc.getNetworkHandler().sendPacket(packet2);
+            Managers.NETWORK_MANAGER.sendPacket(packet2);
 
             if(dropTridents.getValue()) mc.interactionManager.clickSlot(mc.player.currentScreenHandler.syncId, 44, 0, SlotActionType.THROW, mc.player);
 

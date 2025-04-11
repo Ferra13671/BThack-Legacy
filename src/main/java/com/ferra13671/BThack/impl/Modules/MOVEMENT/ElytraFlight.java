@@ -522,7 +522,7 @@ public class ElytraFlight extends Module {
                 switch (alwaysPress.getValue()) {
                     case "Sprint", "Multi" -> {
                         if (!mc.player.isSprinting() && mc.player.isOnGround()) {
-                            mc.player.networkHandler.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.START_SPRINTING));
+                            Managers.NETWORK_MANAGER.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.START_SPRINTING));
                             mc.player.setSprinting(true);
                         }
                     }
@@ -578,7 +578,7 @@ public class ElytraFlight extends Module {
 
         if (!mc.player.isFallFlying()) {
             mc.player.startFallFlying();
-            mc.player.networkHandler.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.START_FALL_FLYING));
+            Managers.NETWORK_MANAGER.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.START_FALL_FLYING));
             sendBounceGrimPacket();
         }
 
@@ -646,7 +646,7 @@ public class ElytraFlight extends Module {
 
         if (!player.invokeGetFlag(7)) {
             player.invokeSetFlag(7, true);
-            mc.player.networkHandler.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.START_FALL_FLYING));
+            Managers.NETWORK_MANAGER.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.START_FALL_FLYING));
         }
 
         if (isMoving() || ignoreMovement.getValue()) {
@@ -1081,7 +1081,7 @@ public class ElytraFlight extends Module {
             }
 
             if (takeoffTimer.getValue() && !mc.isInSingleplayer()) Managers.TICK_MANAGER.applyTickModifier((timerSpeed * 2.0f) / 50);
-            mc.player.networkHandler.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.START_FALL_FLYING));
+            Managers.NETWORK_MANAGER.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.START_FALL_FLYING));
             _hoverTarget = mc.player.getY() + 0.2;
         } else if (highPingOptimize.getValue() && !closeToGround) {
             Managers.TICK_MANAGER.applyTickModifier(timerSpeed / 50);

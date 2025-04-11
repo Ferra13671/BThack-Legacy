@@ -1,6 +1,7 @@
 package com.ferra13671.BThack.impl.Modules.PLAYER;
 
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
+import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.InventoryUtils;
@@ -52,6 +53,6 @@ public class AutoElytra extends Module {
     public void startFlyAction() {
         IEntity player = (IEntity) mc.player;
         player.invokeSetFlag(7, true);
-        mc.player.networkHandler.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.START_FALL_FLYING));
+        Managers.NETWORK_MANAGER.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.START_FALL_FLYING));
     }
 }

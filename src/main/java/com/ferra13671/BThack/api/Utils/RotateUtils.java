@@ -2,6 +2,7 @@ package com.ferra13671.BThack.api.Utils;
 
 
 import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Utils.Modules.NoRotateMathUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
@@ -25,7 +26,7 @@ public final class RotateUtils implements Mc {
     }
 
     public static void packetRotate(float yaw, float pitch) {
-        mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.LookAndOnGround(yaw, pitch, mc.player.onGround));
+        Managers.NETWORK_MANAGER.sendPacket(new PlayerMoveC2SPacket.LookAndOnGround(yaw, pitch, mc.player.onGround));
         mc.player.lastYaw = yaw;
         mc.player.lastPitch = pitch;
         mc.player.lastOnGround = mc.player.onGround;

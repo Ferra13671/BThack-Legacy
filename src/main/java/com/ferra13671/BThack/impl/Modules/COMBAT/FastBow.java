@@ -1,6 +1,7 @@
 package com.ferra13671.BThack.impl.Modules.COMBAT;
 
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
+import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
@@ -31,8 +32,8 @@ public class FastBow extends Module {
         if (nullCheck()) return;
 
         if (mc.player.getInventory().getMainHandStack().getItem() instanceof BowItem && mc.player.isUsingItem() && (float)this.getItemInUseMaxCount() >= delay.getValue()) {
-            mc.player.networkHandler.sendPacket(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.RELEASE_USE_ITEM, BlockPos.ORIGIN, mc.player.getHorizontalFacing()));
-            mc.player.networkHandler.sendPacket(new PlayerInteractItemC2SPacket(Hand.MAIN_HAND, 0, mc.player.getYaw(), mc.player.getPitch()));
+            Managers.NETWORK_MANAGER.sendPacket(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.RELEASE_USE_ITEM, BlockPos.ORIGIN, mc.player.getHorizontalFacing()));
+            Managers.NETWORK_MANAGER.sendPacket(new PlayerInteractItemC2SPacket(Hand.MAIN_HAND, 0, mc.player.getYaw(), mc.player.getPitch()));
             mc.player.clearActiveItem();
         }
     }
