@@ -94,7 +94,7 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
 
         if (Client.clientInfo.isWinter() && ModuleList.clickGui.snow.getValue()) {
             BThackRenderUtils.applyBlend();
-            snowTicker.update((float) ModuleList.clickGui.snowSpeed.getValue());
+            snowTicker.update(ModuleList.clickGui.snowSpeed.getValue().floatValue());
             Shaders.INSTANCE.SNOW.setParameters(mouseX, mouseY, mc.getWindow().getWidth(), mc.getWindow().getHeight(), snowTicker.getPassedTime() / 1000f);
             BThackRender.drawShader(Shaders.INSTANCE.SNOW, 0, 0, mc.getWindow().getScaledWidth(), mc.getWindow().getScaledHeight());
         }
@@ -126,7 +126,7 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
             BThackRender.drawString("New Value: " + writingSlider.get().textBuilder, (int) ((mc.getWindow().getScaledWidth() / 2f) - (FontUtils.getTextWidth("New Value: " + writingSlider.get().textBuilder) / 2)), (mc.getWindow().getScaledHeight() - 45), ColorUtils.WHITE);
 
         BThackMatrix.push();
-        BThackMatrix.scale((float) ModuleList.clickGui.guiScale.getValue(), (float) ModuleList.clickGui.guiScale.getValue(), 1);
+        BThackMatrix.scale(ModuleList.clickGui.guiScale.getValue().floatValue(), ModuleList.clickGui.guiScale.getValue().floatValue(), 1);
 
         for (int i = frames.size() - 1; i > -1; i--) {
             Frame frame = frames.get(i);

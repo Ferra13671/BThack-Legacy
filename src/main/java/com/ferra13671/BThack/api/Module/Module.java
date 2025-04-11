@@ -74,16 +74,16 @@ public class Module {
         BThack.EVENT_BUS.unregister(this);
     }
 
-    public void onChangeSetting(Setting setting) {}
+    public void onChangeSetting(Setting<?> setting) {}
 
     public void playOnSound() {
         if (ModuleList.clientSettings.moduleToggleSound.getValue())
-            SoundSystem.playSound(Sounds.MODULE_ON, (float) ModuleList.clientSettings.soundVolume.getValue());
+            SoundSystem.playSound(Sounds.MODULE_ON, ModuleList.clientSettings.soundVolume.getValue().floatValue());
     }
 
     public void playOffSound() {
         if (ModuleList.clientSettings.moduleToggleSound.getValue())
-            SoundSystem.playSound(Sounds.MODULE_OFF, (float) ModuleList.clientSettings.soundVolume.getValue());
+            SoundSystem.playSound(Sounds.MODULE_OFF, ModuleList.clientSettings.soundVolume.getValue().floatValue());
     }
 
 
@@ -196,8 +196,8 @@ public class Module {
         }
     }
 
-    public void initSettings(Setting... settings) {
-        for (Setting setting : settings)
+    public void initSettings(Setting<?>... settings) {
+        for (Setting<?> setting : settings)
             Managers.SETTINGS_MANAGER.addModuleSetting(setting);
     }
 

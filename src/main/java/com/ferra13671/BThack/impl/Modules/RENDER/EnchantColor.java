@@ -55,7 +55,7 @@ public class EnchantColor extends Module {
             green = (float) (ModuleList.enchantColor.colorSet.getValue().getGreen() / 255d);
             blue = (float) (ModuleList.enchantColor.colorSet.getValue().getBlue() / 255d);
         } else {
-            int rainbowType = (int) ModuleList.enchantColor.rainbowSpeed.getValue();
+            int rainbowType = ModuleList.enchantColor.rainbowSpeed.getValue().intValue();
             float speed = RainbowUtils.getRainbowRectSpeed(rainbowType)[0];
             int delay = (int) RainbowUtils.getRainbowRectSpeed(rainbowType)[1];
             int argb = ColorUtils.rainbow(delay, speed);

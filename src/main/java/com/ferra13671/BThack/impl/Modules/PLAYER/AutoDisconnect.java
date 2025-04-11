@@ -94,7 +94,7 @@ public class AutoDisconnect extends Module {
         for (PlayerEntity player : mc.world.getPlayers()) {
             if (player == mc.player) continue;
 
-            if (player.distanceTo(mc.player) < (float) range.getValue()) {
+            if (player.distanceTo(mc.player) < range.getValue().floatValue()) {
                 if (friends.getValue()) {
                     mc.player.networkHandler.onDisconnect(new DisconnectS2CPacket(Text.literal(getChatName() + " You were disconnected because a player was detected near you.")));
                     if (autoToggle.getValue()) toggle();

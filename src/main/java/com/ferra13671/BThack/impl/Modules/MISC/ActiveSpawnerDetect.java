@@ -222,12 +222,12 @@ public class ActiveSpawnerDetect extends Module {
                                 spawnerPositions.add(pos);
                                 activatedSpawnerFound = true;
                             }
-                            if (activatedSpawnerFound == true) {
+                            if (activatedSpawnerFound) {
                                 if (deactivatedSpawners.getValue()){
                                     boolean lightsFound = false;
-                                    for (int x = (int) -deactivatedSpawnerDistance.getValue(); x < (int) deactivatedSpawnerDistance.getValue() + 1; x++) {
-                                        for (int y = (int) -deactivatedSpawnerDistance.getValue(); y < (int) deactivatedSpawnerDistance.getValue() + 1; y++) {
-                                            for (int z = (int) -deactivatedSpawnerDistance.getValue(); z < (int) deactivatedSpawnerDistance.getValue() + 1; z++) {
+                                    for (int x = (int) -deactivatedSpawnerDistance.getValue(); x < deactivatedSpawnerDistance.getValue() + 1; x++) {
+                                        for (int y = (int) -deactivatedSpawnerDistance.getValue(); y < deactivatedSpawnerDistance.getValue() + 1; y++) {
+                                            for (int z = (int) -deactivatedSpawnerDistance.getValue(); z < deactivatedSpawnerDistance.getValue() + 1; z++) {
                                                 BlockPos bpos = new BlockPos(pos.getX()+x,pos.getY()+y,pos.getZ()+z);
                                                 if (mc.world.getBlockState(bpos).getBlock() == Blocks.TORCH || mc.world.getBlockState(bpos).getBlock() == Blocks.SOUL_TORCH || mc.world.getBlockState(bpos).getBlock() == Blocks.REDSTONE_TORCH || mc.world.getBlockState(bpos).getBlock() == Blocks.JACK_O_LANTERN || mc.world.getBlockState(bpos).getBlock() == Blocks.GLOWSTONE || mc.world.getBlockState(bpos).getBlock() == Blocks.SHROOMLIGHT || mc.world.getBlockState(bpos).getBlock() == Blocks.OCHRE_FROGLIGHT || mc.world.getBlockState(bpos).getBlock() == Blocks.PEARLESCENT_FROGLIGHT || mc.world.getBlockState(bpos).getBlock() == Blocks.PEARLESCENT_FROGLIGHT || mc.world.getBlockState(bpos).getBlock() == Blocks.SEA_LANTERN || mc.world.getBlockState(bpos).getBlock() == Blocks.LANTERN || mc.world.getBlockState(bpos).getBlock() == Blocks.SOUL_LANTERN || mc.world.getBlockState(bpos).getBlock() == Blocks.CAMPFIRE || mc.world.getBlockState(bpos).getBlock() == Blocks.SOUL_CAMPFIRE){
                                                     lightsFound = true;
@@ -237,7 +237,7 @@ public class ActiveSpawnerDetect extends Module {
                                             }
                                         }
                                     }
-                                    if (chatFeedback.getValue() && lightsFound == true) ChatUtils.sendMessage("The Spawner has torches or other light blocks!");
+                                    if (chatFeedback.getValue() && lightsFound) ChatUtils.sendMessage("The Spawner has torches or other light blocks!");
                                 }
 
                                 boolean chestfound = false;
@@ -406,34 +406,56 @@ public class ActiveSpawnerDetect extends Module {
 
     private void displayMessage(String key, BlockPos pos, String key2) {
         if (chatFeedback.getValue()){
-            if (key=="dungeon") {
-                if (key2==":spider") {
-                    if (mc.world.getBlockState(pos.down()).getBlock() == Blocks.BIRCH_PLANKS){
-                        if (displayCords.getValue()) ChatUtils.sendMessage("Detected Activated " + Formatting.RED + "WOODLAND MANSION" + Formatting.RESET + " Spawner! Block Position: " + pos);
-                        else ChatUtils.sendMessage("Detected Activated " + Formatting.RED + "WOODLAND MANSION" + Formatting.RESET + " Spawner!");
+            switch (key) {
+                case "dungeon" -> {
+                    if (key2.equals(":spider")) {
+                        if (mc.world.getBlockState(pos.down()).getBlock() == Blocks.BIRCH_PLANKS) {
+                            if (displayCords.getValue())
+                                ChatUtils.sendMessage("Detected Activated " + Formatting.RED + "WOODLAND MANSION" + Formatting.RESET + " Spawner! Block Position: " + pos);
+                            else
+                                ChatUtils.sendMessage("Detected Activated " + Formatting.RED + "WOODLAND MANSION" + Formatting.RESET + " Spawner!");
+                        } else {
+                            if (displayCords.getValue())
+                                ChatUtils.sendMessage("Detected Activated " + Formatting.RED + "DUNGEON" + Formatting.RESET + " Spawner! Block Position: " + pos);
+                            else
+                                ChatUtils.sendMessage("Detected Activated " + Formatting.RED + "DUNGEON" + Formatting.RESET + " Spawner!");
+                        }
                     } else {
-                        if (displayCords.getValue()) ChatUtils.sendMessage("Detected Activated " + Formatting.RED + "DUNGEON" + Formatting.RESET + " Spawner! Block Position: " + pos);
-                        else ChatUtils.sendMessage("Detected Activated " + Formatting.RED + "DUNGEON" + Formatting.RESET + " Spawner!");
+                        if (displayCords.getValue())
+                            ChatUtils.sendMessage("Detected Activated " + Formatting.RED + "DUNGEON" + Formatting.RESET + " Spawner! Block Position: " + pos);
+                        else
+                            ChatUtils.sendMessage("Detected Activated " + Formatting.RED + "DUNGEON" + Formatting.RESET + " Spawner!");
                     }
-                } else {
-                    if (displayCords.getValue()) ChatUtils.sendMessage("Detected Activated " + Formatting.RED + "DUNGEON" + Formatting.RESET + " Spawner! Block Position: " + pos);
-                    else ChatUtils.sendMessage("Detected Activated " + Formatting.RED + "DUNGEON" + Formatting.RESET + " Spawner!");
                 }
-            } else if (key=="cave_spider") {
-                if (displayCords.getValue()) ChatUtils.sendMessage("Detected Activated " + Formatting.RED + "MINESHAFT" + Formatting.RESET + " Spawner! Block Position: " + pos);
-                else ChatUtils.sendMessage("Detected Activated " + Formatting.RED + "MINESHAFT" + Formatting.RESET + " Spawner!");
-            } else if (key=="silverfish") {
-                if (displayCords.getValue()) ChatUtils.sendMessage("Detected Activated " + Formatting.RED + "STRONGHOLD" + Formatting.RESET + " Spawner! Block Position: " + pos);
-                else ChatUtils.sendMessage("Detected Activated " + Formatting.RED + "STRONGHOLD" + Formatting.RESET + " Spawner!");
-            } else if (key=="blaze") {
-                if (displayCords.getValue()) ChatUtils.sendMessage("Detected Activated " + Formatting.RED + "FORTRESS" + Formatting.RESET + " Spawner! Block Position: " + pos);
-                else ChatUtils.sendMessage("Detected Activated " + Formatting.RED + "FORTRESS" + Formatting.RESET + " Spawner!");
-            } else if (key=="magma") {
-                if (displayCords.getValue()) ChatUtils.sendMessage("Detected Activated " + Formatting.RED + "BASTION" + Formatting.RESET + " Spawner! Block Position: " + pos);
-                else ChatUtils.sendMessage("Detected Activated " + Formatting.RED + "BASTION" + Formatting.RESET + " Spawner!");
-            } else {
-                if (displayCords.getValue()) ChatUtils.sendMessage("Detected Activated Spawner! Block Position: " + pos);
-                else ChatUtils.sendMessage("Detected Activated Spawner!");
+                case "cave_spider" -> {
+                    if (displayCords.getValue())
+                        ChatUtils.sendMessage("Detected Activated " + Formatting.RED + "MINESHAFT" + Formatting.RESET + " Spawner! Block Position: " + pos);
+                    else
+                        ChatUtils.sendMessage("Detected Activated " + Formatting.RED + "MINESHAFT" + Formatting.RESET + " Spawner!");
+                }
+                case "silverfish" -> {
+                    if (displayCords.getValue())
+                        ChatUtils.sendMessage("Detected Activated " + Formatting.RED + "STRONGHOLD" + Formatting.RESET + " Spawner! Block Position: " + pos);
+                    else
+                        ChatUtils.sendMessage("Detected Activated " + Formatting.RED + "STRONGHOLD" + Formatting.RESET + " Spawner!");
+                }
+                case "blaze" -> {
+                    if (displayCords.getValue())
+                        ChatUtils.sendMessage("Detected Activated " + Formatting.RED + "FORTRESS" + Formatting.RESET + " Spawner! Block Position: " + pos);
+                    else
+                        ChatUtils.sendMessage("Detected Activated " + Formatting.RED + "FORTRESS" + Formatting.RESET + " Spawner!");
+                }
+                case "magma" -> {
+                    if (displayCords.getValue())
+                        ChatUtils.sendMessage("Detected Activated " + Formatting.RED + "BASTION" + Formatting.RESET + " Spawner! Block Position: " + pos);
+                    else
+                        ChatUtils.sendMessage("Detected Activated " + Formatting.RED + "BASTION" + Formatting.RESET + " Spawner!");
+                }
+                case null, default -> {
+                    if (displayCords.getValue())
+                        ChatUtils.sendMessage("Detected Activated Spawner! Block Position: " + pos);
+                    else ChatUtils.sendMessage("Detected Activated Spawner!");
+                }
             }
         }
     }

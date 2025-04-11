@@ -59,21 +59,21 @@ public class Radar extends Module {
     @SuppressWarnings("unused")
     public void onRender(RenderHudPreEvent e) {
         Window sr = mc.getWindow();
-        Color rectColor = new Color(0, 0, 0, (float) opacity.getValue());
+        Color rectColor = new Color(0, 0, 0, opacity.getValue().floatValue());
 
         //Very strong math, yeeaah.
         float yaw = (mc.player.yaw / 360);
         yaw = yaw - (float)Math.floor(yaw);
         yaw = yaw * 360;
 
-        float _range = (float) range.getValue();
-        float _scale = (float) scale.getValue();
+        float _range = range.getValue().floatValue();
+        float _scale = scale.getValue().floatValue();
 
         //Drawing a radar map
         BThackRender.drawRect(sr.getScaledWidth(), sr.getScaledHeight(), sr.getScaledWidth() - (int) _scale, sr.getScaledHeight() - (int) _scale, rectColor.hashCode());
         BThackRender.drawTriangle(sr.getScaledWidth() - (_scale / 2), (int)((sr.getScaledHeight() - (_scale / 2)) + 3), 4, -yaw, -1);
-        BThackRender.drawCenteredString("X-", sr.getScaledWidth() - 6, sr.getScaledHeight() - ((int) _scale / 2), -1);
-        BThackRender.drawString("X+", (int)(sr.getScaledWidth() - _scale) + 2, sr.getScaledHeight() - ((int) _scale / 2), -1);
+        BThackRender.drawCenteredString("X-", sr.getScaledWidth() - 6, sr.getScaledHeight() - ((int) _scale / 2f), -1);
+        BThackRender.drawString("X+", (int)(sr.getScaledWidth() - _scale) + 2, sr.getScaledHeight() - ((int) _scale / 2f), -1);
         BThackRender.drawCenteredString("Z+", sr.getScaledWidth() - (int)(_scale / 2), (sr.getScaledHeight() - (int) _scale) + 1, -1);
         BThackRender.drawCenteredString("Z-", sr.getScaledWidth() - (int)(_scale / 2), sr.getScaledHeight() - 9, -1);
         //////

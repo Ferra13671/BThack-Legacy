@@ -53,7 +53,7 @@ public class AntiAFK extends Module {
     public void onClientTick(ClientTickEvent e) {
         if (correct) {
             StartAntiAFK.walkRadius = walkRadius.getValue();
-            StartAntiAFK.messageSize = (int) messageSize.getValue();
+            StartAntiAFK.messageSize = messageSize.getValue().intValue();
             StartAntiAFK.delay = delay.getValue();
         }
     }

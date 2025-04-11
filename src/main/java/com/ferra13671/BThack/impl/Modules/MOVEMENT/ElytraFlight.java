@@ -327,7 +327,7 @@ public class ElytraFlight extends Module {
     );
 
     @Override
-    public void onChangeSetting(Setting setting) {
+    public void onChangeSetting(Setting<?> setting) {
         if (mode.getValue().equals("Bounce"))
             arrayListInfo = mode.getValue() + (abusePitch.getValue() ? (";" + pitch.getValue()) : "");
         else
@@ -389,7 +389,7 @@ public class ElytraFlight extends Module {
 
         //1.12.2 Control
         autoLanding.setValue(false);
-        _speedPercentage = (float) startSpeed.getValue(); /* For acceleration */
+        _speedPercentage = startSpeed.getValue().floatValue(); /* For acceleration */
         _hoverTarget = -1.0;
         travelPacket = null;
 
@@ -459,7 +459,7 @@ public class ElytraFlight extends Module {
     public void onJumpHeight(JumpHeightEvent e) {
         if (nullCheck() || !mode.getValue().equals("Bounce")) return;
         if (mc.player.getInventory().getArmorStack(2).getItem() != Items.ELYTRA) return;
-        e.setJumpHeight((float) jumpHeight.getValue());
+        e.setJumpHeight(jumpHeight.getValue().floatValue());
     }
 
     @EventSubscriber
@@ -612,7 +612,7 @@ public class ElytraFlight extends Module {
 
     public float bouncePitchRotate(float standardValue) {
         if (abusePitch.getValue()) {
-            float pitch = (float) (Managers.FIREWORK_MANAGER.isUsingFireWork() ? fireworkPitchSetting.getValue() : ModuleList.elytraFlight.pitch.getValue());
+            float pitch = Managers.FIREWORK_MANAGER.isUsingFireWork() ? fireworkPitchSetting.getValue().floatValue() : ModuleList.elytraFlight.pitch.getValue().floatValue();
             if (strafing.getValue()) {
                 if (KeyboardUtils.isKeyDown(mc.options.jumpKey.getDefaultKey().getCode())) pitch = Math.max(pitch - 25, -90);
                 if (KeyboardUtils.isKeyDown(mc.options.sneakKey.getDefaultKey().getCode())) pitch = Math.min(pitch + 25, 90);
@@ -674,8 +674,8 @@ public class ElytraFlight extends Module {
             case "Lerp" -> {
                 if (fireworkYaw == Float.MIN_VALUE) fireworkYaw = mc.player.yaw;
                 if (fireworkPitch == Float.MIN_VALUE) fireworkPitch = mc.player.pitch;
-                fireworkYaw = MathHelper.lerp((float) lerpSpeed.getValue(), fireworkYaw, calcYaw());
-                fireworkPitch = MathHelper.lerp((float) lerpSpeed.getValue(), fireworkPitch, calcPitch());
+                fireworkYaw = MathHelper.lerp(lerpSpeed.getValue().floatValue(), fireworkYaw, calcYaw());
+                fireworkPitch = MathHelper.lerp(lerpSpeed.getValue().floatValue(), fireworkPitch, calcPitch());
             }
         }
         if (fireworkYaw != prevFireworkYaw || fireworkPitch != prevFireworkPitch) sendStrafePacket();
@@ -731,10 +731,10 @@ public class ElytraFlight extends Module {
     private float calcPitch() {
         float pitch = -0.8f;
         if (mc.options.sneakKey.isPressed()) {
-            pitch += (float) downPitch.getValue();
+            pitch += downPitch.getValue().floatValue();
         }
         if (mc.options.jumpKey.isPressed()) {
-            pitch += (float) upPitch.getValue();
+            pitch += upPitch.getValue().floatValue();
         }
         return pitch;
     }
@@ -751,11 +751,11 @@ public class ElytraFlight extends Module {
         }
 
         if (!pitchingDown && pitch40pitch > -40) {
-            pitch40pitch -= (float) pitchSpeed.getValue();
+            pitch40pitch -= pitchSpeed.getValue().floatValue();
 
             if (pitch40pitch < -40) pitch40pitch = -40;
         } else if (pitchingDown && pitch40pitch < 40) {
-            pitch40pitch += (float) pitchSpeed.getValue();
+            pitch40pitch += pitchSpeed.getValue().floatValue();
 
             if (pitch40pitch > 40) pitch40pitch = 40;
         }
@@ -829,14 +829,14 @@ public class ElytraFlight extends Module {
     }
 
     public float getFastTickSpeed() {
-        float value = (float) fastFactor.getValue();
+        float value = fastFactor.getValue().floatValue();
 
         if (fastMode.getValue().equals("Smooth")) {
             value = fastTickSpeed;
-            if (fastTickSpeed > (float) fastFactor.getValue()) return value;
-            fastTickSpeed += 0.05f * (float) plusSpeed.getValue();
-            if (fastTickSpeed > (float) fastFactor.getValue()) {
-                fastTickSpeed = (float) fastFactor.getValue();
+            if (fastTickSpeed > fastFactor.getValue().floatValue()) return value;
+            fastTickSpeed += 0.05f * plusSpeed.getValue().floatValue();
+            if (fastTickSpeed > fastFactor.getValue().floatValue()) {
+                fastTickSpeed = fastFactor.getValue().floatValue();
             }
         }
 
@@ -882,7 +882,7 @@ public class ElytraFlight extends Module {
         if (!Managers.FIREWORK_MANAGER.isUsingFireWork()) {
             AutoFirework.useFirework(false);
         }
-        autoGlidePitch = (float) gUpPitch.getValue();
+        autoGlidePitch = gUpPitch.getValue().floatValue();
         if (ModuleList.noElytraBreak.isEnabled())
             ModuleList.noElytraBreak.setToggled(false);
         if (grimRocket.getValue()) {
@@ -893,7 +893,7 @@ public class ElytraFlight extends Module {
     }
 
     public void autoGlideDownAction() {
-        autoGlidePitch = Managers.FIREWORK_MANAGER.isUsingFireWork() ? -0.8f : (float) gDownPitch.getValue();
+        autoGlidePitch = Managers.FIREWORK_MANAGER.isUsingFireWork() ? -0.8f : gDownPitch.getValue().floatValue();
         if (noElytraBreak.getValue()) {
             if (!ModuleList.noElytraBreak.isEnabled())
                 ModuleList.noElytraBreak.setToggled(true);
@@ -955,7 +955,7 @@ public class ElytraFlight extends Module {
             if ((moveUp || _hoverState) && (currentSpeed >= 0.8 || mc.player.velocity.y > 1.0)) {
                 upwardFlight(currentSpeed, getYaw());
             } else { /* Runs when pressing wasd */
-                _packetPitch = (float) forwardPitch.getValue();
+                _packetPitch = forwardPitch.getValue().floatValue();
                 mc.player.velocity.y = fallSpeedC.getValue();
                 setSpeed(getYaw(), moveUp);
                 _boostingTick = 0;
@@ -976,7 +976,7 @@ public class ElytraFlight extends Module {
         float basePitch = NCPStrict.getValue() && strictPitch < baseBoostPitch.getValue() && !Float.isNaN(strictPitch) ? -strictPitch
                 : (float) -baseBoostPitch.getValue();
         float targetPitch = mc.player.pitch < 0.0f ?
-                Math.max(mc.player.pitch * (90.0f - (float) baseBoostPitch.getValue()) / 90.0f - (float) baseBoostPitch.getValue(), -90.0f) :
+                Math.max(mc.player.pitch * (90.0f - baseBoostPitch.getValue().floatValue()) / 90.0f - baseBoostPitch.getValue().floatValue(), -90.0f) :
                 (float) -baseBoostPitch.getValue();
 
         if (_packetPitch <= basePitch && _boostingTick > 2) {
@@ -1027,7 +1027,7 @@ public class ElytraFlight extends Module {
         if (boosting) {
             return NCPStrict.getValue() ? Math.min(speedC.getValue(), 2.0f) : speedC.getValue();
         } else if (accelerateTime.getValue() != 0.0 && startSpeed.getValue() != 100.0) {
-            _speedPercentage = Math.min(_speedPercentage + (100.0f - (float) startSpeed.getValue()) / ((float) accelerateTime.getValue() * 20.0f), 100.0f);
+            _speedPercentage = Math.min(_speedPercentage + (100.0f - startSpeed.getValue().floatValue()) / (accelerateTime.getValue().floatValue() * 20.0f), 100.0f);
             double speedMultiplier = _speedPercentage / 100.0;
 
             return getSettingSpeed() * speedMultiplier * (Math.cos(speedMultiplier * Math.PI) * -0.5 + 0.5);
@@ -1061,7 +1061,7 @@ public class ElytraFlight extends Module {
     private void takeoff(PlayerTravelEvent event) {
         /* Pause Takeoff if server is lagging, player is in water/lava, or player is on ground */
         float timerSpeed = highPingOptimize.getValue() ? 400.0f : 200.0f;
-        float height = highPingOptimize.getValue() ? 0.0f : (float) minTakeoffHeight.getValue();
+        float height = highPingOptimize.getValue() ? 0.0f : minTakeoffHeight.getValue().floatValue();
         boolean closeToGround = mc.player.getY() <= PlayerUtils.getGroundPos(mc.world, mc.player).y + height && !_wasInLiquid && !mc.isInSingleplayer();
 
         if (!easyTakeoff.getValue() || mc.player.onGround) {
@@ -1174,7 +1174,7 @@ public class ElytraFlight extends Module {
 
         /* Reset acceleration */
         if (!_isFlying || _isStandingStill) {
-            _speedPercentage = (float) startSpeed.getValue();
+            _speedPercentage = startSpeed.getValue().floatValue();
         }
 
         /* Modify leg swing */

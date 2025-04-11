@@ -92,7 +92,7 @@ public class SuperInstaMine extends Module {
             case WEST -> matrix4f.rotate((float) Math.toRadians(90), 0, 1, 0);
             case EAST -> matrix4f.rotate((float) Math.toRadians(90), 0, -1, 0);
         }
-        addBlocks(pos, (int) length.getValue(), (int) extraWidth.getValue(), (int) extraHeight.getValue());
+        addBlocks(pos, length.getValue().intValue(), extraWidth.getValue().intValue(), extraHeight.getValue().intValue());
     }
 
     public void mineAction() {
@@ -119,7 +119,7 @@ public class SuperInstaMine extends Module {
                     }
                     //Deleting positions if the maximum number of attempts to break them has been made
                     if (!infinityAttempts.getValue())
-                        list.removeIf(bInfo -> bInfo.attempts >= (int) maxAttempts.getValue());
+                        list.removeIf(bInfo -> bInfo.attempts >= maxAttempts.getValue());
                     
                     if (packetSwitch.getValue() && postSwitch.getValue() && oldSlot != slot)
                         Managers.NETWORK_MANAGER.sendPacket(new UpdateSelectedSlotC2SPacket(oldSlot));

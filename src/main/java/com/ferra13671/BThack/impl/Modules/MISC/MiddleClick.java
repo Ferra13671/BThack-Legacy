@@ -36,7 +36,7 @@ public class MiddleClick extends Module {
     }
 
     @Override
-    public void onChangeSetting(Setting setting) {
+    public void onChangeSetting(Setting<?> setting) {
         arrayListInfo = mode.getValue();
     }
 

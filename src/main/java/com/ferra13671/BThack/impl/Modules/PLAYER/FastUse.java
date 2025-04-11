@@ -118,7 +118,7 @@ public class FastUse extends Module {
         if (mc.options.useKey.isPressed()) {
             sending = true;
             try {
-                for (int i = 0; i < (int) times.getValue(); i++) {
+                for (int i = 0; i < times.getValue().intValue(); i++) {
                     ((IMinecraftClient) mc).useItem();
                     mc.itemUseCooldown = 0;
                 }

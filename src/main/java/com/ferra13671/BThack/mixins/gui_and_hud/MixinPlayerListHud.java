@@ -43,7 +43,7 @@ public abstract class MixinPlayerListHud {
         if (BThack.isFuturePresent()) return;
         if (ModuleList.extraTab.isEnabled()) {
             cir.setReturnValue(client.player.networkHandler.getListedPlayerListEntries()
-                    .stream().sorted(ENTRY_ORDERING).limit((int) ModuleList.extraTab.tabSize.getValue()).toList());
+                    .stream().sorted(ENTRY_ORDERING).limit(ModuleList.extraTab.tabSize.getValue().intValue()).toList());
             cir.cancel();
         }
     }

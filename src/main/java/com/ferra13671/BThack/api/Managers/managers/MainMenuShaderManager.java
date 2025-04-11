@@ -52,7 +52,7 @@ public class MainMenuShaderManager implements Initializable, Mc {
     }
 
     public void update() {
-        shaderTicker.update((float) ModuleList.menuShader.speed.getValue());
+        shaderTicker.update(ModuleList.menuShader.speed.getValue().floatValue());
     }
 
     public float getShaderTime() {

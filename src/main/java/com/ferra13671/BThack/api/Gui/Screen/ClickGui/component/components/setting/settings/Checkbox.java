@@ -16,15 +16,11 @@ import com.ferra13671.BThack.api.SoundSystem.Sounds;
 import com.ferra13671.BThack.Constants;
 import com.ferra13671.BThack.impl.Modules.CLIENT.ClickGui;
 
-public class Checkbox extends AbstractSetting {
-
-	private final BooleanSetting set;
-
+public class Checkbox extends AbstractSetting<BooleanSetting> {
 	protected final Animation animation = new Animation(Easing.LINEAR, 250);
 	
-	public Checkbox(BooleanSetting option, ModuleButton button, int offset, Module module) {
-		super(offset, button, module, option);
-		set = option;
+	public Checkbox(BooleanSetting setting, ModuleButton button, int offset, Module module) {
+		super(offset, button, module, setting);
 		this.x = button.parent.getX() + Constants.CLICKGUI_FRAME_WIDTH;
 		this.y = button.parent.getY() + button.offset;
 
@@ -36,7 +32,7 @@ public class Checkbox extends AbstractSetting {
 		BThackRender.drawRect(parent.parent.getX(), parent.parent.getY() + offset, parent.parent.getX() + (Constants.CLICKGUI_FRAME_WIDTH), parent.parent.getY() + offset + 15, this.hovered ? ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().backgroundHoveredColor()), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))) : ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().backgroundColor()), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))));
 
 		if (needRenderPlate()) {
-			int alpha = (int) (255 * (set.getValue() ? animation.getEase() : 1 - animation.getEase()));
+			int alpha = (int) (255 * (setting.getValue() ? animation.getEase() : 1 - animation.getEase()));
 			if (ModuleList.clickGui.rainbow.getValue()) {
 				Shaders.INSTANCE.X_RAINBOW.setUniformValue("alpha", alpha / 255f);
 				Shaders.INSTANCE.X_RAINBOW.setUniformValue("brightness", 0.7f);
@@ -52,11 +48,11 @@ public class Checkbox extends AbstractSetting {
 	}
 
 	protected boolean needRenderPlate() {
-		return set.getValue() || animation.getEase() < 1;
+		return setting.getValue() || animation.getEase() < 1;
 	}
 
 	protected String getText() {
-		return op.getName();
+		return setting.getName();
 	}
 	
 	@Override
@@ -75,10 +71,10 @@ public class Checkbox extends AbstractSetting {
 		if (!getVisible()) return false;
 
 		if (isMouseOnButton(mouseX, mouseY) && button == 0) {
-			set.setValue(!set.getValue());
-			set.module.onChangeSetting(set);
+			setting.setValue(!setting.getValue());
+			setting.module.onChangeSetting(setting);
 			animation.reset();
-			SoundSystem.playSound(set.getValue() ? Sounds.GUI_CHECKBOX_ENABLE : Sounds.GUI_CHECKBOX_DISABLE);
+			SoundSystem.playSound(setting.getValue() ? Sounds.GUI_CHECKBOX_ENABLE : Sounds.GUI_CHECKBOX_DISABLE);
 		}
 
 		return isMouseOnButton(mouseX, mouseY);

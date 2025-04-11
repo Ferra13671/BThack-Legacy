@@ -62,7 +62,7 @@ public class AutoClicker extends Module {
         if (mode.getValue().equals("Cooldown"))
             return mc.player.getAttackCooldownProgress(0) >= 1.0;
         else
-            return ticker.passed((int) (delay.getValue()));
+            return ticker.passed(delay.getValue());
     }
 
     public boolean check() {

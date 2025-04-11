@@ -36,9 +36,9 @@ public class CustomBob extends Module {
         float f = playerEntity.horizontalSpeed - playerEntity.prevHorizontalSpeed;
         float g = -(playerEntity.horizontalSpeed + f * mc.getRenderTickCounter().getTickDelta(true));
         float h = MathHelper.lerp(mc.getRenderTickCounter().getTickDelta(true), playerEntity.prevStrideDistance, playerEntity.strideDistance);
-        matrices.translate((MathHelper.sin(g * 3.1415927F) * h * 0.5F) * (float) TXStrength.getValue(), (-Math.abs(MathHelper.cos(g * 3.1415927F) * h)) * (float) TYStrength.getValue(), 0.0F);
-        matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees((MathHelper.sin(g * 3.1415927F) * h * 3.0F) * (float) RZStrength.getValue()));
-        matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees((Math.abs(MathHelper.cos(g * 3.1415927F - 0.2F) * h) * 5.0F) * (float) RXStrength.getValue()));
+        matrices.translate((MathHelper.sin(g * 3.1415927F) * h * 0.5F) * TXStrength.getValue().floatValue(), (-Math.abs(MathHelper.cos(g * 3.1415927F) * h)) * TYStrength.getValue().floatValue(), 0.0F);
+        matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees((MathHelper.sin(g * 3.1415927F) * h * 3.0F) * RZStrength.getValue().floatValue()));
+        matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees((Math.abs(MathHelper.cos(g * 3.1415927F - 0.2F) * h) * 5.0F) * RXStrength.getValue().floatValue()));
     }
 
     public double getFullStrength() {

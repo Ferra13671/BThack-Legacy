@@ -86,25 +86,25 @@ public class AutoFish extends Module {
             if(castRodTimer > 0)
                 return;
 
-            reelInTimer = 20 * (int) patience.getValue();
+            reelInTimer = 20 * patience.getValue().intValue();
 
             ItemUtils.useItem(Hand.MAIN_HAND, true, mc.player.getYaw(), mc.player.getPitch());
-            castRodTimer = (int) retryDelay.getValue();
+            castRodTimer = retryDelay.getValue().intValue();
             return;
         }
 
         if(soundBiteDetected) {
-            reelInTimer = (int) biteDelay.getValue();
+            reelInTimer = biteDelay.getValue().intValue();
             soundBiteDetected = false;
         } else if (mc.player.fishHook.getHookedEntity() != null) {
-            reelInTimer = (int) biteDelay.getValue();
+            reelInTimer = biteDelay.getValue().intValue();
         }
 
         if(reelInTimer == 0)
         {
             ItemUtils.useItem(Hand.MAIN_HAND, true, mc.player.getYaw(), mc.player.getPitch());
-            reelInTimer = (int) retryDelay.getValue();
-            castRodTimer = (int) retryDelay.getValue();
+            reelInTimer = retryDelay.getValue().intValue();
+            castRodTimer = retryDelay.getValue().intValue();
         }
     }
 

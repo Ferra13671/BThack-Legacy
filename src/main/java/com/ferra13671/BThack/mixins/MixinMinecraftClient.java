@@ -49,7 +49,7 @@ public abstract class MixinMinecraftClient implements Mc {
         if (ModuleList.fpsReducer.isEnabled()) {
             if (!mc.isWindowFocused()) {
                 if (ModuleList.fpsReducer.lastFocusTicks <= 0)
-                    cir.setReturnValue((int) ModuleList.fpsReducer.fpsLimit.getValue());
+                    cir.setReturnValue(ModuleList.fpsReducer.fpsLimit.getValue().intValue());
             }
         }
     }

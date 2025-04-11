@@ -13,6 +13,6 @@ public class MixinDimensionType {
     @Inject(method = "getMoonPhase", at = @At("HEAD"), cancellable = true)
     public void modifyMoonPhase(long time, CallbackInfoReturnable<Integer> cir) {
         if (ModuleList.worldElements.isEnabled() && ModuleList.worldElements.changeMoonPhase.getValue())
-            cir.setReturnValue((int) ModuleList.worldElements.moonPhase.getValue());
+            cir.setReturnValue(ModuleList.worldElements.moonPhase.getValue().intValue());
     }
 }

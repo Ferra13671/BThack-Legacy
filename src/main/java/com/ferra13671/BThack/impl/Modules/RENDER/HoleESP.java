@@ -89,7 +89,7 @@ public class HoleESP extends Module {
         if (rangeMode.getValue().equals("Normal")) {
             obsHoles = BlockUtils.getNearbyBlocks(mc.player, range.getValue(), false);
         } else {
-            obsHoles = BlockUtils.getSphere(new BlockPos(mc.player.getBlockPos()), (float) rangeH.getValue(), (float) rangeV.getValue(), false, sphere.getValue(), 0);
+            obsHoles = BlockUtils.getSphere(new BlockPos(mc.player.getBlockPos()), rangeH.getValue().floatValue(), rangeV.getValue().floatValue(), false, sphere.getValue(), 0);
         }
         return obsHoles.stream()
                 .filter(blockPos -> HoleUtils.isMutableHole(blockPos, true))
@@ -101,7 +101,7 @@ public class HoleESP extends Module {
         if (rangeMode.getValue().equals("Normal")) {
             bedHoles = BlockUtils.getNearbyBlocks(mc.player, range.getValue(), false);
         } else {
-            bedHoles = BlockUtils.getSphere(new BlockPos(mc.player.getBlockPos()), (float) rangeH.getValue(), (float) rangeV.getValue(), false, sphere.getValue(), 0);
+            bedHoles = BlockUtils.getSphere(new BlockPos(mc.player.getBlockPos()), rangeH.getValue().floatValue(), rangeV.getValue().floatValue(), false, sphere.getValue(), 0);
         }
         return bedHoles.stream()
                 .filter(HoleUtils::isBedrockHole)
@@ -166,14 +166,14 @@ public class HoleESP extends Module {
                 if (ModuleList.holeESP.rangeMode.getValue().equals("Normal")) {
                     obsHoles = bedHoles = BlockUtils.getNearbyBlocks(mc.player, ModuleList.holeESP.range.getValue(), false);
                 } else {
-                    obsHoles = bedHoles = BlockUtils.getSphere(new BlockPos(mc.player.getBlockPos()), (float) ModuleList.holeESP.rangeH.getValue(), (float) ModuleList.holeESP.rangeV.getValue(), false, ModuleList.holeESP.sphere.getValue(), 0);
+                    obsHoles = bedHoles = BlockUtils.getSphere(new BlockPos(mc.player.getBlockPos()), ModuleList.holeESP.rangeH.getValue().floatValue(), ModuleList.holeESP.rangeV.getValue().floatValue(), false, ModuleList.holeESP.sphere.getValue(), 0);
                 }
                 ModuleList.holeESP.obsidianHoleList = obsHoles.stream().filter(blockPos -> HoleUtils.isMutableHole(blockPos, true))
                         .collect(Collectors.toList());
                 ModuleList.holeESP.bedrockHoleList = bedHoles.stream().filter(HoleUtils::isBedrockHole)
                         .collect(Collectors.toList());
 
-                sleepThread((int) ModuleList.holeESP.updateDelay.getValue());
+                sleepThread(ModuleList.holeESP.updateDelay.getValue().longValue());
             }
         }
     }

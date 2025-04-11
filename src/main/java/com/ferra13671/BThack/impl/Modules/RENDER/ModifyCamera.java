@@ -59,7 +59,7 @@ public class ModifyCamera extends Module {
     @SuppressWarnings("unused")
     public void onCameraRotation(RotateCameraEvent e) {
         if (rewriteRotation.getValue()) {
-            e.setRotation(new Vec2f((float) yaw.getValue(), (float) pitch.getValue()));
+            e.setRotation(new Vec2f(yaw.getValue().floatValue(), pitch.getValue().floatValue()));
         }
     }
 }

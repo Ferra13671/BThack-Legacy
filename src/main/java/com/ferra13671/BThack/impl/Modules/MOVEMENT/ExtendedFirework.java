@@ -38,7 +38,7 @@ public class ExtendedFirework extends Module {
     private FireworkRocketEntity firework;
 
     @Override
-    public void onChangeSetting(Setting setting) {
+    public void onChangeSetting(Setting<?> setting) {
         arrayListInfo = maxTime.getValue() + "s.";
     }
 

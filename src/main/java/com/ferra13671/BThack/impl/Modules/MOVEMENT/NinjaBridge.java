@@ -70,10 +70,10 @@ public class NinjaBridge extends Module {
             while (isEnabled()) {
 
                 //Retrieving settings from the module
-                int _actionDelay = (int) actionDelay.getValue();
-                int _placeTime = (int) placeTime.getValue();
-                int _placeFactor = (int) placeFactor.getValue();
-                float extraAirDistance = (float) airCheck.getValue();
+                int _actionDelay = actionDelay.getValue().intValue();
+                int _placeTime = placeTime.getValue().intValue();
+                int _placeFactor = placeFactor.getValue().intValue();
+                float extraAirDistance = airCheck.getValue().floatValue();
                 //
 
                 BlockPos block = getBlockPos(yaw, extraAirDistance);
@@ -152,17 +152,10 @@ public class NinjaBridge extends Module {
         private BlockPos getBlockPos(int yaw, float extraRange) {
             BlockPos block = null;
             switch (yaw) {
-                case -135:
-                    block = BlockPos.ofFloored(mc.player.getX(), mc.player.getY() - 0.5F, mc.player.getZ() + extraRange);
-                    break;
-                case -45:
-                    block = BlockPos.ofFloored(mc.player.getX() - extraRange, mc.player.getY() - extraRange, mc.player.getZ());
-                    break;
-                case 45:
-                    block = BlockPos.ofFloored(mc.player.getX(), mc.player.getY() - 0.5F, mc.player.getZ() - extraRange);
-                    break;
-                case 135:
-                    block = BlockPos.ofFloored(mc.player.getX() + extraRange, mc.player.getY() - 0.5F, mc.player.getZ());
+                case -135 -> block = BlockPos.ofFloored(mc.player.getX(), mc.player.getY() - 0.5F, mc.player.getZ() + extraRange);
+                case -45 -> block = BlockPos.ofFloored(mc.player.getX() - extraRange, mc.player.getY() - extraRange, mc.player.getZ());
+                case 45 -> block = BlockPos.ofFloored(mc.player.getX(), mc.player.getY() - 0.5F, mc.player.getZ() - extraRange);
+                case 135 -> block = BlockPos.ofFloored(mc.player.getX() + extraRange, mc.player.getY() - 0.5F, mc.player.getZ());
             }
 
             return block;

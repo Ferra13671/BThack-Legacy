@@ -68,7 +68,7 @@ public class AutoMine extends Module {
     }
 
     @Override
-    public void onChangeSetting(Setting setting) {
+    public void onChangeSetting(Setting<?> setting) {
         if (this.isEnabled())
             reMineAction();
         if (setting.equals(extraBlocks))

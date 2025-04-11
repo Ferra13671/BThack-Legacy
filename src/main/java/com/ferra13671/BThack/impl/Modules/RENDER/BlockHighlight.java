@@ -15,7 +15,7 @@ import net.minecraft.util.math.Box;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 
 public class BlockHighlight extends Module {
 
@@ -45,7 +45,7 @@ public class BlockHighlight extends Module {
                     float green = (float) boxColor.getValue().getGreen() / 255f;
                     float blue = (float) boxColor.getValue().getBlue() / 255f;
                     float alpha = (float) boxColor.getValue().getAlpha() / 255f;
-                    float lAlpha = (float) linesAlpha.getValue() / 255f;
+                    float lAlpha = linesAlpha.getValue().floatValue() / 255f;
 
                     Box box = BlockUtils.getBoundingBox(result.getBlockPos());
                     if (box == null) {
@@ -53,7 +53,7 @@ public class BlockHighlight extends Module {
                     }
 
                     BThackRender.boxRender.prepareBoxRender();
-                    BThackRender.boxRender.renderBoxes(new ArrayList<>(Arrays.asList(new RenderBox(box, red, green, blue, lAlpha, red, green, blue, alpha))));
+                    BThackRender.boxRender.renderBoxes(new ArrayList<>(List.of(new RenderBox(box, red, green, blue, lAlpha, red, green, blue, alpha))));
                     BThackRender.boxRender.stopBoxRender();
                 }
             }

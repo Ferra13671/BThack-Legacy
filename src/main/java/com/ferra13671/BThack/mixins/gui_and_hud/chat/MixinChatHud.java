@@ -75,9 +75,9 @@ public abstract class MixinChatHud implements ModifyChatHud {
 
     @Inject(method = "addMessage(Lnet/minecraft/text/Text;Lnet/minecraft/network/message/MessageSignatureData;Lnet/minecraft/client/gui/hud/MessageIndicator;)V", at = @At("TAIL"))
     private void addMessage(Text message, MessageSignatureData signatureData, MessageIndicator indicator, CallbackInfo ci) {
-        BetterChat.messageTimestamps.add(0, System.currentTimeMillis());
+        BetterChat.messageTimestamps.addFirst(System.currentTimeMillis());
         while (BetterChat.messageTimestamps.size() > visibleMessages.size()) {
-            BetterChat.messageTimestamps.remove(BetterChat.messageTimestamps.size() - 1);
+            BetterChat.messageTimestamps.removeLast();
         }
     }
     //--------------------------------//
@@ -104,17 +104,17 @@ public abstract class MixinChatHud implements ModifyChatHud {
             }
 
             boolean bl2 = j == list.size() - 1;
-            this.visibleMessages.add(0, new ChatHudLine.Visible(message.creationTick(), orderedText, message.indicator(), bl2));
+            this.visibleMessages.addFirst(new ChatHudLine.Visible(message.creationTick(), orderedText, message.indicator(), bl2));
         }
 
         while(this.visibleMessages.size() > getMaxChatSize()) {
-            this.visibleMessages.remove(this.visibleMessages.size() - 1);
+            this.visibleMessages.removeLast();
         }
     }
 
     @Unique
     public int getMaxChatSize() {
-        if (Client.inited && ModuleList.moreChatHistory.isEnabled()) return (int) ModuleList.moreChatHistory.size.getValue();
+        if (Client.inited && ModuleList.moreChatHistory.isEnabled()) return ModuleList.moreChatHistory.size.getValue().intValue();
         else return 100;
     }
 }

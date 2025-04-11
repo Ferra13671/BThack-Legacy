@@ -83,7 +83,7 @@ public class AutoFarmland extends Module {
     public void filterAction() {
         poses.clear();
 
-        for (BlockPos pos : BlockUtils.getSphere(mc.player.getBlockPos(), (float) range.getValue(), (float) range.getValue(), false, true, 0)) {
+        for (BlockPos pos : BlockUtils.getSphere(mc.player.getBlockPos(), range.getValue().floatValue(), range.getValue().floatValue(), false, true, 0)) {
             if (checkWater.getValue()) {
                 if (mc.world.getBlockState(pos).getBlock() == Blocks.WATER)
                     waterDirtFilter(pos);

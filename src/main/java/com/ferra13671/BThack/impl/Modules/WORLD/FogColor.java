@@ -49,7 +49,7 @@ public class FogColor extends Module {
     }
 
     public Vec3d getFogColor() {
-        ticker.update((float) rainbowSpeed.getValue());
+        ticker.update(rainbowSpeed.getValue().floatValue());
         Color color = rainbow.getValue() ? new Color(ColorUtils.rainbow(ticker.getPassedTime())) : fogColor.getValue();
         return new Vec3d(color.getRed() / 255d, color.getGreen() / 255d, color.getBlue() / 255d);
     }

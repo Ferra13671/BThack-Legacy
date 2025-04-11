@@ -82,7 +82,7 @@ public class CS_Crosshair extends Module {
         BThackMatrix.peek().getPositionMatrix().rotate((float) Math.toRadians(rotate.getValue()), 0, 0, 1);
 
         if (centerRect.getValue())
-            BThackRender.drawRect((int)-height.getValue(), (int)- height.getValue(), (int)height.getValue(), (int)height.getValue(), color.hashCode());
+            BThackRender.drawRect((int)-height.getValue(), (int)- height.getValue(), height.getValue().intValue(), height.getValue().intValue(), color.hashCode());
 
         if (upRect.getValue())
             BThackRender.drawRect((int)(0 -height.getValue()),(int)(0 - height.getValue() - distance.getValue() - width.getValue() - spread), (int)(0 + height.getValue()), (int)(0 - height.getValue() - distance.getValue() - spread), color.hashCode());
@@ -99,7 +99,7 @@ public class CS_Crosshair extends Module {
         BThackMatrix.peek().getPositionMatrix().rotate((float) -Math.toRadians(rotate.getValue()), 0, 0, 1);
         BThackMatrix.translate(-(window.getScaledWidth() / 2f), -(window.getScaledHeight() / 2f), 0);
 
-        spread -= (float) scatterSpeed.getValue();
+        spread -= scatterSpeed.getValue().floatValue();
         if (spread < 0)
             spread = 0;
 
@@ -113,7 +113,7 @@ public class CS_Crosshair extends Module {
         if (e.getPlayer() == mc.player) {
             spread += 6;
             if (spread > scatterLimit.getValue())
-                spread = (int) scatterLimit.getValue();
+                spread = scatterLimit.getValue().intValue();
         }
     }
 }

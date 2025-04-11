@@ -44,7 +44,7 @@ public class FullBright extends Module {
     private boolean hasAppliedNightVision = false;
 
     @Override
-    public void onChangeSetting(Setting setting) {
+    public void onChangeSetting(Setting<?> setting) {
         arrayListInfo = mode.getValue();
     }
 
@@ -64,7 +64,7 @@ public class FullBright extends Module {
                 hasAppliedNightVision = false;
         }
         if (customColor.getValue())
-            return new Color((int) blue.getValue(), (int) green.getValue(), (int) red.getValue()).hashCode();
+            return new Color(blue.getValue().intValue(), green.getValue().intValue(), red.getValue().intValue()).hashCode();
         else
             return  -1;
     }

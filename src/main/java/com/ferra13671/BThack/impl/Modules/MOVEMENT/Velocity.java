@@ -67,7 +67,7 @@ public class Velocity extends Module {
     private int ticks;
 
     @Override
-    public void onChangeSetting(Setting setting) {
+    public void onChangeSetting(Setting<?> setting) {
         arrayListInfo = mode.getValue();
     }
 
@@ -87,8 +87,8 @@ public class Velocity extends Module {
 
         double velV = velocityV.getValue();
         double velH = velocityH.getValue();
-        float explV = (float) explosionV.getValue();
-        float explH = (float) explosionH.getValue();
+        float explV = explosionV.getValue().floatValue();
+        float explH = explosionH.getValue().floatValue();
 
         if (ticks > 0) {
             ticks--;

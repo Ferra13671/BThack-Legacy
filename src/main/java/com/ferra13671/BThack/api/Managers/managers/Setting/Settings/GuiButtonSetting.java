@@ -7,27 +7,14 @@ import net.minecraft.client.gui.screen.Screen;
 
 import java.util.function.Supplier;
 
-public class GuiButtonSetting extends Setting {
-
-    private final Supplier<Screen> screenValue;
+public class GuiButtonSetting extends Setting<Supplier<Screen>> {
 
     public GuiButtonSetting(String name, Module module, Supplier<Screen> screen, Supplier<Boolean> dependence) {
-        super(name, module, dependence);
-
-        this.screenValue = screen;
+        super(name, module, screen, dependence);
     }
 
     public GuiButtonSetting(String name, Module module, Supplier<Screen> screen) {
         this(name, module, screen, null);
-    }
-
-    public Screen getValue() {
-        return screenValue.get();
-    }
-
-    @Override
-    public void toDefault() {
-        //nothing
     }
 
     @Override

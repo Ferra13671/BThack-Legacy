@@ -58,7 +58,7 @@ public class MixinBlock implements Mc {
         if (ModuleList.customFriction.isEnabled()) {
             boolean eq = DataLists.get("CustomFriction", BlockList.class).values.contains(block);
             if (ModuleList.customFriction.mode.getValue().equals("WhiteList") == eq)
-                cir.setReturnValue((float) ModuleList.customFriction.friction.getValue());
+                cir.setReturnValue(ModuleList.customFriction.friction.getValue().floatValue());
         }
         if (ModuleList.noSlow.isEnabled()) {
             if (ModuleList.noSlow.slime.getValue() && (Object) this == Blocks.SLIME_BLOCK) {

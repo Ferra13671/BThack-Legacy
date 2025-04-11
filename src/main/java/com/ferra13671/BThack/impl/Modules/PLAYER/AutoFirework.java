@@ -48,7 +48,7 @@ public class AutoFirework extends Module {
     public void playOffSound() {
         if (mode.getValue().equals("Always"))
             if (ModuleList.clientSettings.moduleToggleSound.getValue())
-                SoundSystem.playSound(Sounds.MODULE_OFF, (float) ModuleList.clientSettings.soundVolume.getValue());
+                SoundSystem.playSound(Sounds.MODULE_OFF, ModuleList.clientSettings.soundVolume.getValue().floatValue());
     }
 
     @Override

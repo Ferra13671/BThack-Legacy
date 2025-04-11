@@ -38,7 +38,7 @@ public class PacketPlace extends Module {
         ThreadManager.startNewThread(thread -> {
             thread.sleepThread(5);
 
-            for (int i = 0; i < (int) sendPackets.getValue(); i++) {
+            for (int i = 0; i < sendPackets.getValue().intValue(); i++) {
                 if (shifting.getValue())
                     mc.player.networkHandler.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.PRESS_SHIFT_KEY));
 

@@ -34,7 +34,7 @@ public class ModuleButton extends Component implements Mc {
 	public boolean renderOpen = false;
 
 	private boolean isHovered;
-	private final ArrayList<AbstractSetting> settings = new ArrayList<>();
+	private final ArrayList<AbstractSetting<?>> settings = new ArrayList<>();
 	private final Animation settingColorAnimation = new Animation(Easing.LINEAR, 1300);
 	private boolean scInvert = false;
 	private Animation settingAnimation = new Animation(Easing.CIRC_OUT, 500);
@@ -47,9 +47,9 @@ public class ModuleButton extends Component implements Mc {
 		this.parent = parent;
 		this.offset = offset;
 		int opY = offset + Constants.CLICKGUI_BUTTON_HEIGHT;
-		AbstractSetting setting;
+		AbstractSetting<?> setting;
 		if(Managers.SETTINGS_MANAGER.getSettingsByMod(module) != null) {
-			for(Setting s : Managers.SETTINGS_MANAGER.getSettingsByMod(module)){
+			for(Setting<?> s : Managers.SETTINGS_MANAGER.getSettingsByMod(module)){
 				setting =
 						s instanceof ModeSetting set ? new ModeButton(set, this, opY, set.getIndex(), module) :
 						s instanceof NumberSetting set ? new Slider(set, this, opY, module) :
@@ -58,8 +58,10 @@ public class ModuleButton extends Component implements Mc {
 						s instanceof GuiButtonSetting set ? new OpenGuiButton(set, this, opY, module) :
 						s instanceof ColorSetting set ? new ColorPicker(set, this, opY, module) :
 						null;
-				settings.add(setting);
-				opY += setting.getHeight();
+				if (setting != null) {
+					settings.add(setting);
+					opY += setting.getHeight();
+				}
 			}
 		}
 
@@ -80,7 +82,7 @@ public class ModuleButton extends Component implements Mc {
 	public void refresh(int newOff) {
 		this.offset = newOff;
 		int opY = offset + Constants.CLICKGUI_BUTTON_HEIGHT;
-		for(AbstractSetting comp : settings) {
+		for(AbstractSetting<?> comp : settings) {
 			comp.refresh(opY);
 			if (comp.getVisible())
 				opY += comp.getHeight();
@@ -103,7 +105,7 @@ public class ModuleButton extends Component implements Mc {
 		if(renderOpen || open) {
 			if(!settings.isEmpty()) {
 				BThackRender.enableScissor(ClickGui.applyGuiScale(parent.getX()), ClickGui.applyGuiScale(parent.getY() + offset), ClickGui.applyGuiScale(Constants.CLICKGUI_FRAME_WIDTH), ClickGui.applyGuiScale(animatedSettingsHeight + Constants.CLICKGUI_BUTTON_HEIGHT));
-				for(AbstractSetting set : settings) {
+				for(AbstractSetting<?> set : settings) {
 					if (set.getVisible())
 						set.renderComponent();
 				}
@@ -154,7 +156,7 @@ public class ModuleButton extends Component implements Mc {
 	public int getHeight() {
 		if(renderOpen || open) {
 			int height = 0;
-			for (AbstractSetting component : settings) {
+			for (AbstractSetting<?> component : settings) {
 				if (component.getVisible())
 					height += component.getHeight();
 			}
@@ -210,7 +212,7 @@ public class ModuleButton extends Component implements Mc {
 			}
 			if (button == 1) {
 				if (renderOpen == open) {
-					settingAnimation = new Animation(ClickGui.getCurrentEasing(), (int) ModuleList.clickGui.animationTime.getValue());
+					settingAnimation = new Animation(ClickGui.getCurrentEasing(), ModuleList.clickGui.animationTime.getValue().intValue());
 					open = !open;
 					settingAnimation.reset();
 					lastAnimFactor = 0;

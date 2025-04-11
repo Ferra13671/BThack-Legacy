@@ -76,7 +76,7 @@ public class Spammer extends Module {
                 try {
                     this.arrayListInfo = spamMode.getValue();
 
-                    String space = " ".repeat(Math.max(0, (int) aSpamSpace.getValue()));
+                    String space = " ".repeat(Math.max(0, aSpamSpace.getValue().intValue()));
 
                     if (Files.exists(path)) {
                         BufferedReader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8);
@@ -120,8 +120,8 @@ public class Spammer extends Module {
 
                     thread.sleepThread(
                             delaySpread.getValue() ?
-                                    (int) (!Constants.RANDOM.nextBoolean() ? (delayInMillis * NumberGenerator.generateFloat(1, 1f + (float) spreadRange.getValue()))
-                                            : (delayInMillis * NumberGenerator.generateFloat((float) spreadRange.getValue(), 1))) : delayInMillis);
+                                    (int) (!Constants.RANDOM.nextBoolean() ? (delayInMillis * NumberGenerator.generateFloat(1, 1f + spreadRange.getValue().floatValue()))
+                                            : (delayInMillis * NumberGenerator.generateFloat(spreadRange.getValue().floatValue(), 1))) : delayInMillis);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -131,7 +131,7 @@ public class Spammer extends Module {
 
     private String genAntiSpam() {
         return StringGenerator.generateNextString(
-                (int) aSpamLength.getValue(),
+                aSpamLength.getValue().intValue(),
                 aSpamCaps.getValue(),
                 aSpamNumbers.getValue(),
                 aSpamSymbols.getValue()

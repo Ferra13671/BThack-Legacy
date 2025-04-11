@@ -14,17 +14,14 @@ import com.ferra13671.BThack.api.SoundSystem.SoundSystem;
 import com.ferra13671.BThack.api.SoundSystem.Sounds;
 import com.ferra13671.BThack.Constants;
 
-public class ModeButton extends AbstractSetting {
+public class ModeButton extends AbstractSetting<ModeSetting> {
 
-	private final ModeSetting set;
-
-	public ModeButton(ModeSetting option, ModuleButton button, int offset, int modeIndex, Module module) {
-		super(offset, button, module, option);
-		set = option;
+	public ModeButton(ModeSetting setting, ModuleButton button, int offset, int modeIndex, Module module) {
+		super(offset, button, module, setting);
 		x = button.parent.getX() + Constants.CLICKGUI_FRAME_WIDTH;
 		y = button.parent.getY() + button.offset;
 
-		set.setValue(option.getOptions().get(modeIndex));
+		setting.setValue(setting.getOptions().get(modeIndex));
 	}
 	
 	@Override
@@ -49,7 +46,7 @@ public class ModeButton extends AbstractSetting {
 	}
 
 	private String getModeString() {
-		return this.op.getName() + ": " + (!set.getOptions().contains(set.getValue()) ? "NULL" : (set.getOptions().size() < set.getIndex() ? set.getValue() : set.getOptions().get(set.getIndex())));
+		return this.setting.getName() + ": " + (!setting.getOptions().contains(setting.getValue()) ? "NULL" : (setting.getOptions().size() < setting.getIndex() ? setting.getValue() : setting.getOptions().get(setting.getIndex())));
 	}
 
 	@Override
@@ -68,17 +65,17 @@ public class ModeButton extends AbstractSetting {
 		if (!getVisible()) return false;
 
 		if (isMouseOnButton(mouseX, mouseY) && button == 0) {
-			int maxIndex = set.getOptions().size();
+			int maxIndex = setting.getOptions().size();
 
-			if (set.getIndex() + 1 >= maxIndex) {
-				set.setIndex(0);
+			if (setting.getIndex() + 1 >= maxIndex) {
+				setting.setIndex(0);
 			} else {
-				int currentIndex = set.getIndex();
-				set.setIndex(currentIndex + 1);
+				int currentIndex = setting.getIndex();
+				setting.setIndex(currentIndex + 1);
 			}
 
-			set.setValue(set.getOptions().get(set.getIndex()));
-			set.module.onChangeSetting(set);
+			setting.setValue(setting.getOptions().get(setting.getIndex()));
+			setting.module.onChangeSetting(setting);
 			SoundSystem.playSound(Sounds.GUI_CHECKBOX_ENABLE);
 		}
 

@@ -39,7 +39,7 @@ public class FastPlace extends Module {
                 case "Normal" -> mc.itemUseCooldown = 0;
                 case "Ultra" -> {
                     if (mc.options.useKey.isPressed()) {
-                        for (int i = 0; i < (int) times.getValue(); i++) {
+                        for (int i = 0; i < times.getValue().intValue(); i++) {
                             ((IMinecraftClient) mc).useItem();
                             mc.itemUseCooldown = 0;
                         }

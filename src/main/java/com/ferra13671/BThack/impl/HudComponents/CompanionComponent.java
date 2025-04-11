@@ -30,7 +30,7 @@ public class CompanionComponent extends HudComponent {
     }
 
     @Override
-    public void onChangeSetting(Setting setting) {
+    public void onChangeSetting(Setting<?> setting) {
         Textures.CAIPIRINHA.setUpdateDelayMillis((int) (150 / speed.getValue()));
         Textures.CUTIE1.setUpdateDelayMillis((int) (50 / speed.getValue()));
     }
@@ -42,8 +42,8 @@ public class CompanionComponent extends HudComponent {
                 Textures.CAIPIRINHA.update();
                 float w = (float) ((Textures.CAIPIRINHA.getWidth() / 560d) * size.getValue());
                 float h = (float) ((Textures.CAIPIRINHA.getHeight() / 560d) * size.getValue());
-                float startX = getX() + (((float) size.getValue() - w) / 2);
-                float startY = getY() + (((float) size.getValue() - h) / 2);
+                float startX = getX() + ((size.getValue().floatValue() - w) / 2);
+                float startY = getY() + ((size.getValue().floatValue() - h) / 2);
                 BThackRender.drawTextureRect(
                         Textures.CAIPIRINHA,
                         startX,
@@ -54,18 +54,18 @@ public class CompanionComponent extends HudComponent {
             }
             case "Cutie1" -> {
                 Textures.CUTIE1.update();
-                BThackRender.drawTextureRect(Textures.CUTIE1, getX(), getY(), getX() + (float) size.getValue(), getY() + (float) size.getValue());
+                BThackRender.drawTextureRect(Textures.CUTIE1, getX(), getY(), getX() + size.getValue().floatValue(), getY() + size.getValue().floatValue());
             }
             case "Cutie2" -> {
                 Textures.CUTIE2.update();
-                BThackRender.drawTextureRect(Textures.CUTIE2, getX(), getY(), getX() + (float) size.getValue(), getY() + (float) size.getValue());
+                BThackRender.drawTextureRect(Textures.CUTIE2, getX(), getY(), getX() + size.getValue().floatValue(), getY() + size.getValue().floatValue());
             }
         }
     }
 
     @Override
     public void tick() {
-        this.width = (float) size.getValue();
-        this.height = (float) size.getValue();
+        this.width = size.getValue().floatValue();
+        this.height = size.getValue().floatValue();
     }
 }

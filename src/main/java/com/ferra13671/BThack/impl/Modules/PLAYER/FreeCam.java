@@ -96,8 +96,8 @@ public class FreeCam extends Module {
         @Override
         public void tick(boolean slowDown, float slowDownFactor) {
             unset();
-            float hSpeed = (float) ModuleList.freeCam.horizontalSpeed.getValue() / 10f;
-            float vSpeed = (float) ModuleList.freeCam.verticalSpeed.getValue() / 10f;
+            float hSpeed = ModuleList.freeCam.horizontalSpeed.getValue().floatValue() / 10f;
+            float vSpeed = ModuleList.freeCam.verticalSpeed.getValue().floatValue() / 10f;
             float fakeMovementForward = getMovementMultiplier(options.forwardKey.isPressed(), options.backKey.isPressed());
             float fakeMovementSideways = getMovementMultiplier(options.leftKey.isPressed(), options.rightKey.isPressed());
             Vec2f dir = handleVanillaMotion(hSpeed, fakeMovementForward, fakeMovementSideways);

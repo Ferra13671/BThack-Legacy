@@ -42,7 +42,7 @@ public class ItemSaver extends Module {
     private int alpha = 0;
 
     @Override
-    public void onChangeSetting(Setting setting) {
+    public void onChangeSetting(Setting<?> setting) {
         arrayListInfo = minStrength.getValue() + "%";
     }
 

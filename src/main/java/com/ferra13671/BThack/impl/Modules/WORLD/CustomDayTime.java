@@ -40,9 +40,9 @@ public class CustomDayTime extends Module {
     public long time = 0L;
 
     @Override
-    public void onChangeSetting(Setting setting) {
+    public void onChangeSetting(Setting<?> setting) {
         if (setting == customTime) {
-            time = (long) customTime.getValue();
+            time = customTime.getValue().longValue();
         }
     }
 
@@ -69,11 +69,11 @@ public class CustomDayTime extends Module {
                         time = 13000L;
                     }
                     if (Objects.equals(_mode, "Custom")) {
-                        time = (long) customTime.getValue();
+                        time = customTime.getValue().longValue();
                     }
                     if (Objects.equals(_mode, "Spin")) {
                         double speed = spinSpeed.getValue();
-                        float speedFactor = (float) extraSpin.getValue();
+                        float speedFactor = extraSpin.getValue().floatValue();
 
                         long newTime = (long) (time + ((speed * speedFactor) / 50));
                         if (newTime >= 24000L) newTime = 0L;

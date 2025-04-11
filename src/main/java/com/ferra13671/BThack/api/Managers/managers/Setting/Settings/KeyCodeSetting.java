@@ -8,25 +8,14 @@ import com.google.gson.JsonPrimitive;
 
 import java.util.function.Supplier;
 
-public class KeyCodeSetting extends Setting {
-
-    private int keyValue = 0;
-
+public class KeyCodeSetting extends Setting<Integer> {
 
     public KeyCodeSetting(String name, Module module, Supplier<Boolean> dependence) {
-        super(name, module, dependence);
+        super(name, module, 0, dependence);
     }
 
     public KeyCodeSetting(String name, Module module) {
-        super(name, module, null);
-    }
-
-    public int getValue() {
-        return keyValue;
-    }
-
-    public void setValue(int value) {
-        keyValue = value;
+        this(name, module, null);
     }
 
     public boolean isPressed() {

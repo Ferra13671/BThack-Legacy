@@ -29,8 +29,7 @@ public class Timer extends Module {
     public void onTick(ClientTickEvent e) {
         if (nullCheck()) return;
 
-        float speed = (float) tickSpeed.getValue();
-        Managers.TICK_MANAGER.applyTickModifier((50f / speed) / 50);
+        Managers.TICK_MANAGER.applyTickModifier((50f / tickSpeed.getValue().floatValue()) / 50);
     }
 
     @Override

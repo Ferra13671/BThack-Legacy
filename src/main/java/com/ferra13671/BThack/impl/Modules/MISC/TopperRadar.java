@@ -124,7 +124,7 @@ public class TopperRadar extends Module {
                 if (autoDisconnect.getValue()) {
                     ThreadManager.startNewThread(thread -> {
 
-                        int delay = (int) shutdownDelay.getValue();
+                        int delay = shutdownDelay.getValue().intValue();
 
                         ChatUtils.sendMessage(Formatting.RED + LanguageSystem.translate("lang.module.radars.disconnectCountdown"));
 

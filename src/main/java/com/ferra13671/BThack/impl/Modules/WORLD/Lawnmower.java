@@ -66,7 +66,7 @@ public class Lawnmower extends Module {
 
         arrayListInfo = "" + range.getValue();
 
-        BlockPos pos = BlockUtils.getSphere(mc.player.getBlockPos(), (float) range.getValue(), (float) range.getValue(), false, true, 0).stream()
+        BlockPos pos = BlockUtils.getSphere(mc.player.getBlockPos(), range.getValue().floatValue(), range.getValue().floatValue(), false, true, 0).stream()
                 .filter(this::isValidBlockPos)
                 .min(Comparator.comparing(pos2 -> MathUtils.getDistance(mc.player.getPos(), pos2.toCenterPos())))
                 .orElse(null);
@@ -77,7 +77,7 @@ public class Lawnmower extends Module {
             RotateMode rm = RotateMode.valueOf(rotateMode.getValue().toUpperCase());
             rm.preRotate(rotations[0], rotations[1]);
             ((ModifyClientPlayerInteractionManager) mc.interactionManager).attackBlockNoEvent(pos, Direction.UP);
-            if (!breakedBoxes.containsKey(pos)) breakedBoxes.put(pos, new Animation(Easing.LINEAR, (int) hideTime.getValue()));
+            if (!breakedBoxes.containsKey(pos)) breakedBoxes.put(pos, new Animation(Easing.LINEAR, hideTime.getValue().intValue()));
             rm.postRotate();
         }
 

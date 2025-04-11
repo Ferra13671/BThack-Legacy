@@ -99,7 +99,7 @@ public class ArrayListComponent extends HudComponent {
 
     public int getArrayColor(int count) {
         if (ModuleList.HUD.rainbow.getValue()) {
-            return ColorUtils.rainbowType((int) ModuleList.HUD.rainbowType.getValue(), count);
+            return ColorUtils.rainbowType(ModuleList.HUD.rainbowType.getValue().intValue(), count);
         } else {
             if (ModuleList.clickGui.customColor.getValue()) return ClickGui.getClickGuiColor(false);
             else return (new Color(Client.clientInfo.getColorTheme().arrayListColor())).hashCode();

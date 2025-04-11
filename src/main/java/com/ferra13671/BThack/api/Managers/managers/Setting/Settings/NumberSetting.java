@@ -7,18 +7,14 @@ import com.google.gson.JsonPrimitive;
 
 import java.util.function.Supplier;
 
-public class NumberSetting extends Setting {
-
-    private double numberValue;
-    private final double defaultNumberValue;
+public class NumberSetting extends Setting<Double> {
     private final double minValue;
     private final double maxValue;
     public final boolean onlyInt;
 
     public NumberSetting(String name, Module module, double numberValue, double minValue, double maxValue, boolean onlyInt, Supplier<Boolean> dependence) {
-        super(name, module, dependence);
+        super(name, module, numberValue, dependence);
 
-        this.numberValue = defaultNumberValue = numberValue;
         this.minValue = minValue;
         this.maxValue = maxValue;
         this.onlyInt = onlyInt;
@@ -28,15 +24,8 @@ public class NumberSetting extends Setting {
         this(name, module, numberValue, minValue, maxValue, onlyInt, null);
     }
 
-    public double getValue(){
-        if(this.onlyInt){
-            numberValue = (int)numberValue;
-        }
-        return numberValue;
-    }
-
-    public void setValue(double value) {
-        numberValue = value;
+    public Double getValue() {
+        return onlyInt ? value.intValue() : value;
     }
 
     public double getMinValue() {
@@ -45,12 +34,6 @@ public class NumberSetting extends Setting {
 
     public double getMaxValue() {
         return maxValue;
-    }
-
-
-    @Override
-    public void toDefault() {
-        numberValue = defaultNumberValue;
     }
 
     @Override

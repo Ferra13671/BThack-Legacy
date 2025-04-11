@@ -25,7 +25,7 @@ public abstract class MixinCamera {
     @ModifyArgs(method = "update", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/Camera;moveBy(FFF)V", ordinal = 0))
     public void modifyArgsMoveBy(Args args) {
         if (ModuleList.modifyCamera.isEnabled() && ModuleList.modifyCamera.rewriteDistance.getValue())
-            args.set(0, -clipToSpace((float) ModuleList.modifyCamera.distance.getValue()));
+            args.set(0, -clipToSpace(ModuleList.modifyCamera.distance.getValue().floatValue()));
     }
 
     @Inject(method = "clipToSpace", at = @At(value = "HEAD"), cancellable = true)

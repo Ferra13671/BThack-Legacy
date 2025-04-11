@@ -46,8 +46,8 @@ public abstract class MixinChatScreen implements Mc {
 
 
             float screenFactor = (float) client.getWindow().getHeight() / 1080;
-            float timeSinceOpen = Math.min((float) (System.currentTimeMillis() - lastOpenTime), (float) ModuleList.betterChat.fadeTime.getValue());
-            float alpha = 1 - (timeSinceOpen / (float) ModuleList.betterChat.fadeTime.getValue());
+            float timeSinceOpen = Math.min((float) (System.currentTimeMillis() - lastOpenTime), ModuleList.betterChat.fadeTime.getValue().floatValue());
+            float alpha = 1 - (timeSinceOpen / ModuleList.betterChat.fadeTime.getValue().floatValue());
 
             float c1 = 1.70158f;
             float c3 = c1 + 1;

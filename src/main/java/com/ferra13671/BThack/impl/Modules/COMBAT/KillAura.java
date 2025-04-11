@@ -199,7 +199,7 @@ public class KillAura extends Module {
     public void attackTargetAction() {
         if (targetedEntity != null) {
             if (!Managers.TRAVEL_CHANGE_MANAGER.containsChanger(travelChanger)) Managers.TRAVEL_CHANGE_MANAGER.addChanger(travelChanger);
-            if (rotateMath.getValue().equals("Always") || updateRotTicker.passed((int) targetRotateDelay.getValue())) {
+            if (rotateMath.getValue().equals("Always") || updateRotTicker.passed(targetRotateDelay.getValue())) {
                 targetRotation = RotateUtils.rotations(targetedEntity.entity);
                 updateRotTicker.reset();
             }
@@ -207,22 +207,22 @@ public class KillAura extends Module {
                 case "Old", "Always" -> currentRotation = targetRotation;
                 case "New" -> {
                     if (currentRotation != null) {
-                        currentRotation[0] += (targetRotation[0] - currentRotation[0]) * (float) rotateStep.getValue();
-                        currentRotation[1] += (targetRotation[1] - currentRotation[1]) * (float) rotateStep.getValue();
+                        currentRotation[0] += (targetRotation[0] - currentRotation[0]) * rotateStep.getValue().floatValue();
+                        currentRotation[1] += (targetRotation[1] - currentRotation[1]) * rotateStep.getValue().floatValue();
                     } else currentRotation = new float[]{RotateUtils.getCameraYaw(), RotateUtils.getCameraPitch()};
                 }
             }
             if (!delayPassed()) return;
-            if (instaRotate.getValue() || targetedEntity.lockTicks >= (int) lockTicks.getValue()) {
+            if (instaRotate.getValue() || targetedEntity.lockTicks >= lockTicks.getValue()) {
                 if (instaRotate.getValue()) {
                     RotateMode rotateMode = getRotateMode();
-                    KillAuraUtils.preAttackRotate(rotateMode, currentRotation, (int) packets.getValue());
+                    KillAuraUtils.preAttackRotate(rotateMode, currentRotation, packets.getValue().intValue());
                 }
                 KillAuraUtils.attackNoRotate(targetedEntity.entity);
                 delayTicker.reset();
                 prevAttackedEntity = targetedEntity.entity;
             } else {
-                targetedEntity = new Target(targetedEntity.entity, prevAttackedEntity == targetedEntity.entity ? (int) lockTicks.getValue() : targetedEntity.lockTicks + 1);
+                targetedEntity = new Target(targetedEntity.entity, prevAttackedEntity == targetedEntity.entity ? lockTicks.getValue().intValue() : targetedEntity.lockTicks + 1);
             }
         } else {
             if (travelCancelled && (deleteTravelTicker.passed(200) || !rotateMath.getValue().equals("New"))) {
@@ -230,8 +230,8 @@ public class KillAura extends Module {
                     Managers.TRAVEL_CHANGE_MANAGER.removeChanger(travelChanger);
                 currentRotation = null;
             } else {
-                currentRotation[0] += (RotateUtils.getCameraYaw() - currentRotation[0]) * (float) rotateStep.getValue();
-                currentRotation[1] += (RotateUtils.getCameraPitch() - currentRotation[1]) * (float) rotateStep.getValue();
+                currentRotation[0] += (RotateUtils.getCameraYaw() - currentRotation[0]) * rotateStep.getValue().floatValue();
+                currentRotation[1] += (RotateUtils.getCameraPitch() - currentRotation[1]) * rotateStep.getValue().floatValue();
             }
         }
     }
@@ -280,7 +280,7 @@ public class KillAura extends Module {
             return (mc.player.getActiveItem().getItem() instanceof ToolItem && mc.player.isUsingItem()) || (ModuleList.packetMine.isEnabled() && (ModuleList.packetMine.currentBreakingBlock != null || !ModuleList.packetMine.conveyorBlocks.isEmpty()));
         }
         if (pauseIfEat.getValue()) {
-            if (ItemUtils.isFood(mc.player.getActiveItem()) && mc.player.isUsingItem()) return true;
+            return ItemUtils.isFood(mc.player.getActiveItem()) && mc.player.isUsingItem();
         }
         return false;
     }

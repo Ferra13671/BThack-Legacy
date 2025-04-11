@@ -45,7 +45,7 @@ public class Sprint extends Module {
     );
 
     @Override
-    public void onChangeSetting(Setting setting) {
+    public void onChangeSetting(Setting<?> setting) {
         if (isEnabled()) arrayListInfo = mode.getValue() + (strafe.getValue() ? ": strafe" : "");
     }
 

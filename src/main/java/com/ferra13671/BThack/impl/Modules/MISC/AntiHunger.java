@@ -28,7 +28,7 @@ public class AntiHunger extends Module {
     }
 
     @Override
-    public void onChangeSetting(Setting setting) {
+    public void onChangeSetting(Setting<?> setting) {
         arrayListInfo = cancelMoveState.getValue() ? "Cancel Move" : "Standard";
     }
 

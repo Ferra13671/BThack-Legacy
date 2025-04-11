@@ -20,7 +20,7 @@ import net.minecraft.client.render.Tessellator;
 
 import java.awt.*;
 
-public class ColorPicker extends AbstractSetting {
+public class ColorPicker extends AbstractSetting<ColorSetting> {
     private final ColorObject colorRect = new ColorObject() {
         @Override
         protected float getStartX() {
@@ -115,21 +115,19 @@ public class ColorPicker extends AbstractSetting {
         }
     };
 
-    private final ColorSetting set;
     private Color rgbColor;
     private float[] hsbColor;
     private float hue;
     private float alpha;
 
-    public ColorPicker(ColorSetting op, ModuleButton button , int offset, Module module) {
-        super(offset, button, module, op);
+    public ColorPicker(ColorSetting setting, ModuleButton button , int offset, Module module) {
+        super(offset, button, module, setting);
 
-        set = op;
         updateColors();
     }
 
     private void updateColors() {
-        rgbColor = set.getValue();
+        rgbColor = setting.getValue();
         alpha = rgbColor.getAlpha() / 255f;
         hsbColor = Color.RGBtoHSB(rgbColor.getRed(), rgbColor.getGreen(), rgbColor.getBlue(), null);
         hue = hsbColor[0];
@@ -147,14 +145,14 @@ public class ColorPicker extends AbstractSetting {
     @Override
     public void renderComponent() {
         BThackRender.drawRect(parent.parent.getX(), parent.parent.getY() + offset, parent.parent.getX() + (Constants.CLICKGUI_FRAME_WIDTH), parent.parent.getY() + offset + getHeight(), ColorUtils.integrateAlpha(new Color(Client.clientInfo.getColorTheme().backgroundColor()).hashCode(), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))));
-        BThackRender.drawString(set.getName(), parent.parent.getX() + 2, parent.parent.getY() + offset + 2, ColorUtils.WHITE);
+        BThackRender.drawString(setting.getName(), parent.parent.getX() + 2, parent.parent.getY() + offset + 2, ColorUtils.WHITE);
 
         Drawers.GRADIENT_RECT.begin();
         Drawers.GRADIENT_RECT.draw(colorRect.getStartX(), colorRect.getStartY(), colorRect.getEndX(), colorRect.getEndY(), ColorUtils.WHITE, new Color(Color.HSBtoRGB(hue, 1f, 1f)).hashCode(), GradientRectDrawer.GradientMode.HORIZONTAL);
         Drawers.GRADIENT_RECT.draw(colorRect.getStartX(), colorRect.getStartY(), colorRect.getEndX(), colorRect.getEndY(), ColorUtils.TRANSPARENT, ColorUtils.BLACK, GradientRectDrawer.GradientMode.VERTICAL);
 
         //Alpha Rect
-        if (!set.isBlockedAlpha())
+        if (!setting.isBlockedAlpha())
             Drawers.GRADIENT_RECT.draw(alphaRect.getStartX(), alphaRect.getStartY(), alphaRect.getEndX(), alphaRect.getEndY(), new Color(rgbColor.getRed(), rgbColor.getGreen(), rgbColor.getBlue()).hashCode(), ColorUtils.WHITE, GradientRectDrawer.GradientMode.VERTICAL);
         Drawers.GRADIENT_RECT.end();
 
@@ -177,7 +175,7 @@ public class ColorPicker extends AbstractSetting {
 
         drawColorCrosshair();
         drawHueCrosshair();
-        if (!set.isBlockedAlpha())
+        if (!setting.isBlockedAlpha())
             drawAlphaCrosshair();
 
         BThackRender.drawString("R:" + rgbColor.getRed() + " G:" + rgbColor.getGreen() + " B:" + rgbColor.getBlue() + " A:" + rgbColor.getAlpha(), parent.parent.getX() + 2, colorRect.getEndY() + 4, -1, true, FontRenderManager.DrawMode.SMALL);
@@ -203,7 +201,7 @@ public class ColorPicker extends AbstractSetting {
     public boolean updateComponent(int mouseX, int mouseY) {
         if (!getVisible()) return true;
 
-        if (!set.getValue().equals(rgbColor)) updateColors();
+        if (!setting.getValue().equals(rgbColor)) updateColors();
 
         if (colorRect.hovered) {
             float width = ClickGui.applyGuiScale(colorRect.getWidth());
@@ -214,7 +212,7 @@ public class ColorPicker extends AbstractSetting {
             yF = (yF / height) * colorRect.getHeight();
 
             Color color = new Color(Color.HSBtoRGB(hue, xF / colorRect.getWidth(), 1f - (yF / colorRect.getHeight())));
-            set.setValue(new Color(color.getRed(), color.getGreen(), color.getBlue(), (int) (alpha * 255)));
+            setting.setValue(new Color(color.getRed(), color.getGreen(), color.getBlue(), (int) (alpha * 255)));
             updateColors();
         }
         if (hueRect.hovered) {
@@ -224,17 +222,17 @@ public class ColorPicker extends AbstractSetting {
 
             hue = yF / colorRect.getHeight();
             Color color = new Color(Color.HSBtoRGB(hue, hsbColor[1], hsbColor[2]));
-            set.setValue(new Color(color.getRed(), color.getGreen(), color.getBlue(), (int) (alpha * 255)));
+            setting.setValue(new Color(color.getRed(), color.getGreen(), color.getBlue(), (int) (alpha * 255)));
             updateColors();
         }
-        if (!set.isBlockedAlpha()) {
+        if (!setting.isBlockedAlpha()) {
             if (alphaRect.hovered) {
                 float height = ClickGui.applyGuiScale(alphaRect.getHeight());
                 float yF = MathUtils.applyRange(mouseY - ClickGui.applyGuiScale(alphaRect.getStartY()), 0, height);
                 yF = (yF / height) * alphaRect.getHeight();
 
                 Color color = new Color(Color.HSBtoRGB(hue, hsbColor[1], hsbColor[2]));
-                set.setValue(new Color(color.getRed(), color.getGreen(), color.getBlue(), (int) ((1 - (yF / alphaRect.getHeight())) * 255)));
+                setting.setValue(new Color(color.getRed(), color.getGreen(), color.getBlue(), (int) ((1 - (yF / alphaRect.getHeight())) * 255)));
                 updateColors();
             }
         }
@@ -255,7 +253,7 @@ public class ColorPicker extends AbstractSetting {
                 hueRect.hovered = true;
                 return false;
             }
-            if (!set.isBlockedAlpha()) {
+            if (!setting.isBlockedAlpha()) {
                 if (alphaRect.isMouseOnObject(mouseX, mouseY)) {
                     alphaRect.hovered = true;
                     return false;

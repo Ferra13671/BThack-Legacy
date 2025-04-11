@@ -156,7 +156,7 @@ public class PacketMine extends Module {
         currentSlot = -1;
         doubleFast = true;
         firstSkip = true;
-        breakDelay = (int) breakDelaySet.getValue();
+        breakDelay = breakDelaySet.getValue().intValue();
 
         ModuleList.superInstaMine.setToggled(false);
 
@@ -179,7 +179,7 @@ public class PacketMine extends Module {
             packetRemoveItem();
         doubleFast = true;
         firstSkip = true;
-        breakDelay = (int) breakDelaySet.getValue();
+        breakDelay = breakDelaySet.getValue().intValue();
 
         ModuleList.treeCutter.setToggled(false);
     }
@@ -552,7 +552,7 @@ public class PacketMine extends Module {
             if (bestSlot < 9) {
                 Managers.NETWORK_MANAGER.sendPacket(new UpdateSelectedSlotC2SPacket(bestSlot));
             } else {
-                currentHotbarSlot = (int) hotbarSlot.getValue() - 1;
+                currentHotbarSlot = hotbarSlot.getValue().intValue() - 1;
                 pc.packetClickSlot(0, bestSlot, currentHotbarSlot, SlotActionType.SWAP);
                 currentSlot = bestSlot;
                 Managers.NETWORK_MANAGER.sendPacket(new UpdateSelectedSlotC2SPacket(currentHotbarSlot));
@@ -588,6 +588,6 @@ public class PacketMine extends Module {
 
     public void setCurrentBreakingBlock(BreakingBlock breakingBlock) {
         currentBreakingBlock = breakingBlock;
-        breakDelay = (int) breakDelaySet.getValue();
+        breakDelay = breakDelaySet.getValue().intValue();
     }
 }

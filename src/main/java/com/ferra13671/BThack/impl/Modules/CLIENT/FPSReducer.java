@@ -29,7 +29,7 @@ public class FPSReducer extends Module {
     public int lastFocusTicks = 0;
 
     @Override
-    public void onChangeSetting(Setting setting) {
+    public void onChangeSetting(Setting<?> setting) {
         arrayListInfo = fpsLimit.getValue() + "";
     }
 
@@ -42,7 +42,7 @@ public class FPSReducer extends Module {
     @EventSubscriber
     public void onTick(ClientTickEvent e) {
         if (mc.isWindowFocused())
-            lastFocusTicks = (int) delay.getValue();
+            lastFocusTicks = delay.getValue().intValue();
         else {
             if (lastFocusTicks > 0)
                 lastFocusTicks--;

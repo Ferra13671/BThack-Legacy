@@ -91,57 +91,57 @@ public class Shaders extends Module {
     public void drawShader(float tickDelta) {
         switch (shaderMode.getValue()) {
             case "Default" -> {
-                defaultShader.setUniformValue("quality", (int) lineWidth.getValue());
+                defaultShader.setUniformValue("quality", lineWidth.getValue().intValue());
                 defaultShader.setUniformValue("color", fillColor.getValue().getRed() / 255f, fillColor.getValue().getGreen() / 255f, fillColor.getValue().getBlue() / 255f, fillColor.getValue().getAlpha() / 255f);
                 defaultShader.setUniformValue("outlinecolor", outlineColor.getValue().getRed() / 255f, outlineColor.getValue().getGreen() / 255f, outlineColor.getValue().getBlue() / 255f, outlineColor.getValue().getAlpha() / 255f);
                 defaultShader.render(tickDelta);
             }
             case "Gradient" -> {
-                gradientShader.setUniformValue("quality", (int) lineWidth.getValue());
+                gradientShader.setUniformValue("quality", lineWidth.getValue().intValue());
                 gradientShader.setUniformValue("scale", (float) (int) (scale.getValue() * 1000));
                 gradientShader.setUniformValue("time", com.ferra13671.BThack.api.Shader.Shaders.INSTANCE.shaderTicker.getPassedTime() / 1000f);
                 gradientShader.setUniformValue("resolution", (float) mc.getWindow().getWidth(), mc.getWindow().getHeight());
-                gradientShader.setUniformValue("fillAlpha", (float) fillAlpha.getValue() / 255f);
-                gradientShader.setUniformValue("outlineAlpha", (float) outlineAlpha.getValue() / 255f);
+                gradientShader.setUniformValue("fillAlpha", fillAlpha.getValue().floatValue() / 255f);
+                gradientShader.setUniformValue("outlineAlpha", outlineAlpha.getValue().floatValue() / 255f);
                 gradientShader.setUniformValue("color1", (float) color1.getValue().getRed() / 255f, (float) color1.getValue().getGreen() / 255f, (float) color1.getValue().getBlue() / 255f);
                 gradientShader.setUniformValue("color2", (float) color2.getValue().getRed() / 255f, (float) color2.getValue().getGreen() / 255f, (float) color2.getValue().getBlue() / 255f);
-                gradientShader.setUniformValue("speed", (float) speed.getValue() * 3);
+                gradientShader.setUniformValue("speed", speed.getValue().floatValue() * 3);
                 gradientShader.render(tickDelta);
             }
             case "Rainbow_xy" -> {
-                rainbowXYShader.setUniformValue("quality", (int) lineWidth.getValue());
+                rainbowXYShader.setUniformValue("quality", lineWidth.getValue().intValue());
                 rainbowXYShader.setUniformValue("scale", (float) (int) (scale.getValue() * 1000));
                 rainbowXYShader.setUniformValue("time", com.ferra13671.BThack.api.Shader.Shaders.INSTANCE.shaderTicker.getPassedTime() / 1000f);
                 rainbowXYShader.setUniformValue("resolution", (float) mc.getWindow().getWidth(), mc.getWindow().getHeight());
-                rainbowXYShader.setUniformValue("brightness", (float) brightness.getValue());
-                rainbowXYShader.setUniformValue("saturation", (float) saturation.getValue());
-                rainbowXYShader.setUniformValue("fillAlpha", (float) fillAlpha.getValue() / 255f);
-                rainbowXYShader.setUniformValue("outlineAlpha", (float) outlineAlpha.getValue() / 255f);
-                rainbowXYShader.setUniformValue("speed", (float) speed.getValue() * 3);
+                rainbowXYShader.setUniformValue("brightness", brightness.getValue().floatValue());
+                rainbowXYShader.setUniformValue("saturation", saturation.getValue().floatValue());
+                rainbowXYShader.setUniformValue("fillAlpha", fillAlpha.getValue().floatValue() / 255f);
+                rainbowXYShader.setUniformValue("outlineAlpha", outlineAlpha.getValue().floatValue() / 255f);
+                rainbowXYShader.setUniformValue("speed", speed.getValue().floatValue() * 3);
                 rainbowXYShader.render(tickDelta);
             }
             case "Rainbow_x" -> {
-                rainbowXShader.setUniformValue("quality", (int) lineWidth.getValue());
+                rainbowXShader.setUniformValue("quality", lineWidth.getValue().intValue());
                 rainbowXShader.setUniformValue("scale", (float) (int) (scale.getValue() * 1000));
                 rainbowXShader.setUniformValue("time", com.ferra13671.BThack.api.Shader.Shaders.INSTANCE.shaderTicker.getPassedTime() / 1000f);
                 rainbowXShader.setUniformValue("resolution", (float) mc.getWindow().getWidth(), mc.getWindow().getHeight());
-                rainbowXShader.setUniformValue("brightness", (float) brightness.getValue());
-                rainbowXShader.setUniformValue("saturation", (float) saturation.getValue());
-                rainbowXShader.setUniformValue("fillAlpha", (float) fillAlpha.getValue() / 255f);
-                rainbowXShader.setUniformValue("outlineAlpha", (float) outlineAlpha.getValue() / 255f);
-                rainbowXShader.setUniformValue("speed", (float) speed.getValue() * 3);
+                rainbowXShader.setUniformValue("brightness", brightness.getValue().floatValue());
+                rainbowXShader.setUniformValue("saturation", saturation.getValue().floatValue());
+                rainbowXShader.setUniformValue("fillAlpha", fillAlpha.getValue().floatValue() / 255f);
+                rainbowXShader.setUniformValue("outlineAlpha", outlineAlpha.getValue().floatValue() / 255f);
+                rainbowXShader.setUniformValue("speed", speed.getValue().floatValue() * 3);
                 rainbowXShader.render(tickDelta);
             }
             case "Rainbow_y" -> {
-                rainbowYShader.setUniformValue("quality", (int) lineWidth.getValue());
+                rainbowYShader.setUniformValue("quality", lineWidth.getValue().intValue());
                 rainbowYShader.setUniformValue("scale", (float) (int) (scale.getValue() * 1000));
                 rainbowYShader.setUniformValue("time", com.ferra13671.BThack.api.Shader.Shaders.INSTANCE.shaderTicker.getPassedTime() / 1000f);
                 rainbowYShader.setUniformValue("resolution", (float) mc.getWindow().getWidth(), mc.getWindow().getHeight());
-                rainbowYShader.setUniformValue("brightness", (float) brightness.getValue());
-                rainbowYShader.setUniformValue("saturation", (float) saturation.getValue());
-                rainbowYShader.setUniformValue("fillAlpha", (float) fillAlpha.getValue() / 255f);
-                rainbowYShader.setUniformValue("outlineAlpha", (float) outlineAlpha.getValue() / 255f);
-                rainbowYShader.setUniformValue("speed", (float) speed.getValue() * 3);
+                rainbowYShader.setUniformValue("brightness", brightness.getValue().floatValue());
+                rainbowYShader.setUniformValue("saturation", saturation.getValue().floatValue());
+                rainbowYShader.setUniformValue("fillAlpha", fillAlpha.getValue().floatValue() / 255f);
+                rainbowYShader.setUniformValue("outlineAlpha", outlineAlpha.getValue().floatValue() / 255f);
+                rainbowYShader.setUniformValue("speed", speed.getValue().floatValue() * 3);
                 rainbowYShader.render(tickDelta);
             }
         }

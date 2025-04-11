@@ -69,7 +69,7 @@ public class PearlPhase extends Module {
     public void playOffSound() {
         if (mode.getValue().equals("Always"))
             if (ModuleList.clientSettings.moduleToggleSound.getValue())
-                SoundSystem.playSound(Sounds.MODULE_OFF, (float) ModuleList.clientSettings.soundVolume.getValue());
+                SoundSystem.playSound(Sounds.MODULE_OFF, ModuleList.clientSettings.soundVolume.getValue().floatValue());
     }
 
     @Override
@@ -118,9 +118,9 @@ public class PearlPhase extends Module {
     }
 
     public void pearlPhaseAction(float yaw) {
-        GrimUtils.sendPreActionGrimPackets(yaw, (float) phasePitch.getValue());
+        GrimUtils.sendPreActionGrimPackets(yaw, phasePitch.getValue().floatValue());
 
-        ItemUtils.useItem(Items.ENDER_PEARL, swingHand.getValue(), yaw, (float) phasePitch.getValue());
+        ItemUtils.useItem(Items.ENDER_PEARL, swingHand.getValue(), yaw, phasePitch.getValue().floatValue());
 
         GrimUtils.sendPostActionGrimPackets();
     }

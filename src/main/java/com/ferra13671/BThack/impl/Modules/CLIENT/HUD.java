@@ -88,7 +88,7 @@ public class HUD extends Module {
 
     public static int getHUDColor() {
         if (ModuleList.HUD.rainbow.getValue()) {
-            return ColorUtils.rainbowType((int) ModuleList.HUD.rainbowType.getValue());
+            return ColorUtils.rainbowType(ModuleList.HUD.rainbowType.getValue().intValue());
         } else {
             return ClickGui.getClickGuiColor(false);
         }

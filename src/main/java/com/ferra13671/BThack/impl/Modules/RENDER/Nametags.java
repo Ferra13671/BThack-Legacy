@@ -79,9 +79,9 @@ public class Nametags extends Module {
         if (cords == null) return;
 
         BThackMatrix.push();
-        BThackMatrix.scale((float) iSize.getValue(), (float) iSize.getValue(), 1);
-        cords[0] /= (float) iSize.getValue();
-        cords[1] /= (float) iSize.getValue();
+        BThackMatrix.scale(iSize.getValue().floatValue(), iSize.getValue().floatValue(), 1);
+        cords[0] /= iSize.getValue().floatValue();
+        cords[1] /= iSize.getValue().floatValue();
 
         BThackRender.drawItem(itemEntity.getStack(), (int) cords[0] - 8, (int) cords[1] - 18, null, true);
         if (itemName.getValue())
@@ -97,9 +97,9 @@ public class Nametags extends Module {
         BThackMatrix.push();
         BThackMatrix.translate(1,1,600);
 
-        BThackMatrix.scale((float) pSize.getValue(), (float) pSize.getValue(), 1);
-        cords[0] /= (float) pSize.getValue();
-        cords[1] /= (float) pSize.getValue();
+        BThackMatrix.scale(pSize.getValue().floatValue(), pSize.getValue().floatValue(), 1);
+        cords[0] /= pSize.getValue().floatValue();
+        cords[1] /= pSize.getValue().floatValue();
 
         switch (playerMode.getValue()) {
             case "Mini" -> renderMiniPlayerNametag(cords, player);

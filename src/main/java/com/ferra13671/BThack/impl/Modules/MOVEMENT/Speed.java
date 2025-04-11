@@ -75,7 +75,7 @@ public class Speed extends Module {
     @EventSubscriber
     public void onJumpHeight(JumpHeightEvent e) {
         if (mode.getValue().equals("Normal"))
-            e.setJumpHeight((float) jumpHeight.getValue());
+            e.setJumpHeight(jumpHeight.getValue().floatValue());
     }
 
     @EventSubscriber

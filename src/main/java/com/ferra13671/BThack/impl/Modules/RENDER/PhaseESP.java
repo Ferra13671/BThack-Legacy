@@ -126,8 +126,8 @@ public class PhaseESP extends Module {
 
     private List<Vec3i> getVectors() {
         List<Vec3i> vecList = new ArrayList<>();
-        for (int x = -1 - (int) extraRange.getValue(); x < 2 + (int) extraRange.getValue(); x++)
-            for (int z = -1 - (int) extraRange.getValue(); z < 2 + (int) extraRange.getValue(); z++)
+        for (int x = -1 - extraRange.getValue().intValue(); x < 2 + extraRange.getValue().intValue(); x++)
+            for (int z = -1 - extraRange.getValue().intValue(); z < 2 + extraRange.getValue().intValue(); z++)
                 vecList.add(new Vec3i(x, 0, z));
         return vecList;
     }

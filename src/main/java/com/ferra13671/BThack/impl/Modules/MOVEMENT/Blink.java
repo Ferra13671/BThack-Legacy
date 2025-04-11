@@ -51,7 +51,7 @@ public class Blink extends Module {
     private final Ticker ticker = new Ticker();
 
     @Override
-    public void onChangeSetting(Setting setting) {
+    public void onChangeSetting(Setting<?> setting) {
         arrayListInfo = maxTime.getValue() + "ms.";
     }
 

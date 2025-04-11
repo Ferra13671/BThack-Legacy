@@ -45,7 +45,7 @@ public class TridentDupe extends Module {
     }
 
     @Override
-    public void onChangeSetting(Setting setting) {
+    public void onChangeSetting(Setting<?> setting) {
         if (isEnabled()) {
             if (autoInventory.getValue()) {
                 if (mc.currentScreen != null) pc.closeScreen();
@@ -93,7 +93,7 @@ public class TridentDupe extends Module {
 
     private void dupe()
     {
-        int delayInt = (int) delay.getValue() * 100;
+        int delayInt = delay.getValue().intValue() * 100;
 
         mc.interactionManager.interactItem(mc.player, Hand.MAIN_HAND);
         cancel = true;

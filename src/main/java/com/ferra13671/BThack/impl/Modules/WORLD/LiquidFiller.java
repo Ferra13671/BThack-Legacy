@@ -70,7 +70,7 @@ public class LiquidFiller extends Module {
     }
 
     public void filterAction(List<Vec3i> sch) {
-        for (BlockPos pos : BlockUtils.getSphere(BlockPos.ofFloored(mc.player.getX(), mc.player.getY(), mc.player.getZ()), (float) range.getValue(), (float) range.getValue(), false, true, 0)) {
+        for (BlockPos pos : BlockUtils.getSphere(BlockPos.ofFloored(mc.player.getX(), mc.player.getY(), mc.player.getZ()), range.getValue().floatValue(), range.getValue().floatValue(), false, true, 0)) {
             Block block = mc.world.getBlockState(pos).getBlock();
 
             if (!ignoreWalls.getValue())
@@ -89,7 +89,7 @@ public class LiquidFiller extends Module {
     public void interactAction(List<Vec3i> sch) {
         int places = 0;
         for (Vec3i pos : sch) {
-            if (places >= (int) placePerTick.getValue()) break;
+            if (places >= placePerTick.getValue().intValue()) break;
             int slot = InventoryUtils.findItem(BlockItem.class);
             if (slot == -1) return;
             if (mc.player.getInventory().getStack(mc.player.getInventory().selectedSlot).getItem() instanceof BlockItem) slot = mc.player.getInventory().selectedSlot;

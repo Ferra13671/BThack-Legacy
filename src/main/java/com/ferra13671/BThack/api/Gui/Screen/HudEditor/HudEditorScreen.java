@@ -69,7 +69,7 @@ public class HudEditorScreen extends BThackScreen {
 
         if (Client.clientInfo.isWinter() && ModuleList.clickGui.snow.getValue()) {
             BThackRenderUtils.applyBlend();
-            BThackScreens.CLICK_GUI.snowTicker.update((float) ModuleList.clickGui.snowSpeed.getValue());
+            BThackScreens.CLICK_GUI.snowTicker.update(ModuleList.clickGui.snowSpeed.getValue().floatValue());
             Shaders.INSTANCE.SNOW.setParameters(mouseX, mouseY, mc.getWindow().getWidth(), mc.getWindow().getHeight(), BThackScreens.CLICK_GUI.snowTicker.getPassedTime() / 1000f);
             BThackRender.drawShader(Shaders.INSTANCE.SNOW, 0, 0, mc.getWindow().getScaledWidth(), mc.getWindow().getScaledHeight());
         }
@@ -99,7 +99,7 @@ public class HudEditorScreen extends BThackScreen {
         frame.updateButtons(mouseX, mouseY);
 
         BThackMatrix.push();
-        BThackMatrix.scale((float) ModuleList.clickGui.guiScale.getValue(), (float) ModuleList.clickGui.guiScale.getValue(), 1);
+        BThackMatrix.scale(ModuleList.clickGui.guiScale.getValue().floatValue(), ModuleList.clickGui.guiScale.getValue().floatValue(), 1);
         frame.renderFrame();
         frame.updatePosition((int) (mouseX / ModuleList.clickGui.guiScale.getValue()), (int) (mouseY / ModuleList.clickGui.guiScale.getValue()));
         BThackMatrix.pop();

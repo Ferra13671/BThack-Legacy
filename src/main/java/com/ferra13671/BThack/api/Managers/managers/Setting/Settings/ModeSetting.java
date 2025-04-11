@@ -8,19 +8,18 @@ import com.google.gson.JsonPrimitive;
 import java.util.List;
 import java.util.function.Supplier;
 
-public class ModeSetting extends Setting {
+public class ModeSetting extends Setting<String> {
 
     private List<String> options;
-    private String modeVal;
     private int modeIndex;
 
 
     public ModeSetting(String name, Module module, List<String> options, Supplier<Boolean> dependence) {
-        super(name, module, dependence);
+        super(name, module, "", dependence);
         if (options.isEmpty())
             options.add("NULL");
         this.options = options;
-        modeVal = options.get(0);
+        value = options.getFirst();
         modeIndex = 0;
     }
 
@@ -36,14 +35,6 @@ public class ModeSetting extends Setting {
         this.options = options;
     }
 
-    public String getValue(){
-        return modeVal;
-    }
-
-    public void setValue(String value) {
-        modeVal = value;
-    }
-
     public int getIndex() {
         return this.modeIndex;
     }
@@ -55,7 +46,7 @@ public class ModeSetting extends Setting {
     @Override
     public void toDefault() {
         modeIndex = 0;
-        modeVal = options.get(0);
+        value = options.getFirst();
     }
 
     @Override

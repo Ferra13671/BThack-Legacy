@@ -54,7 +54,7 @@ public class ChestStealer extends Module {
     public static boolean active = false;
 
     @Override
-    public void onChangeSetting(Setting setting) {
+    public void onChangeSetting(Setting<?> setting) {
         if (setting == steal) {
             if (steal.getValue().equals("Select"))
                 ChatUtils.sendMessage(Formatting.GRAY + "Use: " + Client.clientInfo.getChatPrefix() + DataLists.get("ChestStealer", ItemList.class).editDataListCommand.getAliases()[0]);
@@ -86,7 +86,7 @@ public class ChestStealer extends Module {
                                 if (checkFullInventory()) break;
                                 if (filterStack(container.getInventory().getStack(index))) {
                                     pc.clickSlot(container.syncId, index, 0, SlotActionType.QUICK_MOVE);
-                                    thread.sleepThread((long) stealDelay.getValue());
+                                    thread.sleepThread(stealDelay.getValue().longValue());
                                 }
 
                                 if (container.getInventory().isEmpty()) {

@@ -7,33 +7,13 @@ import com.google.gson.JsonPrimitive;
 
 import java.util.function.Supplier;
 
-public class BooleanSetting extends Setting {
-
-    private boolean booleanValue;
-    private final boolean defaultValue;
-
-
+public class BooleanSetting extends Setting<Boolean> {
     public BooleanSetting(String name, Module module, boolean defaultValue, Supplier<Boolean> dependence) {
-        super(name, module, dependence);
-
-        this.booleanValue = this.defaultValue = defaultValue;
+        super(name, module, defaultValue, dependence);
     }
 
     public BooleanSetting(String name, Module module, boolean defaultValue) {
         this(name, module, defaultValue, null);
-    }
-
-    public Boolean getValue() {
-        return booleanValue;
-    }
-
-    public void setValue(boolean value) {
-        this.booleanValue = value;
-    }
-
-    @Override
-    public void toDefault() {
-        booleanValue = defaultValue;
     }
 
     @Override

@@ -57,7 +57,7 @@ public class MenuShader extends Module {
     }
 
     @Override
-    public void onChangeSetting(Setting setting) {
+    public void onChangeSetting(Setting<?> setting) {
         if (this.isEnabled())
             Managers.MAIN_MENU_SHADER_MANAGER.setMainMenuShader(getShader());
     }

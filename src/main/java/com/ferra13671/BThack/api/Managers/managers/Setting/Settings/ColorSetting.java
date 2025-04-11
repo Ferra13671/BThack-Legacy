@@ -8,33 +8,15 @@ import com.google.gson.JsonPrimitive;
 import java.awt.*;
 import java.util.function.Supplier;
 
-public class ColorSetting extends Setting {
+public class ColorSetting extends Setting<Color> {
     private boolean blockedAlpha = false;
 
-    private Color color;
-    private final Color defaultColor;
-
     public ColorSetting(String name, Module module, Color defaultColor) {
-        super(name, module, null);
-        this.defaultColor = color = defaultColor;
+        super(name, module, defaultColor, null);
     }
 
     public ColorSetting(String name, Module module, Color defaultColor, Supplier<Boolean> dependence) {
-        super(name, module, dependence);
-        this.defaultColor = color = defaultColor;
-    }
-
-    @Override
-    public void toDefault() {
-        color = defaultColor;
-    }
-
-    public Color getValue() {
-        return color;
-    }
-
-    public void setValue(Color color) {
-        this.color = color;
+        super(name, module, defaultColor, dependence);
     }
 
     @Override
@@ -54,10 +36,10 @@ public class ColorSetting extends Setting {
     @Override
     public void save(JsonObject jsonObject) {
         JsonObject colorObject = new JsonObject();
-        colorObject.add("Red", new JsonPrimitive(color.getRed()));
-        colorObject.add("Green", new JsonPrimitive(color.getGreen()));
-        colorObject.add("Blue", new JsonPrimitive(color.getBlue()));
-        colorObject.add("Alpha", new JsonPrimitive(color.getAlpha()));
+        colorObject.add("Red", new JsonPrimitive(value.getRed()));
+        colorObject.add("Green", new JsonPrimitive(value.getGreen()));
+        colorObject.add("Blue", new JsonPrimitive(value.getBlue()));
+        colorObject.add("Alpha", new JsonPrimitive(value.getAlpha()));
 
         jsonObject.add(getName(), colorObject);
     }

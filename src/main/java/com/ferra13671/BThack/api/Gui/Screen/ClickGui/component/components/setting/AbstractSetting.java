@@ -6,7 +6,7 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.Setting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.impl.Modules.CLIENT.ClickGui;
 
-public abstract class AbstractSetting extends Component {
+public abstract class AbstractSetting<T extends Setting<?>> extends Component {
 
     public int x;
     public int y;
@@ -19,13 +19,13 @@ public abstract class AbstractSetting extends Component {
 
     public final ModuleButton parent;
     public final Module module;
-    public final Setting op;
+    public final T setting;
 
-    public AbstractSetting(int offset, ModuleButton button, Module module, Setting op) {
+    public AbstractSetting(int offset, ModuleButton button, Module module, T setting) {
         this.offset = offset;
         this.parent = button;
         this.module = module;
-        this.op = op;
+        this.setting = setting;
     }
 
     @Override
@@ -34,8 +34,8 @@ public abstract class AbstractSetting extends Component {
     @Override
     public void refresh(int newOff) {
         offset = newOff;
-        if (op != null && op.dependence != null)
-            setVisible(op.dependence.get());
+        if (setting != null && setting.dependence != null)
+            setVisible(setting.dependence.get());
     }
 
     @Override

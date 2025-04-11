@@ -74,7 +74,7 @@ public class InstaNuker extends Module {
     }
 
     public void filterAction() {
-        for (BlockPos pos : BlockUtils.getSphere(mc.player.getBlockPos(), (float) range.getValue(), (float) range.getValue(), false, true, 0)) {
+        for (BlockPos pos : BlockUtils.getSphere(mc.player.getBlockPos(), range.getValue().floatValue(), range.getValue().floatValue(), false, true, 0)) {
             if (pos.getY() >= (int) mc.player.getY()) {
                 Block _block = mc.world.getBlockState(pos).getBlock();
                 if (BlockUtils.canBreak(pos) || _block != Blocks.OBSIDIAN || _block != Blocks.CRYING_OBSIDIAN) {

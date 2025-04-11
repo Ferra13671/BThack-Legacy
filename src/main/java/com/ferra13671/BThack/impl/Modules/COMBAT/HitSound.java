@@ -38,7 +38,7 @@ public class HitSound extends Module {
         if (e.getPlayer() == mc.player) {
             if (e.getEntity() instanceof EndCrystalEntity) return;
 
-            float volume1 = (float) volume.getValue();
+            float volume1 = volume.getValue().floatValue();
 
             switch (sound.getValue()) {
                 case "Ding" -> mc.player.playSound(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, volume1, 1);

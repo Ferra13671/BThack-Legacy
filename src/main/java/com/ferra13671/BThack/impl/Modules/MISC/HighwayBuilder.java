@@ -28,6 +28,7 @@ import net.minecraft.util.math.Vec3i;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class HighwayBuilder extends Module {
 
@@ -88,7 +89,7 @@ public class HighwayBuilder extends Module {
         if (!mc.world.getBlockState(blockPos).isReplaceable()) return;
 
         BuildThread3D thread3D = new BuildThread3D();
-        thread3D.set3DSchematic(0 ,Arrays.asList(new Vec3i(0,0,0)), blockPos);
+        thread3D.set3DSchematic(0 , List.of(new Vec3i(0, 0, 0)), blockPos);
         thread3D.setNeedBlocks(onlyObsidian.getValue() && mode.getValue().equals("Highway") ? Arrays.asList(Blocks.OBSIDIAN, Blocks.CRYING_OBSIDIAN) : new ArrayList<>());
         thread3D.start();
     }
@@ -105,7 +106,7 @@ public class HighwayBuilder extends Module {
                 ModuleList.scaffold.setToggled(false);
 
                 while (BuildManager.isBuilding) {
-                    thread.sleepThread((int) actDelay.getValue());
+                    thread.sleepThread(actDelay.getValue().longValue());
                 }
 
                 byte[] moveFactor = RotateUtils.getCordFactorFromDirection(highwayYaw);
@@ -154,7 +155,7 @@ public class HighwayBuilder extends Module {
         destroyThread.start();
         thread.sleepThread(2);
         while (DestroyManager.isDestroying) {
-            thread.sleepThread((int) actDelay.getValue());
+            thread.sleepThread(actDelay.getValue().longValue());
         }
     }
 
@@ -171,24 +172,21 @@ public class HighwayBuilder extends Module {
         gotoN.start();
         thread.sleepThread(2);
         while (gotoN.isMoving()) {
-            thread.sleepThread((int) actDelay.getValue());
+            thread.sleepThread(actDelay.getValue().longValue());
         }
     }
 
     /*
     All logic and actions for XZ alignment.
      */
-    private void alignAction(Thread thread) {
+    private void alignAction(BThackThread thread) {
         WhereToAlign whereToAlign = new WhereToAlign();
         AlignWithXZ alignWithXZ = new AlignWithXZ(whereToAlign);
         alignWithXZ.alignWithXZ();
-        try {
-            thread.sleep(2);
-        } catch (Exception ignored) {}
+
+        thread.sleepThread(2);
         while (alignWithXZ.isMoving()) {
-            try {
-                thread.sleep(100);
-            } catch (Exception ignored) {}
+            thread.sleepThread(100);
         }
     }
 
@@ -199,12 +197,12 @@ public class HighwayBuilder extends Module {
         if (!mode.getValue().equals("Tunnel")) {
             ArrayList<Vec3i> schematic = getBuildSchematic(highwayYaw);
             BuildThread3D buildThread3D = new BuildThread3D();
-            buildThread3D.set3DSchematic((int) buildTicks.getValue(), schematic, BlockPos.ofFloored(mc.player.getX(), Math.round(mc.player.getY()) - 1, mc.player.getZ()));
+            buildThread3D.set3DSchematic(buildTicks.getValue().intValue(), schematic, BlockPos.ofFloored(mc.player.getX(), Math.round(mc.player.getY()) - 1, mc.player.getZ()));
             buildThread3D.setNeedBlocks(onlyObsidian.getValue() ? Arrays.asList(Blocks.OBSIDIAN, Blocks.CRYING_OBSIDIAN) : new ArrayList<>());
             buildThread3D.start();
             thread.sleepThread(2);
             while (BuildManager.isBuilding) {
-                thread.sleepThread((int) actDelay.getValue());
+                thread.sleepThread(actDelay.getValue().longValue());
             }
         }
     }
@@ -228,7 +226,7 @@ public class HighwayBuilder extends Module {
 
         thread.sleepThread(2);
         while (BuildManager.isBuilding) {
-            thread.sleepThread((int) actDelay.getValue());
+            thread.sleepThread(actDelay.getValue().longValue());
         }
 
         for (Vec3i vec3i : checkBlocks) {

@@ -55,14 +55,14 @@ public class WorldElements extends Module {
     }
 
     @Override
-    public void onChangeSetting(Setting setting) {
+    public void onChangeSetting(Setting<?> setting) {
         if (isEnabled()) {
             if (setting == stars || setting == starsSeed || setting == changeStars) ((ModifyWorldRenderer) mc.worldRenderer).generateStarsMap();
         }
     }
 
     public BuiltBuffer buildStarsBuffer() {
-        Random random = Random.create((long) starsSeed.getValue());
+        Random random = Random.create(starsSeed.getValue().longValue());
         BufferBuilder bufferBuilder = Tessellator.getInstance().begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION);
 
         for(int j = 0; j < stars.getValue(); ++j) {

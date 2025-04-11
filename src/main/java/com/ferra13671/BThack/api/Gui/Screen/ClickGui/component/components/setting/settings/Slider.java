@@ -25,9 +25,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Set;
 
-public class Slider extends AbstractSetting implements Mc {
-
-	private final NumberSetting set;
+public class Slider extends AbstractSetting<NumberSetting> implements Mc {
 
 	private boolean dragging = false;
 
@@ -50,9 +48,8 @@ public class Slider extends AbstractSetting implements Mc {
 	private double renderWidth = -1;
 	private final Ticker soundTicker = new Ticker();
 
-	public Slider(NumberSetting option, ModuleButton button, int offset, Module module) {
-		super(offset, button, module, option);
-		set = option;
+	public Slider(NumberSetting setting, ModuleButton button, int offset, Module module) {
+		super(offset, button, module, setting);
 		x = button.parent.getX() + Constants.CLICKGUI_FRAME_WIDTH;
 		y = button.parent.getY() + button.offset;
 	}
@@ -70,7 +67,7 @@ public class Slider extends AbstractSetting implements Mc {
 		} else
 			BThackRender.drawRect(parent.parent.getX() + 2, parent.parent.getY() + offset + 11, parent.parent.getX() + 2 + (int) renderWidth, parent.parent.getY() + offset + 15, ClickGui.getClickGuiColor(false));
 
-		BThackRender.drawString(op.getName() + ": " + set.getValue(), parent.parent.getX() + 2, (parent.parent.getY() + offset + 1), ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()));
+		BThackRender.drawString(setting.getName() + ": " + setting.getValue(), parent.parent.getX() + 2, (parent.parent.getY() + offset + 1), ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()));
 	}
 
 	@Override
@@ -80,15 +77,15 @@ public class Slider extends AbstractSetting implements Mc {
 		y = parent.parent.getY() + offset;
 		x = parent.parent.getX();
 
-		double min = set.getMinValue();
-		double max = set.getMaxValue();
+		double min = setting.getMinValue();
+		double max = setting.getMaxValue();
 
 		double diff = ((mouseX - 1 - ClickGui.applyGuiScale(x)) / (getWidth() * 2)) * 100;
 		diff = Math.max(0, Math.min(100, diff));
 
 		double prevRenderWidth = renderWidth;
 
-		renderWidth = (100 - 4) * ((set.getValue() - min) / (max - min));
+		renderWidth = (100 - 4) * ((setting.getValue() - min) / (max - min));
 
 		if (prevRenderWidth != renderWidth && prevRenderWidth != -1 && soundTicker.passed(50)) {
 			SoundSystem.playSound(renderWidth > prevRenderWidth ? Sounds.GUI_SLIDER_UP : Sounds.GUI_SLIDER_DOWN);
@@ -97,11 +94,11 @@ public class Slider extends AbstractSetting implements Mc {
 
 		if (dragging) {
 			if (diff == 0) {
-				set.setValue(min);
-				set.module.onChangeSetting(set);
+				setting.setValue(min);
+				setting.module.onChangeSetting(setting);
 			} else {
-				set.setValue(roundToPlace(((diff / 100) * (max - min) + min)));
-				set.module.onChangeSetting(set);
+				setting.setValue(roundToPlace(((diff / 100) * (max - min) + min)));
+				setting.module.onChangeSetting(setting);
 			}
 		}
 
@@ -165,15 +162,15 @@ public class Slider extends AbstractSetting implements Mc {
 
 			writing = false;
 
-			if (number < set.getMinValue())
-				number = set.getMinValue();
-			if (number > set.getMaxValue())
-				number = set.getMaxValue();
+			if (number < setting.getMinValue())
+				number = setting.getMinValue();
+			if (number > setting.getMaxValue())
+				number = setting.getMaxValue();
 
-			if (set.onlyInt) {
-				set.setValue((int) number);
+			if (setting.onlyInt) {
+				setting.setValue((double) (int) number);
 			} else
-				set.setValue(number);
+				setting.setValue(number);
 		}
 
 		if (key == KeyboardUtils.KEY_ESCAPE || key == ModuleList.clickGui.getKey()) {

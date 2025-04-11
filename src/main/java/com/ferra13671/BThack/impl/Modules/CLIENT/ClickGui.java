@@ -109,12 +109,12 @@ public class ClickGui extends OneActionModule {
     }
 
     public void prepareRainbowShader() {
-        Shaders.INSTANCE.X_RAINBOW.setUniformValue("scale", (float) rainbowScale.getValue());
-        Shaders.INSTANCE.X_RAINBOW.setUniformValue("speed", (float) rainbowSpeed.getValue());
+        Shaders.INSTANCE.X_RAINBOW.setUniformValue("scale", rainbowScale.getValue().floatValue());
+        Shaders.INSTANCE.X_RAINBOW.setUniformValue("speed", rainbowSpeed.getValue().floatValue());
     }
 
     @Override
-    public void onChangeSetting(Setting setting) {
+    public void onChangeSetting(Setting<?> setting) {
         Managers.COLOR_THEME_MANAGER.updateColorTheme();
     }
 
@@ -136,7 +136,7 @@ public class ClickGui extends OneActionModule {
     public static void renderBlur(float tickDelta) {
         PostEffectProcessor blurProcessor = ((IGameRenderer) mc.gameRenderer).getBlurPostProcessor();
         if (blurProcessor != null) {
-            blurProcessor.setUniforms("Radius", (float) ModuleList.clickGui.blurStrength.getValue());
+            blurProcessor.setUniforms("Radius", ModuleList.clickGui.blurStrength.getValue().floatValue());
             blurProcessor.render(tickDelta);
         }
         mc.getFramebuffer().beginWrite(false);

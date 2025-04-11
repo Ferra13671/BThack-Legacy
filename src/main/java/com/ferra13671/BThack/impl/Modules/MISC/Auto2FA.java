@@ -57,7 +57,7 @@ public class Auto2FA extends Module {
 
     public void sendCommandAction(String command) {
         ThreadManager.startNewThread(thread -> {
-            thread.sleepThread((long) delay.getValue());
+            thread.sleepThread(delay.getValue().longValue());
             ChatUtils.sendCommand(command);
             if (autoToggle.getValue())
                 setToggled(false);

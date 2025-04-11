@@ -60,7 +60,7 @@ public class Tooltips extends Module {
             BThackRender.drawShader(Shaders.INSTANCE.X_RAINBOW, x + 8, y - 21, x + 158, y - 6);
         else
             BThackRender.drawRect(x + 8, y - 21, x + 158, y - 6, getFrameColor());
-        BThackRender.drawVerticalGradientRect(x + 8, y - 6, x + 158, y + 48, ColorUtils.fastRGBA(5, 5, 5, (int) backGroundAlpha.getValue()), ColorUtils.fastRGBA(50, 50, 50, (int) backGroundAlpha.getValue()));
+        BThackRender.drawVerticalGradientRect(x + 8, y - 6, x + 158, y + 48, ColorUtils.fastRGBA(5, 5, 5, backGroundAlpha.getValue().intValue()), ColorUtils.fastRGBA(50, 50, 50, backGroundAlpha.getValue().intValue()));
 
         BThackRender.drawString(itemStack.getName().getString(), x + 10, y - 16, -1, true, FontRenderManager.DrawMode.NORMAL_BOLD);
 
@@ -98,7 +98,7 @@ public class Tooltips extends Module {
 
             BThackMatrix.push();
             BThackMatrix.translate(0f, 0f, 600f);
-            BThackRender.drawVerticalGradientRect(x1, y1 - 10, x2, y2, ColorUtils.fastRGBA(5, 5, 5, (int) backGroundAlpha.getValue()), ColorUtils.fastRGBA(100, 100, 100, (int) backGroundAlpha.getValue()));
+            BThackRender.drawVerticalGradientRect(x1, y1 - 10, x2, y2, ColorUtils.fastRGBA(5, 5, 5, backGroundAlpha.getValue().intValue()), ColorUtils.fastRGBA(100, 100, 100, backGroundAlpha.getValue().intValue()));
             if (frameRainbow.getValue())
                 BThackRender.drawShaderOutlineRect(Shaders.INSTANCE.X_RAINBOW,x1, y1 - 10, x2, y2, 1);
             else
