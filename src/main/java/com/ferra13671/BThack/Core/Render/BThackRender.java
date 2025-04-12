@@ -157,7 +157,7 @@ public final class BThackRender implements Mc {
 
     public static void drawHudPlate(float x1, float y1, float x2, float y2) {
         BThackRenderUtils.applyBlend();
-        drawRoundedRectWithOutline(x1, y1, x2, y2, 8f, ColorUtils.fastRGBA(0, 0, 0, 150), HUD.getHUDColor(), 2f / BThackRenderUtils.getGuiScale());
+        drawRoundedRectWithOutline(x1, y1, x2, y2, 5f, ColorUtils.fastRGBA(0, 0, 0, 150), HUD.getHUDColor(), 2f / BThackRenderUtils.getGuiScale());
     }
 
     public static void drawLine(float x1, float y1, float x2, float y2, float width, int color) {

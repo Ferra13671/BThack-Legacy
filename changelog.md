@@ -1,3 +1,6 @@
+# 1.21.1-1.8.0.1 Changes
+- Stupid fix
+
 # 1.21.1-1.8 Changes
 - Fixed incomplete password hiding when using PasswordHider
 - Fixed InstaRebreak mode in PacketMine on 2b2t.org.ru

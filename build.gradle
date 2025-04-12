@@ -11,7 +11,7 @@ plugins {
 project.ext.withBaritone = true
 project.ext.devVersion = false
 // The version of BThack to be used both in the file name and within BThack
-project.ext.releaseVersion = "1.8"
+project.ext.releaseVersion = "1.8.0.1"
 project.ext.version = project.ext.devVersion ? getDevName() : project.ext.releaseVersion
 
 version = project.ext.version + (project.ext.withBaritone ? "" : "-NoBaritone")
