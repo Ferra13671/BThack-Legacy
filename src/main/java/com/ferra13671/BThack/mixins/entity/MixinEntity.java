@@ -30,8 +30,6 @@ public abstract class MixinEntity implements Mc {
 
     @Shadow public float yaw;
 
-    @Shadow protected abstract void setFlag(int index, boolean value);
-
     @Shadow public abstract World getWorld();
 
     @Shadow public abstract Vec3d getVelocity();
@@ -126,7 +124,7 @@ public abstract class MixinEntity implements Mc {
 
     @ModifyVariable(method = "updateMovementInFluid", at = @At("STORE"), ordinal = 1)
     public Vec3d modifyGetFluidStateVelocityOnUpdateMovementInFluid(Vec3d vec3d) {
-        if (ModuleList.noPush.isEnabled() && ModuleList.noPush.liquids.getValue())
+        if ((Object) this == mc.player && ModuleList.noPush.isEnabled() && ModuleList.noPush.liquids.getValue())
             return new Vec3d(0, vec3d.getY(), 0);
         else return vec3d;
     }

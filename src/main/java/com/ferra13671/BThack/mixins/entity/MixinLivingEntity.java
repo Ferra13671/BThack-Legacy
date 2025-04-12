@@ -7,8 +7,6 @@ import com.ferra13671.BThack.api.Events.Player.PlayerJumpEvent;
 import com.ferra13671.BThack.api.Events.Player.PlayerTravelEvent;
 import com.ferra13671.BThack.api.Events.Player.PlayerTraverRotEvent;
 import com.ferra13671.BThack.api.Interfaces.Mc;
-import com.ferra13671.BThack.api.Managers.Managers;
-import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.MegaEvents.Base.Event;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -16,12 +14,10 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MovementType;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -34,10 +30,6 @@ import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 @Mixin(LivingEntity.class)
 public abstract class MixinLivingEntity extends Entity implements Mc {
-
-    @Shadow @Final public float randomSmallSeed;
-
-    @Shadow @Final public float randomLargeSeed;
 
     public MixinLivingEntity(EntityType<?> type, World world) {
         super(type, world);
@@ -53,10 +45,8 @@ public abstract class MixinLivingEntity extends Entity implements Mc {
 
     @Inject(method = "isBaby", at = @At("HEAD"), cancellable = true)
     public void modifyIsBaby(CallbackInfoReturnable<Boolean> cir) {
-        if (!Module.nullCheck())
-            if (this.randomSmallSeed == mc.player.randomSmallSeed && this.randomLargeSeed == mc.player.randomLargeSeed)
-                if (ModuleList.babyModel.isEnabled())
-                    cir.setReturnValue(true);
+        if ((Object) this == mc.player && ModuleList.babyModel.isEnabled())
+            cir.setReturnValue(true);
     }
 
     @Inject(method = "getJumpVelocity(F)F", at = @At("TAIL"), cancellable = true)
@@ -74,6 +64,7 @@ public abstract class MixinLivingEntity extends Entity implements Mc {
 
     @ModifyArgs(method = "jump", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;addVelocityInternal(Lnet/minecraft/util/math/Vec3d;)V"))
     public void modifyArgsInSetVelocityOnJump(Args args) {
+        if ((Object) this != mc.player) return;
         PlayerTraverRotEvent event = new PlayerTraverRotEvent(mc.player.getYaw(), mc.player.getPitch(), false);
         BThack.EVENT_BUS.activate(event);
         BThack.EVENT_BUS.activate(new PlayerJumpEvent());
