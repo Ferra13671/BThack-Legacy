@@ -1,3 +1,17 @@
+# 1.21.1-1.8 Changes
+- Fixed incomplete password hiding when using PasswordHider
+- Fixed InstaRebreak mode in PacketMine on 2b2t.org.ru
+- Fixed bug with double hand rendering in Shaders
+- Fixed category closing animation in ClickGui and HudEditor
+- Fixed terrible font quality when guiScale = 1
+- Slightly increased stability of Bounce ElytraFlight on GrimV3
+- Improved KillAura rotation math
+- Slightly modified ClickGui rendering
+- Changed HUD style
+- Buttons and widgets now have a rounded shape
+- Added more sounds to ClickGui
+- Added ‘Arrows’ setting to ClickGui module
+
 # 1.21.1-1.7.1 Changes
 - Fixed Shaders bug after reloading resources
 - Fixed a bug with AutoFirework toggling notification
