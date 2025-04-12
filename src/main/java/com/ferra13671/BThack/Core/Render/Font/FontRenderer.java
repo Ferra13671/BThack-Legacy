@@ -103,7 +103,7 @@ public class FontRenderer implements Closeable, Mc {
         if (initialized) throw new IllegalStateException("Double call to init()");
         initialized = true;
         previousGameScale = (int) mc.getWindow().getScaleFactor();
-        scaleMul = previousGameScale;
+        scaleMul = previousGameScale + 1; //Yes
         this.font = font.deriveFont(sizePx * scaleMul);
         if (prebakeGlyphs != null && !prebakeGlyphs.isEmpty()) {
             prebakeGlyphsFuture = prebake();
