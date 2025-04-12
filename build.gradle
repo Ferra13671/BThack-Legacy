@@ -9,9 +9,9 @@ plugins {
 
 //A switch that can be used to enable/disable Baritone integration in the jar file.
 project.ext.withBaritone = true
-project.ext.devVersion = true
+project.ext.devVersion = false
 // The version of BThack to be used both in the file name and within BThack
-project.ext.releaseVersion = "1.7.1"
+project.ext.releaseVersion = "1.8"
 project.ext.version = project.ext.devVersion ? getDevName() : project.ext.releaseVersion
 
 version = project.ext.version + (project.ext.withBaritone ? "" : "-NoBaritone")
