@@ -113,13 +113,13 @@ public final class BThackRender implements Mc {
         Vector3f startPos = matrix4f.transformPosition(x1, y1, 0, new Vector3f());
         Vector3f endPos = matrix4f.transformPosition(x2, y2, 0, new Vector3f());
 
-        Shaders.INSTANCE.ROUNDED_RECT.setUniformValue("resolution", (float) mc.getWindow().getWidth(), (float) mc.getWindow().getHeight());
-        float scale = BThackRenderUtils.getGuiScale();
-        Shaders.INSTANCE.ROUNDED_RECT.setUniformValue("position", startPos.x * scale, startPos.y * scale);
-        Shaders.INSTANCE.ROUNDED_RECT.setUniformValue("size", (endPos.x - startPos.x) * scale, (endPos.y - startPos.y) * scale);
-        Shaders.INSTANCE.ROUNDED_RECT.setUniformValue("radius", radius);
-        float[] rgba = ColorUtils.hashCodeToRGBA(color);
-        Shaders.INSTANCE.ROUNDED_RECT.setUniformValue("color", rgba[0], rgba[1], rgba[2], rgba[3]);
+        Shaders.INSTANCE.ROUNDED_RECT_WITH_OUTLINE.setUniformValue("resolution", (float) mc.getWindow().getWidth(), (float) mc.getWindow().getHeight());
+        float scale = mc.getWindow().getScaledHeight() / (float) mc.getWindow().getHeight();
+        Shaders.INSTANCE.ROUNDED_RECT_WITH_OUTLINE.setUniformValue("position", startPos.x / scale, startPos.y / scale);
+        Shaders.INSTANCE.ROUNDED_RECT_WITH_OUTLINE.setUniformValue("size", (endPos.x - startPos.x) / scale, (endPos.y - startPos.y) / scale);
+        Shaders.INSTANCE.ROUNDED_RECT_WITH_OUTLINE.setUniformValue("radius", radius / scale);
+        float[] rgba1 = ColorUtils.hashCodeToRGBA(color);
+        Shaders.INSTANCE.ROUNDED_RECT_WITH_OUTLINE.setUniformValue("color", rgba1[0], rgba1[1], rgba1[2], rgba1[3]);
 
         buffer.vertex(matrix4f, x1, y1, 0);
         buffer.vertex(matrix4f, x1, y2, 0);
@@ -137,15 +137,15 @@ public final class BThackRender implements Mc {
         Vector3f endPos = matrix4f.transformPosition(x2, y2, 0, new Vector3f());
 
         Shaders.INSTANCE.ROUNDED_RECT_WITH_OUTLINE.setUniformValue("resolution", (float) mc.getWindow().getWidth(), (float) mc.getWindow().getHeight());
-        float scale = BThackRenderUtils.getGuiScale();
-        Shaders.INSTANCE.ROUNDED_RECT_WITH_OUTLINE.setUniformValue("position", startPos.x * scale, startPos.y * scale);
-        Shaders.INSTANCE.ROUNDED_RECT_WITH_OUTLINE.setUniformValue("size", (endPos.x - startPos.x) * scale, (endPos.y - startPos.y) * scale);
-        Shaders.INSTANCE.ROUNDED_RECT_WITH_OUTLINE.setUniformValue("radius", radius);
+        float scale = mc.getWindow().getScaledHeight() / (float) mc.getWindow().getHeight();
+        Shaders.INSTANCE.ROUNDED_RECT_WITH_OUTLINE.setUniformValue("position", startPos.x / scale, startPos.y / scale);
+        Shaders.INSTANCE.ROUNDED_RECT_WITH_OUTLINE.setUniformValue("size", (endPos.x - startPos.x) / scale, (endPos.y - startPos.y) / scale);
+        Shaders.INSTANCE.ROUNDED_RECT_WITH_OUTLINE.setUniformValue("radius", radius / scale);
         float[] rgba1 = ColorUtils.hashCodeToRGBA(color);
         float[] rgba2 = ColorUtils.hashCodeToRGBA(outlineColor);
         Shaders.INSTANCE.ROUNDED_RECT_WITH_OUTLINE.setUniformValue("color", rgba1[0], rgba1[1], rgba1[2], rgba1[3]);
         Shaders.INSTANCE.ROUNDED_RECT_WITH_OUTLINE.setUniformValue("outlineColor", rgba2[0], rgba2[1], rgba2[2], rgba2[3]);
-        Shaders.INSTANCE.ROUNDED_RECT_WITH_OUTLINE.setUniformValue("depth", depth * BThackRenderUtils.getGuiScale());
+        Shaders.INSTANCE.ROUNDED_RECT_WITH_OUTLINE.setUniformValue("depth", depth / scale);
 
         buffer.vertex(matrix4f, x1, y1, 0);
         buffer.vertex(matrix4f, x1, y2, 0);
