@@ -28,6 +28,7 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(GameRenderer.class)
 public abstract class MixinGameRenderer {
@@ -50,6 +51,11 @@ public abstract class MixinGameRenderer {
     @Shadow @Final private LightmapTextureManager lightmapTextureManager;
 
     @Shadow @Final public HeldItemRenderer firstPersonRenderer;
+
+    @Inject(method = "shouldRenderBlockOutline", at = @At("HEAD"), cancellable = true)
+    public void modifyShouldRenderBlockOutline(CallbackInfoReturnable<Boolean> cir) {
+        if (ModuleList.blockHighlight.isEnabled()) cir.setReturnValue(false);
+    }
 
     @Inject(method = "renderWorld", at = @At(value = "FIELD", target = "Lnet/minecraft/client/render/GameRenderer;renderHand:Z", opcode = Opcodes.GETFIELD, ordinal = 0))
     private void modifyRenderHandOnRenderWorld(RenderTickCounter tickCounter, CallbackInfo ci, @Local(ordinal = 1) Matrix4f matrix4f2, @Local(ordinal = 1) float tickDelta) {
