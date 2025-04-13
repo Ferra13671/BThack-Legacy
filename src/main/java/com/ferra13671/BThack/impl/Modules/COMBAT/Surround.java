@@ -6,9 +6,11 @@ import com.ferra13671.BThack.api.Managers.managers.Build.BuildManager;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
+import com.ferra13671.BThack.api.Utils.InventoryUtils;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
+import net.minecraft.item.BlockItem;
 import net.minecraft.network.packet.s2c.play.PlayerPositionLookS2CPacket;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
@@ -26,6 +28,7 @@ public class Surround extends Module {
 
     public final NumberSetting blocksPerTick = new NumberSetting("Blocks Per Tick", this, 4, 1, 8, true);
     public final BooleanSetting extraBlocks = new BooleanSetting("Extra Blocks", this, false);
+    public final BooleanSetting silentSwap = new BooleanSetting("Silent Swap", this, true);
 
     public Surround() {
         super("Surround",
@@ -43,7 +46,8 @@ public class Surround extends Module {
                 disableIfNoBlocks,
 
                 blocksPerTick,
-                extraBlocks
+                extraBlocks,
+                silentSwap
         );
     }
 
@@ -104,7 +108,17 @@ public class Surround extends Module {
         int count = 0;
         for (BlockPos blockPos : getBlockPoses()) {
             if (mc.world.isAir(blockPos)) {
-                if (BuildManager.pickUpPlaceBlocks(true, BuildManager.obsidians)) BuildManager.placeBlock(blockPos);
+                if (silentSwap.getValue()) {
+                    if (BuildManager.pickUpPlaceBlocks(false, BuildManager.obsidians)) {
+                        int slot = findSlot();
+                        if (slot != -1) {
+                            int oldSlot = mc.player.getInventory().selectedSlot;
+                            InventoryUtils.swapAction(oldSlot, slot, false, "Client");
+                            BuildManager.placeBlock(blockPos);
+                            InventoryUtils.swapAction(oldSlot, slot, true, "Client");
+                        }
+                    }
+                } else if (BuildManager.pickUpPlaceBlocks(true, BuildManager.obsidians)) BuildManager.placeBlock(blockPos);
                 count++;
                 if (count >= blocksPerTick.getValue()) break;
             }
@@ -136,5 +150,19 @@ public class Surround extends Module {
             result.add(playerPos.add(0, -1, -1));
         }
         return result;
+    }
+
+    public int findSlot() {
+        if (mc.player.getMainHandStack().getItem() instanceof BlockItem item) {
+            if (BuildManager.isNeedBlock(item.getBlock(), BuildManager.obsidians)) return mc.player.getInventory().selectedSlot;
+        }
+
+        for (int i = 0; i < 36; i++) {
+            if (mc.player.getInventory().getStack(i).getItem() instanceof BlockItem blockItem) {
+                if (BuildManager.isNeedBlock(blockItem.getBlock(), BuildManager.obsidians))
+                    return i;
+            }
+        }
+        return -1;
     }
 }

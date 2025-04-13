@@ -162,7 +162,7 @@ public class BuildManager implements Initializable, Mc {
         return false;
     }
 
-    private static boolean isNeedBlock(Block block, List<Block> needBlocks) {
+    public static boolean isNeedBlock(Block block, List<Block> needBlocks) {
         BlockState state = block.getDefaultState();
         if (shiftBlocks.contains(block)) return false;
         if (block instanceof AbstractChestBlock<?> || block instanceof ShulkerBoxBlock) return false;
