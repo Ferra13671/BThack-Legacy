@@ -7,6 +7,7 @@ import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.util.Arm;
+import org.joml.Matrix4f;
 
 public class HandTweaks extends Module {
 
@@ -16,6 +17,7 @@ public class HandTweaks extends Module {
     public final NumberSetting lHandYaw = new NumberSetting("LHand Yaw", this, 0, -100, 100, true);
     public final NumberSetting lHandPitch = new NumberSetting("LHand Pitch", this, 0, -100, 100, true);
     public final NumberSetting lHandRoll = new NumberSetting("LHand Roll", this, 0, -100, 100, true);
+    public final NumberSetting lHandScale = new NumberSetting("LHand Scale", this, 1, 0.05, 4, false);
     public final BooleanSetting lArmAlso = new BooleanSetting("LArm Also", this, true);
 
     public final NumberSetting rHandX = new NumberSetting("RHand X", this, 0.63, -2.0, 2.0, false);
@@ -24,8 +26,11 @@ public class HandTweaks extends Module {
     public final NumberSetting rHandYaw = new NumberSetting("RHand Yaw", this, 0, -100, 100, true);
     public final NumberSetting rHandPitch = new NumberSetting("RHand Pitch", this, 0, -100, 100, true);
     public final NumberSetting rHandRoll = new NumberSetting("RHand Roll", this, 0, -100, 100, true);
+    public final NumberSetting rHandScale = new NumberSetting("RHand Scale", this, 1, 0.05, 4, false);
 
     public final BooleanSetting noEatAnim = new BooleanSetting("No Eat Anim", this, false);
+    public final BooleanSetting noBob = new BooleanSetting("No Bob", this, false);
+    public final NumberSetting handAnimStep = new NumberSetting("Hand Anim. Step", this, 0.5, 0.3, 1, false);
 
     public HandTweaks() {
         super("HandTweaks",
@@ -42,6 +47,7 @@ public class HandTweaks extends Module {
                 lHandYaw,
                 lHandPitch,
                 lHandRoll,
+                lHandScale,
                 lArmAlso,
 
                 rHandX,
@@ -49,9 +55,12 @@ public class HandTweaks extends Module {
                 rHandZ,
                 rHandYaw,
                 rHandPitch,
+                rHandScale,
                 rHandRoll,
 
-                noEatAnim
+                noEatAnim,
+                noBob,
+                handAnimStep
         );
     }
 
@@ -71,16 +80,19 @@ public class HandTweaks extends Module {
 
     @EventSubscriber
     public void onTransFormPost(TransformFirstPersonEvent.Post e) {
+        Matrix4f matrix = e.matrices.peek().getPositionMatrix();
         if (e.arm == Arm.LEFT) {
             if (!lArmAlso.getValue())
                 if (e.transformType == TransformFirstPersonEvent.TransformType.ARM) return;
-            e.matrices.peek().getPositionMatrix().rotate((float) Math.toRadians(lHandYaw.getValue()),0,1,0);
-            e.matrices.peek().getPositionMatrix().rotate((float) Math.toRadians(lHandPitch.getValue()),1,0,0);
-            e.matrices.peek().getPositionMatrix().rotate((float) Math.toRadians(lHandRoll.getValue()),0,0,1);
+            matrix.rotate((float) Math.toRadians(lHandYaw.getValue()),0,1,0);
+            matrix.rotate((float) Math.toRadians(lHandPitch.getValue()),1,0,0);
+            matrix.rotate((float) Math.toRadians(lHandRoll.getValue()),0,0,1);
+            matrix.scale(lHandScale.getValue().floatValue());
         } else if (e.arm == Arm.RIGHT) {
-            e.matrices.peek().getPositionMatrix().rotate((float) Math.toRadians(rHandYaw.getValue()),0,1,0);
-            e.matrices.peek().getPositionMatrix().rotate((float) Math.toRadians(rHandPitch.getValue()),1,0,0);
-            e.matrices.peek().getPositionMatrix().rotate((float) Math.toRadians(rHandRoll.getValue()),0,0,1);
+            matrix.rotate((float) Math.toRadians(rHandYaw.getValue()),0,1,0);
+            matrix.rotate((float) Math.toRadians(rHandPitch.getValue()),1,0,0);
+            matrix.rotate((float) Math.toRadians(rHandRoll.getValue()),0,0,1);
+            matrix.scale(rHandScale.getValue().floatValue());
         }
     }
 }

@@ -27,6 +27,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -72,8 +73,25 @@ public abstract class MixinGameRenderer {
         if (ModuleList.shaders.isEnabled()) ModuleList.shaders.drawShader(tickCounter.getTickDelta(true));
     }
 
+    @Redirect(method = "renderHand", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/GameRenderer;tiltViewWhenHurt(Lnet/minecraft/client/util/math/MatrixStack;F)V"))
+    public void modifyTiltViewWhenHurtInRenderHand(GameRenderer instance, MatrixStack matrices, float tickDelta) {
+        if ((ModuleList.handTweaks.isEnabled() && ModuleList.handTweaks.noBob.getValue()))
+            tiltViewWhenHurt(matrices, tickDelta);
+
+        if (ModuleList.handTweaks.isEnabled() && ModuleList.handTweaks.handAnimStep.getValue().floatValue() == 1f) {
+            client.player.renderYaw = client.player.lastRenderYaw = client.player.yaw;
+            client.player.renderPitch = client.player.lastRenderPitch = client.player.pitch;
+        }
+    }
+
+    @Redirect(method = "renderHand", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/GameRenderer;bobView(Lnet/minecraft/client/util/math/MatrixStack;F)V"))
+    public void modifyBobViewInRenderHand(GameRenderer instance, MatrixStack matrices, float tickDelta) {
+        if (!(ModuleList.handTweaks.isEnabled() && ModuleList.handTweaks.noBob.getValue()))
+            bobView(matrices, tickDelta);
+    }
+
     @Inject(method = "renderHand", at = @At("RETURN"))
-    public void modifyRenderHand(Camera camera, float tickDelta, Matrix4f matrix4f, CallbackInfo ci) {
+    public void modifyRenderHandPost(Camera camera, float tickDelta, Matrix4f matrix4f, CallbackInfo ci) {
         if (ModuleList.shaders.isEnabled() && ModuleList.shaders.hands.getValue()) {
             renderShaderHand(camera, tickDelta);
             ((IWorldRenderer) client.worldRenderer)._getBufferBuilders().getOutlineVertexConsumers().draw();
@@ -120,9 +138,11 @@ public abstract class MixinGameRenderer {
             loadProjectionMatrix(getBasicProjectionMatrix(getFov(camera, tickDelta, false)));
             MatrixStack matrixStack = new MatrixStack();
             matrixStack.push();
-            tiltViewWhenHurt(matrixStack, tickDelta);
-            if (client.options.getBobView().getValue()) {
-                bobView(matrixStack, tickDelta);
+            if (!(ModuleList.handTweaks.isEnabled() && ModuleList.handTweaks.noBob.getValue())) {
+                tiltViewWhenHurt(matrixStack, tickDelta);
+                if (client.options.getBobView().getValue()) {
+                    bobView(matrixStack, tickDelta);
+                }
             }
 
             boolean bl = client.getCameraEntity() instanceof LivingEntity && ((LivingEntity) client.getCameraEntity()).isSleeping();
