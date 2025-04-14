@@ -61,12 +61,10 @@ public class KeyCode extends AbstractSetting<KeyCodeSetting> {
         if (binding) {
             if (key == KeyboardUtils.KEY_DELETE) {
                 setting.setValue(0);
-                setting.module.onChangeSetting(setting);
                 binding = false;
                 SoundSystem.playSound(Sounds.GUI_TYPING);
             } else if (key != KeyboardUtils.KEY_ESCAPE) {
                 setting.setValue(key);
-                setting.module.onChangeSetting(setting);
                 binding = false;
                 SoundSystem.playSound(Sounds.GUI_TYPING);
             }

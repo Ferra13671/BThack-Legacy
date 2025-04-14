@@ -113,20 +113,43 @@ public final class BThackRender implements Mc {
         Vector3f startPos = matrix4f.transformPosition(x1, y1, 0, new Vector3f());
         Vector3f endPos = matrix4f.transformPosition(x2, y2, 0, new Vector3f());
 
-        Shaders.INSTANCE.ROUNDED_RECT_WITH_OUTLINE.setUniformValue("resolution", (float) mc.getWindow().getWidth(), (float) mc.getWindow().getHeight());
+        Shaders.INSTANCE.ROUNDED_RECT.setUniformValue("resolution", (float) mc.getWindow().getWidth(), (float) mc.getWindow().getHeight());
         float scale = mc.getWindow().getScaledHeight() / (float) mc.getWindow().getHeight();
-        Shaders.INSTANCE.ROUNDED_RECT_WITH_OUTLINE.setUniformValue("position", startPos.x / scale, startPos.y / scale);
-        Shaders.INSTANCE.ROUNDED_RECT_WITH_OUTLINE.setUniformValue("size", (endPos.x - startPos.x) / scale, (endPos.y - startPos.y) / scale);
-        Shaders.INSTANCE.ROUNDED_RECT_WITH_OUTLINE.setUniformValue("radius", radius / scale);
+        Shaders.INSTANCE.ROUNDED_RECT.setUniformValue("position", startPos.x / scale, startPos.y / scale);
+        Shaders.INSTANCE.ROUNDED_RECT.setUniformValue("size", (endPos.x - startPos.x) / scale, (endPos.y - startPos.y) / scale);
+        Shaders.INSTANCE.ROUNDED_RECT.setUniformValue("radius", radius / scale);
         float[] rgba1 = ColorUtils.hashCodeToRGBA(color);
-        Shaders.INSTANCE.ROUNDED_RECT_WITH_OUTLINE.setUniformValue("color", rgba1[0], rgba1[1], rgba1[2], rgba1[3]);
+        Shaders.INSTANCE.ROUNDED_RECT.setUniformValue("color", rgba1[0], rgba1[1], rgba1[2], rgba1[3]);
 
-        buffer.vertex(matrix4f, x1, y1, 0);
-        buffer.vertex(matrix4f, x1, y2, 0);
-        buffer.vertex(matrix4f, x2, y2, 0);
-        buffer.vertex(matrix4f, x2, y1, 0);
+        buffer.vertex(matrix4f, x1 - 1, y1 - 1, 0);
+        buffer.vertex(matrix4f, x1 - 1, y2 + 1, 0);
+        buffer.vertex(matrix4f, x2 + 1, y2 + 1, 0);
+        buffer.vertex(matrix4f, x2 + 1, y1 - 1, 0);
 
         BThackRenderUtils.draw(buffer.end());
+    }
+
+    public static void drawRoundedRectOld(float x1, float y1, float x2, float y2, float radius, int color) {
+        float[] rgba = ColorUtils.hashCodeToRGBA(color);
+        Matrix4f matrix = BThackMatrix.peek().getPositionMatrix();
+        BThackRenderUtils.resetShader();
+        BufferBuilder bufferBuilder = Tessellator.getInstance().begin(VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION_COLOR);
+        float[][] map = new float[][]{new float[]{x2 - radius, y2 - radius, radius}, new float[]{x2 - radius, y1 + radius, radius}, new float[]{x1 + radius, y1 + radius, radius}, new float[]{x1 + radius, y2 - radius, radius}};
+        for (int i = 0; i < 4; i++) {
+            float[] current = map[i];
+            double rad = current[2];
+            for (double r = i * 90d; r < (360 / 4d + i * 90d); r += (90 / 10f)) {
+                float rad1 = (float) Math.toRadians(r);
+                float sin = (float) (Math.sin(rad1) * rad);
+                float cos = (float) (Math.cos(rad1) * rad);
+                bufferBuilder.vertex(matrix, current[0] + sin, current[1] + cos, 0.0F).color(rgba[0], rgba[1], rgba[2], rgba[3]);
+            }
+            float rad1 = (float) Math.toRadians((360 / 4d + i * 90d));
+            float sin = (float) (Math.sin(rad1) * rad);
+            float cos = (float) (Math.cos(rad1) * rad);
+            bufferBuilder.vertex(matrix, current[0] + sin, current[1] + cos, 0.0F).color(rgba[0], rgba[1], rgba[2], rgba[3]);
+        }
+        BThackRenderUtils.drawNoReset(bufferBuilder.end());
     }
 
     public static void drawRoundedRectWithOutline(float x1, float y1, float x2, float y2, float radius, int color, int outlineColor, float depth) {
@@ -147,17 +170,16 @@ public final class BThackRender implements Mc {
         Shaders.INSTANCE.ROUNDED_RECT_WITH_OUTLINE.setUniformValue("outlineColor", rgba2[0], rgba2[1], rgba2[2], rgba2[3]);
         Shaders.INSTANCE.ROUNDED_RECT_WITH_OUTLINE.setUniformValue("depth", depth / scale);
 
-        buffer.vertex(matrix4f, x1, y1, 0);
-        buffer.vertex(matrix4f, x1, y2, 0);
-        buffer.vertex(matrix4f, x2, y2, 0);
-        buffer.vertex(matrix4f, x2, y1, 0);
+        buffer.vertex(matrix4f, x1 - 1, y1 - 1, 0);
+        buffer.vertex(matrix4f, x1 - 1, y2 + 1, 0);
+        buffer.vertex(matrix4f, x2 + 1, y2 + 1, 0);
+        buffer.vertex(matrix4f, x2 + 1, y1 - 1, 0);
 
         BThackRenderUtils.draw(buffer.end());
     }
 
     public static void drawHudPlate(float x1, float y1, float x2, float y2) {
-        BThackRenderUtils.applyBlend();
-        drawRoundedRectWithOutline(x1, y1, x2, y2, 5f, ColorUtils.fastRGBA(0, 0, 0, 150), HUD.getHUDColor(), 2f / BThackRenderUtils.getGuiScale());
+        ModuleList.HUD.hudStyle.draw(x1, y1, x2, y2);
     }
 
     public static void drawLine(float x1, float y1, float x2, float y2, float width, int color) {

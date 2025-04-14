@@ -72,7 +72,6 @@ public class Checkbox extends AbstractSetting<BooleanSetting> {
 
 		if (isMouseOnButton(mouseX, mouseY) && button == 0) {
 			setting.setValue(!setting.getValue());
-			setting.module.onChangeSetting(setting);
 			animation.reset();
 			SoundSystem.playSound(setting.getValue() ? Sounds.GUI_CHECKBOX_ENABLE : Sounds.GUI_CHECKBOX_DISABLE);
 		}

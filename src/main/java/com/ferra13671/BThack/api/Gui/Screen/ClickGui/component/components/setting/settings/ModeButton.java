@@ -75,7 +75,6 @@ public class ModeButton extends AbstractSetting<ModeSetting> {
 			}
 
 			setting.setValue(setting.getOptions().get(setting.getIndex()));
-			setting.module.onChangeSetting(setting);
 			SoundSystem.playSound(Sounds.GUI_CHECKBOX_ENABLE);
 		}
 

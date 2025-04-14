@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.api.Managers.managers.Setting.Settings;
 
+import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.api.Module.Module;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -41,6 +42,8 @@ public abstract class Setting<T> {
 
     public void setValue(T value) {
         this.value = value;
+        if (BThack.instance.getInitStage() == BThack.InitStage.FULL_INITED)
+            module.onChangeSetting(this);
     }
 
     public void toDefault() {

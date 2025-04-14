@@ -95,10 +95,8 @@ public class Slider extends AbstractSetting<NumberSetting> implements Mc {
 		if (dragging) {
 			if (diff == 0) {
 				setting.setValue(min);
-				setting.module.onChangeSetting(setting);
 			} else {
 				setting.setValue(roundToPlace(((diff / 100) * (max - min) + min)));
-				setting.module.onChangeSetting(setting);
 			}
 		}
 

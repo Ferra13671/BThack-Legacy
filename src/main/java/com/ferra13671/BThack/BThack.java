@@ -82,6 +82,10 @@ public final class BThack implements ClientModInitializer, Mc {
         return withBaritone;
     }
 
+    public InitStage getInitStage() {
+        return initStage;
+    }
+
     @Override
     public void onInitializeClient() {
         if (initStage == InitStage.CLIENT_INIT) throw new UnsupportedOperationException("You cannot call client initialization inside client initialization");
@@ -310,7 +314,7 @@ public final class BThack implements ClientModInitializer, Mc {
         error(line);
     }
 
-    private enum InitStage {
+    public enum InitStage {
         NOT_INITED,
         CLIENT_INIT,
         POST_INIT,
