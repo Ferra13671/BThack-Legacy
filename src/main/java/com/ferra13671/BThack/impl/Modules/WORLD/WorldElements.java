@@ -15,7 +15,7 @@ import org.joml.Vector3f;
 public class WorldElements extends Module {
 
     public final BooleanSetting changeStars = new BooleanSetting("Change Stars", this, true);
-    public final BooleanSetting starBrightness = new BooleanSetting("Star Brightness", this, true);
+    public final BooleanSetting starBrightness = new BooleanSetting("Star Brightness", this, true, changeStars::getValue);
     public final NumberSetting starBright = new NumberSetting("Star Bright", this, 0.5,0,1, false, () -> changeStars.getValue() && starBrightness.getValue());
     public final NumberSetting stars = new NumberSetting("Stars", this, 3000, 200, 10000, true, changeStars::getValue);
     public final NumberSetting starsSeed = new NumberSetting("Stars Seed", this, 10842, 1, 20000, true, changeStars::getValue);
