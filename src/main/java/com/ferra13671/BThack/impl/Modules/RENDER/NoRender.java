@@ -3,6 +3,7 @@ package com.ferra13671.BThack.impl.Modules.RENDER;
 import com.ferra13671.BThack.api.Events.PacketEvent;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.Setting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
@@ -23,6 +24,7 @@ public class NoRender extends Module {
     public final BooleanSetting nausea = new BooleanSetting("Nausea", this, true);
     public final BooleanSetting fallingBlocks = new BooleanSetting("Falling Blocks", this, true);
     public final BooleanSetting armorStands = new BooleanSetting("Armor Stands", this, false);
+    public final BooleanSetting textureRotations = new BooleanSetting("Texture Rotations", this, false);
 
     public final BooleanSetting chestRender = new BooleanSetting("Chest Render", this, false);
     public final NumberSetting chestRadius = new NumberSetting("CRender Range", this, 10, 5, 50, false, chestRender::getValue);
@@ -53,6 +55,7 @@ public class NoRender extends Module {
                 nausea,
                 fallingBlocks,
                 armorStands,
+                textureRotations,
 
                 chestRender,
                 chestRadius,
@@ -63,6 +66,11 @@ public class NoRender extends Module {
                 eTableRender,
                 eTableRadius
         );
+    }
+
+    @Override
+    public void onChangeSetting(Setting<?> setting) {
+        if (setting == textureRotations) mc.worldRenderer.reload();
     }
 
     @EventSubscriber

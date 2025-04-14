@@ -16,21 +16,23 @@
     "accessor.packet.IPlayerMoveC2SPacket",
     "accessor.packet.IPlayerPositionLookS2CPacket",
     "baritone.MixinMineProcess",
+    "block.MixinAbstractBlock",
+    "block.MixinAbstractBlockState",
+    "block.MixinBlock",
     "entity.MixinEntity",
     "entity.MixinFireWorkRocketEntity",
     "entity.MixinLivingEntity",
     "entity.MixinPlayerEntity",
+    "render.MixinSodiumBlockOcclusionCache",
+    "render.MixinSodiumDefaultFluidRenderer",
     "world.MixinDimensionType",
-    "world.MixinWorld",
-    "xray.MixinAbstractBlock",
-    "xray.MixinBlock",
-    "xray.MixinSodiumBlockOcclusionCache",
-    "xray.MixinSodiumDefaultFluidRenderer"
+    "world.MixinWorld"
   ],
   "injectors": {
     "defaultRequire": 1
   },
   "client": [
+    "MixinBasicBakedModel",
     "MixinCamera",
     "MixinClientConnection",
     "MixinClientPlayNetworkHandler",
@@ -69,7 +71,10 @@
     "render.MixinArmorFeatureRenderer",
     "render.MixinBackgroundRenderer",
     "render.MixinBlockEntityRenderDispatcher",
+    "render.MixinBlockModelRenderer",
+    "render.MixinChunkOcclusionGraphBuilder",
     "render.MixinEntityRenderer",
+    "render.MixinFluidRenderer",
     "render.MixinGameRenderer",
     "render.MixinHeldItemRenderer",
     "render.MixinInGameOverlayRenderer",
@@ -80,10 +85,6 @@
     "world.MixinClientWorld",
     "world.MixinEndDimensionEffects",
     "world.MixinNetherDimensionEffects",
-    "world.MixinOverworldDimensionEffects",
-    "xray.MixinBasicBakedModel",
-    "xray.MixinBlockModelRenderer",
-    "xray.MixinChunkOcclusionGraphBuilder",
-    "xray.MixinFluidRenderer"
+    "world.MixinOverworldDimensionEffects"
   ]
 }
