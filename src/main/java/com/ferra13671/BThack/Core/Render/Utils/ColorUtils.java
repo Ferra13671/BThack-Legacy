@@ -21,34 +21,13 @@ public final class ColorUtils {
     }
 
     public static int rainbow() {
-        return rainbowInternal(100, 1);
+        return rainbow(1, 1);
     }
 
-    public static int rainbow(int delay, float speed) {
-        return rainbowInternal(delay, speed);
-    }
-
-    public static int rainbowType(int type) {
-        float speed = RainbowUtils.getRainbowSpeed(type)[0];
-        int delay = (int)RainbowUtils.getRainbowSpeed(type)[1];
-
-        return rainbowInternal(delay, speed);
-    }
-
-    public static int rainbowType(int type, float counter) {
-        float speed = RainbowUtils.getRainbowSpeed(type)[0];
-        int delay = (int)RainbowUtils.getRainbowSpeed(type)[1];
-
-        delay = (int)(delay * counter);
-
-        return rainbowInternal(delay, speed);
-    }
-
-    private static int rainbowInternal(int extraDelay, float speed) {
-        double rainbowState = Math.ceil((Shaders.INSTANCE.shaderTicker.getPassedTime() + extraDelay) / 20.0);
-        float rSpeed = 360 * speed;
-        rainbowState %= 360;
-        return Color.getHSBColor((float) (rainbowState / rSpeed), 0.5f, 1f).getRGB();
+    public static int rainbow(int count, float speed) {
+        double rainbowState = Math.ceil(((Shaders.INSTANCE.shaderTicker.getPassedTime() * speed) + (100 * count)) / 20.0);
+        rainbowState = (rainbowState % 360) / 360;
+        return Color.getHSBColor((float) rainbowState, 0.5f, 1f).getRGB();
     }
 
     public static int gradient(int color1, int color2, int count, float scale, float speed) {

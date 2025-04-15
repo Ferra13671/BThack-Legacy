@@ -2,7 +2,6 @@ package com.ferra13671.BThack.impl.Modules.RENDER;
 
 import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
-import com.ferra13671.BThack.Core.Render.Utils.RainbowUtils;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ColorSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
@@ -18,7 +17,7 @@ public class EnchantColor extends Module {
     public final NumberSetting enchantSize = new NumberSetting("Ench. Size", this, 1, 0.1, 5, false);
 
     public final BooleanSetting rainbow = new BooleanSetting("Rainbow", this, false);
-    public final NumberSetting rainbowSpeed = new NumberSetting("Rainbow Speed", this, 2, 1, 4, true, rainbow::getValue);
+    public final NumberSetting speed = new NumberSetting("Speed", this, 1, 0.1, 10, false, rainbow::getValue);
 
     public final NumberSetting alphaColor = new NumberSetting("Alpha", this, 180, 0, 255, true);
     public final ColorSetting colorSet = new ColorSetting("Color", this, new Color(255, 255, 255), () -> !rainbow.getValue()).withBlockedAlpha();
@@ -40,7 +39,7 @@ public class EnchantColor extends Module {
                 colorSet,
 
                 rainbow,
-                rainbowSpeed
+                speed
         );
     }
 
@@ -55,10 +54,8 @@ public class EnchantColor extends Module {
             green = (float) (ModuleList.enchantColor.colorSet.getValue().getGreen() / 255d);
             blue = (float) (ModuleList.enchantColor.colorSet.getValue().getBlue() / 255d);
         } else {
-            int rainbowType = ModuleList.enchantColor.rainbowSpeed.getValue().intValue();
-            float speed = RainbowUtils.getRainbowRectSpeed(rainbowType)[0];
-            int delay = (int) RainbowUtils.getRainbowRectSpeed(rainbowType)[1];
-            int argb = ColorUtils.rainbow(delay, speed);
+
+            int argb = ColorUtils.rainbow(1, ModuleList.enchantColor.speed.getValue().floatValue());
             red = ColorHelper.Argb.getRed(argb) / 255f;
             green = ColorHelper.Argb.getGreen(argb) / 255f;
             blue = ColorHelper.Argb.getBlue(argb) / 255f;

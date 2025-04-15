@@ -96,7 +96,7 @@ public class ArrayListComponent extends HudComponent {
 
     public int getArrayColor(int count) {
         if (ModuleList.HUD.gradient.getValue()) return ColorUtils.gradient(ModuleList.HUD.color1.getValue(), ModuleList.HUD.color2.getValue(), count, ModuleList.HUD.scale.getValue().floatValue(), ModuleList.HUD.speed.getValue().floatValue()).hashCode();
-        else if (ModuleList.HUD.rainbow.getValue()) return ColorUtils.rainbowType(ModuleList.HUD.rainbowType.getValue().intValue(), count);
+        else if (ModuleList.HUD.rainbow.getValue()) return ColorUtils.rainbow(count * ModuleList.HUD.scale.getValue().intValue(), ModuleList.HUD.speed.getValue().floatValue());
         else return ModuleList.HUD.color.getValue().hashCode();
     }
 

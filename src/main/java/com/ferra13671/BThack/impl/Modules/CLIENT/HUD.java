@@ -23,12 +23,13 @@ import java.util.function.Consumer;
 public class HUD extends Module {
 
     public BooleanSetting rainbow;
-    public NumberSetting rainbowType;
 
     public BooleanSetting gradient;
     public ColorSetting textColor;
     public ColorSetting color1;
     public ColorSetting color2;
+
+
     public NumberSetting speed;
     public NumberSetting scale;
 
@@ -54,25 +55,25 @@ public class HUD extends Module {
         mc.getWindow().swapBuffers();
 
         rainbow = new BooleanSetting("Rainbow", this, false, () -> !gradient.getValue());
-        rainbowType = new NumberSetting("Rainbow type", this, 3, 1, 8, true, rainbow::getValue);
 
         gradient = new BooleanSetting("Gradient", this, true, () -> !(rainbow.getValue() && !this.gradient.getValue()));
         textColor = new ColorSetting("Text Color", this, new Color(213, 142, 253), gradient::getValue).withBlockedAlpha();
         color1 = new ColorSetting("Color1", this, new Color(213, 142, 253), gradient::getValue).withBlockedAlpha();
         color2 = new ColorSetting("Color2", this, new Color(61, 0, 96), gradient::getValue).withBlockedAlpha();
-        speed = new NumberSetting("Speed", this, 1, 0.1, 10, false, gradient::getValue);
-        scale = new NumberSetting("Scale", this, 1, 0.1, 10, false, gradient::getValue);
+
+        speed = new NumberSetting("Speed", this, 1, 0.1, 10, false, () -> rainbow.getValue() || gradient.getValue());
+        scale = new NumberSetting("Scale", this, 1, 0.1, 10, false, () -> rainbow.getValue() || gradient.getValue());
 
         color = new ColorSetting("Color", this, new Color(213, 142, 253), () -> !rainbow.getValue() && !gradient.getValue()).withBlockedAlpha();
 
         initSettings(
                 rainbow,
-                rainbowType,
 
                 gradient,
                 textColor,
                 color1,
                 color2,
+
                 speed,
                 scale,
 
@@ -136,7 +137,7 @@ public class HUD extends Module {
         if (ModuleList.HUD.gradient.getValue()) {
             return ModuleList.HUD.textColor.getValue().hashCode();
         } else if (ModuleList.HUD.rainbow.getValue()) {
-            return ColorUtils.rainbowType(ModuleList.HUD.rainbowType.getValue().intValue());
+            return ColorUtils.rainbow(1, ModuleList.HUD.speed.getValue().floatValue());
         } else {
             return ModuleList.HUD.color.getValue().hashCode();
         }
