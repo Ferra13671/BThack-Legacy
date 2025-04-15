@@ -1,6 +1,5 @@
 package com.ferra13671.BThack.impl.HudComponents;
 
-import com.ferra13671.BThack.Core.Client.Client;
 import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.Core.Render.BThackMatrix;
 import com.ferra13671.BThack.Core.Render.BThackRender;
@@ -12,10 +11,8 @@ import com.ferra13671.BThack.api.Module.HudComponent;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.impl.Modules.CLIENT.ClickGui;
 import net.minecraft.client.MinecraftClient;
 
-import java.awt.*;
 import java.io.Closeable;
 import java.util.Collections;
 import java.util.List;
@@ -98,12 +95,9 @@ public class ArrayListComponent extends HudComponent {
     }
 
     public int getArrayColor(int count) {
-        if (ModuleList.HUD.rainbow.getValue()) {
-            return ColorUtils.rainbowType(ModuleList.HUD.rainbowType.getValue().intValue(), count);
-        } else {
-            if (ModuleList.clickGui.customColor.getValue()) return ClickGui.getClickGuiColor(false);
-            else return (new Color(Client.clientInfo.getColorTheme().arrayListColor())).hashCode();
-        }
+        if (ModuleList.HUD.gradient.getValue()) return ColorUtils.gradient(ModuleList.HUD.color1.getValue(), ModuleList.HUD.color2.getValue(), count, ModuleList.HUD.scale.getValue().floatValue(), ModuleList.HUD.speed.getValue().floatValue()).hashCode();
+        else if (ModuleList.HUD.rainbow.getValue()) return ColorUtils.rainbowType(ModuleList.HUD.rainbowType.getValue().intValue(), count);
+        else return ModuleList.HUD.color.getValue().hashCode();
     }
 
 

@@ -36,6 +36,22 @@ public class Shaders implements Mc {
             super.release();
         }
     };
+    public final ShaderProgram XY_GRADIENT = new ShaderProgram(Identifier.of("bthack", "render/xy_gradient"), VertexFormats.POSITION) {
+        @Override
+        public void use() {
+            this.setUniformValue("time", shaderTicker.getPassedTime() / 1000f);
+            this.setUniformValue("resolution", (float) mc.getWindow().getWidth(), mc.getWindow().getHeight());
+            super.use();
+        }
+
+        @Override
+        public void release() {
+            this.setUniformValue("brightness", 1f);
+            this.setUniformValue("scale", 1f);
+            this.setUniformValue("speed", 1f);
+            super.release();
+        }
+    };
     public final MainMenuShader SNOW = MainMenuShader.of("render/snow");
 
     @EventSubscriber

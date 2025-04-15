@@ -16,7 +16,6 @@ import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.*;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Shader.Shaders;
 import com.ferra13671.BThack.Constants;
 import com.ferra13671.BThack.api.Utils.Textures;
 import com.ferra13671.BThack.impl.Modules.CLIENT.ClickGui;
@@ -122,11 +121,9 @@ public class ModuleButton extends Component implements Mc {
 
 	private void drawEnabledBackground(int alpha) {
 		float _alpha = (int) (alpha * (module.isEnabled() ? toggleAnimation.getEase() : 1 - toggleAnimation.getEase())) / 255f;
-		if (ModuleList.clickGui.rainbow.getValue()) {
-			Shaders.INSTANCE.X_RAINBOW.setUniformValue("alpha", _alpha);
-			Shaders.INSTANCE.X_RAINBOW.setUniformValue("brightness", isHovered ? 0.9f : 0.7f);
-			ModuleList.clickGui.prepareRainbowShader();
-			BThackRender.drawShader(Shaders.INSTANCE.X_RAINBOW, parent.getX(), parent.getY() + offset, parent.getX() + Constants.CLICKGUI_FRAME_WIDTH, parent.getY() + Constants.CLICKGUI_BUTTON_HEIGHT + offset);
+		if (ModuleList.clickGui.isShaderEnabled()) {
+			ModuleList.clickGui.prepareCurrentShader(_alpha, isHovered ? 0.9f : 0.7f);
+			BThackRender.drawShader(ModuleList.clickGui.getCurrentShader(), parent.getX(), parent.getY() + offset, parent.getX() + Constants.CLICKGUI_FRAME_WIDTH, parent.getY() + Constants.CLICKGUI_BUTTON_HEIGHT + offset);
 		} else {
 			BThackRender.drawRect(parent.getX(), parent.getY() + offset, parent.getX() + Constants.CLICKGUI_FRAME_WIDTH, parent.getY() + Constants.CLICKGUI_BUTTON_HEIGHT + offset,
 					ColorUtils.integrateAlpha(

@@ -14,7 +14,6 @@ import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.Module
 import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.setting.settings.Slider;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Shader.Shaders;
 import com.ferra13671.BThack.Constants;
 import com.ferra13671.BThack.api.Utils.Data;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
@@ -164,15 +163,15 @@ public class Frame implements Mc, Closeable {
 		boolean needScissor = frameAnimation.getEase() < 1;
 		renderHeight = needScissor ? (float) (height * (open ? frameAnimation.getEase() : 1 - frameAnimation.getEase())) : open ? height : 0;
 
-		if (ModuleList.clickGui.rainbow.getValue()) {
-			ModuleList.clickGui.prepareRainbowShader();
-			BThackRender.drawShader(Shaders.INSTANCE.X_RAINBOW, x, y, x + Constants.CLICKGUI_FRAME_WIDTH, y + Constants.CLICKGUI_BAR_HEIGHT);
+		if (ModuleList.clickGui.isShaderEnabled()) {
+			ModuleList.clickGui.prepareCurrentShader(1, 1);
+			BThackRender.drawShader(ModuleList.clickGui.getCurrentShader(), x, y, x + Constants.CLICKGUI_FRAME_WIDTH, y + Constants.CLICKGUI_BAR_HEIGHT);
 		} else
 			BThackRender.drawRect(x, y, x + Constants.CLICKGUI_FRAME_WIDTH, y + Constants.CLICKGUI_BAR_HEIGHT, ModuleList.clickGui.customColor.getValue() ? ColorUtils.fastRGBA(ModuleList.clickGui.color.getValue().getRed(), ModuleList.clickGui.color.getValue().getGreen(), ModuleList.clickGui.color.getValue().getBlue(), 255) : ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().color()));
 		if (ModuleList.clickGui.frameOutline.getValue()) {
-			if (ModuleList.clickGui.rainbow.getValue()) {
-				ModuleList.clickGui.prepareRainbowShader();
-				BThackRender.drawShaderOutlineRect(Shaders.INSTANCE.X_RAINBOW, x - 1, y - 1, x + Constants.CLICKGUI_FRAME_WIDTH + 1, y + renderHeight + Constants.CLICKGUI_BAR_HEIGHT + 1, 1);
+			if (ModuleList.clickGui.isShaderEnabled()) {
+				ModuleList.clickGui.prepareCurrentShader(1, 1);
+				BThackRender.drawShaderOutlineRect(ModuleList.clickGui.getCurrentShader(), x - 1, y - 1, x + Constants.CLICKGUI_FRAME_WIDTH + 1, y + renderHeight + Constants.CLICKGUI_BAR_HEIGHT + 1, 1);
 			} else {
 				BThackRender.drawOutlineRect(x - 1, y - 1, x + Constants.CLICKGUI_FRAME_WIDTH + 1, y + renderHeight + Constants.CLICKGUI_BAR_HEIGHT + 1, 1, ClickGui.getClickGuiColor(true));
 			}

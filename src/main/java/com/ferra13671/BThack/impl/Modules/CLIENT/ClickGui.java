@@ -8,6 +8,7 @@ import com.ferra13671.BThack.api.Managers.managers.ColourTheme.ColorTheme;
 import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.*;
 import com.ferra13671.BThack.api.Module.OneActionModule;
+import com.ferra13671.BThack.api.Shader.ShaderProgram;
 import com.ferra13671.BThack.api.Shader.Shaders;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.GuiSystem.BThackScreens;
@@ -21,9 +22,18 @@ import java.util.List;
 public class ClickGui extends OneActionModule {
 
     public final ModeSetting activeTheme = new ModeSetting("Theme", this, getActiveThemeList());
-    public final BooleanSetting rainbow = new BooleanSetting("Rainbow", this, true);
-    public final NumberSetting rainbowScale = new NumberSetting("Rainbow Scale", this, 1, 0.3, 4, false, rainbow::getValue);
-    public final NumberSetting rainbowSpeed = new NumberSetting("Rainbow Speed", this, 1, 0.3, 4, false, rainbow::getValue);
+
+    //rainbow and gradient
+    public BooleanSetting rainbow;
+
+    public BooleanSetting gradient;
+    public ColorSetting color1;
+    public ColorSetting color2;
+
+    public NumberSetting scale;
+    public NumberSetting speed;
+    //
+
     public final BooleanSetting customColor = new BooleanSetting("Custom Color", this, false, () -> !rainbow.getValue());
     public final ColorSetting color = new ColorSetting("ClickGui Color", this, new Color(25, 28, 255), () -> customColor.getValue() && !rainbow.getValue()).withBlockedAlpha();
 
@@ -60,13 +70,29 @@ public class ClickGui extends OneActionModule {
                 false
         );
 
+        rainbow = new BooleanSetting("Rainbow", this, false, () -> !gradient.getValue());
+        gradient = new BooleanSetting("Gradient", this, true, () -> !(rainbow.getValue() && !this.gradient.getValue()));
+
+        color1 = new ColorSetting("Color1", this, new Color(195, 85, 251), gradient::getValue).withBlockedAlpha();
+        color2 = new ColorSetting("Color2", this, new Color(105, 0, 166), gradient::getValue).withBlockedAlpha();
+
+        scale = new NumberSetting("Scale", this, 1, 0.3, 4, false, rainbow::getValue);
+        speed = new NumberSetting("Speed", this, 1, 0.3, 4, false, rainbow::getValue);
+
         initSettings(
                 activeTheme,
+
                 color,
                 customColor,
+
                 rainbow,
-                rainbowScale,
-                rainbowSpeed,
+
+                gradient,
+                color1,
+                color2,
+
+                scale,
+                speed,
 
                 arrows,
 
@@ -108,9 +134,29 @@ public class ClickGui extends OneActionModule {
         return easingList;
     }
 
-    public void prepareRainbowShader() {
-        Shaders.INSTANCE.X_RAINBOW.setUniformValue("scale", rainbowScale.getValue().floatValue());
-        Shaders.INSTANCE.X_RAINBOW.setUniformValue("speed", rainbowSpeed.getValue().floatValue());
+    public boolean isShaderEnabled() {
+        return rainbow.getValue() || gradient.getValue();
+    }
+
+    public void prepareCurrentShader(float alpha, float brightness) {
+        if (gradient.getValue()) {
+            Shaders.INSTANCE.XY_GRADIENT.setUniformValue("scale", scale.getValue().floatValue());
+            Shaders.INSTANCE.XY_GRADIENT.setUniformValue("speed", speed.getValue().floatValue());
+            Shaders.INSTANCE.X_RAINBOW.setUniformValue("brightness", brightness);
+
+            Shaders.INSTANCE.XY_GRADIENT.setUniformValue("color1", color1.getValue().getRed() / 255f, color1.getValue().getGreen() / 255f, color1.getValue().getBlue() / 255f, alpha);
+            Shaders.INSTANCE.XY_GRADIENT.setUniformValue("color2", color2.getValue().getRed() / 255f, color2.getValue().getGreen() / 255f, color2.getValue().getBlue() / 255f, alpha);
+        } else if (rainbow.getValue()) {
+            Shaders.INSTANCE.X_RAINBOW.setUniformValue("alpha", alpha);
+            Shaders.INSTANCE.X_RAINBOW.setUniformValue("brightness", brightness);
+            Shaders.INSTANCE.X_RAINBOW.setUniformValue("scale", scale.getValue().floatValue());
+            Shaders.INSTANCE.X_RAINBOW.setUniformValue("speed", speed.getValue().floatValue());
+        }
+    }
+
+    public ShaderProgram getCurrentShader() {
+        if (gradient.getValue()) return Shaders.INSTANCE.XY_GRADIENT;
+        else return Shaders.INSTANCE.X_RAINBOW;
     }
 
     @Override

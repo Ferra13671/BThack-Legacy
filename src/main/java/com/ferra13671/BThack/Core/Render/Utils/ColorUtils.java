@@ -1,7 +1,9 @@
 package com.ferra13671.BThack.Core.Render.Utils;
 
+import com.ferra13671.BThack.api.Shader.Shaders;
 import com.ferra13671.BThack.api.Utils.MathUtils;
 import net.minecraft.util.math.ColorHelper;
+import net.minecraft.util.math.MathHelper;
 
 import java.awt.*;
 
@@ -19,26 +21,18 @@ public final class ColorUtils {
     }
 
     public static int rainbow() {
-        double rainbowState = Math.ceil((System.currentTimeMillis() + 100) / 20.0);
-        rainbowState %= 360;
-        return Color.getHSBColor((float) (rainbowState / 360.0f), 0.5f, 1f).getRGB();
+        return rainbowInternal(100, 1);
     }
 
     public static int rainbow(int delay, float speed) {
-        double rainbowState = Math.ceil((System.currentTimeMillis() + delay) / 20.0);
-        float rSpeed = 360 * speed;
-        rainbowState %= 360;
-        return Color.getHSBColor((float) (rainbowState / rSpeed), 0.5f, 1f).getRGB();
+        return rainbowInternal(delay, speed);
     }
 
     public static int rainbowType(int type) {
         float speed = RainbowUtils.getRainbowSpeed(type)[0];
         int delay = (int)RainbowUtils.getRainbowSpeed(type)[1];
 
-        double rainbowState = Math.ceil((System.currentTimeMillis() + delay) / 20.0);
-        float rSpeed = 360 * speed;
-        rainbowState %= 360;
-        return Color.getHSBColor((float) (rainbowState / rSpeed), 0.5f, 1f).getRGB();
+        return rainbowInternal(delay, speed);
     }
 
     public static int rainbowType(int type, float counter) {
@@ -47,10 +41,46 @@ public final class ColorUtils {
 
         delay = (int)(delay * counter);
 
-        double rainbowState = Math.ceil((System.currentTimeMillis() + delay) / 20.0);
+        return rainbowInternal(delay, speed);
+    }
+
+    private static int rainbowInternal(int extraDelay, float speed) {
+        double rainbowState = Math.ceil((Shaders.INSTANCE.shaderTicker.getPassedTime() + extraDelay) / 20.0);
         float rSpeed = 360 * speed;
         rainbowState %= 360;
         return Color.getHSBColor((float) (rainbowState / rSpeed), 0.5f, 1f).getRGB();
+    }
+
+    public static int gradient(int color1, int color2, int count, float scale, float speed) {
+        float colorState = (float) Math.ceil(((Shaders.INSTANCE.shaderTicker.getPassedTime() * speed) + ((200 * scale) * count)) / 20.0);
+        colorState %= 360;
+        colorState /= 360;
+        if (colorState > 0.5) colorState = 1f - colorState;
+        colorState *= 2f;
+
+        float[] rgba1 = hashCodeToRGBA(color1);
+        float[] rgba2 = hashCodeToRGBA(color2);
+
+        return new Color(
+                MathUtils.applyRange(MathHelper.lerp(colorState, rgba1[0], rgba2[0]), 0, 1),
+                MathUtils.applyRange(MathHelper.lerp(colorState, rgba1[1], rgba2[1]), 0, 1),
+                MathUtils.applyRange(MathHelper.lerp(colorState, rgba1[2], rgba2[2]), 0, 1),
+                MathUtils.applyRange(MathHelper.lerp(colorState, rgba1[3], rgba2[3]), 0, 1)
+        ).hashCode();
+    }
+
+    public static Color gradient(Color color1, Color color2, int count, float scale, float speed) {
+        float colorState = (float) Math.ceil(((Shaders.INSTANCE.shaderTicker.getPassedTime() * speed) + ((200 * scale) * count)) / 20.0);
+        colorState %= 360;
+        colorState /= 360;
+        if (colorState > 0.5) colorState = 1f - colorState;
+        colorState *= 2f;
+
+        return new Color(
+                MathUtils.applyRange(MathHelper.lerp(colorState, color1.getRed(), color2.getRed()), 0, 255),
+                MathUtils.applyRange(MathHelper.lerp(colorState, color1.getGreen(), color2.getGreen()), 0, 255),
+                MathUtils.applyRange(MathHelper.lerp(colorState, color1.getBlue(), color2.getBlue()), 0, 255),
+                MathUtils.applyRange(MathHelper.lerp(colorState, color1.getAlpha(), color2.getAlpha()), 0, 255));
     }
 
     public static int integrateAlpha(int colorHashcode, int alpha) {

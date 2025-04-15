@@ -10,7 +10,6 @@ import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.Module
 import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.setting.AbstractSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Shader.Shaders;
 import com.ferra13671.BThack.api.SoundSystem.SoundSystem;
 import com.ferra13671.BThack.api.SoundSystem.Sounds;
 import com.ferra13671.BThack.Constants;
@@ -33,11 +32,9 @@ public class Checkbox extends AbstractSetting<BooleanSetting> {
 
 		if (needRenderPlate()) {
 			int alpha = (int) (255 * (setting.getValue() ? animation.getEase() : 1 - animation.getEase()));
-			if (ModuleList.clickGui.rainbow.getValue()) {
-				Shaders.INSTANCE.X_RAINBOW.setUniformValue("alpha", alpha / 255f);
-				Shaders.INSTANCE.X_RAINBOW.setUniformValue("brightness", 0.7f);
-				ModuleList.clickGui.prepareRainbowShader();
-				BThackRender.drawShader(Shaders.INSTANCE.X_RAINBOW, parent.parent.getX() + 1, parent.parent.getY() + offset, parent.parent.getX() + Constants.CLICKGUI_FRAME_WIDTH - 1, parent.parent.getY() + offset + 15);
+			if (ModuleList.clickGui.isShaderEnabled()) {
+				ModuleList.clickGui.prepareCurrentShader(alpha / 255f, 0.7f);
+				BThackRender.drawShader(ModuleList.clickGui.getCurrentShader(), parent.parent.getX() + 1, parent.parent.getY() + offset, parent.parent.getX() + Constants.CLICKGUI_FRAME_WIDTH - 1, parent.parent.getY() + offset + 15);
 			} else
 				BThackRender.drawRect(parent.parent.getX() + 1, parent.parent.getY() + offset, parent.parent.getX() + Constants.CLICKGUI_FRAME_WIDTH - 1, parent.parent.getY() + offset + 15, ColorUtils.integrateAlpha(ClickGui.getClickGuiColor(true), alpha));
 

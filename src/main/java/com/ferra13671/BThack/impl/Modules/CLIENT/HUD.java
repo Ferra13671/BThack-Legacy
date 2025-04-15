@@ -9,23 +9,30 @@ import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Events.Render.RenderHudPreEvent;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Gui.Screen.HudEditor.HudEditorScreen;
-import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
-import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.Setting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.*;
 import com.ferra13671.BThack.api.Module.HudComponent;
-import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
-import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.Utils.SpeedMathThread;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 
+import java.awt.*;
 import java.util.Arrays;
 import java.util.function.Consumer;
 
 public class HUD extends Module {
 
-    public final BooleanSetting rainbow = new BooleanSetting("Rainbow", this, true);
-    public final NumberSetting rainbowType = new NumberSetting("Rainbow type", this, 3, 1, 8, true, rainbow::getValue);
+    public BooleanSetting rainbow;
+    public NumberSetting rainbowType;
+
+    public BooleanSetting gradient;
+    public ColorSetting color1;
+    public ColorSetting color2;
+    public NumberSetting speed;
+    public NumberSetting scale;
+
+
+    public final ColorSetting color = new ColorSetting("Color", this, new Color(213, 142, 253), () -> !rainbow.getValue()).withBlockedAlpha();
 
     public final ModeSetting style = new ModeSetting("Style", this, Arrays.asList("Rounded New", "Rounded Old", "Primitive", "Old"));
 
@@ -45,9 +52,27 @@ public class HUD extends Module {
 
         mc.getWindow().swapBuffers();
 
+        rainbow = new BooleanSetting("Rainbow", this, false, () -> !gradient.getValue());
+        rainbowType = new NumberSetting("Rainbow type", this, 3, 1, 8, true, rainbow::getValue);
+
+        gradient = new BooleanSetting("Gradient", this, true, () -> !(rainbow.getValue() && !this.gradient.getValue()));
+        color1 = new ColorSetting("Color1", this, new Color(213, 142, 253), gradient::getValue).withBlockedAlpha();
+        color2 = new ColorSetting("Color2", this, new Color(61, 0, 96), gradient::getValue).withBlockedAlpha();
+        speed = new NumberSetting("Speed", this, 1, 0.1, 10, false, gradient::getValue);
+        scale = new NumberSetting("Scale", this, 1, 0.1, 10, false, gradient::getValue);
+
         initSettings(
                 rainbow,
                 rainbowType,
+
+                gradient,
+                color1,
+                color2,
+                speed,
+                scale,
+
+                color,
+
                 style
         );
     }
@@ -103,10 +128,12 @@ public class HUD extends Module {
     }
 
     public static int getHUDColor() {
-        if (ModuleList.HUD.rainbow.getValue()) {
+        if (ModuleList.HUD.gradient.getValue()) {
+            return ColorUtils.gradient(ModuleList.HUD.color1.getValue(), ModuleList.HUD.color2.getValue(), 1, ModuleList.HUD.scale.getValue().floatValue(), ModuleList.HUD.speed.getValue().floatValue()).hashCode();
+        } else if (ModuleList.HUD.rainbow.getValue()) {
             return ColorUtils.rainbowType(ModuleList.HUD.rainbowType.getValue().intValue());
         } else {
-            return ClickGui.getClickGuiColor(false);
+            return ModuleList.HUD.color.getValue().hashCode();
         }
     }
 
