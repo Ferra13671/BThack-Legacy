@@ -19,6 +19,21 @@ public class Shaders implements Mc {
 
     public final ShaderProgram ROUNDED_RECT = ShaderProgram.of("render/rounded_rect", VertexFormats.POSITION);
     public final ShaderProgram ROUNDED_RECT_WITH_OUTLINE = ShaderProgram.of("render/rounded_rect_with_outline", VertexFormats.POSITION);
+    public final ShaderProgram XY_GRADIENT_ROUNDED_RECT_WITH_OUTLINE = new ShaderProgram(Identifier.of("bthack", "render/xy_gradient_rounded_rect_with_outline"), VertexFormats.POSITION) {
+        @Override
+        public void use() {
+            this.setUniformValue("time", shaderTicker.getPassedTime() / 1000f);
+            this.setUniformValue("resolution", (float) mc.getWindow().getWidth(), mc.getWindow().getHeight());
+            super.use();
+        }
+
+        @Override
+        public void release() {
+            this.setUniformValue("scale", 1f);
+            this.setUniformValue("speed", 1f);
+            super.release();
+        }
+    };
     public final ShaderProgram X_RAINBOW = new ShaderProgram(Identifier.of("bthack", "render/x_rainbow"), VertexFormats.POSITION) {
         @Override
         public void use() {

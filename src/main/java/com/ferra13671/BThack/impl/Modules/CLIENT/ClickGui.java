@@ -142,7 +142,7 @@ public class ClickGui extends OneActionModule {
         if (gradient.getValue()) {
             Shaders.INSTANCE.XY_GRADIENT.setUniformValue("scale", scale.getValue().floatValue());
             Shaders.INSTANCE.XY_GRADIENT.setUniformValue("speed", speed.getValue().floatValue());
-            Shaders.INSTANCE.X_RAINBOW.setUniformValue("brightness", brightness);
+            Shaders.INSTANCE.XY_GRADIENT.setUniformValue("brightness", brightness);
 
             Shaders.INSTANCE.XY_GRADIENT.setUniformValue("color1", color1.getValue().getRed() / 255f, color1.getValue().getGreen() / 255f, color1.getValue().getBlue() / 255f, alpha);
             Shaders.INSTANCE.XY_GRADIENT.setUniformValue("color2", color2.getValue().getRed() / 255f, color2.getValue().getGreen() / 255f, color2.getValue().getBlue() / 255f, alpha);

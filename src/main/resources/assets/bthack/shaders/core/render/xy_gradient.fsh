@@ -24,5 +24,5 @@ void main() {
     if (colorState > 0.5) colorState = 1. - colorState;
     colorState *= 2.;
 
-    fragColor = vec4(_step(color1.r, color2.r, colorState) * brightness, _step(color1.g, color2.g, colorState) * brightness, _step(color1.b, color2.b, colorState) * brightness, _step(color1.a, color2.a, colorState) * brightness);
+    fragColor = vec4(_step(color1.r, color2.r, colorState) * brightness, _step(color1.g, color2.g, colorState) * brightness, _step(color1.b, color2.b, colorState) * brightness, _step(color1.a, color2.a, colorState));
 }

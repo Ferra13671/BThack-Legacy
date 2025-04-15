@@ -46,7 +46,7 @@ public class DescriptionBar implements Closeable, Mc {
 
     public void render() {
         int alpha = closing ? (int) ((1 - alphaAnimation.getEase()) * 255) : (int) (alphaAnimation.getEase() * 255);
-        Shaders.INSTANCE.X_RAINBOW.setUniformValue("alpha", alpha / 255f);
+        ModuleList.clickGui.prepareCurrentShader(alpha / 255f, 1);
 
         int scaledHeight = (int) (mc.getWindow().getScaledHeight() / ModuleList.clickGui.guiScale.getValue());
 
@@ -59,7 +59,7 @@ public class DescriptionBar implements Closeable, Mc {
             BThackMatrix.translate((float) -((1 - moveAnimation.getEase()) * length), 0, 0);
 
             BThackRender.drawRect(1, scaledHeight - 30, length, scaledHeight -1, ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().backgroundColor()), alpha));
-            BThackRender.drawShaderOutlineRect(Shaders.INSTANCE.X_RAINBOW, 1, scaledHeight - 30, length, scaledHeight -1, 1);
+            BThackRender.drawShaderOutlineRect(ModuleList.clickGui.getCurrentShader(), 1, scaledHeight - 30, length, scaledHeight -1, 1);
             BThackRender.drawString(module.getDescription(), 6, scaledHeight - 7 - (FontUtils.getTextHeight(module.getDescription()) / 2f), ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()), alpha));
             BThackRender.drawString("Plugin: " + pluginMod.plugin.pluginName, 6, scaledHeight - 19 - (FontUtils.getTextHeight(pluginMod.plugin.pluginName) / 2f), ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()), alpha));
         } else {
@@ -68,7 +68,7 @@ public class DescriptionBar implements Closeable, Mc {
             BThackMatrix.translate((float) -((1 - moveAnimation.getEase()) * length), 0, 0);
 
             BThackRender.drawRect(1, scaledHeight - 18, length, scaledHeight -1, ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().backgroundColor()), alpha));
-            BThackRender.drawShaderOutlineRect(Shaders.INSTANCE.X_RAINBOW, 1, scaledHeight - 18, length, scaledHeight -1, 1);
+            BThackRender.drawShaderOutlineRect(ModuleList.clickGui.getCurrentShader(), 1, scaledHeight - 18, length, scaledHeight -1, 1);
             BThackRender.drawString(module.getDescription(), 6, scaledHeight - 9.5f - (FontUtils.getTextHeight(module.getDescription()) / 2f), ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()), alpha));
         }
         BThackMatrix.pop();
