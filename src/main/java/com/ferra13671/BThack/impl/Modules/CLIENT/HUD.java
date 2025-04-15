@@ -37,6 +37,9 @@ public class HUD extends Module {
     public ColorSetting color;
 
     public final ModeSetting style = new ModeSetting("Style", this, Arrays.asList("Rounded New", "Rounded Old", "Primitive", "Old"));
+    public final NumberSetting roundScale = new NumberSetting("Round Scale", this, 5, 3, 10, false, () -> style.getValue().contains("Rounded"));
+
+    public final ColorSetting backGroundColor = new ColorSetting("BackGround Color", this, new Color(0, 0, 0, 150));
 
     public HUD() {
         super("HUD",
@@ -61,7 +64,7 @@ public class HUD extends Module {
         color1 = new ColorSetting("Color1", this, new Color(213, 142, 253), gradient::getValue).withBlockedAlpha();
         color2 = new ColorSetting("Color2", this, new Color(61, 0, 96), gradient::getValue).withBlockedAlpha();
 
-        speed = new NumberSetting("Speed", this, 1, 0.1, 10, false, () -> rainbow.getValue() || gradient.getValue());
+        speed = new NumberSetting("Speed", this, 2, 0.1, 10, false, () -> rainbow.getValue() || gradient.getValue());
         scale = new NumberSetting("Scale", this, 1, 0.1, 10, false, () -> rainbow.getValue() || gradient.getValue());
 
         color = new ColorSetting("Color", this, new Color(213, 142, 253), () -> !rainbow.getValue() && !gradient.getValue()).withBlockedAlpha();
@@ -79,7 +82,10 @@ public class HUD extends Module {
 
                 color,
 
-                style
+                style,
+                roundScale,
+
+                backGroundColor
         );
     }
     public HudStyle hudStyle = HudStyle.valueOf(style.getValue().toUpperCase().replace(" ", "_"));
@@ -147,19 +153,19 @@ public class HUD extends Module {
         ROUNDED_NEW(pos -> {
             BThackRenderUtils.applyBlend();
             if (ModuleList.HUD.gradient.getValue())
-                BThackRender.drawGradientRoundedRectWithOutline(pos[0], pos[1], pos[2], pos[3], 5f, ColorUtils.fastRGBA(0, 0, 0, 150), ModuleList.HUD.color1.getValue().hashCode(), ModuleList.HUD.color2.getValue().hashCode(), 2f / BThackRenderUtils.getGuiScale(), ModuleList.HUD.scale.getValue().floatValue(), ModuleList.HUD.speed.getValue().floatValue());
+                BThackRender.drawGradientRoundedRectWithOutline(pos[0], pos[1], pos[2], pos[3], ModuleList.HUD.roundScale.getValue().floatValue(), ModuleList.HUD.backGroundColor.getValue().hashCode(), ModuleList.HUD.color1.getValue().hashCode(), ModuleList.HUD.color2.getValue().hashCode(), 2f / BThackRenderUtils.getGuiScale(), ModuleList.HUD.scale.getValue().floatValue(), ModuleList.HUD.speed.getValue().floatValue());
             else
-                BThackRender.drawRoundedRectWithOutline(pos[0], pos[1], pos[2], pos[3], 5f, ColorUtils.fastRGBA(0, 0, 0, 150), HUD.getHUDColor(), 2f / BThackRenderUtils.getGuiScale());
+                BThackRender.drawRoundedRectWithOutline(pos[0], pos[1], pos[2], pos[3], ModuleList.HUD.roundScale.getValue().floatValue(), ModuleList.HUD.backGroundColor.getValue().hashCode(), HUD.getHUDColor(), 2f / BThackRenderUtils.getGuiScale());
         }),
         ROUNDED_OLD(pos -> {
             BThackRenderUtils.applyBlend();
-            BThackRender.drawRoundedRectOld(pos[0], pos[1], pos[2], pos[3], 2.5f, ModuleList.HUD.gradient.getValue() ? ColorUtils.gradient(ModuleList.HUD.color1.getValue().hashCode(), ModuleList.HUD.color2.getValue().hashCode(), 1, ModuleList.HUD.scale.getValue().floatValue(), ModuleList.HUD.speed.getValue().floatValue()) : HUD.getHUDColor());
+            BThackRender.drawRoundedRectOld(pos[0], pos[1], pos[2], pos[3], ModuleList.HUD.roundScale.getValue().floatValue() / 2, ModuleList.HUD.gradient.getValue() ? ColorUtils.gradient(ModuleList.HUD.color1.getValue().hashCode(), ModuleList.HUD.color2.getValue().hashCode(), 1, ModuleList.HUD.scale.getValue().floatValue(), ModuleList.HUD.speed.getValue().floatValue()) : HUD.getHUDColor());
             float step = 2f / BThackRenderUtils.getGuiScale();
-            BThackRender.drawRoundedRectOld(pos[0] + step, pos[1] + step, pos[2] - step, pos[3] - step, 2.5f, ColorUtils.fastRGBA(0, 0, 0, 190));
+            BThackRender.drawRoundedRectOld(pos[0] + step, pos[1] + step, pos[2] - step, pos[3] - step, ModuleList.HUD.roundScale.getValue().floatValue() / 2, ModuleList.HUD.backGroundColor.getValue().hashCode());
         }),
         PRIMITIVE(pos -> {
             BThackRenderUtils.applyBlend();
-            BThackRender.drawRect(pos[0], pos[1], pos[2], pos[3], ColorUtils.fastRGBA(0, 0, 0, 190));
+            BThackRender.drawRect(pos[0], pos[1], pos[2], pos[3], ModuleList.HUD.backGroundColor.getValue().hashCode());
             BThackRender.drawOutlineRect(pos[0], pos[1], pos[2], pos[3], 1f / BThackRenderUtils.getGuiScale(), ModuleList.HUD.gradient.getValue() ? ColorUtils.gradient(ModuleList.HUD.color1.getValue().hashCode(), ModuleList.HUD.color2.getValue().hashCode(), 1, ModuleList.HUD.scale.getValue().floatValue(), ModuleList.HUD.speed.getValue().floatValue()) : HUD.getHUDColor());
         }),
         OLD(pos -> {});
