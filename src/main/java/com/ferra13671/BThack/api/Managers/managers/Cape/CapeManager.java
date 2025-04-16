@@ -7,7 +7,7 @@ import net.minecraft.util.Identifier;
 public class CapeManager implements Initializable {
     public static final ClientInfo.CapeInfo DEFAULT_CAPE_INFO = new ClientInfo.CapeInfo("", ClientInfo.CapeDataType.NONE);
 
-    private boolean enabled = true;
+    private boolean enabled = false;
     private Cape currentCape = Cape.fromIdentifier(Identifier.of("bthack", "textures/bthack_cape.png"));
 
     @Override
