@@ -53,31 +53,30 @@ public class Slider extends AbstractSetting<NumberSetting> implements Mc {
 
 	@Override
 	public void renderComponent() {
-		BThackRender.drawRect(parent.parent.getX(), parent.parent.getY() + offset, parent.parent.getX() + Constants.CLICKGUI_FRAME_WIDTH, parent.parent.getY() + offset + 15, ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().backgroundColor()), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))));
+		y = parent.parent.getY() + offset;
+		x = parent.parent.getX();
 
-		//BThackRender.drawRect(parent.parent.getX(), parent.parent.getY() + offset, parent.parent.getX(), parent.parent.getY() + offset + 15, new Color(Client.clientInfo.getColorTheme().getBackgroundFontColour()).hashCode());
-		BThackRender.drawRect(parent.parent.getX() + 2, parent.parent.getY() + offset + 11, parent.parent.getX() + 100 - 2, parent.parent.getY() + offset + 15, Color.GRAY.darker().darker().darker().getRGB());
+		BThackRender.drawRect(x, y, x + Constants.CLICKGUI_FRAME_WIDTH, y + getHeight(), ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().backgroundColor()), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))));
+
+		BThackRender.drawRect(x + 2, y + 11, x + Constants.CLICKGUI_FRAME_WIDTH - 2, y + getHeight(), Color.GRAY.darker().darker().darker().getRGB());
 
 		if (ModuleList.clickGui.isShaderEnabled()) {
 			ModuleList.clickGui.prepareCurrentShader(1, 1);
-			BThackRender.drawShader(ModuleList.clickGui.getCurrentShader(), parent.parent.getX() + 2, parent.parent.getY() + offset + 11, parent.parent.getX() + 2 + (int) renderWidth, parent.parent.getY() + offset + 15);
+			BThackRender.drawShader(ModuleList.clickGui.getCurrentShader(), x + 2, y + 11, x + 2 + (int) renderWidth, y + getHeight());
 		} else
-			BThackRender.drawRect(parent.parent.getX() + 2, parent.parent.getY() + offset + 11, parent.parent.getX() + 2 + (int) renderWidth, parent.parent.getY() + offset + 15, ClickGui.getClickGuiColor(false));
+			BThackRender.drawRect(x + 2, y + 11, x + 2 + (int) renderWidth, y + getHeight(), ClickGui.getClickGuiColor(false));
 
-		BThackRender.drawString(setting.getName() + ": " + setting.getValue(), parent.parent.getX() + 2, (parent.parent.getY() + offset + 1), ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()));
+		BThackRender.drawString(setting.getName() + ": " + setting.getValue(), x + 2, y + 1, ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()));
 	}
 
 	@Override
 	public boolean updateComponent(int mouseX, int mouseY) {
 		if (!getVisible() || !parent.open) return true;
 
-		y = parent.parent.getY() + offset;
-		x = parent.parent.getX();
-
 		double min = setting.getMinValue();
 		double max = setting.getMaxValue();
 
-		double diff = ((mouseX - 1 - ClickGui.applyGuiScale(x)) / (getWidth() * 2)) * 100;
+		double diff = ((mouseX - 1 - ClickGui.applyGuiScale(x)) / ((float) ClickGui.applyGuiScale((Constants.CLICKGUI_FRAME_WIDTH / 2) - 2) * 2)) * 100;
 		diff = Math.max(0, Math.min(100, diff));
 
 		double prevRenderWidth = renderWidth;
@@ -98,10 +97,6 @@ public class Slider extends AbstractSetting<NumberSetting> implements Mc {
 		}
 
 		return !dragging;
-	}
-
-	private float getWidth() {
-		return ClickGui.applyGuiScale(50 - 2);
 	}
 
 	public static double roundToPlace(double value) {

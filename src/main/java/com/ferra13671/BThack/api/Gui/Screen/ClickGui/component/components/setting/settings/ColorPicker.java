@@ -24,22 +24,22 @@ public class ColorPicker extends AbstractSetting<ColorSetting> {
     private final ColorObject colorRect = new ColorObject() {
         @Override
         protected float getStartX() {
-            return parent.parent.getX() + 5;
+            return x + 5;
         }
 
         @Override
         protected float getStartY() {
-            return parent.parent.getY() + offset + 15;
+            return y + 15;
         }
 
         @Override
         protected float getEndX() {
-            return parent.parent.getX() + 5 + getWidth();
+            return x + 5 + getWidth();
         }
 
         @Override
         protected float getEndY() {
-            return parent.parent.getY() + offset + 15 + getHeight();
+            return y + 15 + getHeight();
         }
 
         @Override
@@ -55,22 +55,22 @@ public class ColorPicker extends AbstractSetting<ColorSetting> {
     private final ColorObject hueRect = new ColorObject() {
         @Override
         protected float getStartX() {
-            return parent.parent.getX() + 60;
+            return x + 60;
         }
 
         @Override
         protected float getStartY() {
-            return parent.parent.getY() + offset + 15;
+            return y + 15;
         }
 
         @Override
         protected float getEndX() {
-            return parent.parent.getX() + 60 + getWidth();
+            return x + 60 + getWidth();
         }
 
         @Override
         protected float getEndY() {
-            return parent.parent.getY() + offset + 15 + getHeight();
+            return y + 15 + getHeight();
         }
 
         @Override
@@ -86,22 +86,22 @@ public class ColorPicker extends AbstractSetting<ColorSetting> {
     private final ColorObject alphaRect = new ColorObject() {
         @Override
         protected float getStartX() {
-            return parent.parent.getX() + 74;
+            return x + 74;
         }
 
         @Override
         protected float getStartY() {
-            return parent.parent.getY() + offset + 15;
+            return y + 15;
         }
 
         @Override
         protected float getEndX() {
-            return parent.parent.getX() + 74 + getWidth();
+            return x + 74 + getWidth();
         }
 
         @Override
         protected float getEndY() {
-            return parent.parent.getY() + offset + 15 + getHeight();
+            return y + 15 + getHeight();
         }
 
         @Override
@@ -146,7 +146,10 @@ public class ColorPicker extends AbstractSetting<ColorSetting> {
 
     @Override
     public void renderComponent() {
-        BThackRender.drawRect(parent.parent.getX(), parent.parent.getY() + offset, parent.parent.getX() + (Constants.CLICKGUI_FRAME_WIDTH), parent.parent.getY() + offset + getHeight(), ColorUtils.integrateAlpha(new Color(Client.clientInfo.getColorTheme().backgroundColor()).hashCode(), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))));
+        y = parent.parent.getY() + offset;
+        x = parent.parent.getX();
+
+        BThackRender.drawRect(x, y, x + Constants.CLICKGUI_FRAME_WIDTH, y + getHeight(), ColorUtils.integrateAlpha(new Color(Client.clientInfo.getColorTheme().backgroundColor()).hashCode(), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))));
         if (opened) {
             Drawers.GRADIENT_RECT.begin();
             Drawers.GRADIENT_RECT.draw(colorRect.getStartX(), colorRect.getStartY(), colorRect.getEndX(), colorRect.getEndY(), ColorUtils.WHITE, new Color(Color.HSBtoRGB(hue, 1f, 1f)).hashCode(), GradientRectDrawer.GradientMode.HORIZONTAL);
@@ -179,10 +182,10 @@ public class ColorPicker extends AbstractSetting<ColorSetting> {
             if (!setting.isBlockedAlpha())
                 drawAlphaCrosshair();
 
-            BThackRender.drawString("R:" + rgbColor.getRed() + " G:" + rgbColor.getGreen() + " B:" + rgbColor.getBlue() + " A:" + rgbColor.getAlpha(), parent.parent.getX() + 2, colorRect.getEndY() + 4, -1, true, FontRenderManager.DrawMode.SMALL);
+            BThackRender.drawString("R:" + rgbColor.getRed() + " G:" + rgbColor.getGreen() + " B:" + rgbColor.getBlue() + " A:" + rgbColor.getAlpha(), x + 2, colorRect.getEndY() + 4, -1, true, FontRenderManager.DrawMode.SMALL);
         }
-        BThackRender.drawString(setting.getName(), parent.parent.getX() + 2, parent.parent.getY() + offset + 2, ColorUtils.WHITE);
-        BThackRender.drawRect(parent.parent.getX() + Constants.CLICKGUI_FRAME_WIDTH - 12, parent.parent.getY() + offset + 2, parent.parent.getX() + Constants.CLICKGUI_FRAME_WIDTH - 2, parent.parent.getY() + offset + 12, rgbColor.hashCode());
+        BThackRender.drawString(setting.getName(), x + 2, y + 2, ColorUtils.WHITE);
+        BThackRender.drawRect(x + Constants.CLICKGUI_FRAME_WIDTH - 12, y + 2, x + Constants.CLICKGUI_FRAME_WIDTH - 2, y + 12, rgbColor.hashCode());
     }
 
     private void drawColorCrosshair() {
@@ -239,8 +242,6 @@ public class ColorPicker extends AbstractSetting<ColorSetting> {
                 updateColors();
             }
         }
-        y = parent.parent.getY() + offset;
-        x = parent.parent.getX();
 
         return false;
     }

@@ -24,9 +24,12 @@ public class KeyCode extends AbstractSetting<KeyCodeSetting> {
 
     @Override
     public void renderComponent() {
-        BThackRender.drawRect(parent.parent.getX(), parent.parent.getY() + offset, parent.parent.getX() + Constants.CLICKGUI_FRAME_WIDTH, parent.parent.getY() + offset + 15, this.hovered ? ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().backgroundHoveredColor()), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))) : ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().backgroundColor()), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))));
+        y = parent.parent.getY() + offset;
+        x = parent.parent.getX();
 
-        BThackRender.drawString(binding ? "< PRESS KEY >" : (setting.getName() + ": " + KeyboardUtils.getKeyName(setting.getValue())), parent.parent.getX() + 2, parent.parent.getY() + offset + 4, ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()));
+        BThackRender.drawRect(x, y, x + Constants.CLICKGUI_FRAME_WIDTH, y + getHeight(), this.hovered ? ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().backgroundHoveredColor()), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))) : ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().backgroundColor()), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))));
+
+        BThackRender.drawString(binding ? "< PRESS KEY >" : (setting.getName() + ": " + KeyboardUtils.getKeyName(setting.getValue())), x + 2, y + 4, ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()));
     }
 
     @Override
@@ -34,8 +37,6 @@ public class KeyCode extends AbstractSetting<KeyCodeSetting> {
         if (!getVisible() || !parent.open) return true;
 
         hovered = isMouseOnButton(mouseX, mouseY);
-        y = parent.parent.getY() + offset;
-        x = parent.parent.getX();
 
         return true;
     }

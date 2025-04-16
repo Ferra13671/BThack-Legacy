@@ -26,20 +26,23 @@ public class Checkbox extends AbstractSetting<BooleanSetting> {
 
 	@Override
 	public void renderComponent() {
-		BThackRender.drawRect(parent.parent.getX(), parent.parent.getY() + offset, parent.parent.getX() + (Constants.CLICKGUI_FRAME_WIDTH), parent.parent.getY() + offset + 15, this.hovered ? ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().backgroundHoveredColor()), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))) : ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().backgroundColor()), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))));
+		y = parent.parent.getY() + offset;
+		x = parent.parent.getX();
+
+		BThackRender.drawRect(x, y, x + Constants.CLICKGUI_FRAME_WIDTH, y + getHeight(), this.hovered ? ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().backgroundHoveredColor()), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))) : ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().backgroundColor()), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))));
 
 		if (needRenderPlate()) {
 			int alpha = (int) (255 * (setting.getValue() ? animation.getEase() : 1 - animation.getEase()));
 			if (ModuleList.clickGui.isShaderEnabled()) {
 				ModuleList.clickGui.prepareCurrentShader(alpha / 255f, 0.7f);
-				BThackRender.drawShader(ModuleList.clickGui.getCurrentShader(), parent.parent.getX() + 1, parent.parent.getY() + offset, parent.parent.getX() + Constants.CLICKGUI_FRAME_WIDTH - 1, parent.parent.getY() + offset + 15);
+				BThackRender.drawShader(ModuleList.clickGui.getCurrentShader(), x + 1, y, x + Constants.CLICKGUI_FRAME_WIDTH - 1, y + getHeight());
 			} else
-				BThackRender.drawRect(parent.parent.getX() + 1, parent.parent.getY() + offset, parent.parent.getX() + Constants.CLICKGUI_FRAME_WIDTH - 1, parent.parent.getY() + offset + 15, ColorUtils.integrateAlpha(ClickGui.getClickGuiColor(true), alpha));
+				BThackRender.drawRect(x + 1, y, x + Constants.CLICKGUI_FRAME_WIDTH - 1, y + getHeight(), ColorUtils.integrateAlpha(ClickGui.getClickGuiColor(true), alpha));
 
-			BThackRender.drawOutlineRect(parent.parent.getX() + 1, parent.parent.getY() + offset, parent.parent.getX() + Constants.CLICKGUI_FRAME_WIDTH - 1, parent.parent.getY() + offset + 15, 1, Constants.CLICKGUI_BUTTON_OUTLINE_COLOR);
+			BThackRender.drawOutlineRect(x + 1, y, x + Constants.CLICKGUI_FRAME_WIDTH - 1, y + getHeight(), 1, Constants.CLICKGUI_BUTTON_OUTLINE_COLOR);
 		}
 
-		BThackRender.drawString(getText(), parent.parent.getX() + 7, parent.parent.getY() + offset + 4, ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()));
+		BThackRender.drawString(getText(), x + 7, y + 4, ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()));
 	}
 
 	protected boolean needRenderPlate() {
@@ -56,8 +59,6 @@ public class Checkbox extends AbstractSetting<BooleanSetting> {
 		if (!getVisible()) return true;
 
 		hovered = isMouseOnButton(mouseX, mouseY);
-		y = parent.parent.getY() + offset;
-		x = parent.parent.getX();
 		return true;
 	}
 	

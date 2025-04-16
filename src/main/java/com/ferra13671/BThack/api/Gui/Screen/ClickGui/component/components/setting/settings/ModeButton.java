@@ -24,7 +24,10 @@ public class ModeButton extends AbstractSetting<ModeSetting> {
 	
 	@Override
 	public void renderComponent() {
-		BThackRender.drawRect(parent.parent.getX(), parent.parent.getY() + offset, parent.parent.getX() + Constants.CLICKGUI_FRAME_WIDTH, parent.parent.getY() + offset + 15, this.hovered ? ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().backgroundHoveredColor()), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))) : ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().backgroundColor()), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))));
+		y = parent.parent.getY() + offset;
+		x = parent.parent.getX();
+
+		BThackRender.drawRect(x, y, x + Constants.CLICKGUI_FRAME_WIDTH, y + getHeight(), this.hovered ? ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().backgroundHoveredColor()), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))) : ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().backgroundColor()), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))));
 
 		String text = getModeString();
 		float scale = getTextScale(text);
@@ -33,7 +36,7 @@ public class ModeButton extends AbstractSetting<ModeSetting> {
 			BThackMatrix.push();
 			BThackMatrix.scale(scale, scale, 1);
 		}
-		BThackRender.drawString(text, (parent.parent.getX() + 2) / scale, (parent.parent.getY() + offset + 4) / scale, ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()));
+		BThackRender.drawString(text, (x + 2) / scale, (y + 4) / scale, ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()));
 		if (scale != 1)
 			BThackMatrix.pop();
 	}
@@ -52,8 +55,6 @@ public class ModeButton extends AbstractSetting<ModeSetting> {
 		if (!getVisible() || !parent.open) return true;
 
 		hovered = isMouseOnButton(mouseX, mouseY);
-		y = parent.parent.getY() + offset;
-		x = parent.parent.getX();
 
 		return true;
 	}
