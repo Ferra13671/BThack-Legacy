@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.setting;
 
+import com.ferra13671.BThack.Constants;
 import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.Component;
 import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.ModuleButton;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.Setting;
@@ -22,6 +23,9 @@ public abstract class AbstractSetting<T extends Setting<?>> extends Component {
     public final T setting;
 
     public AbstractSetting(int offset, ModuleButton button, Module module, T setting) {
+        this.x = button.parent.getX() + Constants.CLICKGUI_FRAME_WIDTH;
+        this.y = button.parent.getY() + button.offset;
+
         this.offset = offset;
         this.parent = button;
         this.module = module;

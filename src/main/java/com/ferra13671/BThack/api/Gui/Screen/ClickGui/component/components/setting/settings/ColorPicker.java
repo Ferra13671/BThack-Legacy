@@ -120,6 +120,8 @@ public class ColorPicker extends AbstractSetting<ColorSetting> {
     private float hue;
     private float alpha;
 
+    private boolean opened = false;
+
     public ColorPicker(ColorSetting setting, ModuleButton button , int offset, Module module) {
         super(offset, button, module, setting);
 
@@ -139,46 +141,47 @@ public class ColorPicker extends AbstractSetting<ColorSetting> {
 
     @Override
     public int getHeight() {
-        return 80;
+        return opened ? 80 : 15;
     }
 
     @Override
     public void renderComponent() {
         BThackRender.drawRect(parent.parent.getX(), parent.parent.getY() + offset, parent.parent.getX() + (Constants.CLICKGUI_FRAME_WIDTH), parent.parent.getY() + offset + getHeight(), ColorUtils.integrateAlpha(new Color(Client.clientInfo.getColorTheme().backgroundColor()).hashCode(), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))));
-        BThackRender.drawString(setting.getName(), parent.parent.getX() + 2, parent.parent.getY() + offset + 2, ColorUtils.WHITE);
+        if (opened) {
+            Drawers.GRADIENT_RECT.begin();
+            Drawers.GRADIENT_RECT.draw(colorRect.getStartX(), colorRect.getStartY(), colorRect.getEndX(), colorRect.getEndY(), ColorUtils.WHITE, new Color(Color.HSBtoRGB(hue, 1f, 1f)).hashCode(), GradientRectDrawer.GradientMode.HORIZONTAL);
+            Drawers.GRADIENT_RECT.draw(colorRect.getStartX(), colorRect.getStartY(), colorRect.getEndX(), colorRect.getEndY(), ColorUtils.TRANSPARENT, ColorUtils.BLACK, GradientRectDrawer.GradientMode.VERTICAL);
 
-        Drawers.GRADIENT_RECT.begin();
-        Drawers.GRADIENT_RECT.draw(colorRect.getStartX(), colorRect.getStartY(), colorRect.getEndX(), colorRect.getEndY(), ColorUtils.WHITE, new Color(Color.HSBtoRGB(hue, 1f, 1f)).hashCode(), GradientRectDrawer.GradientMode.HORIZONTAL);
-        Drawers.GRADIENT_RECT.draw(colorRect.getStartX(), colorRect.getStartY(), colorRect.getEndX(), colorRect.getEndY(), ColorUtils.TRANSPARENT, ColorUtils.BLACK, GradientRectDrawer.GradientMode.VERTICAL);
+            //Alpha Rect
+            if (!setting.isBlockedAlpha())
+                Drawers.GRADIENT_RECT.draw(alphaRect.getStartX(), alphaRect.getStartY(), alphaRect.getEndX(), alphaRect.getEndY(), new Color(rgbColor.getRed(), rgbColor.getGreen(), rgbColor.getBlue()).hashCode(), ColorUtils.WHITE, GradientRectDrawer.GradientMode.VERTICAL);
+            Drawers.GRADIENT_RECT.end();
 
-        //Alpha Rect
-        if (!setting.isBlockedAlpha())
-            Drawers.GRADIENT_RECT.draw(alphaRect.getStartX(), alphaRect.getStartY(), alphaRect.getEndX(), alphaRect.getEndY(), new Color(rgbColor.getRed(), rgbColor.getGreen(), rgbColor.getBlue()).hashCode(), ColorUtils.WHITE, GradientRectDrawer.GradientMode.VERTICAL);
-        Drawers.GRADIENT_RECT.end();
+            //Hue Rect
+            Tessellator tessellator = BThackRenderUtils.prepareToDraw();
+            Shaders.INSTANCE.POSITION.use();
+            float hue = 0;
+            float hueFactor = 1 / 26f;
+            float hueY = 0;
+            for (int i = 0; i < 26; i++) {
+                Color hueColor = Color.getHSBColor(hue, 1f, 1f);
+                Drawers.RECT.beginBuffer(tessellator);
+                Shaders.INSTANCE.POSITION.setUniformValue("color", hueColor.getRed() / 255f, hueColor.getGreen() / 255f, hueColor.getBlue() / 255f, hueColor.getAlpha() / 255f);
+                Drawers.RECT.draw(hueRect.getStartX(), hueRect.getStartY() + hueY, hueRect.getEndX(), hueRect.getStartY() + (hueY + 2));
+                Drawers.RECT.endNoReset();
+                hue += hueFactor;
+                hueY += 2;
+            }
+            Shaders.INSTANCE.POSITION.release();
 
-        //Hue Rect
-        Tessellator tessellator = BThackRenderUtils.prepareToDraw();
-        Shaders.INSTANCE.POSITION.use();
-        float hue = 0;
-        float hueFactor = 1 / 26f;
-        float hueY = 0;
-        for (int i = 0; i < 26; i++) {
-            Color hueColor = Color.getHSBColor(hue, 1f, 1f);
-            Drawers.RECT.beginBuffer(tessellator);
-            Shaders.INSTANCE.POSITION.setUniformValue("color", hueColor.getRed() / 255f, hueColor.getGreen() / 255f, hueColor.getBlue() / 255f, hueColor.getAlpha() / 255f);
-            Drawers.RECT.draw(hueRect.getStartX(), hueRect.getStartY() + hueY, hueRect.getEndX(), hueRect.getStartY() + (hueY + 2));
-            Drawers.RECT.endNoReset();
-            hue += hueFactor;
-            hueY += 2;
+            drawColorCrosshair();
+            drawHueCrosshair();
+            if (!setting.isBlockedAlpha())
+                drawAlphaCrosshair();
+
+            BThackRender.drawString("R:" + rgbColor.getRed() + " G:" + rgbColor.getGreen() + " B:" + rgbColor.getBlue() + " A:" + rgbColor.getAlpha(), parent.parent.getX() + 2, colorRect.getEndY() + 4, -1, true, FontRenderManager.DrawMode.SMALL);
         }
-        Shaders.INSTANCE.POSITION.release();
-
-        drawColorCrosshair();
-        drawHueCrosshair();
-        if (!setting.isBlockedAlpha())
-            drawAlphaCrosshair();
-
-        BThackRender.drawString("R:" + rgbColor.getRed() + " G:" + rgbColor.getGreen() + " B:" + rgbColor.getBlue() + " A:" + rgbColor.getAlpha(), parent.parent.getX() + 2, colorRect.getEndY() + 4, -1, true, FontRenderManager.DrawMode.SMALL);
+        BThackRender.drawString(setting.getName(), parent.parent.getX() + 2, parent.parent.getY() + offset + 2, ColorUtils.WHITE);
         BThackRender.drawRect(parent.parent.getX() + Constants.CLICKGUI_FRAME_WIDTH - 12, parent.parent.getY() + offset + 2, parent.parent.getX() + Constants.CLICKGUI_FRAME_WIDTH - 2, parent.parent.getY() + offset + 12, rgbColor.hashCode());
     }
 
@@ -236,6 +239,8 @@ public class ColorPicker extends AbstractSetting<ColorSetting> {
                 updateColors();
             }
         }
+        y = parent.parent.getY() + offset;
+        x = parent.parent.getX();
 
         return false;
     }
@@ -244,7 +249,12 @@ public class ColorPicker extends AbstractSetting<ColorSetting> {
     public boolean mouseClicked(int mouseX, int mouseY, int button) {
         if (!this.getVisible()) return false;
 
-        if (button == 0) {
+        if (isMouseOnButton(mouseX, mouseY)) {
+            opened = !opened;
+            parent.parent.refresh();
+            return false;
+        }
+        if (opened && button == 0) {
             if (colorRect.isMouseOnObject(mouseX, mouseY)) {
                 colorRect.hovered = true;
                 return false;

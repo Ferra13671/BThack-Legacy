@@ -20,8 +20,6 @@ public class Checkbox extends AbstractSetting<BooleanSetting> {
 	
 	public Checkbox(BooleanSetting setting, ModuleButton button, int offset, Module module) {
 		super(offset, button, module, setting);
-		this.x = button.parent.getX() + Constants.CLICKGUI_FRAME_WIDTH;
-		this.y = button.parent.getY() + button.offset;
 
 		animation.reset();
 	}

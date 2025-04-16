@@ -16,9 +16,6 @@ public class Visible extends Checkbox {
 
     public Visible(ModuleButton parent, int offset, Module module) {
         super(null, parent, offset, module);
-
-        x = parent.parent.getX() + Constants.CLICKGUI_FRAME_WIDTH;
-        y = parent.parent.getY() + parent.offset;
     }
 
     @Override

@@ -17,8 +17,6 @@ public class OpenGuiButton extends AbstractSetting<GuiButtonSetting> implements 
 
     public OpenGuiButton(GuiButtonSetting setting, ModuleButton button, int offset, Module module) {
         super(offset, button, module, setting);
-        x = button.parent.getX() + Constants.CLICKGUI_FRAME_WIDTH;
-        y = button.parent.getY() + button.offset;
     }
 
     @Override

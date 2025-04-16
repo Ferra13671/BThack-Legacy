@@ -19,10 +19,6 @@ public class Keybind extends AbstractSetting<Setting<?>> {
 	
 	public Keybind(ModuleButton button, int offset) {
 		super(offset, button, null, null);
-
-
-		this.x = button.parent.getX() + Constants.CLICKGUI_FRAME_WIDTH;
-		this.y = button.parent.getY() + button.offset;
 	}
 	
 	@Override

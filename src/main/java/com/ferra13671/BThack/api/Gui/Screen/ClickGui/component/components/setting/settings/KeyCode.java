@@ -20,8 +20,6 @@ public class KeyCode extends AbstractSetting<KeyCodeSetting> {
 
     public KeyCode(ModuleButton button, int offset, KeyCodeSetting setting, Module module) {
         super(offset, button, module, setting);
-        x = button.parent.getX() + Constants.CLICKGUI_FRAME_WIDTH;
-        y = button.parent.getY() + button.offset;
     }
 
     @Override

@@ -18,8 +18,6 @@ public class ModeButton extends AbstractSetting<ModeSetting> {
 
 	public ModeButton(ModeSetting setting, ModuleButton button, int offset, int modeIndex, Module module) {
 		super(offset, button, module, setting);
-		x = button.parent.getX() + Constants.CLICKGUI_FRAME_WIDTH;
-		y = button.parent.getY() + button.offset;
 
 		setting.setValue(setting.getOptions().get(modeIndex));
 	}

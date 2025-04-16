@@ -49,8 +49,6 @@ public class Slider extends AbstractSetting<NumberSetting> implements Mc {
 
 	public Slider(NumberSetting setting, ModuleButton button, int offset, Module module) {
 		super(offset, button, module, setting);
-		x = button.parent.getX() + Constants.CLICKGUI_FRAME_WIDTH;
-		y = button.parent.getY() + button.offset;
 	}
 
 	@Override
