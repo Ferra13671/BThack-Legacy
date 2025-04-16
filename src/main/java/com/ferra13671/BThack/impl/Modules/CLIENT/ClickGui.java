@@ -76,8 +76,8 @@ public class ClickGui extends OneActionModule {
         color1 = new ColorSetting("Color1", this, new Color(195, 85, 251), gradient::getValue).withBlockedAlpha();
         color2 = new ColorSetting("Color2", this, new Color(105, 0, 166), gradient::getValue).withBlockedAlpha();
 
-        scale = new NumberSetting("Scale", this, 1, 0.3, 4, false, rainbow::getValue);
-        speed = new NumberSetting("Speed", this, 1, 0.3, 4, false, rainbow::getValue);
+        scale = new NumberSetting("Scale", this, 1, 0.3, 4, false, () -> rainbow.getValue() || gradient.getValue());
+        speed = new NumberSetting("Speed", this, 1, 0.3, 4, false, () -> rainbow.getValue() || gradient.getValue());
 
         initSettings(
                 activeTheme,
