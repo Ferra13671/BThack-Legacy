@@ -8,6 +8,7 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetti
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ColorSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
+import com.ferra13671.BThack.api.Shader.ShaderProgram;
 import com.ferra13671.BThack.api.Shader.Shaders;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -25,10 +26,19 @@ public class Tooltips extends Module {
     public final BooleanSetting shulkers = new BooleanSetting("Shulkers", this, true);
     public final BooleanSetting maps = new BooleanSetting("Maps", this, true);
 
-    public final BooleanSetting frameRainbow = new BooleanSetting("Frame Rainbow", this, true);
-    public final ColorSetting frameColor = new ColorSetting("Frame Color", this, new Color(161, 0, 255), () -> !frameRainbow.getValue()).withBlockedAlpha();
+    public BooleanSetting rainbow;
+    public NumberSetting rainbowAlpha;
 
-    public final NumberSetting backGroundAlpha = new NumberSetting("BGround Alpha", this, 255, 10, 255, true);
+    public BooleanSetting gradient;
+    public ColorSetting color1;
+    public ColorSetting color2;
+
+    public NumberSetting scale;
+    public NumberSetting speed;
+
+    public final ColorSetting color = new ColorSetting("Color", this, new Color(161, 0, 255), () -> !rainbow.getValue() && !gradient.getValue());
+
+    public final ColorSetting backGroundColor = new ColorSetting("BackGround", this, new Color(5, 5, 5, 255));
 
     public Tooltips() {
         super("Tooltips",
@@ -38,14 +48,34 @@ public class Tooltips extends Module {
                 false
         );
 
+        rainbow = new BooleanSetting("Rainbow", this, false, () -> !gradient.getValue());
+        rainbowAlpha = new NumberSetting("Rainbow Alpha", this, 255, 0, 255, true, () -> rainbow.getValue() && !gradient.getValue());
+
+        gradient = new BooleanSetting("Gradient", this, true, () -> !(rainbow.getValue() && !this.gradient.getValue()));
+
+        color1 = new ColorSetting("Color1", this, new Color(195, 85, 251), gradient::getValue).withBlockedAlpha();
+        color2 = new ColorSetting("Color2", this, new Color(105, 0, 166), gradient::getValue).withBlockedAlpha();
+
+        scale = new NumberSetting("Scale", this, 1, 0.3, 4, false, () -> rainbow.getValue() || gradient.getValue());
+        speed = new NumberSetting("Speed", this, 1, 0.3, 4, false, () -> rainbow.getValue() || gradient.getValue());
+
         initSettings(
                 shulkers,
                 maps,
 
-                frameRainbow,
-                frameColor,
+                rainbow,
+                rainbowAlpha,
 
-                backGroundAlpha
+                gradient,
+                color1,
+                color2,
+
+                scale,
+                speed,
+
+                color,
+
+                backGroundColor
         );
     }
 
@@ -56,11 +86,20 @@ public class Tooltips extends Module {
         BThackMatrix.translate(0f, 0f, 600f);
 
         BThackRender.drawVerticalGradientOutlineRect(x + 7, y - 22, x + 159, y + 49, 1, ColorUtils.WHITE, ColorUtils.fastRGBA(120, 120, 120, 255));
-        if (frameRainbow.getValue())
-            BThackRender.drawShader(Shaders.INSTANCE.X_RAINBOW, x + 8, y - 21, x + 158, y - 6);
-        else
-            BThackRender.drawRect(x + 8, y - 21, x + 158, y - 6, getFrameColor());
-        BThackRender.drawVerticalGradientRect(x + 8, y - 6, x + 158, y + 48, ColorUtils.fastRGBA(5, 5, 5, backGroundAlpha.getValue().intValue()), ColorUtils.fastRGBA(50, 50, 50, backGroundAlpha.getValue().intValue()));
+        if (isShaderRender()) {
+            ShaderProgram shader = getCurrentShader(); //Just ignore this warn
+            shader.setUniformValue("scale", scale.getValue().floatValue());
+            shader.setUniformValue("speed", speed.getValue().floatValue());
+            if (rainbow.getValue())
+                shader.setUniformValue("alpha", rainbowAlpha.getValue().intValue() / 255f);
+            else {
+                shader.setUniformValue("color1", color1.getValue().getRed() / 255f, color1.getValue().getGreen() / 255f, color1.getValue().getBlue() / 255f, color1.getValue().getAlpha() / 255f);
+                shader.setUniformValue("color2", color2.getValue().getRed() / 255f, color2.getValue().getGreen() / 255f, color2.getValue().getBlue() / 255f, color2.getValue().getAlpha() / 255f);
+            }
+            BThackRender.drawShader(shader, x + 8, y - 21, x + 158, y - 6);
+        } else
+            BThackRender.drawRect(x + 8, y - 21, x + 158, y - 6, getColor());
+        BThackRender.drawRect(x + 8, y - 6, x + 158, y + 48, ColorUtils.fastRGBA(backGroundColor.getValue().getRed(), backGroundColor.getValue().getGreen(), backGroundColor.getValue().getBlue(), backGroundColor.getValue().getAlpha()));
 
         BThackRender.drawString(itemStack.getName().getString(), x + 10, y - 16, -1, true, FontRenderManager.DrawMode.NORMAL_BOLD);
 
@@ -92,17 +131,26 @@ public class Tooltips extends Module {
 
         if (mapState != null) {
             mapState.getPlayerSyncData(mc.player);
-            double scale = 0.8;
+            double _scale = 0.8;
             context.getMatrices().translate(x + 16, y - 4, z);
-            context.getMatrices().scale((float) scale, (float) scale, 0);
+            context.getMatrices().scale((float) _scale, (float) _scale, 0);
 
             BThackMatrix.push();
             BThackMatrix.translate(0f, 0f, 600f);
-            BThackRender.drawVerticalGradientRect(x1, y1 - 10, x2, y2, ColorUtils.fastRGBA(5, 5, 5, backGroundAlpha.getValue().intValue()), ColorUtils.fastRGBA(100, 100, 100, backGroundAlpha.getValue().intValue()));
-            if (frameRainbow.getValue())
-                BThackRender.drawShaderOutlineRect(Shaders.INSTANCE.X_RAINBOW,x1, y1 - 10, x2, y2, 1);
-            else
-                BThackRender.drawOutlineRect(x1, y1 - 10, x2, y2, 1, getFrameColor()); //yea
+            BThackRender.drawRect(x1, y1 - 10, x2, y2, ColorUtils.fastRGBA(backGroundColor.getValue().getRed(), backGroundColor.getValue().getGreen(), backGroundColor.getValue().getBlue(), backGroundColor.getValue().getAlpha()));
+            if (isShaderRender()) {
+                ShaderProgram shader = getCurrentShader(); //Just ignore this warn
+                shader.setUniformValue("scale", scale.getValue().floatValue());
+                shader.setUniformValue("speed", speed.getValue().floatValue());
+                if (rainbow.getValue())
+                    shader.setUniformValue("alpha", rainbowAlpha.getValue().intValue() / 255f);
+                else {
+                    shader.setUniformValue("color1", color1.getValue().getRed() / 255f, color1.getValue().getGreen() / 255f, color1.getValue().getBlue() / 255f, color1.getValue().getAlpha() / 255f);
+                    shader.setUniformValue("color2", color2.getValue().getRed() / 255f, color2.getValue().getGreen() / 255f, color2.getValue().getBlue() / 255f, color2.getValue().getAlpha() / 255f);
+                }
+                BThackRender.drawShaderOutlineRect(shader,x1, y1 - 10, x2, y2, 1);
+            } else
+                BThackRender.drawOutlineRect(x1, y1 - 10, x2, y2, 1, getColor()); //yea
 
             BThackMatrix.scale(0.75f, 0.75f, 0.75f);
             BThackRender.drawString(stack.getItem().getName().getString(), (int) ((x1 + 5) * 1.3333), (int) ((y1 - 5) * 1.3333), -1, true, FontRenderManager.DrawMode.NORMAL_BOLD);
@@ -114,7 +162,15 @@ public class Tooltips extends Module {
         context.getMatrices().pop();
     }
 
-    private int getFrameColor() {
-        return ColorUtils.fastRGBA(frameColor.getValue().getRed(), frameColor.getValue().getGreen(), frameColor.getValue().getBlue(), 255);
+    public boolean isShaderRender() {
+        return rainbow.getValue() || gradient.getValue();
+    }
+
+    public ShaderProgram getCurrentShader() {
+        return gradient.getValue() ? Shaders.INSTANCE.XY_GRADIENT : Shaders.INSTANCE.X_RAINBOW;
+    }
+
+    private int getColor() {
+        return ColorUtils.fastRGBA(color.getValue().getRed(), color.getValue().getGreen(), color.getValue().getBlue(), 255);
     }
 }
