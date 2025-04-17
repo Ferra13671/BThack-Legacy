@@ -2,8 +2,10 @@ package com.ferra13671.BThack.api.Managers.managers.TwoFA;
 
 import com.ferra13671.BThack.Core.FileSystem.ConfigSystem.ConfigUtils;
 import com.ferra13671.BThack.Core.FileSystem.JsonUtils;
+import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.TwoFA.TOTP.TOTPGenerator;
 import com.ferra13671.BThack.api.Managers.managers.TwoFA.TOTP.TotpSecret;
+import com.ferra13671.BThack.api.Utils.Data;
 import com.ferra13671.BThack.api.Utils.Initializable;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -22,9 +24,12 @@ public class TwoFAManager implements Initializable {
     }
 
     public String getCode(String name) {
-        if (twoFAKeys.containsKey(name)) {
-            return totpGenerator.generateCurrent(TotpSecret.fromBase32EncodedString(twoFAKeys.get(name))).value();
-        } else return null;
+        Data<String> key = new Data<>(twoFAKeys.getOrDefault(name, null));
+        if (key.get() == null)
+            Managers.ACCOUNT_MANAGER.getAccounts().forEach(account -> {
+                if (account.name().equals(name) && !account.twoFA().isEmpty()) key.set(account.twoFA());
+            });
+        return key.get() != null ? totpGenerator.generateCurrent(TotpSecret.fromBase32EncodedString(key.get())).value() : null;
     }
 
     public void save() throws IOException {

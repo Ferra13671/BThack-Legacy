@@ -2,6 +2,8 @@ package com.ferra13671.BThack.api.Managers.managers;
 
 import com.ferra13671.BThack.Core.FileSystem.ConfigSystem.ConfigUtils;
 import com.ferra13671.BThack.Core.FileSystem.JsonUtils;
+import com.ferra13671.BThack.api.Managers.Managers;
+import com.ferra13671.BThack.api.Utils.Data;
 import com.ferra13671.BThack.api.Utils.Initializable;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -20,7 +22,12 @@ public class AutoAuthManager implements Initializable {
     }
 
     public String getPassword(String nickname) {
-        return passwords.getOrDefault(nickname, null);
+        Data<String> password = new Data<>(passwords.getOrDefault(nickname, null));
+        if (password.get() == null)
+            Managers.ACCOUNT_MANAGER.getAccounts().forEach(account -> {
+                if (account.name().equals(nickname) && !account.autoAuth().isEmpty()) password.set(account.autoAuth());
+            });
+        return password.get();
     }
 
     public void save() throws IOException {

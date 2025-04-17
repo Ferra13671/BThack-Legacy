@@ -64,6 +64,7 @@ public final class ConfigSystem {
             });
             saveActionBotTasks();
             Managers.AUTO_AUTH_MANAGER.save();
+            Managers.ACCOUNT_MANAGER.save();
             saveClientInfo();
             saveWaypoints();
             saveMacros();
@@ -88,6 +89,7 @@ public final class ConfigSystem {
             loadFrames();
             loadActionBotTasks();
             Managers.AUTO_AUTH_MANAGER.load();
+            Managers.ACCOUNT_MANAGER.load();
             loadClientInfo();
             loadWaypoints();
             loadMacros();

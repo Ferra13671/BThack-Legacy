@@ -15,6 +15,7 @@ public class Textures {
     public static final GLTexture CONFIG_FILE = GLTexture.fromPath("assets/bthack/textures/config_file.png", PathMode.INSIDEJAR, GLTexture.ColorMode.RGBA, true);
     public static final GLTexture SHOW = GLTexture.fromPath("assets/bthack/textures/show.png", PathMode.INSIDEJAR, GLTexture.ColorMode.RGBA, false);
     public static final GLTexture HIDE = GLTexture.fromPath("assets/bthack/textures/hide.png", PathMode.INSIDEJAR, GLTexture.ColorMode.RGBA, false);
+    public static final GLTexture PLAYER = GLTexture.fromPath("assets/bthack/textures/player.png", PathMode.INSIDEJAR, GLTexture.ColorMode.RGBA, true);
 
     //Gifs
     public static final GLGif CAIPIRINHA = GLGif.fromInputStream(Textures.class.getClassLoader().getResourceAsStream("assets/bthack/gifs/caipirinha.gif"), GLGif.DecompileMode.DELTAS, 150);

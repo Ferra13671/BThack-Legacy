@@ -9,14 +9,19 @@ import com.ferra13671.BThack.api.SoundSystem.Sounds;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.Utils.Ticker;
 import com.google.common.collect.Sets;
+import net.minecraft.util.Formatting;
 
 import java.util.Set;
 
 public class NumberFrameButton extends Button {
+    private final String nullText;
     private final StringBuilder textBuilder = new StringBuilder();
     private boolean isDouble = false;
 
+    private boolean selected = false;
     private final Ticker soundTicker = new Ticker();
+    private final Ticker insertTicker = new Ticker();
+    private boolean insertAdd = false;
 
     private final Set<String> keys = Sets.newHashSet(
             "1","2","3","4","5","6","7","8","9","0"
@@ -25,14 +30,29 @@ public class NumberFrameButton extends Button {
 
     public NumberFrameButton(int id, int centerX, int centerY, int width, int height) {
         super(id,centerX,centerY, width, height, "");
+        this.nullText = "";
+    }
+
+    public NumberFrameButton(int id, int centerX, int centerY, int width, int height, String nullText) {
+        super(id,centerX,centerY, width, height, "");
+        this.nullText = nullText;
+    }
+
+    @Override
+    public void updateButton(int mouseX, int mouseY) {
+        if (selected && insertTicker.passed(500)) {
+            insertAdd = !insertAdd;
+            insertTicker.reset();
+        } else if (!selected) insertAdd = false;
     }
 
 
     @Override
     public void renderButton() {
         drawPlate(getAnimationDelta());
-
-        BThackRender.drawString(textBuilder.toString(), getCenterX() - getWidth() + 3, getCenterY() - (FontUtils.getTextHeight(getText()) / 2f), ColorUtils.WHITE, true, FontRenderManager.DrawMode.NORMAL_BOLD);
+        String text = textBuilder.toString();
+        if (text.isEmpty() && !selected) text = Formatting.GRAY + nullText + "...";
+        BThackRender.drawString(text + (insertAdd && selected ? "|" : ""), getCenterX() - getWidth() + 5, getCenterY() - (FontUtils.getTextHeight(getText(), FontRenderManager.DrawMode.NORMAL_BOLD) / 2f), ColorUtils.WHITE, true, FontRenderManager.DrawMode.NORMAL_BOLD);
     }
 
 

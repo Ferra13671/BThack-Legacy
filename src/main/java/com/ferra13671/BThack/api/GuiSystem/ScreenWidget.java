@@ -30,6 +30,10 @@ public class ScreenWidget extends BThackScreen {
         this.parent = parent;
     }
 
+    public BThackScreen getParent() {
+        return parent;
+    }
+
     @Override
     public void init() {
         super.init();

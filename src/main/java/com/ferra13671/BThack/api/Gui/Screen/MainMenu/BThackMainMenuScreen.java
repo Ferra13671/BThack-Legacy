@@ -6,6 +6,7 @@ import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Animation.Animation;
 import com.ferra13671.BThack.api.Animation.Easing;
+import com.ferra13671.BThack.api.Gui.Widget.Account.AccountsWidget;
 import com.ferra13671.BThack.api.GuiSystem.BThackWidgets;
 import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Thread.ThreadManager;
@@ -98,6 +99,11 @@ public class BThackMainMenuScreen extends BThackScreen {
         buttons.add(Button.of(4, xCenter, yCenter + 110,
                 100, 10,
                 "lang.screen.Mainmenu.Quit").withAction(buttonClickInfo -> actionAfterClicking(() -> changeScreen(() -> BThackScreens.EXIT, new Animation(Easing.LINEAR, 1000)))));
+        buttons.add(Button.of(9, mc.getWindow().getScaledWidth() - 55, mc.getWindow().getScaledHeight() - 15, 50, 10, "Accounts")
+                .withAction(buttonClickInfo -> actionAfterClicking(() -> {
+                    widgetManage.addWidget(new AccountsWidget());
+                    getButtonFromId(9).setHovered(false);
+                })));
     }
 
     @Override

@@ -66,7 +66,7 @@ public class Button implements Mc {
     public void renderButton() {
         float animationDelta = getAnimationDelta();
         drawPlate(animationDelta);
-        BThackRender.drawString(getText(), (getCenterX() - (FontUtils.getTextWidth(getText()) / 2f)), (getCenterY() - (FontUtils.getTextHeight(getText()) / 2f)), -1, true, FontRenderManager.DrawMode.NORMAL_BOLD);
+        BThackRender.drawString(getText(), (getCenterX() - (FontUtils.getTextWidth(getText(), FontRenderManager.DrawMode.NORMAL_BOLD) / 2f)), (getCenterY() - (FontUtils.getTextHeight(getText(), FontRenderManager.DrawMode.NORMAL_BOLD) / 2f)), -1, true, FontRenderManager.DrawMode.NORMAL_BOLD);
     }
 
     protected void drawPlate(float animationDelta) {

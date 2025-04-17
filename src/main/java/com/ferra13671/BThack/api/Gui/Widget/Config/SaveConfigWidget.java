@@ -21,7 +21,7 @@ public class SaveConfigWidget extends ScreenWidget {
         super.init();
 
         buttons.clear();
-        buttons.add(new TextFrameButton(1, (int) xLeft + 55, (int) yUp + 15, 50, 10));
+        buttons.add(new TextFrameButton(1, (int) xLeft + 55, (int) yUp + 15, 50, 10, "Config name"));
         Button button = Button.of(2, (int) xLeft + 55, (int) yDown - 15, 50, 10, "Confirm")
                 .withAction(buttonClickInfo -> {
                     try {

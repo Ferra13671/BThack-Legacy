@@ -8,23 +8,42 @@ import com.ferra13671.BThack.api.SoundSystem.SoundSystem;
 import com.ferra13671.BThack.api.SoundSystem.Sounds;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.Utils.Ticker;
+import net.minecraft.util.Formatting;
 
 public class TextFrameButton extends Button {
+    private final String nullText;
     private StringBuilder textBuilder = new StringBuilder();
 
     private boolean selected = false;
+    private final Ticker insertTicker = new Ticker();
+    private boolean insertAdd = false;
     private final Ticker soundTicker = new Ticker();
 
 
     public TextFrameButton(int id, int centerX, int centerY, int width, int height) {
         super(id,centerX,centerY, width, height, "");
+        this.nullText = "";
     }
 
+    public TextFrameButton(int id, int centerX, int centerY, int width, int height, String nullText) {
+        super(id,centerX,centerY, width, height, "");
+        this.nullText = nullText;
+    }
+
+    @Override
+    public void updateButton(int mouseX, int mouseY) {
+        if (selected && insertTicker.passed(500)) {
+            insertAdd = !insertAdd;
+            insertTicker.reset();
+        } else if (!selected) insertAdd = false;
+    }
 
     @Override
     public void renderButton() {
         drawPlate(getAnimationDelta());
-        BThackRender.drawString(textBuilder.toString(), this.getCenterX() - this.getWidth() + 3, this.getCenterY() - (FontUtils.getTextHeight(getText()) / 2f), ColorUtils.WHITE, true, FontRenderManager.DrawMode.NORMAL_BOLD);
+        String text = textBuilder.toString();
+        if (text.isEmpty() && !selected) text = Formatting.GRAY + nullText + "...";
+        BThackRender.drawString(text + (insertAdd && selected ? "|" : ""), getCenterX() - getWidth() + 5, getCenterY() - (FontUtils.getTextHeight(getText(), FontRenderManager.DrawMode.NORMAL_BOLD) / 2f), ColorUtils.WHITE, true, FontRenderManager.DrawMode.NORMAL_BOLD);
     }
 
     @Override
@@ -48,7 +67,7 @@ public class TextFrameButton extends Button {
 
         if (!this.selected) return;
 
-        if (FontUtils.getTextWidth(textBuilder.toString()) < ((this.getWidth() * 2) - ((this.getWidth() * 2) * 0.1))) {
+        if (FontUtils.getTextWidth(textBuilder.toString()) < ((getWidth() * 2) - ((getWidth() * 2) * 0.1))) {
             textBuilder.append(_char);
             if (soundTicker.passed(50)) {
                 SoundSystem.playSound(Sounds.GUI_TYPING);

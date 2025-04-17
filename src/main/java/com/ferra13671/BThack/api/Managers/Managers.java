@@ -1,6 +1,7 @@
 package com.ferra13671.BThack.api.Managers;
 
 import com.ferra13671.BThack.api.Managers.managers.*;
+import com.ferra13671.BThack.api.Managers.managers.Account.AccountManager;
 import com.ferra13671.BThack.api.Managers.managers.Build.BuildManager;
 import com.ferra13671.BThack.api.Managers.managers.Cape.CapeManager;
 import com.ferra13671.BThack.api.Managers.managers.ColourTheme.ColorThemeManager;
@@ -34,4 +35,5 @@ public class Managers {
     public static final CapeManager CAPE_MANAGER = new CapeManager();
     public static final TwoFAManager TWOFA_MANAGER = new TwoFAManager();
     public static final AutoAuthManager AUTO_AUTH_MANAGER = new AutoAuthManager();
+    public static final AccountManager ACCOUNT_MANAGER = new AccountManager();
 }

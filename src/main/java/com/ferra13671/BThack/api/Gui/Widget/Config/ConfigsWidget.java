@@ -5,7 +5,6 @@ import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Drawers.Drawers;
 import com.ferra13671.BThack.Core.Render.Font.FontRenderManager;
 import com.ferra13671.BThack.Core.Render.Font.FontUtils;
-import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Animation.Animation;
 import com.ferra13671.BThack.api.Animation.Easing;
 import com.ferra13671.BThack.api.GuiSystem.ScreenWidget;
@@ -149,6 +148,7 @@ public class ConfigsWidget extends ScreenWidget {
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int mouseButton) {
         for (Button button : configs) {
+            if (button.getCenterY() > yDown - 56.5f + 30) return super.mouseClicked(mouseX, mouseY, mouseButton);
             if (button.isMouseOnButton((int) mouseX, (int) mouseY)) {
                 button.mouseClicked((int) mouseX, (int) mouseY, mouseButton);
                 button.setSelected(true);
@@ -188,7 +188,6 @@ public class ConfigsWidget extends ScreenWidget {
                 SoundSystem.playSound(Sounds.CONFIG_SAVED_OR_LOADED);
             }
         }
-        if (keyCode == KeyboardUtils.KEY_ESCAPE) close();
         return super.keyPressed(keyCode, scanCode, shift);
     }
 
