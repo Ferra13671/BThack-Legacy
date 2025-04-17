@@ -16,7 +16,7 @@ public abstract class AbstractOneTextComponent extends HudComponent {
     @Override
     public void render() {
         BThackRender.drawHudPlate(getX(), getY(), getX() + width, getY() + height);
-        drawText(text, (int) getX() + 3, (int) getY() + 3);
+        drawText(text, getX() + 3, getY() + 3);
     }
 
     @Override

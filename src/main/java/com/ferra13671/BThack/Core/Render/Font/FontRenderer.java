@@ -1,12 +1,10 @@
 package com.ferra13671.BThack.Core.Render.Font;
 
 import com.ferra13671.BTbot.api.Utils.Generate.StringGenerator;
-import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.Core.Render.Utils.BThackRenderUtils;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.Constants;
-import com.ferra13671.BThack.api.Shader.Shaders;
 import com.ferra13671.BThack.api.Utils.MathUtils;
 import com.ferra13671.TextureUtils.TextureStorage;
 import com.mojang.blaze3d.systems.RenderSystem;

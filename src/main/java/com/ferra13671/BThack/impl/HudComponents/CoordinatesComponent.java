@@ -27,8 +27,8 @@ public class CoordinatesComponent extends HudComponent {
 
         BThackRender.drawHudPlate(getX(), getY(), getX() + width, getY() + height);
 
-        drawText(xyz1, (int) getX() + 3, (int) getY() + 3);
-        drawText(xyz2, (int) getX() + 3, (int) (getY() + FontUtils.getTextHeight(xyz1, FontRenderManager.DrawMode.NORMAL_BOLD) + 7));
+        drawText(xyz1, getX() + 3, getY() + 3);
+        drawText(xyz2, getX() + 3, getY() + FontUtils.getTextHeight(xyz1, FontRenderManager.DrawMode.NORMAL_BOLD) + 7);
     }
 
     @Override

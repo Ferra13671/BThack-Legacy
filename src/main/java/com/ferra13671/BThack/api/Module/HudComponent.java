@@ -78,11 +78,11 @@ public abstract class HudComponent extends Module {
 
     public void tick() {}
 
-    public void drawText(String text, int x, int y, int color) {
+    public void drawText(String text, float x, float y, int color) {
         BThackRender.drawString(text, x, y, color, true, FontRenderManager.DrawMode.NORMAL_BOLD);
     }
 
-    public void drawText(String text, int x, int y) {
+    public void drawText(String text, float x, float y) {
         drawText(text, x, y, HUD.getHUDColor());
     }
 

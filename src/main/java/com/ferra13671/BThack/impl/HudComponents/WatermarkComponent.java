@@ -34,7 +34,7 @@ public class WatermarkComponent extends HudComponent {
 
         if (logoType.getValue().equals("Text")) {
             BThackRender.drawHudPlate(getX(), getY(), getX() + width, getY() + height);
-            drawText(Client.clientInfo.getCName(), (int) getX() + 3, (int) getY() + 3);
+            drawText(Client.clientInfo.getCName(), getX() + 3, getY() + 3);
         } else {
             BThackRender.drawTextureRect(Textures.BTHACK_LOGO, getX(), getY() - 18, getX() + 138, getY() + 54);
         }

@@ -39,7 +39,7 @@ public class DurabilityComponent extends HudComponent {
         } else {
             text = "Durability: " + Formatting.WHITE + ItemUtils.getItemDurability(mc.player.getInventory().getMainHandStack());
         }
-        drawText(text, (int) getX() + 3, (int) getY() + 3);
+        drawText(text, getX() + 3, getY() + 3);
         width = FontUtils.getTextWidth(text, FontRenderManager.DrawMode.NORMAL_BOLD) + 6;
         height = FontUtils.getTextHeight(text, FontRenderManager.DrawMode.NORMAL_BOLD) + 6;
     }
