@@ -117,7 +117,7 @@ public final class ConfigSystem {
                 add(jsonObject, "Visible", module.isVisible());
 
                 if (Managers.SETTINGS_MANAGER.getSettingsByMod(module) != null) {
-                    for (Setting s : Managers.SETTINGS_MANAGER.getSettingsByMod(module)) {
+                    for (Setting<?> s : Managers.SETTINGS_MANAGER.getSettingsByMod(module)) {
                         s.save(settingObject);
                     }
                 }
@@ -134,7 +134,7 @@ public final class ConfigSystem {
                 JsonObject settingObject = jsonObject.get("Settings").getAsJsonObject();
 
                 if (Managers.SETTINGS_MANAGER.getSettingsByMod(module) != null) {
-                    for (Setting s : Managers.SETTINGS_MANAGER.getSettingsByMod(module)) {
+                    for (Setting<?> s : Managers.SETTINGS_MANAGER.getSettingsByMod(module)) {
                         JsonElement settingValueObject;
 
                         settingValueObject = settingObject.get(s.getName());
@@ -182,7 +182,7 @@ public final class ConfigSystem {
                 add(moduleObject, "Visible", module.isVisible());
 
                 if (Managers.SETTINGS_MANAGER.getSettingsByMod(module) != null) {
-                    for (Setting s : Managers.SETTINGS_MANAGER.getSettingsByMod(module)) {
+                    for (Setting<?> s : Managers.SETTINGS_MANAGER.getSettingsByMod(module)) {
                         s.save(settingObject);
                     }
                 }
@@ -205,7 +205,7 @@ public final class ConfigSystem {
                             JsonObject settingObject = moduleObject.get("Settings").getAsJsonObject();
 
                             if (Managers.SETTINGS_MANAGER.getSettingsByMod(module) != null) {
-                                for (Setting s : Managers.SETTINGS_MANAGER.getSettingsByMod(module)) {
+                                for (Setting<?> s : Managers.SETTINGS_MANAGER.getSettingsByMod(module)) {
                                     JsonElement settingValueObject;
 
                                     settingValueObject = settingObject.get(s.getName());
@@ -281,7 +281,7 @@ public final class ConfigSystem {
                 add(jsonObject, "Enabled", hudComponent.isEnabled());
 
                 if (Managers.SETTINGS_MANAGER.getSettingsByMod(module) != null) {
-                    for (Setting s : Managers.SETTINGS_MANAGER.getSettingsByMod(module)) {
+                    for (Setting<?> s : Managers.SETTINGS_MANAGER.getSettingsByMod(module)) {
                         s.save(settingObject);
                     }
                 }
@@ -314,7 +314,7 @@ public final class ConfigSystem {
                                 JsonObject settingObject = jsonObject.get("Settings").getAsJsonObject();
 
                                 if (Managers.SETTINGS_MANAGER.getSettingsByMod(module) != null) {
-                                    for (Setting s : Managers.SETTINGS_MANAGER.getSettingsByMod(module)) {
+                                    for (Setting<?> s : Managers.SETTINGS_MANAGER.getSettingsByMod(module)) {
                                         JsonElement settingValueObject;
 
                                         settingValueObject = settingObject.get(s.getName());
