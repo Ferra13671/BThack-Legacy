@@ -14,6 +14,7 @@ public record Account(String name, String autoAuth, String twoFA) {
         ((IMinecraftClient) MinecraftClient.getInstance()).setSession(new Session(name,
                 UUID.randomUUID(), "", Optional.empty(),
                 Optional.empty(), Session.AccountType.LEGACY));
+        MinecraftClient.getInstance().getWindow().setTitle("");
     }
 
     @Override
