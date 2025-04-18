@@ -128,7 +128,6 @@ public class AccountButton extends Button {
         public void mouseClicked(int mouseX, int mouseY, int mouseButton) {
             super.mouseClicked(mouseX, mouseY, mouseButton);
             clickAction(mouseX, mouseY, mouseButton);
-            BThack.log("Click Successful");
         }
     }
 }
