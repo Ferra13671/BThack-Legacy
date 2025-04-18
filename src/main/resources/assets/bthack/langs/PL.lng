@@ -41,6 +41,7 @@
 "lang.module.ActiveSpawnerDetect": Określa, czy gracz znajdował się w przeszłości w pobliżu mob spoutera.
 "lang.module.AntiHunger": Zmniejsza utratę głodu podczas ruchu.
 "lang.module.Auto2FA": Automatycznie wysyła kod 2fa, jeśli zażąda tego serwer.
+"lang.module.AutoAnvilEnchant": Automatycznie nakłada zaklęcia z książek na przedmioty, jeśli w pobliżu znajduje się kowadło.
 "lang.module.AutoAuth": Automatyczne logowanie/rejestracja.
 "lang.module.Breaker": Automatycznie wydobywa wybrane bloki.
 "lang.module.CleanMemory": Czyści pamięć RAM po włączeniu zasilania.
@@ -265,6 +266,7 @@
 "lang.argument.KeyBind.exception": Klawisz '%s' nie istnieje.
 "lang.argument.Macro.exception": Makro '%s' nie istnieje.
 "lang.argument.2FAPlayer.exception": Klucz 2fa dla pseudonimu '%s' nie istnieje.
+"lang.argument.Enchantment.exception": Enchantment '%s' nie istnieje.
 
 
 //Commands
@@ -308,6 +310,7 @@
 "lang.command.Auto2FA.description": Dodaje/usuwa klucz 2fa dla określonego pseudonimu.
 "lang.command.ClearChat.description": Czyści czat.
 "lang.command.AutoAuthList.description": Wyświetla listę pseudonimów AutoAuth i przypisanych do nich haseł.
+"lang.command.AutoAnvilEnchant.description": Umożliwia zmianę wymaganych zaklęć w module AutoAnvilEnchant.
 
 
 "lang.command.ClanList.message2":   Uczestnicy:
@@ -361,6 +364,9 @@
 "lang.command.Auto2FA.successfulSave": Klucz 2fa został pomyślnie zapisany dla pseudonimu: %s!
 "lang.command.Auto2FA.successfulRewrite": Klucz 2fa został pomyślnie nadpisany dla pseudonimu: %s!
 "lang.command.Auto2FA.successfulRemove": 2fa klucz został pomyślnie usunięty dla pseudonimu: %s!
+"lang.command.AutoAnvilEnchant.add": Wymagane zaklęcie('%s', '%s') zostało pomyślnie dodane dla przedmiotu '%s'.
+"lang.command.AutoAnvilEnchant.remove": Wymagane zaklęcie('%s') zostało pomyślnie usunięte dla przedmiotu '%s'.
+"lang.command.AutoAnvilEnchant.clear": Wszystkie niezbędne zaklęcia dla przedmiotu '%s' zostały usunięte.
 
 "lang.command.List.listCleared": Lista %s została wyczyszczona!
 

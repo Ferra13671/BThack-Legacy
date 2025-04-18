@@ -13,7 +13,7 @@ import com.ferra13671.BThack.api.Utils.BlockUtils;
 import com.ferra13671.BThack.api.Utils.ItemUtils;
 import com.ferra13671.BThack.api.Utils.DataList.PacketList;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
-import com.ferra13671.BThack.impl.Modules.MISC.AutoAuth;
+import com.ferra13671.BThack.api.Utils.Lists;
 import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.arguments.*;
@@ -24,16 +24,15 @@ import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import net.minecraft.block.Block;
 import net.minecraft.command.CommandSource;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.Item;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.text.Text;
 
-import java.io.File;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
 
@@ -114,6 +113,29 @@ public class Arguments {
         @Override
         public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
             return CommandSource.suggestMatching(Registries.ITEM.stream().map(block -> block.getTranslationKey().replace("item.minecraft.", "")), builder);
+        }
+
+        @Override
+        public Collection<String> getExamples() {
+            return examples;
+        }
+    };
+    public static final Supplier<ArgumentType<RegistryKey<Enchantment>>> ENCHANTMENT = () -> new ArgumentType<>() {
+        private static final Collection<String> examples = Lists.ENCHANTMENTS.keySet().stream().limit(10).toList();
+
+        @Override
+        public RegistryKey<Enchantment> parse(StringReader reader) throws CommandSyntaxException {
+            String name = reader.readString();
+            RegistryKey<Enchantment> enchantment = Lists.ENCHANTMENTS.get(name);
+            if (enchantment == null) throw new DynamicCommandExceptionType(
+                    n -> Text.literal(String.format(LanguageSystem.translate("lang.argument.Enchantment.exception"), name))
+            ).create(reader.readString());
+            return enchantment;
+        }
+
+        @Override
+        public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
+            return CommandSource.suggestMatching(Lists.ENCHANTMENTS.keySet(), builder);
         }
 
         @Override
@@ -316,7 +338,7 @@ public class Arguments {
         public String parse(StringReader reader) throws CommandSyntaxException {
             String name = reader.readString();
 
-            Class<? extends Packet<?>> packet = PacketList.CLIENT_PACKETS.getOrDefault(name, null);
+            Class<? extends Packet<?>> packet = Lists.CLIENT_PACKETS.getOrDefault(name, null);
             if (packet == null)
                 throw new DynamicCommandExceptionType(
                         n -> Text.literal(String.format(LanguageSystem.translate("lang.argument.ClientPacket.exception"), name))
@@ -326,7 +348,7 @@ public class Arguments {
 
         @Override
         public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
-            return CommandSource.suggestMatching(PacketList.CLIENT_PACKETS.keySet(), builder);
+            return CommandSource.suggestMatching(Lists.CLIENT_PACKETS.keySet(), builder);
         }
 
         @Override
@@ -341,7 +363,7 @@ public class Arguments {
         public String parse(StringReader reader) throws CommandSyntaxException {
             String name = reader.readString();
 
-            Class<? extends Packet<?>> packet = PacketList.SERVER_PACKETS.getOrDefault(name, null);
+            Class<? extends Packet<?>> packet = Lists.SERVER_PACKETS.getOrDefault(name, null);
             if (packet == null)
                 throw new DynamicCommandExceptionType(
                         n -> Text.literal(String.format(LanguageSystem.translate("lang.argument.ServerPacket.exception"), name))
@@ -351,7 +373,7 @@ public class Arguments {
 
         @Override
         public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
-            return CommandSource.suggestMatching(PacketList.SERVER_PACKETS.keySet(), builder);
+            return CommandSource.suggestMatching(Lists.SERVER_PACKETS.keySet(), builder);
         }
 
         @Override

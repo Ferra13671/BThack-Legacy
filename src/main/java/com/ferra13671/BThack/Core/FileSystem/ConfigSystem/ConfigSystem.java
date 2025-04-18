@@ -20,6 +20,7 @@ import com.ferra13671.BThack.api.Social.Clans.Clan;
 import com.ferra13671.BThack.api.Social.Clans.ClanManager;
 import com.ferra13671.BThack.api.Social.Clans.ClanSettingsBuilder;
 import com.ferra13671.BThack.api.Utils.DataList.DataLists;
+import com.ferra13671.BThack.impl.Modules.MISC.AutoAnvilEnchant;
 import com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.ActionBotConfig;
 import com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.ActionBotTask;
 import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
@@ -65,6 +66,7 @@ public final class ConfigSystem {
             saveActionBotTasks();
             Managers.AUTO_AUTH_MANAGER.save();
             Managers.ACCOUNT_MANAGER.save();
+            AutoAnvilEnchant.save();
             saveClientInfo();
             saveWaypoints();
             saveMacros();
@@ -90,6 +92,7 @@ public final class ConfigSystem {
             loadActionBotTasks();
             Managers.AUTO_AUTH_MANAGER.load();
             Managers.ACCOUNT_MANAGER.load();
+            AutoAnvilEnchant.load();
             loadClientInfo();
             loadWaypoints();
             loadMacros();

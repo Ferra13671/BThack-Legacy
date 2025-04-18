@@ -70,6 +70,7 @@ public final class ModuleList {
     public static ActiveSpawnerDetect activeSpawnerDetect;
     public static AntiHunger antiHunger;
     public static Auto2FA auto2FA;
+    public static AutoAnvilEnchant autoAnvilEnchant;
     public static AutoAuth autoAuth;
     public static Breaker breaker;
     public static CleanMemory cleanMemory;
@@ -267,6 +268,7 @@ public final class ModuleList {
         activeSpawnerDetect = register(new ActiveSpawnerDetect());
         antiHunger = register(new AntiHunger());
         auto2FA = register(new Auto2FA());
+        autoAnvilEnchant = register(new AutoAnvilEnchant());
         autoAuth = register(new AutoAuth());
         breaker = register(new Breaker());
         cleanMemory = register(new CleanMemory());

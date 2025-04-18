@@ -42,6 +42,7 @@
 "lang.module.ActiveSpawnerDetect": Detects if a player has been near a mob spawner in the past.
 "lang.module.AntiHunger": Reduces hunger lost from moving around.
 "lang.module.Auto2FA": Automatically sends the 2fa code if the server requests it.
+"lang.module.AutoAnvilEnchant": Automatically applies enchantments from books to items if there is an anvil nearby.
 "lang.module.AutoAuth": Automatically login/register;
 "lang.module.Breaker": Automatically mining selected blocks.
 "lang.module.CleanMemory": Clears RAM when turned on.
@@ -267,6 +268,7 @@
 "lang.argument.KeyBind.exception": The '%s' key does not exist.
 "lang.argument.Macro.exception": The macro '%s' does not exist.
 "lang.argument.2FAPlayer.exception": The 2fa key for the nickname '%s' does not exist.
+"lang.argument.Enchantment.exception": Enchantment '%s' does not exist.
 
 
 //Commands
@@ -310,6 +312,7 @@
 "lang.command.Auto2FA.description": Adds/removes a 2fa key for a specific nickname.
 "lang.command.ClearChat.description": Clears the chat.
 "lang.command.AutoAuthList.description": Shows a list of AutoAuth nicknames and their assigned passwords.
+"lang.command.AutoAnvilEnchant.description": Allows you to change the required enchantments in the AutoAnvilEnchant module.
 
 
 "lang.command.ClanList.message2":   Members:
@@ -363,6 +366,9 @@
 "lang.command.Auto2FA.successfulSave": The 2fa key was successfully saved for the nickname: %s!
 "lang.command.Auto2FA.successfulRewrite": 2fa key was successfully rewritten for nickname: %s!
 "lang.command.Auto2FA.successfulRemove": 2fa key was successfully removed for nickname: %s!
+"lang.command.AutoAnvilEnchant.add": The required enchantment('%s', '%s') was successfully added for item '%s'.
+"lang.command.AutoAnvilEnchant.remove": The required enchantment('%s') has been successfully removed from item '%s'.
+"lang.command.AutoAnvilEnchant.clear": All required enchantments for item '%s' have been cleared.
 
 "lang.command.List.listCleared": %s list cleared!
 

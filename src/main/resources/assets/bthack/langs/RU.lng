@@ -41,6 +41,7 @@
 "lang.module.ActiveSpawnerDetect": Определяет, находился ли игрок в прошлом рядом со спаунером мобов.
 "lang.module.AntiHunger": Уменьшает голод, потерянный при движении.
 "lang.module.Auto2FA": Автоматически отправляет код 2fa, если сервер его запрашивает.
+"lang.module.AutoAnvilEnchant": Автоматически накладывает зачарования из книг на предметы, если поблизости есть наковальня.
 "lang.module.AutoAuth": Автоматический вход/регистрация.
 "lang.module.Breaker": Автоматически добывает выбранные блоки.
 "lang.module.CleanMemory": Очищает ОЗУ при включении.
@@ -266,6 +267,7 @@
 "lang.argument.KeyBind.exception": Клавиши '%s' не существует.
 "lang.argument.Macro.exception": Макрос '%s' не существует.
 "lang.argument.2FAPlayer.exception": 2fa ключ для никнейма '%s' не существует.
+"lang.argument.Enchantment.exception": Зачаровния '%s' не существует.
 
 
 //Commands
@@ -309,6 +311,7 @@
 "lang.command.Auto2FA.description": Добавляет/удаляет 2fa ключ для определенного ника.
 "lang.command.ClearChat.description": Очищает чат.
 "lang.command.AutoAuthList.description": Показывает список ников AutoAuth и назначенных им паролей.
+"lang.command.AutoAnvilEnchant.description": Позволяет изменить необходимые зачарования в модуле AutoAnvilEnchant.
 
 
 "lang.command.ClanList.message2":   Участники:
@@ -362,6 +365,9 @@
 "lang.command.Auto2FA.successfulSave": 2fa ключ был успешно сохранен для никнейма: %s!
 "lang.command.Auto2FA.successfulRewrite": 2fa ключ был успешно перезаписан для никнейма: %s!
 "lang.command.Auto2FA.successfulRemove": 2fa был ключ успешно удален для никнейма: %s!
+"lang.command.AutoAnvilEnchant.add": Требуемое зачарование('%s', '%s') было успешно добавлено для предмета '%s'.
+"lang.command.AutoAnvilEnchant.remove": Требуемое зачарование('%s') было успешно снято для предмета '%s'.
+"lang.command.AutoAnvilEnchant.clear": Все необходимые зачарования для предмета '%s' были очищенны.
 
 "lang.command.List.listCleared": %s список очищен!
 
