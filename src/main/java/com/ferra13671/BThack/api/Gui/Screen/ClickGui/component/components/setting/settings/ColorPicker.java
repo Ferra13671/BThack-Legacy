@@ -8,6 +8,8 @@ import com.ferra13671.BThack.Core.Render.Drawers.GradientRectDrawer;
 import com.ferra13671.BThack.Core.Render.Font.FontRenderManager;
 import com.ferra13671.BThack.Core.Render.Utils.BThackRenderUtils;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
+import com.ferra13671.BThack.api.Animation.Animation;
+import com.ferra13671.BThack.api.Animation.Easing;
 import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.ModuleButton;
 import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.setting.AbstractSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ColorSetting;
@@ -121,6 +123,7 @@ public class ColorPicker extends AbstractSetting<ColorSetting> {
     private float alpha;
 
     private boolean opened = false;
+    private final Animation animation = new Animation(Easing.CIRC_OUT, 300);
 
     public ColorPicker(ColorSetting setting, ModuleButton button , int offset, Module module) {
         super(offset, button, module, setting);
@@ -141,16 +144,18 @@ public class ColorPicker extends AbstractSetting<ColorSetting> {
 
     @Override
     public int getHeight() {
-        return opened ? 80 : 15;
+        return opened ? (int) (80 * animation.getEase()) : 15 + (int) (65 * (1 - animation.getEase()));
     }
 
     @Override
     public void renderComponent() {
+        if (animation.getEase() < 1) parent.parent.refresh();
         y = parent.parent.getY() + offset;
         x = parent.parent.getX();
 
         BThackRender.drawRect(x, y, x + Constants.CLICKGUI_FRAME_WIDTH, y + getHeight(), ColorUtils.integrateAlpha(new Color(Client.clientInfo.getColorTheme().backgroundColor()).hashCode(), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))));
-        if (opened) {
+        if (opened || animation.getEase() < 1) {
+            BThackRender.enableScissor(x, y, Constants.CLICKGUI_FRAME_WIDTH, getHeight());
             Drawers.GRADIENT_RECT.begin();
             Drawers.GRADIENT_RECT.draw(colorRect.getStartX(), colorRect.getStartY(), colorRect.getEndX(), colorRect.getEndY(), ColorUtils.WHITE, new Color(Color.HSBtoRGB(hue, 1f, 1f)).hashCode(), GradientRectDrawer.GradientMode.HORIZONTAL);
             Drawers.GRADIENT_RECT.draw(colorRect.getStartX(), colorRect.getStartY(), colorRect.getEndX(), colorRect.getEndY(), ColorUtils.TRANSPARENT, ColorUtils.BLACK, GradientRectDrawer.GradientMode.VERTICAL);
@@ -183,6 +188,7 @@ public class ColorPicker extends AbstractSetting<ColorSetting> {
                 drawAlphaCrosshair();
 
             BThackRender.drawString("R:" + rgbColor.getRed() + " G:" + rgbColor.getGreen() + " B:" + rgbColor.getBlue() + " A:" + rgbColor.getAlpha(), x + 2, colorRect.getEndY() + 4, -1, true, FontRenderManager.DrawMode.SMALL);
+            BThackRender.disableScissor();
         }
         BThackRender.drawString(setting.getName(), x + 2, y + 2, ColorUtils.WHITE);
         BThackRender.drawRect(x + Constants.CLICKGUI_FRAME_WIDTH - 12, y + 2, x + Constants.CLICKGUI_FRAME_WIDTH - 2, y + 12, rgbColor.hashCode());
@@ -253,6 +259,7 @@ public class ColorPicker extends AbstractSetting<ColorSetting> {
         if (isMouseOnButton(mouseX, mouseY)) {
             opened = !opened;
             parent.parent.refresh();
+            animation.reset();
             return false;
         }
         if (opened && button == 0) {
