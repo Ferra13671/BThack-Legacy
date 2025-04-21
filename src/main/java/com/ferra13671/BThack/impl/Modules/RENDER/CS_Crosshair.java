@@ -13,6 +13,7 @@ import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.client.util.Window;
+import net.minecraft.util.math.MathHelper;
 
 import java.awt.*;
 
@@ -63,14 +64,15 @@ public class CS_Crosshair extends Module {
         );
     }
 
-    private float spread = 0;
+    private float currentSpread = 0;
+    private float prevSpread = 0;
 
     @EventSubscriber
     public void onOverlay(RenderHudPreEvent e) {
         if (nullCheck()) return;
 
         if (!movable.getValue())
-            spread = 0;
+            currentSpread = 0;
 
         BThackMatrix.push();
 
@@ -81,27 +83,30 @@ public class CS_Crosshair extends Module {
         BThackMatrix.translate(window.getScaledWidth() / 2f, window.getScaledHeight() / 2f, 0);
         BThackMatrix.peek().getPositionMatrix().rotate((float) Math.toRadians(rotate.getValue()), 0, 0, 1);
 
+        float spread = MathHelper.lerp(e.getPartialTicks(), prevSpread, currentSpread);
+
         if (centerRect.getValue())
-            BThackRender.drawRect((int)-height.getValue(), (int)- height.getValue(), height.getValue().intValue(), height.getValue().intValue(), color.hashCode());
+            BThackRender.drawRect(-height.getValue().floatValue(), -height.getValue().floatValue(), height.getValue().intValue(), height.getValue().intValue(), color.hashCode());
 
         if (upRect.getValue())
-            BThackRender.drawRect((int)(0 -height.getValue()),(int)(0 - height.getValue() - distance.getValue() - width.getValue() - spread), (int)(0 + height.getValue()), (int)(0 - height.getValue() - distance.getValue() - spread), color.hashCode());
+            BThackRender.drawRect(0 -height.getValue().floatValue(), 0 - height.getValue().floatValue() - distance.getValue().floatValue() - width.getValue().floatValue() - spread, height.getValue().floatValue(), 0 - height.getValue().floatValue() - distance.getValue().floatValue() - spread, color.hashCode());
 
         if (leftRect.getValue())
-            BThackRender.drawRect((int)(0 - height.getValue() - distance.getValue() - width.getValue() - spread), (int)(0 - height.getValue()), (int)(0 - height.getValue() - distance.getValue() - spread), (int)(0 + height.getValue()), color.hashCode());
+            BThackRender.drawRect(0 - height.getValue().floatValue() - distance.getValue().floatValue() - width.getValue().floatValue() - spread, 0 - height.getValue().floatValue(), 0 - height.getValue().floatValue() - distance.getValue().floatValue() - spread, height.getValue().floatValue(), color.hashCode());
 
         if (downRect.getValue())
-            BThackRender.drawRect((int)-height.getValue(), (int)(0 + height.getValue() + distance.getValue() + spread), (int)( + height.getValue()), (int)(0 + height.getValue() + distance.getValue() + width.getValue() + spread), color.hashCode());
+            BThackRender.drawRect(-height.getValue().floatValue(), height.getValue().floatValue() + distance.getValue().floatValue() + spread, height.getValue().floatValue(), height.getValue().floatValue() + distance.getValue().floatValue() + width.getValue().floatValue() + spread, color.hashCode());
 
         if (rightRect.getValue())
-            BThackRender.drawRect((int)(0 + height.getValue() + distance.getValue() + spread), (int)(0 - height.getValue()), (int)(0 + height.getValue() + distance.getValue() + width.getValue() + spread), (int)(0 + height.getValue()), color.hashCode());
+            BThackRender.drawRect(height.getValue().floatValue() + distance.getValue().floatValue() + spread, 0 - height.getValue().floatValue(), height.getValue().floatValue() + distance.getValue().floatValue() + width.getValue().floatValue() + spread, height.getValue().floatValue(), color.hashCode());
 
         BThackMatrix.peek().getPositionMatrix().rotate((float) -Math.toRadians(rotate.getValue()), 0, 0, 1);
         BThackMatrix.translate(-(window.getScaledWidth() / 2f), -(window.getScaledHeight() / 2f), 0);
 
-        spread -= scatterSpeed.getValue().floatValue();
-        if (spread < 0)
-            spread = 0;
+        prevSpread = currentSpread;
+        currentSpread -= scatterSpeed.getValue().floatValue();
+        if (currentSpread < 0)
+            currentSpread = 0;
 
         BThackMatrix.pop();
     }
@@ -111,9 +116,9 @@ public class CS_Crosshair extends Module {
         if (nullCheck() || !movable.getValue()) return;
 
         if (e.getPlayer() == mc.player) {
-            spread += 6;
-            if (spread > scatterLimit.getValue())
-                spread = scatterLimit.getValue().intValue();
+            currentSpread += 6;
+            if (currentSpread > scatterLimit.getValue())
+                currentSpread = scatterLimit.getValue().intValue();
         }
     }
 }
