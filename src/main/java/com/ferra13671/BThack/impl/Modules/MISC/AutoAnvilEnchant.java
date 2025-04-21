@@ -104,7 +104,6 @@ public class AutoAnvilEnchant extends Module {
         );
     }
     private final Ticker delayTicker = new Ticker();
-    private final Ticker postClickTicker = new Ticker();
     private PostClickInfo postClickInfo = null;
 
     @EventSubscriber

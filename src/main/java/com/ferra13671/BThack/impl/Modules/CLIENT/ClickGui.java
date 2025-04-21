@@ -46,11 +46,7 @@ public class ClickGui extends OneActionModule {
     public final NumberSetting opacity = new NumberSetting("Opacity", this, 0.76, 0.1, 1, false);
 
     public final NumberSetting animationTime = new NumberSetting("Anim Time", this, 400, 250, 1500, true);
-    public final ModeSetting easing = new ModeSetting("Easing", this, getEasingList());
-    {
-        easing.setValue("CIRC_OUT");
-        easing.setIndex(17);
-    }
+    public final ModeSetting easing = new ModeSetting("Easing", this, getEasingList()).defaultValue("CIRC_OUT");
 
     public final BooleanSetting blur = new BooleanSetting("Blur", this, true);
     public final NumberSetting blurStrength = new NumberSetting("Blur Strength", this, 4, 1.1, 20, false, blur::getValue);
