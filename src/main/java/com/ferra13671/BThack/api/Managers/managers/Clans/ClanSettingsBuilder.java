@@ -1,4 +1,4 @@
-package com.ferra13671.BThack.api.Social.Clans;
+package com.ferra13671.BThack.api.Managers.managers.Clans;
 
 import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
@@ -27,7 +27,7 @@ public final class ClanSettingsBuilder {
 
     public static ModeSetting buildClanTargetMode(Module module, BooleanSetting clanManager, ModeSetting clanMode) {
         ArrayList<String> clanNames = new ArrayList<>();
-        for (Clan clan : ClanManager.getClans()) {
+        for (Clan clan : Managers.CLAN_MANAGER.getClans()) {
             clanNames.add(clan.getName());
         }
         if (clanNames.isEmpty()) {
@@ -37,8 +37,8 @@ public final class ClanSettingsBuilder {
         return new ModeSetting("Target", module, clanNames, () -> clanManager.getValue()  && clanMode.equals("Target Clan"));
     }
 
-    public static ArrayList<Setting> buildClanManager(Module module) {
-        ArrayList<Setting> settings = new ArrayList<>();
+    public static ArrayList<Setting<?>> buildClanManager(Module module) {
+        ArrayList<Setting<?>> settings = new ArrayList<>();
         ArrayList<String> targetMode = new ArrayList<>(Arrays.asList(
                 "Only Enemy",
                 "Neutral Also",
@@ -46,7 +46,7 @@ public final class ClanSettingsBuilder {
                 "All Clans"
         ));
         ArrayList<String> clanNames = new ArrayList<>();
-        for (Clan clan : ClanManager.getClans()) {
+        for (Clan clan : Managers.CLAN_MANAGER.getClans()) {
             clanNames.add(clan.getName());
         }
         if (clanNames.isEmpty()) {
@@ -69,7 +69,7 @@ public final class ClanSettingsBuilder {
 
     public static void reloadSettings() {
         ArrayList<String> clanNames = new ArrayList<>();
-        for (Clan clan : ClanManager.getClans()) {
+        for (Clan clan : Managers.CLAN_MANAGER.getClans()) {
             clanNames.add(clan.getName());
         }
         if (clanNames.isEmpty()) {

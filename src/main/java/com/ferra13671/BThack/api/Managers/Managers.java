@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.api.Managers;
 
+import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.api.Managers.managers.*;
 import com.ferra13671.BThack.api.Managers.managers.Account.AccountManager;
 import com.ferra13671.BThack.api.Managers.managers.Build.BuildManager;
@@ -10,9 +11,12 @@ import com.ferra13671.BThack.api.Managers.managers.Destroy.DestroyManager;
 import com.ferra13671.BThack.api.Managers.managers.Macros.MacrosManager;
 import com.ferra13671.BThack.api.Managers.managers.Memory.MemoryManager;
 import com.ferra13671.BThack.api.Managers.managers.Setting.SettingsManager;
+import com.ferra13671.BThack.api.Managers.managers.Clans.ClanManager;
+import com.ferra13671.BThack.api.Managers.managers.SocialManager;
 import com.ferra13671.BThack.api.Managers.managers.TravelChange.TravelChangeManager;
 import com.ferra13671.BThack.api.Managers.managers.TwoFA.TwoFAManager;
 import com.ferra13671.BThack.api.Managers.managers.Waypoint.WaypointManager;
+import net.minecraft.util.Formatting;
 
 public class Managers {
     public static final TPSManager TPS_MANAGER = new TPSManager();
@@ -36,4 +40,17 @@ public class Managers {
     public static final TwoFAManager TWOFA_MANAGER = new TwoFAManager();
     public static final AutoAuthManager AUTO_AUTH_MANAGER = new AutoAuthManager();
     public static final AccountManager ACCOUNT_MANAGER = new AccountManager();
+    public static final SocialManager FRIENDS_MANAGER = new SocialManager("Friends/Friends.txt", "friend") {
+        @Override
+        public Formatting getColor() {
+            return Formatting.valueOf(ModuleList.clientSettings.friendColor.getValue());
+        }
+    };
+    public static final SocialManager ENEMIES_MANAGER = new SocialManager("Enemies/Enemies.txt", "enemy") {
+        @Override
+        public Formatting getColor() {
+            return Formatting.valueOf(ModuleList.clientSettings.enemyColor.getValue());
+        }
+    };
+    public static final ClanManager CLAN_MANAGER = new ClanManager();
 }

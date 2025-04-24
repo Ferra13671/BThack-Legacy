@@ -2,12 +2,11 @@ package com.ferra13671.BThack.impl.Modules.RENDER;
 
 import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.api.Events.Render.RenderHudPreEvent;
+import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Social.Clans.Clan;
-import com.ferra13671.BThack.api.Social.Clans.ClanManager;
-import com.ferra13671.BThack.api.Social.SocialManagers;
+import com.ferra13671.BThack.api.Managers.managers.Clans.Clan;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.client.util.Window;
@@ -101,12 +100,12 @@ public class Radar extends Module {
                     y = y + (int) radarPosZ;
 
                     if (isCurrentCords(x,y, (sr.getScaledWidth() - (int) _scale) + 1, sr.getScaledWidth() - 1, (sr.getScaledHeight() - (int) _scale) + 1, sr.getScaledHeight() - 1)) {
-                        if (SocialManagers.FRIENDS.contains(player)) {
+                        if (Managers.FRIENDS_MANAGER.contains(player)) {
                             BThackRender.drawSquare(x, y, 1, friendColor.hashCode());
-                        } else if (SocialManagers.ENEMIES.contains(player)) {
+                        } else if (Managers.ENEMIES_MANAGER.contains(player)) {
                             BThackRender.drawSquare(x, y, 1, enemyColor.hashCode());
-                        } else if (ClanManager.isAlly(player)) {
-                            Clan clan = ClanManager.getFirstClanFromMember(player.getDisplayName().getString());
+                        } else if (Managers.CLAN_MANAGER.isAlly(player)) {
+                            Clan clan = Managers.CLAN_MANAGER.getFirstClanFromMember(player.getDisplayName().getString());
 
                             if (clan != null) {
                                 BThackRender.drawSquare(x,y,3, -1);

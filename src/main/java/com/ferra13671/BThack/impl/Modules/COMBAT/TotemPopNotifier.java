@@ -1,11 +1,11 @@
 package com.ferra13671.BThack.impl.Modules.COMBAT;
 
 import com.ferra13671.BThack.api.Events.Entity.TotemPopEvent;
+import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Social.Clans.ClanSettingsBuilder;
-import com.ferra13671.BThack.api.Social.SocialManagers;
+import com.ferra13671.BThack.api.Managers.managers.Clans.ClanSettingsBuilder;
 import com.ferra13671.BThack.api.Utils.ChatUtils;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.Utils.Modules.KillAuraUtils;
@@ -49,7 +49,7 @@ public class TotemPopNotifier extends Module {
         if (!yourselfAlso.getValue())
             if (e.entity == mc.player) return;
         if (friends.getValue())
-            if (SocialManagers.FRIENDS.contains((PlayerEntity) e.entity)) return;
+            if (Managers.FRIENDS_MANAGER.contains((PlayerEntity) e.entity)) return;
         if (!KillAuraUtils.isSuccessfulClanMember((PlayerEntity) e.entity, clanManager.getValue(), clanMode.getValue(), targetClan.getValue())) return;
 
         String text = "" + Formatting.WHITE + Formatting.BOLD + e.entity.getDisplayName().getString() + Formatting.RESET + Formatting.GOLD + " just popped " + Formatting.WHITE + Formatting.BOLD + e.totemsPopped + Formatting.RESET + Formatting.GOLD + " times!";

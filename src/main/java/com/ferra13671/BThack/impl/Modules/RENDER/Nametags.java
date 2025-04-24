@@ -8,13 +8,13 @@ import com.ferra13671.BThack.Core.Render.Font.FontUtils;
 import com.ferra13671.BThack.Core.Render.Utils.BThackRenderUtils;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Events.Render.RenderHudPreEvent;
+import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ColorSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Shader.Shaders;
-import com.ferra13671.BThack.api.Social.SocialManagers;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.impl.Modules.CLIENT.ClientSettings;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
@@ -120,8 +120,7 @@ public class Nametags extends Module {
         float downY = cords[1];
 
         drawBase(leftX, upY, rightX, downY);
-        BThackRender.drawCenteredString((SocialManagers.FRIENDS.contains(player) ? ClientSettings.getFriendColor() : SocialManagers.ENEMIES.contains(player) ? ClientSettings.getEnemyColor() : "") + text, cords[0], downY - ((downY - upY) / 2f) - (FontUtils.getTextHeight(text, FontRenderManager.DrawMode.NORMAL_BOLD) / 2), -1, FontRenderManager.DrawMode.NORMAL_BOLD);
-        //BThackRender.drawString((SocialManagers.FRIENDS.contains(player) ? ClientSettings.getFriendColor() : SocialManagers.ENEMIES.contains(player) ? ClientSettings.getEnemyColor() : "") + text, leftX + 5, upY + 5, -1, true, FontRenderManager.DrawMode.NORMAL_BOLD);
+        BThackRender.drawCenteredString((Managers.FRIENDS_MANAGER.contains(player) ? ClientSettings.getFriendColor() : Managers.ENEMIES_MANAGER.contains(player) ? ClientSettings.getEnemyColor() : "") + text, cords[0], downY - ((downY - upY) / 2f) - (FontUtils.getTextHeight(text, FontRenderManager.DrawMode.NORMAL_BOLD) / 2), -1, FontRenderManager.DrawMode.NORMAL_BOLD);
     }
 
     public void renderNormalPlayerNametag(float[] cords, PlayerEntity player) {
@@ -131,7 +130,7 @@ public class Nametags extends Module {
         float downY = cords[1];
 
         drawBase(leftX, upY, rightX, downY);
-        drawName((SocialManagers.FRIENDS.contains(player) ? ClientSettings.getFriendColor() : (SocialManagers.ENEMIES.contains(player) ? ClientSettings.getEnemyColor() : "")) + player.getDisplayName().getString(), leftX, downY);
+        drawName((Managers.FRIENDS_MANAGER.contains(player) ? ClientSettings.getFriendColor() : (Managers.ENEMIES_MANAGER.contains(player) ? ClientSettings.getEnemyColor() : "")) + player.getDisplayName().getString(), leftX, downY);
         drawHP(leftX + 5, downY - 22, player);
         drawArmor(leftX + 5, upY + 4, player);
     }
@@ -193,13 +192,12 @@ public class Nametags extends Module {
 
         float length = (((entity.getMaxHealth() - entity.getHealth()) / entity.getMaxHealth()) * 80);
 
-        //float extraX = ((entity.getHealth() / entity.getMaxHealth()) * 80);
         BThackRender.drawHorizontalGradientRect(startX + 15, startY, startX + 80, startY + 7, ColorUtils.RED, ColorUtils.GREEN);
         BThackRender.drawRect(95 + startX - length, startY, startX + 95, startY + 7, ColorUtils.BLACK);
     }
 
     public void drawSocialInfo(float startX, float startY, PlayerEntity player) {
-        String socialText = (SocialManagers.FRIENDS.contains(player) ? ClientSettings.getFriendColor() + "Friend" : "") + Formatting.RESET + (SocialManagers.ENEMIES.contains(player) ? ClientSettings.getEnemyColor() + (SocialManagers.FRIENDS.contains(player) ? "   " : "") + "Enemy" : "");
+        String socialText = (Managers.FRIENDS_MANAGER.contains(player) ? ClientSettings.getFriendColor() + "Friend" : "") + Formatting.RESET + (Managers.ENEMIES_MANAGER.contains(player) ? ClientSettings.getEnemyColor() + (Managers.FRIENDS_MANAGER.contains(player) ? "   " : "") + "Enemy" : "");
         BThackRender.drawString(socialText, startX, startY, -1, false);
     }
 

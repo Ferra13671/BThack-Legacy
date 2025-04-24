@@ -8,7 +8,7 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Managers.managers.TravelChange.TravelChanger;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Social.Clans.ClanSettingsBuilder;
+import com.ferra13671.BThack.api.Managers.managers.Clans.ClanSettingsBuilder;
 import com.ferra13671.BThack.api.Utils.*;
 import com.ferra13671.BThack.api.Utils.Grim.GrimUtils;
 import com.ferra13671.BThack.api.Utils.Modules.KillAuraUtils;

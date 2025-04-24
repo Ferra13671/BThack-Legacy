@@ -16,9 +16,8 @@ import com.ferra13671.BThack.api.Managers.managers.Waypoint.Waypoint;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Plugin.Plugin;
 import com.ferra13671.BThack.api.Plugin.PluginSystem;
-import com.ferra13671.BThack.api.Social.Clans.Clan;
-import com.ferra13671.BThack.api.Social.Clans.ClanManager;
-import com.ferra13671.BThack.api.Social.Clans.ClanSettingsBuilder;
+import com.ferra13671.BThack.api.Managers.managers.Clans.Clan;
+import com.ferra13671.BThack.api.Managers.managers.Clans.ClanSettingsBuilder;
 import com.ferra13671.BThack.api.Utils.DataList.DataLists;
 import com.ferra13671.BThack.impl.Modules.MISC.AutoAnvilEnchant;
 import com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.ActionBotConfig;
@@ -335,7 +334,7 @@ public final class ConfigSystem {
     public static void saveClans() throws IOException {
         FileSystem.deleteDirectory(new File("BThack/Social/Clans"));
         FileSystem.registerFolder("Clans", "/Social");
-        for (Clan clan : ClanManager.getClans()) {
+        for (Clan clan : Managers.CLAN_MANAGER.getClans()) {
             JsonArray list = new JsonArray();
             for (String ally : clan.getMembers()) {
                 list.add(new JsonPrimitive(ally));
@@ -353,7 +352,7 @@ public final class ConfigSystem {
     }
 
     public static void loadClans() throws IOException {
-        ClanManager.getClans().clear();
+        Managers.CLAN_MANAGER.getClans().clear();
         File folder = new File(Paths.get("BThack/Social/Clans").toUri());
         File[] files = folder.listFiles();
 
@@ -378,7 +377,7 @@ public final class ConfigSystem {
                                 clan.getMembers().addAll(list.asList().stream().map(JsonElement::getAsString).toList());
                             }
 
-                            ClanManager.getClans().add(clan);
+                            Managers.CLAN_MANAGER.getClans().add(clan);
                         }
                         inputStream.close();
                     }

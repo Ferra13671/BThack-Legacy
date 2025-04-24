@@ -3,12 +3,11 @@ package com.ferra13671.BThack.impl.Modules.RENDER;
 import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Line.RenderLine;
 import com.ferra13671.BThack.api.Events.Render.RenderWorldLastEvent;
+import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ColorSetting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Social.Clans.Clan;
-import com.ferra13671.BThack.api.Social.Clans.ClanManager;
-import com.ferra13671.BThack.api.Social.SocialManagers;
+import com.ferra13671.BThack.api.Managers.managers.Clans.Clan;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.Utils.Modules.KillAuraUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
@@ -65,12 +64,12 @@ public class Tracers extends Module {
             for (PlayerEntity playerEntity : mc.world.getPlayers()) {
                 if (playerEntity != null && playerEntity != mc.player && !playerEntity.isDead()) {
                     String name = playerEntity.getDisplayName().getString();
-                    if (SocialManagers.FRIENDS.contains(name)) {
+                    if (Managers.FRIENDS_MANAGER.contains(name)) {
                         lines.add(new RenderLine(playerEntity, 0.03f, 0.96f, 0.86f, 1f));
-                    } else if (SocialManagers.ENEMIES.contains(name)) {
+                    } else if (Managers.ENEMIES_MANAGER.contains(name)) {
                         lines.add(new RenderLine(playerEntity, 1f, 0, 0, 1f));
-                    } else if (ClanManager.isAlly(name)) {
-                        Clan clan = ClanManager.getFirstClanFromMember(name);
+                    } else if (Managers.CLAN_MANAGER.isAlly(name)) {
+                        Clan clan = Managers.CLAN_MANAGER.getFirstClanFromMember(name);
                         if (clan != null) {
                             lines.add(new RenderLine(playerEntity, clan.getR(), clan.getG(), clan.getB(), 1f));
                         } else {

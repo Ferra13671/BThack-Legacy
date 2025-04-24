@@ -2,12 +2,11 @@ package com.ferra13671.BThack.api.Utils.Modules;
 
 import com.ferra13671.BTbot.api.Utils.Generate.NumberGenerator;
 import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
-import com.ferra13671.BThack.api.Social.Clans.Clan;
-import com.ferra13671.BThack.api.Social.Clans.ClanStatus;
-import com.ferra13671.BThack.api.Social.Clans.ClanManager;
-import com.ferra13671.BThack.api.Social.SocialManagers;
+import com.ferra13671.BThack.api.Managers.managers.Clans.Clan;
+import com.ferra13671.BThack.api.Managers.managers.Clans.ClanStatus;
 import com.ferra13671.BThack.api.Utils.PlayerUtils;
 import com.ferra13671.BThack.api.Utils.RotateMode;
 import com.ferra13671.BThack.api.Utils.RotateUtils;
@@ -125,7 +124,7 @@ public final class KillAuraUtils implements Mc {
 
     public static boolean isFriend(PlayerEntity player, boolean friends) {
         if (!friends) {
-            return SocialManagers.FRIENDS.contains(player);
+            return Managers.FRIENDS_MANAGER.contains(player);
         }
         return false;
     }
@@ -147,7 +146,7 @@ public final class KillAuraUtils implements Mc {
 
     public static boolean isSuccessfulClanMember(PlayerEntity player, boolean clanManager, String clanMode, String targetClan) {
         if (clanManager) {
-            List<Clan> clans = ClanManager.getClansFromMember(player.getDisplayName().getString());
+            List<Clan> clans = Managers.CLAN_MANAGER.getClansFromMember(player.getDisplayName().getString());
             switch (clanMode) {
                 case "Only Enemy":
                     if (!clans.isEmpty()) {

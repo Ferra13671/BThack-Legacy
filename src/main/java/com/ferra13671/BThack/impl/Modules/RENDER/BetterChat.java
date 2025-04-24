@@ -2,11 +2,11 @@ package com.ferra13671.BThack.impl.Modules.RENDER;
 
 import com.ferra13671.BThack.Core.Client.Client;
 import com.ferra13671.BThack.api.Events.PacketEvent;
+import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Social.SocialManagers;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.impl.Modules.CLIENT.ClientSettings;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
@@ -88,7 +88,7 @@ public class BetterChat extends Module {
             }
 
             if (friends.getValue()) {
-                for (String string : SocialManagers.FRIENDS.getPlayers()) {
+                for (String string : Managers.FRIENDS_MANAGER.getPlayers()) {
                     if (packet.content().getString().contains(string)) {
                         String text = packet.content().getString().replace(string, ClientSettings.getFriendColor() + string + (checked ? Formatting.YELLOW : Formatting.RESET));
                         packet = new GameMessageS2CPacket(Text.literal(text), packet.overlay());
@@ -96,7 +96,7 @@ public class BetterChat extends Module {
                 }
             }
             if (enemies.getValue()) {
-                for (String string : SocialManagers.ENEMIES.getPlayers()) {
+                for (String string : Managers.ENEMIES_MANAGER.getPlayers()) {
                     if (packet.content().getString().contains(string)) {
                         String text = packet.content().getString().replace(string, ClientSettings.getEnemyColor() + string + (checked ? Formatting.YELLOW : Formatting.RESET));
                         packet = new GameMessageS2CPacket(Text.literal(text), packet.overlay());

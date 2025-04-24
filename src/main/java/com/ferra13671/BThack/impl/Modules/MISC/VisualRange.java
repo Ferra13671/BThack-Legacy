@@ -1,8 +1,8 @@
 package com.ferra13671.BThack.impl.Modules.MISC;
 
+import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Social.SocialManagers;
 import com.ferra13671.BThack.api.Utils.ChatUtils;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
@@ -57,7 +57,7 @@ public class VisualRange extends Module {
             if (player != mc.player && !players.contains(playerName)) {
                 if (enter.getValue()) {
                     if (!friends.getValue())
-                        if (SocialManagers.FRIENDS.contains(player)) return;
+                        if (Managers.FRIENDS_MANAGER.contains(player)) return;
 
                     String text = getChatName() + String.format(LanguageSystem.translate("lang.module.VisualRange.playerEntered"), playerName + Formatting.RESET + Formatting.GOLD);
                     if (enterSound.getValue())
@@ -76,7 +76,7 @@ public class VisualRange extends Module {
             if (player != mc.player && players.contains(playerName)) {
                 if (leave.getValue()) {
                     if (!friends.getValue())
-                        if (SocialManagers.FRIENDS.contains(player)) return;
+                        if (Managers.FRIENDS_MANAGER.contains(player)) return;
 
                     String text = getChatName() + String.format(LanguageSystem.translate("lang.module.VisualRange.playerLeaved"), playerName + Formatting.RESET + Formatting.GOLD);
                     if (leaveSound.getValue())

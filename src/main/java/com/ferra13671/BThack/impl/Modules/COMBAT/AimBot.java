@@ -7,7 +7,7 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetti
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Social.Clans.ClanSettingsBuilder;
+import com.ferra13671.BThack.api.Managers.managers.Clans.ClanSettingsBuilder;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.Utils.Modules.KillAuraUtils;
 import com.ferra13671.BThack.api.Utils.RotateUtils;

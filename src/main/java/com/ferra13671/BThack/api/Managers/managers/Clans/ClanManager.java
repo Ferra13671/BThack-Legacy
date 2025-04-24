@@ -1,7 +1,8 @@
-package com.ferra13671.BThack.api.Social.Clans;
+package com.ferra13671.BThack.api.Managers.managers.Clans;
 
 import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.Core.FileSystem.ConfigSystem.ConfigSystem;
+import com.ferra13671.BThack.api.Utils.Initializable;
 import net.minecraft.entity.player.PlayerEntity;
 
 import java.io.IOException;
@@ -11,10 +12,14 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class ClanManager {
-    private static final List<Clan> clans = new ArrayList<>();
+public final class ClanManager implements Initializable {
+    private final List<Clan> clans = new ArrayList<>();
 
-    public static Clan getClan(String clanName) {
+    @Override
+    public void init() {
+    }
+
+    public Clan getClan(String clanName) {
         for (Clan clan : clans) {
             if (clan.getName().equals(clanName))
                 return clan;
@@ -23,7 +28,7 @@ public final class ClanManager {
         return null;
     }
 
-    public static Clan getFirstClanFromMember(String memberName) {
+    public Clan getFirstClanFromMember(String memberName) {
         for (Clan clan : clans) {
             if (clan.getMembers().contains(memberName))
                 return clan;
@@ -31,7 +36,7 @@ public final class ClanManager {
         return null;
     }
 
-    public static List<Clan> getClansFromMember(String memberName) {
+    public List<Clan> getClansFromMember(String memberName) {
         List<Clan> temp = new ArrayList<>();
 
         for (Clan clan : clans) {
@@ -41,7 +46,7 @@ public final class ClanManager {
         return temp;
     }
 
-    public static void addClan(Clan clan) {
+    public void addClan(Clan clan) {
         String concurrentClan = clans.stream().map(Clan::getName).filter(s -> clan.getName().equals(s)).findFirst().orElse(null);
         if (concurrentClan != null) BThack.log("This clan already exists!");
         else {
@@ -54,7 +59,7 @@ public final class ClanManager {
         }
     }
 
-    public static void removeClan(Clan clan) {
+    public void removeClan(Clan clan) {
         if (clans.contains(clan)) {
             clans.remove(clan);
             Path path = Paths.get("BThack/Social/Clans/" + clan.getName() + ".json");
@@ -72,7 +77,7 @@ public final class ClanManager {
             BThack.log("This clan doesn't exist!");
     }
 
-    public static void reload() {
+    public void reload() {
         clans.clear();
         try {
             ConfigSystem.loadClans();
@@ -81,19 +86,19 @@ public final class ClanManager {
         }
     }
 
-    public static boolean isAlly(PlayerEntity player) {
+    public boolean isAlly(PlayerEntity player) {
         String name = player.getDisplayName().getString();
         return isAlly(name);
     }
 
-    public static boolean isAlly(String name) {
+    public boolean isAlly(String name) {
         for (Clan clan : clans) {
             if (clan.getMembers().contains(name)) return true;
         }
         return false;
     }
 
-    public static List<Clan> getClans() {
+    public List<Clan> getClans() {
         return clans;
     }
 }

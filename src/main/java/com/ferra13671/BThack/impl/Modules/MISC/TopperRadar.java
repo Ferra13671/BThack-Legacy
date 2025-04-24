@@ -2,13 +2,13 @@ package com.ferra13671.BThack.impl.Modules.MISC;
 
 import com.ferra13671.BThack.Constants;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
+import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Managers.managers.Thread.ThreadManager;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Social.Clans.ClanSettingsBuilder;
-import com.ferra13671.BThack.api.Social.SocialManagers;
+import com.ferra13671.BThack.api.Managers.managers.Clans.ClanSettingsBuilder;
 import com.ferra13671.BThack.api.Utils.ChatUtils;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.Utils.Modules.KillAuraUtils;
@@ -77,7 +77,7 @@ public class TopperRadar extends Module {
         for (AbstractClientPlayerEntity player : mc.world.getPlayers()) {
             if (player == mc.player || reportedToppers.contains(player)) continue;
             if (!friends.getValue()) {
-                if (SocialManagers.FRIENDS.contains(player)) continue;
+                if (Managers.FRIENDS_MANAGER.contains(player)) continue;
             }
             if (!KillAuraUtils.isSuccessfulClanMember(player, clanManager, clanMode, target)) continue;
 

@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.api.Managers.managers.Command.CustomArguments;
 
-import com.ferra13671.BThack.api.Social.SocialManager;
+import com.ferra13671.BThack.api.Managers.managers.SocialManager;
 import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.arguments.ArgumentType;

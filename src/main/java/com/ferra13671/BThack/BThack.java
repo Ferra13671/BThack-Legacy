@@ -14,8 +14,6 @@ import com.ferra13671.BThack.api.GuiSystem.BThackWidgets;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Plugin.Plugin;
 import com.ferra13671.BThack.api.Plugin.PluginSystem;
-import com.ferra13671.BThack.api.Social.SocialManager;
-import com.ferra13671.BThack.api.Social.SocialManagers;
 import com.ferra13671.BThack.api.SoundSystem.Sounds;
 import com.ferra13671.BThack.api.SoundSystem.yaw.TinySound;
 import com.ferra13671.BThack.api.GuiSystem.BThackScreens;
@@ -30,8 +28,6 @@ import net.fabricmc.loader.api.metadata.ModMetadata;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.net.URI;
 
 public final class BThack implements ClientModInitializer, Mc {
@@ -137,23 +133,6 @@ public final class BThack implements ClientModInitializer, Mc {
             ActionBotConfig.loadActionBotTasksData();
         } catch (Exception e) {
             initErr("There was an error loading ActionBot tasks!");
-        }
-
-        initDebug("Starting to upload social info...");
-        try {
-            for (Field field : SocialManagers.class.getFields()) {
-                if ( Modifier.isStatic(field.getModifiers())
-                        && Modifier.isPublic(field.getModifiers())
-                        && Modifier.isFinal(field.getModifiers())
-                        && field.getType().equals(SocialManager.class)
-                ) {
-                    SocialManager socialManager = (SocialManager) field.get(null);
-                    socialManager.load();
-                }
-            }
-        } catch (Exception e) {
-            initErr("There was an error loading social info!");
-            e.printStackTrace(); //Okay
         }
 
         PluginSystem.getLoadedPlugins().forEach(Plugin::preInit);

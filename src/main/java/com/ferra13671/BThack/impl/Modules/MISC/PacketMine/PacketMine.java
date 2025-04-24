@@ -16,7 +16,6 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ColorSetting
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Social.SocialManagers;
 import com.ferra13671.BThack.api.Utils.*;
 import com.ferra13671.BThack.impl.Modules.PLAYER.AutoTool;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
@@ -524,7 +523,7 @@ public class PacketMine extends Module {
         for (PlayerEntity player : mc.world.getPlayers()) {
             if (player == mc.player) continue;
             if (!friends.getValue()) {
-                if (SocialManagers.FRIENDS.contains(player)) continue;
+                if (Managers.FRIENDS_MANAGER.contains(player)) continue;
             }
             if (player.distanceTo(mc.player) > 4) continue;
             BlockPos blockPos = BlockPos.ofFloored(player.getX(), player.getY(),player.getZ());

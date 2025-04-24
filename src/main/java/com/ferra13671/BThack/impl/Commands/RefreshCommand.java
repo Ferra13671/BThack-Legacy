@@ -1,8 +1,7 @@
 package com.ferra13671.BThack.impl.Commands;
 
+import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Command.AbstractCommand;
-import com.ferra13671.BThack.api.Social.Clans.ClanManager;
-import com.ferra13671.BThack.api.Social.SocialManagers;
 import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.minecraft.command.CommandSource;
@@ -16,17 +15,17 @@ public class RefreshCommand extends AbstractCommand {
     @Override
     public void compile(LiteralArgumentBuilder<CommandSource> builder) {
         builder.then(literal("friends").executes(context -> {
-            SocialManagers.FRIENDS.load();
+            Managers.FRIENDS_MANAGER.load();
             sendMessage(Formatting.AQUA + LanguageSystem.translate("lang.command.Refresh.friendRefreshed"));
             return SUCCESFUL;
         }));
         builder.then(literal("enemies").executes(context -> {
-            SocialManagers.ENEMIES.load();
+            Managers.ENEMIES_MANAGER.load();
             sendMessage(Formatting.AQUA + LanguageSystem.translate("lang.command.Refresh.enemyRefreshed"));
             return SUCCESFUL;
         }));
         builder.then(literal("clans").executes(context -> {
-            ClanManager.reload();
+            Managers.CLAN_MANAGER.reload();
             sendMessage(Formatting.AQUA + LanguageSystem.translate("lang.command.Refresh.clanRefreshed"));
             return SUCCESFUL;
         }));

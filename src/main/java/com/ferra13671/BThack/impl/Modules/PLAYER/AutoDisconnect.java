@@ -1,10 +1,10 @@
 package com.ferra13671.BThack.impl.Modules.PLAYER;
 
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
+import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Social.SocialManagers;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.mixins.accessor.IPlayerInventory;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
@@ -99,7 +99,7 @@ public class AutoDisconnect extends Module {
                     mc.player.networkHandler.onDisconnect(new DisconnectS2CPacket(Text.literal(getChatName() + " You were disconnected because a player was detected near you.")));
                     if (autoToggle.getValue()) toggle();
                 } else {
-                    if (!SocialManagers.FRIENDS.contains(player)) {
+                    if (!Managers.FRIENDS_MANAGER.contains(player)) {
                         mc.player.networkHandler.onDisconnect(new DisconnectS2CPacket(Text.literal(getChatName() + " You were disconnected because a player was detected near you.")));
                         if (autoToggle.getValue()) toggle();
                     }

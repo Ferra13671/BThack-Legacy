@@ -1,11 +1,11 @@
 package com.ferra13671.BThack.impl.Modules.MISC;
 
 import com.ferra13671.BThack.api.Events.InputEvent;
+import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.Setting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Social.SocialManagers;
 import com.ferra13671.BThack.api.Utils.ItemUtils;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.impl.Modules.PLAYER.AutoFirework;
@@ -52,10 +52,10 @@ public class MiddleClick extends Module {
             switch (mode.getValue()) {
                 case "Friend" -> {
                     if (mc.targetedEntity instanceof PlayerEntity target && target.getDisplayName() != null) {
-                        if (SocialManagers.FRIENDS.contains(target))
-                            SocialManagers.FRIENDS.remove(target.getNameForScoreboard());
+                        if (Managers.FRIENDS_MANAGER.contains(target))
+                            Managers.FRIENDS_MANAGER.remove(target.getNameForScoreboard());
                         else
-                            SocialManagers.FRIENDS.add(target.getNameForScoreboard());
+                            Managers.FRIENDS_MANAGER.add(target.getNameForScoreboard());
                     }
                 }
                 case "Pearl" -> ItemUtils.useItem(Items.ENDER_PEARL, swingHand.getValue(), mc.player.getYaw(), mc.player.getPitch());
