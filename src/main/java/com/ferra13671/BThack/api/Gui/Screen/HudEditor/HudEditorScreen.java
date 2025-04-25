@@ -41,8 +41,7 @@ public class HudEditorScreen extends BThackScreen {
         super(Text.literal("Hud Mover"));
 
         frame = new Frame(Categories.HUD, writingSlider);
-        frame.setX(300);
-        frame.setY(50);
+        frame.setPosition(300, 50);
         ticker.reset();
     }
 

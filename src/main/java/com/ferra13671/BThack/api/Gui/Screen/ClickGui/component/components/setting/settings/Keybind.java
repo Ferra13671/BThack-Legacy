@@ -23,12 +23,11 @@ public class Keybind extends AbstractSetting<Setting<?>> {
 	
 	@Override
 	public void renderComponent() {
-		y = parent.parent.getY() + offset;
-		x = parent.parent.getX();
+		super.renderComponent();
 
-		BThackRender.drawRect(x, y, x + Constants.CLICKGUI_FRAME_WIDTH, y + getHeight(), this.hovered ? ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().backgroundHoveredColor()), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))) : ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().backgroundColor()), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))));
+		BThackRender.drawRect(getX(), getY(), getX() + Constants.CLICKGUI_FRAME_WIDTH, getY() + getHeight(), hovered ? ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().backgroundHoveredColor()), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))) : ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().backgroundColor()), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))));
 
-		BThackRender.drawString(binding ? "< PRESS KEY >" : ("Key: " + KeyboardUtils.getKeyName(this.parent.module.getKey())), x + 2, y + 4, ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()));
+		BThackRender.drawString(binding ? "< PRESS KEY >" : ("Key: " + KeyboardUtils.getKeyName(parent.module.getKey())), getX() + 2, getY() + 4, ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()));
 	}
 	
 	@Override
@@ -40,9 +39,8 @@ public class Keybind extends AbstractSetting<Setting<?>> {
 	
 	@Override
 	public boolean mouseClicked(int mouseX, int mouseY, int button) {
-		if(isMouseOnButton(mouseX, mouseY) && button == 0) {
+		if(isMouseOnButton(mouseX, mouseY) && button == 0)
 			binding = !binding;
-		}
 
 		return isMouseOnButton(mouseX, mouseY);
 	}

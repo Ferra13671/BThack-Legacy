@@ -1,6 +1,8 @@
 package com.ferra13671.BThack.api.Managers.managers.Setting.Settings;
 
 import com.ferra13671.BThack.BThack;
+import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.ModuleButton;
+import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.setting.AbstractSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -54,4 +56,6 @@ public abstract class Setting<T> {
     public abstract void load(JsonObject jsonObject, JsonElement jsonElement);
 
     public abstract void save(JsonObject jsonObject);
+
+    public abstract AbstractSetting<? extends Setting<T>> asSettingButton(ModuleButton parent, int offset);
 }

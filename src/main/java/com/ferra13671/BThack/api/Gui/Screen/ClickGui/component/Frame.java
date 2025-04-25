@@ -18,6 +18,7 @@ import com.ferra13671.BThack.Constants;
 import com.ferra13671.BThack.api.Utils.Data;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.impl.Modules.CLIENT.ClickGui;
+import org.joml.Vector2i;
 
 import java.io.Closeable;
 import java.util.ArrayList;
@@ -27,14 +28,12 @@ public class Frame implements Mc, Closeable {
 	private static final List<Frame> GLOBAL_FRAMES = new ArrayList<>();
 
 	public int id;
-	public final ArrayList<ModuleButton> buttons = new ArrayList<>();
-	public final String frameName;
+	public final String name;
 	private boolean open = true;
-	private int y = 0;
-	private int x = 0;
+	private final Vector2i position = new Vector2i(0, 0);
 	private boolean isDragging = false;
-	public int dragX = 0;
-	public int dragY = 0;
+	private final Vector2i dragPosition = new Vector2i(0, 0);
+	public final ArrayList<ModuleButton> buttons = new ArrayList<>();
 	public int height;
 	public float renderHeight;
 	public boolean buttonHovered = false;
@@ -47,13 +46,13 @@ public class Frame implements Mc, Closeable {
 
 		this.writingSlider = writingSlider;
 
-		frameName = name;
+		this.name = name;
 		int tY = Constants.CLICKGUI_BAR_HEIGHT;
 
 		for(Module mod : modules) {
 			ModuleButton button = new ModuleButton(mod, this, tY);
 			buttons.add(button);
-			tY += Constants.CLICKGUI_BAR_HEIGHT;
+			tY += Constants.CLICKGUI_BUTTON_HEIGHT;
 		}
 	}
 	
@@ -64,13 +63,9 @@ public class Frame implements Mc, Closeable {
 	public ArrayList<ModuleButton> getButtons() {
 		return buttons;
 	}
-	
-	public void setX(int newX) {
-		this.x = newX;
-	}
-	
-	public void setY(int newY) {
-		this.y = newY;
+
+	public void setPosition(int x, int y) {
+		position.set(x, y);
 	}
 	
 	public void setDrag(boolean drag) {
@@ -85,20 +80,18 @@ public class Frame implements Mc, Closeable {
 		this.open = open;
 	}
 
-	public String getFrameName() {
-		return this.frameName;
+	public String getName() {
+		return this.name;
 	}
 
 	public void updateButtons(int mouseX, int mouseY) {
-		for (ModuleButton button : getButtons()) {
+		for (ModuleButton button : getButtons())
 			button.updateComponent(mouseX, mouseY);
-		}
 	}
 
 	public void resetHovered() {
-		for (ModuleButton button : getButtons()) {
+		for (ModuleButton button : getButtons())
 			button.resetHovered();
-		}
 		buttonHovered = false;
 	}
 
@@ -118,17 +111,14 @@ public class Frame implements Mc, Closeable {
 	public boolean updateClick(double mouseX, double mouseY, int mouseButton) {
 		if(isWithinHeader((int) mouseX, (int) mouseY) && mouseButton == 0) {
 			setDrag(true);
-			dragX = (int) (mouseX / ModuleList.clickGui.guiScale.getValue()) - getX();
-			dragY = (int) (mouseY / ModuleList.clickGui.guiScale.getValue()) - getY();
+			dragPosition.set((int) (mouseX / ModuleList.clickGui.guiScale.getValue()) - getX(), (int) (mouseY / ModuleList.clickGui.guiScale.getValue()) - getY());
 			return false;
 		}
-		if(isOpen()) {
-			if(!getButtons().isEmpty()) {
-				for(Component component : getButtons()) {
-					component.mouseClicked((int) mouseX, (int) mouseY, mouseButton);
-				}
-			}
-		}
+
+		if(isOpen() && !getButtons().isEmpty())
+			for(Component component : getButtons())
+				component.mouseClicked((int) mouseX, (int) mouseY, mouseButton);
+
 		if(isWithinHeader((int) mouseX, (int) mouseY) && mouseButton == 1) {
 			setOpen(!isOpen());
 			resetAnimationIgnoreOpen();
@@ -139,21 +129,16 @@ public class Frame implements Mc, Closeable {
     }
 
 	public void updateRelease(int mouseX, int mouseY, int mouseButton) {
-		if(isOpen()) {
-			if(!getButtons().isEmpty()) {
-				for(Component component : getButtons()) {
-					component.mouseReleased(mouseX, mouseY, mouseButton);
-				}
-			}
-		}
+		if(isOpen() && !getButtons().isEmpty())
+			for(Component component : getButtons())
+				component.mouseReleased(mouseX, mouseY, mouseButton);
 	}
 
 	public Module getDescriptionModule(double mouseX, double mouseY) {
-		if (isOpen()) {
-			for (ModuleButton button : buttons) {
-				if (button.isMouseOnButton((int) mouseX, (int) mouseY)) return button.module;
-			}
-		}
+		if (isOpen())
+			for (ModuleButton button : buttons)
+				if (button.isMouseOnButton((int) mouseX, (int) mouseY))
+					return button.module;
 		return null;
 	}
 	
@@ -165,31 +150,27 @@ public class Frame implements Mc, Closeable {
 
 		if (ModuleList.clickGui.isShaderEnabled()) {
 			ModuleList.clickGui.prepareCurrentShader(1, 1);
-			BThackRender.drawShader(ModuleList.clickGui.getCurrentShader(), x, y, x + Constants.CLICKGUI_FRAME_WIDTH, y + Constants.CLICKGUI_BAR_HEIGHT);
+			BThackRender.drawShader(ModuleList.clickGui.getCurrentShader(), getX(), getY(), getX() + Constants.CLICKGUI_FRAME_WIDTH, getY() + Constants.CLICKGUI_BAR_HEIGHT);
 		} else
-			BThackRender.drawRect(x, y, x + Constants.CLICKGUI_FRAME_WIDTH, y + Constants.CLICKGUI_BAR_HEIGHT, ModuleList.clickGui.customColor.getValue() ? ColorUtils.fastRGBA(ModuleList.clickGui.color.getValue().getRed(), ModuleList.clickGui.color.getValue().getGreen(), ModuleList.clickGui.color.getValue().getBlue(), 255) : ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().color()));
+			BThackRender.drawRect(getX(), getY(), getX() + Constants.CLICKGUI_FRAME_WIDTH, getY() + Constants.CLICKGUI_BAR_HEIGHT, ModuleList.clickGui.customColor.getValue() ? ColorUtils.fastRGBA(ModuleList.clickGui.color.getValue().getRed(), ModuleList.clickGui.color.getValue().getGreen(), ModuleList.clickGui.color.getValue().getBlue(), 255) : ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().color()));
 		if (ModuleList.clickGui.frameOutline.getValue()) {
 			if (ModuleList.clickGui.isShaderEnabled()) {
 				ModuleList.clickGui.prepareCurrentShader(1, 1);
-				BThackRender.drawShaderOutlineRect(ModuleList.clickGui.getCurrentShader(), x - 1, y - 1, x + Constants.CLICKGUI_FRAME_WIDTH + 1, y + renderHeight + Constants.CLICKGUI_BAR_HEIGHT + 1, 1);
-			} else {
-				BThackRender.drawOutlineRect(x - 1, y - 1, x + Constants.CLICKGUI_FRAME_WIDTH + 1, y + renderHeight + Constants.CLICKGUI_BAR_HEIGHT + 1, 1, ClickGui.getClickGuiColor(true));
-			}
+				BThackRender.drawShaderOutlineRect(ModuleList.clickGui.getCurrentShader(), getX() - 1, getY() - 1, getX() + Constants.CLICKGUI_FRAME_WIDTH + 1, getY() + renderHeight + Constants.CLICKGUI_BAR_HEIGHT + 1, 1);
+			} else
+				BThackRender.drawOutlineRect(getX() - 1, getY() - 1, getX() + Constants.CLICKGUI_FRAME_WIDTH + 1, getY() + renderHeight + Constants.CLICKGUI_BAR_HEIGHT + 1, 1, ClickGui.getClickGuiColor(true));
 		}
 
-		BThackRender.drawString(frameName, x + (Constants.CLICKGUI_FRAME_WIDTH / 2f) - (FontUtils.getTextWidth(frameName) / 2f), y + (Constants.CLICKGUI_BAR_HEIGHT / 2f) - (FontUtils.getTextHeight(frameName) / 2f), ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()), true, FontRenderManager.DrawMode.NORMAL_BOLD);
+		BThackRender.drawString(name, getX() + (Constants.CLICKGUI_FRAME_WIDTH / 2f) - (FontUtils.getTextWidth(name) / 2f), getY() + (Constants.CLICKGUI_BAR_HEIGHT / 2f) - (FontUtils.getTextHeight(name) / 2f), ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()), true, FontRenderManager.DrawMode.NORMAL_BOLD);
 
-		if(open || frameAnimation.getEase() < 1) {
-			if(!buttons.isEmpty()) {
-				if (needScissor)
-					BThackRender.enableScissor(ClickGui.applyGuiScale(x), ClickGui.applyGuiScale(y + Constants.CLICKGUI_BAR_HEIGHT), ClickGui.applyGuiScale(Constants.CLICKGUI_FRAME_WIDTH), (int) ClickGui.applyGuiScale(renderHeight));
-				for(Component component : buttons) {
-					component.renderComponent();
-				}
-				BThackMatrix.translate(0, 0, -1);
-				if (needScissor)
-					BThackRender.disableScissor();
-			}
+		if((open || frameAnimation.getEase() < 1) && !buttons.isEmpty()) {
+			if (needScissor)
+				BThackRender.enableScissor(ClickGui.applyGuiScale(getX()), ClickGui.applyGuiScale(getY() + Constants.CLICKGUI_BAR_HEIGHT), ClickGui.applyGuiScale(Constants.CLICKGUI_FRAME_WIDTH), (int) ClickGui.applyGuiScale(renderHeight));
+			for(Component component : buttons)
+				component.renderComponent();
+			BThackMatrix.translate(0, 0, -1);
+			if (needScissor)
+				BThackRender.disableScissor();
 		}
 	}
 	
@@ -203,9 +184,8 @@ public class Frame implements Mc, Closeable {
 	}
 
 	public void tick() {
-		for (ModuleButton button : buttons) {
+		for (ModuleButton button : buttons)
 			button.tick();
-		}
 	}
 
 	@Override
@@ -215,49 +195,42 @@ public class Frame implements Mc, Closeable {
 	}
 
 	public int getX() {
-		return x;
+		return position.x;
 	}
 	
 	public int getY() {
-		return y;
+		return position.y;
 	}
 	
 	public void updatePosition(int mouseX, int mouseY) {
-		if(isDragging) {
-			setX(mouseX - dragX);
-			setY(mouseY - dragY);
-		}
+		if(isDragging)
+			setPosition(mouseX - dragPosition.x, mouseY - dragPosition.y);
 	}
 
 	public void moveFrame(int keyCode) {
+		int x = position.x;
+		int y = position.y;
 		switch (keyCode) {
-			case KeyboardUtils.KEY_LEFT:
-				x -= 5;
-				break;
-			case KeyboardUtils.KEY_RIGHT:
-				x += 5;
-				break;
-			case KeyboardUtils.KEY_UP:
-				y -= 5;
-				break;
-			case KeyboardUtils.KEY_DOWN:
-				y += 5;
+			case KeyboardUtils.KEY_LEFT -> x -= Constants.CLICKGUI_FRAME_MOVE_STEP;
+			case KeyboardUtils.KEY_RIGHT -> x += Constants.CLICKGUI_FRAME_MOVE_STEP;
+			case KeyboardUtils.KEY_UP -> y -= Constants.CLICKGUI_FRAME_MOVE_STEP;
+			case KeyboardUtils.KEY_DOWN -> y += Constants.CLICKGUI_FRAME_MOVE_STEP;
 		}
+		setPosition(x, y);
 	}
 
 	public void moveFrame(double deltaX, double deltaY) {
-		x += (int) (deltaX * 7);
-		y += (int) (deltaY * 7);
+		setPosition(position.x + (int) (deltaX * 7), position.y + (int) (deltaY * 7));
 	}
 	
 	public boolean isWithinHeader(int mouseX, int mouseY) {
-        return mouseX >= ClickGui.applyGuiScale(x) && mouseX <= ClickGui.applyGuiScale(x + Constants.CLICKGUI_FRAME_WIDTH) &&
-				mouseY >= ClickGui.applyGuiScale(y) && mouseY <= ClickGui.applyGuiScale(y + Constants.CLICKGUI_BAR_HEIGHT);
+        return mouseX >= ClickGui.applyGuiScale(getX()) && mouseX <= ClickGui.applyGuiScale(getX() + Constants.CLICKGUI_FRAME_WIDTH) &&
+				mouseY >= ClickGui.applyGuiScale(getY()) && mouseY <= ClickGui.applyGuiScale(getY() + Constants.CLICKGUI_BAR_HEIGHT);
     }
 
 	public boolean isMouseOnFrame(int mouseX, int mouseY) {
-		return mouseX >= ClickGui.applyGuiScale(x) && mouseX <= ClickGui.applyGuiScale(x + Constants.CLICKGUI_FRAME_WIDTH) &&
-				mouseY >= ClickGui.applyGuiScale(y) && mouseY <= ClickGui.applyGuiScale(y + renderHeight + Constants.CLICKGUI_BAR_HEIGHT);
+		return mouseX >= ClickGui.applyGuiScale(getX()) && mouseX <= ClickGui.applyGuiScale(getX() + Constants.CLICKGUI_FRAME_WIDTH) &&
+				mouseY >= ClickGui.applyGuiScale(getY()) && mouseY <= ClickGui.applyGuiScale(getY() + renderHeight + Constants.CLICKGUI_BAR_HEIGHT);
 	}
 
 	public static List<Frame> getGlobalFrames() {

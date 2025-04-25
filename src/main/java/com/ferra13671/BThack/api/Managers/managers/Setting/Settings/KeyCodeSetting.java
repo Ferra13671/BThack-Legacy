@@ -1,5 +1,8 @@
 package com.ferra13671.BThack.api.Managers.managers.Setting.Settings;
 
+import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.ModuleButton;
+import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.setting.AbstractSetting;
+import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.setting.settings.KeyCode;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.google.gson.JsonElement;
@@ -36,5 +39,10 @@ public class KeyCodeSetting extends Setting<Integer> {
     @Override
     public void save(JsonObject jsonObject) {
         jsonObject.add(getName(), new JsonPrimitive(getValue()));
+    }
+
+    @Override
+    public AbstractSetting<KeyCodeSetting> asSettingButton(ModuleButton parent, int offset) {
+        return new KeyCode(parent, offset, this, module);
     }
 }

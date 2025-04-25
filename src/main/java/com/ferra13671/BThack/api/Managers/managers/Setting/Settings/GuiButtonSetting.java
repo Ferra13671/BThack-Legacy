@@ -1,5 +1,8 @@
 package com.ferra13671.BThack.api.Managers.managers.Setting.Settings;
 
+import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.ModuleButton;
+import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.setting.AbstractSetting;
+import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.setting.settings.OpenGuiButton;
 import com.ferra13671.BThack.api.Module.Module;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -25,5 +28,10 @@ public class GuiButtonSetting extends Setting<Supplier<Screen>> {
     @Override
     public void save(JsonObject jsonObject) {
         //nothing
+    }
+
+    @Override
+    public AbstractSetting<GuiButtonSetting> asSettingButton(ModuleButton parent, int offset) {
+        return new OpenGuiButton(this, parent, offset, module);
     }
 }

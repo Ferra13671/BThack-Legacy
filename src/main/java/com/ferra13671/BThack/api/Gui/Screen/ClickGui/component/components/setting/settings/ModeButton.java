@@ -24,10 +24,9 @@ public class ModeButton extends AbstractSetting<ModeSetting> {
 	
 	@Override
 	public void renderComponent() {
-		y = parent.parent.getY() + offset;
-		x = parent.parent.getX();
+		super.renderComponent();
 
-		BThackRender.drawRect(x, y, x + Constants.CLICKGUI_FRAME_WIDTH, y + getHeight(), this.hovered ? ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().backgroundHoveredColor()), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))) : ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().backgroundColor()), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))));
+		BThackRender.drawRect(getX(), getY(), getX() + Constants.CLICKGUI_FRAME_WIDTH, getY() + getHeight(), hovered ? ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().backgroundHoveredColor()), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))) : ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().backgroundColor()), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))));
 
 		String text = getModeString();
 		float scale = getTextScale(text);
@@ -36,7 +35,7 @@ public class ModeButton extends AbstractSetting<ModeSetting> {
 			BThackMatrix.push();
 			BThackMatrix.scale(scale, scale, 1);
 		}
-		BThackRender.drawString(text, (x + 2) / scale, (y + 4) / scale, ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()));
+		BThackRender.drawString(text, (getX() + 2) / scale, (getY() + 4) / scale, ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()));
 		if (scale != 1)
 			BThackMatrix.pop();
 	}
@@ -47,7 +46,7 @@ public class ModeButton extends AbstractSetting<ModeSetting> {
 	}
 
 	private String getModeString() {
-		return this.setting.getName() + ": " + (!setting.getOptions().contains(setting.getValue()) ? "NULL" : (setting.getOptions().size() < setting.getIndex() ? setting.getValue() : setting.getOptions().get(setting.getIndex())));
+		return setting.getName() + ": " + (!setting.getOptions().contains(setting.getValue()) ? "NULL" : (setting.getOptions().size() < setting.getIndex() ? setting.getValue() : setting.getOptions().get(setting.getIndex())));
 	}
 
 	@Override

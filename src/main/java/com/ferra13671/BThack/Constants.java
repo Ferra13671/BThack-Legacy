@@ -26,6 +26,7 @@ public final class Constants {
 
     public static final int CLICKGUI_BAR_HEIGHT = 12;
     public static final int CLICKGUI_FRAME_WIDTH = 100;
+    public static final int CLICKGUI_FRAME_MOVE_STEP = 5;
     public static final int CLICKGUI_BUTTON_OUTLINE_COLOR = ColorUtils.fastRGBA(0, 0, 0, 100);
     public static final int CLICKGUI_BUTTON_HEIGHT = 14;
     public static final int CLICKGUI_SLIDER_ROUND_TO_PLACE_VALUE = 2;

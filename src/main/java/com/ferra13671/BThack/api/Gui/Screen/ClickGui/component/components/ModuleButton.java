@@ -11,12 +11,11 @@ import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.Component;
 import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.Frame;
 import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.setting.AbstractSetting;
 import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.setting.settings.*;
-import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.setting.settings.Checkbox;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Managers.Managers;
-import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.*;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.Constants;
+import com.ferra13671.BThack.api.Utils.Data;
 import com.ferra13671.BThack.api.Utils.Textures;
 import com.ferra13671.BThack.impl.Modules.CLIENT.ClickGui;
 
@@ -45,35 +44,26 @@ public class ModuleButton extends Component implements Mc {
 		this.module = module;
 		this.parent = parent;
 		this.offset = offset;
-		int opY = offset + Constants.CLICKGUI_BUTTON_HEIGHT;
-		AbstractSetting<?> setting;
-		if(Managers.SETTINGS_MANAGER.getSettingsByMod(module) != null) {
-			for(Setting<?> s : Managers.SETTINGS_MANAGER.getSettingsByMod(module)){
-				setting =
-						s instanceof ModeSetting set ? new ModeButton(set, this, opY, set.getIndex(), module) :
-						s instanceof NumberSetting set ? new Slider(set, this, opY, module) :
-						s instanceof BooleanSetting set ? new Checkbox(set, this, opY, module) :
-						s instanceof KeyCodeSetting set ? new KeyCode(this, opY, set, module) :
-						s instanceof GuiButtonSetting set ? new OpenGuiButton(set, this, opY, module) :
-						s instanceof ColorSetting set ? new ColorPicker(set, this, opY, module) :
-						null;
-				if (setting != null) {
-					settings.add(setting);
-					opY += setting.getHeight();
-				}
+		final Data<Integer> opY = new Data<>(offset + Constants.CLICKGUI_BUTTON_HEIGHT);
+		final Data<AbstractSetting<?>> setting = new Data<>();
+		Managers.SETTINGS_MANAGER.getSettingsByMod(module).forEach(s -> {
+			if (s != null) {
+				setting.set(s.asSettingButton(this, opY.get()));
+				settings.add(setting.get());
+				opY.set(opY.get() + setting.get().getHeight());
 			}
-		}
+		});
 
 		int h = 0;
 		if (module.allowRemapVisible) {
-			setting = new Visible(this, opY, module);
-			h = setting.getHeight();
-			settings.add(setting);
+			setting.set(new Visible(this, opY.get(), module));
+			h = setting.get().getHeight();
+			settings.add(setting.get());
 		}
 		if (module.allowRemapKeyCode) {
 			if (module.allowRemapVisible)
-				opY += h;
-			settings.add(new Keybind(this, opY));
+				opY.set(opY.get() + h);
+			settings.add(new Keybind(this, opY.get()));
 		}
 	}
 
@@ -104,10 +94,9 @@ public class ModuleButton extends Component implements Mc {
 		if(renderOpen || open) {
 			if(!settings.isEmpty()) {
 				BThackRender.enableScissor(ClickGui.applyGuiScale(parent.getX()), ClickGui.applyGuiScale(parent.getY() + offset), ClickGui.applyGuiScale(Constants.CLICKGUI_FRAME_WIDTH), ClickGui.applyGuiScale(animatedSettingsHeight + Constants.CLICKGUI_BUTTON_HEIGHT));
-				for(AbstractSetting<?> set : settings) {
+				for(AbstractSetting<?> set : settings)
 					if (set.getVisible())
 						set.renderComponent();
-				}
 				BThackRender.disableScissor();
 				if (ModuleList.clickGui.settingsOutline.getValue())
 					BThackRender.drawOutlineRect(parent.getX(), parent.getY() + offset, parent.getX() + Constants.CLICKGUI_FRAME_WIDTH, parent.getY() + offset + animatedSettingsHeight + Constants.CLICKGUI_BUTTON_HEIGHT, 1, ColorUtils.fastRGBA(255, 255, 255, Math.max(1, (int) ((scInvert ? 1 - settingColorAnimation.getEase() : settingColorAnimation.getEase()) * 255))));
@@ -153,10 +142,9 @@ public class ModuleButton extends Component implements Mc {
 	public int getHeight() {
 		if(renderOpen || open) {
 			int height = 0;
-			for (AbstractSetting<?> component : settings) {
+			for (AbstractSetting<?> component : settings)
 				if (component.getVisible())
 					height += component.getHeight();
-			}
 			height = open ? (int) (lastAnimFactor * height) : (int) (height - (lastAnimFactor * height));
 			animatedSettingsHeight = height;
 			height += Constants.CLICKGUI_BUTTON_HEIGHT;
@@ -182,11 +170,9 @@ public class ModuleButton extends Component implements Mc {
 			isHovered = true;
 			parent.buttonHovered = true;
 		}
-		if(!settings.isEmpty()) {
-			for(Component comp : settings) {
+		if(!settings.isEmpty())
+			for(Component comp : settings)
 				comp.updateComponent(mouseX, mouseY);
-			}
-		}
 		return false;
 	}
 
@@ -218,30 +204,26 @@ public class ModuleButton extends Component implements Mc {
 			}
 		}
 		if (open) {
-			for (Component comp : settings) {
+			for (Component comp : settings)
 				comp.mouseClicked(mouseX, mouseY, button);
-			}
-		}
-		if (open)
 			parent.refresh();
+		}
 
 		return isMouseOnButton(mouseX, mouseY);
 	}
 
 	@Override
 	public void mouseReleased(int mouseX, int mouseY, int mouseButton) {
-		for(Component comp : settings) {
+		for(Component comp : settings)
 			comp.mouseReleased(mouseX, mouseY, mouseButton);
-		}
 		if (open)
 			parent.refresh();
 	}
 
 	@Override
 	public void keyTyped(int key) {
-		for(Component comp : this.settings) {
+		for(Component comp : settings)
 			comp.keyTyped(key);
-		}
 	}
 
 	public boolean isMouseOnButton(int x, int y) {

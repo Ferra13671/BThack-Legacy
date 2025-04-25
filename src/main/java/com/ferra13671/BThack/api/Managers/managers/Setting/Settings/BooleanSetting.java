@@ -1,5 +1,8 @@
 package com.ferra13671.BThack.api.Managers.managers.Setting.Settings;
 
+import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.ModuleButton;
+import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.setting.AbstractSetting;
+import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.setting.settings.Checkbox;
 import com.ferra13671.BThack.api.Module.Module;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -24,5 +27,10 @@ public class BooleanSetting extends Setting<Boolean> {
     @Override
     public void save(JsonObject jsonObject) {
         jsonObject.add(getName(), new JsonPrimitive(getValue()));
+    }
+
+    @Override
+    public AbstractSetting<BooleanSetting> asSettingButton(ModuleButton parent, int offset) {
+        return new Checkbox(this, parent, offset, module);
     }
 }

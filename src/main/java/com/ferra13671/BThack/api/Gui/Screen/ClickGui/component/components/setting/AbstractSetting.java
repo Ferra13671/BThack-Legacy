@@ -1,21 +1,16 @@
 package com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.setting;
 
-import com.ferra13671.BThack.Constants;
 import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.Component;
 import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.ModuleButton;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.Setting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.impl.Modules.CLIENT.ClickGui;
+import org.joml.Vector2i;
 
 public abstract class AbstractSetting<T extends Setting<?>> extends Component {
-
-    public int x;
-    public int y;
-
+    public final Vector2i position = new Vector2i(0, 0);
     public int offset;
-
     public boolean hovered;
-
     private boolean visible = true;
 
     public final ModuleButton parent;
@@ -23,9 +18,6 @@ public abstract class AbstractSetting<T extends Setting<?>> extends Component {
     public final T setting;
 
     public AbstractSetting(int offset, ModuleButton button, Module module, T setting) {
-        this.x = button.parent.getX() + Constants.CLICKGUI_FRAME_WIDTH;
-        this.y = button.parent.getY() + button.offset;
-
         this.offset = offset;
         this.parent = button;
         this.module = module;
@@ -33,7 +25,9 @@ public abstract class AbstractSetting<T extends Setting<?>> extends Component {
     }
 
     @Override
-    public abstract void renderComponent();
+    public void renderComponent() {
+        position.set(parent.parent.getX(), parent.parent.getY() + offset);
+    }
 
     @Override
     public void refresh(int newOff) {
@@ -47,6 +41,14 @@ public abstract class AbstractSetting<T extends Setting<?>> extends Component {
         return 15;
     }
 
+    public int getX() {
+        return position.x;
+    }
+
+    public int getY() {
+        return position.y;
+    }
+
     @Override
     public abstract boolean updateComponent(int mouseX, int mouseY);
 
@@ -54,8 +56,8 @@ public abstract class AbstractSetting<T extends Setting<?>> extends Component {
     public abstract boolean mouseClicked(int mouseX, int mouseY, int button);
 
     public boolean isMouseOnButton(int x, int y) {
-        return x > ClickGui.applyGuiScale(this.x) && x < ClickGui.applyGuiScale(this.x + 100) &&
-                y > ClickGui.applyGuiScale(this.y) && y < ClickGui.applyGuiScale(this.y + 15);
+        return x > ClickGui.applyGuiScale(getX()) && x < ClickGui.applyGuiScale(getX() + 100) &&
+                y > ClickGui.applyGuiScale(getY()) && y < ClickGui.applyGuiScale(getY() + 15);
     }
 
     public boolean getVisible() {

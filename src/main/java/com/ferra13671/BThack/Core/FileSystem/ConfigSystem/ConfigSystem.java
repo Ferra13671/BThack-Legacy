@@ -244,7 +244,7 @@ public final class ConfigSystem {
                 add(frameObject, "y", frame.getY());
                 add(frameObject, "opened", frame.isOpen());
 
-                add(jsonObject, frame.getFrameName().toLowerCase(), frameObject);
+                add(jsonObject, frame.getName().toLowerCase(), frameObject);
             }
         });
     }
@@ -252,15 +252,14 @@ public final class ConfigSystem {
     public static void loadFrames() throws IOException {
         ConfigUtils.loadFromJson("Frames", "", jsonObject -> {
             for (Frame frame : Frame.getGlobalFrames()) {
-                JsonElement jsonElement = jsonObject.get(frame.getFrameName().toLowerCase());
+                JsonElement jsonElement = jsonObject.get(frame.getName().toLowerCase());
                 if (jsonElement == null) return;
                 JsonObject settingObject = jsonElement.getAsJsonObject();
                 if (settingObject == null) return;
 
                 if (equalsNull(settingObject, "x", "y", "opened")) return;
 
-                frame.setX(settingObject.get("x").getAsInt());
-                frame.setY(settingObject.get("y").getAsInt());
+                frame.setPosition(settingObject.get("x").getAsInt(), settingObject.get("y").getAsInt());
                 frame.setOpen(settingObject.get("opened").getAsBoolean());
             }
         }, () -> {});

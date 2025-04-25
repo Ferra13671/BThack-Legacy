@@ -21,17 +21,15 @@ public class OpenGuiButton extends AbstractSetting<GuiButtonSetting> implements 
 
     @Override
     public void renderComponent() {
-        y = parent.parent.getY() + offset;
-        x = parent.parent.getX();
+        super.renderComponent();
 
-        BThackRender.drawRect(x, y, x + Constants.CLICKGUI_FRAME_WIDTH, y + getHeight(), this.hovered ? ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().backgroundHoveredColor()), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))) : ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().backgroundColor()), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))));
+        BThackRender.drawRect(getX(), getY(), getX() + Constants.CLICKGUI_FRAME_WIDTH, getY() + getHeight(), hovered ? ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().backgroundHoveredColor()), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))) : ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().backgroundColor()), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))));
 
-        BThackRender.drawString(this.setting.getName() + " ... ", x + 2, y + 4, ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()));
+        BThackRender.drawString(setting.getName() + " ... ", getX() + 2, getY() + 4, ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()));
     }
 
     @Override
     public boolean updateComponent(int mouseX, int mouseY) {
-
         if (!getVisible()) return true;
 
         hovered = isMouseOnButton(mouseX, mouseY);
@@ -43,9 +41,8 @@ public class OpenGuiButton extends AbstractSetting<GuiButtonSetting> implements 
     public boolean mouseClicked(int mouseX, int mouseY, int button) {
         if (!getVisible()) return false;
 
-        if (isMouseOnButton(mouseX, mouseY) && button == 0 && this.parent.open) {
+        if (isMouseOnButton(mouseX, mouseY) && button == 0 && parent.open)
             ((BThackScreen) mc.currentScreen).actionAfterClicking(() -> mc.setScreen(setting.getValue().get()));
-        }
 
         return isMouseOnButton(mouseX, mouseY);
     }

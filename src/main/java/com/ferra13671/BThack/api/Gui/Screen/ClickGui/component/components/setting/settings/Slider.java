@@ -53,20 +53,19 @@ public class Slider extends AbstractSetting<NumberSetting> implements Mc {
 
 	@Override
 	public void renderComponent() {
-		y = parent.parent.getY() + offset;
-		x = parent.parent.getX();
+		super.renderComponent();
 
-		BThackRender.drawRect(x, y, x + Constants.CLICKGUI_FRAME_WIDTH, y + getHeight(), ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().backgroundColor()), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))));
+		BThackRender.drawRect(getX(), getY(), getX() + Constants.CLICKGUI_FRAME_WIDTH, getY() + getHeight(), ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().backgroundColor()), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))));
 
-		BThackRender.drawRect(x + 2, y + 11, x + Constants.CLICKGUI_FRAME_WIDTH - 2, y + getHeight(), Color.GRAY.darker().darker().darker().getRGB());
+		BThackRender.drawRect(getX() + 2, getY() + 11, getX() + Constants.CLICKGUI_FRAME_WIDTH - 2, getY() + getHeight(), Color.GRAY.darker().darker().darker().getRGB());
 
 		if (ModuleList.clickGui.isShaderEnabled()) {
 			ModuleList.clickGui.prepareCurrentShader(1, 1);
-			BThackRender.drawShader(ModuleList.clickGui.getCurrentShader(), x + 2, y + 11, x + 2 + (int) renderWidth, y + getHeight());
+			BThackRender.drawShader(ModuleList.clickGui.getCurrentShader(), getX() + 2, getY() + 11, getX() + 2 + (int) renderWidth, getY() + getHeight());
 		} else
-			BThackRender.drawRect(x + 2, y + 11, x + 2 + (int) renderWidth, y + getHeight(), ClickGui.getClickGuiColor(false));
+			BThackRender.drawRect(getX() + 2, getY() + 11, getX() + 2 + (int) renderWidth, getY() + getHeight(), ClickGui.getClickGuiColor(false));
 
-		BThackRender.drawString(setting.getName() + ": " + setting.getValue(), x + 2, y + 1, ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()));
+		BThackRender.drawString(setting.getName() + ": " + setting.getValue(), getX() + 2, getY() + 1, ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()));
 	}
 
 	@Override
@@ -76,7 +75,7 @@ public class Slider extends AbstractSetting<NumberSetting> implements Mc {
 		double min = setting.getMinValue();
 		double max = setting.getMaxValue();
 
-		double diff = ((mouseX - 1 - ClickGui.applyGuiScale(x)) / ((float) ClickGui.applyGuiScale((Constants.CLICKGUI_FRAME_WIDTH / 2) - 2) * 2)) * 100;
+		double diff = ((mouseX - 1 - ClickGui.applyGuiScale(getX())) / ((float) ClickGui.applyGuiScale((Constants.CLICKGUI_FRAME_WIDTH / 2) - 2) * 2)) * 100;
 		diff = Math.max(0, Math.min(100, diff));
 
 		double prevRenderWidth = renderWidth;
@@ -88,13 +87,8 @@ public class Slider extends AbstractSetting<NumberSetting> implements Mc {
 			soundTicker.reset();
 		}
 
-		if (dragging) {
-			if (diff == 0) {
-				setting.setValue(min);
-			} else {
-				setting.setValue(roundToPlace(((diff / 100) * (max - min) + min)));
-			}
-		}
+		if (dragging)
+			setting.setValue(diff == 0 ? min : roundToPlace(((diff / 100) * (max - min) + min)));
 
 		return !dragging;
 	}
@@ -133,18 +127,12 @@ public class Slider extends AbstractSetting<NumberSetting> implements Mc {
 	public void keyTyped(int key) {
 		if (!writing) return;
 
-		if (key == KeyboardUtils.KEY_MINUS) {
-			if (textBuilder.isEmpty())
-				textBuilder.append((char) key);
-		}
-
-		if (keys.contains(key) || (char) key == '.') {
+		if ((key == KeyboardUtils.KEY_MINUS && textBuilder.isEmpty()) || (keys.contains(key) || (char) key == '.'))
 			textBuilder.append((char) key);
-		}
-		if (key == KeyboardUtils.KEY_BACKSPACE) {
+
+		if (key == KeyboardUtils.KEY_BACKSPACE)
 			if (!textBuilder.isEmpty())
 				textBuilder.deleteCharAt(textBuilder.length() - 1);
-		}
 
 		if (key == KeyboardUtils.KEY_ENTER) {
 			double number = getNumber();
@@ -157,9 +145,9 @@ public class Slider extends AbstractSetting<NumberSetting> implements Mc {
 			if (number > setting.getMaxValue())
 				number = setting.getMaxValue();
 
-			if (setting.onlyInt) {
+			if (setting.onlyInt)
 				setting.setValue((double) (int) number);
-			} else
+			else
 				setting.setValue(number);
 		}
 
@@ -180,24 +168,20 @@ public class Slider extends AbstractSetting<NumberSetting> implements Mc {
 	}
 
 	private boolean isMouseOnButtonD(int x, int y) {
-		return x > ClickGui.applyGuiScale(this.x) && x < ClickGui.applyGuiScale(this.x + (Constants.CLICKGUI_FRAME_WIDTH / 2f + 1)) &&
-				y > ClickGui.applyGuiScale(this.y) && y < ClickGui.applyGuiScale(this.y + 15);
+		return x > ClickGui.applyGuiScale(getX()) && x < ClickGui.applyGuiScale(getX() + (Constants.CLICKGUI_FRAME_WIDTH / 2f + 1)) &&
+				y > ClickGui.applyGuiScale(getY()) && y < ClickGui.applyGuiScale(getY() + Constants.CLICKGUI_BUTTON_HEIGHT);
 	}
 
 	private boolean isMouseOnButtonI(int x, int y) {
-		return x > ClickGui.applyGuiScale(this.x + Constants.CLICKGUI_FRAME_WIDTH / 2f) && x < ClickGui.applyGuiScale(this.x + Constants.CLICKGUI_FRAME_WIDTH) &&
-				y > ClickGui.applyGuiScale(this.y) && y < ClickGui.applyGuiScale(this.y + 15);
+		return x > ClickGui.applyGuiScale(getX() + Constants.CLICKGUI_FRAME_WIDTH / 2f) && x < ClickGui.applyGuiScale(getX() + Constants.CLICKGUI_FRAME_WIDTH) &&
+				y > ClickGui.applyGuiScale(getY()) && y < ClickGui.applyGuiScale(getY() + Constants.CLICKGUI_BUTTON_HEIGHT);
 	}
 
 	public double getNumber() {
 		if (!textBuilder.isEmpty()) {
-			if (textBuilder.charAt(textBuilder.length() - 1) == '.') {
+			if (textBuilder.charAt(textBuilder.length() - 1) == '.')
 				textBuilder.append("0");
-			}
-		}
-		if (textBuilder.isEmpty()) {
-			return 0;
-		}
+		} else return 0;
 
 		return Double.parseDouble(textBuilder.toString());
 	}

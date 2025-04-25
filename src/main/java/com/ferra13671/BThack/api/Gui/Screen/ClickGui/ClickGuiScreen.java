@@ -53,8 +53,7 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
             Frame frame = new Frame(category, writingSlider);
             frame.id = tempId;
             tempId++;
-            frame.setY(tempY);
-            frame.setX(tempX);
+            frame.setPosition(tempX, tempY);
             frames.add(frame);
             tempX += Constants.CLICKGUI_FRAME_WIDTH + 5;
             frame.refresh();
