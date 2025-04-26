@@ -22,15 +22,6 @@ public class Shaders extends Module {
 
     public final ModeSetting shaderMode = new ModeSetting("Shader", this, Arrays.asList("Default", "Gradient", "Rainbow_xy", "Rainbow_x", "Rainbow_y"));
 
-    public final BooleanSetting players = new BooleanSetting("Players", this, true);
-    public final BooleanSetting items = new BooleanSetting("Items", this, true);
-    public final BooleanSetting hostiles = new BooleanSetting("Hostiles", this, true);
-    public final BooleanSetting golems = new BooleanSetting("Golems", this, true);
-    public final BooleanSetting passive = new BooleanSetting("Passive", this, true);
-    public final BooleanSetting hands = new BooleanSetting("Hands", this, true);
-    public final BooleanSetting self = new BooleanSetting("Self", this, true);
-    public final BooleanSetting crystals = new BooleanSetting("Crystals", this, true);
-
     //Default
     public final ColorSetting fillColor = new ColorSetting("Fill Color", this, new Color(118, 13, 179, 90), () -> shaderMode.getValue().equals("Default"));
     public final ColorSetting outlineColor = new ColorSetting("Outline Color", this, new Color(161, 0, 255, 255), () -> shaderMode.getValue().equals("Default"));
@@ -51,6 +42,16 @@ public class Shaders extends Module {
 
     public final NumberSetting lineWidth = new NumberSetting("Line Width", this, 2, 0, 6, true);
 
+    public final CategorySetting targetsCategory = new CategorySetting("Targets", this);
+    public final BooleanSetting players = new BooleanSetting("Players", this, true).inCategory(targetsCategory);
+    public final BooleanSetting items = new BooleanSetting("Items", this, true).inCategory(targetsCategory);
+    public final BooleanSetting hostiles = new BooleanSetting("Hostiles", this, true).inCategory(targetsCategory);
+    public final BooleanSetting golems = new BooleanSetting("Golems", this, true).inCategory(targetsCategory);
+    public final BooleanSetting passive = new BooleanSetting("Passive", this, true).inCategory(targetsCategory);
+    public final BooleanSetting hands = new BooleanSetting("Hands", this, true).inCategory(targetsCategory);
+    public final BooleanSetting self = new BooleanSetting("Self", this, true).inCategory(targetsCategory);
+    public final BooleanSetting crystals = new BooleanSetting("Crystals", this, true).inCategory(targetsCategory);
+
     public Shaders() {
         super("Shaders",
                 "lang.module.Shaders",
@@ -61,15 +62,6 @@ public class Shaders extends Module {
 
         initSettings(
                 shaderMode,
-
-                players,
-                items,
-                hostiles,
-                golems,
-                passive,
-                hands,
-                self,
-                crystals,
 
                 fillColor,
                 outlineColor,
@@ -84,7 +76,9 @@ public class Shaders extends Module {
                 scale,
                 fillAlpha,
                 outlineAlpha,
-                lineWidth
+                lineWidth,
+
+                targetsCategory
         );
     }
 

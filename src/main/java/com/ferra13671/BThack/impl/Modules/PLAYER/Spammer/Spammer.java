@@ -3,6 +3,7 @@ package com.ferra13671.BThack.impl.Modules.PLAYER.Spammer;
 import com.ferra13671.BTbot.api.Utils.Generate.StringGenerator;
 import com.ferra13671.BTbot.api.Utils.Generate.NumberGenerator;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.CategorySetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Managers.managers.Thread.ThreadManager;
@@ -27,12 +28,13 @@ public class Spammer extends Module {
     public final BooleanSetting delaySpread = new BooleanSetting("Delay Spread", this, false);
     public final NumberSetting spreadRange = new NumberSetting("Spread range", this, 0.3, 0.1, 0.7, false, delaySpread::getValue);
 
-    public final BooleanSetting antiSpam = new BooleanSetting("AntiSpam", this, true);
-    public final NumberSetting aSpamLength = new NumberSetting("ASpam Length", this, 5, 1, 15, true, antiSpam::getValue);
-    public final NumberSetting aSpamSpace = new NumberSetting("ASpam Space", this, 3, 1, 6, true, antiSpam::getValue);
-    public final BooleanSetting aSpamCaps = new BooleanSetting("ASpam Caps", this, true, antiSpam::getValue);
-    public final BooleanSetting aSpamNumbers = new BooleanSetting("ASpam Numbers", this, true, antiSpam::getValue);
-    public final BooleanSetting aSpamSymbols = new BooleanSetting("ASpam Symbols", this, true, antiSpam::getValue);
+    public final CategorySetting antiSpamCategory = new CategorySetting("AntiSpam", this);
+    public final BooleanSetting antiSpam = new BooleanSetting("AntiSpam", this, true).inCategory(antiSpamCategory);
+    public final NumberSetting aSpamLength = new NumberSetting("ASpam Length", this, 5, 1, 15, true, antiSpam::getValue).inCategory(antiSpamCategory);
+    public final NumberSetting aSpamSpace = new NumberSetting("ASpam Space", this, 3, 1, 6, true, antiSpam::getValue).inCategory(antiSpamCategory);
+    public final BooleanSetting aSpamCaps = new BooleanSetting("ASpam Caps", this, true, antiSpam::getValue).inCategory(antiSpamCategory);
+    public final BooleanSetting aSpamNumbers = new BooleanSetting("ASpam Numbers", this, true, antiSpam::getValue).inCategory(antiSpamCategory);
+    public final BooleanSetting aSpamSymbols = new BooleanSetting("ASpam Symbols", this, true, antiSpam::getValue).inCategory(antiSpamCategory);
 
     public Spammer() {
         super("Spammer",
@@ -48,12 +50,7 @@ public class Spammer extends Module {
                 delaySpread,
                 spreadRange,
 
-                antiSpam,
-                aSpamLength,
-                aSpamSpace,
-                aSpamCaps,
-                aSpamNumbers,
-                aSpamSymbols
+                antiSpamCategory
         );
     }
 

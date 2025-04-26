@@ -40,12 +40,12 @@ public class CategoryButton extends AbstractSetting<CategorySetting> {
         subSettings.forEach(subSetting -> {
             if (subSetting.getVisible()) visibleSettings.add(subSetting);
         });
-        height = yOffset.get() - offset;
+        height = yOffset.get() - offset - Constants.CLICKGUI_BUTTON_HEIGHT;
     }
 
     @Override
     public int getHeight() {
-        renderHeight = opened ? (int) (height * animation.getEase()) : Constants.CLICKGUI_BUTTON_HEIGHT + (int) ((height - Constants.CLICKGUI_BUTTON_HEIGHT) * (1 - animation.getEase()));
+        renderHeight = opened ? Constants.CLICKGUI_BUTTON_HEIGHT + (int) (height * animation.getEase()) : Constants.CLICKGUI_BUTTON_HEIGHT + (int) ((height - Constants.CLICKGUI_BUTTON_HEIGHT) * (1 - animation.getEase()));
         return renderHeight;
     }
 
@@ -61,7 +61,7 @@ public class CategoryButton extends AbstractSetting<CategorySetting> {
                 visibleSettings.add(component);
             }
         }
-        height = yOffset.get() - newOff;
+        height = yOffset.get() - newOff - Constants.CLICKGUI_BUTTON_HEIGHT;
     }
 
     @Override

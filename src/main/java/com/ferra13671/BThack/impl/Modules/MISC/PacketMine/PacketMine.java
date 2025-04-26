@@ -40,7 +40,7 @@ public class PacketMine extends Module {
     public final BooleanSetting swingHand = new BooleanSetting("Swing Hand", this, true).inCategory(generalCategory);
 
     public final BooleanSetting removeIfUse = new BooleanSetting("Remove If Use", this, true).inCategory(generalCategory);
-    public final NumberSetting breakDelaySet = new NumberSetting("Break Delay", this, 5, 0, 5, true).inCategory(generalCategory);
+    public final NumberSetting breakDelaySet = new NumberSetting("Break Delay", this, 0, 0, 5, true).inCategory(generalCategory);
 
     public final BooleanSetting conveyorMode = new BooleanSetting("Conveyor Mode", this, false).inCategory(generalCategory);
 

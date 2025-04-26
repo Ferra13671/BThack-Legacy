@@ -5,10 +5,7 @@ import com.ferra13671.BThack.Core.Render.Box.RenderBox;
 import com.ferra13671.BThack.api.Events.PacketEvent;
 import com.ferra13671.BThack.api.Events.Render.RenderWorldLastEvent;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
-import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
-import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ColorSetting;
-import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
-import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.*;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.Utils.PlayerUtils;
@@ -44,31 +41,28 @@ import java.util.concurrent.Executors;
 
 public class NewChunks extends Module {
 
-    public final ModeSetting page = new ModeSetting("Page", this, Arrays.asList("Search", "Render"));
+    public final CategorySetting searchCategory = new CategorySetting("Search", this);
+    public final BooleanSetting blockUpdateSearch = new BooleanSetting("Block Update", this, false).inCategory(searchCategory);
+    public final BooleanSetting beingUpdatedSearch = new BooleanSetting("Being Update", this, true).inCategory(searchCategory);
+    public final BooleanSetting paletteSearch = new BooleanSetting("Palette", this, true).inCategory(searchCategory);
+    public final BooleanSetting liquidSearch = new BooleanSetting("Liquid", this, false).inCategory(searchCategory);
+    public final BooleanSetting overworldOldCheck = new BooleanSetting("Overw. Old", this, true).inCategory(searchCategory);
+    public final BooleanSetting netherOldCheck = new BooleanSetting("Nether Old", this, true).inCategory(searchCategory);
+    public final BooleanSetting endOldCheck = new BooleanSetting("End Old", this, true).inCategory(searchCategory);
 
-    //---------Search---------//
-    public final BooleanSetting blockUpdateSearch = new BooleanSetting("Block Update", this, false, () -> page.getValue().equals("Search"));
-    public final BooleanSetting beingUpdatedSearch = new BooleanSetting("Being Update", this, true, () -> page.getValue().equals("Search"));
-    public final BooleanSetting paletteSearch = new BooleanSetting("Palette", this, true, () -> page.getValue().equals("Search"));
-    public final BooleanSetting liquidSearch = new BooleanSetting("Liquid", this, false, () -> page.getValue().equals("Search"));
-    public final BooleanSetting overworldOldCheck = new BooleanSetting("Overw. Old", this, true, () -> page.getValue().equals("Search"));
-    public final BooleanSetting netherOldCheck = new BooleanSetting("Nether Old", this, true, () -> page.getValue().equals("Search"));
-    public final BooleanSetting endOldCheck = new BooleanSetting("End Old", this, true, () -> page.getValue().equals("Search"));
-    //------------------------//
-
-    //---------Render---------//
-    public final BooleanSetting newChunkRender = new BooleanSetting("New Render", this, true, () -> page.getValue().equals("Render"));
-    public final NumberSetting newDist = new NumberSetting("New Dist", this, 350, 100, 2000, false, () -> page.getValue().equals("Render") && newChunkRender.getValue());
-    public final NumberSetting newY = new NumberSetting("New Y", this, 0, 0, 400, false, () -> page.getValue().equals("Render") && newChunkRender.getValue());
-    public final ColorSetting newColor = new ColorSetting("New Color", this, new Color(0, 255, 0, 100), () -> page.getValue().equals("Render") && newChunkRender.getValue());
-    public final ColorSetting newLineColor = new ColorSetting("New Line Color", this, new Color(0, 255, 0, 255), () -> page.getValue().equals("Render") && newChunkRender.getValue());
-
-    public final BooleanSetting oldChunkRender = new BooleanSetting("Old Render", this, true, () -> page.getValue().equals("Render"));
-    public final NumberSetting oldDist = new NumberSetting("Old Dist", this, 350, 100, 2000, false, () -> page.getValue().equals("Render") && oldChunkRender.getValue());
-    public final NumberSetting oldY = new NumberSetting("Old Y", this, 0, 0, 400, false, () -> page.getValue().equals("Render") && oldChunkRender.getValue());
-    public final ColorSetting oldColor = new ColorSetting("Old Color", this, new Color(255, 255, 0, 100), () -> page.getValue().equals("Render") && oldChunkRender.getValue());
-    public final ColorSetting oldLineColor = new ColorSetting("Old Line Color", this, new Color(255, 255, 0, 255), () -> page.getValue().equals("Render") && oldChunkRender.getValue());
-    //------------------------//
+    public final CategorySetting renderCategory = new CategorySetting("Render", this);
+    public final CategorySetting newChunksCategory = new CategorySetting("New Chunks", this).inCategory(renderCategory);
+    public final BooleanSetting newChunkRender = new BooleanSetting("New Render", this, true).inCategory(newChunksCategory);
+    public final NumberSetting newDist = new NumberSetting("New Dist", this, 350, 100, 2000, false, newChunkRender::getValue).inCategory(newChunksCategory);
+    public final NumberSetting newY = new NumberSetting("New Y", this, 0, 0, 400, false, newChunkRender::getValue).inCategory(newChunksCategory);
+    public final ColorSetting newColor = new ColorSetting("New Color", this, new Color(0, 255, 0, 100), newChunkRender::getValue).inCategory(newChunksCategory);
+    public final ColorSetting newLineColor = new ColorSetting("New Line Color", this, new Color(0, 255, 0, 255), newChunkRender::getValue).inCategory(newChunksCategory);
+    public final CategorySetting oldChunksCategory = new CategorySetting("Old Chunks", this).inCategory(renderCategory);
+    public final BooleanSetting oldChunkRender = new BooleanSetting("Old Render", this, true).inCategory(oldChunksCategory);
+    public final NumberSetting oldDist = new NumberSetting("Old Dist", this, 350, 100, 2000, false, oldChunkRender::getValue).inCategory(oldChunksCategory);
+    public final NumberSetting oldY = new NumberSetting("Old Y", this, 0, 0, 400, false, oldChunkRender::getValue).inCategory(oldChunksCategory);
+    public final ColorSetting oldColor = new ColorSetting("Old Color", this, new Color(255, 255, 0, 100), oldChunkRender::getValue).inCategory(oldChunksCategory);
+    public final ColorSetting oldLineColor = new ColorSetting("Old Line Color", this, new Color(255, 255, 0, 255), oldChunkRender::getValue).inCategory(oldChunksCategory);
 
 
     public NewChunks() {
@@ -80,31 +74,8 @@ public class NewChunks extends Module {
         );
 
         initSettings(
-                page,
-
-
-
-                blockUpdateSearch,
-                beingUpdatedSearch,
-                paletteSearch,
-                liquidSearch,
-                overworldOldCheck,
-                netherOldCheck,
-                endOldCheck,
-
-
-
-                newChunkRender,
-                newDist,
-                newY,
-                newColor,
-                newLineColor,
-
-                oldChunkRender,
-                oldDist,
-                oldY,
-                oldColor,
-                oldLineColor
+                searchCategory,
+                renderCategory
         );
     }
 

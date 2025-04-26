@@ -2,6 +2,7 @@ package com.ferra13671.BThack.impl.Modules.PLAYER;
 
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.CategorySetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
@@ -22,13 +23,14 @@ public class AutoMount extends Module {
     public final NumberSetting range = new NumberSetting("Range", this, 4.3, 2, 7, false);
     public final NumberSetting delay = new NumberSetting("DelayTicks", this, 1, 1, 5, true);
 
-    public final BooleanSetting boats = new BooleanSetting("Boats", this, true);
-    public final BooleanSetting horses = new BooleanSetting("Horses", this, true);
-    public final BooleanSetting skeletonHorses = new BooleanSetting("Skeleton Horses", this, true, horses::getValue);
-    public final BooleanSetting zombieHorses = new BooleanSetting("Zombie Horses", this, true, horses::getValue);
-    public final BooleanSetting donkeys = new BooleanSetting("Donkeys", this, true);
-    public final BooleanSetting pigs = new BooleanSetting("Pigs", this, true);
-    public final BooleanSetting llamas = new BooleanSetting("Llamas", this, true);
+    public final CategorySetting targetsCategory = new CategorySetting("Targets", this);
+    public final BooleanSetting boats = new BooleanSetting("Boats", this, true).inCategory(targetsCategory);
+    public final BooleanSetting horses = new BooleanSetting("Horses", this, true).inCategory(targetsCategory);
+    public final BooleanSetting skeletonHorses = new BooleanSetting("Skeleton Horses", this, true, horses::getValue).inCategory(targetsCategory);
+    public final BooleanSetting zombieHorses = new BooleanSetting("Zombie Horses", this, true, horses::getValue).inCategory(targetsCategory);
+    public final BooleanSetting donkeys = new BooleanSetting("Donkeys", this, true).inCategory(targetsCategory);
+    public final BooleanSetting pigs = new BooleanSetting("Pigs", this, true).inCategory(targetsCategory);
+    public final BooleanSetting llamas = new BooleanSetting("Llamas", this, true).inCategory(targetsCategory);
 
 
     public AutoMount() {
@@ -43,13 +45,7 @@ public class AutoMount extends Module {
                 range,
                 delay,
 
-                boats,
-                horses,
-                skeletonHorses,
-                zombieHorses,
-                donkeys,
-                pigs,
-                llamas
+                targetsCategory
         );
     }
 

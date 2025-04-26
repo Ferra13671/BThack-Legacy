@@ -4,6 +4,7 @@ import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.CategorySetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Managers.managers.TravelChange.TravelChanger;
@@ -30,33 +31,35 @@ public class KillAura extends Module {
     public final ModeSetting mode = new ModeSetting("Mode", this, new ArrayList<>(Arrays.asList("Aura", "TriggerBot")));
     public final ModeSetting attackMode = new ModeSetting("AttackMode", this, new ArrayList<>(Arrays.asList("CoolDown", "Delay")));
     public final NumberSetting range = new NumberSetting("Range", this, 3.62, 1, 10, false, () -> mode.getValue().equals("Aura"));
-    public final BooleanSetting instaRotate = new BooleanSetting("Insta Rotate", this, false, () -> mode.getValue().equals("Aura"));
-    public final ModeSetting rotateMath = new ModeSetting("Rotate Math", this, Arrays.asList("New", "Old", "Always"), () -> mode.getValue().equals("Aura") && !instaRotate.getValue());
-    public final NumberSetting targetRotateDelay = new NumberSetting("Target Rot. Delay", this, 150, 0, 500, true, () -> mode.getValue().equals("Aura") && !instaRotate.getValue() && !rotateMath.getValue().equals("Always"));
-    public final NumberSetting rotateStep = new NumberSetting("Rotate Step", this, 0.6125, 0.35, 0.8, false, () -> mode.getValue().equals("Aura") && !instaRotate.getValue() && rotateMath.getValue().equals("New"));
-    public final NumberSetting lockTicks = new NumberSetting("Lock Ticks", this, 5, 3, 10, true, () -> mode.getValue().equals("Aura") && !instaRotate.getValue());
-    public final BooleanSetting grim = new BooleanSetting("Grim", this, true);
-    public final ModeSetting rotateMode = new ModeSetting("RotateMode", this, new ArrayList<>(Arrays.asList("Packet", "Vanilla", "None")), () -> !mode.getValue().equals("TriggerBot") && instaRotate.getValue()).defaultValue("Grim");
-    public final NumberSetting packets = new NumberSetting("Packets", this, 1, 1, 5, true, () -> rotateMode.getValue().equals("Packet") && mode.getValue().equals("Aura"));
-    public final NumberSetting delay = new NumberSetting("Delay(Second)", this, 1.4, 0.1, 4, false, () -> attackMode.getValue().equals("Delay"));
-    public final NumberSetting postCooldown = new NumberSetting("Post Cooldown", this, 56, 0, 100, true, () -> attackMode.getValue().equals("CoolDown"));
 
-    public final BooleanSetting players = new BooleanSetting("Players", this, true);
-    public final BooleanSetting teammates = new BooleanSetting("Teammates", this, false);
-    public final BooleanSetting friends = new BooleanSetting("Friends", this, false);
-    public final BooleanSetting hostiles = new BooleanSetting("Hostiles", this, true);
-    public final BooleanSetting passive = new BooleanSetting("Passive", this, true);
-    public final BooleanSetting golems = new BooleanSetting("Golems", this, false);
-    public final BooleanSetting otherMobs = new BooleanSetting("Other Mobs", this, true);
+    public final CategorySetting rotateCategory = new CategorySetting("Rotate", this);
+    public final BooleanSetting instaRotate = new BooleanSetting("Insta Rotate", this, false, () -> mode.getValue().equals("Aura")).inCategory(rotateCategory);
+    public final ModeSetting rotateMath = new ModeSetting("Rotate Math", this, Arrays.asList("New", "Old", "Always"), () -> mode.getValue().equals("Aura") && !instaRotate.getValue()).inCategory(rotateCategory);
+    public final NumberSetting targetRotateDelay = new NumberSetting("Target Rot. Delay", this, 150, 0, 500, true, () -> mode.getValue().equals("Aura") && !instaRotate.getValue() && !rotateMath.getValue().equals("Always")).inCategory(rotateCategory);
+    public final NumberSetting rotateStep = new NumberSetting("Rotate Step", this, 0.6125, 0.35, 0.8, false, () -> mode.getValue().equals("Aura") && !instaRotate.getValue() && rotateMath.getValue().equals("New")).inCategory(rotateCategory);
+    public final NumberSetting lockTicks = new NumberSetting("Lock Ticks", this, 5, 3, 10, true, () -> mode.getValue().equals("Aura") && !instaRotate.getValue()).inCategory(rotateCategory);
+    public final BooleanSetting grim = new BooleanSetting("Grim", this, true, () ->  mode.getValue().equals("Aura")).inCategory(rotateCategory);
+    public final ModeSetting rotateMode = new ModeSetting("RotateMode", this, new ArrayList<>(Arrays.asList("Packet", "Vanilla", "None")), () ->  mode.getValue().equals("Aura") && instaRotate.getValue()).inCategory(rotateCategory);
+    public final NumberSetting packets = new NumberSetting("Packets", this, 1, 1, 5, true, () -> rotateMode.getValue().equals("Packet") && mode.getValue().equals("Aura")).inCategory(rotateCategory);
+    public final NumberSetting delay = new NumberSetting("Delay(Second)", this, 1.4, 0.1, 4, false, () -> attackMode.getValue().equals("Delay")).inCategory(rotateCategory);
 
     public final BooleanSetting ignoreWalls = new BooleanSetting("Ignore Walls", this, false);
 
-    public final BooleanSetting pauseIfEat = new BooleanSetting("Pause If Eat", this, true);
-    public final BooleanSetting pauseIfMine = new BooleanSetting("Pause If Mine", this, true);
+    public final CategorySetting targetsCategory = new CategorySetting("Targets", this);
+    public final BooleanSetting players = new BooleanSetting("Players", this, true).inCategory(targetsCategory);
+    public final BooleanSetting teammates = new BooleanSetting("Teammates", this, false).inCategory(targetsCategory);
+    public final BooleanSetting friends = new BooleanSetting("Friends", this, false).inCategory(targetsCategory);
+    public final BooleanSetting hostiles = new BooleanSetting("Hostiles", this, true).inCategory(targetsCategory);
+    public final BooleanSetting passive = new BooleanSetting("Passive", this, true).inCategory(targetsCategory);
+    public final BooleanSetting golems = new BooleanSetting("Golems", this, false).inCategory(targetsCategory);
+    public final BooleanSetting otherMobs = new BooleanSetting("Other Mobs", this, true).inCategory(targetsCategory);
+    public final BooleanSetting clanManager = ClanSettingsBuilder.buildToggle(this).inCategory(targetsCategory);
+    public final ModeSetting clanMode = ClanSettingsBuilder.buildStatusMode(this, clanManager).inCategory(targetsCategory);
+    public final ModeSetting targetClan = ClanSettingsBuilder.buildClanTargetMode(this, clanManager, clanMode).inCategory(targetsCategory);
 
-    public final BooleanSetting clanManager = ClanSettingsBuilder.buildToggle(this);
-    public final ModeSetting clanMode = ClanSettingsBuilder.buildStatusMode(this, clanManager);
-    public final ModeSetting targetClan = ClanSettingsBuilder.buildClanTargetMode(this, clanManager, clanMode);
+    public final CategorySetting pauseCategory = new CategorySetting("Pause", this);
+    public final BooleanSetting pauseIfEat = new BooleanSetting("Pause If Eat", this, true).inCategory(pauseCategory);
+    public final BooleanSetting pauseIfMine = new BooleanSetting("Pause If Mine", this, true).inCategory(pauseCategory);
 
     public KillAura() {
         super("KillAura",
@@ -70,33 +73,14 @@ public class KillAura extends Module {
                 mode,
                 attackMode,
                 range,
-                instaRotate,
-                rotateMath,
-                targetRotateDelay,
-                rotateStep,
-                lockTicks,
-                grim,
-                rotateMode,
-                packets,
-                delay,
-                postCooldown,
 
-                players,
-                teammates,
-                friends,
-                hostiles,
-                passive,
-                golems,
-                otherMobs,
+                rotateCategory,
 
                 ignoreWalls,
 
-                pauseIfEat,
-                pauseIfMine,
+                targetsCategory,
 
-                clanManager,
-                clanMode,
-                targetClan
+                pauseCategory
         );
     }
 

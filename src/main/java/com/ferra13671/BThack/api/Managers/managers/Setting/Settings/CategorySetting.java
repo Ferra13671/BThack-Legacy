@@ -24,12 +24,20 @@ public class CategorySetting extends Setting<List<Setting<?>>> {
 
     @Override
     public void load(JsonObject jsonObject, JsonElement jsonElement) {
+        JsonObject categoryObject = jsonElement.getAsJsonObject();
+        getValue().forEach(setting -> {
+            JsonElement settingValueObject = categoryObject.get(setting.getName());
 
+            if (settingValueObject != null)
+                setting.load(categoryObject, settingValueObject);
+        });
     }
 
     @Override
     public void save(JsonObject jsonObject) {
-
+        JsonObject categoryObject = new JsonObject();
+        getValue().forEach(setting -> setting.save(categoryObject));
+        jsonObject.add(getName(), categoryObject);
     }
 
     @Override

@@ -4,10 +4,7 @@ import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Box.RenderBox;
 import com.ferra13671.BThack.Core.Render.Line.RenderLine;
 import com.ferra13671.BThack.api.Events.Render.RenderWorldLastEvent;
-import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
-import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ColorSetting;
-import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
-import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.*;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.*;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
@@ -24,36 +21,33 @@ import java.util.Arrays;
 
 public class ChestESP extends Module {
 
-    public final BooleanSetting tracers = new BooleanSetting("Tracers", this, false);
-    public final ModeSetting traceMode = new ModeSetting("Trace Mode", this, Arrays.asList("All", "Select"), tracers::getValue);
-
     public final BooleanSetting chests = new BooleanSetting("Chests", this, true);
-    public final ColorSetting chestColor = new ColorSetting("Chest Color", this, new Color(255, 135, 0), chests::getValue).withBlockedAlpha();
-    public final BooleanSetting chestsTrace = new BooleanSetting("Chests Trace", this, true, () -> tracers.getValue() && traceMode.getValue().equals("Select"));
-
     public final BooleanSetting enderChests = new BooleanSetting("EnderChests", this, true);
-    public final ColorSetting eChestColor = new ColorSetting("Ender Chest Color", this, new Color(204, 0, 204), enderChests::getValue).withBlockedAlpha();
-    public final BooleanSetting eChestsTrace = new BooleanSetting("EChests Trace", this, true, () -> tracers.getValue() && traceMode.getValue().equals("Select"));
-
     public final BooleanSetting shulkers = new BooleanSetting("Shulkers", this, true);
-    public final ColorSetting shulkerColor = new ColorSetting("Shulker Color", this, new Color(255, 76, 255), shulkers::getValue).withBlockedAlpha();
-    public final BooleanSetting shulkersTrace = new BooleanSetting("Shulk. Trace", this, true, () -> tracers.getValue() && traceMode.getValue().equals("Select"));
-
     public final BooleanSetting barrels = new BooleanSetting("Barrels", this, true);
-    public final ColorSetting barrelColor = new ColorSetting("Barrel Color", this, new Color(165, 64, 0), barrels::getValue).withBlockedAlpha();
-    public final BooleanSetting barrelsTrace = new BooleanSetting("Barrels Trace", this, true, () -> tracers.getValue() && traceMode.getValue().equals("Select"));
-
     public final BooleanSetting hoppers = new BooleanSetting("Hoppers", this, false);
-    public final ColorSetting hopperColor = new ColorSetting("Hopper Color", this, new Color(127, 127, 127), hoppers::getValue).withBlockedAlpha();
-    public final BooleanSetting hoppersTrace = new BooleanSetting("Hoppers Trace", this, true, () -> tracers.getValue() && traceMode.getValue().equals("Select"));
-
     public final BooleanSetting droppers = new BooleanSetting("Droppers", this, false);
-    public final ColorSetting dropperColor = new ColorSetting("Dropper Color", this, new Color(178, 178, 178), droppers::getValue).withBlockedAlpha();
-    public final BooleanSetting droppersTrace = new BooleanSetting("Dropp. Trace", this, true, () -> tracers.getValue() && traceMode.getValue().equals("Select"));
-
     public final BooleanSetting dispensers = new BooleanSetting("Dispensers", this, false);
-    public final ColorSetting dispenserColor = new ColorSetting("Dispenser Color", this, new Color(178, 178, 178), dispensers::getValue).withBlockedAlpha();
-    public final BooleanSetting dispensersTrace = new BooleanSetting("Disp. Trace", this, true, () -> tracers.getValue() && traceMode.getValue().equals("Select"));
+
+    public final CategorySetting tracersCategory = new CategorySetting("Tracers", this);
+    public final BooleanSetting tracers = new BooleanSetting("Tracers", this, false).inCategory(tracersCategory);
+    public final ModeSetting traceMode = new ModeSetting("Trace Mode", this, Arrays.asList("All", "Select"), tracers::getValue).inCategory(tracersCategory);
+    public final BooleanSetting chestsTrace = new BooleanSetting("Chests Trace", this, true, () -> tracers.getValue() && traceMode.getValue().equals("Select")).inCategory(tracersCategory);
+    public final BooleanSetting eChestsTrace = new BooleanSetting("EChests Trace", this, true, () -> tracers.getValue() && traceMode.getValue().equals("Select")).inCategory(tracersCategory);
+    public final BooleanSetting shulkersTrace = new BooleanSetting("Shulkers Trace", this, true, () -> tracers.getValue() && traceMode.getValue().equals("Select")).inCategory(tracersCategory);
+    public final BooleanSetting barrelsTrace = new BooleanSetting("Barrels Trace", this, true, () -> tracers.getValue() && traceMode.getValue().equals("Select")).inCategory(tracersCategory);
+    public final BooleanSetting hoppersTrace = new BooleanSetting("Hoppers Trace", this, true, () -> tracers.getValue() && traceMode.getValue().equals("Select")).inCategory(tracersCategory);
+    public final BooleanSetting droppersTrace = new BooleanSetting("Droppers Trace", this, true, () -> tracers.getValue() && traceMode.getValue().equals("Select")).inCategory(tracersCategory);
+    public final BooleanSetting dispensersTrace = new BooleanSetting("Dispensers Trace", this, true, () -> tracers.getValue() && traceMode.getValue().equals("Select")).inCategory(tracersCategory);
+
+    public final CategorySetting colorsCategory = new CategorySetting("Colors", this);
+    public final ColorSetting chestColor = new ColorSetting("Chest Color", this, new Color(255, 135, 0)).withBlockedAlpha().inCategory(colorsCategory);
+    public final ColorSetting eChestColor = new ColorSetting("Ender Chest Color", this, new Color(204, 0, 204)).withBlockedAlpha().inCategory(colorsCategory);
+    public final ColorSetting shulkerColor = new ColorSetting("Shulker Color", this, new Color(255, 76, 255)).withBlockedAlpha().inCategory(colorsCategory);
+    public final ColorSetting barrelColor = new ColorSetting("Barrel Color", this, new Color(165, 64, 0)).withBlockedAlpha().inCategory(colorsCategory);
+    public final ColorSetting hopperColor = new ColorSetting("Hopper Color", this, new Color(127, 127, 127)).withBlockedAlpha().inCategory(colorsCategory);
+    public final ColorSetting dropperColor = new ColorSetting("Dropper Color", this, new Color(178, 178, 178)).withBlockedAlpha().inCategory(colorsCategory);
+    public final ColorSetting dispenserColor = new ColorSetting("Dispenser Color", this, new Color(178, 178, 178)).withBlockedAlpha().inCategory(colorsCategory);
 
     public final NumberSetting renderRange = new NumberSetting("Range", this, 200, 50, 600, false);
 
@@ -67,37 +61,16 @@ public class ChestESP extends Module {
 
         initSettings(
                 chests,
-                chestColor,
-                chestsTrace,
-
                 enderChests,
-                eChestColor,
-                eChestsTrace,
-
                 shulkers,
-                shulkerColor,
-                shulkersTrace,
-
                 barrels,
-                barrelColor,
-                barrelsTrace,
-
                 hoppers,
-                hopperColor,
-                hoppersTrace,
-
                 droppers,
-                dropperColor,
-                droppersTrace,
-
                 dispensers,
-                dispenserColor,
-                dispensersTrace,
 
+                tracersCategory,
 
-                tracers,
-                traceMode,
-
+                colorsCategory,
 
                 renderRange
         );

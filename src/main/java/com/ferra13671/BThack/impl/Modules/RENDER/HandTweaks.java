@@ -2,6 +2,7 @@ package com.ferra13671.BThack.impl.Modules.RENDER;
 
 import com.ferra13671.BThack.api.Events.Render.TransformFirstPersonEvent;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.CategorySetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
@@ -11,22 +12,23 @@ import org.joml.Matrix4f;
 
 public class HandTweaks extends Module {
 
-    public final NumberSetting lHandX = new NumberSetting("LHand X", this, -0.63, -2.0, 2.0, false);
-    public final NumberSetting lHandY = new NumberSetting("LHand Y", this, -0.08, -2.0, 2.0, false);
-    public final NumberSetting lHandZ = new NumberSetting("LHand Z", this, -0.67, -2.0, 2.0, false);
-    public final NumberSetting lHandYaw = new NumberSetting("LHand Yaw", this, 0, -100, 100, true);
-    public final NumberSetting lHandPitch = new NumberSetting("LHand Pitch", this, 0, -100, 100, true);
-    public final NumberSetting lHandRoll = new NumberSetting("LHand Roll", this, 0, -100, 100, true);
-    public final NumberSetting lHandScale = new NumberSetting("LHand Scale", this, 1, 0.05, 4, false);
-    public final BooleanSetting lArmAlso = new BooleanSetting("LArm Also", this, true);
+    public final CategorySetting leftHandCategory = new CategorySetting("Left Hand", this);
+    public final NumberSetting lHandX = new NumberSetting("LHand X", this, -0.63, -2.0, 2.0, false).inCategory(leftHandCategory);
+    public final NumberSetting lHandY = new NumberSetting("LHand Y", this, -0.08, -2.0, 2.0, false).inCategory(leftHandCategory);
+    public final NumberSetting lHandZ = new NumberSetting("LHand Z", this, -0.67, -2.0, 2.0, false).inCategory(leftHandCategory);
+    public final NumberSetting lHandYaw = new NumberSetting("LHand Yaw", this, 0, -100, 100, true).inCategory(leftHandCategory);
+    public final NumberSetting lHandPitch = new NumberSetting("LHand Pitch", this, 0, -100, 100, true).inCategory(leftHandCategory);
+    public final NumberSetting lHandRoll = new NumberSetting("LHand Roll", this, 0, -100, 100, true).inCategory(leftHandCategory);
+    public final NumberSetting lHandScale = new NumberSetting("LHand Scale", this, 1, 0.05, 4, false).inCategory(leftHandCategory);
 
-    public final NumberSetting rHandX = new NumberSetting("RHand X", this, 0.63, -2.0, 2.0, false);
-    public final NumberSetting rHandY = new NumberSetting("RHand Y", this, -0.08, -2.0, 2.0, false);
-    public final NumberSetting rHandZ = new NumberSetting("RHand Z", this, -0.67, -2.0, 2.0, false);
-    public final NumberSetting rHandYaw = new NumberSetting("RHand Yaw", this, 0, -100, 100, true);
-    public final NumberSetting rHandPitch = new NumberSetting("RHand Pitch", this, 0, -100, 100, true);
-    public final NumberSetting rHandRoll = new NumberSetting("RHand Roll", this, 0, -100, 100, true);
-    public final NumberSetting rHandScale = new NumberSetting("RHand Scale", this, 1, 0.05, 4, false);
+    public final CategorySetting rightHandCategory = new CategorySetting("Right Hand", this);
+    public final NumberSetting rHandX = new NumberSetting("RHand X", this, 0.63, -2.0, 2.0, false).inCategory(rightHandCategory);
+    public final NumberSetting rHandY = new NumberSetting("RHand Y", this, -0.08, -2.0, 2.0, false).inCategory(rightHandCategory);
+    public final NumberSetting rHandZ = new NumberSetting("RHand Z", this, -0.67, -2.0, 2.0, false).inCategory(rightHandCategory);
+    public final NumberSetting rHandYaw = new NumberSetting("RHand Yaw", this, 0, -100, 100, true).inCategory(rightHandCategory);
+    public final NumberSetting rHandPitch = new NumberSetting("RHand Pitch", this, 0, -100, 100, true).inCategory(rightHandCategory);
+    public final NumberSetting rHandRoll = new NumberSetting("RHand Roll", this, 0, -100, 100, true).inCategory(rightHandCategory);
+    public final NumberSetting rHandScale = new NumberSetting("RHand Scale", this, 1, 0.05, 4, false).inCategory(rightHandCategory);
 
     public final BooleanSetting noEatAnim = new BooleanSetting("No Eat Anim", this, false);
     public final BooleanSetting noBob = new BooleanSetting("No Bob", this, false);
@@ -41,22 +43,9 @@ public class HandTweaks extends Module {
         );
 
         initSettings(
-                lHandX,
-                lHandY,
-                lHandZ,
-                lHandYaw,
-                lHandPitch,
-                lHandRoll,
-                lHandScale,
-                lArmAlso,
+                leftHandCategory,
 
-                rHandX,
-                rHandY,
-                rHandZ,
-                rHandYaw,
-                rHandPitch,
-                rHandScale,
-                rHandRoll,
+                rightHandCategory,
 
                 noEatAnim,
                 noBob,
@@ -70,8 +59,6 @@ public class HandTweaks extends Module {
             if (e.transformType == TransformFirstPersonEvent.TransformType.EAT)
                     e.setCancelled(true);
         if (e.arm == Arm.LEFT) {
-            if (!lArmAlso.getValue())
-                if (e.transformType == TransformFirstPersonEvent.TransformType.ARM) return;
             e.matrices.translate(lHandX.getValue(), lHandY.getValue(), lHandZ.getValue());
         } else if (e.arm == Arm.RIGHT) {
             e.matrices.translate(rHandX.getValue(), rHandY.getValue(), rHandZ.getValue());
@@ -82,8 +69,6 @@ public class HandTweaks extends Module {
     public void onTransFormPost(TransformFirstPersonEvent.Post e) {
         Matrix4f matrix = e.matrices.peek().getPositionMatrix();
         if (e.arm == Arm.LEFT) {
-            if (!lArmAlso.getValue())
-                if (e.transformType == TransformFirstPersonEvent.TransformType.ARM) return;
             matrix.rotate((float) Math.toRadians(lHandYaw.getValue()),0,1,0);
             matrix.rotate((float) Math.toRadians(lHandPitch.getValue()),1,0,0);
             matrix.rotate((float) Math.toRadians(lHandRoll.getValue()),0,0,1);

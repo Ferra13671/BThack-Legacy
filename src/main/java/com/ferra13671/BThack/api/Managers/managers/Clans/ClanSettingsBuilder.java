@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public final class ClanSettingsBuilder {
-    public static final ArrayList<String> modulesWithClanManager = new ArrayList<>();
+    public static final ArrayList<ModeSetting> clanManagersTargetSettings = new ArrayList<>();
 
     public static BooleanSetting buildToggle(Module module) {
         return new BooleanSetting("Clan Manager", module, true);
@@ -33,8 +33,9 @@ public final class ClanSettingsBuilder {
         if (clanNames.isEmpty()) {
             clanNames.add("Null");
         }
-        modulesWithClanManager.add(module.getName());
-        return new ModeSetting("Target", module, clanNames, () -> clanManager.getValue()  && clanMode.equals("Target Clan"));
+        ModeSetting setting = new ModeSetting("Target", module, clanNames, () -> clanManager.getValue()  && clanMode.equals("Target Clan"));
+        clanManagersTargetSettings.add(setting);
+        return setting;
     }
 
     public static ArrayList<Setting<?>> buildClanManager(Module module) {
@@ -62,7 +63,7 @@ public final class ClanSettingsBuilder {
         settings.add(clanMode);
         settings.add(target);
 
-        modulesWithClanManager.add(module.getName());
+        clanManagersTargetSettings.add(target);
 
         return settings;
     }
@@ -75,9 +76,9 @@ public final class ClanSettingsBuilder {
         if (clanNames.isEmpty()) {
             clanNames.add("Null");
         }
-        for (String moduleName : modulesWithClanManager) {
-            ((ModeSetting) Managers.SETTINGS_MANAGER.getModuleSettingByName(moduleName, "Target")).setOptions(clanNames);
-            ((ModeSetting) Managers.SETTINGS_MANAGER.getModuleSettingByName(moduleName, "Target")).setValue(((ModeSetting) Managers.SETTINGS_MANAGER.getModuleSettingByName(moduleName, "Target")).getOptions().get(((ModeSetting) Managers.SETTINGS_MANAGER.getModuleSettingByName(moduleName, "Target")).getIndex()));
-        }
+        clanManagersTargetSettings.forEach(targetSetting -> {
+            targetSetting.setOptions(clanNames);
+            targetSetting.setValue(targetSetting.getOptions().get(targetSetting.getIndex()));
+        });
     }
 }

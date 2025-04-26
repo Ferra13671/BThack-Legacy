@@ -5,6 +5,7 @@ import com.ferra13671.BThack.Core.Render.Line.RenderLine;
 import com.ferra13671.BThack.api.Events.Render.RenderWorldLastEvent;
 import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.CategorySetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ColorSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Managers.managers.Clans.Clan;
@@ -20,16 +21,16 @@ import java.util.ArrayList;
 
 public class Tracers extends Module {
 
-    public final BooleanSetting players = new BooleanSetting("Players", this, true);
+    public final CategorySetting targetsCategory = new CategorySetting("Targets", this);
+    public final BooleanSetting players = new BooleanSetting("Players", this, true).inCategory(targetsCategory);
+    public final BooleanSetting hostile = new BooleanSetting("Mobs", this, true).inCategory(targetsCategory);
+    public final BooleanSetting animals = new BooleanSetting("Animals", this, true).inCategory(targetsCategory);
+    public final BooleanSetting items = new BooleanSetting("Items", this, false).inCategory(targetsCategory);
 
-    public final BooleanSetting hostile = new BooleanSetting("Mobs", this, true);
-    public final ColorSetting hostileColor = new ColorSetting("Hostile Color", this, new Color(212, 235, 43), hostile::getValue).withBlockedAlpha();
-
-    public final BooleanSetting animals = new BooleanSetting("Animals", this, true);
-    public final ColorSetting animalColor = new ColorSetting("Animal Color", this, new Color(176, 255, 87), animals::getValue).withBlockedAlpha();
-
-    public final BooleanSetting items = new BooleanSetting("Items", this, false);
-    public final ColorSetting itemColor = new ColorSetting("Item Color", this, new Color(150, 150, 255), items::getValue).withBlockedAlpha();
+    public final CategorySetting colorsCategory = new CategorySetting("Colors", this);
+    public final ColorSetting hostileColor = new ColorSetting("Hostile Color", this, new Color(212, 235, 43)).withBlockedAlpha().inCategory(colorsCategory);
+    public final ColorSetting animalColor = new ColorSetting("Animal Color", this, new Color(176, 255, 87)).withBlockedAlpha().inCategory(colorsCategory);
+    public final ColorSetting itemColor = new ColorSetting("Item Color", this, new Color(150, 150, 255)).withBlockedAlpha().inCategory(colorsCategory);
 
     public Tracers() {
         super("Tracers",
@@ -40,16 +41,8 @@ public class Tracers extends Module {
         );
 
         initSettings(
-                players,
-
-                hostile,
-                hostileColor,
-
-                animals,
-                animalColor,
-
-                items,
-                itemColor
+                targetsCategory,
+                colorsCategory
         );
     }
 

@@ -7,10 +7,7 @@ import com.ferra13671.BThack.api.Animation.Easing;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Events.Render.RenderWorldLastEvent;
 import com.ferra13671.BThack.api.IMixin.ModifyClientPlayerInteractionManager;
-import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
-import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ColorSetting;
-import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
-import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.*;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.*;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
@@ -29,12 +26,12 @@ public class Lawnmower extends Module {
     public final BooleanSetting flowers = new BooleanSetting("Flowers", this, true);
     public final BooleanSetting ignoreWalls = new BooleanSetting("Ignore Walls", this, false);
 
-
-    public final BooleanSetting render = new BooleanSetting("Render", this, true);
-    public final ColorSetting color = new ColorSetting("Color", this, new Color(213, 142, 253), render::getValue).withBlockedAlpha();
-    public final NumberSetting boxAlpha = new NumberSetting("Box Alpha", this, 76, 0, 255, true, render::getValue);
-    public final NumberSetting linesAlpha = new NumberSetting("Lines Alpha", this, 255, 0, 255, true, render::getValue);
-    public final NumberSetting hideTime = new NumberSetting("Hide Time", this, 500, 100, 2000, true, render::getValue);
+    public final CategorySetting renderCategory = new CategorySetting("Render", this);
+    public final BooleanSetting render = new BooleanSetting("Render", this, true).inCategory(renderCategory);
+    public final ColorSetting color = new ColorSetting("Color", this, new Color(213, 142, 253), render::getValue).withBlockedAlpha().inCategory(renderCategory);
+    public final NumberSetting boxAlpha = new NumberSetting("Box Alpha", this, 76, 0, 255, true, render::getValue).inCategory(renderCategory);
+    public final NumberSetting linesAlpha = new NumberSetting("Lines Alpha", this, 255, 0, 255, true, render::getValue).inCategory(renderCategory);
+    public final NumberSetting hideTime = new NumberSetting("Hide Time", this, 500, 100, 2000, true, render::getValue).inCategory(renderCategory);
 
     public Lawnmower() {
         super("Lawnmower",
@@ -50,11 +47,7 @@ public class Lawnmower extends Module {
                 flowers,
                 ignoreWalls,
 
-                render,
-                color,
-                boxAlpha,
-                linesAlpha,
-                hideTime
+                renderCategory
         );
     }
     private final Map<BlockPos, Animation> breakedBoxes = new HashMap<>();

@@ -4,6 +4,7 @@ import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Events.PacketEvent;
 import com.ferra13671.BThack.api.Managers.managers.Build.BuildManager;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.CategorySetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.InventoryUtils;
@@ -20,15 +21,16 @@ import java.util.List;
 
 public class Surround extends Module {
 
-    public final BooleanSetting autoToggle = new BooleanSetting("Auto Toggle", this, true);
-    public final BooleanSetting disableOnY = new BooleanSetting("Disable On Y", this, true, autoToggle::getValue);
-    public final BooleanSetting disableOnTp = new BooleanSetting("Disable On Tp", this, true, autoToggle::getValue);
-    public final BooleanSetting disableOnDeath = new BooleanSetting("Disable On Death", this, true, autoToggle::getValue);
-    public final BooleanSetting disableIfNoBlocks = new BooleanSetting("Disable If No Blocks", this, true, autoToggle::getValue);
-
     public final NumberSetting blocksPerTick = new NumberSetting("Blocks Per Tick", this, 4, 1, 8, true);
     public final BooleanSetting extraBlocks = new BooleanSetting("Extra Blocks", this, false);
     public final BooleanSetting silentSwap = new BooleanSetting("Silent Swap", this, true);
+
+    public final CategorySetting autoDisableCategory = new CategorySetting("Auto Disable", this);
+    public final BooleanSetting autoDisable = new BooleanSetting("Auto Disable", this, true).inCategory(autoDisableCategory);
+    public final BooleanSetting disableOnY = new BooleanSetting("Disable On Y", this, true, autoDisable::getValue).inCategory(autoDisableCategory);
+    public final BooleanSetting disableOnTp = new BooleanSetting("Disable On Tp", this, true, autoDisable::getValue).inCategory(autoDisableCategory);
+    public final BooleanSetting disableOnDeath = new BooleanSetting("Disable On Death", this, true, autoDisable::getValue).inCategory(autoDisableCategory);
+    public final BooleanSetting disableIfNoBlocks = new BooleanSetting("Disable If No Blocks", this, true, autoDisable::getValue).inCategory(autoDisableCategory);
 
     public Surround() {
         super("Surround",
@@ -39,15 +41,11 @@ public class Surround extends Module {
         );
 
         initSettings(
-                autoToggle,
-                disableOnY,
-                disableOnTp,
-                disableOnDeath,
-                disableIfNoBlocks,
-
                 blocksPerTick,
                 extraBlocks,
-                silentSwap
+                silentSwap,
+
+                autoDisableCategory
         );
     }
 
@@ -74,7 +72,7 @@ public class Surround extends Module {
             return;
         }
 
-        if (autoToggle.getValue()) {
+        if (autoDisable.getValue()) {
             if (disableOnY.getValue()) {
                 if (prevY != mc.player.getY()) {
                     toggle();
@@ -99,7 +97,7 @@ public class Surround extends Module {
         prevY = mc.player.getY();
 
         if (!BuildManager.pickUpPlaceBlocks(false, BuildManager.obsidians)) {
-            if (autoToggle.getValue() && disableIfNoBlocks.getValue()) {
+            if (autoDisable.getValue() && disableIfNoBlocks.getValue()) {
                 toggle();
             }
             return;
@@ -129,7 +127,7 @@ public class Surround extends Module {
     public void onPacketReceive(PacketEvent.Receive e) {
         if (nullCheck()) return;
 
-        if (autoToggle.getValue() && disableOnTp.getValue()) {
+        if (autoDisable.getValue() && disableOnTp.getValue()) {
             if (e.getPacket() instanceof PlayerPositionLookS2CPacket) {
                 toggle();
             }
