@@ -3,11 +3,10 @@ package com.ferra13671.BThack.mixins.entity;
 import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.api.Events.Entity.SetVelocityEvent;
-import com.ferra13671.BThack.api.Events.Player.SetPlayerPitchEvent;
-import com.ferra13671.BThack.api.Events.Player.SetPlayerYawEvent;
 import com.ferra13671.BThack.api.Events.Player.VelocityUpdateEvent;
 import com.ferra13671.BThack.api.Events.Player.ChangePlayerLookEvent;
 import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Modules.NoRotateMathUtils;
 import com.ferra13671.MegaEvents.Base.Event;
 import net.minecraft.entity.Entity;
 import net.minecraft.text.Text;
@@ -41,6 +40,8 @@ public abstract class MixinEntity implements Mc {
         return null;
     }
 
+    @Shadow public float pitch;
+
     @Inject(method = "setVelocity(DDD)V", at = @At("HEAD"), cancellable = true)
     @SuppressWarnings("ConstantConditions")
     public void modifySetVelocity(double x, double y, double z, CallbackInfo ci) {
@@ -71,12 +72,9 @@ public abstract class MixinEntity implements Mc {
     @SuppressWarnings("ConstantConditions")
     public void modifySetYaw(float yaw, CallbackInfo ci) {
         if ((Object) this != mc.player) return;
-        SetPlayerYawEvent event = new SetPlayerYawEvent(yaw);
-        BThack.EVENT_BUS.activate(event);
-        if (event.isCancelled()) return;
-        if (event.getYaw() != yaw) {
-            this.yaw = event.getYaw();
+        if (ModuleList.noRotate.isEnabled()) {
             ci.cancel();
+            this.yaw = NoRotateMathUtils.getNearestYawAxis(mc.player);
         }
     }
 
@@ -84,12 +82,9 @@ public abstract class MixinEntity implements Mc {
     @SuppressWarnings("ConstantConditions")
     public void modifySetPitch(float pitch, CallbackInfo ci) {
         if ((Object) this != mc.player) return;
-        SetPlayerPitchEvent event = new SetPlayerPitchEvent(pitch);
-        BThack.EVENT_BUS.activate(event);
-        if (event.isCancelled()) return;
-        if (event.getPitch() != pitch) {
-            this.yaw = event.getPitch();
+        if (ModuleList.noRotate.isEnabled() && ModuleList.noRotate.blockPitch.getValue()) {
             ci.cancel();
+            this.pitch = NoRotateMathUtils.getNearestPitchAxis(mc.player);
         }
     }
 

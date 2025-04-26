@@ -17,8 +17,7 @@ public final class NoRotateMathUtils {
             yaw *= -1;
         }
 
-        //Reduces yaw to a value between 0 and 360.
-        yaw = (int) (((yaw / 360d) - (int) (yaw / 360d)) * 360);
+        yaw = yaw % 360;
 
         if (MathUtils.hasInRange(yaw, 0, 45))
             return invertIfNeed(invert, MathUtils.nearest(yaw, 0, 45));
