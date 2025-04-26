@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.setting;
 
+import com.ferra13671.BThack.Constants;
 import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.Component;
 import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.ModuleButton;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.Setting;
@@ -56,8 +57,8 @@ public abstract class AbstractSetting<T extends Setting<?>> extends Component {
     public abstract boolean mouseClicked(int mouseX, int mouseY, int button);
 
     public boolean isMouseOnButton(int x, int y) {
-        return x > ClickGui.applyGuiScale(getX()) && x < ClickGui.applyGuiScale(getX() + 100) &&
-                y > ClickGui.applyGuiScale(getY()) && y < ClickGui.applyGuiScale(getY() + 15);
+        return x > ClickGui.applyGuiScale(getX()) && x < ClickGui.applyGuiScale(getX() + Constants.CLICKGUI_FRAME_WIDTH) &&
+                y > ClickGui.applyGuiScale(getY()) && y < ClickGui.applyGuiScale(getY() + Constants.CLICKGUI_BUTTON_HEIGHT);
     }
 
     public boolean getVisible() {

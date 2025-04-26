@@ -144,7 +144,7 @@ public class ColorPicker extends AbstractSetting<ColorSetting> {
 
     @Override
     public int getHeight() {
-        return opened ? (int) (80 * animation.getEase()) : 15 + (int) (65 * (1 - animation.getEase()));
+        return opened ? (int) (80 * animation.getEase()) : Constants.CLICKGUI_BUTTON_HEIGHT + (int) (66 * (1 - animation.getEase()));
     }
 
     @Override

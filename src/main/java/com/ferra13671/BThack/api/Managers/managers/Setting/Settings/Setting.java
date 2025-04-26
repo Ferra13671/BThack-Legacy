@@ -14,7 +14,7 @@ public abstract class Setting<T> {
     public final Module module;
 
     public T value;
-    public T defaultValue;
+    public final T defaultValue;
 
     public final Supplier<Boolean> dependence;
 
@@ -58,4 +58,9 @@ public abstract class Setting<T> {
     public abstract void save(JsonObject jsonObject);
 
     public abstract AbstractSetting<? extends Setting<T>> asSettingButton(ModuleButton parent, int offset);
+
+    public Setting<T> inCategory(CategorySetting categorySetting) {
+        categorySetting.getValue().add(this);
+        return this;
+    }
 }
