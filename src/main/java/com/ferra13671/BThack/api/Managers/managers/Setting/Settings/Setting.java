@@ -59,8 +59,8 @@ public abstract class Setting<T> {
 
     public abstract AbstractSetting<? extends Setting<T>> asSettingButton(ModuleButton parent, int offset);
 
-    public Setting<T> inCategory(CategorySetting categorySetting) {
+    public <S extends Setting<T>> S inCategory(CategorySetting categorySetting) {
         categorySetting.getValue().add(this);
-        return this;
+        return (S) this;
     }
 }

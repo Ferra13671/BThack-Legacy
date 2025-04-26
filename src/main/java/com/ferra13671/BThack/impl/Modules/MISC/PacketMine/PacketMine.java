@@ -11,10 +11,7 @@ import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Events.Render.RenderWorldLastEvent;
 import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Destroy.DestroyManager;
-import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
-import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ColorSetting;
-import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
-import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.*;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.*;
 import com.ferra13671.BThack.impl.Modules.PLAYER.AutoTool;
@@ -26,6 +23,7 @@ import net.minecraft.network.packet.c2s.play.UpdateSelectedSlotC2SPacket;
 import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3i;
 
@@ -36,40 +34,36 @@ import java.util.List;
 
 public class PacketMine extends Module {
 
-    public final ModeSetting page = new ModeSetting("Page", this, new ArrayList<>(Arrays.asList("General", "Render")));
+    public final CategorySetting generalCategory = new CategorySetting("General", this);
+    public final CategorySetting renderCategory = new CategorySetting("Render", this);
 
-    public final BooleanSetting swingHand = new BooleanSetting("Swing Hand", this, true, () -> page.getValue().equals("General"));
+    public final BooleanSetting swingHand = new BooleanSetting("Swing Hand", this, true).inCategory(generalCategory);
 
-    public final BooleanSetting removeIfUse = new BooleanSetting("Remove If Use", this, true, () -> page.getValue().equals("General"));
-    public final BooleanSetting stopPackets = new BooleanSetting("Stop Packets", this, true, () -> removeIfUse.getValue() && page.getValue().equals("General"));
-    public final NumberSetting breakDelaySet = new NumberSetting("Break Delay", this, 5, 0, 5, true, () -> page.getValue().equals("General"));
+    public final BooleanSetting removeIfUse = new BooleanSetting("Remove If Use", this, true).inCategory(generalCategory);
+    public final NumberSetting breakDelaySet = new NumberSetting("Break Delay", this, 5, 0, 5, true).inCategory(generalCategory);
+
+    public final BooleanSetting conveyorMode = new BooleanSetting("Conveyor Mode", this, false).inCategory(generalCategory);
+
+    public final BooleanSetting doubleMine = new BooleanSetting("Double Mine", this, false).inCategory(generalCategory);
+    public final NumberSetting doubleSpeed = new NumberSetting("Double Speed", this, 0.85, 0.5, 1, false, doubleMine::getValue).inCategory(generalCategory);
+
+    public final BooleanSetting instaRebreak = new BooleanSetting("Insta Rebreak", this, false).inCategory(generalCategory);
+
+    public final BooleanSetting speedMine = new BooleanSetting("Speed Mine", this, false, () -> !doubleMine.getValue()).inCategory(generalCategory);
+    public final NumberSetting mineSpeed = new NumberSetting("Mine Speed", this, 1.2, 1, 10, false, () -> speedMine.getValue() && !doubleMine.getValue()).inCategory(generalCategory);
+
+    public final BooleanSetting autoCityMode = new BooleanSetting("Auto City", this, false).inCategory(generalCategory);
+    public final BooleanSetting friends = new BooleanSetting("Friends", this, false, autoCityMode::getValue).inCategory(generalCategory);
+
+    public final BooleanSetting inventoryMode = new BooleanSetting("Inventory Mode", this, false).inCategory(generalCategory);
+    public final NumberSetting hotbarSlot = new NumberSetting("Hotbar Slot", this, 1, 1, 9, true, inventoryMode::getValue).inCategory(generalCategory);
 
 
-    public final BooleanSetting conveyorMode = new BooleanSetting("Conveyor Mode", this, false, () -> page.getValue().equals("General"));
-    public final BooleanSetting conveyorLimitState = new BooleanSetting("ConveyorLimit", this, false, () -> conveyorMode.getValue() && page.getValue().equals("General"));
-    public final NumberSetting conveyorLimit = new NumberSetting("Limit", this, 2, 1, 10, true, () -> page.getValue().equals("General") && conveyorLimitState.getValue());
+    public final BooleanSetting renderBox = new BooleanSetting("Render Box", this, true).inCategory(renderCategory);
+    public final ColorSetting boxColor = new ColorSetting("Box Color", this, new Color(0, 255, 0), renderBox::getValue).withBlockedAlpha().inCategory(renderCategory);
+    public final BooleanSetting conveyorRender = new BooleanSetting("Conveyor Render", this, true, renderBox::getValue).inCategory(renderCategory);
 
-    public final BooleanSetting doubleMode = new BooleanSetting("Double Mode", this, false, () -> conveyorMode.getValue() && page.getValue().equals("General"));
-    public final NumberSetting fastSpeed = new NumberSetting("Fast Speed", this, 5, 5, 50, false, () -> conveyorMode.getValue() && doubleMode.getValue() && page.getValue().equals("General"));
-    public final NumberSetting normalSpeed = new NumberSetting("Normal Speed", this, 1.05, 0.9, 1.3, false, () -> conveyorMode.getValue() && doubleMode.getValue() && page.getValue().equals("General"));
-    public final BooleanSetting switchToOld = new BooleanSetting("Switch To Old", this, false, () -> conveyorMode.getValue() && doubleMode.getValue() && page.getValue().equals("General"));
-
-    public final BooleanSetting instaRebreak = new BooleanSetting("Insta Rebreak", this, false, () -> page.getValue().equals("General"));
-
-    public final BooleanSetting speedMine = new BooleanSetting("Speed Mine", this, false, () -> !doubleMode.getValue() && page.getValue().equals("General"));
-    public final NumberSetting mineSpeed = new NumberSetting("Mine Speed", this, 1.2, 1, 10, false, () -> speedMine.getValue() && !doubleMode.getValue() && page.getValue().equals("General"));
-
-    public final BooleanSetting autoCityMode = new BooleanSetting("Auto City", this, false, () -> page.getValue().equals("General"));
-    public final BooleanSetting friends = new BooleanSetting("Friends", this, false, () -> autoCityMode.getValue() && page.getValue().equals("General"));
-
-    public final BooleanSetting inventoryMode = new BooleanSetting("Inventory Mode", this, false, () -> page.getValue().equals("General"));
-    public final NumberSetting hotbarSlot = new NumberSetting("Hotbar Slot", this, 1, 1, 9, true, () -> inventoryMode.getValue() && page.getValue().equals("General"));
-
-    public final BooleanSetting renderBox = new BooleanSetting("Render Box", this, true, () -> page.getValue().equals("Render"));
-    public final ColorSetting boxColor = new ColorSetting("Box Color", this, new Color(0, 255, 0), () -> renderBox.getValue() && page.getValue().equals("Render")).withBlockedAlpha();
-    public final BooleanSetting conveyorRender = new BooleanSetting("Conveyor Render", this, true, () -> renderBox.getValue() && page.getValue().equals("Render"));
-
-    public final NumberSetting conveyorAlpha = new NumberSetting("Conv. Alpha", this, 255, 0, 255, true, () -> renderBox.getValue() && conveyorRender.getValue() && page.getValue().equals("Render"));
+    public final NumberSetting conveyorAlpha = new NumberSetting("Conv. Alpha", this, 255, 0, 255, true, () -> renderBox.getValue() && conveyorRender.getValue()).inCategory(renderCategory);
 
 
     public PacketMine() {
@@ -81,38 +75,8 @@ public class PacketMine extends Module {
         );
 
         initSettings(
-                page,
-
-                swingHand,
-
-                removeIfUse,
-                stopPackets,
-                breakDelaySet,
-
-                conveyorMode,
-                conveyorLimitState,
-                conveyorLimit,
-
-                doubleMode,
-                fastSpeed,
-                normalSpeed,
-                switchToOld,
-
-                instaRebreak,
-
-                speedMine,
-                mineSpeed,
-
-                autoCityMode,
-                friends,
-
-                inventoryMode,
-                hotbarSlot,
-
-                renderBox,
-                boxColor,
-
-                conveyorAlpha
+                generalCategory,
+                renderCategory
         );
 
     }
@@ -131,9 +95,7 @@ public class PacketMine extends Module {
     private boolean conveyorAnimationInvert = true;
 
     //Double Mode
-    private boolean doubleFast;
-    private BreakingBlock doubleBlock;
-    private boolean firstSkip = true;
+    private BreakingBlock doubleBreakingBlock;
 
     //Inventory mode
     private int currentSlot = -1;
@@ -143,18 +105,17 @@ public class PacketMine extends Module {
     BlockPos breakedPos;
 
     //Insta Rebreak Animation
-    private final Animation instaRebreakAnimation = new Animation(Easing.LINEAR, 800);
+    private final Animation instaRebreakAnimation = new Animation(Easing.LINEAR, 1000);
     private boolean instaRebreakAnimationInvert = true;
 
     @Override
     public void onEnable() {
         super.onEnable();
 
-        setCurrentBreakingBlock(null);
+        clearBreakBlocks();
+        doubleBreakingBlock = null;
         conveyorBlocks.clear();
         currentSlot = -1;
-        doubleFast = true;
-        firstSkip = true;
         breakDelay = breakDelaySet.getValue().intValue();
 
         ModuleList.superInstaMine.setToggled(false);
@@ -172,12 +133,12 @@ public class PacketMine extends Module {
     public void onDisable() {
         super.onDisable();
 
-        setCurrentBreakingBlock(null);
+        clearBreakBlocks();
+        doubleBreakingBlock = null;
         conveyorBlocks.clear();
         if (!nullCheck())
             packetRemoveItem();
-        doubleFast = true;
-        firstSkip = true;
+
         breakDelay = breakDelaySet.getValue().intValue();
 
         ModuleList.treeCutter.setToggled(false);
@@ -192,7 +153,7 @@ public class PacketMine extends Module {
         if (currentBreakingBlock != null) {
             if (currentBreakingBlock.blockPos.equals(e.getBlockPos())) return;
         }
-        updateBlockLimited(e.getBlockPos());
+        updateBlock(e.getBlockPos());
     }
 
     @EventSubscriber(priority = Integer.MAX_VALUE)
@@ -204,45 +165,26 @@ public class PacketMine extends Module {
             conveyorRemove(e.getBlockHitResult().getBlockPos());
             e.setCancelled(true);
         }
-        if (e.blockHitResult.getBlockPos() == currentBreakingBlock.blockPos) {
-            e.setCancelled(true);
-            if (stopPackets.getValue())
-                Managers.NETWORK_MANAGER.sendPacket(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.STOP_DESTROY_BLOCK, currentBreakingBlock.blockPos, RotateUtils.getInvertedFacingEntity(mc.player), 0));
+    }
 
-            setCurrentBreakingBlock(null);
-        }
-    }
-    public void updateBlockLimited(BlockPos pos) {  //Okay
-        if (!conveyorLimitState.getValue()) {
-            updateBlock(pos);
-            return;
-        }
-        if (conveyorBlocks.size() >= conveyorLimit.getValue() + 1) {
-            if (conveyorMode.getValue()) {
-                conveyorBlocks.removeFirst();
-            }
-            if (pos == currentBreakingBlock.blockPos) {
-                if (stopPackets.getValue())
-                    Managers.NETWORK_MANAGER.sendPacket(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.STOP_DESTROY_BLOCK, currentBreakingBlock.blockPos, RotateUtils.getInvertedFacingEntity(mc.player), 0));
-                setCurrentBreakingBlock(null);
-            }
-        }
-        else updateBlock(pos);
-    }
-    public boolean updateBlock(BlockPos pos) {
+    public void updateBlock(BlockPos pos) {
         if (conveyorMode.getValue()) {
-            if (currentBreakingBlock != null) {
-                if (!conveyorContains(pos)) {
+            if (needAddToConveyor()) {
+                if (!conveyorContains(pos))
                     conveyorBlocks.add(new BreakingBlock(pos));
-                    return true;
-                }
-                return false;
+                return;
             }
         }
 
 
-        setCurrentBreakingBlock(new BreakingBlock(pos));
-        return true;
+        updateBlockInternal(new BreakingBlock(pos));
+    }
+
+    private void updateBlockInternal(BreakingBlock breakingBlock) {
+        if (doubleMine.getValue() && currentBreakingBlock != null) {
+            doubleBreakingBlock = currentBreakingBlock;
+        }
+        currentBreakingBlock = breakingBlock;
     }
 
     private void checkDestroyDelta() {
@@ -264,20 +206,18 @@ public class PacketMine extends Module {
             instaRebreakAnimationInvert = !instaRebreakAnimationInvert;
         }
 
-        if (instaRebreak.getValue()) {
-            if (breakedPos != null) {
-                float instaRebreakAlpha = (float) (instaRebreakAnimationInvert ? 1 - instaRebreakAnimation.getEase() : instaRebreakAnimation.getEase());
-                renderBoxes.add(new RenderBox(
-                        BlockUtils.createBox(breakedPos, 0.5, 0.5, 1, false),
-                        1,
-                        0,
-                        0,
-                        instaRebreakAlpha,
-                        1,
-                        0,
-                        0,
-                        instaRebreakAlpha * 0.3f));
-            }
+        if (instaRebreak.getValue() && breakedPos != null) {
+            float instaRebreakAlpha = (float) (instaRebreakAnimationInvert ? 1 - instaRebreakAnimation.getEase() : instaRebreakAnimation.getEase());
+            renderBoxes.add(new RenderBox(
+                    BlockUtils.createBox(breakedPos, 0.5, 0.5, 1, false),
+                    1,
+                    0,
+                    0,
+                    instaRebreakAlpha,
+                    1,
+                    0,
+                    0,
+                    instaRebreakAlpha * 0.3f));
         }
 
         if (renderBox.getValue() && currentBreakingBlock != null) {
@@ -286,7 +226,7 @@ public class PacketMine extends Module {
                 conveyorAnimationInvert = !conveyorAnimationInvert;
             }
 
-            double currentDestroyBlockSize = MathHelper.lerp(mc.getRenderTickCounter().getTickDelta(true), currentBreakingBlock.prevDestroyProgress, currentBreakingBlock.currentDestroyProgress) / 2;
+            double currentDestroyBlockSize = createLerpSize(currentBreakingBlock);
             float boxR = (float) boxColor.getValue().getRed() / 255f;
             float boxG = (float) boxColor.getValue().getGreen() / 255f;
             float boxB = (float) boxColor.getValue().getBlue() / 255f;
@@ -313,53 +253,47 @@ public class PacketMine extends Module {
             float conveyorLinesAlpha = (float) ((conveyorAlpha.getValue() / 255d) * (conveyorAnimationInvert ? 1 - conveyorAnimation.getEase() : conveyorAnimation.getEase()));
             float conveyorBoxAlpha = 0.3f * conveyorLinesAlpha;
 
-            if (conveyorMode.getValue()) {
-                if (doubleMode.getValue() && doubleBlock != null) {
-                    if (BlockUtils.canBreak(doubleBlock.blockPos)) {
-                        double doubleBlockSize = doubleBlock.currentDestroyProgress / 2;
-                        renderBoxes.add(
-                                new RenderBox(
-                                        BlockUtils.createBox(
-                                                doubleBlock.blockPos,
-                                                doubleBlockSize,
-                                                doubleBlockSize,
-                                                doubleBlockSize,
-                                                true
-                                        ),
-                                        boxR,
-                                        boxG,
-                                        boxB,
-                                        1,
-                                        boxR,
-                                        boxG,
-                                        boxB,
-                                        0.3f
-                                )
-                        );
-                    }
+            if (doubleMine.getValue() && doubleBreakingBlock != null) {
+                if (BlockUtils.canBreak(doubleBreakingBlock.blockPos)) {
+                    double doubleBlockSize = createLerpSize(doubleBreakingBlock);
+                    renderBoxes.add(
+                            new RenderBox(
+                                    BlockUtils.createBox(
+                                            doubleBreakingBlock.blockPos,
+                                            doubleBlockSize,
+                                            doubleBlockSize,
+                                            doubleBlockSize,
+                                            true
+                                    ),
+                                    boxR,
+                                    boxG,
+                                    boxB,
+                                    1,
+                                    boxR,
+                                    boxG,
+                                    boxB,
+                                    0.3f
+                            )
+                    );
                 }
-                if (conveyorRender.getValue()) {
-                    for (BreakingBlock pos : conveyorBlocks) {
-                        renderBoxes.add(
-                                new RenderBox(
-                                        BlockUtils.createBox(
-                                                pos.blockPos,
-                                                0.1,
-                                                0.1,
-                                                0.1,
-                                                true
-                                        ),
-                                        1,
-                                        1,
-                                        0,
-                                        conveyorLinesAlpha,
-                                        1,
-                                        1,
-                                        0,
-                                        conveyorBoxAlpha
-                                )
-                        );
-                    }
+            }
+            if (conveyorMode.getValue() && conveyorRender.getValue()) {
+                for (BreakingBlock pos : conveyorBlocks) {
+                    renderBoxes.add(
+                            createRenderBox(BlockUtils.createBox(
+                                            pos.blockPos,
+                                            0.1,
+                                            0.1,
+                                            0.1,
+                                            true
+                                    ),
+                                    1,
+                                    1,
+                                    0,
+                                    conveyorLinesAlpha,
+                                    conveyorBoxAlpha
+                            )
+                    );
                 }
             }
         }
@@ -369,6 +303,14 @@ public class PacketMine extends Module {
             BThackRender.boxRender.renderBoxes(renderBoxes);
             BThackRender.boxRender.stopBoxRender();
         }
+    }
+
+    private RenderBox createRenderBox(Box box, float red, float green, float blue, float linesAlpha, float boxAlpha) {
+        return new RenderBox(box, red, green, blue, linesAlpha, red, green, blue, boxAlpha);
+    }
+
+    private double createLerpSize(BreakingBlock breakingBlock) {
+        return MathHelper.lerp(mc.getRenderTickCounter().getTickDelta(true), breakingBlock.prevDestroyProgress, breakingBlock.currentDestroyProgress) / 2;
     }
 
     @EventSubscriber
@@ -382,25 +324,22 @@ public class PacketMine extends Module {
 
         if (instaRebreak.getValue() && breakedPos != null) {
             if (!mc.world.isAir(breakedPos) && BlockUtils.canBreak(breakedPos) && currentBreakingBlock == null) {
-                updateBlockLimited(breakedPos);
+                updateBlock(breakedPos);
                 breakDelay = 0; //For InstaRebreak, the break delay doesn't make sense
             }
         }
 
-        if ((!conveyorMode.getValue() || conveyorBlocks.isEmpty()) && currentBreakingBlock == null) doubleBlock = null;
+        if ((!conveyorMode.getValue() || conveyorBlocks.isEmpty()) && currentBreakingBlock == null) doubleBreakingBlock = null;
 
         if (!conveyorMode.getValue())
             if (!conveyorBlocks.isEmpty())
                 conveyorBlocks.clear();
 
-        if (conveyorBlocks.isEmpty()) firstSkip = true;
-
         if (autoCityMode.getValue())
             autoCityAction();
 
 
-        if (currentBreakingBlock == null) {
-            doubleFast = true;
+        if (currentBreakingBlock == null && (!doubleMine.getValue() || doubleBreakingBlock == null)) {
             destroyDelta = 0;
             return;
         }
@@ -412,101 +351,97 @@ public class PacketMine extends Module {
             breakDelay--;
             return;
         }
-        if (!updateBreak(currentBreakingBlock, true)) {
+        if (!updateBreakProgress()) {
 
             packetRemoveItem();
             itemRemoved = false;
 
             if (conveyorMode.getValue()) {
-                for (BreakingBlock breakingBlock : conveyorBlocks) {
-                    if (breakingBlock.equals(currentBreakingBlock)) {
-                        conveyorBlocks.remove(breakingBlock);
-                        break;
-                    }
-                }
-                if (!firstSkip) {
-                    conveyorBlocks.removeFirst();
-                } else {
-                    firstSkip = false;
-                }
+                conveyorBlocks.removeIf(breakingBlock -> breakingBlock.equals(currentBreakingBlock) || breakingBlock.equals(doubleBreakingBlock));
 
                 breakedPos = currentBreakingBlock.blockPos;
-                setCurrentBreakingBlock(null);
-                if (!conveyorBlocks.isEmpty())
+                clearBreakBlocks();
+                if (!conveyorBlocks.isEmpty()) {
                     updateBlock(conveyorBlocks.getFirst().blockPos);
+                    conveyorBlocks.removeFirst();
+                    if (doubleMine.getValue() && !conveyorBlocks.isEmpty()) {
+                        updateBlock(conveyorBlocks.getFirst().blockPos);
+                        conveyorBlocks.removeFirst();
+                    }
+                }
             } else {
                 breakedPos = currentBreakingBlock.blockPos;
-                setCurrentBreakingBlock(null);
+                clearBreakBlocks();
             }
         }
     }
 
-    public boolean updateBreak(BreakingBlock breakingBlock, boolean reset) {
-        if (mc.world.isAir(breakingBlock.blockPos) || !BlockUtils.canBreak(breakingBlock.blockPos)) {
+    public boolean updateBreakProgress() {
+        if (currentBreakingBlock == null) return false;
+        if (!currentBreakingBlock.canBreak() && (doubleBreakingBlock == null || (!doubleMine.getValue() || !doubleBreakingBlock.canBreak()))) {
             packetRemoveItem();
-
-            if (reset) destroyDelta = 0;
+            destroyDelta = 0;
             return false;
         }
+        if (currentSlot == -1) packetEquipItem();
 
-        if (reset && currentSlot == -1) {
-            packetEquipItem();
-        }
+        if (checkStopAction(currentBreakingBlock)) return false;
+        if (doubleMine.getValue() && doubleBreakingBlock != null)
+            checkStopAction(doubleBreakingBlock);
 
-        try {
-            if (breakingBlock.currentDestroyProgress == 1) {
+        updateBreakProgressInternal(currentBreakingBlock);
+        if (doubleMine.getValue() && doubleBreakingBlock != null)
+            updateBreakProgressInternal(doubleBreakingBlock);
 
-                if (instaRebreak.getValue() && breakedPos != null && breakedPos.equals(breakingBlock.blockPos)) return false;
-
-                stopDestroyBlock(breakingBlock.blockPos);
-
-
-                if (reset) destroyDelta = 0;
-                doubleFast = !doubleFast;
-                if (!doubleFast) {
-                    doubleBlock = currentBreakingBlock;
-                } else {
-                    if (doubleBlock != null && conveyorMode.getValue() && doubleMode.getValue() && switchToOld.getValue()) {
-                        if (swingHand.getValue()) mc.player.swingHand(Hand.MAIN_HAND);
-                        startDestroyBlock(doubleBlock.blockPos);
-                        stopDestroyBlock(doubleBlock.blockPos);
-                    }
-                }
-                return false;
-            }
-            if (!breakingBlock.startDestroying) {
-
-                if (instaRebreak.getValue() && breakedPos != null && breakedPos.equals(breakingBlock.blockPos)){
-                    breakingBlock.currentDestroyProgress = 1;
-                    if (swingHand.getValue()) mc.player.swingHand(Hand.MAIN_HAND);
-                    stopDestroyBlock(breakingBlock.blockPos);
-                } else {
-                    if (swingHand.getValue()) mc.player.swingHand(Hand.MAIN_HAND);
-                    startDestroyBlock(breakingBlock.blockPos);
-                }
-                breakingBlock.startDestroying = true;
-            } else {
-                breakingBlock.prevDestroyProgress = breakingBlock.currentDestroyProgress;
-                breakingBlock.currentDestroyProgress += getDestroyDelta();
-                if (breakingBlock.currentDestroyProgress >= 1) breakingBlock.currentDestroyProgress = 1;
-            }
-        } catch (Exception ignored) {}
-
-        if (breakingBlock.blockPos != null) {
-            if (mc.world.isAir(breakingBlock.blockPos) || !BlockUtils.canBreak(breakingBlock.blockPos)) {
-                if (reset) destroyDelta = 0;
-                return false;
-            }
-        }
+        if (!currentBreakingBlock.canBreak())
+            currentBreakingBlock = null;
+        if (doubleBreakingBlock != null && !doubleBreakingBlock.canBreak())
+            doubleBreakingBlock = null;
         return true;
     }
 
-    private double getDestroyDelta() {
-        return destroyDelta * (doubleMode.getValue() && conveyorMode.getValue() && !conveyorBlocks.isEmpty() ? (doubleFast && (firstSkip || conveyorBlocks.size() > 1) ? fastSpeed.getValue() : normalSpeed.getValue()) : (speedMine.getValue() ? mineSpeed.getValue() : 1));
+    public boolean checkStopAction(BreakingBlock breakingBlock) {
+        if (breakingBlock.currentDestroyProgress == 1) {
+            if (breakingBlock == currentBreakingBlock)
+                if (instaRebreak.getValue() && breakedPos != null && breakedPos.equals(currentBreakingBlock.blockPos)) return false;
+            destroyDelta = 0;
+            if (swingHand.getValue()) mc.player.swingHand(Hand.MAIN_HAND);
+            if (!doubleMine.getValue() || breakingBlock == currentBreakingBlock)
+                stopDestroyBlock(currentBreakingBlock.blockPos);
+            return true;
+        }
+        return false;
+    }
+
+    public void updateBreakProgressInternal(BreakingBlock breakingBlock) {
+        if (!breakingBlock.startDestroying) {
+            if (breakingBlock == currentBreakingBlock)
+                if (doubleMine.getValue() && doubleBreakingBlock != null && !doubleBreakingBlock.startDestroying) return;
+            if (instaRebreak.getValue() && breakedPos != null && breakedPos.equals(breakingBlock.blockPos)){
+                breakingBlock.currentDestroyProgress = 1;
+                if (swingHand.getValue()) mc.player.swingHand(Hand.MAIN_HAND);
+                stopDestroyBlock(breakingBlock.blockPos);
+            } else {
+                if (swingHand.getValue()) mc.player.swingHand(Hand.MAIN_HAND);
+                startDestroyBlock(breakingBlock.blockPos);
+            }
+            breakingBlock.startDestroying = true;
+        } else {
+            breakingBlock.prevDestroyProgress = breakingBlock.currentDestroyProgress;
+            breakingBlock.currentDestroyProgress += getDestroyDelta(breakingBlock == currentBreakingBlock);
+            if (breakingBlock.currentDestroyProgress >= 1) breakingBlock.currentDestroyProgress = 1;
+        }
+    }
+
+    private double getDestroyDelta(boolean isDouble) {
+        return (destroyDelta * (isDouble && doubleMine.getValue() ? doubleSpeed.getValue() : 1)) * (speedMine.getValue() ? mineSpeed.getValue() : 1);
     }
 
     private void startDestroyBlock(BlockPos blockPos) {
+        Managers.NETWORK_MANAGER.sendSequencePacket(id -> new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.STOP_DESTROY_BLOCK, blockPos, RotateUtils.getInvertedFacingEntity(mc.player), id));
         Managers.NETWORK_MANAGER.sendSequencePacket(id -> new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.START_DESTROY_BLOCK, blockPos, RotateUtils.getInvertedFacingEntity(mc.player), id));
+        if (doubleMine.getValue())
+            Managers.NETWORK_MANAGER.sendSequencePacket(id -> new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.STOP_DESTROY_BLOCK, blockPos, RotateUtils.getInvertedFacingEntity(mc.player), id));
     }
 
     private void stopDestroyBlock(BlockPos blockPos) {
@@ -528,7 +463,7 @@ public class PacketMine extends Module {
             if (player.distanceTo(mc.player) > 4) continue;
             BlockPos blockPos = BlockPos.ofFloored(player.getX(), player.getY(),player.getZ());
             if (BlockUtils.canBreak(blockPos) && MathUtils.getDistance(mc.player.getPos(), blockPos.toCenterPos()) < 4.25)
-                updateBlockLimited(blockPos);
+                updateBlock(blockPos);
             BlockPos nearestPos = null;
             double nearestLength = 9999;
             for (Vec3i vec : autoCityVectors) {
@@ -541,7 +476,7 @@ public class PacketMine extends Module {
                 }
             }
             if (nearestPos == null) return;
-            if (BlockUtils.canBreak(nearestPos)) updateBlockLimited(nearestPos);
+            if (BlockUtils.canBreak(nearestPos)) updateBlock(nearestPos);
         }
     }
 
@@ -585,8 +520,13 @@ public class PacketMine extends Module {
         }
     }
 
-    public void setCurrentBreakingBlock(BreakingBlock breakingBlock) {
-        currentBreakingBlock = breakingBlock;
+    public void clearBreakBlocks() {
+        currentBreakingBlock = null;
+        doubleBreakingBlock = null;
         breakDelay = breakDelaySet.getValue().intValue();
+    }
+
+    public boolean needAddToConveyor() {
+        return currentBreakingBlock != null && (!doubleMine.getValue() || doubleBreakingBlock != null);
     }
 }

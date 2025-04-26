@@ -60,7 +60,7 @@ public class TreeCutter extends Module {
             for (BlockPos pos : getBlockPoses(e.getBlockPos())) {
                 if (ModuleList.packetMine.currentBreakingBlock.blockPos.equals(pos)) return;
                 if (ModuleList.packetMine.conveyorContains(pos)) return;
-                ModuleList.packetMine.updateBlockLimited(pos);
+                ModuleList.packetMine.updateBlock(pos);
             }
         }
     }

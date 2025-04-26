@@ -150,7 +150,6 @@ public class ColorPicker extends AbstractSetting<ColorSetting> {
     @Override
     public void renderComponent() {
         super.renderComponent();
-        if (animation.getEase() < 1) parent.parent.refresh();
 
         BThackRender.drawRect(getX(), getY(), getX() + Constants.CLICKGUI_FRAME_WIDTH, getY() + getHeight(), ColorUtils.integrateAlpha(new Color(Client.clientInfo.getColorTheme().backgroundColor()).hashCode(), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))));
         if (opened || animation.getEase() < 1) {
@@ -211,6 +210,7 @@ public class ColorPicker extends AbstractSetting<ColorSetting> {
     @Override
     public boolean updateComponent(int mouseX, int mouseY) {
         if (!getVisible()) return true;
+        if (animation.getEase() < 1) parent.parent.refresh();
 
         if (!setting.getValue().equals(rgbColor)) updateColors();
 

@@ -13,8 +13,13 @@ import java.util.function.Supplier;
 
 //The value of this setting is the list of sub-settings assigned to this setting(category)
 public class CategorySetting extends Setting<List<Setting<?>>> {
-    protected CategorySetting(String name, Module module, Supplier<Boolean> dependence) {
+
+    public CategorySetting(String name, Module module, Supplier<Boolean> dependence) {
         super(name, module, new ArrayList<>(), dependence);
+    }
+
+    public CategorySetting(String name, Module module) {
+        this(name, module, null);
     }
 
     @Override
