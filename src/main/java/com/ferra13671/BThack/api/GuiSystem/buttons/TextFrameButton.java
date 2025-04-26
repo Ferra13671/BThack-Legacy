@@ -43,7 +43,9 @@ public class TextFrameButton extends Button {
         drawPlate(getAnimationDelta());
         String text = textBuilder.toString();
         if (text.isEmpty() && !selected) text = Formatting.GRAY + nullText + "...";
-        BThackRender.drawString(text + (insertAdd && selected ? "|" : ""), getCenterX() - getWidth() + 5, getCenterY() - (FontUtils.getTextHeight(getText(), FontRenderManager.DrawMode.NORMAL_BOLD) / 2f), ColorUtils.WHITE, true, FontRenderManager.DrawMode.NORMAL_BOLD);
+        BThackRender.enableScissor(getCenterX() - getWidth() + 2, getCenterY() - getHeight(), (getWidth() * 2) - 2, getHeight() * 2);
+        BThackRender.drawString(text + (insertAdd && selected ? "|" : ""), FontUtils.getTextWidth(text, FontRenderManager.DrawMode.NORMAL_BOLD) > (getWidth() * 2) - 10 ? getCenterX() + getWidth() - FontUtils.getTextWidth(text, FontRenderManager.DrawMode.NORMAL_BOLD) - 10 : (getCenterX() - getWidth() + 5), getCenterY() - (FontUtils.getTextHeight(getText(), FontRenderManager.DrawMode.NORMAL_BOLD) / 2f), ColorUtils.WHITE, true, FontRenderManager.DrawMode.NORMAL_BOLD);
+        BThackRender.disableScissor();
     }
 
     @Override
@@ -60,6 +62,13 @@ public class TextFrameButton extends Button {
                 }
             }
         }
+        if (key == KeyboardUtils.KEY_V && KeyboardUtils.isKeyDown(KeyboardUtils.KEY_LCONTROL)) {
+            String clipboard = mc.keyboard.getClipboard();
+            for (int i = 0; i < clipboard.length(); i++) {
+                char c = clipboard.charAt(i);
+                charTyped(c);
+            }
+        }
     }
 
     @Override
@@ -67,12 +76,10 @@ public class TextFrameButton extends Button {
 
         if (!this.selected) return;
 
-        if (FontUtils.getTextWidth(textBuilder.toString()) < ((getWidth() * 2) - ((getWidth() * 2) * 0.1))) {
-            textBuilder.append(_char);
-            if (soundTicker.passed(50)) {
-                SoundSystem.playSound(Sounds.GUI_TYPING);
-                soundTicker.reset();
-            }
+        textBuilder.append(_char);
+        if (soundTicker.passed(50)) {
+            SoundSystem.playSound(Sounds.GUI_TYPING);
+            soundTicker.reset();
         }
     }
 
