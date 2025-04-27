@@ -5,6 +5,7 @@ import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Drawers.Drawers;
 import com.ferra13671.BThack.Core.Render.Font.FontRenderManager;
 import com.ferra13671.BThack.Core.Render.Font.FontUtils;
+import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Animation.Animation;
 import com.ferra13671.BThack.api.Animation.Easing;
 import com.ferra13671.BThack.api.GuiSystem.ScreenWidget;
@@ -13,6 +14,8 @@ import com.ferra13671.BThack.api.SoundSystem.SoundSystem;
 import com.ferra13671.BThack.api.SoundSystem.Sounds;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.Utils.Textures;
+import com.ferra13671.BThack.api.Utils.Ticker;
+import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
 import net.minecraft.client.gui.DrawContext;
 
 import java.io.IOException;
@@ -30,6 +33,9 @@ public class ConfigsWidget extends ScreenWidget {
 
     private Animation configButtonsAnimation;
     private boolean closing = false;
+
+    private String errorMessage = "";
+    private final Ticker removeErrorMessageTicker = new Ticker();
 
     public ConfigsWidget() {
         super(330, 230, 1);
@@ -59,7 +65,7 @@ public class ConfigsWidget extends ScreenWidget {
 
         Button confirmButton = new Button(1, (int) xRight - 83, (int) yDown - 15, 78, 10, "Load Config")
                 .withAction(buttonClickInfo -> loadCurrentConfig());
-        confirmButton.setClickSound(Sounds.CONFIG_SAVED_OR_LOADED);
+        confirmButton.setClickSound(null);
         Button deleteButton = Button.of(4, (int) xRight - 83, (int) yDown - 40, 78, 10, "Delete Config")
                 .withAction(buttonClickInfo -> actionAfterClicking(this::deleteCurrentConfig));
         confirmButton.setHided(selectedConfig == null);
@@ -120,8 +126,12 @@ public class ConfigsWidget extends ScreenWidget {
     public void loadCurrentConfig() {
         try {
             ConfigSystem.loadConfigFile(selectedConfig.getText());
-        } catch (IOException ignored) {}
-        close();
+            SoundSystem.playSound(Sounds.CONFIG_SAVED_OR_LOADED);
+            close();
+        } catch (Exception e) {
+            errorMessage = LanguageSystem.translate("lang.widget.Configs.error");
+            removeErrorMessageTicker.reset();
+        }
     }
 
     @Override
@@ -143,6 +153,12 @@ public class ConfigsWidget extends ScreenWidget {
         }
         BThackRender.disableScissor();
         super.render(context, mouseX, mouseY, partialTicks);
+        if (!removeErrorMessageTicker.passed(4000)) {
+            float textWidth = FontUtils.getTextWidth(errorMessage);
+            float textHeight = FontUtils.getTextHeight(errorMessage);
+            BThackRender.drawRoundedRectWithOutline(xLeft + (getWidth() / 2) - (textWidth / 2) - 10, yDown - 75 - (textHeight / 2) - 5, xLeft + (getWidth() / 2) + (textWidth / 2) + 10, yDown - 75 + (textHeight / 2) + 5, 5f, ColorUtils.fastRGBA(0, 0, 0, 150), -1, 1f);
+            BThackRender.drawCenteredString(errorMessage, xLeft + (getWidth() / 2), yDown - 75 - (textHeight / 2), ColorUtils.RED);
+        }
     }
 
     @Override

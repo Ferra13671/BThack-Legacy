@@ -248,6 +248,7 @@
 "lang.widget.Update.Failed.text2": Check your internet connection and try again.
 "lang.widget.Update.Failed.tryAgain": Try again
 "lang.widget.Update.Failed.close": Close
+"lang.widget.Configs.error": An error occurred when loading config.
 
 
 //Command Arguments

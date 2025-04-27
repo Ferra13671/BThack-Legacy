@@ -57,7 +57,7 @@ public class Button implements Mc {
     }
 
     public void mouseClicked(int mouseX, int mouseY, int mouseButton) {
-        if (isMouseOnButton(mouseX, mouseY))
+        if (isMouseOnButton(mouseX, mouseY) && clickSound != null)
             SoundSystem.playSound(clickSound);
     }
 

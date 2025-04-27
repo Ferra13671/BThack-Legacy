@@ -246,6 +246,7 @@
 "lang.widget.Update.Failed.text2": Sprawdź połączenie internetowe i spróbuj ponownie.
 "lang.widget.Update.Failed.tryAgain": Spróbować ponownie
 "lang.widget.Update.Failed.close": Zamknij
+"lang.widget.Configs.error": Podczas ładowania konfiguracji wystąpił błąd.
 
 
 //Command Arguments

@@ -247,6 +247,7 @@
 "lang.widget.Update.Failed.text2": Проверьте подключение к Интернету и повторите попытку.
 "lang.widget.Update.Failed.tryAgain": Попробовать снова
 "lang.widget.Update.Failed.close": Закрыть
+"lang.widget.Configs.error": Произошла ошибка при загрузке конфига.
 
 
 //Command Arguments
