@@ -34,9 +34,8 @@ import java.util.List;
 
 public class PacketMine extends Module {
 
+    //----------General----------//
     public final CategorySetting generalCategory = new CategorySetting("General", this);
-    public final CategorySetting renderCategory = new CategorySetting("Render", this);
-
     public final BooleanSetting swingHand = new BooleanSetting("Swing Hand", this, true).inCategory(generalCategory);
 
     public final BooleanSetting removeIfUse = new BooleanSetting("Remove If Use", this, true).inCategory(generalCategory);
@@ -57,13 +56,28 @@ public class PacketMine extends Module {
 
     public final BooleanSetting inventoryMode = new BooleanSetting("Inventory Mode", this, false).inCategory(generalCategory);
     public final NumberSetting hotbarSlot = new NumberSetting("Hotbar Slot", this, 1, 1, 9, true, inventoryMode::getValue).inCategory(generalCategory);
+    //---------------------------//
 
 
-    public final BooleanSetting renderBox = new BooleanSetting("Render Box", this, true).inCategory(renderCategory);
-    public final ColorSetting boxColor = new ColorSetting("Box Color", this, new Color(0, 255, 0), renderBox::getValue).withBlockedAlpha().inCategory(renderCategory);
-    public final BooleanSetting conveyorRender = new BooleanSetting("Conveyor Render", this, true, renderBox::getValue).inCategory(renderCategory);
+    //----------Render----------//
+    public final CategorySetting renderCategory = new CategorySetting("Render", this);
+    public final ModeSetting boxMode = new ModeSetting("Box Mode", this, Arrays.asList("Static Color", "Progress Color")).inCategory(renderCategory);
+    public final ColorSetting boxColor = new ColorSetting("Box Color", this, new Color(0, 255, 0), () -> boxMode.getValue().equals("Static Color")).withBlockedAlpha().inCategory(renderCategory);
+    public final ColorSetting startBoxColor = new ColorSetting("Start Color", this, new Color(255, 0, 0), () -> boxMode.getValue().equals("Progress Color")).withBlockedAlpha().inCategory(renderCategory);
+    public final ColorSetting endBoxColor = new ColorSetting("End Color", this, new Color(0, 255, 0), () -> boxMode.getValue().equals("Progress Color")).withBlockedAlpha().inCategory(renderCategory);
 
-    public final NumberSetting conveyorAlpha = new NumberSetting("Conv. Alpha", this, 255, 0, 255, true, () -> renderBox.getValue() && conveyorRender.getValue()).inCategory(renderCategory);
+    public final CategorySetting instaRebreakCategory = new CategorySetting("Insta Rebreak", this).inCategory(renderCategory);
+    public final ModeSetting instaRebreakAnimationMode = new ModeSetting("Anim. Mode", this, Arrays.asList("Static", "Color", "Size")).defaultValue("Color").inCategory(instaRebreakCategory);
+    public final NumberSetting instaRebreakBoxSize = new NumberSetting("Box Size", this, 1, 0.1, 1, false).inCategory(instaRebreakCategory);
+    public final ColorSetting instaRebreakColor = new ColorSetting("Insta Rebreak Color", this, new Color(255, 0, 0)).withBlockedAlpha().inCategory(instaRebreakCategory);
+    public final NumberSetting instaRebreakAnimTime = new NumberSetting("Anim. Time", this, 1000, 500, 3000, true).inCategory(instaRebreakCategory);
+
+    public final CategorySetting conveyorCategory = new CategorySetting("Conveyor", this).inCategory(renderCategory);
+    public final ModeSetting conveyorAnimationMode = new ModeSetting("Anim. Mode", this, Arrays.asList("Static", "Color", "Size")).defaultValue("Color").inCategory(conveyorCategory);
+    public final NumberSetting conveyorBoxSize = new NumberSetting("Box Size", this, 0.2, 0.1, 1, false).inCategory(conveyorCategory);
+    public final ColorSetting conveyorColor = new ColorSetting("Conveyor Color", this, new Color(255, 255, 0, 255)).inCategory(conveyorCategory);
+    public final NumberSetting conveyorAnimTime = new NumberSetting("Anim. Time", this, 1000, 500, 3000, true).inCategory(conveyorCategory);
+    //--------------------------//
 
 
     public PacketMine() {
@@ -109,6 +123,12 @@ public class PacketMine extends Module {
     private boolean instaRebreakAnimationInvert = true;
 
     @Override
+    public void onChangeSetting(Setting<?> setting) {
+        if (setting == conveyorAnimTime) conveyorAnimation.setMillis(conveyorAnimTime.getValue().intValue());
+        if (setting == instaRebreakAnimTime) instaRebreakAnimation.setMillis(instaRebreakAnimTime.getValue().intValue());
+    }
+
+    @Override
     public void onEnable() {
         super.onEnable();
 
@@ -121,6 +141,8 @@ public class PacketMine extends Module {
         ModuleList.superInstaMine.setToggled(false);
 
         conveyorAnimation.reset();
+        conveyorAnimation.setMillis(conveyorAnimTime.getValue().intValue());
+        instaRebreakAnimation.setMillis(instaRebreakAnimTime.getValue().intValue());
         conveyorAnimationInvert = true;
 
         instaRebreakAnimation.reset();
@@ -150,9 +172,7 @@ public class PacketMine extends Module {
         if (e.getBlockPos() == null) return;
 
         e.setCancelled(true);
-        if (currentBreakingBlock != null) {
-            if (currentBreakingBlock.blockPos.equals(e.getBlockPos())) return;
-        }
+        if (currentBreakingBlock != null && currentBreakingBlock.blockPos.equals(e.getBlockPos())) return;
         updateBlock(e.getBlockPos());
     }
 
@@ -181,18 +201,16 @@ public class PacketMine extends Module {
     }
 
     private void updateBlockInternal(BreakingBlock breakingBlock) {
-        if (doubleMine.getValue() && currentBreakingBlock != null) {
+        if (doubleMine.getValue() && currentBreakingBlock != null)
             doubleBreakingBlock = currentBreakingBlock;
-        }
         currentBreakingBlock = breakingBlock;
     }
 
     private void checkDestroyDelta() {
         int bestSlot = AutoTool.getBestSlot(mc.world.getBlockState(currentBreakingBlock.blockPos), inventoryMode.getValue() ? 36 : 9);
         ItemStack stack = mc.player.getInventory().getStack(mc.player.getInventory().selectedSlot);
-        if (bestSlot != -1) {
+        if (bestSlot != -1)
             stack = mc.player.getInventory().getStack(bestSlot);
-        }
 
         destroyDelta = ItemUtils.getMineSpeed(mc.world.getBlockState(currentBreakingBlock.blockPos), currentBreakingBlock.blockPos, stack);
     }
@@ -207,90 +225,69 @@ public class PacketMine extends Module {
         }
 
         if (instaRebreak.getValue() && breakedPos != null) {
-            float instaRebreakAlpha = (float) (instaRebreakAnimationInvert ? 1 - instaRebreakAnimation.getEase() : instaRebreakAnimation.getEase());
+            float animStep = (float) (instaRebreakAnimationInvert ? 1 - instaRebreakAnimation.getEase() : instaRebreakAnimation.getEase());
+            float[] color = new float[]{instaRebreakColor.getValue().getRed() / 255f, instaRebreakColor.getValue().getGreen() / 255f, instaRebreakColor.getValue().getBlue() / 255f, 1f};
+            float boxSize = instaRebreakBoxSize.getValue().floatValue() / 2f;
+            switch (instaRebreakAnimationMode.getValue()) {
+                case "Size" -> boxSize *= animStep;
+                case "Color" -> {
+                    color[0] *= animStep;
+                    color[1] *= animStep;
+                    color[2] *= animStep;
+                    color[3] *= animStep;
+                }
+            }
             renderBoxes.add(new RenderBox(
-                    BlockUtils.createBox(breakedPos, 0.5, 0.5, 1, false),
-                    1,
-                    0,
-                    0,
-                    instaRebreakAlpha,
-                    1,
-                    0,
-                    0,
-                    instaRebreakAlpha * 0.3f));
+                    BlockUtils.createBox(breakedPos, boxSize, boxSize, boxSize, true),
+                    color[0],
+                    color[1],
+                    color[2],
+                    color[3],
+                    color[0],
+                    color[1],
+                    color[2],
+                    color[3] * 0.3f));
         }
 
-        if (renderBox.getValue() && currentBreakingBlock != null) {
+        if (currentBreakingBlock != null) {
             if (conveyorAnimation.getEase() >= 1) {
                 conveyorAnimation.reset();
                 conveyorAnimationInvert = !conveyorAnimationInvert;
             }
 
-            double currentDestroyBlockSize = createLerpSize(currentBreakingBlock);
-            float boxR = (float) boxColor.getValue().getRed() / 255f;
-            float boxG = (float) boxColor.getValue().getGreen() / 255f;
-            float boxB = (float) boxColor.getValue().getBlue() / 255f;
-            renderBoxes.add(
-                    new RenderBox(
-                            BlockUtils.createBox(
-                                    currentBreakingBlock.blockPos,
-                                    currentDestroyBlockSize,
-                                    currentDestroyBlockSize,
-                                    currentDestroyBlockSize,
-                                    true
-                            ),
-                            boxR,
-                            boxG,
-                            boxB,
-                            1,
-                            boxR,
-                            boxG,
-                            boxB,
-                            0.3f
-                    )
-            );
+            renderBoxes.add(getRenderBox(currentBreakingBlock));
 
-            float conveyorLinesAlpha = (float) ((conveyorAlpha.getValue() / 255d) * (conveyorAnimationInvert ? 1 - conveyorAnimation.getEase() : conveyorAnimation.getEase()));
-            float conveyorBoxAlpha = 0.3f * conveyorLinesAlpha;
+            if (doubleMine.getValue() && doubleBreakingBlock != null)
+                if (BlockUtils.canBreak(doubleBreakingBlock.blockPos))
+                    renderBoxes.add(getRenderBox(doubleBreakingBlock));
 
-            if (doubleMine.getValue() && doubleBreakingBlock != null) {
-                if (BlockUtils.canBreak(doubleBreakingBlock.blockPos)) {
-                    double doubleBlockSize = createLerpSize(doubleBreakingBlock);
-                    renderBoxes.add(
-                            new RenderBox(
-                                    BlockUtils.createBox(
-                                            doubleBreakingBlock.blockPos,
-                                            doubleBlockSize,
-                                            doubleBlockSize,
-                                            doubleBlockSize,
-                                            true
-                                    ),
-                                    boxR,
-                                    boxG,
-                                    boxB,
-                                    1,
-                                    boxR,
-                                    boxG,
-                                    boxB,
-                                    0.3f
-                            )
-                    );
+            if (conveyorMode.getValue()) {
+                float animStep = (float) (conveyorAnimationInvert ? 1 - conveyorAnimation.getEase() : conveyorAnimation.getEase());
+                float[] convColor = new float[]{conveyorColor.getValue().getRed() / 255f, conveyorColor.getValue().getGreen() / 255f, conveyorColor.getValue().getBlue() / 255f, conveyorColor.getValue().getAlpha() / 255f};
+                float convBoxSize = conveyorBoxSize.getValue().floatValue() / 2f;
+                switch (conveyorAnimationMode.getValue()) {
+                    case "Size" -> convBoxSize *= animStep;
+                    case "Color" -> {
+                        convColor[0] *= animStep;
+                        convColor[1] *= animStep;
+                        convColor[2] *= animStep;
+                        convColor[3] *= animStep;
+                    }
                 }
-            }
-            if (conveyorMode.getValue() && conveyorRender.getValue()) {
+                float conveyorBoxAlpha = 0.3f * convColor[3];
                 for (BreakingBlock pos : conveyorBlocks) {
                     renderBoxes.add(
                             createRenderBox(BlockUtils.createBox(
                                             pos.blockPos,
-                                            0.1,
-                                            0.1,
-                                            0.1,
+                                            convBoxSize,
+                                            convBoxSize,
+                                            convBoxSize,
                                             true
                                     ),
-                                    1,
-                                    1,
-                                    0,
-                                    conveyorLinesAlpha,
+                                    convColor[0],
+                                    convColor[1],
+                                    convColor[2],
+                                    convColor[3],
                                     conveyorBoxAlpha
                             )
                     );
@@ -303,6 +300,30 @@ public class PacketMine extends Module {
             BThackRender.boxRender.renderBoxes(renderBoxes);
             BThackRender.boxRender.stopBoxRender();
         }
+    }
+
+    private RenderBox getRenderBox(BreakingBlock breakingBlock) {
+        double blockSize = createLerpSize(breakingBlock);
+        float boxR = (float) (boxMode.getValue().equals("Static Color") ? boxColor.getValue().getRed() / 255f : MathHelper.lerp(breakingBlock.currentDestroyProgress, startBoxColor.getValue().getRed(), endBoxColor.getValue().getRed()) / 255f);
+        float boxG = (float) (boxMode.getValue().equals("Static Color") ? boxColor.getValue().getGreen() / 255f : MathHelper.lerp(breakingBlock.currentDestroyProgress, startBoxColor.getValue().getGreen(), endBoxColor.getValue().getGreen()) / 255f);
+        float boxB = (float) (boxMode.getValue().equals("Static Color") ? boxColor.getValue().getBlue() / 255f : MathHelper.lerp(breakingBlock.currentDestroyProgress, startBoxColor.getValue().getBlue(), endBoxColor.getValue().getBlue()) / 255f);
+        return new RenderBox(
+                BlockUtils.createBox(
+                        breakingBlock.blockPos,
+                        blockSize,
+                        blockSize,
+                        blockSize,
+                        true
+                ),
+                boxR,
+                boxG,
+                boxB,
+                1,
+                boxR,
+                boxG,
+                boxB,
+                0.3f
+        );
     }
 
     private RenderBox createRenderBox(Box box, float red, float green, float blue, float linesAlpha, float boxAlpha) {
@@ -331,9 +352,8 @@ public class PacketMine extends Module {
 
         if ((!conveyorMode.getValue() || conveyorBlocks.isEmpty()) && currentBreakingBlock == null) doubleBreakingBlock = null;
 
-        if (!conveyorMode.getValue())
-            if (!conveyorBlocks.isEmpty())
-                conveyorBlocks.clear();
+        if (!conveyorMode.getValue() && !conveyorBlocks.isEmpty())
+            conveyorBlocks.clear();
 
         if (autoCityMode.getValue())
             autoCityAction();
@@ -419,12 +439,11 @@ public class PacketMine extends Module {
                 if (doubleMine.getValue() && doubleBreakingBlock != null && !doubleBreakingBlock.startDestroying) return;
             if (instaRebreak.getValue() && breakedPos != null && breakedPos.equals(breakingBlock.blockPos)){
                 breakingBlock.currentDestroyProgress = 1;
-                if (swingHand.getValue()) mc.player.swingHand(Hand.MAIN_HAND);
                 stopDestroyBlock(breakingBlock.blockPos);
             } else {
-                if (swingHand.getValue()) mc.player.swingHand(Hand.MAIN_HAND);
                 startDestroyBlock(breakingBlock.blockPos);
             }
+            if (swingHand.getValue()) mc.player.swingHand(Hand.MAIN_HAND);
             breakingBlock.startDestroying = true;
         } else {
             breakingBlock.prevDestroyProgress = breakingBlock.currentDestroyProgress;
@@ -457,9 +476,7 @@ public class PacketMine extends Module {
     private void autoCityAction() {
         for (PlayerEntity player : mc.world.getPlayers()) {
             if (player == mc.player) continue;
-            if (!friends.getValue()) {
-                if (Managers.FRIENDS_MANAGER.contains(player)) continue;
-            }
+            if (!friends.getValue() && Managers.FRIENDS_MANAGER.contains(player)) continue;
             if (player.distanceTo(mc.player) > 4) continue;
             BlockPos blockPos = BlockPos.ofFloored(player.getX(), player.getY(),player.getZ());
             if (BlockUtils.canBreak(blockPos) && MathUtils.getDistance(mc.player.getPos(), blockPos.toCenterPos()) < 4.25)
@@ -481,7 +498,7 @@ public class PacketMine extends Module {
     }
 
     private void packetEquipItem() {
-        int bestSlot = AutoTool.getBestSlot(mc.world.getBlockState(currentBreakingBlock.blockPos), inventoryMode.getValue() ? 36 : 8);
+        int bestSlot = AutoTool.getBestSlot(mc.world.getBlockState(currentBreakingBlock.blockPos), inventoryMode.getValue() ? 36 : 9);
         if (bestSlot != -1) {
             if (bestSlot < 9) {
                 Managers.NETWORK_MANAGER.sendPacket(new UpdateSelectedSlotC2SPacket(bestSlot));
@@ -504,10 +521,9 @@ public class PacketMine extends Module {
     }
 
     public boolean conveyorContains(BlockPos pos) {
-        for (BreakingBlock breakingBlock : conveyorBlocks) {
+        for (BreakingBlock breakingBlock : conveyorBlocks)
             if (breakingBlock.blockPos.equals(pos))
                 return true;
-        }
         return false;
     }
 
