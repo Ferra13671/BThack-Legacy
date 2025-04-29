@@ -20,9 +20,9 @@ public class TravelChangeManager implements Initializable, Mc {
     /*
     TravelChangers priority:
 
-    LongJump(Elytra&Firework mode): 1000000
-    ElytraFlight: 1000000
-    KillAura: 5000
+    KillAura: 10000
+    LongJump(Elytra&Firework mode): 5000
+    ElytraFlight: 5000
     MoveTask/TunnelTask: 1000
     Sprint: 500
      */

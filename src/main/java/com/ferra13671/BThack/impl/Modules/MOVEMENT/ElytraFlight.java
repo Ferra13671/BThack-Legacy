@@ -314,11 +314,11 @@ public class ElytraFlight extends Module {
     public float _speedPercentage = 0.0f;
     public TravelPacket travelPacket = null;
 
-    public final TravelChanger travelChanger = new TravelChanger(1000000,
-            () -> switch (ModuleList.elytraFlight.mode.getValue()) {
+    public final TravelChanger travelChanger = new TravelChanger(5000,
+            () -> switch (mode.getValue()) {
                 case "Bounce" -> new Float[]{bounceYawRotate(RotateUtils.getCameraYaw()), bouncePitchRotate(RotateUtils.getCameraPitch())};
                 case "Firework" -> getFireworkModeRots();
-                case "Pitch40" -> new Float[]{RotateUtils.getCameraYaw(), (ModuleList.elytraFlight.travelMode.getValue().equals("Rewrite") ? pitch40pitch : RotateUtils.getCameraPitch())};
+                case "Pitch40" -> new Float[]{RotateUtils.getCameraYaw(), (travelMode.getValue().equals("Rewrite") ? pitch40pitch : RotateUtils.getCameraPitch())};
                 case "Auto Glide" -> new Float[]{RotateUtils.getCameraYaw(), getAutoGlidePitch()};
                 default -> new Float[]{RotateUtils.getCameraYaw(), RotateUtils.getCameraPitch()};
             },
@@ -334,8 +334,8 @@ public class ElytraFlight extends Module {
             arrayListInfo = mode.getValue();
 
         if (isEnabled()) {
-            if (!mode.getValue().equals("1.12.2 Control")) Managers.TRAVEL_CHANGE_MANAGER.addChanger(travelChanger);
-            else Managers.TRAVEL_CHANGE_MANAGER.removeChanger(travelChanger);
+            if (mode.getValue().equals("1.12.2 Control") || (mode.getValue().equals("Pitch40") && travelMode.getValue().equals("Pitch"))) Managers.TRAVEL_CHANGE_MANAGER.removeChanger(travelChanger);
+            else Managers.TRAVEL_CHANGE_MANAGER.addChanger(travelChanger);
         }
     }
 
@@ -393,8 +393,8 @@ public class ElytraFlight extends Module {
         _hoverTarget = -1.0;
         travelPacket = null;
 
-        if (!mode.getValue().equals("1.12.2 Control")) Managers.TRAVEL_CHANGE_MANAGER.addChanger(travelChanger);
-        else Managers.TRAVEL_CHANGE_MANAGER.removeChanger(travelChanger);
+        if (mode.getValue().equals("1.12.2 Control") || (mode.getValue().equals("Pitch40") && travelMode.getValue().equals("Pitch"))) Managers.TRAVEL_CHANGE_MANAGER.removeChanger(travelChanger);
+        else Managers.TRAVEL_CHANGE_MANAGER.addChanger(travelChanger);
 
         if (mode.getValue().equals("Bounce"))
             arrayListInfo = mode.getValue() + (abusePitch.getValue() ? (";" + pitch.getValue()) : "");

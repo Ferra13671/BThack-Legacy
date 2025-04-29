@@ -92,7 +92,7 @@ public class KillAura extends Module {
     public Target targetedEntity;
     private float[] targetRotation;
     private float[] currentRotation;
-    private final TravelChanger travelChanger = new TravelChanger(5000,
+    private final TravelChanger travelChanger = new TravelChanger(10000,
             () -> new Float[]{currentRotation[0], currentRotation[1]},
             () -> {if (grim.getValue()) GrimUtils.sendPreActionGrimPackets(Managers.TRAVEL_CHANGE_MANAGER.getLastYaw(), Managers.TRAVEL_CHANGE_MANAGER.getLastPitch());
             },

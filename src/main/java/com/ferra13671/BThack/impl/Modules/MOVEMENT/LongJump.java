@@ -70,7 +70,7 @@ public class LongJump extends Module {
     }
     private final ElytraAndFireworkMode elytraAndFireworkMode = new ElytraAndFireworkMode();
     private final GlideMode glideMode = new GlideMode();
-    private final TravelChanger travelChanger = new TravelChanger(1000000, () -> new Float[]{mc.player.getYaw(), (float) -pitch.getValue()}, () -> {
+    private final TravelChanger travelChanger = new TravelChanger(5000, () -> new Float[]{mc.player.getYaw(), (float) -pitch.getValue()}, () -> {
         if (grim.getValue())
             GrimUtils.sendPreActionGrimPackets(Managers.TRAVEL_CHANGE_MANAGER.getLastYaw(), Managers.TRAVEL_CHANGE_MANAGER.getLastPitch());
     }, () -> true);

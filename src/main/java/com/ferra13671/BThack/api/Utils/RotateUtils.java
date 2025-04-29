@@ -1,6 +1,7 @@
 package com.ferra13671.BThack.api.Utils;
 
 
+import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Utils.Modules.NoRotateMathUtils;
@@ -275,10 +276,11 @@ public final class RotateUtils implements Mc {
     }
 
     public static float getCameraYaw() {
-        return mc.gameRenderer.getCamera().getYaw();
+        return ModuleList.noRotate.isEnabled() ? mc.player.getYaw() : mc.gameRenderer.getCamera().getYaw();
     }
 
     public static float getCameraPitch() {
-        return mc.gameRenderer.getCamera().getPitch();
+        return ModuleList.noRotate.isEnabled() && ModuleList.noRotate.blockPitch.getValue() && !(ModuleList.elytraFlight.isEnabled() && ModuleList.elytraFlight.mode.getValue().equals("Pitch40"))
+                ? mc.player.getPitch() : mc.gameRenderer.getCamera().getPitch();
     }
 }

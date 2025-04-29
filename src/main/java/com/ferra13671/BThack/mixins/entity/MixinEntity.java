@@ -83,6 +83,7 @@ public abstract class MixinEntity implements Mc {
     public void modifySetPitch(float pitch, CallbackInfo ci) {
         if ((Object) this != mc.player) return;
         if (ModuleList.noRotate.isEnabled() && ModuleList.noRotate.blockPitch.getValue()) {
+            if (ModuleList.elytraFlight.isEnabled() && ModuleList.elytraFlight.mode.getValue().equals("Pitch40")) return;
             ci.cancel();
             this.pitch = NoRotateMathUtils.getNearestPitchAxis(mc.player);
         }
