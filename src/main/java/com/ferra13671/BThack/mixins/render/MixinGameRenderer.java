@@ -7,6 +7,7 @@ import com.ferra13671.BThack.api.Events.Render.RenderWorldLastEvent;
 import com.ferra13671.BThack.api.IMixin.ModifyHeldItemRenderer;
 import com.ferra13671.BThack.api.Shader.Shaders;
 import com.ferra13671.BThack.mixins.accessor.IWorldRenderer;
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
@@ -130,6 +131,11 @@ public abstract class MixinGameRenderer {
     @Inject(method = "render", at = @At("HEAD"))
     public void modifyRender(RenderTickCounter tickCounter, boolean tick, CallbackInfo ci) {
         Shaders.INSTANCE.updateTime();
+    }
+
+    @ModifyReturnValue(method = "getFov",at = @At("RETURN"))
+    public double modifyGetFov(double original) {
+        return ModuleList.zoom.isEnabled() ? ModuleList.zoom.getFov(original) : original;
     }
 
     @Unique

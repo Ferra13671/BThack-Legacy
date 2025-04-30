@@ -177,6 +177,7 @@
 "lang.module.Tracers": Rysuje linie prowadzące do podmiotów.
 "lang.module.Waypoints": Umożliwia renderowanie waypointów.
 "lang.module.Xray": Umożliwia anulowanie rysowania bloków.
+"lang.module.Zoom": Umożliwia powiększenie obrazu.
 
 //WORLD
 "lang.module.AutoFarm": Automatycznie zbiera i sadzi plony.

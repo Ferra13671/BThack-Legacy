@@ -178,6 +178,7 @@
 "lang.module.Tracers": Draws lines leading to entities.
 "lang.module.Waypoints": Allows rendering of waypoints.
 "lang.module.Xray": Allows you to cancel the rendering of blocks.
+"lang.module.Zoom": Allows you to zoom in.
 
 //WORLD
 "lang.module.AutoFarm": Automatically picks and plants the crop.

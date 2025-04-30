@@ -202,6 +202,7 @@ public final class ModuleList {
     public static Tracers tracers;
     public static Waypoints waypoints;
     public static Xray xray;
+    public static Zoom zoom;
 
     //WORLD
     public static AutoFarm autoFarm;
@@ -400,6 +401,7 @@ public final class ModuleList {
         tracers = register(new Tracers());
         waypoints = register(new Waypoints());
         xray = register(new Xray());
+        zoom = register(new Zoom());
 
         //WORLD
         autoFarm = register(new AutoFarm());
