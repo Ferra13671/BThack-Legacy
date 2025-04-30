@@ -126,7 +126,7 @@ public class HUD extends Module {
 
     @EventSubscriber(priority = Integer.MIN_VALUE)
     public void onRender(RenderHudPreEvent e) {
-        if (mc.currentScreen instanceof HudEditorScreen) return;
+        if (mc.currentScreen instanceof HudEditorScreen || mc.options.hudHidden) return;
         BThackMatrix.push();
         BThackMatrix.translate(0,0,3000);
 
