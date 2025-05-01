@@ -174,13 +174,13 @@ public class Module {
         if (this.toggled) {
             sendToggleMessage();
             playOnSound();
-            onEnable();
             addToArrayList();
+            onEnable();
         } else {
             sendToggleMessage();
             playOffSound();
-            onDisable();
             removeFromArrayList();
+            onDisable();
         }
     }
 
@@ -188,11 +188,11 @@ public class Module {
         if (this.toggled == toggled) return;
         this.toggled = toggled;
         if (this.toggled) {
-            onEnable();
             addToArrayList();
+            onEnable();
         } else {
-            onDisable();
             removeFromArrayList();
+            onDisable();
         }
     }
 
