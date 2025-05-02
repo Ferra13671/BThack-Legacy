@@ -102,6 +102,10 @@ public abstract class MixinGameRenderer {
 
     @Inject(method = "bobView", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/MinecraftClient;getCameraEntity()Lnet/minecraft/entity/Entity;", shift = At.Shift.AFTER), cancellable = true)
     public void modifyBobView(MatrixStack matrices, float tickDelta, CallbackInfo ci) {
+        if (ModuleList.freeCam.isEnabled()) {
+            ci.cancel();
+            return;
+        }
         if (ModuleList.customBob.isEnabled()) {
             ci.cancel();
             if (ModuleList.customBob.getFullStrength() == 0) return;
