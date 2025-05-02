@@ -274,6 +274,91 @@ public class ActionBotConfig {
         });
         //----------------------------//
 
+        //----------UseItemOnBlock Task----------//
+        addFullActionBotTask(new ActionBotTaskData() {
+            @Override
+            public ActionBotTask getTask() {
+                return new UseItemOnBlockTask(0, 0, 0);
+            }
+
+            @Override
+            public BThackScreen getTaskScreen(TaskButton instance, boolean edit) {
+                return new AbstractTaskGui(instance, edit) {
+                    @Override
+                    public List<TaskSettingButton> getSettingButtons() {
+                        return Arrays.asList(
+                                new TaskSettingButton(new NumberFrameButton(1, 60, scaledResolution.getScaledHeight() / 2 - 46, 40, 10), "X (Relative to the player)"),
+                                new TaskSettingButton(new NumberFrameButton(2, 60, scaledResolution.getScaledHeight() / 2 - 24, 40, 10), "Y (Relative to the player)"),
+                                new TaskSettingButton(new NumberFrameButton(3, 60, scaledResolution.getScaledHeight() / 2 - 2, 40, 10), "Z (Relative to the player)")
+                        );
+                    }
+
+                    @Override
+                    public ActionBotTask getAddingTask() {
+                        NumberFrameButton xFrame = (NumberFrameButton) getButtonFromId(1);
+                        NumberFrameButton yFrame = (NumberFrameButton) getButtonFromId(2);
+                        NumberFrameButton zFrame = (NumberFrameButton) getButtonFromId(3);
+                        return new UseItemOnBlockTask((int) xFrame.getNumber(), (int) yFrame.getNumber(), (int) zFrame.getNumber());
+                    }
+                };
+            }
+        });
+        //---------------------------------------//
+
+        //----------RightClick Task----------//
+        addFullActionBotTask(new ActionBotTaskData() {
+            @Override
+            public ActionBotTask getTask() {
+                return new RightClickTask(0, 0);
+            }
+
+            @Override
+            public BThackScreen getTaskScreen(TaskButton instance, boolean edit) {
+                return new AbstractTaskGui(instance, edit) {
+                    @Override
+                    public List<TaskSettingButton> getSettingButtons() {
+                        return Arrays.asList(
+                                new TaskSettingButton(new NumberFrameButton(1, 60, scaledResolution.getScaledHeight() / 2 - 24, 40, 10), "Yaw"),
+                                new TaskSettingButton(new NumberFrameButton(2, 60, scaledResolution.getScaledHeight() / 2 - 2, 40, 10), "Pitch")
+                        );
+                    }
+
+                    @Override
+                    public ActionBotTask getAddingTask() {
+                        return new RightClickTask((float) ((NumberFrameButton) getButtonFromId(1)).getNumber(), (float) ((NumberFrameButton) getButtonFromId(2)).getNumber());
+                    }
+                };
+            }
+        });
+        //---------------------------------------//
+
+        //----------UseItem Task----------//
+        addFullActionBotTask(new ActionBotTaskData() {
+            @Override
+            public ActionBotTask getTask() {
+                return new UseItemTask(0, 0);
+            }
+
+            @Override
+            public BThackScreen getTaskScreen(TaskButton instance, boolean edit) {
+                return new AbstractTaskGui(instance, edit) {
+                    @Override
+                    public List<TaskSettingButton> getSettingButtons() {
+                        return Arrays.asList(
+                                new TaskSettingButton(new NumberFrameButton(1, 60, scaledResolution.getScaledHeight() / 2 - 24, 40, 10), "Yaw"),
+                                new TaskSettingButton(new NumberFrameButton(2, 60, scaledResolution.getScaledHeight() / 2 - 2, 40, 10), "Pitch")
+                        );
+                    }
+
+                    @Override
+                    public ActionBotTask getAddingTask() {
+                        return new UseItemTask((float) ((NumberFrameButton) getButtonFromId(1)).getNumber(), (float) ((NumberFrameButton) getButtonFromId(2)).getNumber());
+                    }
+                };
+            }
+        });
+        //--------------------------------//
+
         //---------EnableModule Task---------//
         addFullActionBotTask(new ActionBotTaskData() {
             @Override
