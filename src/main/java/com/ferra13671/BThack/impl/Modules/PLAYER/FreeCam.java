@@ -9,6 +9,7 @@ import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
+import com.ferra13671.BThack.api.Utils.RotateUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.client.input.Input;
 import net.minecraft.client.input.KeyboardInput;
@@ -153,8 +154,8 @@ public class FreeCam extends Module {
             position = mc.gameRenderer.getCamera().getPos();
             lastPosition = position;
 
-            yaw = mc.player.getYaw();
-            pitch = mc.player.getPitch();
+            yaw = RotateUtils.getCameraYaw();
+            pitch = RotateUtils.getCameraPitch();
         }
 
         public void changeLookDirection(double cursorDeltaX, double cursorDeltaY) {

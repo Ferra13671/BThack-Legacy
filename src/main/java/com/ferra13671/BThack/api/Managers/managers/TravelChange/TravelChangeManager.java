@@ -1,6 +1,7 @@
 package com.ferra13671.BThack.api.Managers.managers.TravelChange;
 
 import com.ferra13671.BThack.BThack;
+import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.api.Events.Camera.RotateCameraEvent;
 import com.ferra13671.BThack.api.Events.Player.ChangePlayerLookEvent;
 import com.ferra13671.BThack.api.Events.Player.PlayerTravelEvent;
@@ -43,8 +44,8 @@ public class TravelChangeManager implements Initializable, Mc {
         if (!changers.contains(changer)) {
             changers.add(changer);
             filterChangers();
-            freeCamData.yaw = mc.player.getYaw();
-            freeCamData.pitch = mc.player.getPitch();
+            freeCamData.yaw = RotateUtils.getCameraYaw();
+            freeCamData.pitch = RotateUtils.getCameraPitch();
         }
     }
 
@@ -52,7 +53,7 @@ public class TravelChangeManager implements Initializable, Mc {
         if (changers.contains(changer)) {
             changers.remove(changer);
             filterChangers();
-            if (!Module.nullCheck()) {
+            if (!Module.nullCheck() && !ModuleList.freeCam.isEnabled()) {
                 mc.player.yaw = RotateUtils.getCameraYaw();
                 mc.player.pitch = RotateUtils.getCameraPitch();
             }
@@ -78,14 +79,14 @@ public class TravelChangeManager implements Initializable, Mc {
 
     @EventSubscriber
     public void onCameraRotate(RotateCameraEvent e) {
-        if (!changers.isEmpty()) {
+        if (!changers.isEmpty() && !ModuleList.freeCam.isEnabled()) {
             e.setRotation(new Vec2f(freeCamData.yaw, freeCamData.pitch));
         }
     }
 
     @EventSubscriber
     public void onChangePlayer(ChangePlayerLookEvent e) {
-        if (!changers.isEmpty()) {
+        if (!changers.isEmpty() && !ModuleList.freeCam.isEnabled()) {
             e.cancel();
             freeCamData.changeLookDirection(e.cursorDeltaX, e.cursorDeltaY);
         }
