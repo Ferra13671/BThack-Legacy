@@ -5,10 +5,8 @@ import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.api.Category.Categories;
 import com.ferra13671.BThack.api.Category.Category;
 import com.ferra13671.BThack.api.IMixin.ModifyWindow;
-import com.ferra13671.BThack.api.Managers.managers.ColourTheme.ColorTheme;
 import com.ferra13671.BThack.api.Module.HudComponent;
 import com.ferra13671.BThack.api.Interfaces.Mc;
-import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.DataList.DataLists;
@@ -82,11 +80,6 @@ public final class Client implements Mc {
                 m.toggle();
             }
         }
-    }
-
-
-    public static void addCTheme(String name, int frontColour, int backgroundFontColour, int backgroundFontHoveredColour, int moduleEnabledColour, int moduleDisabledColour, int arrayListColour) {
-        Managers.COLOR_THEME_MANAGER.addColorTheme(new ColorTheme(name, frontColour, backgroundFontColour, backgroundFontHoveredColour, moduleEnabledColour, moduleDisabledColour, arrayListColour));
     }
 
     public static String getRealTime(String format) {

@@ -5,7 +5,6 @@ import com.ferra13671.BThack.api.Managers.managers.*;
 import com.ferra13671.BThack.api.Managers.managers.Account.AccountManager;
 import com.ferra13671.BThack.api.Managers.managers.Build.BuildManager;
 import com.ferra13671.BThack.api.Managers.managers.Cape.CapeManager;
-import com.ferra13671.BThack.api.Managers.managers.ColourTheme.ColorThemeManager;
 import com.ferra13671.BThack.api.Managers.managers.Command.CommandManager;
 import com.ferra13671.BThack.api.Managers.managers.Destroy.DestroyManager;
 import com.ferra13671.BThack.api.Managers.managers.Macros.MacrosManager;
@@ -27,7 +26,6 @@ public class Managers {
     public static final TickManager TICK_MANAGER = new TickManager();
     public static final MainMenuShaderManager MAIN_MENU_SHADER_MANAGER = new MainMenuShaderManager();
     public static final TotemPopManager TOTEM_POP_MANAGER = new TotemPopManager();
-    public static final ColorThemeManager COLOR_THEME_MANAGER = new ColorThemeManager();
     public static final SettingsManager SETTINGS_MANAGER = new SettingsManager();
     public static final MemoryManager MEMORY_MANAGER = new MemoryManager();
     public static final TravelChangeManager TRAVEL_CHANGE_MANAGER = new TravelChangeManager();

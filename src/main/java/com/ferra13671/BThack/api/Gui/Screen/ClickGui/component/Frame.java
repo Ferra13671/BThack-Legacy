@@ -152,7 +152,7 @@ public class Frame implements Mc, Closeable {
 			ModuleList.clickGui.prepareCurrentShader(1, 1);
 			BThackRender.drawShader(ModuleList.clickGui.getCurrentShader(), getX(), getY(), getX() + Constants.CLICKGUI_FRAME_WIDTH, getY() + Constants.CLICKGUI_BAR_HEIGHT);
 		} else
-			BThackRender.drawRect(getX(), getY(), getX() + Constants.CLICKGUI_FRAME_WIDTH, getY() + Constants.CLICKGUI_BAR_HEIGHT, ModuleList.clickGui.customColor.getValue() ? ColorUtils.fastRGBA(ModuleList.clickGui.color.getValue().getRed(), ModuleList.clickGui.color.getValue().getGreen(), ModuleList.clickGui.color.getValue().getBlue(), 255) : ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().color()));
+			BThackRender.drawRect(getX(), getY(), getX() + Constants.CLICKGUI_FRAME_WIDTH, getY() + Constants.CLICKGUI_BAR_HEIGHT, ColorUtils.fastRGBA(ModuleList.clickGui.color.getValue().getRed(), ModuleList.clickGui.color.getValue().getGreen(), ModuleList.clickGui.color.getValue().getBlue(), 255));
 		if (ModuleList.clickGui.frameOutline.getValue()) {
 			if (ModuleList.clickGui.isShaderEnabled()) {
 				ModuleList.clickGui.prepareCurrentShader(1, 1);
@@ -161,7 +161,7 @@ public class Frame implements Mc, Closeable {
 				BThackRender.drawOutlineRect(getX() - 1, getY() - 1, getX() + Constants.CLICKGUI_FRAME_WIDTH + 1, getY() + renderHeight + Constants.CLICKGUI_BAR_HEIGHT + 1, 1, ClickGui.getClickGuiColor(true));
 		}
 
-		BThackRender.drawString(name, getX() + (Constants.CLICKGUI_FRAME_WIDTH / 2f) - (FontUtils.getTextWidth(name) / 2f), getY() + (Constants.CLICKGUI_BAR_HEIGHT / 2f) - (FontUtils.getTextHeight(name) / 2f), ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()), true, FontRenderManager.DrawMode.NORMAL_BOLD);
+		BThackRender.drawString(name, getX() + (Constants.CLICKGUI_FRAME_WIDTH / 2f) - (FontUtils.getTextWidth(name) / 2f), getY() + (Constants.CLICKGUI_BAR_HEIGHT / 2f) - (FontUtils.getTextHeight(name) / 2f), ModuleList.clickGui.textColor.getValue().hashCode(), true, FontRenderManager.DrawMode.NORMAL_BOLD);
 
 		if((open || frameAnimation.getEase() < 1) && !buttons.isEmpty()) {
 			if (needScissor)

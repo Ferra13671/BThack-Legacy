@@ -4,6 +4,7 @@ import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.Module
 import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.setting.AbstractSetting;
 import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.setting.settings.ColorPicker;
 import com.ferra13671.BThack.api.Module.Module;
+import com.ferra13671.BThack.api.Utils.MathUtils;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
@@ -20,6 +21,11 @@ public class ColorSetting extends Setting<Color> {
 
     public ColorSetting(String name, Module module, Color defaultColor, Supplier<Boolean> dependence) {
         super(name, module, defaultColor, dependence);
+    }
+
+    public Color getBrighterValue() {
+        Color temp = getValue();
+        return new Color(Math.min(255, temp.getRed() + 35), Math.min(255, temp.getGreen() + 35), Math.min(255, temp.getBlue() + 35), temp.getAlpha());
     }
 
     @Override

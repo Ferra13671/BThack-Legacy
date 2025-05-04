@@ -1,7 +1,6 @@
 package com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.setting.settings;
 
 
-import com.ferra13671.BThack.Core.Client.Client;
 import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
@@ -55,7 +54,7 @@ public class Slider extends AbstractSetting<NumberSetting> implements Mc {
 	public void renderComponent() {
 		super.renderComponent();
 
-		BThackRender.drawRect(getX(), getY(), getX() + Constants.CLICKGUI_FRAME_WIDTH, getY() + getHeight(), ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().backgroundColor()), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))));
+		BThackRender.drawRect(getX(), getY(), getX() + Constants.CLICKGUI_FRAME_WIDTH, getY() + getHeight(), ColorUtils.integrateAlpha(ModuleList.clickGui.backgroundColor.getValue().hashCode(), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))));
 
 		BThackRender.drawRect(getX() + 2, getY() + 11, getX() + Constants.CLICKGUI_FRAME_WIDTH - 2, getY() + getHeight(), Color.GRAY.darker().darker().darker().getRGB());
 
@@ -65,7 +64,7 @@ public class Slider extends AbstractSetting<NumberSetting> implements Mc {
 		} else
 			BThackRender.drawRect(getX() + 2, getY() + 11, getX() + 2 + (int) renderWidth, getY() + getHeight(), ClickGui.getClickGuiColor(false));
 
-		BThackRender.drawString(setting.getName() + ": " + setting.getValue(), getX() + 2, getY() + 1, ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()));
+		BThackRender.drawString(setting.getName() + ": " + setting.getValue(), getX() + 2, getY() + 1, ModuleList.clickGui.textColor.getValue().hashCode());
 	}
 
 	@Override

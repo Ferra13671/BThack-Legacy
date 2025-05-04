@@ -105,7 +105,6 @@ public final class BThack implements ClientModInitializer, Mc {
         try {
             initDebug("Starting to create BThack directory...");
             FileSystem.start();
-            FileSystem.createTutorialJsonTheme();
             initDebug("BThack directory successfully created!");
         } catch (IOException e) {
             initErr("There was an error when creating the BThack directory.");
@@ -144,15 +143,6 @@ public final class BThack implements ClientModInitializer, Mc {
         if (initStage == InitStage.FULL_INITED) throw new UnsupportedOperationException("You cannot call initialization after a full initialization has been performed");
 
         initStage = InitStage.POST_INIT;
-
-        BThack.initDebug("Starting to upload color themes....");
-        try {
-            ConfigSystem.loadColourThemes();
-            BThack.initDebug("Color themes has loaded!");
-        } catch (IOException e) {
-            BThack.initErr("There was a error when loading color themes!");
-            throw new RuntimeException(e);
-        }
 
         BThackRender.init();
         BThack.initDebug("Starting client initialization...");

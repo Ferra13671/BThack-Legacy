@@ -1,6 +1,5 @@
 package com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components;
 
-import com.ferra13671.BThack.Core.Client.Client;
 import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Font.FontUtils;
@@ -105,7 +104,7 @@ public class ModuleButton extends Component implements Mc {
 	}
 
 	private int getModuleTextColor() {
-		return ModuleList.clickGui.opacity.getValue() > 0.4 ? ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()) : (module.isEnabled() ? ClickGui.getClickGuiColor(true) : ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()));
+		return ModuleList.clickGui.opacity.getValue() > 0.4 ? ModuleList.clickGui.textColor.getValue().hashCode() : (module.isEnabled() ? ClickGui.getClickGuiColor(true) : ModuleList.clickGui.textColor.getValue().hashCode());
 	}
 
 	private void drawEnabledBackground(int alpha) {
@@ -129,8 +128,8 @@ public class ModuleButton extends Component implements Mc {
 		BThackRender.drawRect(parent.getX(), parent.getY() + offset, parent.getX() + Constants.CLICKGUI_FRAME_WIDTH, parent.getY() + Constants.CLICKGUI_BUTTON_HEIGHT + offset,
 				ColorUtils.integrateAlpha(
 						isHovered ?
-								new Color(Client.clientInfo.getColorTheme().backgroundHoveredColor()).brighter().brighter().hashCode() :
-								new Color(Client.clientInfo.getColorTheme().backgroundColor()).darker().darker().hashCode(),
+								ModuleList.clickGui.backgroundColor.getBrighterValue().hashCode() :
+								ModuleList.clickGui.backgroundColor.getValue().hashCode(),
 						alpha
 				)
 		);

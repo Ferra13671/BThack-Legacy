@@ -4,8 +4,6 @@ import com.ferra13671.BThack.Core.Client.Client;
 import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Animation.Easing;
-import com.ferra13671.BThack.api.Managers.managers.ColourTheme.ColorTheme;
-import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.*;
 import com.ferra13671.BThack.api.Module.OneActionModule;
 import com.ferra13671.BThack.api.Shader.ShaderProgram;
@@ -21,8 +19,6 @@ import java.util.List;
 
 public class ClickGui extends OneActionModule {
 
-    public final ModeSetting activeTheme = new ModeSetting("Theme", this, getActiveThemeList());
-
     //rainbow and gradient
     public BooleanSetting rainbow;
 
@@ -34,8 +30,9 @@ public class ClickGui extends OneActionModule {
     public NumberSetting speed;
     //
 
-    public final BooleanSetting customColor = new BooleanSetting("Custom Color", this, false, () -> !rainbow.getValue());
-    public final ColorSetting color = new ColorSetting("ClickGui Color", this, new Color(25, 28, 255), () -> customColor.getValue() && !rainbow.getValue()).withBlockedAlpha();
+    public final ColorSetting textColor = new ColorSetting("Text Color", this, new Color(255, 255, 255)).withBlockedAlpha();
+    public final ColorSetting backgroundColor = new ColorSetting("Background Color", this, new Color(17, 17, 17)).withBlockedAlpha();
+    public final ColorSetting color = new ColorSetting("ClickGui Color", this, new Color(119, 0, 189), () -> !rainbow.getValue() && !gradient.getValue()).withBlockedAlpha();
 
     public final BooleanSetting arrows = new BooleanSetting("Arrows", this, true);
 
@@ -76,10 +73,9 @@ public class ClickGui extends OneActionModule {
         speed = new NumberSetting("Speed", this, 1, 0.3, 4, false, () -> rainbow.getValue() || gradient.getValue());
 
         initSettings(
-                activeTheme,
-
+                textColor,
+                backgroundColor,
                 color,
-                customColor,
 
                 rainbow,
 
@@ -113,15 +109,6 @@ public class ClickGui extends OneActionModule {
         );
     }
 
-    public List<String> getActiveThemeList() {
-        ArrayList<String> options = new ArrayList<>();
-
-        for (ColorTheme theme : Managers.COLOR_THEME_MANAGER.getColorThemes()) {
-            options.add(theme.name());
-        }
-        return options;
-    }
-
     public List<String> getEasingList() {
         List<String> easingList = new ArrayList<>();
         for (Easing eas : Easing.values()) {
@@ -142,7 +129,7 @@ public class ClickGui extends OneActionModule {
 
             Shaders.INSTANCE.XY_GRADIENT.setUniformValue("color1", color1.getValue().getRed() / 255f, color1.getValue().getGreen() / 255f, color1.getValue().getBlue() / 255f, alpha);
             Shaders.INSTANCE.XY_GRADIENT.setUniformValue("color2", color2.getValue().getRed() / 255f, color2.getValue().getGreen() / 255f, color2.getValue().getBlue() / 255f, alpha);
-        } else if (rainbow.getValue()) {
+        } else {
             Shaders.INSTANCE.X_RAINBOW.setUniformValue("alpha", alpha);
             Shaders.INSTANCE.X_RAINBOW.setUniformValue("brightness", brightness);
             Shaders.INSTANCE.X_RAINBOW.setUniformValue("scale", scale.getValue().floatValue());
@@ -153,11 +140,6 @@ public class ClickGui extends OneActionModule {
     public ShaderProgram getCurrentShader() {
         if (gradient.getValue()) return Shaders.INSTANCE.XY_GRADIENT;
         else return Shaders.INSTANCE.X_RAINBOW;
-    }
-
-    @Override
-    public void onChangeSetting(Setting<?> setting) {
-        Managers.COLOR_THEME_MANAGER.updateColorTheme();
     }
 
     @Override
@@ -190,9 +172,7 @@ public class ClickGui extends OneActionModule {
 
     public static int getClickGuiColor(boolean allowRainbow) {
         if (ModuleList.clickGui.rainbow.getValue() && allowRainbow) return ColorUtils.rainbow();
-        else return (ModuleList.clickGui.customColor.getValue() ?
-                new Color(ModuleList.clickGui.color.getValue().getRed(), ModuleList.clickGui.color.getValue().getGreen(), ModuleList.clickGui.color.getValue().getBlue()) :
-                new Color(Client.clientInfo.getColorTheme().moduleEnabledColor())).getRGB();
+        else return ModuleList.clickGui.color.getValue().getRGB();
     }
 
     public static float applyGuiScale(float cord) {

@@ -1,14 +1,10 @@
 package com.ferra13671.BThack.Core.FileSystem;
 
 import com.ferra13671.BThack.BThack;
-import com.ferra13671.BThack.Constants;
-import com.ferra13671.BThack.Core.FileSystem.ConfigSystem.ConfigUtils;
-import com.google.gson.*;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -17,20 +13,18 @@ import java.nio.file.Paths;
 public final class FileSystem {
 
     public static void start() throws IOException {
-
         registerFolder("HudComponents", "");
         registerFolder("Social", "");
         registerFolder("Friends", "/Social");
         registerFolder("Enemies", "/Social");
         registerFolder("Spammer", "");
         registerFolder("Modules", "");
-        registerFolder("Themes", "");
-        registerFolder("ColourThemes", "/Themes");
         registerFolder("ActionBotConfigs", "");
         registerFolder("DefaultConfig", "/ActionBot");
         registerFolder("Configs", "");
         registerFolder("Fonts", "");
         registerFolder("CustomCapes", "");
+
         registerFile("AutoAuthPasswords", "", FileType.JSON);
         registerFile("2FAKeys", "", FileType.JSON);
         registerFile("VersionInfo", "", FileType.JSON);
@@ -69,29 +63,6 @@ public final class FileSystem {
         } else {
             BThack.debug(name + " folder already exists");
         }
-    }
-
-    public static void createTutorialJsonTheme() throws IOException {
-        ConfigUtils.registerFiles("tutorialTheme", "Themes/ColourThemes");
-
-        OutputStreamWriter fileOutputStreamWriter = new OutputStreamWriter(Files.newOutputStream(Paths.get("BThack/Themes/ColourThemes/tutorialTheme.json")), StandardCharsets.UTF_8);
-
-        JsonObject colourThemeObject = new JsonObject();
-        JsonObject coloursObject = new JsonObject();
-
-        colourThemeObject.add("Name", new JsonPrimitive("TutorialTheme"));
-
-        coloursObject.add("color", new JsonPrimitive(0x191CFF));
-        coloursObject.add("backgroundColor", new JsonPrimitive(0xFF111111));
-        coloursObject.add("backgroundHoveredColor", new JsonPrimitive(0xFF222222));
-        coloursObject.add("moduleEnabledColor", new JsonPrimitive(0x191CFF));
-        coloursObject.add("moduleDisabledColor", new JsonPrimitive(0xFFFFFF));
-        coloursObject.add("arrayListColor", new JsonPrimitive(0x191CFF));
-
-        colourThemeObject.add("Colours", coloursObject);
-        String jsonString = Constants.GSON.toJson(JsonParser.parseString(colourThemeObject.toString()));
-        fileOutputStreamWriter.write(jsonString);
-        fileOutputStreamWriter.close();
     }
 
     public static void deleteDirectory(File directory) {

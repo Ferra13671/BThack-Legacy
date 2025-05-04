@@ -2,7 +2,6 @@ package com.ferra13671.BThack.Core.Client;
 
 import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.api.Managers.managers.Cape.CapeManager;
-import com.ferra13671.BThack.api.Managers.managers.ColourTheme.ColorTheme;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 
 public final class ClientInfo implements Mc {
@@ -11,7 +10,6 @@ public final class ClientInfo implements Mc {
     private String chatPrefix = "$";
     private String font = "default";
     private String currentConfigName = "";
-    private ColorTheme colorTheme;
     private CapeInfo capeInfo = CapeManager.DEFAULT_CAPE_INFO;
     private boolean isWinter = false;
 
@@ -38,10 +36,6 @@ public final class ClientInfo implements Mc {
         return currentConfigName;
     }
 
-    public ColorTheme getColorTheme() {
-        return colorTheme;
-    }
-
     public String getFont() {
         return font;
     }
@@ -61,10 +55,6 @@ public final class ClientInfo implements Mc {
 
     public void setCurrentConfigName(String currentConfigName) {
         this.currentConfigName = currentConfigName;
-    }
-
-    public void setColorTheme(ColorTheme colorTheme) {
-        this.colorTheme = colorTheme;
     }
 
     public void setFont(String font) {

@@ -518,52 +518,6 @@ public final class ConfigSystem {
         Managers.TWOFA_MANAGER.load();
     }
 
-    public static void loadColourThemes() throws IOException {
-        //Default themes
-        Client.addCTheme("Default", 0x191CFF, 0xFF111111, -14540254, 0x191CFF, 0xFFFFFF, 0x191CFF);
-        Client.addCTheme("PurpleNight", 0xD902EE, 0x320D3E, 0x360E42, 0xF162FF, 0xFFD79D, 0xD902EE);
-        Client.addCTheme("PinkAndBrown", 0xBE1558, 0x322514, 0x3A2B17, 0xE75874, 0xFBCBC9, 0xBE1558);
-        Client.addCTheme("Chestnut", 0xDD8F2E, 0x2E1104, 0x341406, 0xDDB869, 0x956429, 0xDD8F2E);
-        Client.addCTheme("ChocolateBrownie", 0xB6452C, 0x301B28, 0x381F2E, 0xDDC5A2, 0x523634, 0xB6452C);
-        Client.addCTheme("CitrusMix", 0x902B04, 0x2B2E0E, 0x333611, 0xD9901C, 0xF7E9B3, 0xD9901C);
-        Client.addCTheme("CopperMountain", 0x206F7C, 0x211B1A, 0x251F1D, 0x77341D, 0xB17365, 0x206F7C);
-        Client.addCTheme("Crocuses", 0xDFBD99, 0x4C1905, 0x561D07, 0xBA4A1B, 0xC4A189, 0xDFBD99);
-        Client.addCTheme("Freshness", 0x62A77C, 0x153626, 0x183D2B, 0x7CC398, 0xADCBB5, 0x62A77C);
-        Client.addCTheme("Ocean", 0x5A89B9, 0x0A1C34, 0x0B1F3A, 0xC1D9F9, 0x2E4553, 0x5A89B9);
-        Client.addCTheme("Spice", 0xA96946, 0x271007, 0x2F1308, 0xA96946, 0xECCDB1, 0xA96946);
-
-        //Custom themes
-        PluginSystem.getLoadedPlugins().forEach(Plugin::onLoadColourThemes);
-
-        File folder = Paths.get("BThack/Themes/ColourThemes").toFile();
-        File[] files = folder.listFiles();
-
-        if (files != null) {
-            for (File file : files) {
-                if (file.isFile()) {
-                    if (Objects.equals(FilenameUtils.getExtension(file.getName()), "json")) {
-                        String name = file.getName().replace(".json", "");
-                        ConfigUtils.loadFromJson(name, "Themes/ColourThemes", colourThemeObject -> {
-                            if (_null(colourThemeObject, "Name")) return;
-
-                            JsonObject colourObject = colourThemeObject.get("Colours").getAsJsonObject();
-
-                            Client.addCTheme(
-                                    colourThemeObject.get("Name").getAsString(),
-                                    colourObject.get("color").getAsInt(),
-                                    colourObject.get("backgroundColor").getAsInt(),
-                                    colourObject.get("backgroundHoveredColor").getAsInt(),
-                                    colourObject.get("moduleEnabledColor").getAsInt(),
-                                    colourObject.get("moduleDisabledColor").getAsInt(),
-                                    colourObject.get("arrayListColor").getAsInt()
-                            );
-                        }, () -> {});
-                    }
-                }
-            }
-        }
-    }
-
     public static void saveClientInfo() throws IOException {
         ConfigUtils.saveInJson("ClientInfo", "", jsonObject -> {
             add(jsonObject, "prefix", Client.clientInfo.getChatPrefix());

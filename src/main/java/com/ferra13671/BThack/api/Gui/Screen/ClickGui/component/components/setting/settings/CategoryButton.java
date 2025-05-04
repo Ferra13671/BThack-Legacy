@@ -1,7 +1,6 @@
 package com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.setting.settings;
 
 import com.ferra13671.BThack.Constants;
-import com.ferra13671.BThack.Core.Client.Client;
 import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
@@ -68,8 +67,8 @@ public class CategoryButton extends AbstractSetting<CategorySetting> {
     public void renderComponent() {
         super.renderComponent();
 
-        BThackRender.drawRect(getX(), getY(), getX() + Constants.CLICKGUI_FRAME_WIDTH, getY() + Constants.CLICKGUI_BUTTON_HEIGHT, hovered ? ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().backgroundHoveredColor()), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))) : ColorUtils.integrateAlpha(ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().backgroundColor()), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))));
-        BThackRender.drawString(setting.getName(), getX() + 7, getY() + 4, ColorUtils.fastRGBA(Client.clientInfo.getColorTheme().moduleDisabledColor()));
+        BThackRender.drawRect(getX(), getY(), getX() + Constants.CLICKGUI_FRAME_WIDTH, getY() + Constants.CLICKGUI_BUTTON_HEIGHT, hovered ? ColorUtils.integrateAlpha(ModuleList.clickGui.backgroundColor.getBrighterValue().hashCode(), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))) : ColorUtils.integrateAlpha(ModuleList.clickGui.backgroundColor.getValue().hashCode(), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))));
+        BThackRender.drawString(setting.getName(), getX() + 7, getY() + 4, ModuleList.clickGui.textColor.getValue().hashCode());
         RenderSystem.setShaderColor(0.7f, 0.7f, 0.7f, 1f);
         BThackRender.drawTextureRect(opened ? Textures.HIDE : Textures.SHOW, getX() + Constants.CLICKGUI_FRAME_WIDTH - Constants.CLICKGUI_BUTTON_HEIGHT, getY(), getX() + Constants.CLICKGUI_FRAME_WIDTH, getY() + Constants.CLICKGUI_BUTTON_HEIGHT);
         RenderSystem.setShaderColor(1, 1, 1, 1);
