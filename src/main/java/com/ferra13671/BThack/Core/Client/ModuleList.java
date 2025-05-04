@@ -57,7 +57,6 @@ public final class ModuleList {
     public static HoleFill holeFill;
     public static IgniteAura igniteAura;
     public static KillAura killAura;
-    //public static LavaAura lavaAura;
     public static NoFriendDamage noFriendDamage;
     public static PearlPhase pearlPhase;
     public static Surround surround;
@@ -256,7 +255,6 @@ public final class ModuleList {
         holeFill = register(new HoleFill());
         igniteAura = register(new IgniteAura());
         killAura = register(new KillAura());
-        //lavaAura = register(new LavaAura());
         noFriendDamage = register(new NoFriendDamage());
         pearlPhase = register(new PearlPhase());
         surround = register(new Surround());

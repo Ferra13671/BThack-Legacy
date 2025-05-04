@@ -9,6 +9,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.packet.c2s.play.UpdateSelectedSlotC2SPacket;
 import net.minecraft.screen.slot.SlotActionType;
 
+import java.util.function.Function;
+
 public final class InventoryUtils implements Mc, Pc {
 
     public static final int HEAD_SLOT = 5;
@@ -40,13 +42,13 @@ public final class InventoryUtils implements Mc, Pc {
         return findItem(item, slots, stack -> 1);
     }
 
-    public static int findItem(Item item, int slots, ItemFilter filter) {
+    public static int findItem(Item item, int slots, Function<ItemStack, Integer> filter) {
         int bestSlot = -1;
         int bestScore = -1;
         for (int i = 0; i < slots; i++) {
             ItemStack stack = mc.player.getInventory().getStack(i);
             if (stack.getItem() == item) {
-                int score = filter.checkScore(stack);
+                int score = filter.apply(stack);
                 if (score > bestScore) {
                     bestSlot = i;
                     bestScore = score;
@@ -64,13 +66,13 @@ public final class InventoryUtils implements Mc, Pc {
         return findItem(item, slots, stack -> 1);
     }
 
-    public static int findItem(Class<? extends Item> item, int slots, ItemFilter filter) {
+    public static int findItem(Class<? extends Item> item, int slots, Function<ItemStack, Integer> filter) {
         int bestSlot = -1;
         int bestScore = -1;
         for (int i = 0; i < slots; i++) {
             ItemStack stack = mc.player.getInventory().getStack(i);
             if (stack.getItem().getClass().equals(item)) {
-                int score = filter.checkScore(stack);
+                int score = filter.apply(stack);
                 if (score > bestScore) {
                     bestSlot = i;
                     bestScore = score;
@@ -129,11 +131,10 @@ public final class InventoryUtils implements Mc, Pc {
 
         switch (swapMode) {
             case "Client" -> {
-                if (slot < 9) {
+                if (slot < 9)
                     InventoryUtils.swapItem((post ? oldSlot : slot));
-                } else {
+                else
                     InventoryUtils.swapItemOnInventory(oldSlot, slot);
-                }
             }
             case "Packet" -> {
                 if (slot < 9)
@@ -142,9 +143,5 @@ public final class InventoryUtils implements Mc, Pc {
                     InventoryUtils.swapItemOnInventory(oldSlot, slot);
             }
         }
-    }
-
-    public interface ItemFilter {
-        int checkScore(ItemStack stack);
     }
 }

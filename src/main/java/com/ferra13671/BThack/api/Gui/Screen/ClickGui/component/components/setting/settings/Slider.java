@@ -12,14 +12,13 @@ import com.ferra13671.BThack.api.SoundSystem.SoundSystem;
 import com.ferra13671.BThack.api.SoundSystem.Sounds;
 import com.ferra13671.BThack.Constants;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
+import com.ferra13671.BThack.api.Utils.MathUtils;
 import com.ferra13671.BThack.api.Utils.Ticker;
 import com.ferra13671.BThack.impl.Modules.CLIENT.ClickGui;
 import com.google.common.collect.Sets;
 
 
 import java.awt.*;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.Set;
 
 public class Slider extends AbstractSetting<NumberSetting> implements Mc {
@@ -86,15 +85,9 @@ public class Slider extends AbstractSetting<NumberSetting> implements Mc {
 		}
 
 		if (dragging)
-			setting.setValue(diff == 0 ? min : roundToPlace(((diff / 100) * (max - min) + min)));
+			setting.setValue(diff == 0 ? min : MathUtils.roundNumber(((diff / 100) * (max - min) + min), Constants.CLICKGUI_SLIDER_ROUND_TO_PLACE_VALUE));
 
 		return !dragging;
-	}
-
-	public static double roundToPlace(double value) {
-		BigDecimal bd = new BigDecimal(value);
-		bd = bd.setScale(Constants.CLICKGUI_SLIDER_ROUND_TO_PLACE_VALUE, RoundingMode.HALF_UP);
-		return bd.doubleValue();
 	}
 
 	@Override

@@ -3,7 +3,7 @@ package com.ferra13671.BTbot.api.Utils.Motion.Goto;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Managers.managers.Thread.BThackThread;
 import com.ferra13671.BThack.api.Managers.managers.Thread.ThreadClosedException;
-import com.ferra13671.BThack.api.Utils.RotateUtils;
+import com.ferra13671.BThack.api.Utils.Rotate.RotateUtils;
 import net.minecraft.util.math.Vec3d;
 
 public class Goto extends BThackThread implements Mc {

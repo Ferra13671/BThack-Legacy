@@ -9,7 +9,8 @@ import java.util.Set;
 
 @SuppressWarnings("unused")
 public final class KeyboardUtils {
-    private static final HashMap<String, Integer> keyMap = new HashMap<>();
+    private static final HashMap<String, Integer> keyCodeMap = new HashMap<>();
+    private static final HashMap<Integer, String> keyNameMap = new HashMap<>();
 
     private static final Set<Integer> activeKeys = Sets.newHashSet();
 
@@ -25,8 +26,9 @@ public final class KeyboardUtils {
                         && field.getName().startsWith("KEY_")) {
 
                     int key = field.getInt(null);
-                    String name = field.getName().substring(4).toLowerCase();
-                    keyMap.put(name, key);
+                    String name = field.getName().substring(4).toUpperCase();
+                    keyCodeMap.put(name, key);
+                    keyNameMap.put(key, name);
                 }
             }
         } catch (Exception ignored) {}
@@ -49,141 +51,23 @@ public final class KeyboardUtils {
     }
 
     public static boolean containsKey(String key) {
-        return keyMap.containsKey(key.toLowerCase());
+        return keyCodeMap.containsKey(key.toUpperCase());
     }
 
     public static boolean containsIndex(int index) {
-        return keyMap.containsValue(index);
+        return keyCodeMap.containsValue(index);
     }
 
     public static int getKeyIndex(String key) {
-        return keyMap.get(key.toLowerCase());
+        return keyCodeMap.get(key.toUpperCase());
     }
 
     public static Set<String> getKeys() {
-        return keyMap.keySet();
+        return keyCodeMap.keySet();
     }
 
     public static String getKeyName(int key) {
-        return switch (key) {
-            case 48 -> "0";
-            case 49 -> "1";
-            case 50 -> "2";
-            case 51 -> "3";
-            case 52 -> "4";
-            case 53 -> "5";
-            case 54 -> "6";
-            case 55 -> "7";
-            case 56 -> "8";
-            case 57 -> "9";
-            case 65 -> "A";
-            case 66 -> "B";
-            case 67 -> "C";
-            case 68 -> "D";
-            case 69 -> "E";
-            case 70 -> "F";
-            case 71 -> "G";
-            case 72 -> "H";
-            case 73 -> "I";
-            case 74 -> "J";
-            case 75 -> "K";
-            case 76 -> "L";
-            case 77 -> "M";
-            case 78 -> "N";
-            case 79 -> "O";
-            case 80 -> "P";
-            case 81 -> "Q";
-            case 82 -> "R";
-            case 83 -> "S";
-            case 84 -> "T";
-            case 85 -> "U";
-            case 86 -> "V";
-            case 87 -> "W";
-            case 88 -> "X";
-            case 89 -> "Y";
-            case 90 -> "Z";
-            case 290 -> "F1";
-            case 291 -> "F2";
-            case 292 -> "F3";
-            case 293 -> "F4";
-            case 294 -> "F5";
-            case 295 -> "F6";
-            case 296 -> "F7";
-            case 297 -> "F8";
-            case 298 -> "F9";
-            case 299 -> "F10";
-            case 300 -> "F11";
-            case 301 -> "F12";
-            case 302 -> "F13";
-            case 303 -> "F14";
-            case 304 -> "F15";
-            case 305 -> "F16";
-            case 306 -> "F17";
-            case 307 -> "F18";
-            case 308 -> "F19";
-            case 309 -> "F20";
-            case 310 -> "F21";
-            case 311 -> "F22";
-            case 312 -> "F23";
-            case 313 -> "F24";
-            case 314 -> "F25";
-            case 282 -> "NUMLOCK";
-            case 320 -> "NUMPAD0";
-            case 321 -> "NUMPAD1";
-            case 322 -> "NUMPAD2";
-            case 323 -> "NUMPAD3";
-            case 324 -> "NUMPAD4";
-            case 325 -> "NUMPAD5";
-            case 326 -> "NUMPAD6";
-            case 327 -> "NUMPAD7";
-            case 328 -> "NUMPAD8";
-            case 329 -> "NUMPAD9";
-            case 330 -> "NUMPADCOMMA";
-            case 335 -> "NUMPADENTER";
-            case 336 -> "NUMPADEQUALS";
-            case 264 -> "DOWN";
-            case 263 -> "LEFT";
-            case 262 -> "RIGHT";
-            case 265 -> "UP";
-            case 334 -> "ADD";
-            case 39 -> "APOSTROPHE";
-            case 92 -> "BACKSLASH";
-            case 44 -> "COMMA";
-            case 61 -> "EQUALS";
-            case 96 -> "GRAVE";
-            case 91 -> "LBRACKET";
-            case 45 -> "MINUS";
-            case 332 -> "MULTIPLY";
-            case 46 -> "PERIOD";
-            case 93 -> "RBRACKET";
-            case 59 -> "SEMICOLON";
-            case 47 -> "SLASH";
-            case 32 -> "SPACE";
-            case 258 -> "TAB";
-            case 342 -> "LALT";
-            case 341 -> "LCONTROL";
-            case 340 -> "LSHIFT";
-            case 343 -> "LWIN";
-            case 346 -> "RALT";
-            case 345 -> "RCONTROL";
-            case 344 -> "RSHIFT";
-            case 347 -> "RWIN";
-            case 257 -> "RETURN";
-            case 256 -> "ESCAPE";
-            case 259 -> "BACKSPACE";
-            case 261 -> "DELETE";
-            case 269 -> "END";
-            case 268 -> "HOME";
-            case 260 -> "INSERT";
-            case 267 -> "PAGEDOWN";
-            case 266 -> "PAGEUP";
-            case 280 -> "CAPSLOCK";
-            case 284 -> "PAUSE";
-            case 281 -> "SCROLLLOCK";
-            case 283 -> "PRINTSCREEN";
-            case 0 -> "NONE";
-            default -> "UNKNOWN";
-        };
+        return keyNameMap.getOrDefault(key, "UNKNOWN");
     }
 
     public static final int KEY_0 = 48;

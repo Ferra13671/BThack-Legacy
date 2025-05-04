@@ -2,7 +2,7 @@ package com.ferra13671.BThack.api.Utils.Modules;
 
 
 import com.ferra13671.BThack.api.Interfaces.Mc;
-import com.ferra13671.BThack.api.Utils.RotateUtils;
+import com.ferra13671.BThack.api.Utils.Rotate.RotateUtils;
 
 public final class StrafeUtils implements Mc {
 

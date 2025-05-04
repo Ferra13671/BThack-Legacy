@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.impl.HudComponents.OneTextComponents;
 
-import com.ferra13671.BThack.api.Utils.RotateUtils;
+import com.ferra13671.BThack.api.Utils.Rotate.RotateUtils;
 import com.ferra13671.BThack.impl.HudComponents.AbstractOneTextComponent;
 import net.minecraft.util.Formatting;
 

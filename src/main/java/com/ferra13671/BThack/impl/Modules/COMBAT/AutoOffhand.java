@@ -121,7 +121,7 @@ public class AutoOffhand extends Module {
             if (slot == -1) return false;
             if (slot < 9) slot += 36;
 
-            InventoryUtils.replaceItems(slot, InventoryUtils.OFFHAND_SLOT, 0);
+            InventoryUtils.replaceItems(slot, InventoryUtils.OFFHAND_SLOT);
             return true;
         }
         return false;

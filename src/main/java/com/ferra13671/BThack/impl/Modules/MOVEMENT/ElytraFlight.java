@@ -17,6 +17,7 @@ import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.*;
 import com.ferra13671.BThack.api.Utils.Modules.StrafeUtils;
 import com.ferra13671.BThack.api.Utils.Grim.GrimUtils;
+import com.ferra13671.BThack.api.Utils.Rotate.RotateUtils;
 import com.ferra13671.BThack.impl.Modules.PLAYER.AutoFirework;
 import com.ferra13671.BThack.mixins.accessor.entity.IEntity;
 import com.ferra13671.BThack.mixins.accessor.entity.ILivingEntity;

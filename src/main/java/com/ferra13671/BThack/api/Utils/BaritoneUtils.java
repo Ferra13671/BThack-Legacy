@@ -4,6 +4,7 @@ import baritone.api.BaritoneAPI;
 import baritone.api.pathing.goals.GoalXZ;
 import baritone.api.utils.BlockOptionalMetaLookup;
 import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Rotate.RotateUtils;
 import net.minecraft.block.Block;
 import net.minecraft.util.math.ChunkPos;
 

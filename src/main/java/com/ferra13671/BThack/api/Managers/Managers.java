@@ -8,7 +8,7 @@ import com.ferra13671.BThack.api.Managers.managers.Cape.CapeManager;
 import com.ferra13671.BThack.api.Managers.managers.Command.CommandManager;
 import com.ferra13671.BThack.api.Managers.managers.Destroy.DestroyManager;
 import com.ferra13671.BThack.api.Managers.managers.Macros.MacrosManager;
-import com.ferra13671.BThack.api.Managers.managers.Memory.MemoryManager;
+import com.ferra13671.BThack.api.Managers.managers.MemoryManager;
 import com.ferra13671.BThack.api.Managers.managers.Setting.SettingsManager;
 import com.ferra13671.BThack.api.Managers.managers.Clans.ClanManager;
 import com.ferra13671.BThack.api.Managers.managers.SocialManager;

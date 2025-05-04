@@ -8,7 +8,7 @@ import com.ferra13671.BThack.api.Events.Player.PlayerTravelEvent;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Utils.Initializable;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.RotateUtils;
+import com.ferra13671.BThack.api.Utils.Rotate.RotateUtils;
 import com.ferra13671.BThack.impl.Modules.PLAYER.FreeCam;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.util.math.Vec2f;

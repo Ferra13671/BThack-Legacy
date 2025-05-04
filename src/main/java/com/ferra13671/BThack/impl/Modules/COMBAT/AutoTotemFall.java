@@ -46,11 +46,7 @@ public class AutoTotemFall extends Module {
     public void onTick(ClientTickEvent e) {
         if (nullCheck()) return;
 
-        if (mc.player.fallDistance > fallCheck.getValue()) {
-            isFalling = !mc.player.verticalCollision;
-        } else {
-            isFalling = false;
-        }
+        isFalling = mc.player.fallDistance > fallCheck.getValue() && !mc.player.verticalCollision;
 
         if (!isFalling) return;
         if (PlayerUtils.getGroundPos(mc.world, mc.player).y + toGround.getValue() > mc.player.getY()) {
@@ -61,7 +57,7 @@ public class AutoTotemFall extends Module {
 
                 if (slot < 9) slot += 36;
 
-                InventoryUtils.replaceItems(slot, InventoryUtils.OFFHAND_SLOT, 5);
+                InventoryUtils.replaceItems(slot, InventoryUtils.OFFHAND_SLOT);
             }
         }
     }

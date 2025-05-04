@@ -40,7 +40,7 @@ public class AutoMend extends Module {
             }
             return;
         }
-        InventoryUtils.replaceItems(slot, InventoryUtils.OFFHAND_SLOT, 0);
+        InventoryUtils.replaceItems(slot, InventoryUtils.OFFHAND_SLOT);
     }
 
 

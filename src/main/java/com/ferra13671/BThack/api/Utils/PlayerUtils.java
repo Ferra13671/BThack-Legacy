@@ -1,6 +1,7 @@
 package com.ferra13671.BThack.api.Utils;
 
 import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Rotate.RotateUtils;
 import com.ferra13671.BThack.mixins.accessor.entity.IEntity;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.block.BlockState;

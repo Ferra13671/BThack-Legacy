@@ -6,6 +6,7 @@ import com.ferra13671.BThack.Constants;
 import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.Core.DeviceSystem;
 import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Managers.managers.Thread.ThreadManager;
 import com.ferra13671.DiscordRPC.DiscordEventHandlers;
 import com.ferra13671.DiscordRPC.DiscordRPC;
 import com.ferra13671.DiscordRPC.DiscordRichPresence;
@@ -44,14 +45,9 @@ public final class DiscordUtils implements Mc {
         String imageKey = "bthack_icon";
 
         if (ModuleList.discordRPC.secret.getValue()) {
-            int percent = NumberGenerator.generateInt(1, 100);
-            if (percent > 0 && percent <= 10) {
-                imageKey = "hentai_face1";
-            } else if (percent > 10 && percent <= 20) {
-                imageKey = "hentai_face2";
-            } else if (percent > 20 && percent <= 30) {
-                imageKey = "hentai_face3";
-            }
+            double percent = NumberGenerator.generateInt(1, 100) / 10d;
+            if (percent < 5)
+                imageKey = "hentai_face" + NumberGenerator.generateInt(1, 3);
         }
 
         discordRichPresence.startTimestamp = System.currentTimeMillis() / 1000L;
@@ -60,8 +56,8 @@ public final class DiscordUtils implements Mc {
 
         discordRPC.Discord_UpdatePresence(discordRichPresence);
 
-        new Thread(() -> {
-            while (!Thread.currentThread().isInterrupted()) {
+        ThreadManager.startNewThread("RPC-Callback-Handler", thread -> {
+            while (!thread.isInterrupted()) {
                 try {
                     details = "Version " + BThack.instance.VERSION;
                     state = "Main Menu";
@@ -82,13 +78,10 @@ public final class DiscordUtils implements Mc {
                     discordRPC.Discord_UpdatePresence(discordRichPresence);
                 } catch (Exception exception) {
                     exception.printStackTrace();
-                } try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException exception) {
-                    exception.printStackTrace();
                 }
+                thread.sleepThread(1000);
             }
-        }, "RPC-Callback-Handler").start();
+        });
     }
 
     public static void shutdown() {

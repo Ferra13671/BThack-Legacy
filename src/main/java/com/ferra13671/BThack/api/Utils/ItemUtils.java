@@ -85,7 +85,6 @@ public final class ItemUtils implements Mc {
         try {
             return Registries.ITEM.getOrEmpty(Identifier.of(nameOrId))
                     .orElse(null);
-
         } catch(InvalidIdentifierException e) {
             return null;
         }

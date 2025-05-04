@@ -5,10 +5,10 @@ import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Font.FontRenderManager;
 import com.ferra13671.BThack.Core.Render.Font.FontUtils;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
-import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.setting.settings.Slider;
 import com.ferra13671.BThack.api.SoundSystem.SoundSystem;
 import com.ferra13671.BThack.api.SoundSystem.Sounds;
 import com.ferra13671.BThack.Constants;
+import com.ferra13671.BThack.api.Utils.MathUtils;
 import com.ferra13671.BThack.api.Utils.Ticker;
 
 public class SliderButton extends Button {
@@ -60,7 +60,7 @@ public class SliderButton extends Button {
             if (diff == 0) {
                 value = min;
             } else {
-                value = Slider.roundToPlace(((diff / 100) * (max - min) + min));
+                value = MathUtils.roundNumber(((diff / 100) * (max - min) + min), Constants.CLICKGUI_SLIDER_ROUND_TO_PLACE_VALUE);
             }
         }
     }

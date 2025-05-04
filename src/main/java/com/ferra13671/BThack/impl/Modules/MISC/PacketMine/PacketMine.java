@@ -14,6 +14,7 @@ import com.ferra13671.BThack.api.Managers.managers.Destroy.DestroyManager;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.*;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.*;
+import com.ferra13671.BThack.api.Utils.Rotate.RotateUtils;
 import com.ferra13671.BThack.impl.Modules.PLAYER.AutoTool;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.entity.player.PlayerEntity;
