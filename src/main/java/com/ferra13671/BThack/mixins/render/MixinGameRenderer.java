@@ -139,7 +139,7 @@ public abstract class MixinGameRenderer {
 
     @ModifyReturnValue(method = "getFov",at = @At("RETURN"))
     public double modifyGetFov(double original) {
-        return ModuleList.zoom.isEnabled() ? ModuleList.zoom.getFov(original) : original;
+        return ModuleList.zoom.isEnabled() && ModuleList.zoom.needZoom() ? ModuleList.zoom.getFov(original) : original;
     }
 
     @Unique

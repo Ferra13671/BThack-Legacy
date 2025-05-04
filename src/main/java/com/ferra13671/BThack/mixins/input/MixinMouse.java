@@ -21,7 +21,7 @@ public class MixinMouse {
 
     @Inject(method = "onMouseScroll", at = @At("HEAD"), cancellable = true)
     public void modifyOnMouseScroll(long window, double horizontal, double vertical, CallbackInfo ci) {
-        if (ModuleList.zoom.isEnabled()) {
+        if (ModuleList.zoom.isEnabled() && ModuleList.zoom.needZoom()) {
             ModuleList.zoom.mouseScroll((float) vertical);
             ci.cancel();
         }
