@@ -25,7 +25,6 @@ public class Button implements Mc {
     protected int height;
     public String text;
     protected boolean hovered;
-    protected boolean outline = true;
     protected boolean hided = false;
     protected boolean allowUpdate = true;
     protected boolean selected = false;
@@ -133,10 +132,6 @@ public class Button implements Mc {
 
     public boolean isSelected() {
         return selected;
-    }
-
-    public boolean isOutline() {
-        return outline;
     }
 
     public String getText() {

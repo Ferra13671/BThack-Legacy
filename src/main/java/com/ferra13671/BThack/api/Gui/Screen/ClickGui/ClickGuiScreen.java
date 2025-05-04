@@ -14,6 +14,7 @@ import com.ferra13671.BThack.api.Category.Category;
 import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.Component;
 import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.Frame;
 import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.ModuleButton;
+import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.SearchModuleButton;
 import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.setting.settings.Slider;
 import com.ferra13671.BThack.api.Gui.Widget.Config.ConfigsWidget;
 import com.ferra13671.BThack.api.GuiSystem.buttons.Button;
@@ -44,6 +45,8 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
     private final Ticker ticker = new Ticker();
     public final ShaderTicker snowTicker = new ShaderTicker();
 
+    public SearchModuleButton searchModuleButton;
+
     public ClickGuiScreen() {
         super(Text.literal("ClickGui"));
         int tempX = 20;
@@ -51,6 +54,10 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
         int tempId = 0;
         for (Category category : Categories.getCategories()) {
             Frame frame = new Frame(category, writingSlider);
+            if (frame.getName().equals("CLIENT")) {
+                searchModuleButton = new SearchModuleButton(frame, 0);
+                frame.buttons.addFirst(searchModuleButton);
+            }
             frame.id = tempId;
             tempId++;
             frame.setPosition(tempX, tempY);
@@ -214,8 +221,8 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
 
         for(Frame frame : frames) {
             if(frame.isOpen() && keyCode != 1) {
-                if(!frame.getButtons().isEmpty()) {
-                    for(Component component : frame.getButtons()) {
+                if(!frame.getVisibleButtons().isEmpty()) {
+                    for(Component component : frame.getVisibleButtons()) {
                         component.keyTyped(keyCode);
                     }
                 }
@@ -245,6 +252,14 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
     }
 
     @Override
+    public boolean charTyped(char chr, int modifiers) {
+        if (widgetManage.widgets.isEmpty())
+            searchModuleButton.charTyped(chr);
+        else super.charTyped(chr, modifiers);
+        return false;
+    }
+
+    @Override
     public boolean mouseReleased(double mouseX, double mouseY, int state) {
         super.mouseReleased(mouseX, mouseY, state);
         if (!widgetManage.widgets.isEmpty()) return false;
@@ -260,6 +275,7 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
     @Override
     public void removed() {
         super.removed();
+        searchModuleButton.reset();
         for (Frame frame : frames) {
             for (ModuleButton component : frame.buttons) {
                 component.open = false;

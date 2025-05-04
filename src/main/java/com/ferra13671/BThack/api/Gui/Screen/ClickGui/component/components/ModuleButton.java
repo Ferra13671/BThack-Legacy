@@ -66,6 +66,10 @@ public class ModuleButton extends Component implements Mc {
 		}
 	}
 
+	public String getName() {
+		return module.getName();
+	}
+
 	@Override
 	public void refresh(int newOff) {
 		this.offset = newOff;
@@ -85,7 +89,7 @@ public class ModuleButton extends Component implements Mc {
 		if (ModuleList.clickGui.moduleOutline.getValue())
 			BThackRender.drawOutlineRect(parent.getX(), parent.getY() + offset, parent.getX() + Constants.CLICKGUI_FRAME_WIDTH, parent.getY() + Constants.CLICKGUI_BUTTON_HEIGHT + offset, 1, Constants.CLICKGUI_BUTTON_OUTLINE_COLOR);
 
-		BThackRender.drawString(module.getName(), (parent.getX() + 5), (parent.getY() + offset + (Constants.CLICKGUI_BUTTON_HEIGHT / 2f) - (FontUtils.getTextHeight(module.getName())) / 2f), getModuleTextColor());
+		BThackRender.drawString(getName(), (parent.getX() + 5), (parent.getY() + offset + (Constants.CLICKGUI_BUTTON_HEIGHT / 2f) - (FontUtils.getTextHeight(module.getName())) / 2f), getModuleTextColor());
 
 		if (ModuleList.clickGui.arrows.getValue() && !settings.isEmpty())
 			BThackRender.drawTextureRect(open ? Textures.HIDE : Textures.SHOW, parent.getX() + Constants.CLICKGUI_FRAME_WIDTH - Constants.CLICKGUI_BUTTON_HEIGHT, parent.getY() + offset, parent.getX() + Constants.CLICKGUI_FRAME_WIDTH, parent.getY() + offset + Constants.CLICKGUI_BUTTON_HEIGHT);
@@ -106,7 +110,7 @@ public class ModuleButton extends Component implements Mc {
 		return ModuleList.clickGui.opacity.getValue() > 0.4 ? ModuleList.clickGui.textColor.getValue().hashCode() : (module.isEnabled() ? ClickGui.getClickGuiColor(true) : ModuleList.clickGui.textColor.getValue().hashCode());
 	}
 
-	private void drawEnabledBackground() {
+	protected void drawEnabledBackground() {
 		float _alpha = (int) (ClickGui.INT_OPACITY * (module.isEnabled() ? toggleAnimation.getEase() : 1 - toggleAnimation.getEase())) / 255f;
 		if (ModuleList.clickGui.isShaderEnabled()) {
 			ModuleList.clickGui.prepareCurrentShader(_alpha, isHovered ? 0.9f : 0.7f);
@@ -123,7 +127,7 @@ public class ModuleButton extends Component implements Mc {
 		}
 	}
 
-	private void drawNormalBackground() {
+	protected void drawNormalBackground() {
 		BThackRender.drawRect(parent.getX(), parent.getY() + offset, parent.getX() + Constants.CLICKGUI_FRAME_WIDTH, parent.getY() + Constants.CLICKGUI_BUTTON_HEIGHT + offset,
 				ColorUtils.integrateAlpha(
 						isHovered ?

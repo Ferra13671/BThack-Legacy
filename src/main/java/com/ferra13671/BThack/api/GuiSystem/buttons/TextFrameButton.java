@@ -11,13 +11,12 @@ import com.ferra13671.BThack.api.Utils.Ticker;
 import net.minecraft.util.Formatting;
 
 public class TextFrameButton extends Button {
-    private final String nullText;
-    private StringBuilder textBuilder = new StringBuilder();
+    protected final String nullText;
+    protected StringBuilder textBuilder = new StringBuilder();
 
-    private boolean selected = false;
-    private final Ticker insertTicker = new Ticker();
-    private boolean insertAdd = false;
-    private final Ticker soundTicker = new Ticker();
+    protected final Ticker insertTicker = new Ticker();
+    protected boolean insertAdd = false;
+    protected final Ticker soundTicker = new Ticker();
 
 
     public TextFrameButton(int id, int centerX, int centerY, int width, int height) {
