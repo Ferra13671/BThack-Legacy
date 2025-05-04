@@ -27,7 +27,7 @@ public class Checkbox extends AbstractSetting<BooleanSetting> {
 	public void renderComponent() {
 		super.renderComponent();
 
-		BThackRender.drawRect(getX(), getY(), getX() + Constants.CLICKGUI_FRAME_WIDTH, getY() + getHeight(), hovered ? ColorUtils.integrateAlpha(ModuleList.clickGui.backgroundColor.getBrighterValue().hashCode(), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))) : ColorUtils.integrateAlpha(ModuleList.clickGui.backgroundColor.getValue().hashCode(), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))));
+		BThackRender.drawRect(getX(), getY(), getX() + Constants.CLICKGUI_FRAME_WIDTH, getY() + getHeight(), hovered ? ClickGui.BACKGROUND_HOVERED_COLOR : ClickGui.BACKGROUND_COLOR);
 
 		if (needRenderPlate()) {
 			int alpha = getAlpha();

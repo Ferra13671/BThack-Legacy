@@ -3,7 +3,6 @@ package com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.setti
 
 import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.Core.Render.BThackRender;
-import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.ModuleButton;
 import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.setting.AbstractSetting;
 import com.ferra13671.BThack.api.Interfaces.Mc;
@@ -54,7 +53,7 @@ public class Slider extends AbstractSetting<NumberSetting> implements Mc {
 	public void renderComponent() {
 		super.renderComponent();
 
-		BThackRender.drawRect(getX(), getY(), getX() + Constants.CLICKGUI_FRAME_WIDTH, getY() + getHeight(), ColorUtils.integrateAlpha(ModuleList.clickGui.backgroundColor.getValue().hashCode(), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))));
+		BThackRender.drawRect(getX(), getY(), getX() + Constants.CLICKGUI_FRAME_WIDTH, getY() + getHeight(), ClickGui.BACKGROUND_COLOR);
 
 		BThackRender.drawRect(getX() + 2, getY() + 11, getX() + Constants.CLICKGUI_FRAME_WIDTH - 2, getY() + getHeight(), Color.GRAY.darker().darker().darker().getRGB());
 

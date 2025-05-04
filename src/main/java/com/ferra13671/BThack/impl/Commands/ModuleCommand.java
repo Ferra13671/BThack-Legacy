@@ -32,7 +32,7 @@ public class ModuleCommand extends AbstractCommand {
             return SUCCESFUL;
         }))).then(literal("reset").executes(context -> {
             final Module module = context.getArgument("module", Module.class);
-            for (Setting setting : Managers.SETTINGS_MANAGER.getSettingsByMod(module)) {
+            for (Setting<?> setting : Managers.SETTINGS_MANAGER.getSettingsByMod(module)) {
                 setting.toDefault();
             }
             sendMessage(Formatting.AQUA + String.format(LanguageSystem.translate("lang.command.Module.reset"), module.getName()));

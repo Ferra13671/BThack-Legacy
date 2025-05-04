@@ -18,6 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ClickGui extends OneActionModule {
+    public static int INT_OPACITY;
+    public static int BACKGROUND_COLOR;
+    public static int BACKGROUND_HOVERED_COLOR;
 
     //rainbow and gradient
     public BooleanSetting rainbow;
@@ -115,6 +118,15 @@ public class ClickGui extends OneActionModule {
             easingList.add(eas.name());
         }
         return easingList;
+    }
+
+    @Override
+    public void onChangeSetting(Setting<?> setting) {
+        if (setting == opacity) {
+            INT_OPACITY = Math.min(255, (int) (255 * opacity.getValue()));
+            BACKGROUND_COLOR = ColorUtils.integrateAlpha(ModuleList.clickGui.backgroundColor.getValue().hashCode(), INT_OPACITY);
+            BACKGROUND_HOVERED_COLOR = ColorUtils.integrateAlpha(ModuleList.clickGui.backgroundColor.getBrighterValue().hashCode(), INT_OPACITY);
+        }
     }
 
     public boolean isShaderEnabled() {

@@ -80,9 +80,8 @@ public class ModuleButton extends Component implements Mc {
 	@Override
 	public void renderComponent() {
 
-		int alpha = (int) (255 * ModuleList.clickGui.opacity.getValue());
-		if (!module.isEnabled() || toggleAnimation.getEase() < 1) drawNormalBackground(alpha);
-		if (module.isEnabled() || toggleAnimation.getEase() < 1) drawEnabledBackground(alpha);
+		if (!module.isEnabled() || toggleAnimation.getEase() < 1) drawNormalBackground();
+		if (module.isEnabled() || toggleAnimation.getEase() < 1) drawEnabledBackground();
 		if (ModuleList.clickGui.moduleOutline.getValue())
 			BThackRender.drawOutlineRect(parent.getX(), parent.getY() + offset, parent.getX() + Constants.CLICKGUI_FRAME_WIDTH, parent.getY() + Constants.CLICKGUI_BUTTON_HEIGHT + offset, 1, Constants.CLICKGUI_BUTTON_OUTLINE_COLOR);
 
@@ -107,8 +106,8 @@ public class ModuleButton extends Component implements Mc {
 		return ModuleList.clickGui.opacity.getValue() > 0.4 ? ModuleList.clickGui.textColor.getValue().hashCode() : (module.isEnabled() ? ClickGui.getClickGuiColor(true) : ModuleList.clickGui.textColor.getValue().hashCode());
 	}
 
-	private void drawEnabledBackground(int alpha) {
-		float _alpha = (int) (alpha * (module.isEnabled() ? toggleAnimation.getEase() : 1 - toggleAnimation.getEase())) / 255f;
+	private void drawEnabledBackground() {
+		float _alpha = (int) (ClickGui.INT_OPACITY * (module.isEnabled() ? toggleAnimation.getEase() : 1 - toggleAnimation.getEase())) / 255f;
 		if (ModuleList.clickGui.isShaderEnabled()) {
 			ModuleList.clickGui.prepareCurrentShader(_alpha, isHovered ? 0.9f : 0.7f);
 			BThackRender.drawShader(ModuleList.clickGui.getCurrentShader(), parent.getX(), parent.getY() + offset, parent.getX() + Constants.CLICKGUI_FRAME_WIDTH, parent.getY() + Constants.CLICKGUI_BUTTON_HEIGHT + offset);
@@ -124,13 +123,13 @@ public class ModuleButton extends Component implements Mc {
 		}
 	}
 
-	private void drawNormalBackground(int alpha) {
+	private void drawNormalBackground() {
 		BThackRender.drawRect(parent.getX(), parent.getY() + offset, parent.getX() + Constants.CLICKGUI_FRAME_WIDTH, parent.getY() + Constants.CLICKGUI_BUTTON_HEIGHT + offset,
 				ColorUtils.integrateAlpha(
 						isHovered ?
 								ModuleList.clickGui.backgroundColor.getBrighterValue().hashCode() :
 								ModuleList.clickGui.backgroundColor.getValue().hashCode(),
-						alpha
+						ClickGui.INT_OPACITY
 				)
 		);
 	}

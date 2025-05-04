@@ -4,7 +4,6 @@ import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.Module
 import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.setting.AbstractSetting;
 import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.setting.settings.ColorPicker;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.MathUtils;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;

@@ -1,6 +1,5 @@
 package com.ferra13671.BThack.api.Managers.managers.Setting.Settings;
 
-import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.ModuleButton;
 import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.setting.AbstractSetting;
 import com.ferra13671.BThack.api.Module.Module;
@@ -44,8 +43,7 @@ public abstract class Setting<T> {
 
     public void setValue(T value) {
         this.value = value;
-        if (BThack.instance.getInitStage() == BThack.InitStage.FULL_INITED)
-            module.onChangeSetting(this);
+        module.onChangeSetting(this);
     }
 
     public void toDefault() {

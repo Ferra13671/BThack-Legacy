@@ -4,7 +4,6 @@ package com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.setti
 import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.Core.Render.BThackMatrix;
 import com.ferra13671.BThack.Core.Render.BThackRender;
-import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.ModuleButton;
 import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.setting.AbstractSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
@@ -12,6 +11,7 @@ import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.SoundSystem.SoundSystem;
 import com.ferra13671.BThack.api.SoundSystem.Sounds;
 import com.ferra13671.BThack.Constants;
+import com.ferra13671.BThack.impl.Modules.CLIENT.ClickGui;
 
 public class ModeButton extends AbstractSetting<ModeSetting> {
 
@@ -25,7 +25,7 @@ public class ModeButton extends AbstractSetting<ModeSetting> {
 	public void renderComponent() {
 		super.renderComponent();
 
-		BThackRender.drawRect(getX(), getY(), getX() + Constants.CLICKGUI_FRAME_WIDTH, getY() + getHeight(), hovered ? ColorUtils.integrateAlpha(ModuleList.clickGui.backgroundColor.getBrighterValue().hashCode(), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))) : ColorUtils.integrateAlpha(ModuleList.clickGui.backgroundColor.getValue().hashCode(), (int) (255 * Math.min(1, ModuleList.clickGui.opacity.getValue() + 0.13))));
+		BThackRender.drawRect(getX(), getY(), getX() + Constants.CLICKGUI_FRAME_WIDTH, getY() + getHeight(), hovered ? ClickGui.BACKGROUND_HOVERED_COLOR : ClickGui.BACKGROUND_COLOR);
 
 		String text = getModeString();
 		float scale = getTextScale(text);
