@@ -34,35 +34,16 @@ public final class RotateUtils implements Mc {
     }
 
     public static float[] rotations(Entity entity) {
-        double x = entity.getX() - mc.player.getX();
-        double y = entity.getY() - (mc.player.getY() + mc.player.getStandingEyeHeight() - 0.7);
-        double z = entity.getZ() - mc.player.getZ();
-
-        double u = MathHelper.sqrt((float)(x * x + z * z));
-
-        float u2 = (float) (MathHelper.atan2(z, x) * (180D / Math.PI) - 90.0F);
-        float u3 = (float) (-MathHelper.atan2(y, u) * (180D / Math.PI));
-
-        return new float[]{u2, u3};
+        return rotations(new Vec3d(entity.getX(), entity.getY(), entity.getZ()));
     }
 
     public static float[] rotations(BlockPos pos) {
-        Vec3d eyePos = mc.player.getEyePos();
-        double x = pos.getX() - eyePos.getX();
-        double y = pos.getY() - eyePos.getY();
-        double z = pos.getZ() - eyePos.getZ();
-
-        double u = Math.sqrt(x * x + z * z);
-
-        float u2 = (float) (MathHelper.atan2(z, x) * (180D / Math.PI) - 90.0F);
-        float u3 = (float) (-MathHelper.atan2(y, u) * (180D / Math.PI));
-
-        return new float[]{u2, u3};
+        return rotations(new Vec3d(pos.getX(), pos.getY(), pos.getZ()));
     }
 
     public static float[] rotations(Vec3d vec3d) {
         double x = vec3d.getX() - mc.player.getX();
-        double y = vec3d.getY() - (mc.player.getY() + mc.player.getStandingEyeHeight() - 0.7);
+        double y = vec3d.getY() - mc.player.getEyeY();
         double z = vec3d.getZ() - mc.player.getZ();
 
         double u = MathHelper.sqrt((float)(x * x + z * z));
@@ -117,7 +98,6 @@ public final class RotateUtils implements Mc {
     }
 
     public static String getDirection(float yaw) {
-
         return switch (NoRotateMathUtils.getNearestYawAxis((int) yaw)) {
             case 45, -315 -> "X- Z+";
             case 90, -270 -> "X-";
