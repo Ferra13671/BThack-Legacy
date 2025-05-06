@@ -185,6 +185,8 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
             for (Frame frame : frames) {
                 if (!frame.updateClick(mouseX, mouseY, mouseButton)) {
                     Frame temp = frames.getFirst();
+                    if (!frame.getName().equals("CLIENT") || !searchModuleButton.isMouseOnButton2((int) mouseX, (int) mouseY))
+                        searchModuleButton.resetSelected();
                     frames.set(0, frame);
                     frames.set(frame.id, temp);
                     temp.id = frame.id;

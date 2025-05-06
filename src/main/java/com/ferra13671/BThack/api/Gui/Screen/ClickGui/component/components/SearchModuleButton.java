@@ -9,6 +9,7 @@ import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.Frame;
 import com.ferra13671.BThack.api.GuiSystem.buttons.TextFrameButton;
 import com.ferra13671.BThack.api.Module.Module;
+import com.ferra13671.BThack.impl.Modules.CLIENT.ClickGui;
 import net.minecraft.util.Formatting;
 
 public class SearchModuleButton extends ModuleButton {
@@ -29,6 +30,10 @@ public class SearchModuleButton extends ModuleButton {
 
     public void reset() {
         textFrameButton.setText("");
+        resetSelected();
+    }
+
+    public void resetSelected() {
         textFrameButton.setSelected(false);
     }
 
@@ -92,6 +97,11 @@ public class SearchModuleButton extends ModuleButton {
     @Override
     public boolean isMouseOnButton(int x, int y) {
         return false;
+    }
+
+    public boolean isMouseOnButton2(int x, int y) {
+        return x > ClickGui.applyGuiScale(parent.getX()) && x < ClickGui.applyGuiScale(parent.getX() + Constants.CLICKGUI_FRAME_WIDTH) &&
+                y > ClickGui.applyGuiScale(parent.getY() + offset) && y < ClickGui.applyGuiScale(parent.getY() + Constants.CLICKGUI_BUTTON_HEIGHT + offset);
     }
 
     public String getSearchText() {
