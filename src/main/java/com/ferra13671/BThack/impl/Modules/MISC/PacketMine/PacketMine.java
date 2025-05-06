@@ -38,11 +38,10 @@ public class PacketMine extends Module {
     //----------General----------//
     public final CategorySetting generalCategory = new CategorySetting("General", this);
     public final BooleanSetting swingHand = new BooleanSetting("Swing Hand", this, true).inCategory(generalCategory);
-
-    public final BooleanSetting removeIfUse = new BooleanSetting("Remove If Use", this, true).inCategory(generalCategory);
     public final NumberSetting breakDelaySet = new NumberSetting("Break Delay", this, 0, 0, 5, true).inCategory(generalCategory);
 
     public final BooleanSetting conveyorMode = new BooleanSetting("Conveyor Mode", this, false).inCategory(generalCategory);
+    public final BooleanSetting removeIfUse = new BooleanSetting("Remove If Use", this, true, conveyorMode::getValue).inCategory(generalCategory);
 
     public final BooleanSetting doubleMine = new BooleanSetting("Double Mine", this, false).inCategory(generalCategory);
     public final NumberSetting doubleSpeed = new NumberSetting("Double Speed", this, 0.85, 0.5, 1, false, doubleMine::getValue).inCategory(generalCategory);
@@ -100,7 +99,6 @@ public class PacketMine extends Module {
     public BreakingBlock currentBreakingBlock;
     private float destroyDelta = 0;
     private int breakDelay = 5;
-    private boolean itemRemoved = true;
 
     //Conveyor Mode
     public final ArrayList<BreakingBlock> conveyorBlocks = new ArrayList<>();
@@ -117,7 +115,7 @@ public class PacketMine extends Module {
     private int currentHotbarSlot = -1;
 
     //Insta Rebreak
-    BlockPos breakedPos;
+    private BlockPos breakedPos;
 
     //Insta Rebreak Animation
     private final Animation instaRebreakAnimation = new Animation(Easing.LINEAR, 1000);
@@ -339,11 +337,6 @@ public class PacketMine extends Module {
     public void onTick(ClientTickEvent e) {
         if (nullCheck() || mc.isPaused()) return;
 
-        if (!itemRemoved) {
-            packetRemoveItem();
-            itemRemoved = true;
-        }
-
         if (instaRebreak.getValue() && breakedPos != null) {
             if (!mc.world.isAir(breakedPos) && BlockUtils.canBreak(breakedPos) && currentBreakingBlock == null) {
                 updateBlock(breakedPos);
@@ -373,9 +366,7 @@ public class PacketMine extends Module {
             return;
         }
         if (!updateBreakProgress()) {
-
             packetRemoveItem();
-            itemRemoved = false;
 
             if (conveyorMode.getValue()) {
                 conveyorBlocks.removeIf(breakingBlock -> breakingBlock.equals(currentBreakingBlock) || breakingBlock.equals(doubleBreakingBlock));
@@ -530,7 +521,7 @@ public class PacketMine extends Module {
 
     private void conveyorRemove(BlockPos pos) {
         for (BreakingBlock breakingBlock : conveyorBlocks) {
-            if (breakingBlock.blockPos == pos) {
+            if (breakingBlock.blockPos.equals(pos)) {
                 conveyorBlocks.remove(breakingBlock);
                 return;
             }
