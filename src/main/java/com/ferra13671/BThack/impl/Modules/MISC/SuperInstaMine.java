@@ -58,8 +58,7 @@ public class SuperInstaMine extends Module {
                 maxAttempts
         );
     }
-    //Screw it, I'll just calculate the positions by processing them through a matrix.
-    //TODO: Well, I need to do something similar in HighwayBuilder.
+
     private Matrix4f matrix4f;
     private final HashMap<BlockState, ArrayList<BlockInfo>> poses = new HashMap<>();
 

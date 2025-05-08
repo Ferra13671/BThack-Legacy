@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.impl.Modules.MOVEMENT;
 
+import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Managers.managers.Build.BuildManager;
 import com.ferra13671.BThack.api.Managers.managers.Build.FacingBlock;
@@ -51,6 +52,11 @@ public class Scaffold extends Module {
 
     @Override
     public void onEnable() {
+        if (ModuleList.highwayBuilder.isEnabled()) {
+            toggle();
+            return;
+        }
+
         super.onEnable();
         yFlag = 0;
         oldPos = null;

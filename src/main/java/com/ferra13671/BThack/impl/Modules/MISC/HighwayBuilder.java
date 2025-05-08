@@ -4,7 +4,6 @@ import com.ferra13671.BTbot.api.Utils.Motion.Align.AlignWithXZ;
 import com.ferra13671.BTbot.api.Utils.Motion.Align.WhereToAlign;
 import com.ferra13671.BTbot.api.Utils.Motion.Goto.CollisionAction;
 import com.ferra13671.BTbot.api.Utils.Motion.Goto.Goto;
-import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Managers.managers.Build.BuildManager;
 import com.ferra13671.BThack.api.Managers.managers.Build.BuildThread3D;
@@ -17,11 +16,17 @@ import com.ferra13671.BThack.api.Managers.managers.Thread.BThackThread;
 import com.ferra13671.BThack.api.Managers.managers.Thread.ThreadManager;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.ChatUtils;
+import com.ferra13671.BThack.api.Utils.InventoryUtils;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
+import com.ferra13671.BThack.api.Utils.MathUtils;
+import com.ferra13671.BThack.api.Utils.Rotate.RotateMode;
 import com.ferra13671.BThack.api.Utils.Rotate.RotateUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.FluidBlock;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.Items;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3i;
@@ -30,6 +35,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/*
+  Known bugs:
+        Terrible work on the corner highways
+  TODO:
+        Ability to freely rotate the camera when working
+        More settings
+ */
 public class HighwayBuilder extends Module {
 
     public final ModeSetting mode = new ModeSetting("Mode", this, new ArrayList<>(Arrays.asList("Highway", "Tunnel")));
@@ -42,7 +54,8 @@ public class HighwayBuilder extends Module {
     public final BooleanSetting onlyObsidian = new BooleanSetting("Only Obsidian", this, true, () -> !mode.getValue().equals("Tunnel"));
     public final NumberSetting highwWidth = new NumberSetting("Highw. Width", this, 4, 2, 6, true);
     public final NumberSetting tunnelHeight = new NumberSetting("Tunnel Height", this, 4, 3, 5, true);
-    public final NumberSetting actDelay = new NumberSetting("ActDelay", this, 50, 20, 200, true);
+    //If the value is less than 100, problems with moving between stages may appear
+    public final NumberSetting stageDelay = new NumberSetting("Stage Delay", this, 100, 100, 200, true);
 
     public final BooleanSetting clearFloat = new BooleanSetting("Clear Float", this, true, () -> !mode.getValue().equals("Tunnel"));
     public final BooleanSetting clearBorder = new BooleanSetting("Clear Border", this, true, () -> !mode.getValue().equals("Tunnel"));
@@ -68,7 +81,7 @@ public class HighwayBuilder extends Module {
                 onlyObsidian,
                 highwWidth,
                 tunnelHeight,
-                actDelay,
+                stageDelay,
 
                 clearFloat,
                 clearBorder,
@@ -77,8 +90,10 @@ public class HighwayBuilder extends Module {
     }
 
     public int highwayYaw = 0;
+    public byte[] moveFactor;
 
     @EventSubscriber
+    @SuppressWarnings({"DataFlowIssue", "unused"})
     public void onTick(ClientTickEvent e) {
         if (nullCheck()) return;
 
@@ -88,10 +103,21 @@ public class HighwayBuilder extends Module {
         BlockPos blockPos = BlockPos.ofFloored(mc.player.getX(), Math.round(mc.player.getY()) - 1, mc.player.getZ());
         if (!mc.world.getBlockState(blockPos).isReplaceable()) return;
 
-        BuildThread3D thread3D = new BuildThread3D();
-        thread3D.set3DSchematic(0 , List.of(new Vec3i(0, 0, 0)), blockPos);
-        thread3D.setNeedBlocks(onlyObsidian.getValue() && mode.getValue().equals("Highway") ? Arrays.asList(Blocks.OBSIDIAN, Blocks.CRYING_OBSIDIAN) : new ArrayList<>());
-        thread3D.start();
+        int slot = InventoryUtils.findItem(BlockItem.class);
+        if (onlyObsidian.getValue() && mode.getValue().equals("Highway")) {
+            slot = InventoryUtils.findItem(Items.OBSIDIAN);
+            if (slot == -1) slot = InventoryUtils.findItem(Items.CRYING_OBSIDIAN);
+        }
+        if (slot == -1) {
+            ChatUtils.sendMessage(this.getChatName() + " " + Formatting.RED + LanguageSystem.translate("lang.module.Scaffold.noBlocks"));
+            setToggled(false);
+            return;
+        }
+
+        int oldSlot = mc.player.getInventory().selectedSlot;
+        InventoryUtils.swapAction(oldSlot, slot, false, "Client");
+        BuildManager.placeBlock(blockPos, RotateMode.GRIM);
+        InventoryUtils.swapAction(oldSlot, slot, true, "Client");
     }
 
     @Override
@@ -99,16 +125,11 @@ public class HighwayBuilder extends Module {
         super.onEnable();
         ThreadManager.startNewThread("HighwayThread", thread -> {
             highwayYaw = RotateUtils.getAbsDirection(mc.player);
+            moveFactor = getCordFactorFromDirection();
 
             alignAction(thread);
 
             while (this.isEnabled()) {
-                ModuleList.scaffold.setToggled(false);
-
-                while (BuildManager.isBuilding) {
-                    thread.sleepThread(actDelay.getValue().longValue());
-                }
-
                 byte[] moveFactor = RotateUtils.getCordFactorFromDirection(highwayYaw);
 
                 waterAndLavaCheckAction(thread);
@@ -130,16 +151,15 @@ public class HighwayBuilder extends Module {
         });
     }
 
+    /**
+     * All the actions and logic for breaking interfering blocks.
+     */
     private void breakAction(BThackThread thread, byte[] moveFactor) {
-        ArrayList<Vec3i> schematic = getBreakSchematic(highwayYaw, 0, 0, 0,0);
+        ArrayList<Vec3i> schematic = getBreakSchematic(0, 0, 0,0);
         breakInternal(thread, moveFactor, schematic, true);
 
-        ArrayList<Vec3i> tempSchematic = new ArrayList<>();
-        for (Vec3i vec : getBuildSchematic(highwayYaw)) {
-            if (schematic.contains(vec))
-                tempSchematic.add(vec);
-        }
-        schematic.removeIf(tempSchematic::contains);
+        ArrayList<Vec3i> buildSchematic = getBuildSchematic();
+        schematic.removeIf(buildSchematic::contains);
 
         breakInternal(thread, moveFactor, schematic, false);
         if (mode.getValue().equals("Tunnel")) {
@@ -148,6 +168,7 @@ public class HighwayBuilder extends Module {
         }
     }
 
+    @SuppressWarnings("DataFlowIssue")
     private void breakInternal(BThackThread thread, byte[] moveFactor, ArrayList<Vec3i> schematic, boolean ignoreObsidian) {
         DestroyThread3D destroyThread = new DestroyThread3D();
         destroyThread.set3DSchematic(schematic, BlockPos.ofFloored(mc.player.getX() + (moveFactor[0] * 2), Math.round(mc.player.getY()) - (!mode.getValue().equals("Tunnel") ? 1 : 0), mc.player.getZ() + (moveFactor[1] * 2)));
@@ -155,13 +176,14 @@ public class HighwayBuilder extends Module {
         destroyThread.start();
         thread.sleepThread(2);
         while (DestroyManager.isDestroying) {
-            thread.sleepThread(actDelay.getValue().longValue());
+            thread.sleepThread(stageDelay.getValue().longValue());
         }
     }
 
-    /*
-    All the logic and action to move.
+    /**
+     * All the logic and action to move.
      */
+    @SuppressWarnings("DataFlowIssue")
     private void gotoAction(BThackThread thread, byte[] moveFactor) {
         boolean obstructionFound = !mc.world.isAir(BlockPos.ofFloored(mc.player.getX() + moveFactor[0], mc.player.getY(), mc.player.getZ() + moveFactor[1]));
 
@@ -172,12 +194,12 @@ public class HighwayBuilder extends Module {
         gotoN.start();
         thread.sleepThread(2);
         while (gotoN.isMoving()) {
-            thread.sleepThread(actDelay.getValue().longValue());
+            thread.sleepThread(stageDelay.getValue().longValue());
         }
     }
 
-    /*
-    All logic and actions for XZ alignment.
+    /**
+     * All logic and actions for XZ alignment.
      */
     private void alignAction(BThackThread thread) {
         WhereToAlign whereToAlign = new WhereToAlign();
@@ -190,144 +212,118 @@ public class HighwayBuilder extends Module {
         }
     }
 
-    /*
-    All the actions and logic for placing highways.
+    /**
+     * All the actions and logic for placing highways.
      */
+    @SuppressWarnings("DataFlowIssue")
     private void buildAction(BThackThread thread) {
         if (!mode.getValue().equals("Tunnel")) {
-            ArrayList<Vec3i> schematic = getBuildSchematic(highwayYaw);
+            ArrayList<Vec3i> schematic = getBuildSchematic();
             BuildThread3D buildThread3D = new BuildThread3D();
             buildThread3D.set3DSchematic(buildTicks.getValue().intValue(), schematic, BlockPos.ofFloored(mc.player.getX(), Math.round(mc.player.getY()) - 1, mc.player.getZ()));
             buildThread3D.setNeedBlocks(onlyObsidian.getValue() ? Arrays.asList(Blocks.OBSIDIAN, Blocks.CRYING_OBSIDIAN) : new ArrayList<>());
             buildThread3D.start();
             thread.sleepThread(2);
             while (BuildManager.isBuilding) {
-                thread.sleepThread(actDelay.getValue().longValue());
+                thread.sleepThread(stageDelay.getValue().longValue());
             }
         }
     }
 
-    /*
-    Checks for water and lava on the path. (However, it doesn't work)
+    /**
+     * Checks for water and lava on the path.
+     * (However, it doesn't work)
      */
+    @SuppressWarnings("DataFlowIssue")
     private void waterAndLavaCheckAction(BThackThread thread) {
-        byte[] moveFactor = getCordFactorFromDirection(highwayYaw);
-        ArrayList<Vec3i> checkRadius = getBreakSchematic(highwayYaw, 1, 1, 1, 1);
+        ArrayList<Vec3i> checkRadius = getBreakSchematic(1, 1, 1, 1);
         ArrayList<Vec3i> checkBlocks = new ArrayList<>();
         for (Vec3i vec3i : checkRadius) {
             BlockPos pos = new BlockPos(vec3i);
-            if (mc.world.getBlockState(pos).isLiquid()) {
+            if (mc.world.getBlockState(pos).getBlock() instanceof FluidBlock) {
                 checkBlocks.add(pos);
             }
         }
         BuildThread3D thread3D = new BuildThread3D();
-        thread3D.set3DSchematic(1, checkBlocks, BlockPos.ofFloored(mc.player.getX() + (moveFactor[0]), Math.round(mc.player.getY()) - (!mode.getValue().equals("Tunnel") ? 1 : 0), mc.player.getZ() + (moveFactor[1])));
+        thread3D.set3DSchematic(1, checkBlocks, BlockPos.ofFloored(mc.player.getX() + moveFactor[0], Math.round(mc.player.getY()) - (!mode.getValue().equals("Tunnel") ? 1 : 0), mc.player.getZ() + moveFactor[1]));
         thread3D.start();
 
         thread.sleepThread(2);
         while (BuildManager.isBuilding) {
-            thread.sleepThread(actDelay.getValue().longValue());
+            thread.sleepThread(stageDelay.getValue().longValue());
         }
 
         for (Vec3i vec3i : checkBlocks) {
-            if (mc.world.getBlockState(new BlockPos(vec3i)).isLiquid()) {
+            if (mc.world.getBlockState(new BlockPos(vec3i)).getBlock() instanceof FluidBlock) {
                 toggle();
                 thread.closeThread();
             }
         }
     }
 
-    /*
-    Returns the block mining scheme. (Can break on corner trunks)
+    /**
+     * Returns the block mining scheme. (Can break on corner highways)
      */
-    protected ArrayList<Vec3i> getBreakSchematic(int highwayYaw, int extraMinWidth, int extraMaxWidth, int extraMinHeight, int extraMaxHeight) {
-        byte[] moveF = getCordFactorFromDirection(highwayYaw);
+    protected ArrayList<Vec3i> getBreakSchematic(int extraMinWidth, int extraMaxWidth, int extraMinHeight, int extraMaxHeight) {
+        ArrayList<Vec3i> sch = new ArrayList<>();
+
         int a = (int) (-(highwWidth.getValue() / 2)) - (((borders.getValue() || extraBlocks.getValue()) && !mode.getValue().equals("Tunnel")) ? 1 : 0) - extraMinWidth;
         int b = (int) ((highwWidth.getValue() - 1) - ((int) (highwWidth.getValue() / 2))) + (((borders.getValue() || extraBlocks.getValue()) && !mode.getValue().equals("Tunnel")) ? 1 : 0) + extraMaxWidth;
-        ArrayList<Vec3i> sch = new ArrayList<>();
-        int ab = a;
-        if (!clearBorder.getValue() || mode.getValue().equals("Tunnel")) {
-            a += 1;
-            b -= 1;
-            ab = a;
-        }
-        while (ab != 0) {
-            sch.add(new Vec3i((ab - moveF[0]) * moveF[1], -extraMinHeight + 1, (ab - moveF[1]) * moveF[0]));
-            ab++;
-        }
-        ab = b;
-        while (ab != -1) {
-            sch.add(new Vec3i((ab - moveF[0]) * moveF[1], -extraMinHeight + 1, (ab - moveF[1]) * moveF[0]));
-            ab--;
-        }
-        if (!clearBorder.getValue() || mode.getValue().equals("Tunnel")) {
-            a -= 1;
-            b += 1;
-        }
-        ab = a;
-        for (int i = -extraMinHeight + 2; i < tunnelHeight.getValue() + 1 + extraMaxHeight; i++) {
-            while (ab != 0) {
-                sch.add(new Vec3i((ab - moveF[0]) * moveF[1], i, (ab - moveF[1]) * moveF[0]));
-                ab++;
-            }
-            ab = b;
-            while (ab != -1) {
-                sch.add(new Vec3i((ab - moveF[0]) * moveF[1], i, (ab - moveF[1]) * moveF[0]));
-                ab--;
-            }
-            ab = a;
-        }
+
+        int extraValue = (!clearBorder.getValue() || mode.getValue().equals("Tunnel")) ? 1 : 0;
+
+        addLine(a + extraValue, b - extraValue, -extraMinHeight + 1, sch);
+
+        for (int i = -extraMinHeight + 2; i < tunnelHeight.getValue() + 1 + extraMaxHeight; i++)
+            addLine(a, b, i, sch);
+
         if (clearFloat.getValue() || mode.getValue().equals("Tunnel")) {
-            if (!clearEBlocks.getValue()) {
-                a += 1;
-                b -= 1;
-            }
-            ab = a;
-            while (ab != 0) {
-                sch.add(new Vec3i((ab - moveF[0]) * moveF[1], -extraMinHeight, (ab - moveF[1]) * moveF[0]));
-                ab++;
-            }
-            ab = b;
-            while (ab != -1) {
-                sch.add(new Vec3i((ab - moveF[0]) * moveF[1], -extraMinHeight, (ab - moveF[1]) * moveF[0]));
-                ab--;
-            }
+            int e = !clearEBlocks.getValue() ? 1 : 0;
+            addLine(a + e, b - e, -extraMinHeight, sch);
         }
+
         return sch;
     }
 
-    /*
-    Returns a schematic for installing the blocks. (Can break on corner trunks)
+    public void addLine(int start, int end, int y, ArrayList<Vec3i> schematic) {
+        List<Integer> abValues = MathUtils.getNumbers(start, end);
+        boolean last = false;
+        while (!abValues.isEmpty()) {
+            Integer value = last ? abValues.getLast() : abValues.getFirst();
+            addPos(value, y, schematic);
+            abValues.remove(value);
+            last = !last;
+        }
+    }
+
+    public void addPos(int value, int y, ArrayList<Vec3i> schematic) {
+        schematic.add(new Vec3i((value - moveFactor[0]) * moveFactor[1], y, (value - moveFactor[1]) * moveFactor[0]));
+    }
+
+    /**
+     * Returns a schematic for placing the blocks. (Can break on corner highways)
      */
-    protected ArrayList<Vec3i> getBuildSchematic(int highwayYaw) {
-        byte[] moveF = getCordFactorFromDirection(highwayYaw);
+    protected ArrayList<Vec3i> getBuildSchematic() {
+        ArrayList<Vec3i> sch = new ArrayList<>();
+
         int a = (int) (-(highwWidth.getValue() / 2)) - (extraBlocks.getValue() ? 1 : 0);
         int b = (int) ((highwWidth.getValue() - 1) - ((int) (highwWidth.getValue() / 2))) + (extraBlocks.getValue() ? 1 : 0);
-        ArrayList<Vec3i> sch = new ArrayList<>();
-        int ab = a;
-        while (ab != 1) {
-            sch.add(new Vec3i((ab - moveF[0]) * moveF[1], 0, (ab - moveF[1]) * moveF[0]));
-            ab++;
-        }
-        ab = b;
-        while (ab != 0) {
-            sch.add(new Vec3i((ab - moveF[0]) * moveF[1], 0, (ab - moveF[1]) * moveF[0]));
-            ab--;
-        }
+
+        addLine(a, b, 0, sch);
         if (borders.getValue()) {
-            a -= extraBlocks.getValue() ? 0 : 1;
-            b += extraBlocks.getValue() ? 0 : 1;
-            sch.add(new Vec3i((a - moveF[0]) * moveF[1], 1, (a - moveF[1]) * moveF[0]));
-            sch.add(new Vec3i((b - moveF[0]) * moveF[1], 1, (b - moveF[1]) * moveF[0]));
+            int e = extraBlocks.getValue() ? 0 : 1;
+            addPos(a - e, 1, sch);
+            addPos(b + e, 1, sch);
         }
+
         return sch;
     }
 
-    /*
-    Returns the 2 byte numbers required to correctly determine the position of the blocks on the schematics.
+    /**
+     * Returns the 2 byte numbers required to correctly determine the position of the blocks on the schematics.
      */
-    public byte[] getCordFactorFromDirection(int yaw) {
-        return switch (yaw) {
+    public byte[] getCordFactorFromDirection() {
+        return switch (highwayYaw) {
             case 45 -> new byte[]{-1, -1};
             case 135 -> new byte[]{1, -1};
 

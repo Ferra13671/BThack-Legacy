@@ -7,6 +7,8 @@ import org.joml.Vector3f;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.List;
 
 public final class MathUtils {
 
@@ -62,5 +64,17 @@ public final class MathUtils {
     public static Vec3d transformPos(Matrix4f matrix, float x, float y, float z) {
         Vector3f vector3f = matrix.transformPosition(x, y, z, new Vector3f());
         return new Vec3d(vector3f.x(), vector3f.y(), vector3f.z());
+    }
+
+    public static List<Integer> getNumbers(Integer minNumber, Integer maxNumber) {
+        ArrayList<Integer> numbers = new ArrayList<>();
+        if (minNumber.doubleValue() > maxNumber.doubleValue()) {
+            Integer temp = minNumber;
+            minNumber = maxNumber;
+            maxNumber = temp;
+        }
+        for (int i = minNumber; i < maxNumber + 1; i++)
+            numbers.add(i);
+        return numbers;
     }
 }
