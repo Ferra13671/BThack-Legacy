@@ -1,3 +1,25 @@
+# 1.21.1-1.9 Changes
+- Added SilentSwap in Surround
+- Added 'Style' setting in HUD module
+- Added 'Texture Rotations' setting in NoRender module
+- Added gradient in HUD, HUDEditor and ClickGui
+- Added 'BackGround Color' and 'Scale' settings in HUD
+- Added more color settings in Tooltips
+- Added account manager
+- Added AutoAnvilEnchant module(Beta)
+- Added more render settings in PacketMine
+- Added Zoom module
+- Added RightClick, UseItem and UseItemOnBlock tasks in ActionBot
+- New SpeedMine and DoubleMine (in PacketMine) for 2b2t.org.ru
+- Modified HandTweaks module
+- Color settings can now be opened/closed
+- Removed camera bobbing when FreeCam is enabled
+- Fixed ActionBot moving while any screen is open
+- Fixed FreeCam movement when ActionBot enabled
+- Fixed phantom enabling of CustomCape
+- Fixed NoRotate module
+- Fixed a bug with the 'Star Brightness' setting in WorldElements module being displayed all the time
+
 # 1.21.1-1.8.0.1 Changes
 - Stupid fix
 
