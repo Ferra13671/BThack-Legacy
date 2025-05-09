@@ -3,7 +3,6 @@ import java.time.LocalDate
 
 plugins {
     id 'fabric-loom' version '1.7-SNAPSHOT'
-    id 'maven-publish'
     id "com.github.johnrengelman.shadow" version "8.1.1"
 }
 
@@ -64,7 +63,8 @@ repositories {
         url = 'https://babbaj.github.io/maven/'
     }
     maven {
-        url = 'https://jitpack.io'
+        name = 'ferra13671-maven'
+        url = 'https://ferra13671.github.io/maven/'
     }
 
     mavenCentral()
@@ -94,10 +94,10 @@ dependencies {
     //This is to prevent warnings related to missing enum constants from appearing when launching the client in the IDE
     compileOnly "org.apiguardian:apiguardian-api:1.0.0"
 
-    library "com.github.Ferra13671:MegaEvents:1.2"
-    library "com.github.Ferra13671:SimpleLanguageSystem:1.1"
-    library "com.github.Ferra13671:GLTextureUtils:1.4"
-    library "com.github.Ferra13671:Java-DiscordRPC:1.0"
+    library "com.ferra13671:mega-events:1.3"
+    library "com.ferra13671:simple-language-system:1.1"
+    library "com.ferra13671:gl-texture-utils:1.4"
+    library "com.ferra13671:java-discord-rpc:1.0"
 
     includeBaritone()
 }
@@ -151,15 +151,4 @@ jar {
     from("LICENSE") {
         rename { "${it}_${project.archivesBaseName}"}
     }
-}
-
-// configure the maven publication
-publishing {
-    publications {
-        create("mavenJava", MavenPublication) {
-            artifactId = project.archives_base_name
-            from components.java
-        }
-    }
-    repositories {}
 }

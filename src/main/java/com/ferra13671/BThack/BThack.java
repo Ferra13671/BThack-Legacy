@@ -19,7 +19,7 @@ import com.ferra13671.BThack.api.SoundSystem.yaw.TinySound;
 import com.ferra13671.BThack.api.GuiSystem.BThackScreens;
 import com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.ActionBotConfig;
 import com.ferra13671.MegaEvents.Base.IEventBus;
-import com.ferra13671.MegaEvents.Base.UpdatedEventBus;
+import com.ferra13671.MegaEvents.Base.EventBus;
 import com.google.gson.JsonPrimitive;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
@@ -31,7 +31,7 @@ import java.io.InputStreamReader;
 import java.net.URI;
 
 public final class BThack implements ClientModInitializer, Mc {
-    public static final IEventBus EVENT_BUS = new UpdatedEventBus();
+    public static final IEventBus EVENT_BUS = new EventBus();
 
     public final VersionInfo versionInfo = new VersionInfo();
     public final String MC_VERSION;
