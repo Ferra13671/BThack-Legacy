@@ -110,10 +110,6 @@ public class ClickGui extends OneActionModule {
 
                 guiScale
         );
-
-        INT_OPACITY = Math.min(255, (int) (255 * opacity.getValue()));
-        BACKGROUND_COLOR = ColorUtils.integrateAlpha(ModuleList.clickGui.backgroundColor.getValue().hashCode(), INT_OPACITY);
-        BACKGROUND_HOVERED_COLOR = ColorUtils.integrateAlpha(ModuleList.clickGui.backgroundColor.getBrighterValue().hashCode(), INT_OPACITY);
     }
 
     public List<String> getEasingList() {
@@ -126,11 +122,13 @@ public class ClickGui extends OneActionModule {
 
     @Override
     public void onChangeSetting(Setting<?> setting) {
-        if (setting == opacity) {
-            INT_OPACITY = Math.min(255, (int) (255 * opacity.getValue()));
-            BACKGROUND_COLOR = ColorUtils.integrateAlpha(ModuleList.clickGui.backgroundColor.getValue().hashCode(), INT_OPACITY);
-            BACKGROUND_HOVERED_COLOR = ColorUtils.integrateAlpha(ModuleList.clickGui.backgroundColor.getBrighterValue().hashCode(), INT_OPACITY);
-        }
+        if (setting == opacity) openAction();
+    }
+
+    public void openAction() {
+        INT_OPACITY = Math.min(255, (int) (255 * opacity.getValue()));
+        BACKGROUND_COLOR = ColorUtils.integrateAlpha(ModuleList.clickGui.backgroundColor.getValue().hashCode(), INT_OPACITY);
+        BACKGROUND_HOVERED_COLOR = ColorUtils.integrateAlpha(ModuleList.clickGui.backgroundColor.getBrighterValue().hashCode(), INT_OPACITY);
     }
 
     public boolean isShaderEnabled() {

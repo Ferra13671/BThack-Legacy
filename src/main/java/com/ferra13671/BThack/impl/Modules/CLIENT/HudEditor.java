@@ -13,6 +13,9 @@ public class HudEditor extends OneActionModule {
                 MCategory.CLIENT,
                 false
         );
+
+        allowRemapKeyCode = false;
+        allowRemapVisible = false;
     }
 
     @Override

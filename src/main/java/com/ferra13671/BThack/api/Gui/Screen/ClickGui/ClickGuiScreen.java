@@ -73,6 +73,7 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
         super.onDisplayed();
         for (Frame frame : frames) frame.resetAnimation();
         snowTicker.reset();
+        ModuleList.clickGui.openAction();
     }
 
     @Override
