@@ -51,7 +51,7 @@ public class HighwayBuilder extends Module {
 
     public final CategorySetting movementCategory = new CategorySetting("Movement", this);
     public final BooleanSetting postMoveAlign = new BooleanSetting("Post Move Align", this, true).inCategory(movementCategory);
-    public final NumberSetting moveStep = new NumberSetting("Move Step", this, 0.65, 0.5, 1, false).inCategory(movementCategory);
+    public final NumberSetting moveStep = new NumberSetting("Move Step", this, 0.6, 0.5, 1, false).inCategory(movementCategory);
     public final BooleanSetting blockKeyboardMovement = new BooleanSetting("Block Keyboard Move", this, true).inCategory(movementCategory);
 
     public final BooleanSetting borders = new BooleanSetting("Borders", this, true, () -> !mode.getValue().equals("Tunnel"));
