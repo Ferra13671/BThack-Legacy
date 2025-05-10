@@ -101,6 +101,13 @@ public class HighwayBuilder extends Module {
         );
     }
 
+    /**
+     * List of all active HighwayBuilder threads.
+     * When the module is turned off, all threads in the list will be stopped instantly,
+     * which will allow HighwayBuilder to finish immediately, rather than waiting for all threads to finish.
+     */
+    private final List<BThackThread> threads = new ArrayList<>();
+
     private int startY;
 
     public int highwayYaw;
@@ -124,6 +131,8 @@ public class HighwayBuilder extends Module {
             mc.options.jumpKey.setPressed(false);
             mc.options.sneakKey.setPressed(false);
         }
+
+        threads.removeIf(thread -> !thread.isAlive());
 
         if (BuildManager.isBuilding) return;
 
@@ -159,7 +168,7 @@ public class HighwayBuilder extends Module {
         highwayYaw = RotateUtils.getAbsDirection(mc.player);
         moveFactor = getCordFactorFromDirection();
         startY = (int) mc.player.getY();
-        ThreadManager.startNewThread("HighwayThread", thread -> {
+        threads.add(ThreadManager.startNewThread("HighwayThread", thread -> {
 
             alignAction(thread);
 
@@ -182,7 +191,15 @@ public class HighwayBuilder extends Module {
 
                 buildAction(thread);
             }
-        });
+        }));
+    }
+
+    @Override
+    public void onDisable() {
+        super.onDisable();
+
+        threads.forEach(BThackThread::closeThread);
+        threads.clear();
     }
 
     /**
@@ -209,6 +226,7 @@ public class HighwayBuilder extends Module {
         destroyThread.setIgnoreBlocks(ignoreObsidian ? Arrays.asList(Blocks.OBSIDIAN, Blocks.CRYING_OBSIDIAN) : new ArrayList<>());
         destroyThread.start();
         thread.sleepThread(2);
+        threads.add(destroyThread);
         while (DestroyManager.isDestroying) {
             thread.sleepThread(stageDelay.getValue().longValue());
         }
@@ -228,6 +246,7 @@ public class HighwayBuilder extends Module {
         Goto gotoN = new Goto(mc.player.getX() + (moveFactor[0] * step), mc.player.getZ() + (moveFactor[1] * step), CollisionAction.NONE);
         gotoN.start();
         thread.sleepThread(2);
+        threads.add(gotoN);
         while (gotoN.isMoving()) {
             thread.sleepThread(stageDelay.getValue().longValue());
         }
@@ -242,6 +261,7 @@ public class HighwayBuilder extends Module {
         alignWithXZ.alignWithXZ();
 
         thread.sleepThread(2);
+        threads.add(alignWithXZ.getThread());
         while (alignWithXZ.isMoving()) {
             thread.sleepThread(100);
         }
@@ -259,6 +279,7 @@ public class HighwayBuilder extends Module {
             buildThread3D.setNeedBlocks(onlyObsidian.getValue() ? Arrays.asList(Blocks.OBSIDIAN, Blocks.CRYING_OBSIDIAN) : new ArrayList<>());
             buildThread3D.start();
             thread.sleepThread(2);
+            threads.add(buildThread3D);
             while (BuildManager.isBuilding) {
                 thread.sleepThread(stageDelay.getValue().longValue());
             }
@@ -284,6 +305,7 @@ public class HighwayBuilder extends Module {
         thread3D.start();
 
         thread.sleepThread(2);
+        threads.add(thread3D);
         while (BuildManager.isBuilding) {
             thread.sleepThread(stageDelay.getValue().longValue());
         }

@@ -11,7 +11,7 @@ public final class ThreadManager implements Initializable {
         //no action
     }
 
-    public static void startNewThread(IThread iThread) {
+    public static BThackThread startNewThread(IThread iThread) {
         BThackThread thread = new BThackThread() {
             @Override
             public void threadAction() throws ThreadClosedException {
@@ -20,9 +20,10 @@ public final class ThreadManager implements Initializable {
         };
 
         thread.start();
+        return thread;
     }
 
-    public static void startNewThread(String threadName, IThread iThread) {
+    public static BThackThread startNewThread(String threadName, IThread iThread) {
         BThackThread thread = new BThackThread(threadName) {
             @Override
             public void threadAction() throws ThreadClosedException {
@@ -31,5 +32,6 @@ public final class ThreadManager implements Initializable {
         };
 
         thread.start();
+        return thread;
     }
 }
