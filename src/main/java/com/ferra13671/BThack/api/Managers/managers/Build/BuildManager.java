@@ -8,6 +8,7 @@ import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.*;
 import com.ferra13671.BThack.api.Utils.Rotate.RotateMode;
 import com.ferra13671.BThack.api.Utils.Rotate.RotateUtils;
+import com.ferra13671.BThack.mixins.accessor.IAbstractBlock;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import com.google.common.collect.Sets;
 import net.minecraft.block.*;
@@ -166,7 +167,7 @@ public class BuildManager implements Initializable, Mc {
 
     public static boolean isNeedBlock(Block block, List<Block> needBlocks) {
         BlockState state = block.getDefaultState();
-        if (shiftBlocks.contains(block)) return false;
+        if (shiftBlocks.contains(block) || !((IAbstractBlock) block).getCollidable()) return false;
         if (block instanceof AbstractChestBlock<?> || block instanceof ShulkerBoxBlock) return false;
         if (needBlocks.isEmpty()) {
             return state.isSolid();

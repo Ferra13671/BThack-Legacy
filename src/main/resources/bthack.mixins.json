@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "MixinDecoderHandler",
+    "accessor.IAbstractBlock",
     "accessor.IPlayerInventory",
     "accessor.IRenderTickCounter$Dynamic",
     "accessor.entity.IEntity",
