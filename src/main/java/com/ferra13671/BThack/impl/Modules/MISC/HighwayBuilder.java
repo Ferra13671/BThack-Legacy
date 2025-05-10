@@ -10,6 +10,7 @@ import com.ferra13671.BThack.api.Managers.managers.Build.BuildThread3D;
 import com.ferra13671.BThack.api.Managers.managers.Destroy.DestroyManager;
 import com.ferra13671.BThack.api.Managers.managers.Destroy.DestroyThread3D;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.CategorySetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Managers.managers.Thread.BThackThread;
@@ -47,7 +48,11 @@ public class HighwayBuilder extends Module {
     public final ModeSetting mode = new ModeSetting("Mode", this, new ArrayList<>(Arrays.asList("Highway", "Tunnel")));
 
     public final NumberSetting buildTicks = new NumberSetting("Build Ticks", this, 1, 0, 5, true, () -> !mode.getValue().equals("Tunnel"));
-    public final BooleanSetting postMoveAlign = new BooleanSetting("Post Move Align", this, true);
+
+    public final CategorySetting movementCategory = new CategorySetting("Movement", this);
+    public final BooleanSetting postMoveAlign = new BooleanSetting("Post Move Align", this, true).inCategory(movementCategory);
+    public final NumberSetting moveStep = new NumberSetting("Move Step", this, 0.65, 0.5, 1, false).inCategory(movementCategory);
+    public final BooleanSetting blockKeyboardMovement = new BooleanSetting("Block Keyboard Move", this, true).inCategory(movementCategory);
 
     public final BooleanSetting borders = new BooleanSetting("Borders", this, true, () -> !mode.getValue().equals("Tunnel"));
     public final BooleanSetting extraBlocks = new BooleanSetting("Extra Blocks", this, false, () -> !mode.getValue().equals("Tunnel"));
@@ -57,9 +62,15 @@ public class HighwayBuilder extends Module {
     //If the value is less than 100, problems with moving between stages may appear
     public final NumberSetting stageDelay = new NumberSetting("Stage Delay", this, 100, 100, 200, true);
 
-    public final BooleanSetting clearFloat = new BooleanSetting("Clear Float", this, true, () -> !mode.getValue().equals("Tunnel"));
-    public final BooleanSetting clearBorder = new BooleanSetting("Clear Border", this, true, () -> !mode.getValue().equals("Tunnel"));
-    public final BooleanSetting clearEBlocks = new BooleanSetting("Clear EBlocks", this, true, () -> !mode.getValue().equals("Tunnel"));
+    public final CategorySetting clearCategory = new CategorySetting("Clearing", this, () -> !mode.getValue().equals("Tunnel"));
+    public final BooleanSetting clearFloat = new BooleanSetting("Float", this, true).inCategory(clearCategory);
+    public final BooleanSetting clearBorder = new BooleanSetting("Border", this, true).inCategory(clearCategory);
+    public final BooleanSetting clearExtraBlocks = new BooleanSetting("Extra Blocks", this, true).inCategory(clearCategory);
+
+    public final CategorySetting autoDisableCategory = new CategorySetting("Auto Disable", this);
+    public final BooleanSetting disableIfHealth = new BooleanSetting("If Health", this, false).inCategory(autoDisableCategory);
+    public final NumberSetting minHealth = new NumberSetting("Min Health", this, 5, 1, 15, false, disableIfHealth::getValue).inCategory(autoDisableCategory);
+    public final BooleanSetting disableIfChangeY = new BooleanSetting("If Change Y", this, true).inCategory(autoDisableCategory);
 
 
     public HighwayBuilder() {
@@ -74,7 +85,8 @@ public class HighwayBuilder extends Module {
                 mode,
 
                 buildTicks,
-                postMoveAlign,
+
+                movementCategory,
 
                 borders,
                 extraBlocks,
@@ -83,19 +95,35 @@ public class HighwayBuilder extends Module {
                 tunnelHeight,
                 stageDelay,
 
-                clearFloat,
-                clearBorder,
-                clearEBlocks
+                clearCategory,
+
+                autoDisableCategory
         );
     }
 
-    public int highwayYaw = 0;
+    private int startY;
+
+    public int highwayYaw;
     public byte[] moveFactor;
 
     @EventSubscriber
     @SuppressWarnings({"DataFlowIssue", "unused"})
     public void onTick(ClientTickEvent e) {
         if (nullCheck()) return;
+
+        if (confirmDisabling()) {
+            setToggled(false);
+            return;
+        }
+
+        if (blockKeyboardMovement.getValue()) {
+            mc.options.forwardKey.setPressed(false);
+            mc.options.backKey.setPressed(false);
+            mc.options.leftKey.setPressed(false);
+            mc.options.rightKey.setPressed(false);
+            mc.options.jumpKey.setPressed(false);
+            mc.options.sneakKey.setPressed(false);
+        }
 
         if (BuildManager.isBuilding) return;
 
@@ -121,11 +149,17 @@ public class HighwayBuilder extends Module {
     }
 
     @Override
+    @SuppressWarnings("DataFlowIssue")
     public void onEnable() {
+        if (nullCheck()) {
+            setToggled(false);
+            return;
+        }
         super.onEnable();
+        highwayYaw = RotateUtils.getAbsDirection(mc.player);
+        moveFactor = getCordFactorFromDirection();
+        startY = (int) mc.player.getY();
         ThreadManager.startNewThread("HighwayThread", thread -> {
-            highwayYaw = RotateUtils.getAbsDirection(mc.player);
-            moveFactor = getCordFactorFromDirection();
 
             alignAction(thread);
 
@@ -190,7 +224,8 @@ public class HighwayBuilder extends Module {
         if (!mc.world.isAir(BlockPos.ofFloored(mc.player.getX() + moveFactor[0], mc.player.getY() + 1, mc.player.getZ() + moveFactor[1])))
             obstructionFound = true;
 
-        Goto gotoN = new Goto(mc.player.getX() + (moveFactor[0] * (obstructionFound ? 0.16 : 0.5)), mc.player.getZ() + (moveFactor[1] * (obstructionFound ? 0.16 : 0.5)), CollisionAction.NONE);
+        float step = (obstructionFound ? 0.16f : moveStep.getValue().floatValue());
+        Goto gotoN = new Goto(mc.player.getX() + (moveFactor[0] * step), mc.player.getZ() + (moveFactor[1] * step), CollisionAction.NONE);
         gotoN.start();
         thread.sleepThread(2);
         while (gotoN.isMoving()) {
@@ -278,7 +313,7 @@ public class HighwayBuilder extends Module {
             addLine(a, b, i, sch);
 
         if (clearFloat.getValue() || mode.getValue().equals("Tunnel")) {
-            int e = !clearEBlocks.getValue() ? 1 : 0;
+            int e = !clearExtraBlocks.getValue() ? 1 : 0;
             addLine(a + e, b - e, -extraMinHeight, sch);
         }
 
@@ -317,6 +352,13 @@ public class HighwayBuilder extends Module {
         }
 
         return sch;
+    }
+
+    @SuppressWarnings("DataFlowIssue")
+    private boolean confirmDisabling() {
+        return
+                (disableIfHealth.getValue() && mc.player.getHealth() < minHealth.getValue()) ||
+                        (disableIfChangeY.getValue() && startY != (int) mc.player.getY());
     }
 
     /**
