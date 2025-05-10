@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.api.Utils.DataList;
 
 import com.ferra13671.BThack.Core.Client.ModuleList;
-import com.ferra13671.BThack.Core.FileSystem.JsonUtils;
+import com.ferra13671.BThack.Core.Client.Systems.FileSystem.JsonUtils;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Plugin.Plugin;
@@ -116,8 +116,7 @@ public class DataLists implements Mc {
     }
 
     public static <T extends DataList<?, ?>> T get(String key, Class<T> clazz) {
-        Object dataList = dataLists.get(key);
-        return (T) dataList; //Ignore the warning from IntelliJ IDEA
+        return (T) dataLists.get(key); //Ignore the warning from IntelliJ IDEA
     }
 
     public static void add(DataList<?, ?> dataList) {

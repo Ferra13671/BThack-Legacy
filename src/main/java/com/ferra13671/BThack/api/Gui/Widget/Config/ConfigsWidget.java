@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.api.Gui.Widget.Config;
 
-import com.ferra13671.BThack.Core.FileSystem.ConfigSystem.ConfigSystem;
+import com.ferra13671.BThack.Core.Client.Systems.ConfigSystem.ConfigSystem;
 import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Drawers.Drawers;
 import com.ferra13671.BThack.Core.Render.Font.FontRenderManager;

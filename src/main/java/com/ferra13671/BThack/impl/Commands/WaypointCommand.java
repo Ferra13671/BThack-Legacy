@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.impl.Commands;
 
-import com.ferra13671.BThack.Core.FileSystem.ConfigSystem.ConfigSystem;
+import com.ferra13671.BThack.Core.Client.Systems.ConfigSystem.SubConfigs;
 import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Command.AbstractCommand;
@@ -14,7 +14,6 @@ import net.minecraft.command.CommandSource;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.math.Vec3d;
 
-import java.io.IOException;
 import java.util.List;
 
 public class WaypointCommand extends AbstractCommand {
@@ -68,9 +67,7 @@ public class WaypointCommand extends AbstractCommand {
                                                                                     mc.isInSingleplayer() ? "SinglePlayer" : mc.getNetworkHandler().getServerInfo().address
                                                                             )
                                                                     );
-                                                                    try {
-                                                                        ConfigSystem.saveWaypoints();
-                                                                    } catch (IOException ignored) {}
+                                                                    SubConfigs.WAYPOINTS.save();
 
                                                                     sendMessage(Formatting.AQUA + String.format(LanguageSystem.translate("lang.command.Waypoint.added"), context.getArgument("name", String.class)));
 
@@ -85,9 +82,7 @@ public class WaypointCommand extends AbstractCommand {
         ));
         builder.then(literal("remove").then(arg("waypoint", Arguments.WAYPOINT).executes(context -> {
             Managers.WAYPOINT_MANAGER.removeWaypoint(context.getArgument("waypoint", Waypoint.class));
-            try {
-                ConfigSystem.saveWaypoints();
-            } catch (IOException ignored) {}
+            SubConfigs.WAYPOINTS.save();
 
             sendMessage(Formatting.AQUA +  String.format(LanguageSystem.translate("lang.command.Waypoint.removed"), Formatting.WHITE + context.getArgument("waypoint", Waypoint.class).getName() + Formatting.AQUA));
 
@@ -101,9 +96,7 @@ public class WaypointCommand extends AbstractCommand {
                     String newName = context.getArgument("name", String.class);
                     waypoint.setName(newName);
                     Managers.WAYPOINT_MANAGER.addWaypoint(waypoint);
-                    try {
-                        ConfigSystem.saveWaypoints();
-                    } catch (IOException ignored) {}
+                    SubConfigs.WAYPOINTS.save();
 
                     sendMessage(String.format(LanguageSystem.translate("lang.command.Waypoint.changedValue"), oldName, Formatting.AQUA, Formatting.WHITE + "Name: " + oldName + Formatting.AQUA, Formatting.WHITE + newName));
 
@@ -116,9 +109,7 @@ public class WaypointCommand extends AbstractCommand {
                     Vec3d newPos = new Vec3d(context.getArgument("x", Double.class), context.getArgument("y", Double.class), context.getArgument("z", Double.class));
                     waypoint.setPosition(newPos);
                     Managers.WAYPOINT_MANAGER.addWaypoint(waypoint);
-                    try {
-                        ConfigSystem.saveWaypoints();
-                    } catch (IOException ignored) {}
+                    SubConfigs.WAYPOINTS.save();
 
                     sendMessage(String.format(LanguageSystem.translate("lang.command.Waypoint.changedValue"), waypoint.getName(), Formatting.AQUA, Formatting.WHITE + "Position: " + oldPos.getX() + " " + oldPos.getY() + " " + oldPos.getZ() + Formatting.AQUA, Formatting.WHITE + "" + newPos.getX() + " " + newPos.getY() + " " + newPos.getZ()));
 
@@ -131,9 +122,7 @@ public class WaypointCommand extends AbstractCommand {
                     boolean newVisible = context.getArgument("visible", Boolean.class);
                     waypoint.setVisible(newVisible);
                     Managers.WAYPOINT_MANAGER.addWaypoint(waypoint);
-                    try {
-                        ConfigSystem.saveWaypoints();
-                    } catch (IOException ignored) {}
+                    SubConfigs.WAYPOINTS.save();
 
                     sendMessage(String.format(LanguageSystem.translate("lang.command.Waypoint.changedValue"), waypoint.getName(), Formatting.AQUA, Formatting.WHITE + "Visible: " + oldVisible + Formatting.AQUA, Formatting.WHITE + "" + newVisible));
 
@@ -146,9 +135,7 @@ public class WaypointCommand extends AbstractCommand {
                     Waypoint.WaypointDimension newDimension = Waypoint.WaypointDimension.valueOf(context.getArgument("dimension", String.class));
                     waypoint.setDimension(newDimension);
                     Managers.WAYPOINT_MANAGER.addWaypoint(waypoint);
-                    try {
-                        ConfigSystem.saveWaypoints();
-                    } catch (IOException ignored) {}
+                    SubConfigs.WAYPOINTS.save();
 
                     sendMessage(String.format(LanguageSystem.translate("lang.command.Waypoint.changedValue"), waypoint.getName(), Formatting.AQUA, Formatting.WHITE + "Dimension: " + oldDimension.name() + Formatting.AQUA, Formatting.WHITE + newDimension.name()));
 
@@ -161,9 +148,7 @@ public class WaypointCommand extends AbstractCommand {
                     int[] newColor = new int[]{context.getArgument("red", Integer.class), context.getArgument("green", Integer.class), context.getArgument("blue", Integer.class)};
                     waypoint.setColor(ColorUtils.fastRGBA(newColor[0], newColor[1], newColor[2], 255));
                     Managers.WAYPOINT_MANAGER.addWaypoint(waypoint);
-                    try {
-                        ConfigSystem.saveWaypoints();
-                    } catch (IOException ignored) {}
+                    SubConfigs.WAYPOINTS.save();
 
                     sendMessage(String.format(LanguageSystem.translate("lang.command.Waypoint.changedValue"), waypoint.getName(), Formatting.AQUA, Formatting.WHITE + "Color: " + (int) (oldColor[0] * 255) + " " + (int) (oldColor[1] * 255) + " " + (int) (oldColor[2] * 255) + Formatting.AQUA, Formatting.WHITE + "" + newColor[0] + " " + newColor[1] + " " + newColor[2]));
 

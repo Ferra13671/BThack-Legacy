@@ -3,10 +3,10 @@ package com.ferra13671.BThack;
 import com.ferra13671.BTbot.api.Utils.Controller.ClientPlayerController;
 import com.ferra13671.BThack.Core.Client.Client;
 import com.ferra13671.BThack.Core.Client.ModuleList;
-import com.ferra13671.BThack.Core.FileSystem.ConfigSystem.ConfigSystem;
-import com.ferra13671.BThack.Core.FileSystem.ConfigSystem.ConfigUtils;
-import com.ferra13671.BThack.Core.FileSystem.FileSystem;
-import com.ferra13671.BThack.Core.FileSystem.JsonUtils;
+import com.ferra13671.BThack.Core.Client.Systems.ConfigSystem.ConfigSystem;
+import com.ferra13671.BThack.Core.Client.Systems.ConfigSystem.ConfigUtils;
+import com.ferra13671.BThack.Core.Client.Systems.FileSystem.FileSystem;
+import com.ferra13671.BThack.Core.Client.Systems.FileSystem.JsonUtils;
 import com.ferra13671.BThack.Core.DeviceSystem;
 import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.ShutdownSystem;
@@ -170,11 +170,6 @@ public final class BThack implements ClientModInitializer, Mc {
         ShutdownSystem.addShutdownHook(() -> {
             ModuleList.timer.setToggled(false);
             ConfigSystem.saveConfig();
-            try {
-                ConfigSystem.saveHudComponents();
-            } catch (IOException e) {
-                BThack.error(e.getMessage());
-            }
             BThack.instance.saveVersionInfo();
             BThack.log("Config Saved!");
         });

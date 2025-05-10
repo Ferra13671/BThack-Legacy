@@ -1,9 +1,9 @@
 package com.ferra13671.BThack.impl.Commands;
 
 import com.ferra13671.BThack.Core.Client.Client;
-import com.ferra13671.BThack.Core.FileSystem.ConfigSystem.ConfigSystem;
-import com.ferra13671.BThack.Core.FileSystem.ConfigSystem.ConfigUtils;
-import com.ferra13671.BThack.Core.FileSystem.JsonUtils;
+import com.ferra13671.BThack.Core.Client.Systems.ConfigSystem.ConfigUtils;
+import com.ferra13671.BThack.Core.Client.Systems.ConfigSystem.SubConfigs;
+import com.ferra13671.BThack.Core.Client.Systems.FileSystem.JsonUtils;
 import com.ferra13671.BThack.api.Managers.managers.Command.AbstractCommand;
 import com.ferra13671.BThack.api.Managers.managers.Command.Arguments;
 import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
@@ -34,9 +34,7 @@ public class PrefixCommand extends AbstractCommand {
 
             Client.clientInfo.setChatPrefix(newPrefix);
 
-            try {
-                ConfigSystem.saveClientInfo();
-            } catch (IOException ignored) {}
+            SubConfigs.CLIENT_INFO.save();
 
             sendMessage(Formatting.AQUA + String.format(LanguageSystem.translate("lang.command.Prefix.changed"), Formatting.WHITE + newPrefix + Formatting.AQUA));
             return SUCCESFUL;

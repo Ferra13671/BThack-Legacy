@@ -2,7 +2,7 @@ package com.ferra13671.BThack.api.Gui.Screen.HudEditor;
 
 import com.ferra13671.BThack.Core.Client.Client;
 import com.ferra13671.BThack.Core.Client.ModuleList;
-import com.ferra13671.BThack.Core.FileSystem.ConfigSystem.ConfigSystem;
+import com.ferra13671.BThack.Core.Client.Systems.ConfigSystem.SubConfigs;
 import com.ferra13671.BThack.Core.Render.BThackMatrix;
 import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Font.FontUtils;
@@ -28,7 +28,6 @@ import com.google.common.collect.Sets;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.text.Text;
 
-import java.io.IOException;
 import java.util.Set;
 
 public class HudEditorScreen extends BThackScreen {
@@ -159,9 +158,7 @@ public class HudEditorScreen extends BThackScreen {
 
     @Override
     public void removed() {
-        try {
-            ConfigSystem.saveHudComponents();
-        } catch (IOException ignored) {}
+        SubConfigs.HUD_COMPONENTS.save();
         for (ModuleButton component : frame.buttons) {
             component.open = false;
             component.parent.refresh();

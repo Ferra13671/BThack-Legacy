@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.Core.BThackUpdater;
 
 import com.ferra13671.BThack.BThack;
-import com.ferra13671.BThack.Core.FileSystem.JsonUtils;
+import com.ferra13671.BThack.Core.Client.Systems.FileSystem.JsonUtils;
 import com.ferra13671.BThack.api.Utils.Data;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;

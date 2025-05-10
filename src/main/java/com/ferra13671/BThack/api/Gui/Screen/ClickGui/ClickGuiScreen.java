@@ -3,7 +3,7 @@ package com.ferra13671.BThack.api.Gui.Screen.ClickGui;
 import com.ferra13671.BThack.Constants;
 import com.ferra13671.BThack.Core.Client.Client;
 import com.ferra13671.BThack.Core.Client.ModuleList;
-import com.ferra13671.BThack.Core.FileSystem.ConfigSystem.ConfigSystem;
+import com.ferra13671.BThack.Core.Client.Systems.ConfigSystem.ConfigSystem;
 import com.ferra13671.BThack.Core.Render.BThackMatrix;
 import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Font.FontUtils;

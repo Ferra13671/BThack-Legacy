@@ -2,7 +2,6 @@ package com.ferra13671.BThack.Core.Client;
 
 import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.Core.DeviceSystem;
-import com.ferra13671.BThack.Core.FileSystem.ConfigSystem.ConfigSystem;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Plugin.Plugin;
 import com.ferra13671.BThack.api.Plugin.PluginSystem;
@@ -22,7 +21,6 @@ import com.ferra13671.BThack.impl.Modules.RENDER.*;
 import com.ferra13671.BThack.impl.Modules.RENDER.HoleESP;
 import com.ferra13671.BThack.impl.Modules.WORLD.*;
 
-import java.io.IOException;
 import java.util.Arrays;
 
 public final class ModuleList {
@@ -463,10 +461,6 @@ public final class ModuleList {
 
         Client.hudComponents.addAll(PluginUtils.getPluginsHudComponents());
         Client.modules.addAll(Client.hudComponents);
-
-        try {
-            ConfigSystem.loadHudComponents();
-        } catch (IOException ignored) {}
     }
 
     private static <T extends Module> T register(T module) {

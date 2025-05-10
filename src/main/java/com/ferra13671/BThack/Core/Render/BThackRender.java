@@ -4,7 +4,7 @@ import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.Core.Client.Client;
 import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.Core.DeviceSystem;
-import com.ferra13671.BThack.Core.FileSystem.ConfigSystem.ConfigUtils;
+import com.ferra13671.BThack.Core.Client.Systems.ConfigSystem.ConfigUtils;
 import com.ferra13671.BThack.Core.Render.Box.BThackBoxRender;
 import com.ferra13671.BThack.Core.Render.Drawers.*;
 import com.ferra13671.BThack.Core.Render.Font.FontRenderManager;

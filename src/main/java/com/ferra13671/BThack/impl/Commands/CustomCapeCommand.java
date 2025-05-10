@@ -2,7 +2,7 @@ package com.ferra13671.BThack.impl.Commands;
 
 import com.ferra13671.BThack.Core.Client.Client;
 import com.ferra13671.BThack.Core.Client.ClientInfo;
-import com.ferra13671.BThack.Core.FileSystem.ConfigSystem.ConfigSystem;
+import com.ferra13671.BThack.Core.Client.Systems.ConfigSystem.SubConfigs;
 import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Cape.Cape;
 import com.ferra13671.BThack.api.Managers.managers.Cape.CapeManager;
@@ -36,9 +36,7 @@ public class CustomCapeCommand extends AbstractCommand {
                 .then(literal("default").executes(context -> {
                     Managers.CAPE_MANAGER.setCape(Cape.fromIdentifier(Identifier.of("bthack", "textures/bthack_cape.png")));
                     Client.clientInfo.setCapeInfo(CapeManager.DEFAULT_CAPE_INFO);
-                    try {
-                        ConfigSystem.saveClientInfo();
-                    } catch (IOException ignored) {}
+                    SubConfigs.CLIENT_INFO.save();
                     return SUCCESFUL;
                 }))
                 .then(literal("file").then(arg("cape", Arguments.CAPE_FILE).executes(context -> {
@@ -49,9 +47,7 @@ public class CustomCapeCommand extends AbstractCommand {
                     } catch (IOException e) {
                         error(e.getMessage());
                     }
-                    try {
-                        ConfigSystem.saveClientInfo();
-                    } catch (IOException ignored) {}
+                    SubConfigs.CLIENT_INFO.save();
                     return SUCCESFUL;
                 })))
                 .then(literal("url").then(arg("link", Arguments.GREEDY_STRING).executes(context -> {
@@ -61,9 +57,7 @@ public class CustomCapeCommand extends AbstractCommand {
                     } catch (IOException | URISyntaxException e) {
                         error(e.getMessage());
                     }
-                    try {
-                        ConfigSystem.saveClientInfo();
-                    } catch (IOException ignored) {}
+                    SubConfigs.CLIENT_INFO.save();
                     return SUCCESFUL;
                 })))
         );

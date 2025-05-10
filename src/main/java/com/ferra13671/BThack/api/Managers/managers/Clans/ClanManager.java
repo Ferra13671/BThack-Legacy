@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.api.Managers.managers.Clans;
 
 import com.ferra13671.BThack.BThack;
-import com.ferra13671.BThack.Core.FileSystem.ConfigSystem.ConfigSystem;
+import com.ferra13671.BThack.Core.Client.Systems.ConfigSystem.SubConfigs;
 import com.ferra13671.BThack.api.Utils.Initializable;
 import net.minecraft.entity.player.PlayerEntity;
 
@@ -51,11 +51,7 @@ public final class ClanManager implements Initializable {
         if (concurrentClan != null) BThack.log("This clan already exists!");
         else {
             clans.add(clan);
-            try {
-                ConfigSystem.saveClans();
-            } catch (IOException e) {
-                BThack.error(e.getMessage());
-            }
+            SubConfigs.CLANS.save();
         }
     }
 
@@ -68,22 +64,14 @@ public final class ClanManager implements Initializable {
             } catch (IOException e) {
                 BThack.error(e.getMessage());
             }
-            try {
-                ConfigSystem.saveClans();
-            } catch (IOException e) {
-                BThack.error(e.getMessage());
-            }
+            SubConfigs.CLANS.save();
         } else
             BThack.log("This clan doesn't exist!");
     }
 
     public void reload() {
         clans.clear();
-        try {
-            ConfigSystem.loadClans();
-        } catch (IOException e) {
-            BThack.error(e.getMessage());
-        }
+        SubConfigs.CLANS.load();
     }
 
     public boolean isAlly(PlayerEntity player) {

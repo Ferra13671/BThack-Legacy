@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.ActionBotTasks;
 
-import com.ferra13671.BThack.Core.FileSystem.JsonUtils;
+import com.ferra13671.BThack.Core.Client.Systems.FileSystem.JsonUtils;
 import com.ferra13671.BThack.api.Managers.managers.Build.BuildManager;
 import com.ferra13671.BThack.api.Managers.managers.Build.BuildThread3D;
 import com.ferra13671.BThack.api.Managers.managers.Thread.ThreadClosedException;
@@ -13,6 +13,7 @@ import net.minecraft.util.math.Vec3d;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class PlaceTask extends ActionBotTask {
 
@@ -37,7 +38,7 @@ public class PlaceTask extends ActionBotTask {
     @Override
     public void play() throws ThreadClosedException {
         BuildThread3D buildThread3D = new BuildThread3D();
-        buildThread3D.set3DSchematic(1, new ArrayList<>(Arrays.asList(new Vec3d(mc.player.getX() + x, mc.player.getY() + y, mc.player.getZ() + z))), new BlockPos(0,0,0));
+        buildThread3D.set3DSchematic(1, new ArrayList<>(List.of(new Vec3d(mc.player.getX() + x, mc.player.getY() + y, mc.player.getZ() + z))), new BlockPos(0,0,0));
         buildThread3D.start();
         while (BuildManager.isBuilding) {
             if (thread.isThreadClosed()) {

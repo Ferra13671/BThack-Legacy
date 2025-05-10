@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.ActionBotTasks;
 
 
-import com.ferra13671.BThack.Core.FileSystem.JsonUtils;
+import com.ferra13671.BThack.Core.Client.Systems.FileSystem.JsonUtils;
 import com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.ActionBotConfig;
 import com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.ActionBotTask;
 import com.google.gson.JsonObject;

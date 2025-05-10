@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.impl.Commands;
 
 import com.ferra13671.BThack.Core.Client.Client;
-import com.ferra13671.BThack.Core.FileSystem.ConfigSystem.ConfigSystem;
+import com.ferra13671.BThack.Core.Client.Systems.ConfigSystem.SubConfigs;
 import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.api.Managers.managers.Command.AbstractCommand;
 import com.ferra13671.BThack.api.Managers.managers.Command.Arguments;
@@ -17,16 +17,16 @@ public class CustomFontCommand extends AbstractCommand {
     public void compile(LiteralArgumentBuilder<CommandSource> builder) {
         builder.then(literal("setDefault").executes(context -> {
             Client.clientInfo.setFont("default");
+            SubConfigs.CLIENT_INFO.save();
             try {
-                ConfigSystem.saveClientInfo();
                 BThackRender.reloadFontRenderManager();
             } catch (Exception ignored) {}
             return SUCCESFUL;
         }));
         builder.then(literal("set").then(arg("font", Arguments.FONT_FILE("BThack/Fonts/")).executes(context -> {
             Client.clientInfo.setFont(context.getArgument("font", String.class));
+            SubConfigs.CLIENT_INFO.save();
             try {
-                ConfigSystem.saveClientInfo();
                 BThackRender.reloadFontRenderManager();
             } catch (Exception ignored) {}
             return SUCCESFUL;

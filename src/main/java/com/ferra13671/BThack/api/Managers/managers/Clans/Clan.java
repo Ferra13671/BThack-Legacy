@@ -1,9 +1,7 @@
 package com.ferra13671.BThack.api.Managers.managers.Clans;
 
-import com.ferra13671.BThack.BThack;
-import com.ferra13671.BThack.Core.FileSystem.ConfigSystem.ConfigSystem;
+import com.ferra13671.BThack.Core.Client.Systems.ConfigSystem.SubConfigs;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,11 +21,7 @@ public class Clan {
     public boolean addMember(String memberName) {
         if (!members.contains(memberName)) {
             members.add(memberName);
-            try {
-                ConfigSystem.saveClans();
-            } catch (IOException e) {
-                BThack.error(e.getMessage());
-            }
+            SubConfigs.CLANS.save();
             return true;
         } else {
             return false;
@@ -37,11 +31,7 @@ public class Clan {
     public boolean removeMember(String memberName) {
         if (members.contains(memberName)) {
             members.removeIf(memberName::equals);
-            try {
-                ConfigSystem.saveClans();
-            } catch (IOException e) {
-                BThack.error(e.getMessage());
-            }
+            SubConfigs.CLANS.save();
             return true;
         }
         return false;
