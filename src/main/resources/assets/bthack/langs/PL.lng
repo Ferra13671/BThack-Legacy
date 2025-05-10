@@ -221,6 +221,8 @@
 "lang.module.AutoMend.toggleMessage": Wszystkie items naprawione, wyłączanie.
 "lang.module.LongJump.ItemsNotFound": W ekwipunku nie ma żadnych elytra lub fajerwerków.
 "lang.module.TreeCutter.ConveyorNotEnabled": Ustawienie 'Conveyor Mode' nie jest włączone w PacketMine. Należy je włączyć przed włączeniem modułu.
+"lang.module.NoFall.message": [Grim NoFall] Aby funkcja zadziałała, należy zadać obrażenia od upadku 5 razy z włączoną NoFall.
+"lang.module.NoFall.takenDamage": [Grim NoFall] Obrażenia od upadku otrzymane %s razy.
 
 
 //Screens

@@ -222,6 +222,8 @@
 "lang.module.AutoMend.toggleMessage": All items repaired, disabling.
 "lang.module.LongJump.ItemsNotFound": Not found elytra or fireworks in your inventory.
 "lang.module.TreeCutter.ConveyorNotEnabled": The 'Conveyor Mode' setting is not enabled in PacketMine. Enable it before enabling the module.
+"lang.module.NoFall.message": [Grim NoFall] Take fall damage 5 times with NoFall enabled for it to work.
+"lang.module.NoFall.takenDamage": [Grim NoFall] Fall damage taken %s times.
 
 
 

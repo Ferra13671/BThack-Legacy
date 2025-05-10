@@ -2,6 +2,7 @@ package com.ferra13671.BThack.Core.Client;
 
 import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.Core.Client.Systems.FirstLaunchWelcomer;
+import com.ferra13671.BThack.Core.Client.Systems.GrimNoFallSystem;
 import com.ferra13671.BThack.Core.Client.Systems.HotbarSystem;
 import com.ferra13671.BThack.Core.Client.Systems.KeyHandler;
 import com.ferra13671.BThack.api.Interfaces.Mc;
@@ -74,6 +75,7 @@ public final class InitializeHelper implements Mc {
     static void initSystems() {
         BThack.EVENT_BUS.register(new KeyHandler());
         BThack.EVENT_BUS.register(new HotbarSystem());
+        BThack.EVENT_BUS.register(new GrimNoFallSystem());
         if (BThack.instance.versionInfo.isFirstLaunched()) BThack.EVENT_BUS.register(new FirstLaunchWelcomer());
     }
 }

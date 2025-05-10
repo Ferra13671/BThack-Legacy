@@ -222,6 +222,8 @@
 "lang.module.AutoMend.toggleMessage": Все предметы отремонтированы, выключение.
 "lang.module.LongJump.ItemsNotFound": В вашем инвентаре не обнаружены элитры или фейерверки.
 "lang.module.TreeCutter.ConveyorNotEnabled": Настройка 'Conveyor Mode' не включена в PacketMine. Включите ее перед включением модуля.
+"lang.module.NoFall.message": [Grim NoFall] Получите урон от падения 5 раз с включенным NoFall, что бы он заработал.
+"lang.module.NoFall.takenDamage": [Grim NoFall] Урон от падения получен %s раз.
 
 
 //Screens
