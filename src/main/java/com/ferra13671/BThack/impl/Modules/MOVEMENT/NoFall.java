@@ -8,7 +8,7 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.Setting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.ChatUtils;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
-import com.ferra13671.BThack.api.Utils.Ticker;
+import com.ferra13671.BThack.mixins.accessor.entity.ILivingEntity;
 import com.ferra13671.BThack.mixins.accessor.packet.IPlayerMoveC2SPacket;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
@@ -41,7 +41,6 @@ public class NoFall extends Module {
     }
 
     private boolean started = false;
-    private final Ticker postTicker = new Ticker();
     private boolean skipTick = true;
 
     private boolean sentMessage = false;
@@ -77,19 +76,18 @@ public class NoFall extends Module {
             started = true;
 
         if (started) {
-            postTicker.reset();
+            mc.options.jumpKey.setPressed(false);
             if (mc.player.isOnGround()) {
                 if (skipTick) {
                     skipTick = false;
                     return;
                 }
                 mc.player.jump();
+                ((ILivingEntity) mc.player).setJumpingCooldown(10);
                 started = false;
                 skipTick = true;
                 GrimNoFallSystem.updateFallDamage();
             }
         }
-        if (!postTicker.passed(500))
-            mc.options.jumpKey.setPressed(false);
     }
 }
