@@ -43,12 +43,19 @@
 "lang.module.Auto2FA": Automatycznie wysyła kod 2fa, jeśli zażąda tego serwer.
 "lang.module.AutoAnvilEnchant": Automatycznie nakłada zaklęcia z książek na przedmioty, jeśli w pobliżu znajduje się kowadło.
 "lang.module.AutoAuth": Automatyczne logowanie/rejestracja.
+"lang.module.AutoFarm": Automatycznie zbiera i sadzi plony.
+"lang.module.AutoFarmland": Automatycznie orze trawę i ziemię w pobliżu użytkownika.
+"lang.module.AutoShear": Automatyczne strzyżenie owiec.
+"lang.module.AutoSign": Zapamiętuje pierwszy wprowadzony tekst i automatycznie wstawia go w kolejnych powtórzeniach.
 "lang.module.Breaker": Automatycznie wydobywa wybrane bloki.
 "lang.module.CleanMemory": Czyści pamięć RAM po włączeniu zasilania.
 "lang.module.DeathCamera": Po śmierci będziesz mógł latać, tak jak w FreeCam.
+"lang.module.Fly": Wygodniejszy substytut kreatywnego lotu.
 "lang.module.HighwayBuilder": Automatycznie buduje proste autostrady.
 "lang.module.InstaNuker": Natychmiast wydobywa bloki wokół ciebie.
 "lang.module.ItemRandomizer": Gdy moduł jest włączony, losowo zmienia bieżący slot na pasku skrótów.
+"lang.module.Lawnmower": Łamie bloki trawy i kwiatów.
+"lang.module.LiquidFiller": Umieszczanie bloków w płynie.
 "lang.module.MiddleClick": Dodaje dodatkowe powiązanie do środkowego przycisku myszy.
 "lang.module.MoreChatHistory": Zwiększa maksymalny rozmiar czatu.
 "lang.module.NoBreakDelay": Usuwa opóźnienie lomania.
@@ -59,6 +66,7 @@
 "lang.module.PacketMine": Automatycznie rozbija blok przy użyciu pakietów.
 "lang.module.PistonSoundDelay": Redukuje irytujący dźwięk tłoków, gdy jest używany obok Lag Machine.
 "lang.module.PortalGod": Gdy jesteś w portalu, możesz otworzyć GUI.
+"lang.module.Reach": Zwiększa zasięg gracza.
 "lang.module.Replanish": Automatycznie uzupełnia elementy na pasku skrótów.
 "lang.module.Scrapper": Łamie bloki znajdujące się powyżej poziomu stóp.
 "lang.module.SuperInstaMine": Umożliwia natychmiastowe wydobycie dużej liczby bloków. (OSTRZEŻENIE: należy ostrożnie zmieniać ustawienia rozmiaru!)
@@ -180,16 +188,6 @@
 "lang.module.Waypoints": Umożliwia renderowanie waypointów.
 "lang.module.Xray": Umożliwia anulowanie rysowania bloków.
 "lang.module.Zoom": Umożliwia powiększenie obrazu.
-
-//WORLD
-"lang.module.AutoFarm": Automatycznie zbiera i sadzi plony.
-"lang.module.AutoFarmland": Automatycznie orze trawę i ziemię w pobliżu użytkownika.
-"lang.module.AutoShear": Automatyczne strzyżenie owiec.
-"lang.module.AutoSign": Zapamiętuje pierwszy wprowadzony tekst i automatycznie wstawia go w kolejnych powtórzeniach.
-"lang.module.Fly": Wygodniejszy substytut kreatywnego lotu.
-"lang.module.Lawnmower": Łamie bloki trawy i kwiatów.
-"lang.module.LiquidFiller": Umieszczanie bloków w płynie.
-"lang.module.Reach": Zwiększa zasięg gracza.
 
 
 //Module messages

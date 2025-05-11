@@ -43,12 +43,19 @@
 "lang.module.Auto2FA": Автоматически отправляет код 2fa, если сервер его запрашивает.
 "lang.module.AutoAnvilEnchant": Автоматически накладывает зачарования из книг на предметы, если поблизости есть наковальня.
 "lang.module.AutoAuth": Автоматический вход/регистрация.
+"lang.module.AutoFarm": Автоматически собирает и сажает урожай.
+"lang.module.AutoFarmland": Автоматически вспахивает траву и землю рядом с вами.
+"lang.module.AutoShear": Автоматическая стрижка овец.
+"lang.module.AutoSign": Запоминает первый введенный текст и автоматически вставляет его в последующие разы.
 "lang.module.Breaker": Автоматически добывает выбранные блоки.
 "lang.module.CleanMemory": Очищает ОЗУ при включении.
 "lang.module.DeathCamera": После смерти вы сможете летать, как с FreeCam.
+"lang.module.Fly": Более удобная замена творческому полету.
 "lang.module.HighwayBuilder": Автоматически строит прямые магистрали.
 "lang.module.InstaNuker": Мгновенно добывает блоки вокруг вас.
 "lang.module.ItemRandomizer": Пока модуль включен, он случайно меняет текущий слот в хотбаре.
+"lang.module.Lawnmower": Ломает траву и цветы.
+"lang.module.LiquidFiller": Ставит блоки в жидкости.
 "lang.module.MiddleClick": Добавляет дополнительный бинд к средней кнопке мыши.
 "lang.module.MoreChatHistory": Увеличивает максимальный размер чата.
 "lang.module.NoBreakDelay": Убирает задержку ломания.
@@ -58,7 +65,8 @@
 "lang.module.PacketCanceller": Отменяет прием или отправку некоторых пакетов.
 "lang.module.PacketMine": Автоматически ломает блок при помощи пакетов.
 "lang.module.PistonSoundDelay": Уменьшает раздражающий звук поршней при использовании рядом с лаг машиной.
-"lang.module.PortalGod": Когда вы находитесь в портале, вы можете открывать GUI.
+"lang.module.PortalGod": Когда вы находитесь в портале, вы можете открывать GUI.'
+"lang.module.Reach": Увеличивает дальность досягаемости игрока.
 "lang.module.Replanish": Автоматически пополняет предметы в хотбаре.
 "lang.module.Scrapper": Ломает блоки, находящиеся выше уровня ваших ног.
 "lang.module.SuperInstaMine": Позволяет мгновенно добывать большое количество блоков. (ВНИМАНИЕ: изменяйте настройки размера с осторожностью!)
@@ -180,16 +188,6 @@
 "lang.module.Waypoints": Позволяет рендерить вейпоинты.
 "lang.module.Xray": Позволяет отменить отрисовку блоков.
 "lang.module.Zoom": Позволяет увеличить масштаб.
-
-//WORLD
-"lang.module.AutoFarm": Автоматически собирает и сажает урожай.
-"lang.module.AutoFarmland": Автоматически вспахивает траву и землю рядом с вами.
-"lang.module.AutoShear": Автоматическая стрижка овец.
-"lang.module.AutoSign": Запоминает первый введенный текст и автоматически вставляет его в последующие разы.
-"lang.module.Fly": Более удобная замена творческому полету.
-"lang.module.Lawnmower": Ломает траву и цветы.
-"lang.module.LiquidFiller": Ставит блоки в жидкости.
-"lang.module.Reach": Увеличивает дальность досягаемости игрока.
 
 
 //Module messages

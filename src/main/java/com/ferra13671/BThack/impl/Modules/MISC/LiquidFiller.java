@@ -1,0 +1,104 @@
+package com.ferra13671.BThack.impl.Modules.MISC;
+
+import com.ferra13671.BThack.api.Events.ClientTickEvent;
+import com.ferra13671.BThack.api.Managers.managers.Build.BuildManager;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
+import com.ferra13671.BThack.api.Module.Module;
+import com.ferra13671.BThack.api.Utils.BlockUtils;
+import com.ferra13671.BThack.api.Utils.InventoryUtils;
+import com.ferra13671.BThack.api.Utils.KeyboardUtils;
+import com.ferra13671.BThack.api.Utils.Rotate.RotateMode;
+import com.ferra13671.MegaEvents.Base.EventSubscriber;
+import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.FluidBlock;
+import net.minecraft.item.BlockItem;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3i;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class LiquidFiller extends Module {
+
+    public final NumberSetting range = new NumberSetting("Range", this, 3, 3, 7, false);
+    public final NumberSetting placePerTick = new NumberSetting("Place per tick", this, 1, 1, 5, true);
+    public final BooleanSetting water = new BooleanSetting("Water", this, true);
+    public final BooleanSetting lava = new BooleanSetting("Lava", this, true);
+    public final BooleanSetting other = new BooleanSetting("Other (Mods)", this, true);
+
+    public final BooleanSetting rotate = new BooleanSetting("Rotate", this, false);
+    public final ModeSetting rotateMode = new ModeSetting("Rotate Mode", this, Arrays.asList("Packet", "Grim"), rotate::getValue).defaultValue("Grim");
+    public final BooleanSetting ignoreWalls = new BooleanSetting("Ignore Walls", this, true);
+
+    public final ModeSetting swap = new ModeSetting("Swap", this, Arrays.asList("Client", "Packet"));
+
+    public LiquidFiller() {
+        super("LiquidFiller",
+                "lang.module.LiquidFiller",
+                KeyboardUtils.RELEASE,
+                MCategory.MISC,
+                false
+        );
+
+        initSettings(
+                range,
+                placePerTick,
+                water,
+                lava,
+                other,
+
+                rotate,
+                rotateMode,
+                ignoreWalls,
+
+                swap
+        );
+    }
+
+    @EventSubscriber
+    public void onTick(ClientTickEvent e) {
+        if (nullCheck() || BuildManager.isBuilding) return;
+
+        List<Vec3i> sch = new ArrayList<>();
+
+        filterAction(sch);
+        interactAction(sch);
+    }
+
+    public void filterAction(List<Vec3i> sch) {
+        for (BlockPos pos : BlockUtils.getSphere(BlockPos.ofFloored(mc.player.getX(), mc.player.getY(), mc.player.getZ()), range.getValue().floatValue(), range.getValue().floatValue(), false, true, 0)) {
+            Block block = mc.world.getBlockState(pos).getBlock();
+
+            if (!ignoreWalls.getValue())
+                if (!BlockUtils.hasLineOfSight(mc.player.getPos(), pos.toCenterPos())) continue;
+
+            if (block == Blocks.WATER) {
+                if (water.getValue()) sch.add(pos);
+            } else if (block == Blocks.LAVA) {
+                if (lava.getValue()) sch.add(pos);
+            } else if (block instanceof FluidBlock) {
+                if (other.getValue()) sch.add(pos);
+            }
+        }
+    }
+
+    public void interactAction(List<Vec3i> sch) {
+        int places = 0;
+        for (Vec3i pos : sch) {
+            if (places >= placePerTick.getValue().intValue()) break;
+            int slot = InventoryUtils.findItem(BlockItem.class);
+            if (slot == -1) return;
+            if (mc.player.getInventory().getStack(mc.player.getInventory().selectedSlot).getItem() instanceof BlockItem) slot = mc.player.getInventory().selectedSlot;
+            int oldSlot = mc.player.getInventory().selectedSlot;
+
+            InventoryUtils.swapAction(oldSlot, slot, false, swap.getValue());
+            BuildManager.placeBlock(new BlockPos(pos), RotateMode.valueOf(rotateMode.getValue().toUpperCase()));
+            InventoryUtils.swapAction(oldSlot, slot, true, swap.getValue());
+            places++;
+        }
+    }
+}

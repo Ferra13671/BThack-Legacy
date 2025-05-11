@@ -44,12 +44,19 @@
 "lang.module.Auto2FA": Automatically sends the 2fa code if the server requests it.
 "lang.module.AutoAnvilEnchant": Automatically applies enchantments from books to items if there is an anvil nearby.
 "lang.module.AutoAuth": Automatically login/register;
+"lang.module.AutoFarm": Automatically picks and plants the crop.
+"lang.module.AutoFarmland": Automatically plows the grass and dirt near you.
+"lang.module.AutoShear": Automatic sheep shearing.
+"lang.module.AutoSign": Memorizes the first text entered and automatically inserts it in subsequent times.
 "lang.module.Breaker": Automatically mining selected blocks.
 "lang.module.CleanMemory": Clears RAM when turned on.
 "lang.module.DeathCamera": After you die, you can fly as with FreeCam.
+"lang.module.Fly": A more comfortable substitute for creative flight.
 "lang.module.HighwayBuilder": Automatically builds straight highways.
 "lang.module.InstaNuker": Instantly mines the blocks around you.
 "lang.module.ItemRandomizer": While the module is enabled, it randomly changes the current slot in the hotbar.
+"lang.module.Lawnmower": Breaks grass and flowers.
+"lang.module.LiquidFiller": Placing blocks in the liquids.
 "lang.module.MiddleClick": Adds an additional bind on the mouse middle button.
 "lang.module.MoreChatHistory": Increases the maximum chat size.
 "lang.module.NoBreakDelay": Removes the break delay.
@@ -60,6 +67,7 @@
 "lang.module.PacketMine": Automatically breaks the block using packets.
 "lang.module.PistonSoundDelay": Reduces annoying pistons sounds when used near a lag machine.
 "lang.module.PortalGod": When you are in the portal, you can open the GUI.
+"lang.module.Reach": Increases the player's reach range.
 "lang.module.Replanish": Automatically replenishes items in the hotbar.
 "lang.module.Scrapper": Breaks blocks, above the level of your feet.
 "lang.module.SuperInstaMine": Allows you to instantly mine a lot of blocks. (WARNING: change the size settings with caution!)
@@ -181,16 +189,6 @@
 "lang.module.Waypoints": Allows rendering of waypoints.
 "lang.module.Xray": Allows you to cancel the rendering of blocks.
 "lang.module.Zoom": Allows you to zoom in.
-
-//WORLD
-"lang.module.AutoFarm": Automatically picks and plants the crop.
-"lang.module.AutoFarmland": Automatically plows the grass and dirt near you.
-"lang.module.AutoShear": Automatic sheep shearing.
-"lang.module.AutoSign": Memorizes the first text entered and automatically inserts it in subsequent times.
-"lang.module.Fly": A more comfortable substitute for creative flight.
-"lang.module.Lawnmower": Breaks grass and flowers.
-"lang.module.LiquidFiller": Placing blocks in the liquids.
-"lang.module.Reach": Increases the player's reach range.
 
 
 //Module messages

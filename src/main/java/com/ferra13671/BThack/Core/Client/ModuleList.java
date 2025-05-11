@@ -19,7 +19,6 @@ import com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.ActionBot;
 import com.ferra13671.BThack.impl.Modules.PLAYER.Spammer.Spammer;
 import com.ferra13671.BThack.impl.Modules.RENDER.*;
 import com.ferra13671.BThack.impl.Modules.RENDER.HoleESP;
-import com.ferra13671.BThack.impl.Modules.WORLD.*;
 
 import java.util.Arrays;
 
@@ -69,12 +68,19 @@ public final class ModuleList {
     public static Auto2FA auto2FA;
     public static AutoAnvilEnchant autoAnvilEnchant;
     public static AutoAuth autoAuth;
+    public static AutoFarm autoFarm;
+    public static AutoFarmland autoFarmland;
+    public static AutoShear autoShear;
+    public static AutoSign autoSign;
     public static Breaker breaker;
     public static CleanMemory cleanMemory;
     public static DeathCamera deathCamera;
+    public static Fly fly;
     public static HighwayBuilder highwayBuilder;
     public static InstaNuker instaNuker;
     public static ItemRandomizer itemRandomizer;
+    public static Lawnmower lawnmower;
+    public static LiquidFiller liquidFiller;
     public static MiddleClick middleClick;
     public static MoreChatHistory moreChatHistory;
     public static NoBreakDelay noBreakDelay;
@@ -85,6 +91,7 @@ public final class ModuleList {
     public static PacketMine packetMine;
     public static PistonSoundDelay pistonSoundDelay;
     public static PortalGod portalGod;
+    public static Reach reach;
     public static Scrapper scrapper;
     public static SuperInstaMine superInstaMine;
     public static Timer timer;
@@ -203,17 +210,6 @@ public final class ModuleList {
     public static Xray xray;
     public static Zoom zoom;
 
-    //WORLD
-    public static AutoFarm autoFarm;
-    public static AutoFarmland autoFarmland;
-    public static AutoShear autoShear;
-    public static AutoSign autoSign;
-    public static Fly fly;
-    public static Lawnmower lawnmower;
-    public static LiquidFiller liquidFiller;
-    public static Reach reach;
-
-
     static void initModules() {
         PluginSystem.getLoadedPlugins().forEach(Plugin::onInitModules);
 
@@ -263,12 +259,19 @@ public final class ModuleList {
         auto2FA = register(new Auto2FA());
         autoAnvilEnchant = register(new AutoAnvilEnchant());
         autoAuth = register(new AutoAuth());
+        autoFarm = register(new AutoFarm());
+        autoFarmland = register(new AutoFarmland());
+        autoShear = register(new AutoShear());
+        autoSign = register(new AutoSign());
         breaker = register(new Breaker());
         cleanMemory = register(new CleanMemory());
         deathCamera = register(new DeathCamera());
+        fly = register(new Fly());
         highwayBuilder = register(new HighwayBuilder());
         instaNuker = register(new InstaNuker());
         itemRandomizer = register(new ItemRandomizer());
+        lawnmower = register(new Lawnmower());
+        liquidFiller = register(new LiquidFiller());
         middleClick = register(new MiddleClick());
         moreChatHistory = register(new MoreChatHistory());
         noBreakDelay = register(new NoBreakDelay());
@@ -279,6 +282,7 @@ public final class ModuleList {
         packetMine = register(new PacketMine());
         pistonSoundDelay = register(new PistonSoundDelay());
         portalGod = register(new PortalGod());
+        reach = register(new Reach());
         scrapper = register(new Scrapper());
         superInstaMine = register(new SuperInstaMine());
         timer = register(new Timer());
@@ -396,17 +400,6 @@ public final class ModuleList {
         waypoints = register(new Waypoints());
         xray = register(new Xray());
         zoom = register(new Zoom());
-
-        //WORLD
-        autoFarm = register(new AutoFarm());
-        autoFarmland = register(new AutoFarmland());
-        autoShear = register(new AutoShear());
-        autoSign = register(new AutoSign());
-        fly = register(new Fly());
-        lawnmower = register(new Lawnmower());
-        liquidFiller = register(new LiquidFiller());
-        reach = register(new Reach());
-
 
 
         Client.modules.addAll(PluginUtils.getPluginsModules());
