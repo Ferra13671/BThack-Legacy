@@ -191,6 +191,7 @@ public final class ModuleList {
     public static NoOverlay noOverlay;
     public static NoRender noRender;
     public static NoSwing noSwing;
+    public static NoWeather noWeather;
     public static PasswordHider passwordHider;
     public static PhaseESP phaseESP;
     public static Radar radar;
@@ -210,7 +211,6 @@ public final class ModuleList {
     public static Fly fly;
     public static Lawnmower lawnmower;
     public static LiquidFiller liquidFiller;
-    public static NoWeather noWeather;
     public static Reach reach;
 
 
@@ -385,6 +385,7 @@ public final class ModuleList {
         noOverlay = register(new NoOverlay());
         noRender = register(new NoRender());
         noSwing = register(new NoSwing());
+        noWeather = register(new NoWeather());
         passwordHider = register(new PasswordHider());
         phaseESP = register(new PhaseESP());
         radar = register(new Radar());
@@ -404,7 +405,6 @@ public final class ModuleList {
         fly = register(new Fly());
         lawnmower = register(new Lawnmower());
         liquidFiller = register(new LiquidFiller());
-        noWeather = register(new NoWeather());
         reach = register(new Reach());
 
 
