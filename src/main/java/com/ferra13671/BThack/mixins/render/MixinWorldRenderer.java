@@ -8,6 +8,7 @@ import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gl.VertexBuffer;
 import net.minecraft.client.render.*;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.decoration.EndCrystalEntity;
@@ -61,17 +62,30 @@ public abstract class MixinWorldRenderer implements ModifyWorldRenderer {
 
     @Inject(method = "renderWeather", at = @At("HEAD"), cancellable = true)
     public void modifyRenderWeather(LightmapTextureManager manager, float tickDelta, double cameraX, double cameraY, double cameraZ, CallbackInfo ci) {
-        if (ModuleList.noWeather.isEnabled())
+        if (ModuleList.noWeather.isEnabled() && (!ModuleList.ambience.isEnabled() || !ModuleList.ambience.customWeather.getValue()))
             ci.cancel();
+    }
+
+    @Redirect(method = "renderWeather", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/world/ClientWorld;getRainGradient(F)F"))
+    public float modifyGetRainGradientInRenderWeather(ClientWorld instance, float v) {
+        return ModuleList.ambience.getRainGradient(instance.getRainGradient(v));
     }
 
     @Inject(method = "tickRainSplashing", at = @At("HEAD"), cancellable = true)
     public void modifyTickRainSplashing(Camera camera, CallbackInfo ci) {
-        if (ModuleList.noWeather.isEnabled())
+        if (ModuleList.noWeather.isEnabled() && (!ModuleList.ambience.isEnabled() || !ModuleList.ambience.customWeather.getValue()))
             ci.cancel();
     }
 
+    @Redirect(method = "tickRainSplashing", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/world/ClientWorld;getRainGradient(F)F"))
+    public float modifyGetRainGradientInTicRainSplashing(ClientWorld instance, float v) {
+        return ModuleList.ambience.getRainGradient(instance.getRainGradient(v));
+    }
 
+    @Redirect(method = "renderSky", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/world/ClientWorld;getRainGradient(F)F"))
+    public float modifyGetRainGradientInRenderSky(ClientWorld instance, float v) {
+        return ModuleList.ambience.getRainGradient(instance.getRainGradient(v));
+    }
 
     @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/MinecraftClient;hasOutline(Lnet/minecraft/entity/Entity;)Z"))
     public boolean modifyHasOutline(MinecraftClient instance, Entity entity) {

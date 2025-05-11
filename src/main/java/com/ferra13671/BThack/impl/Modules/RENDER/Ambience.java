@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.impl.Modules.RENDER;
 
+import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.api.Events.Render.RenderWorldLastEvent;
 import com.ferra13671.BThack.api.IMixin.ModifyWorldRenderer;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.*;
@@ -54,6 +55,11 @@ public class Ambience extends Module {
     public final BooleanSetting customMoonPhase = new BooleanSetting("Custom Moon Phase", this, false).inCategory(moonPhaseCategory);
     public final NumberSetting moonPhase = new NumberSetting("Moon Phase", this, 5, 0, 7, true, customMoonPhase::getValue).inCategory(moonPhaseCategory);
 
+    public final CategorySetting weatherCategory = new CategorySetting("Weather", this);
+    public final BooleanSetting customWeather = new BooleanSetting("Custom Weather", this, false).inCategory(weatherCategory);
+    public final ModeSetting weather = new ModeSetting("Weather", this, Arrays.asList("Clear", "Rain", "Thunder", "Ash", "Snow"), customWeather::getValue).inCategory(weatherCategory);
+    public final NumberSetting ashProbability = new NumberSetting("Ash Probability", this, 1, 0.1, 10, false, () -> customWeather.getValue() && weather.getValue().equals("Ash")).inCategory(weatherCategory);
+
     public Ambience() {
         super("Ambience",
                 "lang.module.Ambience",
@@ -68,7 +74,8 @@ public class Ambience extends Module {
                 cloudsCategory,
                 worldTimeCategory,
                 starsCategory,
-                moonPhaseCategory
+                moonPhaseCategory,
+                weatherCategory
         );
     }
     private final Ticker ticker = new Ticker();
@@ -149,5 +156,21 @@ public class Ambience extends Module {
         }
 
         return bufferBuilder.end();
+    }
+
+    public boolean isParticleWeather() {
+        return ModuleList.ambience.weather.getValue().equals("Ash");
+    }
+
+    public float getRainGradient(float value) {
+        if (ModuleList.ambience.isEnabled() && ModuleList.ambience.customWeather.getValue() && (!ModuleList.ambience.weather.getValue().equals("Clear") && !ModuleList.ambience.isParticleWeather()))
+            return ModuleList.ambience.weather.getValue().equals("Thunder") ? 2f : 1f;
+        else return value;
+    }
+
+    public float getThunderGradient(float value) {
+        if (ModuleList.ambience.isEnabled() && ModuleList.ambience.customWeather.getValue() && ModuleList.ambience.weather.getValue().equals("Thunder"))
+            return 1f;
+        else return value;
     }
 }

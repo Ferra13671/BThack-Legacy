@@ -26,6 +26,8 @@
     "entity.MixinPlayerEntity",
     "render.MixinSodiumBlockOcclusionCache",
     "render.MixinSodiumDefaultFluidRenderer",
+    "world.MixinBiome",
+    "world.MixinBiomeEffects",
     "world.MixinDimensionType",
     "world.MixinWorld"
   ],
