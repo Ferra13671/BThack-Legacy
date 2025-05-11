@@ -4,10 +4,7 @@ import com.ferra13671.BThack.Core.Client.ModuleList;
 import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.Core.Render.Box.RenderBox;
 import com.ferra13671.BThack.api.Events.Render.RenderWorldLastEvent;
-import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
-import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ColorSetting;
-import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
-import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
+import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.*;
 import com.ferra13671.BThack.api.Managers.managers.Thread.BThackThread;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.*;
@@ -22,37 +19,29 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-//TODO: Categories
 public class HoleESP extends Module {
 
-    public final ModeSetting page = new ModeSetting("Page", this, new ArrayList<>(Arrays.asList("Range", "Update", "Box", "Holes")));
+    public final CategorySetting rangeCategory = new CategorySetting("Range", this);
+    public final ModeSetting rangeMode = new ModeSetting("Range Mode", this, new ArrayList<>(Arrays.asList("Normal", "Extra"))).inCategory(rangeCategory);
+    public final NumberSetting range = new NumberSetting("Range", this, 7, 3, 200, true, () -> rangeMode.getValue().equals("Normal")).inCategory(rangeCategory);
+    public final NumberSetting rangeH = new NumberSetting("RangeH", this, 7, 3, 200, false, () -> rangeMode.getValue().equals("Extra")).inCategory(rangeCategory);
+    public final NumberSetting rangeV = new NumberSetting("RangeV", this, 7, 3, 200, false, () -> rangeMode.getValue().equals("Extra")).inCategory(rangeCategory);
+    public final BooleanSetting sphere = new BooleanSetting("Sphere", this, true, () -> rangeMode.getValue().equals("Extra")).inCategory(rangeCategory);
 
-    //Range Settings
-    public final ModeSetting rangeMode = new ModeSetting("Range Mode", this, new ArrayList<>(Arrays.asList("Normal", "Extra")), () -> page.getValue().equals("Range"));
-    public final NumberSetting range = new NumberSetting("Range", this, 7, 3, 200, true, () -> rangeMode.getValue().equals("Normal") && page.getValue().equals("Range"));
-    public final NumberSetting rangeH = new NumberSetting("RangeH", this, 7, 3, 200, false, () -> rangeMode.getValue().equals("Extra") && page.getValue().equals("Range"));
-    public final NumberSetting rangeV = new NumberSetting("RangeV", this, 7, 3, 200, false, () -> rangeMode.getValue().equals("Extra") && page.getValue().equals("Range"));
-    public final BooleanSetting sphere = new BooleanSetting("Sphere", this, true, () -> rangeMode.getValue().equals("Extra") && page.getValue().equals("Range"));
-    /////////
+    public final CategorySetting updateCategory = new CategorySetting("Update", this);
+    public final ModeSetting updateMode = new ModeSetting("Mode", this, new ArrayList<>(Arrays.asList("Thread", "Unoptimized"))).inCategory(updateCategory);
+    public final NumberSetting updateDelay = new NumberSetting("Delay", this, 500, 100, 1500, true, () -> updateMode.getValue().equals("Thread")).inCategory(updateCategory);
 
-    //Update Settings
-    public final ModeSetting updateMode = new ModeSetting("UpMode", this, new ArrayList<>(Arrays.asList("Thread", "Unoptimized")), () -> page.getValue().equals("Update"));
-    public final NumberSetting updateDelay = new NumberSetting("Delay", this, 500, 100, 1500, true, () -> updateMode.getValue().equals("Thread") && page.getValue().equals("Update"));
-    /////////
+    public final CategorySetting boxCategory = new CategorySetting("Box", this);
+    public final NumberSetting boxLength = new NumberSetting("Box Length", this, 0.5, 0.05, 0.5, false).inCategory(boxCategory);
+    public final NumberSetting boxWidth = new NumberSetting("Box Width", this, 0.5, 0.05, 0.5, false).inCategory(boxCategory);
+    public final NumberSetting boxHeight = new NumberSetting("Box Height", this, 0.2, 0.1, 1, false).inCategory(boxCategory);
 
-    //Box Settings
-    public final NumberSetting boxLength = new NumberSetting("Box Length", this, 0.5, 0.05, 0.5, false, () -> page.getValue().equals("Box"));
-    public final NumberSetting boxWidth = new NumberSetting("Box Width", this, 0.5, 0.05, 0.5, false, () -> page.getValue().equals("Box"));
-    public final NumberSetting boxHeight = new NumberSetting("Box Height", this, 0.2, 0.1, 1, false, () -> page.getValue().equals("Box"));
-    /////////
-
-    //Holes Settings
-    public final BooleanSetting obsidianHoles = new BooleanSetting("Obsidian Holes", this, true, () -> page.getValue().equals("Holes"));
-    public final ColorSetting obsidianColor = new ColorSetting("Obsidian Color", this, new Color(255, 255, 0), () -> obsidianHoles.getValue() && page.getValue().equals("Holes")).withBlockedAlpha();
-
-    public final BooleanSetting bedrockHoles = new BooleanSetting("Bedrock Holes", this, true, () -> page.getValue().equals("Holes"));
-    public final ColorSetting bedrockColor = new ColorSetting("Bedrock Color", this, new Color(61, 194, 46), () -> bedrockHoles.getValue() && page.getValue().equals("Holes")).withBlockedAlpha();
-    /////////
+    public final CategorySetting holesCategory = new CategorySetting("Holes", this);
+    public final BooleanSetting obsidianHoles = new BooleanSetting("Obsidian Holes", this, true).inCategory(holesCategory);
+    public final ColorSetting obsidianColor = new ColorSetting("Obsidian Color", this, new Color(255, 255, 0), obsidianHoles::getValue).withBlockedAlpha().inCategory(holesCategory);
+    public final BooleanSetting bedrockHoles = new BooleanSetting("Bedrock Holes", this, true).inCategory(holesCategory);
+    public final ColorSetting bedrockColor = new ColorSetting("Bedrock Color", this, new Color(61, 194, 46), bedrockHoles::getValue).withBlockedAlpha().inCategory(holesCategory);
 
 
     public HoleESP() {
@@ -79,12 +68,10 @@ public class HoleESP extends Module {
     }
 
     public List<BlockPos> findBedrockHoles() {
-        List<BlockPos> bedHoles;
-        if (rangeMode.getValue().equals("Normal")) {
-            bedHoles = BlockUtils.getNearbyBlocks(mc.player, range.getValue(), false);
-        } else {
-            bedHoles = BlockUtils.getSphere(new BlockPos(mc.player.getBlockPos()), rangeH.getValue().floatValue(), rangeV.getValue().floatValue(), false, sphere.getValue(), 0);
-        }
+        List<BlockPos> bedHoles = rangeMode.getValue().equals("Normal") ?
+                BlockUtils.getNearbyBlocks(mc.player, range.getValue(), false) :
+                BlockUtils.getSphere(new BlockPos(mc.player.getBlockPos()), rangeH.getValue().floatValue(), rangeV.getValue().floatValue(), false, sphere.getValue(), 0);
+
         return bedHoles.stream()
                 .filter(HoleUtils::isBedrockHole)
                 .collect(Collectors.toList());
