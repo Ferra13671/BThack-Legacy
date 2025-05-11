@@ -142,6 +142,7 @@
 "lang.module.XCarry": Umożliwia zapisywanie przedmiotów w slotach rzemieślniczych.
 
 //RENDER
+"lang.module.Ambience": Zmienia atmosferę świata..
 "lang.module.AntiHazard": Wyłącza efekty nudności i ślepoty.
 "lang.module.AttackTrace": Rysuje linię do ostatnio zaatakowanej entiti.
 "lang.module.BetterChat": Dodatkowe ustawienia czatu.
@@ -184,16 +185,11 @@
 "lang.module.AutoFarmland": Automatycznie orze trawę i ziemię w pobliżu użytkownika.
 "lang.module.AutoShear": Automatyczne strzyżenie owiec.
 "lang.module.AutoSign": Zapamiętuje pierwszy wprowadzony tekst i automatycznie wstawia go w kolejnych powtórzeniach.
-"lang.module.CloudsColor": Zmienia kolor chmur.
-"lang.module.CustomDayTime": Ustawia niestandardową porę dnia.
 "lang.module.Fly": Wygodniejszy substytut kreatywnego lotu.
-"lang.module.FogColor": Zmienia kolor mgły.
 "lang.module.Lawnmower": Łamie bloki trawy i kwiatów.
 "lang.module.LiquidFiller": Umieszczanie bloków w płynie.
 "lang.module.NoWeather": Wyłącza pogodę.
 "lang.module.Reach": Zwiększa zasięg gracza.
-"lang.module.SkyColor": Zmienia kolor nieba na świecie.
-"lang.module.WorldElements": Moduł do dostrajania świata.
 
 
 //Module messages

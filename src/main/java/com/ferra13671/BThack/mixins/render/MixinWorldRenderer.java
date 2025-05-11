@@ -43,7 +43,7 @@ public abstract class MixinWorldRenderer implements ModifyWorldRenderer {
 
         starsBuffer = new VertexBuffer(VertexBuffer.Usage.STATIC);
         starsBuffer.bind();
-        starsBuffer.upload(ModuleList.worldElements.isEnabled() && ModuleList.worldElements.changeStars.getValue() ? ModuleList.worldElements.buildStarsBuffer() : buildStarsBuffer(Tessellator.getInstance()));
+        starsBuffer.upload(ModuleList.ambience.isEnabled() && ModuleList.ambience.customStars.getValue() ? ModuleList.ambience.buildStarsBuffer() : buildStarsBuffer(Tessellator.getInstance()));
         VertexBuffer.unbind();
     }
 

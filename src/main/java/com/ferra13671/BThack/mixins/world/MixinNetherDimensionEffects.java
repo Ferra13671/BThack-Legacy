@@ -13,8 +13,7 @@ public class MixinNetherDimensionEffects {
 
     @Inject(method = "adjustFogColor", at = @At("HEAD"), cancellable = true)
     public void modifyGetFogColor(Vec3d par1, float par2, CallbackInfoReturnable<Vec3d> cir) {
-        if (ModuleList.fogColor.isEnabled() && ModuleList.fogColor.nether.getValue()) {
-            cir.setReturnValue(ModuleList.fogColor.getFogColor());
-        }
+        if (ModuleList.ambience.isEnabled() && ModuleList.ambience.customFogColor.getValue() && ModuleList.ambience.nether.getValue())
+            cir.setReturnValue(ModuleList.ambience.getFogColor());
     }
 }

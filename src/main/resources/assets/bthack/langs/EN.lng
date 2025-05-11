@@ -143,6 +143,7 @@
 "lang.module.XCarry": Allows you to save items in crafting slots.
 
 //RENDER
+"lang.module.Ambience": Changes world ambience.
 "lang.module.AntiHazard": Disables nausea and blindness effects.
 "lang.module.AttackTrace": Draws a line to the entity you last attacked.
 "lang.module.BetterChat": Additional settings for chat.
@@ -185,16 +186,11 @@
 "lang.module.AutoFarmland": Automatically plows the grass and dirt near you.
 "lang.module.AutoShear": Automatic sheep shearing.
 "lang.module.AutoSign": Memorizes the first text entered and automatically inserts it in subsequent times.
-"lang.module.CloudsColor": Changes the color of the clouds.
-"lang.module.CustomDayTime": Sets custom day time.
 "lang.module.Fly": A more comfortable substitute for creative flight.
-"lang.module.FogColor": Changes the color of the fog.
 "lang.module.Lawnmower": Breaks grass and flowers.
 "lang.module.LiquidFiller": Placing blocks in the liquids.
 "lang.module.NoWeather": Turns off the weather.
 "lang.module.Reach": Increases the player's reach range.
-"lang.module.SkyColor": Changes the color of the sky in the world.
-"lang.module.WorldElements": A module for fine-tuning the world.
 
 
 //Module messages

@@ -44,20 +44,20 @@ public abstract class MixinClientWorld extends World {
 
     @Inject(method = "getCloudsColor", at = @At("HEAD"), cancellable = true)
     public void modifyGetCloudColor(float p_getCloudColour_1_, CallbackInfoReturnable<Vec3d> cir) {
-        if (ModuleList.cloudsColor.isEnabled())
-            cir.setReturnValue(ModuleList.cloudsColor.getCloudsColor());
+        if (ModuleList.ambience.isEnabled() && ModuleList.ambience.customCloudsColor.getValue())
+            cir.setReturnValue(ModuleList.ambience.getCloudsColor());
     }
 
     @Inject(method = "getSkyColor", at = @At("HEAD"), cancellable = true)
     public void modifyGetSkyColor(Vec3d cameraPos, float tickDelta, CallbackInfoReturnable<Vec3d> cir) {
-        if (ModuleList.skyColor.isEnabled())
-            cir.setReturnValue(ModuleList.skyColor.getSkyColor());
+        if (ModuleList.ambience.isEnabled() && ModuleList.ambience.customSkyColor.getValue())
+            cir.setReturnValue(ModuleList.ambience.getSkyColor());
     }
 
     @Inject(method = "getStarBrightness", at = @At("HEAD"), cancellable = true)
     public void modifyStarBrightness(float f, CallbackInfoReturnable<Float> cir) {
-        if (ModuleList.worldElements.isEnabled() && ModuleList.worldElements.changeStars.getValue() && ModuleList.worldElements.starBrightness.getValue())
-            cir.setReturnValue(ModuleList.worldElements.starBright.getValue().floatValue());
+        if (ModuleList.ambience.isEnabled() && ModuleList.ambience.customStars.getValue() && ModuleList.ambience.customBrightness.getValue())
+            cir.setReturnValue(ModuleList.ambience.starsBrightness.getValue().floatValue());
     }
 
     @Inject(method = "playSound(DDDLnet/minecraft/sound/SoundEvent;Lnet/minecraft/sound/SoundCategory;FFZJ)V", at = @At("HEAD"), cancellable = true)
@@ -79,8 +79,8 @@ public abstract class MixinClientWorld extends World {
 
     @ModifyArgs(method = "setTimeOfDay", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/world/ClientWorld$Properties;setTimeOfDay(J)V"))
     public void modifyArgsSetTimeOfDay(Args args) {
-        if (ModuleList.customDayTime.isEnabled())
-            args.set(0, ModuleList.customDayTime.time < 0 ? -ModuleList.customDayTime.time : ModuleList.customDayTime.time);
+        if (ModuleList.ambience.isEnabled() && ModuleList.ambience.customWorldTime.getValue())
+            args.set(0, ModuleList.ambience.getWorldTime());
     }
 
     @Inject(method = "addEntity", at = @At("HEAD"))

@@ -142,6 +142,7 @@
 "lang.module.XCarry": Позволяет сохранять предметы в слотах для крафта.
 
 //RENDER
+"lang.module.Ambience": Меняет атмосферму мира.
 "lang.module.AntiHazard": Отключает эффекты тошноты и слепоты.
 "lang.module.AttackTrace": Рисует линию к ентити, которого вы атаковали последним.
 "lang.module.BetterChat": Дополнительные настройки для чата.
@@ -184,16 +185,11 @@
 "lang.module.AutoFarmland": Автоматически вспахивает траву и землю рядом с вами.
 "lang.module.AutoShear": Автоматическая стрижка овец.
 "lang.module.AutoSign": Запоминает первый введенный текст и автоматически вставляет его в последующие разы.
-"lang.module.CloudsColor": Меняет цвет облаков.
-"lang.module.CustomDayTime": Устанавливает кастомное время дня.
 "lang.module.Fly": Более удобная замена творческому полету.
-"lang.module.FogColor": Меняет цвет тумана.
 "lang.module.Lawnmower": Ломает траву и цветы.
 "lang.module.LiquidFiller": Ставит блоки в жидкости.
 "lang.module.NoWeather": Отключает погоду.
 "lang.module.Reach": Увеличивает дальность досягаемости игрока.
-"lang.module.SkyColor": Меняет цвет неба в мире.
-"lang.module.WorldElements": Модуль для тонкой настройки мира.
 
 
 //Module messages

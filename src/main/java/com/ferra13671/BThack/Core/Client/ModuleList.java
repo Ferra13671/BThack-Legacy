@@ -165,6 +165,7 @@ public final class ModuleList {
     public static XCarry xCarry;
 
     //RENDER
+    public static Ambience ambience;
     public static AntiHazard antiHazard;
     public static AttackTrace attackTrace;
     public static BetterChat betterChat;
@@ -206,16 +207,11 @@ public final class ModuleList {
     public static AutoFarmland autoFarmland;
     public static AutoShear autoShear;
     public static AutoSign autoSign;
-    public static CloudsColor cloudsColor;
-    public static CustomDayTime customDayTime;
     public static Fly fly;
-    public static FogColor fogColor;
     public static Lawnmower lawnmower;
     public static LiquidFiller liquidFiller;
     public static NoWeather noWeather;
     public static Reach reach;
-    public static SkyColor skyColor;
-    public static WorldElements worldElements;
 
 
     static void initModules() {
@@ -363,6 +359,7 @@ public final class ModuleList {
         xCarry = register(new XCarry());
 
         //RENDER
+        ambience = register(new Ambience());
         antiHazard = register(new AntiHazard());
         attackTrace = register(new AttackTrace());
         betterChat = register(new BetterChat());
@@ -404,16 +401,11 @@ public final class ModuleList {
         autoFarmland = register(new AutoFarmland());
         autoShear = register(new AutoShear());
         autoSign = register(new AutoSign());
-        cloudsColor = register(new CloudsColor());
-        customDayTime = register(new CustomDayTime());
         fly = register(new Fly());
-        fogColor = register(new FogColor());
         lawnmower = register(new Lawnmower());
         liquidFiller = register(new LiquidFiller());
         noWeather = register(new NoWeather());
         reach = register(new Reach());
-        skyColor = register(new SkyColor());
-        worldElements = register(new WorldElements());
 
 
 

@@ -14,7 +14,10 @@ public class MixinBackgroundRenderer {
 
     @Inject(method = "applyFog", at = @At("TAIL"))
     private static void modifyApplyFog(Camera camera, BackgroundRenderer.FogType fogType, float viewDistance, boolean thickFog, float tickDelta, CallbackInfo ci) {
-        if (ModuleList.noFog.isEnabled()) {
+        if (ModuleList.ambience.isEnabled() && ModuleList.ambience.customFogDistance.getValue()) {
+            RenderSystem.setShaderFogStart(ModuleList.ambience.fogStart.getValue().floatValue());
+            RenderSystem.setShaderFogEnd(ModuleList.ambience.fogEnd.getValue().floatValue());
+        } else if (ModuleList.noFog.isEnabled()) {
             if (fogType == BackgroundRenderer.FogType.FOG_TERRAIN) {
                 RenderSystem.setShaderFogStart(viewDistance * 4);
                 RenderSystem.setShaderFogEnd(viewDistance * 4.25f);

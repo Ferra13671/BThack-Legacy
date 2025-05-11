@@ -12,7 +12,7 @@ public abstract class MixinWorld {
 
     @Inject(method = "getTimeOfDay", at = @At("HEAD"), cancellable = true)
     public void modifyGetTimeOfDay(CallbackInfoReturnable<Long> cir) {
-        if (ModuleList.customDayTime.isEnabled())
-            cir.setReturnValue(ModuleList.customDayTime.time);
+        if (ModuleList.ambience.isEnabled() && ModuleList.ambience.customWorldTime.getValue())
+            cir.setReturnValue(ModuleList.ambience.getWorldTime());
     }
 }
