@@ -135,8 +135,7 @@ public class Module {
         CLIENT(Categories.CLIENT),
         RENDER(Categories.RENDER),
         MOVEMENT(Categories.MOVEMENT),
-        PLAYER(Categories.PLAYER),
-        WORLD(Categories.WORLD);
+        PLAYER(Categories.PLAYER);
 
 
         public final Category category;

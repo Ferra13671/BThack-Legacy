@@ -12,7 +12,6 @@ public class Categories {
     public static final Category RENDER = register("RENDER");
     public static final Category MOVEMENT = register("MOVEMENT");
     public static final Category PLAYER = register("PLAYER");
-    public static final Category WORLD = register("WORLD");
 
     public static final Category HUD = new Category("HUD");
 
