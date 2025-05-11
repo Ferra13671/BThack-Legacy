@@ -169,6 +169,7 @@
 "lang.module.NoOverlay": Wyłącza renderowanie nakładki.
 "lang.module.NoRender": Wyłącza renderowanie niektórych elementów.
 "lang.module.NoSwing": Anuluje animację machania ręką na serwerze lub kliencie.
+"lang.module.NoWeather": Wyłącza pogodę.
 "lang.module.PasswordHider": Ukrywa hasło podczas wprowadzania polecenia na czacie.
 "lang.module.PhaseESP": Podświetla bloki, które można stopniowo wprowadzać.
 "lang.module.Radar": Radar wyświetlający podmioty znajdujące się w pobliżu.
@@ -188,7 +189,6 @@
 "lang.module.Fly": Wygodniejszy substytut kreatywnego lotu.
 "lang.module.Lawnmower": Łamie bloki trawy i kwiatów.
 "lang.module.LiquidFiller": Umieszczanie bloków w płynie.
-"lang.module.NoWeather": Wyłącza pogodę.
 "lang.module.Reach": Zwiększa zasięg gracza.
 
 

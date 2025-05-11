@@ -169,6 +169,7 @@
 "lang.module.NoOverlay": Отключает рендеринг оверлея.
 "lang.module.NoRender": Отключает рендеринг некоторых элементов.
 "lang.module.NoSwing": Отменяет анимацию взмаха руки на сервере или клиенте.
+"lang.module.NoWeather": Отключает погоду.
 "lang.module.PasswordHider": Скрывает ваш пароль при вводе команды в чате.
 "lang.module.PhaseESP": Выделяет блоки, в которые можно фазнуться.
 "lang.module.Radar": Радар, отображающий сущностей, которые находятся рядом с вами.
@@ -188,7 +189,6 @@
 "lang.module.Fly": Более удобная замена творческому полету.
 "lang.module.Lawnmower": Ломает траву и цветы.
 "lang.module.LiquidFiller": Ставит блоки в жидкости.
-"lang.module.NoWeather": Отключает погоду.
 "lang.module.Reach": Увеличивает дальность досягаемости игрока.
 
 

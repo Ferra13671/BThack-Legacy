@@ -170,6 +170,7 @@
 "lang.module.NoOverlay": Disables overlay rendering.
 "lang.module.NoRender": Disables rendering of some elements.
 "lang.module.NoSwing": Cancels server or client hand swing animation.
+"lang.module.NoWeather": Turns off the weather.
 "lang.module.PasswordHider": Hides your password when entering a command in chat.
 "lang.module.PhaseESP": Highlights blocks that can be phase.
 "lang.module.Radar": A radar that displays entities that are near you.
@@ -189,7 +190,6 @@
 "lang.module.Fly": A more comfortable substitute for creative flight.
 "lang.module.Lawnmower": Breaks grass and flowers.
 "lang.module.LiquidFiller": Placing blocks in the liquids.
-"lang.module.NoWeather": Turns off the weather.
 "lang.module.Reach": Increases the player's reach range.
 
 
