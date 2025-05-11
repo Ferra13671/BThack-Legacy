@@ -32,16 +32,6 @@ public class TotemPopNotifier extends Module {
                 MCategory.COMBAT,
                 false
         );
-
-        initSettings(
-                sendToPublic,
-                yourselfAlso,
-                messageSound,
-                friends,
-                clanManager,
-                clanMode,
-                targetClan
-        );
     }
 
     @EventSubscriber

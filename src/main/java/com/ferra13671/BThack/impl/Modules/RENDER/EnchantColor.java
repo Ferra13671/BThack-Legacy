@@ -29,18 +29,6 @@ public class EnchantColor extends Module {
                 MCategory.RENDER,
                 false
         );
-
-        initSettings(
-                enchantSpeed,
-                enchantSize,
-
-                alphaColor,
-
-                colorSet,
-
-                rainbow,
-                speed
-        );
     }
 
     public static float[] getEnchantColor() {

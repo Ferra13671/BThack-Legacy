@@ -59,27 +59,6 @@ public class Shaders extends Module {
                 MCategory.RENDER,
                 false
         );
-
-        initSettings(
-                shaderMode,
-
-                fillColor,
-                outlineColor,
-
-                color1,
-                color2,
-
-                brightness,
-                saturation,
-
-                speed,
-                scale,
-                fillAlpha,
-                outlineAlpha,
-                lineWidth,
-
-                targetsCategory
-        );
     }
 
     public void drawShader(float tickDelta) {

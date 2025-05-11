@@ -31,16 +31,6 @@ public class VisualRange extends Module {
                 MCategory.MISC,
                 false
         );
-
-        initSettings(
-                friends,
-
-                enter,
-                enterSound,
-
-                leave,
-                leaveSound
-        );
     }
 
     private final List<String> players = new ArrayList<>();

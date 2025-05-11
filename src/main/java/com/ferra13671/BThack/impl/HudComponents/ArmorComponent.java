@@ -15,19 +15,13 @@ import java.util.Arrays;
 
 public class ArmorComponent extends HudComponent {
 
-    public final ModeSetting mode;
+    public final ModeSetting mode = new ModeSetting("Mode", this, Arrays.asList("Vertically", "Horizontally"));
 
     public ArmorComponent() {
         super("Armor",
                 (MinecraftClient.getInstance().getWindow().getScaledWidth() / 2f) + (MinecraftClient.getInstance().getWindow().getScaledWidth() / 7.5f),
                 MinecraftClient.getInstance().getWindow().getScaledHeight() - 140,
                 true
-        );
-
-        mode = new ModeSetting("Mode", this, Arrays.asList("Vertically", "Horizontally"));
-
-        initSettings(
-                mode
         );
     }
 

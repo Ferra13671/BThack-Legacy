@@ -37,18 +37,6 @@ public class AimBot extends Module {
                 MCategory.COMBAT,
                 false
         );
-
-        initSettings(
-                range,
-                players,
-                mobs,
-                teammates,
-                friends,
-                ignoreWalls,
-                clanManager,
-                clanMode,
-                target
-        );
     }
 
     @EventSubscriber

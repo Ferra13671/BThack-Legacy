@@ -19,10 +19,6 @@ public class AutoJump extends Module {
                 MCategory.MOVEMENT,
                 false
         );
-
-        initSettings(
-                mode
-        );
     }
 
     private boolean needRelease = false;

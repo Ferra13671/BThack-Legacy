@@ -34,10 +34,6 @@ public class NoFall extends Module {
                 MCategory.MOVEMENT,
                 false
         );
-
-        initSettings(
-                mode
-        );
     }
 
     private boolean started = false;

@@ -23,10 +23,6 @@ public class MultiFakePlayer extends Module {
                 MCategory.PLAYER,
                 false
         );
-
-        initSettings(
-                summonKey
-        );
     }
 
     ArrayList<Entity> fakePlayers = new ArrayList<>();

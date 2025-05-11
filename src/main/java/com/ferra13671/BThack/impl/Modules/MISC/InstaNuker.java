@@ -37,17 +37,6 @@ public class InstaNuker extends Module {
                 MCategory.MISC,
                 false
         );
-
-        initSettings(
-                range,
-                tickDelay,
-
-                packetSwitch,
-                postSwitch,
-
-                sequence,
-                pauseIfJump
-        );
     }
 
     private final HashMap<Block, ArrayList<BlockPos>> poses = new HashMap<>();
@@ -102,7 +91,7 @@ public class InstaNuker extends Module {
 
     public void instaBreakAction() {
         poses.forEach((block, list) -> {
-            int slot = AutoTool.getBestSlot(mc.world.getBlockState(list.get(0)), 9);
+            int slot = AutoTool.getBestSlot(mc.world.getBlockState(list.getFirst()), 9);
             if (slot != -1) {
                 final int oldSlot = mc.player.getInventory().selectedSlot;
                 if (checkSlots(oldSlot, slot)) {

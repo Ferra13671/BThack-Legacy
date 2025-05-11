@@ -43,20 +43,6 @@ public class SuperInstaMine extends Module {
                 MCategory.MISC,
                 false
         );
-
-        initSettings(
-                packetSwitch,
-                postSwitch,
-
-                length,
-                extraHeight,
-                extraWidth,
-
-                sequence,
-
-                infinityAttempts,
-                maxAttempts
-        );
     }
 
     private Matrix4f matrix4f;

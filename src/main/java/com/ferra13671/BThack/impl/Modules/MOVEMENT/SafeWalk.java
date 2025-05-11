@@ -27,11 +27,6 @@ public class SafeWalk extends Module {
                 MCategory.MOVEMENT,
                 false
         );
-
-        initSettings(
-                mode,
-                edgeDistance
-        );
     }
 
     private boolean sneaking;

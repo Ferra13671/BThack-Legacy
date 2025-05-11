@@ -40,15 +40,6 @@ public class FireBallAura extends Module {
                 MCategory.COMBAT,
                 false
         );
-
-        initSettings(
-                range,
-
-                rotate,
-                rotateMode,
-
-                shulkerBullets
-        );
     }
 
     private final Set<Entity> fireBalls = Sets.newHashSet();

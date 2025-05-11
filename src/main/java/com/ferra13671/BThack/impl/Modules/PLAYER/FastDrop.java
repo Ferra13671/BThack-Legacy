@@ -22,10 +22,6 @@ public class FastDrop extends Module {
                 MCategory.PLAYER,
                 false
         );
-
-        initSettings(
-                delay
-        );
     }
 
     private int ticks;

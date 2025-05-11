@@ -40,15 +40,6 @@ public class ChestStealer extends Module {
                 MCategory.PLAYER,
                 false
         );
-
-        initSettings(
-                stealDelay,
-
-                steal,
-                mode,
-
-                autoClose
-        );
     }
 
     public static boolean active = false;

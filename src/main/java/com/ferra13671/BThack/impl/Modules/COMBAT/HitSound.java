@@ -24,11 +24,6 @@ public class HitSound extends Module {
                 MCategory.COMBAT,
                 false
         );
-
-        initSettings(
-                sound,
-                volume
-        );
     }
 
     @EventSubscriber

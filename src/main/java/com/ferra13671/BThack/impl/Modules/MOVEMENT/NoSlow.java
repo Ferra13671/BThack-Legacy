@@ -20,13 +20,5 @@ public class NoSlow extends Module {
                 MCategory.MOVEMENT,
                 false
         );
-
-        initSettings(
-                useItems,
-                grim,
-                soulSand,
-                slime,
-                honey
-        );
     }
 }

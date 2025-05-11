@@ -49,15 +49,6 @@ public class PMSpammer extends Module {
                 MCategory.PLAYER,
                 false
         );
-
-        initSettings(
-                spamMode,
-                delay,
-                delaySpread,
-                spreadRange,
-
-                antiSpamCategory
-        );
     }
 
     protected final ReadTXT readTXT = new ReadTXT();

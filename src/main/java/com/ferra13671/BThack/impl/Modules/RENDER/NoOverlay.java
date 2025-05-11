@@ -24,18 +24,5 @@ public class NoOverlay extends Module {
                 MCategory.RENDER,
                 false
         );
-
-        initSettings(
-                hurtCam,
-                pumpkin,
-                portal,
-                crosshair,
-                hotbar,
-                experiense,
-                jumpBar,
-                vignette,
-                effects,
-                scoreBoard
-        );
     }
 }

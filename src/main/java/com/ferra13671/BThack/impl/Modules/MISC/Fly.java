@@ -23,10 +23,6 @@ public class Fly extends Module {
                 MCategory.MISC,
                 false
         );
-
-        initSettings(
-                speed
-        );
     }
 
     @EventSubscriber

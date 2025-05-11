@@ -44,26 +44,6 @@ public class AutoOffhand extends Module {
                 MCategory.COMBAT,
                 false
         );
-
-        initSettings(
-                mode,
-
-                item,
-
-                totem,
-                totemMaxHP,
-                totemMinHP,
-
-                crystal,
-                crystalMaxHP,
-                crystalMinHP,
-
-                gapple,
-                gappleMaxHP,
-                gappleMinHP,
-
-                replaceOther
-        );
     }
 
     @EventSubscriber

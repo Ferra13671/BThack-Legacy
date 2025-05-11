@@ -32,11 +32,6 @@ public class ItemSaver extends Module {
                 MCategory.PLAYER,
                 false
         );
-
-        initSettings(
-                minStrength,
-                attackSaver
-        );
     }
 
     private int alpha = 0;

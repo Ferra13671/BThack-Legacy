@@ -31,13 +31,6 @@ public class NinjaBridge extends Module {
                 MCategory.MOVEMENT,
                 false
         );
-
-        initSettings(
-                actionDelay,
-                placeTime,
-                placeFactor,
-                airCheck
-        );
     }
 
     private boolean close = false;

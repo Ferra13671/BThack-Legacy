@@ -15,6 +15,8 @@ import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.util.Formatting;
 
+import java.lang.reflect.Field;
+
 public class Module {
     public final String name;
     private final String description;
@@ -43,6 +45,17 @@ public class Module {
         this.autoEnabled = autoEnabled;
 
         pc = BThack.instance.playerController;
+    }
+
+    public void initSettings() {
+        for (Field field : getClass().getDeclaredFields()) {
+            try {
+                if (field.get(this) instanceof Setting<?> setting && !setting.isInCategory())
+                    Managers.SETTINGS_MANAGER.addModuleSetting(setting);
+            } catch (Exception e) {
+                BThack.error(e.getMessage());
+            }
+        }
     }
 
     public String getArrayListName() {
@@ -193,11 +206,6 @@ public class Module {
             removeFromArrayList();
             onDisable();
         }
-    }
-
-    public void initSettings(Setting<?>... settings) {
-        for (Setting<?> setting : settings)
-            Managers.SETTINGS_MANAGER.addModuleSetting(setting);
     }
 
     public void sendToggleMessage() {

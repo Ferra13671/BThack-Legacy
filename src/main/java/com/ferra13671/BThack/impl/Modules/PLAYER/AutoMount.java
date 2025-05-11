@@ -40,13 +40,6 @@ public class AutoMount extends Module {
                 MCategory.PLAYER,
                 false
         );
-
-        initSettings(
-                range,
-                delay,
-
-                targetsCategory
-        );
     }
 
     private final Ticker delayTicker = new Ticker();

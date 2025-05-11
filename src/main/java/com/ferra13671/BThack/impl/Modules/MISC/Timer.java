@@ -19,10 +19,6 @@ public class Timer extends Module {
                 MCategory.MISC,
                 false
         );
-
-        initSettings(
-                tickSpeed
-        );
     }
 
     @EventSubscriber

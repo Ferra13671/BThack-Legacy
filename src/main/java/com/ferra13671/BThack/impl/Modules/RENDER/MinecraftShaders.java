@@ -64,32 +64,6 @@ public class MinecraftShaders extends Module {
                 false
         );
 
-        initSettings(
-                mode,
-
-
-                shader,
-
-
-                art,
-                bits,
-                blobs,
-                blobs2,
-                bumpy,
-                color_convolve,
-                creeper,
-                deconverge,
-                desaturate,
-                green,
-                notch,
-                ntsc,
-                pencil,
-                phosphor,
-                sobel,
-                spider,
-                wobble
-        );
-
         ShaderEffectRenderCallback.EVENT.register(tickDelta -> {
             if (this.isEnabled()) {
                 if (mode.getValue().equals("One")) {

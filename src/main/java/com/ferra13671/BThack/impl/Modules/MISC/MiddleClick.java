@@ -28,11 +28,6 @@ public class MiddleClick extends Module {
                 MCategory.MISC,
                 false
         );
-
-        initSettings(
-                mode,
-                swingHand
-        );
     }
 
     @Override

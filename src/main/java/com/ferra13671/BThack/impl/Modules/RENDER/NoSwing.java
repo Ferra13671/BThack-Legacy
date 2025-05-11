@@ -22,10 +22,6 @@ public class NoSwing extends Module {
                 MCategory.RENDER,
                 false
         );
-
-        initSettings(
-                mode
-        );
     }
 
     @EventSubscriber

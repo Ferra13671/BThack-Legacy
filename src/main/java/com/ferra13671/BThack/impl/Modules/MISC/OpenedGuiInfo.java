@@ -21,12 +21,6 @@ public class OpenedGuiInfo extends Module {
                 MCategory.MISC,
                 false
         );
-
-        initSettings(
-                aName,
-                aPath,
-                aShouldPause
-        );
     }
 
     @EventSubscriber

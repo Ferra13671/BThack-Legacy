@@ -39,11 +39,6 @@ public class ESP extends Module {
                 MCategory.RENDER,
                 false
         );
-
-        initSettings(
-                targetsCategory,
-                colorsCategory
-        );
     }
 
     @EventSubscriber

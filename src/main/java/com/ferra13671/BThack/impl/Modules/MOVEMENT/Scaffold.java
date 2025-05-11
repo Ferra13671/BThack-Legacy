@@ -36,14 +36,6 @@ public class Scaffold extends Module {
                 MCategory.MOVEMENT,
                 false
         );
-
-        initSettings(
-                keepY,
-                switchMode,
-
-                extraWidth,
-                placeDelay
-        );
     }
 
     private double yFlag;
@@ -139,6 +131,6 @@ public class Scaffold extends Module {
                 new Vec3i(0, 0, -1),
                 new Vec3i(1, 0, 0),
                 new Vec3i(0, 0, 1));
-        else return Arrays.asList(new Vec3i(0, 0, 0));
+        else return List.of(new Vec3i(0, 0, 0));
     }
 }

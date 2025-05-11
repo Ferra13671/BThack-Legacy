@@ -19,11 +19,6 @@ public class FPSReducer extends Module {
                 MCategory.CLIENT,
                 false
         );
-
-        initSettings(
-                fpsLimit,
-                delay
-        );
     }
 
     public int lastFocusTicks = 0;

@@ -99,10 +99,6 @@ public class AutoAnvilEnchant extends Module {
                 MCategory.MISC,
                 false
         );
-
-        initSettings(
-                applyDelay
-        );
     }
     private final Ticker delayTicker = new Ticker();
     private PostClickInfo postClickInfo = null;
@@ -365,8 +361,7 @@ public class AutoAnvilEnchant extends Module {
                 itemStack1Copy.remove(DataComponentTypes.CUSTOM_NAME);
             }
 
-            int t = (int)MathHelper.clamp(l + (long)i, 0L, 2147483647L);
-            level = t;
+            level = (int)MathHelper.clamp(l + (long)i, 0L, 2147483647L);
             if (i <= 0) {
                 itemStack1Copy = ItemStack.EMPTY;
             }

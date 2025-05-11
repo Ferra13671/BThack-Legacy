@@ -15,10 +15,6 @@ public class Flip extends OneActionModule {
                 MCategory.MOVEMENT,
                 false
         );
-
-        initSettings(
-                saveSpeed
-        );
     }
 
     @Override

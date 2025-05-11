@@ -32,13 +32,6 @@ public class MenuShader extends Module {
         allowRemapVisible = false;
         setVisible(false);
 
-        initSettings(
-                random,
-                shader,
-
-                speed
-        );
-
         Managers.MAIN_MENU_SHADER_MANAGER.setPostResetAction(() -> {
             if (this.isEnabled())
                 Managers.MAIN_MENU_SHADER_MANAGER.setMainMenuShader(getShader());

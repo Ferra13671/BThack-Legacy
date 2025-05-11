@@ -25,11 +25,6 @@ public class PacketPlace extends Module {
                 MCategory.PLAYER,
                 false
         );
-
-        initSettings(
-                shifting,
-                sendPackets
-        );
     }
 
     @EventSubscriber

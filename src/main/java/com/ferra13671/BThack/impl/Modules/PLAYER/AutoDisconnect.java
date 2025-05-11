@@ -43,23 +43,6 @@ public class AutoDisconnect extends Module {
                 MCategory.PLAYER,
                 false
         );
-
-        initSettings(
-                autoToggle,
-
-                health,
-                minHealth,
-
-                introvert,
-                range,
-                friends,
-
-                height,
-                minHeight,
-
-                totems,
-                minTotems
-        );
     }
 
     @EventSubscriber

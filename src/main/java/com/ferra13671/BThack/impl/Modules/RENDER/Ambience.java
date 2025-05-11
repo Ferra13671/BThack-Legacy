@@ -67,16 +67,6 @@ public class Ambience extends Module {
                 MCategory.RENDER,
                 false
         );
-
-        initSettings(
-                fogCategory,
-                skyCategory,
-                cloudsCategory,
-                worldTimeCategory,
-                starsCategory,
-                moonPhaseCategory,
-                weatherCategory
-        );
     }
     private final Ticker ticker = new Ticker();
 

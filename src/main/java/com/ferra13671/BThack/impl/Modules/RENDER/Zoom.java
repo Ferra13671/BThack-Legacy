@@ -27,15 +27,6 @@ public class Zoom extends Module {
                 MCategory.RENDER,
                 false
         );
-
-        initSettings(
-                zoom,
-                scrollStep,
-                hideHud,
-
-                toggleMode,
-                holdKey
-        );
     }
     private final Animation animation = new Animation(Easing.CUBIC_OUT, 750);
     private double prevMouseSensitivity;

@@ -21,10 +21,6 @@ public class AntiHunger extends Module {
                 MCategory.MISC,
                 false
         );
-
-        initSettings(
-                cancelMoveState
-        );
     }
 
     @Override

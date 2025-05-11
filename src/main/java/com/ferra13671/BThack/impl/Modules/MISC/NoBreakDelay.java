@@ -15,9 +15,5 @@ public class NoBreakDelay extends Module {
                 MCategory.MISC,
                 false
         );
-
-        initSettings(
-                noInstant
-        );
     }
 }

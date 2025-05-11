@@ -405,6 +405,8 @@ public final class ModuleList {
         Client.modules.addAll(PluginUtils.getPluginsModules());
 
         initHudComponents();
+
+        Client.modules.forEach(Module::initSettings);
     }
 
     private static void initHudComponents() {

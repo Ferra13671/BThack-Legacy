@@ -43,21 +43,6 @@ public class IgniteAura extends Module {
                 MCategory.COMBAT,
                 false
         );
-
-        initSettings(
-                allowInventory,
-                swap,
-                ignoreWalls,
-
-                players,
-                friends,
-                teammates,
-                clanManager,
-                clanMode,
-                targetClan,
-
-                mobs
-        );
     }
 
     private final List<Block> fires = Arrays.asList(Blocks.FIRE, Blocks.SOUL_FIRE);

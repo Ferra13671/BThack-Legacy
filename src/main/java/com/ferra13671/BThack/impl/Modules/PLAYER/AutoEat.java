@@ -36,17 +36,6 @@ public class AutoEat extends Module {
                 MCategory.PLAYER,
                 false
         );
-
-        initSettings(
-                startFoodLevel,
-                allowChorus,
-                allowGapples,
-
-                hpRegen,
-                startHP,
-
-                pauseIfMine
-        );
     }
 
     private boolean foodEating = false;

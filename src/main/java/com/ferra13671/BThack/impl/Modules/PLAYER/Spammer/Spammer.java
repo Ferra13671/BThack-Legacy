@@ -43,15 +43,6 @@ public class Spammer extends Module {
                 MCategory.PLAYER,
                 false
         );
-
-        initSettings(
-                spamMode,
-                delay,
-                delaySpread,
-                spreadRange,
-
-                antiSpamCategory
-        );
     }
 
     private final ReadTXT readTXT = new ReadTXT();

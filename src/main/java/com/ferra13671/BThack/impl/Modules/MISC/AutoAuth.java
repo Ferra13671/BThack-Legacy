@@ -26,12 +26,6 @@ public class AutoAuth extends Module {
                 MCategory.MISC,
                 false
         );
-
-        initSettings(
-                autoToggle,
-                delay,
-                antiFake
-        );
     }
 
     @Override

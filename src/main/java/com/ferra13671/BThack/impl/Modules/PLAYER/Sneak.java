@@ -19,10 +19,6 @@ public class Sneak extends Module {
                 MCategory.PLAYER,
                 false
         );
-
-        initSettings(
-                mode
-        );
     }
 
     @EventSubscriber

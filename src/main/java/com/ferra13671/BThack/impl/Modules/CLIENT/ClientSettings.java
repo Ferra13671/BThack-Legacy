@@ -63,16 +63,6 @@ public class ClientSettings extends Module {
         allowRemapKeyCode = false;
         allowRemapVisible = false;
         setVisible(false);
-
-        initSettings(
-                startSound,
-                moduleToggleSound,
-                soundVolume,
-                language,
-                friendColor,
-                enemyColor,
-                ownColor
-        );
     }
 
     @Override

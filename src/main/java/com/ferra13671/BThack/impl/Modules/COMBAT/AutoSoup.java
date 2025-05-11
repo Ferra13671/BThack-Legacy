@@ -28,13 +28,6 @@ public class AutoSoup extends Module {
                 MCategory.COMBAT,
                 false
         );
-
-        initSettings(
-                swap,
-                swingHand,
-
-                minHealth
-        );
     }
 
     @EventSubscriber

@@ -30,11 +30,6 @@ public class FreeCam extends Module {
                 MCategory.PLAYER,
                 false
         );
-
-        initSettings(
-                verticalSpeed,
-                horizontalSpeed
-        );
     }
 
     private final FreeCamData freeCamData = new FreeCamData();

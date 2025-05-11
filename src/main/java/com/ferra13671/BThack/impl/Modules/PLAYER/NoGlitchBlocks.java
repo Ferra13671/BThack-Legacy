@@ -23,11 +23,6 @@ public class NoGlitchBlocks extends Module {
                 MCategory.PLAYER,
                 false
         );
-
-        initSettings(
-                _break,
-                _place
-        );
     }
 
     @EventSubscriber

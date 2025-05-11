@@ -21,10 +21,6 @@ public class ElytraReplace extends Module {
                 MCategory.PLAYER,
                 false
         );
-
-        initSettings(
-                minDurability
-        );
     }
 
     boolean needReplace = true;

@@ -22,13 +22,6 @@ public class CustomBob extends Module {
                 MCategory.RENDER,
                 false
         );
-
-        initSettings(
-                TXStrength,
-                TYStrength,
-                RXStrength,
-                RZStrength
-        );
     }
 
     public void customBob(MatrixStack matrices) {

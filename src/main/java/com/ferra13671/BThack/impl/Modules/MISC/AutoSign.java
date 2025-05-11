@@ -23,10 +23,6 @@ public class AutoSign extends Module {
                 MCategory.MISC,
                 false
         );
-
-        initSettings(
-                closeScreen
-        );
     }
 
     private String[] text;

@@ -34,12 +34,6 @@ public class BlockHighlight extends Module {
                 MCategory.RENDER,
                 false
         );
-
-        initSettings(
-                boxColor,
-                linesAlpha,
-                animTime
-        );
     }
 
     private Box currentBox = null;

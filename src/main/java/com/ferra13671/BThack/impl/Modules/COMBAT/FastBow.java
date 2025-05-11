@@ -23,8 +23,6 @@ public class FastBow extends Module {
                 MCategory.COMBAT,
                 false
         );
-
-        initSettings(delay);
     }
 
     @EventSubscriber

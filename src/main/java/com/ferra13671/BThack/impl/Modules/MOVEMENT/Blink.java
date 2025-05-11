@@ -36,15 +36,6 @@ public class Blink extends Module {
                 MCategory.MOVEMENT,
                 false
         );
-
-        initSettings(
-                maxTime,
-                onlyMovement,
-
-                autoDisable,
-                disableIfVelocity,
-                disableIfAttack
-        );
     }
 
     private final List<Packet<?>> packets = new ArrayList<>();

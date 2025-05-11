@@ -12,19 +12,13 @@ import java.util.Arrays;
 
 public class DurabilityComponent extends HudComponent {
 
-    private final ModeSetting mode;
+    public final ModeSetting mode = new ModeSetting("Info", this, Arrays.asList("Normal", "Full 1"));
 
     public DurabilityComponent() {
         super("Durability",
                 5,
                 220,
                 false
-        );
-
-        mode = new ModeSetting("Info", this, Arrays.asList("Normal", "Full 1", "Full 2"));
-
-        initSettings(
-                mode
         );
     }
 

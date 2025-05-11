@@ -30,15 +30,6 @@ public class FullBright extends Module {
                 MCategory.RENDER,
                 false
         );
-
-        initSettings(
-                mode,
-
-                customColor,
-                red,
-                green,
-                blue
-        );
     }
 
     private boolean hasAppliedNightVision = false;

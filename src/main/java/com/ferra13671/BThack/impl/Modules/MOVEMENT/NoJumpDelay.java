@@ -16,7 +16,6 @@ public class NoJumpDelay extends Module {
                 MCategory.MOVEMENT,
                 false
         );
-
     }
 
     @EventSubscriber

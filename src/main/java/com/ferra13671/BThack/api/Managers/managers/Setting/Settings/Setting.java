@@ -16,6 +16,7 @@ public abstract class Setting<T> {
     public final T defaultValue;
 
     public final Supplier<Boolean> dependence;
+    private boolean inCategory = false;
 
     protected Setting(String name, Module module, T value, Supplier<Boolean> dependence) {
         this.name = name;
@@ -51,6 +52,10 @@ public abstract class Setting<T> {
         module.onChangeSetting(this);
     }
 
+    public boolean isInCategory() {
+        return inCategory;
+    }
+
     public abstract void load(JsonObject jsonObject, JsonElement jsonElement);
 
     public abstract void save(JsonObject jsonObject);
@@ -59,6 +64,7 @@ public abstract class Setting<T> {
 
     public <S extends Setting<T>> S inCategory(CategorySetting categorySetting) {
         categorySetting.getValue().add(this);
+        inCategory = true;
         return (S) this;
     }
 }

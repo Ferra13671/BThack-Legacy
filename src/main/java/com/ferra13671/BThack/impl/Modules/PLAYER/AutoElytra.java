@@ -23,10 +23,6 @@ public class AutoElytra extends Module {
                 MCategory.PLAYER,
                 false
         );
-
-        initSettings(
-                fallDist
-        );
     }
 
     @EventSubscriber

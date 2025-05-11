@@ -14,11 +14,8 @@ import java.util.Arrays;
 public class FastFall extends Module {
 
     public final ModeSetting mode = new ModeSetting("Mode", this, Arrays.asList("Timer", "Velocity", "Pos"));
-
     public final NumberSetting fallDistance = new NumberSetting("Fall Dist.", this, 1, 0.1, 5, false);
-
     public final NumberSetting downSpeed = new NumberSetting("Down Speed", this, 0.4, 0.35, 1.5, false, () -> mode.getValue().equals("Velocity"));
-
     public final NumberSetting timerSpeed = new NumberSetting("Timer Speed", this, 2, 1.1, 5, false, () -> mode.getValue().equals("Timer"));
 
     public FastFall() {
@@ -27,16 +24,6 @@ public class FastFall extends Module {
                 KeyboardUtils.RELEASE,
                 MCategory.MOVEMENT,
                 false
-        );
-
-        initSettings(
-                mode,
-
-                fallDistance,
-
-                downSpeed,
-
-                timerSpeed
         );
     }
 

@@ -19,11 +19,6 @@ public class ShiftSpam extends Module {
                 MCategory.MOVEMENT,
                 false
         );
-
-        initSettings(
-                activeDelay,
-                deActiveDelay
-        );
     }
 
     private final Ticker ticker = new Ticker();

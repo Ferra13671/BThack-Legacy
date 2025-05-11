@@ -2,25 +2,16 @@ package com.ferra13671.BThack.impl.HudComponents;
 
 import com.ferra13671.BThack.Core.Render.BThackRender;
 import com.ferra13671.BThack.api.Module.HudComponent;
-import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.item.ItemStack;
 
 public class InventoryComponent extends HudComponent {
-
-    public final NumberSetting backGroundAlpha = new NumberSetting("BG Alpha", this, 135, 0, 255, true);
-    public final NumberSetting outlineAlpha = new NumberSetting("Outline Alpha", this, 125, 0, 255, true);
 
     public InventoryComponent() {
         super("Inventory",
                 (MinecraftClient.getInstance().getWindow().getScaledWidth() / 2f) + (MinecraftClient.getInstance().getWindow().getScaledWidth() / 7.5f),
                 MinecraftClient.getInstance().getWindow().getScaledHeight() - 60,
                 true
-        );
-
-        initSettings(
-                backGroundAlpha,
-                outlineAlpha
         );
 
         this.width = 145 + 6;

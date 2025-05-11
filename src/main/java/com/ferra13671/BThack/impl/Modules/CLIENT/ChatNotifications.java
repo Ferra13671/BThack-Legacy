@@ -20,10 +20,5 @@ public class ChatNotifications extends Module {
         allowRemapKeyCode = false;
         allowRemapVisible = false;
         setVisible(false);
-
-        initSettings(
-                moduleToggle,
-                moduleMessages
-        );
     }
 }

@@ -24,11 +24,6 @@ public class CustomFriction extends Module {
                 MCategory.MOVEMENT,
                 false
         );
-
-        initSettings(
-                friction,
-                mode
-        );
     }
 
     @Override

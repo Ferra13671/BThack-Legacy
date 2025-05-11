@@ -26,10 +26,6 @@ public class Criticals extends Module {
                 MCategory.COMBAT,
                 false
         );
-
-        initSettings(
-                mode
-        );
     }
 
     @EventSubscriber

@@ -19,11 +19,6 @@ public class Impulse extends OneActionModule {
                 MCategory.MOVEMENT,
                 false
         );
-
-        initSettings(
-                considerY,
-                factor
-        );
     }
 
     @Override

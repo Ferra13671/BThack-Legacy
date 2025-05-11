@@ -42,16 +42,6 @@ public class PearlPhase extends Module {
                 MCategory.COMBAT,
                 false
         );
-
-        initSettings(
-                mode,
-
-                autoToggle,
-                phaseDelay,
-
-                swingHand,
-                phasePitch
-        );
     }
 
     private final List<Vec3i> phasePoses = Arrays.asList(

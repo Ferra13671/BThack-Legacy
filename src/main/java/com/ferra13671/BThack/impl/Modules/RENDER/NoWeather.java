@@ -13,6 +13,5 @@ public class NoWeather extends Module {
                 MCategory.RENDER,
                 false
         );
-
     }
 }

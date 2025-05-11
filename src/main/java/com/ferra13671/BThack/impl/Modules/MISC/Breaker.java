@@ -28,10 +28,6 @@ public class Breaker extends Module {
                 MCategory.MISC,
                 false
         );
-
-        initSettings(
-                mode
-        );
     }
 
     @EventSubscriber

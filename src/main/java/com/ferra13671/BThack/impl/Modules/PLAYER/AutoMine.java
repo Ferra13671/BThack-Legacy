@@ -45,26 +45,6 @@ public class AutoMine extends Module {
                 MCategory.PLAYER,
                 false
         );
-
-        initSettings(
-                ancientDebris,
-                diamond,
-                deepslateDiamond,
-                redstone,
-                deepslateRedstone,
-                gold,
-                deepslateGold,
-                netherGold,
-                iron,
-                deepslateIron,
-                copper,
-                deepslateCopper,
-                coal,
-                deepslateCoal,
-                quartz,
-
-                extraBlocks
-        );
     }
 
     @Override

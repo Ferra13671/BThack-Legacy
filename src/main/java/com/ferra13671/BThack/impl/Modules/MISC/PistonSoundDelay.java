@@ -19,10 +19,6 @@ public class PistonSoundDelay extends Module {
                 MCategory.MISC,
                 false
         );
-
-        initSettings(
-                soundDelay
-        );
     }
 
     private long delay = 0;

@@ -33,11 +33,8 @@ import java.util.Arrays;
 public class LongJump extends Module {
 
     public final ModeSetting mode = new ModeSetting("Mode", this, Arrays.asList("Normal", "Normal2", "Glide", "Elytra&Firework"));
-
     public final NumberSetting speed = new NumberSetting("Speed", this, 1.5, 1.1, 5, false, () -> mode.getValue().equals("Normal"));
-
     public final NumberSetting strength = new NumberSetting("Strength", this, 1.5, 1.1, 5, false, () -> mode.getValue().equals("Normal2"));
-
     public final NumberSetting fallSpeed = new NumberSetting("Fall Speed", this, 0.05,0.05, 0.125, false, () -> mode.getValue().equals("Glide"));
 
     public final NumberSetting flyTime = new NumberSetting("Fly Time", this, 0.5, 0.1, 1, false, () -> mode.getValue().equals("Elytra&Firework"));
@@ -51,21 +48,6 @@ public class LongJump extends Module {
                 KeyboardUtils.RELEASE,
                 MCategory.MOVEMENT,
                 false
-        );
-
-        initSettings(
-                mode,
-
-                speed,
-
-                strength,
-
-                fallSpeed,
-
-                flyTime,
-                swapMode,
-                pitch,
-                grim
         );
     }
     private final ElytraAndFireworkMode elytraAndFireworkMode = new ElytraAndFireworkMode();

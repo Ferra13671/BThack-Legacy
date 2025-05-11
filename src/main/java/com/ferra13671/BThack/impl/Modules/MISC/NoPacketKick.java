@@ -15,9 +15,5 @@ public class NoPacketKick extends Module {
                 MCategory.MISC,
                 false
         );
-
-        initSettings(
-                chatNotify
-        );
     }
 }

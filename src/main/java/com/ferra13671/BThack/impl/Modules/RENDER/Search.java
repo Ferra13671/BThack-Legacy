@@ -34,12 +34,6 @@ public class Search extends Module {
                 MCategory.RENDER,
                 false
         );
-
-        initSettings(
-                boxColor,
-                lineColor,
-                tracers
-        );
     }
 
     @Override

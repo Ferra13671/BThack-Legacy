@@ -28,10 +28,6 @@ public class TreeCutter extends Module {
                 MCategory.MISC,
                 false
         );
-
-        initSettings(
-                mode
-        );
     }
 
     @Override

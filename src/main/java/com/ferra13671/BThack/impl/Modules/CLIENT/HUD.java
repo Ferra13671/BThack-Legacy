@@ -68,25 +68,6 @@ public class HUD extends Module {
         scale = new NumberSetting("Scale", this, 1, 0.1, 10, false, () -> rainbow.getValue() || gradient.getValue());
 
         color = new ColorSetting("Color", this, new Color(213, 142, 253), () -> !rainbow.getValue() && !gradient.getValue()).withBlockedAlpha();
-
-        initSettings(
-                rainbow,
-
-                gradient,
-                textColor,
-                color1,
-                color2,
-
-                speed,
-                scale,
-
-                color,
-
-                style,
-                roundScale,
-
-                backGroundColor
-        );
     }
     public HudStyle hudStyle = HudStyle.valueOf(style.getValue().toUpperCase().replace(" ", "_"));
 

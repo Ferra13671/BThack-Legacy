@@ -32,14 +32,6 @@ public class AutoFirework extends Module {
                 MCategory.PLAYER,
                 false
         );
-
-        initSettings(
-                mode,
-
-                delay,
-
-                swingHand
-        );
     }
 
     private final Ticker ticker = new Ticker();

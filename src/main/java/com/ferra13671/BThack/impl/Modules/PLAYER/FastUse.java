@@ -36,17 +36,6 @@ public class FastUse extends Module {
                 MCategory.PLAYER,
                 false
         );
-
-        initSettings(
-                mode,
-                times,
-
-                crystals,
-                fishRods,
-                throwables,
-                expBottle,
-                others
-        );
     }
 
     private boolean sending = false;

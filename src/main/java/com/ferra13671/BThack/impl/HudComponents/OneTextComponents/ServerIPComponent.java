@@ -8,19 +8,13 @@ import java.util.Objects;
 
 public class ServerIPComponent extends AbstractOneTextComponent {
 
-    private final BooleanSetting isShort;
+    public final BooleanSetting isShort = new BooleanSetting("Short", this, false);
 
     public ServerIPComponent() {
         super("ServerIP",
                 5,
                 115,
                 true
-        );
-
-        isShort = new BooleanSetting("Short", this, false);
-
-        initSettings(
-                isShort
         );
     }
 

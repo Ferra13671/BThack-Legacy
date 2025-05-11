@@ -29,13 +29,6 @@ public class Speed extends Module {
                 MCategory.MOVEMENT,
                 false
         );
-
-        initSettings(
-                mode,
-
-                speed,
-                jumpHeight
-        );
     }
 
     @EventSubscriber

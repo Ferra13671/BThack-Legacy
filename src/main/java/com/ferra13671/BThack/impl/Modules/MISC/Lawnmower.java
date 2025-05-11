@@ -42,15 +42,6 @@ public class Lawnmower extends Module {
                 MCategory.MISC,
                 false
         );
-
-        initSettings(
-                range,
-                rotateMode,
-                flowers,
-                ignoreWalls,
-
-                renderCategory
-        );
     }
     private final Map<BlockPos, Animation> breakedBoxes = new HashMap<>();
 

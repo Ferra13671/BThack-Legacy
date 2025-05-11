@@ -86,12 +86,6 @@ public class PacketMine extends Module {
                 MCategory.MISC,
                 false
         );
-
-        initSettings(
-                generalCategory,
-                renderCategory
-        );
-
     }
 
     private final List<Vec3i> autoCityVectors = Arrays.asList(

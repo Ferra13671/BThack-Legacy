@@ -30,6 +30,7 @@ import java.awt.*;
 import java.util.Arrays;
 
 public class Nametags extends Module {
+
     public final BooleanSetting players = new BooleanSetting("Players", this, true);
     public final ModeSetting playerMode = new ModeSetting("PMode", this, Arrays.asList("Mini", "Normal", "Full"));
     public final NumberSetting pSize = new NumberSetting("PSize", this, 0.7, 0.4, 2, false, players::getValue);
@@ -46,18 +47,6 @@ public class Nametags extends Module {
                 KeyboardUtils.RELEASE,
                 MCategory.RENDER,
                 false
-        );
-
-        initSettings(
-                players,
-                playerMode,
-                pSize,
-                rainbow,
-                outlineColor,
-
-                items,
-                iSize,
-                itemName
         );
     }
 

@@ -22,10 +22,6 @@ public class AutoMend extends Module {
                 MCategory.PLAYER,
                 false
         );
-
-        initSettings(
-                autoToggle
-        );
     }
 
     @EventSubscriber

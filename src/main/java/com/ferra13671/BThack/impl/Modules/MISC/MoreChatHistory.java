@@ -15,9 +15,5 @@ public class MoreChatHistory extends Module {
                 MCategory.MISC,
                 false
         );
-
-        initSettings(
-                size
-        );
     }
 }

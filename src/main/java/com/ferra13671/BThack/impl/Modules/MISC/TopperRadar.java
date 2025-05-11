@@ -50,19 +50,6 @@ public class TopperRadar extends Module {
                 MCategory.MISC,
                 false
         );
-
-        initSettings(
-                threshold,
-                amount,
-                onlyGoodArmor,
-
-                friends,
-                clanManager,
-                clanMode,
-                target,
-                autoDisconnect,
-                shutdownDelay
-        );
     }
 
     private final ArrayList<AbstractClientPlayerEntity> reportedToppers = new ArrayList<>();

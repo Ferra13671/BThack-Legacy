@@ -26,12 +26,6 @@ public class Auto2FA extends Module {
                 MCategory.MISC,
                 false
         );
-
-        initSettings(
-                autoToggle,
-                delay,
-                antiFake
-        );
     }
 
     @Override

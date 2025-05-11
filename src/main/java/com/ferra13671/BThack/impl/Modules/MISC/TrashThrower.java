@@ -24,10 +24,6 @@ public class TrashThrower extends Module {
                 MCategory.MISC,
                 false
         );
-
-        initSettings(
-                delay
-        );
     }
     private boolean firstOpened = true;
     private final Ticker ticker = new Ticker();

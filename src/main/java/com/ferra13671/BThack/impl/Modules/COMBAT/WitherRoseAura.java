@@ -43,21 +43,6 @@ public class WitherRoseAura extends Module {
                 MCategory.COMBAT,
                 false
         );
-
-        initSettings(
-                allowInventory,
-                swap,
-                ignoreWalls,
-
-                players,
-                friends,
-                teammates,
-                clanManager,
-                clanMode,
-                targetClan,
-
-                mobs
-        );
     }
 
     @EventSubscriber

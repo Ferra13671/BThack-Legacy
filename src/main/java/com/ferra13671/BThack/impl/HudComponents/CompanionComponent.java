@@ -21,12 +21,6 @@ public class CompanionComponent extends HudComponent {
                 mc.getWindow().getScaledHeight() / 1.8f,
                 false
         );
-
-        initSettings(
-                mode,
-                size,
-                speed
-        );
     }
 
     @Override

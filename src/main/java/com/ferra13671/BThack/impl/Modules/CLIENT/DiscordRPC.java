@@ -18,8 +18,6 @@ public class DiscordRPC extends Module {
         );
         allowRemapKeyCode = false;
 
-        initSettings(secret);
-
         DiscordUtils.init();
     }
 

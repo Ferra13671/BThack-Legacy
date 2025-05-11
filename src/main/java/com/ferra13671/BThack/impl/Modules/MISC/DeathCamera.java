@@ -32,10 +32,6 @@ public class DeathCamera extends Module {
                 MCategory.MISC,
                 false
         );
-
-        initSettings(
-                respawnKey
-        );
     }
 
     private boolean death = false;

@@ -25,11 +25,6 @@ public class AutoWalk extends Module {
                 MCategory.MOVEMENT,
                 false
         );
-
-        initSettings(
-                disableOnDisconnect,
-                mode
-        );
     }
 
     @Override

@@ -12,19 +12,13 @@ import java.util.Arrays;
 
 public class WatermarkComponent extends HudComponent {
 
-    private final ModeSetting logoType;
+    public final ModeSetting logoType = new ModeSetting("Logo Type", this, Arrays.asList("Logo", "Text"));
 
     public WatermarkComponent() {
         super("Watermark",
                 5,
                 5,
                 true
-        );
-
-        logoType = new ModeSetting("Logo Type", this, Arrays.asList("Logo", "Text"));
-
-        initSettings(
-                logoType
         );
     }
 

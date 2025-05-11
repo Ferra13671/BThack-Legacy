@@ -39,14 +39,6 @@ public class AutoFish extends Module {
                 MCategory.PLAYER,
                 false
         );
-
-        initSettings(
-                patience,
-                retryDelay,
-                biteDelay,
-
-                validRange
-        );
     }
 
     private int castRodTimer;

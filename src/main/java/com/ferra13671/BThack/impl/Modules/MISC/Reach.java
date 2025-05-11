@@ -15,9 +15,5 @@ public class Reach extends Module {
                 MCategory.MISC,
                 false
         );
-
-        initSettings(
-                range
-        );
     }
 }

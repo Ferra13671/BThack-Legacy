@@ -39,16 +39,6 @@ public class PhaseESP extends Module {
                 Module.MCategory.RENDER,
                 false
         );
-        initSettings(
-                extraRange,
-                outline,
-                fill,
-
-                goodColor,
-                normalColor,
-                dangerColor
-        );
-
     }
 
     private final List<Block> normalBlocks = Arrays.asList(Blocks.OBSIDIAN, Blocks.CRYING_OBSIDIAN);

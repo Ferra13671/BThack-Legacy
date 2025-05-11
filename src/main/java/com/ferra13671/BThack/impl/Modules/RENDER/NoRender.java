@@ -42,30 +42,6 @@ public class NoRender extends Module {
                 MCategory.RENDER,
                 false
         );
-
-        initSettings(
-                explosions,
-                particles,
-                overlay,
-                waterFog,
-                lavaFog,
-                powderSnowFog,
-                armor,
-                totemAnimation,
-                nausea,
-                fallingBlocks,
-                armorStands,
-                textureRotations,
-
-                chestRender,
-                chestRadius,
-
-                shulkerRender,
-                shulkerRadius,
-
-                eTableRender,
-                eTableRadius
-        );
     }
 
     @Override

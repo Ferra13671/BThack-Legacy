@@ -21,10 +21,5 @@ public class BThackMainMenu extends Module {
         allowRemapKeyCode = false;
         allowRemapVisible = false;
         setVisible(false);
-
-        initSettings(
-                screenChangeAnimation,
-                animationSpeed
-        );
     }
 }

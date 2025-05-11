@@ -20,11 +20,6 @@ public class CameraRotator extends Module {
                 MCategory.MOVEMENT,
                 false
         );
-
-        initSettings(
-                speed,
-                inversion
-        );
     }
 
     @Override

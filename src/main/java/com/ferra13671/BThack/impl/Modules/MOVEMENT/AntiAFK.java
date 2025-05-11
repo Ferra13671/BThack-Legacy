@@ -21,12 +21,6 @@ public class AntiAFK extends Module {
                 MCategory.MOVEMENT,
                 false
         );
-
-        initSettings(
-                walkRadius,
-                delay,
-                messageSize
-        );
     }
 
     private boolean correct = false;

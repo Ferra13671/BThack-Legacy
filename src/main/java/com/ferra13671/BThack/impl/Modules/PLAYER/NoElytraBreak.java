@@ -12,12 +12,6 @@ import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket;
 
-/**
- * Super bebra_tyan exploit for flying on elytres without losing durability
- * (Using fireworks will be broken, so you can use the setting to pause when using fireworks)
- * <p>
- * <b>I'm 99% sure Skeet.cc will steal this module >:)</b>
- */
 public class NoElytraBreak extends Module {
 
     public final NumberSetting abuseDelay = new NumberSetting("Abuse Delay", this, 500, 100, 500, true);
@@ -30,12 +24,6 @@ public class NoElytraBreak extends Module {
                 KeyboardUtils.RELEASE,
                 MCategory.PLAYER,
                 false
-        );
-
-        initSettings(
-                abuseDelay,
-
-                pauseIfFirework
         );
     }
 

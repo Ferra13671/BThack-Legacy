@@ -31,12 +31,6 @@ public class Waypoints extends Module {
                 MCategory.RENDER,
                 false
         );
-
-        initSettings(
-                scale,
-                convertNether,
-                convertOverworld
-        );
     }
 
     @EventSubscriber

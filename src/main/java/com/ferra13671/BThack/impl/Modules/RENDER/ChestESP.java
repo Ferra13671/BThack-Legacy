@@ -58,22 +58,6 @@ public class ChestESP extends Module {
                 MCategory.RENDER,
                 false
         );
-
-        initSettings(
-                chests,
-                enderChests,
-                shulkers,
-                barrels,
-                hoppers,
-                droppers,
-                dispensers,
-
-                tracersCategory,
-
-                colorsCategory,
-
-                renderRange
-        );
     }
 
     @EventSubscriber

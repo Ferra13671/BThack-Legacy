@@ -21,11 +21,6 @@ public class AutoTotemFall extends Module {
                 MCategory.COMBAT,
                 false
         );
-
-        initSettings(
-                fallCheck,
-                toGround
-        );
     }
 
     boolean isFalling = false;

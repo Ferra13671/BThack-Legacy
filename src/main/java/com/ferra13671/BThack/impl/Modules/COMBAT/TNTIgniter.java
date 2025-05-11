@@ -31,13 +31,6 @@ public class TNTIgniter extends Module {
                 MCategory.COMBAT,
                 false
         );
-        
-        initSettings(
-                range,
-
-                swap,
-                allowInventory
-        );
     }
     
     @EventSubscriber

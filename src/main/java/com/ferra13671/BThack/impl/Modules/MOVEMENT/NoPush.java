@@ -17,11 +17,5 @@ public class NoPush extends Module {
                 MCategory.MOVEMENT,
                 false
         );
-
-        initSettings(
-                blocks,
-                entities,
-                liquids
-        );
     }
 }

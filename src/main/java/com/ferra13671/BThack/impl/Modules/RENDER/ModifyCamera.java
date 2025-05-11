@@ -31,20 +31,6 @@ public class ModifyCamera extends Module {
                 MCategory.RENDER,
                 false
         );
-
-        initSettings(
-                rewriteDistance,
-                distance,
-
-                rewritePosition,
-                posX,
-                posY,
-                posZ,
-
-                rewriteRotation,
-                yaw,
-                pitch
-        );
     }
 
     @EventSubscriber

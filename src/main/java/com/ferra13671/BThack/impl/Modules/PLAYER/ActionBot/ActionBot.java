@@ -10,6 +10,7 @@ import com.ferra13671.BThack.api.Gui.Screen.ActionBot.ActionBotConfigGui;
 public class ActionBot extends Module {
 
     public final BooleanSetting repeat = new BooleanSetting("Repeat", this, false);
+    @SuppressWarnings("unused")
     public final GuiButtonSetting openConfig = new GuiButtonSetting("Open Config", this, ActionBotConfigGui::new);
 
     public ActionBot() {
@@ -18,11 +19,6 @@ public class ActionBot extends Module {
                 KeyboardUtils.RELEASE,
                 MCategory.PLAYER,
                 false
-        );
-
-        initSettings(
-                repeat,
-                openConfig
         );
     }
 

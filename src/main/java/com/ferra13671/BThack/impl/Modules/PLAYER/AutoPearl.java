@@ -19,10 +19,6 @@ public class AutoPearl extends OneActionModule {
                 MCategory.PLAYER,
                 false
         );
-
-        initSettings(
-                swingHand
-        );
     }
 
     @Override

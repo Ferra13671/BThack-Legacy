@@ -46,21 +46,6 @@ public class Velocity extends Module {
                 MCategory.MOVEMENT,
                 false
         );
-
-        initSettings(
-                mode,
-
-                liquid,
-                fallFlying,
-
-                velocity,
-                velocityV,
-                velocityH,
-
-                explosion,
-                explosionV,
-                explosionH
-        );
     }
 
     private boolean flag;

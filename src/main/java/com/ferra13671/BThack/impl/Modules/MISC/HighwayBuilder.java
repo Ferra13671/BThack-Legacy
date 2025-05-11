@@ -80,25 +80,6 @@ public class HighwayBuilder extends Module {
                 MCategory.MISC,
                 false
         );
-
-        initSettings(
-                mode,
-
-                buildTicks,
-
-                movementCategory,
-
-                borders,
-                extraBlocks,
-                onlyObsidian,
-                highwWidth,
-                tunnelHeight,
-                stageDelay,
-
-                clearCategory,
-
-                autoDisableCategory
-        );
     }
 
     /**

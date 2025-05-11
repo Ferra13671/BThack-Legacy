@@ -50,23 +50,6 @@ public class BetterChat extends Module {
                 MCategory.RENDER,
                 false
         );
-
-        initSettings(
-                time,
-                timeFormat,
-                separate1,
-                separate2,
-
-                friends,
-
-                enemies,
-
-                yourself,
-                yourselfSound,
-
-                chatAnimation,
-                fadeTime
-        );
     }
 
 

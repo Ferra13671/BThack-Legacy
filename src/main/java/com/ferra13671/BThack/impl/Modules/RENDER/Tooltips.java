@@ -58,25 +58,6 @@ public class Tooltips extends Module {
 
         scale = new NumberSetting("Scale", this, 1, 0.3, 4, false, () -> rainbow.getValue() || gradient.getValue());
         speed = new NumberSetting("Speed", this, 1, 0.3, 4, false, () -> rainbow.getValue() || gradient.getValue());
-
-        initSettings(
-                shulkers,
-                maps,
-
-                rainbow,
-                rainbowAlpha,
-
-                gradient,
-                color1,
-                color2,
-
-                scale,
-                speed,
-
-                color,
-
-                backGroundColor
-        );
     }
 
     public void renderShulkerTooltip(ItemStack itemStack, List<ItemStack> stacks, int x, int y) {

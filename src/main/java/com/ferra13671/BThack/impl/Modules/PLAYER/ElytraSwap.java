@@ -23,10 +23,6 @@ public class ElytraSwap extends OneActionModule {
                 MCategory.PLAYER,
                 false
         );
-
-        initSettings(
-                moveType
-        );
     }
 
     @Override

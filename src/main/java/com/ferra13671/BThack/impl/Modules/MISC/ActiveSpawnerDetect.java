@@ -68,27 +68,6 @@ public class ActiveSpawnerDetect extends Module {
                 MCategory.MISC,
                 false
         );
-
-        initSettings(
-                page,
-
-                chatFeedback,
-                displayCords,
-                extraMessage,
-                lessSpam,
-                airChecker,
-                deactivatedSpawners,
-                trialSpawners,
-                deactivatedSpawnerDistance,
-
-                lessRenderSpam,
-                renderDistance,
-                removerenderdist,
-                trcr,
-                spawnerColor,
-                trialColor,
-                despawnerColor
-        );
     }
     private final Set<Block> goodBlocks = Sets.newHashSet(
             Blocks.CHEST,

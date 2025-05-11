@@ -22,10 +22,6 @@ public class FXAA extends Module {
                 false
         );
 
-        initSettings(
-                level
-        );
-
         ShaderEffectRenderCallback.EVENT.register(tickDelta -> {
             if (this.isEnabled()) {
                 int _level = Integer.parseInt(level.getValue().replace("x", ""));

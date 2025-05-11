@@ -8,19 +8,14 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public class PingComponent extends AbstractOneTextComponent {
-    private final ModeSetting mode;
+
+    public final ModeSetting mode = new ModeSetting("Ping Mode", this, Arrays.asList("Normal", "Short"));
 
     public PingComponent() {
         super("Ping",
                 5,
                 145,
                 true
-        );
-
-        mode = new ModeSetting("Ping Mode", this, Arrays.asList("Normal", "Short"));
-
-        initSettings(
-                mode
         );
     }
 

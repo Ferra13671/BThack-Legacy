@@ -20,10 +20,6 @@ public class MotionBlur extends Module {
                 false
         );
 
-        initSettings(
-                blur
-        );
-
         ShaderEffectRenderCallback.EVENT.register(tickDelta -> {
             if (this.isEnabled()) {
                 if (getBlur() != 0) {

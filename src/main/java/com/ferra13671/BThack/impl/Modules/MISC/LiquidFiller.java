@@ -43,20 +43,6 @@ public class LiquidFiller extends Module {
                 MCategory.MISC,
                 false
         );
-
-        initSettings(
-                range,
-                placePerTick,
-                water,
-                lava,
-                other,
-
-                rotate,
-                rotateMode,
-                ignoreWalls,
-
-                swap
-        );
     }
 
     @EventSubscriber

@@ -36,13 +36,6 @@ public class TridentDupe extends Module {
                 MCategory.MISC,
                 false
         );
-
-        initSettings(
-                delay,
-                dropTridents,
-
-                autoInventory
-        );
     }
 
     @Override
@@ -56,7 +49,7 @@ public class TridentDupe extends Module {
     }
 
     @EventSubscriber(priority = Integer.MAX_VALUE)
-    private void onSendPacket(PacketEvent.Send event) {
+    public void onSendPacket(PacketEvent.Send event) {
 
         if (event.getPacket() instanceof PlayerMoveC2SPacket
                 || event.getPacket() instanceof CloseHandledScreenC2SPacket)

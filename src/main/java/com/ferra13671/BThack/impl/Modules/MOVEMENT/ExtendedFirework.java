@@ -27,10 +27,6 @@ public class ExtendedFirework extends Module {
                 MCategory.MOVEMENT,
                 false
         );
-
-        initSettings(
-                maxTime
-        );
     }
 
     private boolean extendFirework;

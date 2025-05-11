@@ -31,14 +31,6 @@ public class AutoArmor extends Module {
                 MCategory.COMBAT,
                 false
         );
-
-        initSettings(
-                swap,
-                filter,
-                enchFilter,
-                allowInventory,
-                allowReplace
-        );
     }
 
     public List<SlotInfo> slotInfos = new ArrayList<>();

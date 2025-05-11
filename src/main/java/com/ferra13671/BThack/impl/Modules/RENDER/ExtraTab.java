@@ -25,13 +25,6 @@ public class ExtraTab extends Module {
                 MCategory.RENDER,
                 false
         );
-
-        initSettings(
-                tabSize,
-                friends,
-                enemies,
-                yourself
-        );
     }
 
     @Override
@@ -50,7 +43,7 @@ public class ExtraTab extends Module {
             return Text.literal(ClientSettings.getFriendColor() + name);
         if (enemies.getValue() && Managers.ENEMIES_MANAGER.contains(name))
             return Text.literal(ClientSettings.getEnemyColor() + name);
-        if (mc.player.getDisplayName().getString().equals(name))
+        if (yourself.getValue() && mc.player.getDisplayName().getString().equals(name))
             return Text.literal(ClientSettings.getOwnColor() + name);
 
         return Text.literal(name);

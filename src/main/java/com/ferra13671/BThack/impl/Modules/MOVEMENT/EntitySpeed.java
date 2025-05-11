@@ -18,10 +18,6 @@ public class EntitySpeed extends Module {
                 MCategory.MOVEMENT,
                 false
         );
-
-        initSettings(
-                boatSpeed
-        );
     }
 
     @EventSubscriber

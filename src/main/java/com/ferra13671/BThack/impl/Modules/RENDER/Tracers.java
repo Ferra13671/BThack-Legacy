@@ -39,11 +39,6 @@ public class Tracers extends Module {
                 MCategory.RENDER,
                 false
         );
-
-        initSettings(
-                targetsCategory,
-                colorsCategory
-        );
     }
 
     @EventSubscriber(priority = -1)

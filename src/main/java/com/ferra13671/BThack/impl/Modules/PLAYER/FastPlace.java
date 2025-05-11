@@ -23,11 +23,6 @@ public class FastPlace extends Module {
                 MCategory.PLAYER,
                 false
         );
-
-        initSettings(
-                mode,
-                times
-        );
     }
 
     @EventSubscriber

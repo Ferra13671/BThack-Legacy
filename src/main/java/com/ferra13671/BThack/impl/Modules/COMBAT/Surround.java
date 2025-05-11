@@ -39,14 +39,6 @@ public class Surround extends Module {
                 MCategory.COMBAT,
                 false
         );
-
-        initSettings(
-                blocksPerTick,
-                extraBlocks,
-                silentSwap,
-
-                autoDisableCategory
-        );
     }
 
     private double prevY;

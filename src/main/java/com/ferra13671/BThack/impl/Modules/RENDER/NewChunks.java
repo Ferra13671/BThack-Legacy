@@ -72,11 +72,6 @@ public class NewChunks extends Module {
                 MCategory.RENDER,
                 false
         );
-
-        initSettings(
-                searchCategory,
-                renderCategory
-        );
     }
 
     private static final Direction[] searchDirs = new Direction[] { Direction.EAST, Direction.NORTH, Direction.WEST, Direction.SOUTH, Direction.UP };

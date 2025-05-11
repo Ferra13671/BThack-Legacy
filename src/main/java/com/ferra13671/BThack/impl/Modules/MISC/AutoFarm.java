@@ -31,7 +31,6 @@ import java.util.HashMap;
 public class AutoFarm extends Module {
 
     public final BooleanSetting rotate = new BooleanSetting("Rotate", this, false);
-    public final ModeSetting rotateMode = new ModeSetting("Rotate Mode", this, Arrays.asList("Grim", "Packet"), rotate::getValue);
 
     public final ModeSetting swap = new ModeSetting("Swap", this, Arrays.asList("Packet", "Client"));
 
@@ -49,21 +48,6 @@ public class AutoFarm extends Module {
                 KeyboardUtils.RELEASE,
                 MCategory.MISC,
                 false
-        );
-
-        initSettings(
-                rotate,
-                rotateMode,
-
-                swap,
-
-                fortuneFilter,
-
-                _break,
-
-                plant,
-                logicPlant,
-                plantCrop
         );
     }
 

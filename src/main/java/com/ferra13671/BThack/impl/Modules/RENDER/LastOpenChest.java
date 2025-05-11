@@ -23,7 +23,7 @@ import net.minecraft.util.math.Vec3d;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 
 public class LastOpenChest extends Module {
 
@@ -35,10 +35,6 @@ public class LastOpenChest extends Module {
                 KeyboardUtils.RELEASE,
                 MCategory.RENDER,
                 false
-        );
-
-        initSettings(
-                colorSet
         );
     }
 
@@ -90,7 +86,7 @@ public class LastOpenChest extends Module {
             if (box == null) return;
 
             BThackRender.boxRender.prepareBoxRender();
-            BThackRender.boxRender.renderBoxes(new ArrayList<>(Arrays.asList(new RenderBox(box, _red, _green, _blue, 0.6f, _red, _green, _blue, 0.4f))));
+            BThackRender.boxRender.renderBoxes(new ArrayList<>(List.of(new RenderBox(box, _red, _green, _blue, 0.6f, _red, _green, _blue, 0.4f))));
             BThackRender.boxRender.stopBoxRender();
         }
     }

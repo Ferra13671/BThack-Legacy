@@ -16,9 +16,5 @@ public class NoRotate extends Module {
                 MCategory.MOVEMENT,
                 false
         );
-
-        initSettings(
-                blockPitch
-        );
     }
 }

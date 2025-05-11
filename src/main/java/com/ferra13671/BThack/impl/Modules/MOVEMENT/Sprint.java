@@ -32,11 +32,6 @@ public class Sprint extends Module {
                 MCategory.MOVEMENT,
                 false
         );
-
-        initSettings(
-                mode,
-                strafe
-        );
     }
     private float yaw;
     private final TravelChanger travelChanger = new TravelChanger(500,

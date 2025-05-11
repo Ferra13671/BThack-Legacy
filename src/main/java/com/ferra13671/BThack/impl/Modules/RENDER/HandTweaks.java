@@ -41,16 +41,6 @@ public class HandTweaks extends Module {
                 MCategory.RENDER,
                 false
         );
-
-        initSettings(
-                leftHandCategory,
-
-                rightHandCategory,
-
-                noEatAnim,
-                noBob,
-                handAnimStep
-        );
     }
 
     @EventSubscriber

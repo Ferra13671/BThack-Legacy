@@ -45,23 +45,6 @@ public class CS_Crosshair extends Module {
                 MCategory.RENDER,
                 false
         );
-
-        initSettings(
-                width,
-                height,
-                distance,
-                movable,
-                scatterLimit,
-                scatterSpeed,
-                leftRect,
-                rightRect,
-                upRect,
-                downRect,
-                centerRect,
-                colorSet,
-                rotate,
-                rainbow
-        );
     }
 
     private float currentSpread = 0;

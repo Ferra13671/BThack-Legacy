@@ -28,12 +28,6 @@ public class Replanish extends Module {
                 MCategory.PLAYER,
                 false
         );
-
-        initSettings(
-                count,
-                delayMode,
-                delay
-        );
     }
 
     private final Ticker delayTicker = new Ticker();

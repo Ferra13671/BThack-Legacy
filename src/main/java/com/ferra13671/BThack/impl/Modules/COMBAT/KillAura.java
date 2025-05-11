@@ -70,20 +70,6 @@ public class KillAura extends Module {
                 MCategory.COMBAT,
                 false
         );
-
-        initSettings(
-                mode,
-                attackMode,
-                range,
-
-                rotateCategory,
-
-                ignoreWalls,
-
-                targetsCategory,
-
-                pauseCategory
-        );
     }
 
     private Predicate<Entity> entityFilter;

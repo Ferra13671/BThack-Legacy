@@ -32,7 +32,6 @@ public class AutoFarmland extends Module {
 
     public final NumberSetting range = new NumberSetting("Range", this, 4, 3, 7, false);
     public final BooleanSetting checkWater = new BooleanSetting("Check Water", this, false);
-    public final BooleanSetting swapLogic = new BooleanSetting("Swap Logic", this, true);
     public final ModeSetting swap = new ModeSetting("Swap", this, Arrays.asList("Client", "Packet"));
     public final ModeSetting interact = new ModeSetting("Interact", this, Arrays.asList("Client", "Packet"));
     public final BooleanSetting rotate = new BooleanSetting("Rotate", this, false);
@@ -46,18 +45,6 @@ public class AutoFarmland extends Module {
                 KeyboardUtils.RELEASE,
                 MCategory.MISC,
                 false
-        );
-
-        initSettings(
-                range,
-                checkWater,
-                swapLogic,
-                swap,
-                interact,
-                rotate,
-                rotateMode,
-                ignoreWalls,
-                tickDelay
         );
     }
 

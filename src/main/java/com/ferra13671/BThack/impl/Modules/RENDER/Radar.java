@@ -37,16 +37,6 @@ public class Radar extends Module {
                 MCategory.RENDER,
                 false
         );
-
-        initSettings(
-                opacity,
-                scale,
-                range,
-                outline,
-                players,
-                mobs,
-                animals
-        );
     }
 
     private final Color mobColor = new Color(255, 255, 0);

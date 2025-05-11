@@ -25,12 +25,6 @@ public class NoSoundLag extends Module {
                 MCategory.MISC,
                 false
         );
-
-        initSettings(
-                armorEquip,
-                explode,
-                attack
-        );
     }
 
     private final Set<SoundEvent> armorSounds = new HashSet<>(Sets.newHashSet(

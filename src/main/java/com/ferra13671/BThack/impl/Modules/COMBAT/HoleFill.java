@@ -17,6 +17,7 @@ import net.minecraft.util.math.BlockPos;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 
 public class HoleFill extends Module {
 
@@ -28,10 +29,6 @@ public class HoleFill extends Module {
                 KeyboardUtils.RELEASE,
                 MCategory.COMBAT,
                 false
-        );
-
-        initSettings(
-                onlyObsidian
         );
     }
 
@@ -52,7 +49,7 @@ public class HoleFill extends Module {
         if (blockPos == null) return;
 
         BuildThread3D builder3D = new BuildThread3D();
-        builder3D.set3DSchematic(0, new ArrayList<>(Arrays.asList(blockPos)), new BlockPos(0,0,0));
+        builder3D.set3DSchematic(0, new ArrayList<>(List.of(blockPos)), new BlockPos(0,0,0));
         builder3D.setNeedBlocks(onlyObsidian.getValue() ? Arrays.asList(Blocks.OBSIDIAN, Blocks.CRYING_OBSIDIAN) : new ArrayList<>());
         builder3D.start();
     }

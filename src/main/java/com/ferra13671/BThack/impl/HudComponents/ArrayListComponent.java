@@ -21,21 +21,15 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class ArrayListComponent extends HudComponent {
     protected static ArrayListComponent INSTANCE;
 
-    private final BooleanSetting drawRects = new BooleanSetting("Draw Rects", this, true);
-    private final BooleanSetting backGround = new BooleanSetting("BackGround", this, true);
-    private final NumberSetting backGroundAlpha = new NumberSetting("BGAlpha", this, 170, 20, 255, true, backGround::getValue);
+    public final BooleanSetting drawRects = new BooleanSetting("Draw Rects", this, true);
+    public final BooleanSetting backGround = new BooleanSetting("BackGround", this, true);
+    public final NumberSetting backGroundAlpha = new NumberSetting("BGAlpha", this, 170, 20, 255, true, backGround::getValue);
 
     public ArrayListComponent() {
         super("ArrayList",
                 MinecraftClient.getInstance().getWindow().getScaledWidth(),
                 5,
                 true
-        );
-
-        initSettings(
-                drawRects,
-                backGround,
-                backGroundAlpha
         );
 
         INSTANCE = this;

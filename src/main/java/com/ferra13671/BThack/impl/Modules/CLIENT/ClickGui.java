@@ -74,42 +74,6 @@ public class ClickGui extends OneActionModule {
 
         scale = new NumberSetting("Scale", this, 1, 0.3, 4, false, () -> rainbow.getValue() || gradient.getValue());
         speed = new NumberSetting("Speed", this, 1, 0.3, 4, false, () -> rainbow.getValue() || gradient.getValue());
-
-        initSettings(
-                textColor,
-                backgroundColor,
-                color,
-
-                rainbow,
-
-                gradient,
-                color1,
-                color2,
-
-                scale,
-                speed,
-
-                arrows,
-
-                frameOutline,
-                moduleOutline,
-                settingsOutline,
-
-                opacity,
-
-                animationTime,
-                easing,
-
-                blur,
-                blurStrength,
-
-                snow,
-                snowSpeed,
-
-                shouldPause,
-
-                guiScale
-        );
     }
 
     public List<String> getEasingList() {

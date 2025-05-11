@@ -22,6 +22,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+//TODO: Categories
 public class HoleESP extends Module {
 
     public final ModeSetting page = new ModeSetting("Page", this, new ArrayList<>(Arrays.asList("Range", "Update", "Box", "Holes")));
@@ -60,25 +61,6 @@ public class HoleESP extends Module {
                 KeyboardUtils.RELEASE,
                 MCategory.RENDER,
                 false
-        );
-
-        initSettings(
-                page,
-                rangeMode,
-                range,
-                rangeH,
-                rangeV,
-                sphere,
-                updateMode,
-                updateDelay,
-                boxLength,
-                boxWidth,
-                boxHeight,
-                obsidianHoles,
-                obsidianColor,
-
-                bedrockHoles,
-                bedrockColor
         );
     }
 

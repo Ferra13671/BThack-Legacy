@@ -23,11 +23,6 @@ public class GuiMove extends Module {
                 MCategory.MOVEMENT,
                 false
         );
-
-        initSettings(
-                chat,
-                clickGui
-        );
     }
 
     @EventSubscriber

@@ -13,7 +13,7 @@ import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.entity.Entity;
 
 import java.awt.*;
-import java.util.Arrays;
+import java.util.List;
 
 public class AttackTrace extends Module {
 
@@ -27,11 +27,6 @@ public class AttackTrace extends Module {
                 MCategory.RENDER,
                 false
         );
-
-        initSettings(
-                renderTime,
-                color
-        );
     }
 
     private Entity attackEntity = null;
@@ -44,7 +39,7 @@ public class AttackTrace extends Module {
         if (attackEntity != null && attackEntity.isAlive()) {
             if (mc.player.distanceTo(attackEntity) < 20) {
                 BThackRender.lineRender.prepareLineRenderer();
-                BThackRender.lineRender.renderLines(Arrays.asList(new RenderLine(attackEntity, color.getValue().getRed() / 255f, color.getValue().getGreen() / 255f, color.getValue().getBlue() / 255f, 1)));
+                BThackRender.lineRender.renderLines(List.of(new RenderLine(attackEntity, color.getValue().getRed() / 255f, color.getValue().getGreen() / 255f, color.getValue().getBlue() / 255f, 1)));
                 BThackRender.lineRender.stopLineRenderer();
             }
         }

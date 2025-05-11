@@ -28,14 +28,6 @@ public class AutoClicker extends Module {
                 MCategory.COMBAT,
                 false
         );
-
-        initSettings(
-                mode,
-                delay,
-
-                onlySword,
-                ifPressing
-        );
     }
 
     private final Ticker ticker = new Ticker();

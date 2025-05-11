@@ -32,13 +32,6 @@ public class AutoShear extends Module {
                 MCategory.MISC,
                 false
         );
-
-        initSettings(
-                rotate,
-                rotateMode,
-
-                swap
-        );
     }
 
     private Predicate<Entity> filter;
