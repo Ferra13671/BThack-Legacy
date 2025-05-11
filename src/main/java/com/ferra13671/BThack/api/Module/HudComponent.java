@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.api.Module;
 
-import com.ferra13671.BThack.Core.Render.BThackRender;
-import com.ferra13671.BThack.Core.Render.Font.FontRenderManager;
+import com.ferra13671.BThack.core.Render.BThackRender;
+import com.ferra13671.BThack.core.Render.Font.FontRenderManager;
 import com.ferra13671.BThack.api.Category.Categories;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.impl.Modules.CLIENT.HUD;

@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.impl.Modules.RENDER;
 
-import com.ferra13671.BThack.Core.Client.ModuleList;
+import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.api.Events.Render.RenderWorldLastEvent;
 import com.ferra13671.BThack.api.IMixin.ModifyWorldRenderer;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.*;

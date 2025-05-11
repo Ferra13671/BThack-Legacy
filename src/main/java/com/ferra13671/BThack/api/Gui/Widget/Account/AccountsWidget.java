@@ -1,10 +1,10 @@
 package com.ferra13671.BThack.api.Gui.Widget.Account;
 
 import com.ferra13671.BTbot.api.Utils.Generate.StringGenerator;
-import com.ferra13671.BThack.Core.Render.BThackRender;
-import com.ferra13671.BThack.Core.Render.Drawers.Drawers;
-import com.ferra13671.BThack.Core.Render.Font.FontRenderManager;
-import com.ferra13671.BThack.Core.Render.Font.FontUtils;
+import com.ferra13671.BThack.core.Render.BThackRender;
+import com.ferra13671.BThack.core.Render.Drawers.Drawers;
+import com.ferra13671.BThack.core.Render.Font.FontRenderManager;
+import com.ferra13671.BThack.core.Render.Font.FontUtils;
 import com.ferra13671.BThack.api.Animation.Animation;
 import com.ferra13671.BThack.api.Animation.Easing;
 import com.ferra13671.BThack.api.GuiSystem.ScreenWidget;

@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.impl.Modules.PLAYER;
 
-import com.ferra13671.BThack.Core.Client.ModuleList;
+import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;

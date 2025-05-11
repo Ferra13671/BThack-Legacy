@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.api.Managers.managers.Destroy;
 
-import com.ferra13671.BThack.Core.Client.ModuleList;
+import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.api.Managers.managers.Build.BuildManager;
 import com.ferra13671.BThack.api.Managers.managers.Thread.ThreadClosedException;
 import com.ferra13671.BThack.api.Utils.BlockUtils;

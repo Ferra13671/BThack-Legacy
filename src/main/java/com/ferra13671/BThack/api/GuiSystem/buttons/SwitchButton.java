@@ -1,8 +1,8 @@
 package com.ferra13671.BThack.api.GuiSystem.buttons;
 
-import com.ferra13671.BThack.Core.Render.BThackRender;
-import com.ferra13671.BThack.Core.Render.Font.FontRenderManager;
-import com.ferra13671.BThack.Core.Render.Font.FontUtils;
+import com.ferra13671.BThack.core.Render.BThackRender;
+import com.ferra13671.BThack.core.Render.Font.FontRenderManager;
+import com.ferra13671.BThack.core.Render.Font.FontUtils;
 
 public class SwitchButton extends Button {
     private boolean bVal;

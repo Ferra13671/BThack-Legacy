@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.mixins.gui_and_hud;
 
-import com.ferra13671.BThack.Core.Client.ModuleList;
+import com.ferra13671.BThack.core.Client.ModuleList;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;

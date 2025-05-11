@@ -1,13 +1,13 @@
 package com.ferra13671.BThack.api.Gui.Screen.HudEditor;
 
-import com.ferra13671.BThack.Core.Client.Client;
-import com.ferra13671.BThack.Core.Client.ModuleList;
-import com.ferra13671.BThack.Core.Client.Systems.ConfigSystem.SubConfigs;
-import com.ferra13671.BThack.Core.Render.BThackMatrix;
-import com.ferra13671.BThack.Core.Render.BThackRender;
-import com.ferra13671.BThack.Core.Render.Font.FontUtils;
-import com.ferra13671.BThack.Core.Render.Utils.BThackRenderUtils;
-import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
+import com.ferra13671.BThack.core.Client.Client;
+import com.ferra13671.BThack.core.Client.ModuleList;
+import com.ferra13671.BThack.core.Client.Systems.ConfigSystem.SubConfigs;
+import com.ferra13671.BThack.core.Render.BThackMatrix;
+import com.ferra13671.BThack.core.Render.BThackRender;
+import com.ferra13671.BThack.core.Render.Font.FontUtils;
+import com.ferra13671.BThack.core.Render.Utils.BThackRenderUtils;
+import com.ferra13671.BThack.core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Category.Categories;
 import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.Component;
 import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.Frame;

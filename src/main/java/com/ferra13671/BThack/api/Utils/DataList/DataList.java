@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.api.Utils.DataList;
 
-import com.ferra13671.BThack.Core.Client.Systems.ConfigSystem.ConfigUtils;
-import com.ferra13671.BThack.Core.Client.Systems.FileSystem.FileSystem;
+import com.ferra13671.BThack.core.Client.Systems.ConfigSystem.ConfigUtils;
+import com.ferra13671.BThack.core.Client.Systems.FileSystem.FileSystem;
 import com.ferra13671.BThack.api.Utils.DataList.Commands.AbstractDataListCommand;
 import com.ferra13671.BThack.api.Utils.DataList.Commands.EditDataListCommand;
 import com.google.gson.JsonObject;

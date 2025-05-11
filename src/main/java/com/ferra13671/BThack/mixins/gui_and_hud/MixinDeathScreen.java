@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.mixins.gui_and_hud;
 
-import com.ferra13671.BThack.Core.Client.ModuleList;
+import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import net.minecraft.client.gui.screen.DeathScreen;
 import org.spongepowered.asm.mixin.Mixin;

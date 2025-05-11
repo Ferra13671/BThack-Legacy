@@ -1,9 +1,9 @@
 package com.ferra13671.BThack.api.GuiSystem.buttons;
 
-import com.ferra13671.BThack.Core.Render.BThackRender;
-import com.ferra13671.BThack.Core.Render.Font.FontRenderManager;
-import com.ferra13671.BThack.Core.Render.Font.FontUtils;
-import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
+import com.ferra13671.BThack.core.Render.BThackRender;
+import com.ferra13671.BThack.core.Render.Font.FontRenderManager;
+import com.ferra13671.BThack.core.Render.Font.FontUtils;
+import com.ferra13671.BThack.core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.SoundSystem.SoundSystem;
 import com.ferra13671.BThack.api.SoundSystem.Sounds;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;

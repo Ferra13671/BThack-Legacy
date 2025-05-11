@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.api.Gui.Screen.HudEditor.Utils;
 
-import com.ferra13671.BThack.Core.Render.BThackRender;
-import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
+import com.ferra13671.BThack.core.Render.BThackRender;
+import com.ferra13671.BThack.core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Module.HudComponent;
 import com.ferra13671.BThack.api.GuiSystem.buttons.Button;
 

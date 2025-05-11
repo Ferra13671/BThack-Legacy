@@ -1,8 +1,8 @@
 package com.ferra13671.BThack.impl.Modules.MISC;
 
-import com.ferra13671.BThack.Core.Render.BThackRender;
-import com.ferra13671.BThack.Core.Render.Box.RenderBox;
-import com.ferra13671.BThack.Core.Render.Line.RenderLine;
+import com.ferra13671.BThack.core.Render.BThackRender;
+import com.ferra13671.BThack.core.Render.Box.RenderBox;
+import com.ferra13671.BThack.core.Render.Line.RenderLine;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Events.DisconnectEvent;
 import com.ferra13671.BThack.api.Events.Render.RenderWorldLastEvent;

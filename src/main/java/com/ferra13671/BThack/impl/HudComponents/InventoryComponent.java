@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.impl.HudComponents;
 
-import com.ferra13671.BThack.Core.Render.BThackRender;
+import com.ferra13671.BThack.core.Render.BThackRender;
 import com.ferra13671.BThack.api.Module.HudComponent;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.item.ItemStack;

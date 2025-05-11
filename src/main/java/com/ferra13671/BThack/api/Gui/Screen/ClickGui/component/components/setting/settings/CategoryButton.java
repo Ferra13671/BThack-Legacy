@@ -1,8 +1,8 @@
 package com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.setting.settings;
 
 import com.ferra13671.BThack.Constants;
-import com.ferra13671.BThack.Core.Client.ModuleList;
-import com.ferra13671.BThack.Core.Render.BThackRender;
+import com.ferra13671.BThack.core.Client.ModuleList;
+import com.ferra13671.BThack.core.Render.BThackRender;
 import com.ferra13671.BThack.api.Animation.Animation;
 import com.ferra13671.BThack.api.Animation.Easing;
 import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.Component;

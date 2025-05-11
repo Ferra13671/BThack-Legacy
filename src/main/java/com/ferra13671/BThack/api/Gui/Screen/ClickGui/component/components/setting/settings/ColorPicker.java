@@ -1,11 +1,11 @@
 package com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.setting.settings;
 
-import com.ferra13671.BThack.Core.Render.BThackRender;
-import com.ferra13671.BThack.Core.Render.Drawers.Drawers;
-import com.ferra13671.BThack.Core.Render.Drawers.GradientRectDrawer;
-import com.ferra13671.BThack.Core.Render.Font.FontRenderManager;
-import com.ferra13671.BThack.Core.Render.Utils.BThackRenderUtils;
-import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
+import com.ferra13671.BThack.core.Render.BThackRender;
+import com.ferra13671.BThack.core.Render.Drawers.Drawers;
+import com.ferra13671.BThack.core.Render.Drawers.GradientRectDrawer;
+import com.ferra13671.BThack.core.Render.Font.FontRenderManager;
+import com.ferra13671.BThack.core.Render.Utils.BThackRenderUtils;
+import com.ferra13671.BThack.core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Animation.Animation;
 import com.ferra13671.BThack.api.Animation.Easing;
 import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.ModuleButton;

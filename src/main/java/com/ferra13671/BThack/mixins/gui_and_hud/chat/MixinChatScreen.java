@@ -1,10 +1,10 @@
 package com.ferra13671.BThack.mixins.gui_and_hud.chat;
 
 import com.ferra13671.BThack.BThack;
-import com.ferra13671.BThack.Core.Client.ModuleList;
-import com.ferra13671.BThack.Core.Render.BThackMatrix;
-import com.ferra13671.BThack.Core.Render.BThackRender;
-import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
+import com.ferra13671.BThack.core.Client.ModuleList;
+import com.ferra13671.BThack.core.Render.BThackMatrix;
+import com.ferra13671.BThack.core.Render.BThackRender;
+import com.ferra13671.BThack.core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Events.SendMessageEvent;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import net.minecraft.client.MinecraftClient;

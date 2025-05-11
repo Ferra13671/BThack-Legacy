@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot;
 
-import com.ferra13671.BThack.Core.Client.ModuleList;
+import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.api.Managers.managers.Thread.BThackThread;
 import com.ferra13671.BThack.api.Managers.managers.Thread.ThreadClosedException;
 import com.ferra13671.BThack.api.Utils.ChatUtils;

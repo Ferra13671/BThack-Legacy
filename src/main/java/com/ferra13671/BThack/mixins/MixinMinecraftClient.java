@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.mixins;
 
 import com.ferra13671.BThack.BThack;
-import com.ferra13671.BThack.Core.Client.ModuleList;
+import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.api.Events.GuiOpenEvent;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Interfaces.Mc;

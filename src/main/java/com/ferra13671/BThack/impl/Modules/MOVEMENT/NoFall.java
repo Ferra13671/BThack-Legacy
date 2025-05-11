@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.impl.Modules.MOVEMENT;
 
-import com.ferra13671.BThack.Core.Client.Systems.GrimNoFallSystem;
+import com.ferra13671.BThack.core.Client.Systems.GrimNoFallSystem;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Events.PacketEvent;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;

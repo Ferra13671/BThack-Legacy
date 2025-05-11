@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.impl.Modules.RENDER;
 
-import com.ferra13671.BThack.Core.Render.BThackRender;
-import com.ferra13671.BThack.Core.Render.Box.RenderBox;
+import com.ferra13671.BThack.core.Render.BThackRender;
+import com.ferra13671.BThack.core.Render.Box.RenderBox;
 import com.ferra13671.BThack.api.Animation.Animation;
 import com.ferra13671.BThack.api.Animation.Easing;
 import com.ferra13671.BThack.api.Events.Render.RenderWorldLastEvent;

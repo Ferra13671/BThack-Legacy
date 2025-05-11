@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.api.Gui.Screen.MainMenu;
 
-import com.ferra13671.BThack.Core.Render.BThackRender;
-import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
+import com.ferra13671.BThack.core.Render.BThackRender;
+import com.ferra13671.BThack.core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Utils.DesktopUtils;
 import com.ferra13671.BThack.api.GuiSystem.Screen.BThackScreen;
 import com.ferra13671.BThack.api.GuiSystem.BThackScreens;

@@ -1,12 +1,12 @@
 package com.ferra13671.BThack.impl.HudComponents;
 
-import com.ferra13671.BThack.Core.Client.Client;
-import com.ferra13671.BThack.Core.Client.ModuleList;
-import com.ferra13671.BThack.Core.Render.BThackRender;
-import com.ferra13671.BThack.Core.Render.Font.FontRenderManager;
-import com.ferra13671.BThack.Core.Render.Font.FontUtils;
-import com.ferra13671.BThack.Core.Render.Utils.BThackRenderUtils;
-import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
+import com.ferra13671.BThack.core.Client.Client;
+import com.ferra13671.BThack.core.Client.ModuleList;
+import com.ferra13671.BThack.core.Render.BThackRender;
+import com.ferra13671.BThack.core.Render.Font.FontRenderManager;
+import com.ferra13671.BThack.core.Render.Font.FontUtils;
+import com.ferra13671.BThack.core.Render.Utils.BThackRenderUtils;
+import com.ferra13671.BThack.core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Module.HudComponent;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Shader.Shaders;

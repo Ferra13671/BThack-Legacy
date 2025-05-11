@@ -1,15 +1,15 @@
 package com.ferra13671.BThack;
 
 import com.ferra13671.BTbot.api.Utils.Controller.ClientPlayerController;
-import com.ferra13671.BThack.Core.Client.Client;
-import com.ferra13671.BThack.Core.Client.ModuleList;
-import com.ferra13671.BThack.Core.Client.Systems.ConfigSystem.ConfigSystem;
-import com.ferra13671.BThack.Core.Client.Systems.ConfigSystem.ConfigUtils;
-import com.ferra13671.BThack.Core.Client.Systems.FileSystem.FileSystem;
-import com.ferra13671.BThack.Core.Client.Systems.FileSystem.JsonUtils;
-import com.ferra13671.BThack.Core.DeviceSystem;
-import com.ferra13671.BThack.Core.Render.BThackRender;
-import com.ferra13671.BThack.Core.ShutdownSystem;
+import com.ferra13671.BThack.core.Client.Client;
+import com.ferra13671.BThack.core.Client.ModuleList;
+import com.ferra13671.BThack.core.Client.Systems.ConfigSystem.ConfigSystem;
+import com.ferra13671.BThack.core.Client.Systems.ConfigSystem.ConfigUtils;
+import com.ferra13671.BThack.core.Client.Systems.FileSystem.FileSystem;
+import com.ferra13671.BThack.core.Client.Systems.FileSystem.JsonUtils;
+import com.ferra13671.BThack.core.DeviceSystem;
+import com.ferra13671.BThack.core.Render.BThackRender;
+import com.ferra13671.BThack.core.ShutdownSystem;
 import com.ferra13671.BThack.api.GuiSystem.BThackWidgets;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Plugin.Plugin;

@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.mixins.render;
 
 import com.ferra13671.BThack.BThack;
-import com.ferra13671.BThack.Core.Client.ModuleList;
+import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.api.Events.Render.TransformFirstPersonEvent;
 import com.ferra13671.MegaEvents.Base.Event;
 import net.minecraft.client.model.ModelPart;

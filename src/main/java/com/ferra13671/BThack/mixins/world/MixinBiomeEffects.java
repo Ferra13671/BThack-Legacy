@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.mixins.world;
 
-import com.ferra13671.BThack.Core.Client.ModuleList;
+import com.ferra13671.BThack.core.Client.ModuleList;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.world.biome.BiomeEffects;
 import net.minecraft.world.biome.BiomeParticleConfig;

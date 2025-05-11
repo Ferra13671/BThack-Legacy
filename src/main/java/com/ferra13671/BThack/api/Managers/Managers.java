@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.api.Managers;
 
-import com.ferra13671.BThack.Core.Client.ModuleList;
+import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.api.Managers.managers.*;
 import com.ferra13671.BThack.api.Managers.managers.Account.AccountManager;
 import com.ferra13671.BThack.api.Managers.managers.Build.BuildManager;

@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.api.Managers.managers.Cape;
 
-import com.ferra13671.BThack.Core.Client.ClientInfo;
+import com.ferra13671.BThack.core.Client.ClientInfo;
 import com.ferra13671.BThack.api.Utils.Initializable;
 import net.minecraft.util.Identifier;
 

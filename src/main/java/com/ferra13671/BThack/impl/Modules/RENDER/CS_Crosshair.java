@@ -1,9 +1,9 @@
 package com.ferra13671.BThack.impl.Modules.RENDER;
 
 
-import com.ferra13671.BThack.Core.Render.BThackMatrix;
-import com.ferra13671.BThack.Core.Render.BThackRender;
-import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
+import com.ferra13671.BThack.core.Render.BThackMatrix;
+import com.ferra13671.BThack.core.Render.BThackRender;
+import com.ferra13671.BThack.core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Events.Entity.AttackEntityEvent;
 import com.ferra13671.BThack.api.Events.Render.RenderHudPreEvent;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;

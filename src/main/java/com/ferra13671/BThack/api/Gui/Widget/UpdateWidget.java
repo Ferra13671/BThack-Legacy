@@ -1,11 +1,11 @@
 package com.ferra13671.BThack.api.Gui.Widget;
 
-import com.ferra13671.BThack.Core.BThackUpdater.BThackUpdater;
-import com.ferra13671.BThack.Core.BThackUpdater.UpdateState;
-import com.ferra13671.BThack.Core.BThackUpdater.UpdaterThread;
-import com.ferra13671.BThack.Core.Render.BThackRender;
-import com.ferra13671.BThack.Core.Render.Font.FontRenderManager;
-import com.ferra13671.BThack.Core.Render.Font.FontUtils;
+import com.ferra13671.BThack.core.BThackUpdater.BThackUpdater;
+import com.ferra13671.BThack.core.BThackUpdater.UpdateState;
+import com.ferra13671.BThack.core.BThackUpdater.UpdaterThread;
+import com.ferra13671.BThack.core.Render.BThackRender;
+import com.ferra13671.BThack.core.Render.Font.FontRenderManager;
+import com.ferra13671.BThack.core.Render.Font.FontUtils;
 import com.ferra13671.BThack.api.Animation.Animation;
 import com.ferra13671.BThack.api.Animation.Easing;
 import com.ferra13671.BThack.api.GuiSystem.BThackScreens;

@@ -1,8 +1,8 @@
 package com.ferra13671.BThack.mixins;
 
 import com.ferra13671.BThack.BThack;
-import com.ferra13671.BThack.Core.Client.Client;
-import com.ferra13671.BThack.Core.Client.ModuleList;
+import com.ferra13671.BThack.core.Client.Client;
+import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.api.Events.Camera.PositionCameraEvent;
 import com.ferra13671.BThack.api.Events.Camera.RotateCameraEvent;
 import net.minecraft.block.enums.CameraSubmersionType;

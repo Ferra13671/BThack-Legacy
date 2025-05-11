@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.mixins.entity;
 
 import com.ferra13671.BThack.BThack;
-import com.ferra13671.BThack.Core.Client.ModuleList;
+import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.api.Events.Entity.JumpHeightEvent;
 import com.ferra13671.BThack.api.Events.Player.PlayerJumpEvent;
 import com.ferra13671.BThack.api.Events.Player.PlayerTravelEvent;

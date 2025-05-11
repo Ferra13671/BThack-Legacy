@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.api.Shader.MainMenu;
 
-import com.ferra13671.BThack.Core.Render.Utils.BThackRenderUtils;
+import com.ferra13671.BThack.core.Render.Utils.BThackRenderUtils;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Shader.ShaderProgram;
 import org.ladysnake.satin.api.managed.uniform.Uniform1f;

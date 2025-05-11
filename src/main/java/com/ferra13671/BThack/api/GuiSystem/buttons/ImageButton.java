@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.api.GuiSystem.buttons;
 
-import com.ferra13671.BThack.Core.Render.BThackRender;
+import com.ferra13671.BThack.core.Render.BThackRender;
 import com.ferra13671.TextureUtils.GLTexture;
 
 public class ImageButton extends Button {

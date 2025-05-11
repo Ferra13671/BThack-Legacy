@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.mixins.render;
 
-import com.ferra13671.BThack.Core.Client.ModuleList;
+import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.impl.Modules.RENDER.EnchantColor;
 import com.mojang.blaze3d.systems.RenderSystem;

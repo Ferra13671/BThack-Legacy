@@ -1,9 +1,9 @@
 package com.ferra13671.BThack.api.GuiSystem.Screen;
 
 
-import com.ferra13671.BThack.Core.Client.ModuleList;
-import com.ferra13671.BThack.Core.Render.BThackRender;
-import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
+import com.ferra13671.BThack.core.Client.ModuleList;
+import com.ferra13671.BThack.core.Render.BThackRender;
+import com.ferra13671.BThack.core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Animation.Animation;
 import com.ferra13671.BThack.api.Gui.Screen.TransitionScreen;
 import com.ferra13671.BThack.api.Interfaces.Mc;

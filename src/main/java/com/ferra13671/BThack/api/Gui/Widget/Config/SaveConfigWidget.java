@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.api.Gui.Widget.Config;
 
-import com.ferra13671.BThack.Core.Client.Systems.ConfigSystem.ConfigSystem;
+import com.ferra13671.BThack.core.Client.Systems.ConfigSystem.ConfigSystem;
 import com.ferra13671.BThack.api.GuiSystem.ScreenWidget;
 import com.ferra13671.BThack.api.GuiSystem.buttons.Button;
 import com.ferra13671.BThack.api.GuiSystem.buttons.TextFrameButton;

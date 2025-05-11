@@ -1,11 +1,10 @@
 package com.ferra13671.BThack.api.Gui.Widget.Account;
 
-import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.Constants;
-import com.ferra13671.BThack.Core.Render.BThackRender;
-import com.ferra13671.BThack.Core.Render.Font.FontRenderManager;
-import com.ferra13671.BThack.Core.Render.Font.FontUtils;
-import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
+import com.ferra13671.BThack.core.Render.BThackRender;
+import com.ferra13671.BThack.core.Render.Font.FontRenderManager;
+import com.ferra13671.BThack.core.Render.Font.FontUtils;
+import com.ferra13671.BThack.core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.GuiSystem.buttons.Button;
 import com.ferra13671.BThack.api.Managers.managers.Account.Account;
 import com.ferra13671.BThack.api.SoundSystem.Sounds;

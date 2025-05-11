@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.mixins.input;
 
 import com.ferra13671.BThack.BThack;
-import com.ferra13671.BThack.Core.Client.ModuleList;
+import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.api.Events.InputEvent;
 import net.minecraft.client.Mouse;
 import org.spongepowered.asm.mixin.Mixin;

@@ -2,7 +2,7 @@ package com.ferra13671.BThack.api.Module;
 
 import com.ferra13671.BTbot.api.Utils.Controller.ClientPlayerController;
 import com.ferra13671.BThack.BThack;
-import com.ferra13671.BThack.Core.Client.ModuleList;
+import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.api.Category.Categories;
 import com.ferra13671.BThack.api.Category.Category;
 import com.ferra13671.BThack.api.Managers.Managers;

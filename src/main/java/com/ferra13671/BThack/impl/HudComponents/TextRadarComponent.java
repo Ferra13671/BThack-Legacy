@@ -1,9 +1,9 @@
 package com.ferra13671.BThack.impl.HudComponents;
 
 import com.ferra13671.BThack.Constants;
-import com.ferra13671.BThack.Core.Render.BThackRender;
-import com.ferra13671.BThack.Core.Render.Font.FontRenderManager;
-import com.ferra13671.BThack.Core.Render.Font.FontUtils;
+import com.ferra13671.BThack.core.Render.BThackRender;
+import com.ferra13671.BThack.core.Render.Font.FontRenderManager;
+import com.ferra13671.BThack.core.Render.Font.FontUtils;
 import com.ferra13671.BThack.api.Module.HudComponent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Formatting;

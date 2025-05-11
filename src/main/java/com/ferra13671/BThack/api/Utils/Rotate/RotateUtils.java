@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.api.Utils.Rotate;
 
 
-import com.ferra13671.BThack.Core.Client.ModuleList;
+import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Utils.Modules.NoRotateMathUtils;

@@ -3,8 +3,8 @@ package com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.ActionBotTask
 import com.ferra13671.BTbot.api.Utils.Motion.Align.AlignWithXZ;
 import com.ferra13671.BTbot.api.Utils.Motion.Align.WhereToAlign;
 import com.ferra13671.BThack.BThack;
-import com.ferra13671.BThack.Core.Client.ModuleList;
-import com.ferra13671.BThack.Core.Client.Systems.FileSystem.JsonUtils;
+import com.ferra13671.BThack.core.Client.ModuleList;
+import com.ferra13671.BThack.core.Client.Systems.FileSystem.JsonUtils;
 import com.ferra13671.BThack.api.Events.Entity.UpdateInputEvent;
 import com.ferra13671.BThack.api.Managers.managers.Build.BuildManager;
 import com.ferra13671.BThack.api.Managers.managers.Build.BuildThread3D;

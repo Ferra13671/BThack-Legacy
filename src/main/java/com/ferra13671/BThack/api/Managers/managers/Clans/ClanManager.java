@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.api.Managers.managers.Clans;
 
 import com.ferra13671.BThack.BThack;
-import com.ferra13671.BThack.Core.Client.Systems.ConfigSystem.SubConfigs;
+import com.ferra13671.BThack.core.Client.Systems.ConfigSystem.SubConfigs;
 import com.ferra13671.BThack.api.Utils.Initializable;
 import net.minecraft.entity.player.PlayerEntity;
 

@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.mixins.render;
 
-import com.ferra13671.BThack.Core.Client.ModuleList;
-import com.ferra13671.BThack.Core.Render.Utils.BThackRenderUtils;
+import com.ferra13671.BThack.core.Client.ModuleList;
+import com.ferra13671.BThack.core.Render.Utils.BThackRenderUtils;
 import com.ferra13671.BThack.api.IMixin.ModifyWorldRenderer;
 import com.ferra13671.BThack.api.Utils.Modules.KillAuraUtils;
 import com.llamalad7.mixinextras.sugar.Local;

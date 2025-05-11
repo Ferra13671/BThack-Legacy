@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.mixins;
 
 import com.ferra13671.BThack.BThack;
-import com.ferra13671.BThack.Core.Client.Client;
+import com.ferra13671.BThack.core.Client.Client;
 import com.ferra13671.BThack.api.IMixin.ModifyWindow;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.impl.HudComponents.OneTextComponents.ServerIPComponent;

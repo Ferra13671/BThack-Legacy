@@ -1,8 +1,8 @@
 package com.ferra13671.BThack.impl.Commands;
 
-import com.ferra13671.BThack.Core.Client.Client;
-import com.ferra13671.BThack.Core.Client.ClientInfo;
-import com.ferra13671.BThack.Core.Client.Systems.ConfigSystem.SubConfigs;
+import com.ferra13671.BThack.core.Client.Client;
+import com.ferra13671.BThack.core.Client.ClientInfo;
+import com.ferra13671.BThack.core.Client.Systems.ConfigSystem.SubConfigs;
 import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Cape.Cape;
 import com.ferra13671.BThack.api.Managers.managers.Cape.CapeManager;

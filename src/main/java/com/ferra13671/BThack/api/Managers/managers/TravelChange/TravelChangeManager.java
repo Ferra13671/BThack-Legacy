@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.api.Managers.managers.TravelChange;
 
 import com.ferra13671.BThack.BThack;
-import com.ferra13671.BThack.Core.Client.ModuleList;
+import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.api.Events.Camera.RotateCameraEvent;
 import com.ferra13671.BThack.api.Events.Player.ChangePlayerLookEvent;
 import com.ferra13671.BThack.api.Events.Player.PlayerTravelEvent;

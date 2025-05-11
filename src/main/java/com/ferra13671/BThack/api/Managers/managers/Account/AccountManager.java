@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.api.Managers.managers.Account;
 
-import com.ferra13671.BThack.Core.Client.Systems.ConfigSystem.ConfigUtils;
-import com.ferra13671.BThack.Core.Client.Systems.FileSystem.JsonUtils;
+import com.ferra13671.BThack.core.Client.Systems.ConfigSystem.ConfigUtils;
+import com.ferra13671.BThack.core.Client.Systems.FileSystem.JsonUtils;
 import com.ferra13671.BThack.api.Utils.Initializable;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;

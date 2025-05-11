@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.api.Managers.managers.Command;
 
 import com.ferra13671.BThack.BThack;
-import com.ferra13671.BThack.Core.DeviceSystem;
+import com.ferra13671.BThack.core.DeviceSystem;
 import com.ferra13671.BThack.api.Utils.Initializable;
 import com.ferra13671.BThack.api.Plugin.Plugin;
 import com.ferra13671.BThack.api.Plugin.PluginSystem;

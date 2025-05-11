@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.api.Managers.managers.Waypoint;
 
-import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
+import com.ferra13671.BThack.core.Render.Utils.ColorUtils;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;

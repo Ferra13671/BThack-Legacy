@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.mixins.world;
 
-import com.ferra13671.BThack.Core.Client.ModuleList;
+import com.ferra13671.BThack.core.Client.ModuleList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.biome.Biome;
 import org.spongepowered.asm.mixin.Mixin;

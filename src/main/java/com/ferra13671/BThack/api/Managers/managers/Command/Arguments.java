@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.api.Managers.managers.Command;
 
-import com.ferra13671.BThack.Core.Client.Client;
+import com.ferra13671.BThack.core.Client.Client;
 import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Command.CustomArguments.*;
 import com.ferra13671.BThack.api.Managers.managers.Macros.Macro;

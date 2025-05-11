@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.mixins.entity;
 
-import com.ferra13671.BThack.Core.Client.ModuleList;
+import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;

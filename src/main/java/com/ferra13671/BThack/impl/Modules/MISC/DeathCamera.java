@@ -1,8 +1,8 @@
 package com.ferra13671.BThack.impl.Modules.MISC;
 
-import com.ferra13671.BThack.Core.Client.ModuleList;
-import com.ferra13671.BThack.Core.Render.BThackRender;
-import com.ferra13671.BThack.Core.Render.Utils.ColorUtils;
+import com.ferra13671.BThack.core.Client.ModuleList;
+import com.ferra13671.BThack.core.Render.BThackRender;
+import com.ferra13671.BThack.core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Events.Camera.PositionCameraEvent;
 import com.ferra13671.BThack.api.Events.Camera.RotateCameraEvent;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
