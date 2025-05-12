@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.api.Gui.Widget.Account;
 
-import com.ferra13671.BTbot.api.Utils.Generate.StringGenerator;
+import com.ferra13671.BThack.api.Utils.MathUtils;
 import com.ferra13671.BThack.core.Render.BThackRender;
 import com.ferra13671.BThack.core.Render.Drawers.Drawers;
 import com.ferra13671.BThack.core.Render.Font.FontRenderManager;
@@ -92,7 +92,7 @@ public class AccountsWidget extends ScreenWidget {
     }
 
     public void createRandomAccount() {
-        Managers.ACCOUNT_MANAGER.addAccount(new Account(StringGenerator.generateNextString(10, true, false, false), "", ""));
+        Managers.ACCOUNT_MANAGER.addAccount(new Account(MathUtils.randomString(10, true, false, false), "", ""));
         init();
     }
 

@@ -1,13 +1,13 @@
 package com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.ActionBotTasks;
 
-import com.ferra13671.BThack.api.Interfaces.Pc;
+import com.ferra13671.BThack.api.Utils.PlayerUtils;
 import com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.ActionBotConfig;
 import com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.ActionBotTask;
 import com.google.gson.JsonObject;
 
 import java.util.List;
 
-public class CloseScreenTask extends ActionBotTask implements Pc {
+public class CloseScreenTask extends ActionBotTask {
 
     public CloseScreenTask() {
         super("CloseScreen");
@@ -20,7 +20,7 @@ public class CloseScreenTask extends ActionBotTask implements Pc {
 
     @Override
     public void play() {
-        pc.closeScreen();
+        PlayerUtils.closeHandledScreen();
     }
 
     @Override

@@ -25,7 +25,7 @@ public class SimpleDestroyThread extends AbstractDestroyThread {
         DestroyManager.isDestroying = true;
 
         if (ModuleList.packetMine.isEnabled()) {
-            pc.startBlockBreaking(pos, RotateUtils.getInvertedFacingEntity(mc.player));
+            mc.interactionManager.attackBlock(pos, RotateUtils.getInvertedFacingEntity(mc.player));
             Thread.yield();
         }
 

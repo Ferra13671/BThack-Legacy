@@ -143,8 +143,8 @@ public class LongJump extends Module {
                                 item = needSlot;
 
                             if (swapMode.getValue().equals("Swap")) {
-                                pc.clickSlot(0, InventoryUtils.CHESTPLATE_SLOT, 0, SlotActionType.QUICK_MOVE);
-                                pc.clickSlot(0, item, 0, SlotActionType.QUICK_MOVE);
+                                mc.interactionManager.clickSlot(0, InventoryUtils.CHESTPLATE_SLOT, 0, SlotActionType.QUICK_MOVE, mc.player);
+                                mc.interactionManager.clickSlot(0, item, 0, SlotActionType.QUICK_MOVE, mc.player);
                             } else {
                                 InventoryUtils.replaceItems(InventoryUtils.CHESTPLATE_SLOT, item);
                             }
@@ -198,8 +198,8 @@ public class LongJump extends Module {
                                     item = needSlot;
 
                                 if (swapMode.getValue().equals("Swap")) {
-                                    pc.clickSlot(0, InventoryUtils.CHESTPLATE_SLOT, 0, SlotActionType.QUICK_MOVE);
-                                    pc.clickSlot(0, item, 0, SlotActionType.QUICK_MOVE);
+                                    mc.interactionManager.clickSlot(0, InventoryUtils.CHESTPLATE_SLOT, 0, SlotActionType.QUICK_MOVE, mc.player);
+                                    mc.interactionManager.clickSlot(0, item, 0, SlotActionType.QUICK_MOVE, mc.player);
                                 } else {
                                     InventoryUtils.replaceItems(InventoryUtils.CHESTPLATE_SLOT, item);
                                 }
@@ -217,8 +217,8 @@ public class LongJump extends Module {
                                 item = needSlot;
 
                             if (swapMode.getValue().equals("Swap")) {
-                                pc.clickSlot(0, InventoryUtils.CHESTPLATE_SLOT, 0, SlotActionType.QUICK_MOVE);
-                                pc.clickSlot(0, item, 0, SlotActionType.QUICK_MOVE);
+                                mc.interactionManager.clickSlot(0, InventoryUtils.CHESTPLATE_SLOT, 0, SlotActionType.QUICK_MOVE, mc.player);
+                                mc.interactionManager.clickSlot(0, item, 0, SlotActionType.QUICK_MOVE, mc.player);
                             } else {
                                 InventoryUtils.replaceItems(InventoryUtils.CHESTPLATE_SLOT, item);
                             }

@@ -78,7 +78,6 @@
 "lang.module.VisualRange": Powiadamia o wejściu lub zejściu osoby z linii wzroku.
 
 //MOVEMENT
-"lang.module.AntiAFK": Randomizator akcji symulujący aktywność gracza.
 "lang.module.AutoJump": Automatycznie skacze.
 "lang.module.AutoWalk": Automatycznie idzie do przodu.
 "lang.module.Blink": Powoduje opóźnienie pakietów.

@@ -1,6 +1,5 @@
 package com.ferra13671.BThack.api.Module;
 
-import com.ferra13671.BTbot.api.Utils.Controller.ClientPlayerController;
 import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.api.Category.Categories;
@@ -26,7 +25,6 @@ public class Module {
 
     private int keyCode = moduleInfo.key();
     public boolean toggled;
-    public final ClientPlayerController pc = BThack.instance.playerController;
 
     public String arrayListInfo = "";
 

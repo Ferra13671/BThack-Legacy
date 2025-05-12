@@ -1,8 +1,7 @@
 package com.ferra13671.BThack.impl.Modules.PLAYER;
 
-import com.ferra13671.BTbot.api.Utils.Generate.StringGenerator;
-import com.ferra13671.BTbot.api.Utils.Generate.NumberGenerator;
 import com.ferra13671.BThack.api.Module.ModuleInfo;
+import com.ferra13671.BThack.api.Utils.MathUtils;
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.CategorySetting;
@@ -95,8 +94,8 @@ public class PMSpammer extends Module {
 
                                     thread.sleepThread(
                                             delaySpread.getValue() ?
-                                                    (int) (!Constants.RANDOM.nextBoolean() ? (delayInMillis * NumberGenerator.generateFloat(1, 1f + spreadRange.getValue().floatValue()))
-                                                            : (delayInMillis * NumberGenerator.generateFloat(spreadRange.getValue().floatValue(), 1))) : delayInMillis);
+                                                    (int) (!Constants.RANDOM.nextBoolean() ? (delayInMillis * MathUtils.randomFloat(1, 1f + spreadRange.getValue().floatValue()))
+                                                            : (delayInMillis * MathUtils.randomFloat(spreadRange.getValue().floatValue(), 1))) : delayInMillis);
                                 }
                                 m = m + 1;
                                 sendNotification(Formatting.AQUA + LanguageSystem.translate("lang.module.PMSpammer.movingToNext"));
@@ -108,8 +107,8 @@ public class PMSpammer extends Module {
 
                             thread.sleepThread(
                                     delaySpread.getValue() ?
-                                            (int) (!Constants.RANDOM.nextBoolean() ? (delayInMillis * NumberGenerator.generateFloat(1, 1f + spreadRange.getValue().floatValue()))
-                                                    : (delayInMillis * NumberGenerator.generateFloat(spreadRange.getValue().floatValue(), 1))) : delayInMillis);
+                                            (int) (!Constants.RANDOM.nextBoolean() ? (delayInMillis * MathUtils.randomFloat(1, 1f + spreadRange.getValue().floatValue()))
+                                                    : (delayInMillis * MathUtils.randomFloat(spreadRange.getValue().floatValue(), 1))) : delayInMillis);
                         }
                     } catch (IOException e) {
                         throw new RuntimeException(e);
@@ -144,8 +143,8 @@ public class PMSpammer extends Module {
 
                                     thread.sleepThread(
                                             delaySpread.getValue() ?
-                                                    (int) (!Constants.RANDOM.nextBoolean() ? (delayInMillis * NumberGenerator.generateFloat(1, 1f + spreadRange.getValue().floatValue()))
-                                                            : (delayInMillis * NumberGenerator.generateFloat(spreadRange.getValue().floatValue(), 1))) : delayInMillis);
+                                                    (int) (!Constants.RANDOM.nextBoolean() ? (delayInMillis * MathUtils.randomFloat(1, 1f + spreadRange.getValue().floatValue()))
+                                                            : (delayInMillis * MathUtils.randomFloat(spreadRange.getValue().floatValue(), 1))) : delayInMillis);
                                 }
                             }
                             reader.close();
@@ -155,8 +154,8 @@ public class PMSpammer extends Module {
 
                             thread.sleepThread(
                                     delaySpread.getValue() ?
-                                            (int) (!Constants.RANDOM.nextBoolean() ? (delayInMillis * NumberGenerator.generateFloat(1, 1f + spreadRange.getValue().floatValue()))
-                                                    : (delayInMillis * NumberGenerator.generateFloat(spreadRange.getValue().floatValue(), 1))) : delayInMillis);
+                                            (int) (!Constants.RANDOM.nextBoolean() ? (delayInMillis * MathUtils.randomFloat(1, 1f + spreadRange.getValue().floatValue()))
+                                                    : (delayInMillis * MathUtils.randomFloat(spreadRange.getValue().floatValue(), 1))) : delayInMillis);
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
@@ -194,7 +193,7 @@ public class PMSpammer extends Module {
     }
 
     private String genAntiSpam() {
-        return StringGenerator.generateNextString(
+        return MathUtils.randomString(
                 aSpamLength.getValue().intValue(),
                 aSpamCaps.getValue(),
                 aSpamNumbers.getValue(),

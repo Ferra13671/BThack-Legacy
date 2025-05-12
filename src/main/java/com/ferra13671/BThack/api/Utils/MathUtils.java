@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.api.Utils;
 
+import com.ferra13671.BThack.Constants;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import org.joml.Matrix4f;
@@ -11,6 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class MathUtils {
+    private static final int[] defaultSymbols = {97, 122};
+    private static final int[] capsSymbols = {65, 90};
+    private static final int[] otherSymbols = {33, 46};
+    private static final int[] numbers = {48, 57};
 
     public static boolean isInteger(String s) {
         try {
@@ -76,5 +81,43 @@ public final class MathUtils {
         for (int i = minNumber; i < maxNumber + 1; i++)
             numbers.add(i);
         return numbers;
+    }
+
+    public static int randomInt(int min, int max) {
+        return Constants.RANDOM.nextInt(max - min + 1) + min;
+    }
+
+    public static float randomFloat(float min, float max) {
+        return (float) Math.min(max, (Constants.RANDOM.nextDouble() * ((max * 1.1) - min)) + min);
+    }
+
+    public static double randomDouble(double min, double max) {
+        return Math.min(max, (Constants.RANDOM.nextDouble() * ((max * 1.1) - min)) + min);
+    }
+
+    public static String randomString(int length, boolean andCaps, boolean andNumbers, boolean andOtherSymbols) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < length + 1; i++) {
+            char nextSymbol = (char) 0;
+            while (nextSymbol == (char) 0) {
+                switch (randomInt(1,4)) {
+                    case 1 -> nextSymbol = (char) randomInt(defaultSymbols[0], defaultSymbols[1]);
+                    case 2 -> {
+                        if (andCaps)
+                            nextSymbol = (char) randomInt(capsSymbols[0], capsSymbols[1]);
+                    }
+                    case 3 -> {
+                        if (andNumbers)
+                            nextSymbol = (char) randomInt(numbers[0], numbers[1]);
+                    }
+                    case 4 -> {
+                        if (andOtherSymbols)
+                            nextSymbol = (char) randomInt(otherSymbols[0], otherSymbols[1]);
+                    }
+                }
+            }
+            stringBuilder.append(nextSymbol);
+        }
+        return stringBuilder.toString();
     }
 }

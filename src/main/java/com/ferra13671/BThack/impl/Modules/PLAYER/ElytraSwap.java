@@ -40,8 +40,8 @@ public class ElytraSwap extends OneActionModule {
                     int item = needSlot < 9 ? needSlot + 36 : needSlot;
 
                     if (moveType.getValue().equals("Swap")) {
-                        pc.clickSlot(0, InventoryUtils.CHESTPLATE_SLOT, 0, SlotActionType.QUICK_MOVE);
-                        pc.clickSlot(0, item, 0, SlotActionType.QUICK_MOVE);
+                        mc.interactionManager.clickSlot(0, InventoryUtils.CHESTPLATE_SLOT, 0, SlotActionType.QUICK_MOVE, mc.player);
+                        mc.interactionManager.clickSlot(0, item, 0, SlotActionType.QUICK_MOVE, mc.player);
                     } else
                         InventoryUtils.replaceItems(InventoryUtils.CHESTPLATE_SLOT, item);
                     toggle();
@@ -75,8 +75,8 @@ public class ElytraSwap extends OneActionModule {
         int item = slot < 9 ? slot + 36 : slot;
 
         if (moveType.getValue().equals("Swap")) {
-            pc.clickSlot(0, InventoryUtils.CHESTPLATE_SLOT, 0, SlotActionType.QUICK_MOVE);
-            pc.clickSlot(0, item, 0, SlotActionType.QUICK_MOVE);
+            mc.interactionManager.clickSlot(0, InventoryUtils.CHESTPLATE_SLOT, 0, SlotActionType.QUICK_MOVE, mc.player);
+            mc.interactionManager.clickSlot(0, item, 0, SlotActionType.QUICK_MOVE, mc.player);
         } else
             InventoryUtils.replaceItems(InventoryUtils.CHESTPLATE_SLOT, item);
         toggle();

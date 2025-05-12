@@ -10,6 +10,7 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSettin
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.Setting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Module.ModuleInfo;
+import com.ferra13671.BThack.api.Utils.PlayerUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.client.gui.screen.DisconnectedScreen;
 import net.minecraft.client.gui.screen.ingame.InventoryScreen;
@@ -35,7 +36,7 @@ public class TridentDupe extends Module {
     public void onChangeSetting(Setting<?> setting) {
         if (isEnabled()) {
             if (autoInventory.getValue()) {
-                if (mc.currentScreen != null) pc.closeScreen();
+                if (mc.currentScreen != null) PlayerUtils.closeHandledScreen();
                 mc.setScreen(new InventoryScreen(mc.player));
             }
         }

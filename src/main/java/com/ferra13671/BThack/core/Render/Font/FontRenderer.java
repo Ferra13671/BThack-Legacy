@@ -1,6 +1,5 @@
 package com.ferra13671.BThack.core.Render.Font;
 
-import com.ferra13671.BTbot.api.Utils.Generate.StringGenerator;
 import com.ferra13671.BThack.core.Render.Utils.BThackRenderUtils;
 import com.ferra13671.BThack.core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Interfaces.Mc;
@@ -121,7 +120,7 @@ public class FontRenderer implements Closeable, Mc {
     }
 
     private GlyphMap generateMap(char from, char to) {
-        GlyphMap gm = new GlyphMap(from, to, font, StringGenerator.generateNextString(32, false, false, false), paddingBetweenChars);
+        GlyphMap gm = new GlyphMap(from, to, font, MathUtils.randomString(32, false, false, false), paddingBetweenChars);
         maps.add(gm);
         return gm;
     }

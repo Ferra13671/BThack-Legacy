@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.api.Managers.managers.Cape;
 
-import com.ferra13671.BTbot.api.Utils.Generate.StringGenerator;
 import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.MathUtils;
 import com.ferra13671.BThack.mixins.accessor.INativeImage;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.texture.NativeImage;
@@ -21,7 +21,7 @@ import java.net.URL;
 import java.nio.IntBuffer;
 
 public class Cape implements Closeable, Mc {
-    private Identifier texture = Identifier.of("bthack", "capes/cape-" + StringGenerator.generateNextString(10, false, false, false));
+    private Identifier texture = Identifier.of("bthack", "capes/cape-" + MathUtils.randomString(10, false, false, false));
 
     @Override
     public void close() {

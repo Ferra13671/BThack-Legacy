@@ -1,9 +1,8 @@
 package com.ferra13671.BThack.impl.Modules.MISC;
 
-import com.ferra13671.BTbot.api.Utils.Motion.Align.AlignWithXZ;
-import com.ferra13671.BTbot.api.Utils.Motion.Align.WhereToAlign;
-import com.ferra13671.BTbot.api.Utils.Motion.Goto.CollisionAction;
-import com.ferra13671.BTbot.api.Utils.Motion.Goto.Goto;
+import com.ferra13671.BThack.api.Motion.Align.AlignToBlockCenter;
+import com.ferra13671.BThack.api.Motion.Goto.CollisionAction;
+import com.ferra13671.BThack.api.Motion.Goto.Goto;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Managers.managers.Build.BuildManager;
 import com.ferra13671.BThack.api.Managers.managers.Build.BuildThread3D;
@@ -229,13 +228,12 @@ public class HighwayBuilder extends Module {
      * All logic and actions for XZ alignment.
      */
     private void alignAction(BThackThread thread) {
-        WhereToAlign whereToAlign = new WhereToAlign();
-        AlignWithXZ alignWithXZ = new AlignWithXZ(whereToAlign);
-        alignWithXZ.alignWithXZ();
+        AlignToBlockCenter alignToBlockCenter = new AlignToBlockCenter();
+        alignToBlockCenter.align();
 
         thread.sleepThread(2);
-        threads.add(alignWithXZ.getThread());
-        while (alignWithXZ.isMoving()) {
+        threads.add(alignToBlockCenter.getThread());
+        while (alignToBlockCenter.isMoving()) {
             thread.sleepThread(100);
         }
     }

@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.api.GuiSystem;
 
-import com.ferra13671.BTbot.api.Utils.Generate.NumberGenerator;
+import com.ferra13671.BThack.api.Utils.MathUtils;
 import com.ferra13671.BThack.core.Render.BThackRender;
 import com.ferra13671.BThack.core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.GuiSystem.Screen.BThackScreen;
@@ -20,7 +20,7 @@ public class ScreenWidget extends BThackScreen {
     public boolean needClose = false;
 
     public ScreenWidget(float width, float height, float animationSpeed) {
-        super(Text.literal("Widget-" + NumberGenerator.generateInt(10000, 99999)));
+        super(Text.literal("Widget-" + MathUtils.randomInt(10000, 99999)));
         this.width = width;
         this.height = height;
         this.animationSpeed = animationSpeed;

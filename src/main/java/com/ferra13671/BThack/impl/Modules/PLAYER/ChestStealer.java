@@ -1,6 +1,7 @@
 package com.ferra13671.BThack.impl.Modules.PLAYER;
 
 import com.ferra13671.BThack.api.Module.ModuleInfo;
+import com.ferra13671.BThack.api.Utils.PlayerUtils;
 import com.ferra13671.BThack.core.Client.Client;
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
@@ -69,13 +70,13 @@ public class ChestStealer extends Module {
                             if (mc.player.currentScreenHandler instanceof GenericContainerScreenHandler && ModuleList.chestStealer.isEnabled()) {
                                 if (checkFullInventory()) break;
                                 if (filterStack(container.getInventory().getStack(index))) {
-                                    pc.clickSlot(container.syncId, index, 0, SlotActionType.QUICK_MOVE);
+                                    mc.interactionManager.clickSlot(container.syncId, index, 0, SlotActionType.QUICK_MOVE, mc.player);
                                     thread.sleepThread(stealDelay.getValue().longValue());
                                 }
 
                                 if (container.getInventory().isEmpty()) {
                                     if (autoClose.getValue()) {
-                                        pc.closeScreen();
+                                        PlayerUtils.closeHandledScreen();
                                         ChestStealer.active = false;
                                     }
                                     break;

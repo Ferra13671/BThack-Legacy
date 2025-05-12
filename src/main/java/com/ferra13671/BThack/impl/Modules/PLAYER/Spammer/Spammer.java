@@ -1,7 +1,5 @@
 package com.ferra13671.BThack.impl.Modules.PLAYER.Spammer;
 
-import com.ferra13671.BTbot.api.Utils.Generate.StringGenerator;
-import com.ferra13671.BTbot.api.Utils.Generate.NumberGenerator;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.CategorySetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
@@ -11,6 +9,7 @@ import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.api.Utils.ChatUtils;
 import com.ferra13671.BThack.Constants;
+import com.ferra13671.BThack.api.Utils.MathUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -82,7 +81,7 @@ public class Spammer extends Module {
                             }
                             case "Random" -> {
                                 readTXT.read();
-                                int randomValue = NumberGenerator.generateInt(1, readTXT.value);
+                                int randomValue = MathUtils.randomInt(1, readTXT.value);
                                 String tempLine = antiSpam.getValue() ? genAntiSpam() + space + line + space + genAntiSpam() : line;
                                 if (randomValue == 1)
                                     ChatUtils.sendChatMessage(tempLine);
@@ -101,8 +100,8 @@ public class Spammer extends Module {
 
                     thread.sleepThread(
                             delaySpread.getValue() ?
-                                    (int) (!Constants.RANDOM.nextBoolean() ? (delayInMillis * NumberGenerator.generateFloat(1, 1f + spreadRange.getValue().floatValue()))
-                                            : (delayInMillis * NumberGenerator.generateFloat(spreadRange.getValue().floatValue(), 1))) : delayInMillis);
+                                    (int) (!Constants.RANDOM.nextBoolean() ? (delayInMillis * MathUtils.randomFloat(1, 1f + spreadRange.getValue().floatValue()))
+                                            : (delayInMillis * MathUtils.randomFloat(spreadRange.getValue().floatValue(), 1))) : delayInMillis);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -111,7 +110,7 @@ public class Spammer extends Module {
     }
 
     private String genAntiSpam() {
-        return StringGenerator.generateNextString(
+        return MathUtils.randomString(
                 aSpamLength.getValue().intValue(),
                 aSpamCaps.getValue(),
                 aSpamNumbers.getValue(),

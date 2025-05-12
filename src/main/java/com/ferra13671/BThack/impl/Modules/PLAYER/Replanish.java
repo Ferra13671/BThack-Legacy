@@ -58,12 +58,12 @@ public class Replanish extends Module {
                 for (ItemInfo itemInfo : itemInfos) {
                     if (itemInfo.item == stack.getItem() && stack.getName().getString().equals(itemInfo.stackName) && itemInfo.slot != i) {
                         int slotId = itemInfo.slot < 9 ? itemInfo.slot + 36 : itemInfo.slot;
-                        pc.clickSlot(0, slotId, 0, SlotActionType.PICKUP);
-                        pc.tick();
-                        pc.clickSlot(0, i + 36, 0, SlotActionType.PICKUP);
-                        pc.tick();
-                        pc.clickSlot(0, slotId, 0, SlotActionType.PICKUP);
-                        pc.tick();
+                        mc.interactionManager.clickSlot(0, slotId, 0, SlotActionType.PICKUP, mc.player);
+                        mc.interactionManager.tick();
+                        mc.interactionManager.clickSlot(0, i + 36, 0, SlotActionType.PICKUP, mc.player);
+                        mc.interactionManager.tick();
+                        mc.interactionManager.clickSlot(0, slotId, 0, SlotActionType.PICKUP, mc.player);
+                        mc.interactionManager.tick();
                         return;
                     }
                 }

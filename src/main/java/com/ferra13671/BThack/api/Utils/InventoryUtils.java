@@ -1,7 +1,6 @@
 package com.ferra13671.BThack.api.Utils;
 
 import com.ferra13671.BThack.api.Interfaces.Mc;
-import com.ferra13671.BThack.api.Interfaces.Pc;
 import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Thread.ThreadManager;
 import net.minecraft.item.Item;
@@ -11,7 +10,7 @@ import net.minecraft.screen.slot.SlotActionType;
 
 import java.util.function.Function;
 
-public final class InventoryUtils implements Mc, Pc {
+public final class InventoryUtils implements Mc {
 
     public static final int HEAD_SLOT = 5;
     public static final int CHESTPLATE_SLOT = 6;
@@ -21,7 +20,7 @@ public final class InventoryUtils implements Mc, Pc {
 
     public static void swapItem(int needSlot) {
         mc.player.getInventory().selectedSlot = needSlot;
-        pc.tick();
+        mc.interactionManager.tick();
     }
 
     public static void packetSwapItem(int needSlot) {
@@ -29,9 +28,9 @@ public final class InventoryUtils implements Mc, Pc {
     }
 
     public static void swapItemOnInventory(int needHotbarSlot, int inventorySlot) {
-        pc.tick();
-        pc.clickSlot(0, inventorySlot, needHotbarSlot, SlotActionType.SWAP);
-        pc.tick();
+        mc.interactionManager.tick();
+        mc.interactionManager.clickSlot(0, inventorySlot, needHotbarSlot, SlotActionType.SWAP, mc.player);
+        mc.interactionManager.tick();
     }
 
     public static int findItem(Item item) {
@@ -102,28 +101,28 @@ public final class InventoryUtils implements Mc, Pc {
 
     public static void replaceItems(int slot1, int slot2, int delay) {
         ThreadManager.startNewThread(thread -> {
-            pc.clickSlot(0, slot1, 0, SlotActionType.PICKUP);
-            pc.tick();
+            mc.interactionManager.clickSlot(0, slot1, 0, SlotActionType.PICKUP, mc.player);
+            mc.interactionManager.tick();
             if (delay > 0) {
                 thread.sleepThread(delay);
             }
-            pc.clickSlot(0, slot2, 0, SlotActionType.PICKUP);
-            pc.tick();
+            mc.interactionManager.clickSlot(0, slot2, 0, SlotActionType.PICKUP, mc.player);
+            mc.interactionManager.tick();
             if (delay > 0) {
                 thread.sleepThread(delay);
             }
-            pc.clickSlot(0, slot1, 0, SlotActionType.PICKUP);
-            pc.tick();
+            mc.interactionManager.clickSlot(0, slot1, 0, SlotActionType.PICKUP, mc.player);
+            mc.interactionManager.tick();
         });
     }
 
     public static void replaceItems(int slot1, int slot2) {
-        pc.clickSlot(0, slot1, 0, SlotActionType.PICKUP);
-        pc.tick();
-        pc.clickSlot(0, slot2, 0, SlotActionType.PICKUP);
-        pc.tick();
-        pc.clickSlot(0, slot1, 0, SlotActionType.PICKUP);
-        pc.tick();
+        mc.interactionManager.clickSlot(0, slot1, 0, SlotActionType.PICKUP, mc.player);
+        mc.interactionManager.tick();
+        mc.interactionManager.clickSlot(0, slot2, 0, SlotActionType.PICKUP, mc.player);
+        mc.interactionManager.tick();
+        mc.interactionManager.clickSlot(0, slot1, 0, SlotActionType.PICKUP, mc.player);
+        mc.interactionManager.tick();
     }
 
     public static void swapAction(int oldSlot, int slot, boolean post, String swapMode) {

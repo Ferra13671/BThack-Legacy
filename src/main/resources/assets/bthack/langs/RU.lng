@@ -78,7 +78,6 @@
 "lang.module.VisualRange": Уведомляет вас, когда человек входит или выходит из зоны видимости.
 
 //MOVEMENT
-"lang.module.AntiAFK": Рандомизатор действий для имитации активности игрока.
 "lang.module.AutoJump": Автоматически прыгает.
 "lang.module.AutoWalk": Автоматически идет вперед.
 "lang.module.Blink": Создает задержку пакетов.

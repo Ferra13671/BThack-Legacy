@@ -1,7 +1,6 @@
 package com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.ActionBotTasks;
 
-import com.ferra13671.BTbot.api.Utils.Motion.Align.AlignWithXZ;
-import com.ferra13671.BTbot.api.Utils.Motion.Align.WhereToAlign;
+import com.ferra13671.BThack.api.Motion.Align.AlignToBlockCenter;
 import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.core.Client.Systems.FileSystem.JsonUtils;
@@ -210,16 +209,15 @@ public class MoveTask extends ActionBotTask {
 
     public void alignAction() throws ThreadClosedException {
         thread.checkThreadStopped();
-        WhereToAlign whereToAlign = new WhereToAlign();
-        AlignWithXZ alignWithXZ = new AlignWithXZ(whereToAlign);
-        alignWithXZ.alignWithXZ();
+        AlignToBlockCenter alignToBlockCenter = new AlignToBlockCenter();
+        alignToBlockCenter.align();
         do {
             if (thread.isThreadClosed()) {
-                alignWithXZ.getThread().closeThread();
+                alignToBlockCenter.getThread().closeThread();
                 thread.stopOnException();
             }
             sleepThread(50);
-        } while (alignWithXZ.isMoving());
+        } while (alignToBlockCenter.isMoving());
     }
 
     public void disableAction(boolean scaffoldActivated) {

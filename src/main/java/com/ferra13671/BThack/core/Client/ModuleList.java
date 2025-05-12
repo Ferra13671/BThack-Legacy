@@ -102,7 +102,6 @@ public final class ModuleList {
     public static VisualRange visualRange;
 
     //MOVEMENT
-    public static AntiAFK antiAFK;
     public static AutoJump autoJump;
     public static AutoWalk autoWalk;
     public static Blink blink;
@@ -293,7 +292,6 @@ public final class ModuleList {
         visualRange = register(new VisualRange());
 
         //MOVEMENT
-        antiAFK = register(new AntiAFK());
         autoJump = register(new AutoJump());
         autoWalk = register(new AutoWalk());
         blink = register(new Blink());

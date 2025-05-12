@@ -48,7 +48,7 @@ public class AutoShear extends Module {
 
             InventoryUtils.swapAction(oldSlot, slot, false, swap.getValue());
             rotatePre(entity);
-            pc.interactEntity(mc.player, entity, Hand.MAIN_HAND);
+            mc.interactionManager.interactEntity(mc.player, entity, Hand.MAIN_HAND);
             rotatePost();
             InventoryUtils.swapAction(oldSlot, slot, true, swap.getValue());
         }

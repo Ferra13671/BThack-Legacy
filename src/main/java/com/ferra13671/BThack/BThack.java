@@ -1,6 +1,5 @@
 package com.ferra13671.BThack;
 
-import com.ferra13671.BTbot.api.Utils.Controller.ClientPlayerController;
 import com.ferra13671.BThack.core.Client.Client;
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.core.Client.Systems.ConfigSystem.ConfigSystem;
@@ -38,7 +37,6 @@ public final class BThack implements ClientModInitializer, Mc {
     public final String VERSION;
     private final String RELEASE_VERSION;
     private final boolean withBaritone;
-    public final ClientPlayerController playerController = new ClientPlayerController();
 
     private InitStage initStage = InitStage.NOT_INITED;
 

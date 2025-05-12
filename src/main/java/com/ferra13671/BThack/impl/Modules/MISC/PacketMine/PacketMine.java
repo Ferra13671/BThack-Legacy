@@ -472,7 +472,7 @@ public class PacketMine extends Module {
                 Managers.NETWORK_MANAGER.sendPacket(new UpdateSelectedSlotC2SPacket(bestSlot));
             } else {
                 currentHotbarSlot = hotbarSlot.getValue().intValue() - 1;
-                pc.packetClickSlot(0, bestSlot, currentHotbarSlot, SlotActionType.SWAP);
+                mc.interactionManager.clickSlot(0, bestSlot, currentHotbarSlot, SlotActionType.SWAP, mc.player);
                 currentSlot = bestSlot;
                 Managers.NETWORK_MANAGER.sendPacket(new UpdateSelectedSlotC2SPacket(currentHotbarSlot));
             }
@@ -481,7 +481,7 @@ public class PacketMine extends Module {
 
     private void packetRemoveItem() {
         if (currentSlot != -1 && currentHotbarSlot != -1) {
-            pc.packetClickSlot(0, currentSlot, currentHotbarSlot, SlotActionType.SWAP);
+            mc.interactionManager.clickSlot(0, currentSlot, currentHotbarSlot, SlotActionType.SWAP, mc.player);
             currentSlot = -1;
             currentHotbarSlot = -1;
         }

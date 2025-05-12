@@ -41,8 +41,8 @@ public class TrashThrower extends Module {
         if (ticker.passed(delay.getValue())) {
             for (int i = 0; i < 36; i++) {
                 if (DataLists.get("TrashThrower", ItemList.class).values.contains(mc.player.getInventory().getStack(i).getItem())) {
-                    pc.clickSlot(0, (i < 9 ? i + 36 : i), 0, SlotActionType.PICKUP);
-                    pc.clickSlot(0, -999, 0, SlotActionType.PICKUP);
+                    mc.interactionManager.clickSlot(0, (i < 9 ? i + 36 : i), 0, SlotActionType.PICKUP, mc.player);
+                    mc.interactionManager.clickSlot(0, -999, 0, SlotActionType.PICKUP, mc.player);
                 }
             }
             ticker.reset();

@@ -4,6 +4,7 @@ import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Utils.Rotate.RotateUtils;
 import com.ferra13671.BThack.mixins.accessor.entity.IEntity;
 import com.mojang.authlib.GameProfile;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.network.OtherClientPlayerEntity;
 import net.minecraft.client.option.KeyBinding;
@@ -133,5 +134,9 @@ public final class PlayerUtils implements Mc {
         if (mc.player.input != null)
             return mc.player.input.movementForward != 0 || mc.player.input.movementSideways != 0;
         return false;
+    }
+
+    public static void closeHandledScreen() {
+        RenderSystem.recordRenderCall(() -> mc.player.closeHandledScreen());
     }
 }

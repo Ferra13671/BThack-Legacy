@@ -1,12 +1,12 @@
 package com.ferra13671.BThack.api.Utils.Modules;
 
-import com.ferra13671.BTbot.api.Utils.Generate.NumberGenerator;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Managers.managers.Clans.Clan;
 import com.ferra13671.BThack.api.Managers.managers.Clans.ClanStatus;
+import com.ferra13671.BThack.api.Utils.MathUtils;
 import com.ferra13671.BThack.api.Utils.PlayerUtils;
 import com.ferra13671.BThack.api.Utils.Rotate.RotateMode;
 import com.ferra13671.BThack.api.Utils.Rotate.RotateUtils;
@@ -34,9 +34,9 @@ public final class KillAuraUtils implements Mc {
         double xLength = Math.abs(target.getBoundingBox().maxX - target.getBoundingBox().minX);
         double yLength = Math.abs(target.getBoundingBox().maxY - target.getBoundingBox().minY);
         double zLength = Math.abs(target.getBoundingBox().maxZ - target.getBoundingBox().minZ);
-        rotateVector.x += NumberGenerator.generateDouble(-(xLength / 3), xLength / 3);
-        rotateVector.y += NumberGenerator.generateDouble(-(yLength / 3), yLength / 3);
-        rotateVector.z += NumberGenerator.generateDouble(-(zLength / 3), zLength / 3);
+        rotateVector.x += MathUtils.randomDouble(-(xLength / 3), xLength / 3);
+        rotateVector.y += MathUtils.randomDouble(-(yLength / 3), yLength / 3);
+        rotateVector.z += MathUtils.randomDouble(-(zLength / 3), zLength / 3);
         float[] rotations = RotateUtils.rotations(rotateVector);
         preAttackRotate(rotateMode, rotations, packets);
         attackNoRotate(target);

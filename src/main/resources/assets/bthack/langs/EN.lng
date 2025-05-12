@@ -79,7 +79,6 @@
 "lang.module.VisualRange": Notifies you when one enters or leaves your visual range.
 
 //MOVEMENT
-"lang.module.AntiAFK": Action randomizer to simulate player activity.
 "lang.module.AutoJump": Automatic jumps.
 "lang.module.AutoWalk": Automatically walks forward.
 "lang.module.Blink": Creates packet delay.

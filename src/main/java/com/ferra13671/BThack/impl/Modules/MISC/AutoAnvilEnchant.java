@@ -105,10 +105,10 @@ public class AutoAnvilEnchant extends Module {
         BlockPos anvilBlockPos = null;
 
         if (postClickInfo != null) {
-            pc.clickSlot(postClickInfo.syncId, 2, 0, SlotActionType.PICKUP);
-            pc.tick();
-            pc.clickSlot(postClickInfo.syncId, postClickInfo.slot, 0, SlotActionType.PICKUP);
-            pc.tick();
+            mc.interactionManager.clickSlot(postClickInfo.syncId, 2, 0, SlotActionType.PICKUP, mc.player);
+            mc.interactionManager.tick();
+            mc.interactionManager.clickSlot(postClickInfo.syncId, postClickInfo.slot, 0, SlotActionType.PICKUP, mc.player);
+            mc.interactionManager.tick();
 
             mc.player.closeHandledScreen();
 
@@ -198,11 +198,11 @@ public class AutoAnvilEnchant extends Module {
             }
 
             if (!(mc.currentScreen instanceof AnvilScreen screen)) {
-                if (mc.currentScreen != null) pc.closeScreen();
+                if (mc.currentScreen != null) PlayerUtils.closeHandledScreen();
                 boolean releaseSneak = mc.player.isSneaking();
                 if (releaseSneak)
                     Managers.NETWORK_MANAGER.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.RELEASE_SHIFT_KEY));
-                pc.interactBlock(mc.player, Hand.MAIN_HAND, BuildManager.getHitResult(anvilBlockPos, false, RotateUtils.getInvertedFacingEntity(mc.player)));
+                mc.interactionManager.interactBlock(mc.player, Hand.MAIN_HAND, BuildManager.getHitResult(anvilBlockPos, false, RotateUtils.getInvertedFacingEntity(mc.player)));
                 if (releaseSneak)
                     Managers.NETWORK_MANAGER.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.PRESS_SHIFT_KEY));
             } else if (delayTicker.passed(applyDelay.getValue())) {
@@ -212,10 +212,10 @@ public class AutoAnvilEnchant extends Module {
                 int _slot = slot < 9 ? slot + 30 : slot - 6;
                 int _nextBookSlot = nextBookSlot < 9 ? nextBookSlot + 30 : nextBookSlot - 6;
 
-                pc.clickSlot(screenHandler.syncId, _slot, 0, SlotActionType.QUICK_MOVE);
-                pc.tick();
-                pc.clickSlot(screenHandler.syncId, _nextBookSlot, 0, SlotActionType.QUICK_MOVE);
-                pc.tick();
+                mc.interactionManager.clickSlot(screenHandler.syncId, _slot, 0, SlotActionType.QUICK_MOVE, mc.player);
+                mc.interactionManager.tick();
+                mc.interactionManager.clickSlot(screenHandler.syncId, _nextBookSlot, 0, SlotActionType.QUICK_MOVE, mc.player);
+                mc.interactionManager.tick();
 
                 postClickInfo = new PostClickInfo(_slot, screenHandler.syncId);
             }
