@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.impl.HudComponents;
 
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Render.BThackRender;
 import com.ferra13671.BThack.api.Module.HudComponent;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
@@ -9,6 +10,7 @@ import com.ferra13671.BThack.api.Utils.Textures;
 
 import java.util.Arrays;
 
+@ModuleInfo(name = "Companion", category = "HUD")
 public class CompanionComponent extends HudComponent {
 
     public final ModeSetting mode = new ModeSetting("Mode", this, Arrays.asList("Caipirinha", "Cutie1", "Cutie2"));
@@ -16,10 +18,9 @@ public class CompanionComponent extends HudComponent {
     public final NumberSetting speed = new NumberSetting("Speed", this, 1, 0.5, 3, false);
 
     public CompanionComponent() {
-        super("Companion",
+        super(
                 mc.getWindow().getScaledWidth() / 1.8f,
-                mc.getWindow().getScaledHeight() / 1.8f,
-                false
+                mc.getWindow().getScaledHeight() / 1.8f
         );
     }
 

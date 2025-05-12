@@ -4,24 +4,17 @@ import com.ferra13671.BThack.api.Events.PacketEvent;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.Setting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.mixins.accessor.packet.IPlayerMoveC2SPacket;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 
+@ModuleInfo(name = "AntiHunger", description = "lang.module.AntiHunger", category = "MISC")
 public class AntiHunger extends Module {
 
     public final BooleanSetting cancelMoveState = new BooleanSetting("Cancel Move State", this, true);
 
-    public AntiHunger() {
-        super("AntiHunger",
-                "lang.module.AntiHunger",
-                KeyboardUtils.RELEASE,
-                MCategory.MISC,
-                false
-        );
-    }
 
     @Override
     public void onChangeSetting(Setting<?> setting) {

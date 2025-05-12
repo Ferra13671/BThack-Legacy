@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.impl.Modules.RENDER;
 
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Client.Client;
 import com.ferra13671.BThack.core.Render.BThackRender;
 import com.ferra13671.BThack.core.Render.Box.RenderBox;
@@ -12,7 +13,6 @@ import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.ChatUtils;
 import com.ferra13671.BThack.api.Utils.DataList.BlockList;
 import com.ferra13671.BThack.api.Utils.DataList.DataLists;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
@@ -21,20 +21,13 @@ import net.minecraft.util.math.Box;
 import java.awt.*;
 import java.util.ArrayList;
 
+@ModuleInfo(name = "Search", description = "lang.module.Search", category = "RENDER")
 public class Search extends Module {
 
     public final ColorSetting boxColor = new ColorSetting("Box Color", this, new Color(255, 255, 255, 102));
     public final ColorSetting lineColor = new ColorSetting("Line Color", this, new Color(255, 255, 255, 255));
     public final BooleanSetting tracers = new BooleanSetting("Tracers", this, false);
 
-    public Search() {
-        super("Search",
-                "lang.module.Search",
-                KeyboardUtils.RELEASE,
-                MCategory.RENDER,
-                false
-        );
-    }
 
     @Override
     public void onEnable() {

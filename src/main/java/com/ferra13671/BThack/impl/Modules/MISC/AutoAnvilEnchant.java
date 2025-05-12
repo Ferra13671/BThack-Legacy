@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.impl.Modules.MISC;
 
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Client.Systems.ConfigSystem.ConfigUtils;
 import com.ferra13671.BThack.core.Client.Systems.FileSystem.JsonUtils;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
@@ -37,6 +38,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+@ModuleInfo(name = "AutoAnvilEnchant", description = "lang.module.AutoAnvilEnchant", category = "MISC")
 public class AutoAnvilEnchant extends Module {
     public static final HashMap<Item, HashMap<RegistryKey<Enchantment>, Integer>> recipes = new HashMap<>();
 
@@ -92,14 +94,7 @@ public class AutoAnvilEnchant extends Module {
 
     public final NumberSetting applyDelay = new NumberSetting("Apply Delay", this, 0, 0, 300, true);
 
-    public AutoAnvilEnchant() {
-        super("AutoAnvilEnchant",
-                "lang.module.AutoAnvilEnchant",
-                KeyboardUtils.RELEASE,
-                MCategory.MISC,
-                false
-        );
-    }
+
     private final Ticker delayTicker = new Ticker();
     private PostClickInfo postClickInfo = null;
 

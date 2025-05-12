@@ -4,22 +4,15 @@ import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.Setting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 
+@ModuleInfo(name = "FPSReducer", description = "lang.module.FPSReducer", category = "CLIENT")
 public class FPSReducer extends Module {
 
     public final NumberSetting fpsLimit = new NumberSetting("FPS Limit", this, 10, 1, 60, true);
     public final NumberSetting delay = new NumberSetting("Delay", this, 100, 0, 10000, true);
 
-    public FPSReducer() {
-        super("FPSReducer",
-                "lang.module.FPSReducer",
-                KeyboardUtils.RELEASE,
-                MCategory.CLIENT,
-                false
-        );
-    }
 
     public int lastFocusTicks = 0;
 

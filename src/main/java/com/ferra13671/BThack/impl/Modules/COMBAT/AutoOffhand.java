@@ -5,14 +5,15 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetti
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.api.Utils.InventoryUtils;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 
 import java.util.Arrays;
 
+@ModuleInfo(name = "AutoOffhand", description = "lang.module.AutoOffhand", category = "COMBAT")
 public class AutoOffhand extends Module {
 
     public final ModeSetting mode = new ModeSetting("Mode", this, Arrays.asList("Standard", "Extra"));
@@ -37,14 +38,6 @@ public class AutoOffhand extends Module {
 
     public final BooleanSetting replaceOther = new BooleanSetting("Replace Other", this, true);
 
-    public AutoOffhand() {
-        super("AutoOffhand",
-                "lang.module.AutoOffhand",
-                KeyboardUtils.RELEASE,
-                MCategory.COMBAT,
-                false
-        );
-    }
 
     @EventSubscriber
     public void onClientTick(ClientTickEvent e) {

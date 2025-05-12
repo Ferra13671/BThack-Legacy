@@ -5,11 +5,12 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetti
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.CategorySetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.util.Arm;
 import org.joml.Matrix4f;
 
+@ModuleInfo(name = "HandTweaks", description = "lang.module.HandTweaks", category = "RENDER")
 public class HandTweaks extends Module {
 
     public final CategorySetting leftHandCategory = new CategorySetting("Left Hand", this);
@@ -34,14 +35,6 @@ public class HandTweaks extends Module {
     public final BooleanSetting noBob = new BooleanSetting("No Bob", this, false);
     public final NumberSetting handAnimStep = new NumberSetting("Hand Anim. Step", this, 0.5, 0.3, 1, false);
 
-    public HandTweaks() {
-        super("HandTweaks",
-                "lang.module.HandTweaks",
-                KeyboardUtils.RELEASE,
-                MCategory.RENDER,
-                false
-        );
-    }
 
     @EventSubscriber
     public void onTransformSideFirstPerson(TransformFirstPersonEvent.Pre e) {

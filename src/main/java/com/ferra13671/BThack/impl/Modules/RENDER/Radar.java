@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.impl.Modules.RENDER;
 
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Render.BThackRender;
 import com.ferra13671.BThack.api.Events.Render.RenderHudPreEvent;
 import com.ferra13671.BThack.api.Managers.Managers;
@@ -7,7 +8,6 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetti
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Managers.managers.Clans.Clan;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.client.util.Window;
 import net.minecraft.entity.Entity;
@@ -19,6 +19,7 @@ import net.minecraft.entity.player.PlayerEntity;
 
 import java.awt.*;
 
+@ModuleInfo(name = "Radar", description = "lang.module.Radar", category = "RENDER")
 public class Radar extends Module {
 
     public final NumberSetting opacity = new NumberSetting("Opacity", this, 0.5, 0.05, 1, false);
@@ -30,14 +31,6 @@ public class Radar extends Module {
     public final BooleanSetting mobs = new BooleanSetting("Mobs", this, true);
     public final BooleanSetting animals = new BooleanSetting("Animals", this, true);
 
-    public Radar() {
-        super("Radar",
-                "lang.module.Radar",
-                KeyboardUtils.RELEASE,
-                MCategory.RENDER,
-                false
-        );
-    }
 
     private final Color mobColor = new Color(255, 255, 0);
     private final Color animalColor = new Color(0, 255, 0);

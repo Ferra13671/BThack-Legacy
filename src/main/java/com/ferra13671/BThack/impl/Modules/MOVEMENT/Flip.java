@@ -1,21 +1,14 @@
 package com.ferra13671.BThack.impl.Modules.MOVEMENT;
 
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.api.Module.OneActionModule;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 
+@ModuleInfo(name = "Flip", description = "lang.module.Flip", category = "MOVEMENT")
 public class Flip extends OneActionModule {
 
     public final BooleanSetting saveSpeed = new BooleanSetting("Save Speed", this, true);
 
-    public Flip() {
-        super("Flip",
-                "lang.module.Flip",
-                KeyboardUtils.RELEASE,
-                MCategory.MOVEMENT,
-                false
-        );
-    }
 
     @Override
     public void onEnable() {

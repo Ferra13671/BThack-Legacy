@@ -5,9 +5,9 @@ import com.ferra13671.BThack.api.Managers.managers.Build.BuildManager;
 import com.ferra13671.BThack.api.Managers.managers.Build.BuildThread3D;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Module.Module;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.api.Utils.BlockUtils;
 import com.ferra13671.BThack.api.Utils.HoleUtils;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.Utils.MathUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.block.Blocks;
@@ -19,18 +19,11 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
+@ModuleInfo(name = "HoleFill", description = "lang.module.HoleFill", category = "COMBAT")
 public class HoleFill extends Module {
 
     public final BooleanSetting onlyObsidian = new BooleanSetting("Only Obsidian", this, true);
 
-    public HoleFill() {
-        super("HoleFill",
-                "lang.module.HoleFill",
-                KeyboardUtils.RELEASE,
-                MCategory.COMBAT,
-                false
-        );
-    }
 
     @EventSubscriber
     public void onTick(ClientTickEvent e) {

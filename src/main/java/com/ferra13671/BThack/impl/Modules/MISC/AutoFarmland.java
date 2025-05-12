@@ -7,6 +7,7 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetti
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.api.Utils.*;
 import com.ferra13671.BThack.api.Utils.Grim.GrimUtils;
 import com.ferra13671.BThack.api.Utils.Rotate.RotateUtils;
@@ -28,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@ModuleInfo(name = "AutoFarmland", description = "lang.module.AutoFarmland", category = "MISC")
 public class AutoFarmland extends Module {
 
     public final NumberSetting range = new NumberSetting("Range", this, 4, 3, 7, false);
@@ -39,14 +41,6 @@ public class AutoFarmland extends Module {
     public final BooleanSetting ignoreWalls = new BooleanSetting("Ignore Walls", this, true);
     public final NumberSetting tickDelay = new NumberSetting("Tick Delay", this, 3, 1, 20, true);
 
-    public AutoFarmland() {
-        super("AutoFarmland",
-                "lang.module.AutoFarmland",
-                KeyboardUtils.RELEASE,
-                MCategory.MISC,
-                false
-        );
-    }
 
     private final List<BlockPos> poses = new ArrayList<>();
     private final Ticker delayTicker = new Ticker();

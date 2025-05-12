@@ -3,8 +3,8 @@ package com.ferra13671.BThack.impl.Modules.MISC;
 import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Module.Module;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.api.Utils.ChatUtils;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -14,6 +14,7 @@ import net.minecraft.util.Formatting;
 import java.util.ArrayList;
 import java.util.List;
 
+@ModuleInfo(name = "VisualRange", description = "lang.module.VisualRange", category = "MISC")
 public class VisualRange extends Module {
 
     public final BooleanSetting friends = new BooleanSetting("Friends", this, true);
@@ -24,14 +25,6 @@ public class VisualRange extends Module {
     public final BooleanSetting leave = new BooleanSetting("Leave", this, true);
     public final BooleanSetting leaveSound = new BooleanSetting("Leave Sound", this, false);
 
-    public VisualRange() {
-        super("VisualRange",
-                "lang.module.VisualRange",
-                KeyboardUtils.RELEASE,
-                MCategory.MISC,
-                false
-        );
-    }
 
     private final List<String> players = new ArrayList<>();
 

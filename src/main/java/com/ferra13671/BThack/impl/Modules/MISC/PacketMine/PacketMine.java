@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.impl.Modules.MISC.PacketMine;
 
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.core.Render.BThackRender;
 import com.ferra13671.BThack.core.Render.Box.RenderBox;
@@ -32,6 +33,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@ModuleInfo(name = "PacketMine", description = "lang.module.PacketMine", category = "MISC")
 public class PacketMine extends Module {
 
     //----------General----------//
@@ -78,15 +80,6 @@ public class PacketMine extends Module {
     public final NumberSetting conveyorAnimTime = new NumberSetting("Anim. Time", this, 1000, 500, 3000, true).inCategory(conveyorCategory);
     //--------------------------//
 
-
-    public PacketMine() {
-        super("PacketMine",
-                "lang.module.PacketMine",
-                KeyboardUtils.RELEASE,
-                MCategory.MISC,
-                false
-        );
-    }
 
     private final List<Vec3i> autoCityVectors = Arrays.asList(
             new Vec3i(1,0,0),

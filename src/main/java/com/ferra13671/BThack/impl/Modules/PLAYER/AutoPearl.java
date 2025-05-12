@@ -1,25 +1,16 @@
 package com.ferra13671.BThack.impl.Modules.PLAYER;
 
-
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.api.Module.OneActionModule;
 import com.ferra13671.BThack.api.Utils.ItemUtils;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import net.minecraft.item.Items;
 
+@ModuleInfo(name = "AutoPearl", description = "lang.module.AutoPearl", category = "PLAYER")
 public class AutoPearl extends OneActionModule {
 
     public final BooleanSetting swingHand = new BooleanSetting("Swing Hand", this, true);
 
-    public AutoPearl() {
-
-        super("AutoPearl",
-                "lang.module.AutoPearl",
-                KeyboardUtils.RELEASE,
-                MCategory.PLAYER,
-                false
-        );
-    }
 
     @Override
     public void onEnable() {

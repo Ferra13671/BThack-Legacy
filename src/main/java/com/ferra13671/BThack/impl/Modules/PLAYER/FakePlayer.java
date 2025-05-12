@@ -2,21 +2,14 @@ package com.ferra13671.BThack.impl.Modules.PLAYER;
 
 import com.ferra13671.BThack.api.Events.DisconnectEvent;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.api.Utils.PlayerUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.entity.Entity;
 
+@ModuleInfo(name = "FakePlayer", description = "lang.module.FakePlayer", category = "PLAYER")
 public class FakePlayer extends Module {
 
-    public FakePlayer() {
-        super("FakePlayer",
-                "lang.module.FakePlayer",
-                KeyboardUtils.RELEASE,
-                MCategory.PLAYER,
-                false
-        );
-    }
 
     private Entity fakePlayer;
 

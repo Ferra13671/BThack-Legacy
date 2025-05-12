@@ -6,14 +6,15 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetti
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Managers.managers.Clans.ClanSettingsBuilder;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.api.Utils.ChatUtils;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.Utils.Modules.KillAuraUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Formatting;
 
+@ModuleInfo(name = "TotemPopNotifier", description = "lang.module.TotemPopNotifier", category = "COMBAT")
 public class TotemPopNotifier extends Module {
 
     public final BooleanSetting sendToPublic = new BooleanSetting("Send To Public", this, false);
@@ -25,14 +26,6 @@ public class TotemPopNotifier extends Module {
     public final ModeSetting clanMode = ClanSettingsBuilder.buildStatusMode(this, clanManager);
     public final ModeSetting targetClan = ClanSettingsBuilder.buildClanTargetMode(this, clanManager, clanMode);
 
-    public TotemPopNotifier() {
-        super("TotemPopNotifier",
-                "lang.module.TotemPopNotifier",
-                KeyboardUtils.RELEASE,
-                MCategory.COMBAT,
-                false
-        );
-    }
 
     @EventSubscriber
     public void onTotemPop(TotemPopEvent e) {

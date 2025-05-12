@@ -1,6 +1,7 @@
 package com.ferra13671.BThack.impl.Modules.RENDER;
 
 
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Render.BThackMatrix;
 import com.ferra13671.BThack.core.Render.BThackRender;
 import com.ferra13671.BThack.core.Render.Utils.ColorUtils;
@@ -10,13 +11,13 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetti
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ColorSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.client.util.Window;
 import net.minecraft.util.math.MathHelper;
 
 import java.awt.*;
 
+@ModuleInfo(name = "CS_Crosshair", description = "lang.module.CS_Crosshair", category = "RENDER")
 public class CS_Crosshair extends Module {
 
     public final NumberSetting width = new NumberSetting("Width", this, 4, 1, 50, false);
@@ -38,14 +39,6 @@ public class CS_Crosshair extends Module {
 
     public final NumberSetting rotate = new NumberSetting("Rotate", this, 0, 0, 90, true);
 
-    public CS_Crosshair() {
-        super("CS_Crosshair",
-                "lang.module.CS_Crosshair",
-                KeyboardUtils.RELEASE,
-                MCategory.RENDER,
-                false
-        );
-    }
 
     private float currentSpread = 0;
     private float prevSpread = 0;

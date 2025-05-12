@@ -3,7 +3,7 @@ package com.ferra13671.BThack.impl.Modules.PLAYER;
 import com.ferra13671.BThack.api.Events.InputEvent;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.KeyCodeSetting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.api.Utils.PlayerUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import com.mojang.authlib.GameProfile;
@@ -12,20 +12,13 @@ import net.minecraft.entity.Entity;
 import java.util.ArrayList;
 import java.util.UUID;
 
+@ModuleInfo(name = "MultiFakePlayer", description = "lang.module.MultiFakePlayer", category = "PLAYER")
 public class MultiFakePlayer extends Module {
 
     public final KeyCodeSetting summonKey = new KeyCodeSetting("Summon Key", this);
 
-    public MultiFakePlayer() {
-        super("MultiFakePlayer",
-                "lang.module.MultiFakePlayer",
-                KeyboardUtils.RELEASE,
-                MCategory.PLAYER,
-                false
-        );
-    }
 
-    ArrayList<Entity> fakePlayers = new ArrayList<>();
+    private final ArrayList<Entity> fakePlayers = new ArrayList<>();
 
     @Override
     public void onEnable() {

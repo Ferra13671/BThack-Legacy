@@ -6,7 +6,7 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.Setting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -14,6 +14,7 @@ import net.minecraft.entity.effect.StatusEffects;
 import java.awt.*;
 import java.util.Arrays;
 
+@ModuleInfo(name = "FullBright", description = "lang.module.FullBright", category = "RENDER")
 public class FullBright extends Module {
 
     public final ModeSetting mode = new ModeSetting("Mode", this, Arrays.asList("Gamma", "Potion"));
@@ -23,14 +24,6 @@ public class FullBright extends Module {
     public final NumberSetting green = new NumberSetting("Green", this, 255, 0, 255, true, () -> mode.getValue().equals("Gamma") && customColor.getValue());
     public final NumberSetting blue = new NumberSetting("Blue", this, 255, 0, 255, true, () -> mode.getValue().equals("Gamma") && customColor.getValue());
 
-    public FullBright() {
-        super("FullBright",
-                "lang.module.FullBright",
-                KeyboardUtils.RELEASE,
-                MCategory.RENDER,
-                false
-        );
-    }
 
     private boolean hasAppliedNightVision = false;
 

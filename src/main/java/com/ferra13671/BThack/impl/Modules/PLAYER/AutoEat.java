@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.impl.Modules.PLAYER;
 
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
@@ -17,6 +18,7 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.*;
 import net.minecraft.util.Hand;
 
+@ModuleInfo(name = "AutoEat", description = "lang.module.AutoEat", category = "PLAYER")
 public class AutoEat extends Module {
 
     public final NumberSetting startFoodLevel = new NumberSetting("Start FoodL", this, 15, 6, 19, false);
@@ -28,15 +30,6 @@ public class AutoEat extends Module {
 
     public final BooleanSetting pauseIfMine = new BooleanSetting("Pause If Mine", this, true);
 
-
-    public AutoEat() {
-        super("AutoEat",
-                "lang.module.AutoEat",
-                KeyboardUtils.RELEASE,
-                MCategory.PLAYER,
-                false
-        );
-    }
 
     private boolean foodEating = false;
     private boolean gappleEating = false;

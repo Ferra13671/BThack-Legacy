@@ -1,16 +1,17 @@
 package com.ferra13671.BThack.impl.Modules.RENDER;
 
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ColorSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import net.minecraft.util.math.ColorHelper;
 
 import java.awt.*;
 
+@ModuleInfo(name = "EnchantColor", description = "lang.module.EnchantColor", category = "RENDER")
 public class EnchantColor extends Module {
 
     public final NumberSetting enchantSpeed = new NumberSetting("Ench. Speed", this, 1, 0, 2, false);
@@ -22,14 +23,6 @@ public class EnchantColor extends Module {
     public final NumberSetting alphaColor = new NumberSetting("Alpha", this, 180, 0, 255, true);
     public final ColorSetting colorSet = new ColorSetting("Color", this, new Color(255, 255, 255), () -> !rainbow.getValue()).withBlockedAlpha();
 
-    public EnchantColor() {
-        super("EnchantColor",
-                "lang.module.EnchantColor",
-                KeyboardUtils.RELEASE,
-                MCategory.RENDER,
-                false
-        );
-    }
 
     public static float[] getEnchantColor() {
         float red;

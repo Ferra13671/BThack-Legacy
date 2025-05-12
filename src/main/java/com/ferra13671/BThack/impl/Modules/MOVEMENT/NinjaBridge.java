@@ -8,6 +8,7 @@ import com.ferra13671.BThack.api.Managers.managers.Thread.IThread;
 import com.ferra13671.BThack.api.Managers.managers.Thread.ThreadClosedException;
 import com.ferra13671.BThack.api.Managers.managers.Thread.ThreadManager;
 import com.ferra13671.BThack.api.Module.Module;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.api.Utils.*;
 import com.ferra13671.BThack.api.Utils.Rotate.RotateUtils;
 import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
@@ -17,6 +18,7 @@ import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 
 //TODO: rewrite it, maybe.
+@ModuleInfo(name = "NinjaBridge", description = "lang.module.NinjaBridge", category = "MOVEMENT")
 public class NinjaBridge extends Module {
 
     public final NumberSetting actionDelay = new NumberSetting("Action delay", this, 50, 0, 200, true);
@@ -24,14 +26,6 @@ public class NinjaBridge extends Module {
     public final NumberSetting placeFactor = new NumberSetting("Place block factor", this, 25, 1, 100, true);
     public final NumberSetting airCheck = new NumberSetting("Extra air check",this, 0.03, 0.0, 0.2, false);
 
-    public NinjaBridge() {
-        super("NinjaBridge",
-                "lang.module.NinjaBridge",
-                KeyboardUtils.RELEASE,
-                MCategory.MOVEMENT,
-                false
-        );
-    }
 
     private boolean close = false;
 

@@ -3,26 +3,19 @@ package com.ferra13671.BThack.impl.Modules.PLAYER;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Module.Module;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.api.Utils.InventoryUtils;
 import com.ferra13671.BThack.api.Utils.ItemUtils;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.ItemStack;
 
+@ModuleInfo(name = "AutoMend", description = "lang.module.AutoMend", category = "PLAYER")
 public class AutoMend extends Module {
 
     public final BooleanSetting autoToggle = new BooleanSetting("Auto Toggle", this, true);
 
-    public AutoMend() {
-        super("AutoMend",
-                "lang.module.AutoMend",
-                KeyboardUtils.RELEASE,
-                MCategory.PLAYER,
-                false
-        );
-    }
 
     @EventSubscriber
     public void onTick(ClientTickEvent e) {

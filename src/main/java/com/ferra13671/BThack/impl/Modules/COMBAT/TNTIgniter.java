@@ -5,10 +5,10 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetti
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.api.Utils.BlockUtils;
 import com.ferra13671.BThack.api.Utils.InventoryUtils;
 import com.ferra13671.BThack.api.Utils.ItemUtils;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.block.TntBlock;
 import net.minecraft.item.Items;
@@ -17,21 +17,14 @@ import net.minecraft.util.math.BlockPos;
 import java.util.Arrays;
 import java.util.List;
 
+@ModuleInfo(name = "TNTIgniter", description = "lang.module.TNTIgniter", category = "COMBAT")
 public class TNTIgniter extends Module {
 
     public final NumberSetting range = new NumberSetting("Range", this, 4, 4, 10, true);
     
     public final ModeSetting swap = new ModeSetting("Swap", this, Arrays.asList("Client", "Packet"));
     public final BooleanSetting allowInventory = new BooleanSetting("Allow Inventory", this, true);
-    
-    public TNTIgniter() {
-        super("TNTIgniter",
-                "lang.module.TNTIgniter",
-                KeyboardUtils.RELEASE,
-                MCategory.COMBAT,
-                false
-        );
-    }
+
     
     @EventSubscriber
     public void onTick(ClientTickEvent e) {

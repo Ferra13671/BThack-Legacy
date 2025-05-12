@@ -2,8 +2,9 @@ package com.ferra13671.BThack.impl.Modules.RENDER;
 
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 
+@ModuleInfo(name = "NoOverlay", description = "lang.module.NoOverlay", category = "RENDER")
 public class NoOverlay extends Module {
 
     public final BooleanSetting hurtCam = new BooleanSetting("Hurt Camera", this, true);
@@ -16,13 +17,4 @@ public class NoOverlay extends Module {
     public final BooleanSetting vignette = new BooleanSetting("Vignette", this, true);
     public final BooleanSetting effects = new BooleanSetting("Effects", this, true);
     public final BooleanSetting scoreBoard = new BooleanSetting("ScoreBoard", this, false);
-
-    public NoOverlay() {
-        super("NoOverlay",
-                "lang.module.NoOverlay",
-                KeyboardUtils.RELEASE,
-                MCategory.RENDER,
-                false
-        );
-    }
 }

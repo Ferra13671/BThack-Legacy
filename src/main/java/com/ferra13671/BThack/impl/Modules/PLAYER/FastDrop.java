@@ -4,25 +4,18 @@ import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 
+@ModuleInfo(name = "FastDrop", description = "lang.module.FastDrop", category = "PLAYER")
 public class FastDrop extends Module {
 
     public final NumberSetting delay = new NumberSetting("Delay", this, 0, 0, 4, true);
 
-    public FastDrop() {
-        super("FastDrop",
-                "lang.module.FastDrop",
-                KeyboardUtils.RELEASE,
-                MCategory.PLAYER,
-                false
-        );
-    }
 
     private int ticks;
 

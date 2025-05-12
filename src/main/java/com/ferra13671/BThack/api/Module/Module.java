@@ -18,14 +18,15 @@ import net.minecraft.util.Formatting;
 import java.lang.reflect.Field;
 
 public class Module {
-    public final String name;
-    private final String description;
+    private final ModuleInfo moduleInfo = getClass().getAnnotation(ModuleInfo.class);
+    public final String name = moduleInfo.name();
+    private final String description = moduleInfo.description();
+    private final Category category = Categories.get(moduleInfo.category());
+    private final boolean autoEnabled = moduleInfo.autoEnabled();
+
+    private int keyCode = moduleInfo.key();
     public boolean toggled;
-    private final boolean autoEnabled;
-    private int keyCode;
-    private final Category category;
-    public static final MinecraftClient mc = MinecraftClient.getInstance();
-    public final ClientPlayerController pc;
+    public final ClientPlayerController pc = BThack.instance.playerController;
 
     public String arrayListInfo = "";
 
@@ -33,23 +34,13 @@ public class Module {
     public boolean allowRemapVisible = true;
     public boolean allowRemapKeyCode = true;
 
-    public Module(String name, String description, int key, MCategory c, boolean autoEnabled) {
-        this(name, description, key, c.category, autoEnabled);
-    }
-
-    public Module(String name, String description, int key, Category c, boolean autoEnabled) {
-        this.name = name;
-        this.description = description.endsWith(".") ? description : !description.startsWith(".lang") ? description : description + ".";
-        this.keyCode = key;
-        this.category = c;
-        this.autoEnabled = autoEnabled;
-
-        pc = BThack.instance.playerController;
-    }
+    public static final MinecraftClient mc = MinecraftClient.getInstance();
 
     public void initSettings() {
+        if (category == null) throw new IllegalStateException("Category equals null");
         for (Field field : getClass().getDeclaredFields()) {
             try {
+                field.setAccessible(true);
                 if (field.get(this) instanceof Setting<?> setting && !setting.isInCategory())
                     Managers.SETTINGS_MANAGER.addModuleSetting(setting);
             } catch (Exception e) {
@@ -138,22 +129,6 @@ public class Module {
     public void sendNotification(String text) {
         if (ModuleList.chatNotifications.isEnabled() && ModuleList.chatNotifications.moduleMessages.getValue()) {
             ChatUtils.sendMessage(getChatName() + Formatting.GRAY + " " + text);
-        }
-    }
-
-
-    public enum MCategory {
-        COMBAT(Categories.COMBAT),
-        MISC(Categories.MISC),
-        CLIENT(Categories.CLIENT),
-        RENDER(Categories.RENDER),
-        MOVEMENT(Categories.MOVEMENT),
-        PLAYER(Categories.PLAYER);
-
-
-        public final Category category;
-        MCategory(Category category) {
-            this.category = category;
         }
     }
 

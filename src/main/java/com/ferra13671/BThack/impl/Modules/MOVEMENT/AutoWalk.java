@@ -6,26 +6,18 @@ import com.ferra13671.BThack.api.Events.Entity.UpdateInputEvent;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Module.Module;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.api.Utils.BaritoneUtils;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 
 import java.util.Arrays;
 
+@ModuleInfo(name = "AutoWalk", description = "lang.module.AutoWalk", category = "MOVEMENT")
 public class AutoWalk extends Module {
 
     public final BooleanSetting disableOnDisconnect = new BooleanSetting("Disable On Disconnect", this, true);
     public final ModeSetting mode = new ModeSetting("Mode", this, Arrays.asList("Forward", "Baritone"));
 
-
-    public AutoWalk() {
-        super("AutoWalk",
-                "lang.module.AutoWalk",
-                KeyboardUtils.RELEASE,
-                MCategory.MOVEMENT,
-                false
-        );
-    }
 
     @Override
     public void onDisable() {

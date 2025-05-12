@@ -8,7 +8,7 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetti
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.Setting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.api.Utils.Ticker;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.network.packet.Packet;
@@ -20,6 +20,7 @@ import net.minecraft.network.packet.s2c.play.EntityVelocityUpdateS2CPacket;
 import java.util.ArrayList;
 import java.util.List;
 
+@ModuleInfo(name = "Blink", description = "lang.module.Blink", category = "MOVEMENT")
 public class Blink extends Module {
 
     public final NumberSetting maxTime = new NumberSetting("Max Time", this, 59, 10, 59, false);
@@ -29,14 +30,6 @@ public class Blink extends Module {
     public final BooleanSetting disableIfVelocity = new BooleanSetting("Disable If Velocity", this, true);
     public final BooleanSetting disableIfAttack = new BooleanSetting("Disable If Attack", this, true);
 
-    public Blink() {
-        super("Blink",
-                "lang.module.Blink",
-                KeyboardUtils.RELEASE,
-                MCategory.MOVEMENT,
-                false
-        );
-    }
 
     private final List<Packet<?>> packets = new ArrayList<>();
     private final Ticker ticker = new Ticker();

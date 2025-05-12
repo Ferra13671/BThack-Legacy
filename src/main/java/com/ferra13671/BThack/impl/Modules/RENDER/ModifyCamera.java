@@ -5,11 +5,12 @@ import com.ferra13671.BThack.api.Events.Camera.RotateCameraEvent;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.util.math.Vec2f;
 import net.minecraft.util.math.Vec3d;
 
+@ModuleInfo(name = "ModifyCamera", description = "lang.module.ModifyCamera", category = "RENDER")
 public class ModifyCamera extends Module {
 
     public final BooleanSetting rewriteDistance = new BooleanSetting("Rewrite Distance", this, true);
@@ -24,14 +25,6 @@ public class ModifyCamera extends Module {
     public final NumberSetting yaw = new NumberSetting("Camera Yaw", this, 0, -180, 180, false, rewriteRotation::getValue);
     public final NumberSetting pitch = new NumberSetting("Camera Pitch", this, 0, -90, 90, false, rewriteRotation::getValue);
 
-    public ModifyCamera() {
-        super("ModifyCamera",
-                "lang.module.ModifyCamera",
-                KeyboardUtils.RELEASE,
-                MCategory.RENDER,
-                false
-        );
-    }
 
     @EventSubscriber
     @SuppressWarnings("unused")

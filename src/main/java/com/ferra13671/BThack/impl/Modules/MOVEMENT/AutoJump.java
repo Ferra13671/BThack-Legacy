@@ -3,23 +3,16 @@ package com.ferra13671.BThack.impl.Modules.MOVEMENT;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 
 import java.util.Arrays;
 
+@ModuleInfo(name = "AutoJump", description = "lang.module.AutoJump", category = "MOVEMENT")
 public class AutoJump extends Module {
 
     public final ModeSetting mode = new ModeSetting("Mode", this, Arrays.asList("OnlyPress", "PressRelease"));
 
-    public AutoJump() {
-        super("AutoJump",
-                "lang.module.AutoJump",
-                KeyboardUtils.RELEASE,
-                MCategory.MOVEMENT,
-                false
-        );
-    }
 
     private boolean needRelease = false;
 

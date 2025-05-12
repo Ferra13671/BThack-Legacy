@@ -5,7 +5,7 @@ import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.mixins.accessor.IPlayerInventory;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.entity.player.PlayerEntity;
@@ -18,7 +18,7 @@ import net.minecraft.util.collection.DefaultedList;
 /**
  * @author Ferra13671 and Nikitadan4pi
  */
-
+@ModuleInfo(name = "AutoDisconnect", description = "lang.module.AutoDisconnect", category = "PLAYER")
 public class AutoDisconnect extends Module {
 
     public final BooleanSetting autoToggle = new BooleanSetting("Auto Toggle", this, true);
@@ -36,14 +36,6 @@ public class AutoDisconnect extends Module {
     public final BooleanSetting totems = new BooleanSetting("Totems", this, false);
     public final NumberSetting minTotems = new NumberSetting("Min Totems", this, 3, 1, 11, true, totems::getValue);
 
-    public AutoDisconnect() {
-        super("AutoDisconnect",
-                "lang.module.AutoDisconnect",
-                KeyboardUtils.RELEASE,
-                MCategory.PLAYER,
-                false
-        );
-    }
 
     @EventSubscriber
     public void onPlayerTick(ClientTickEvent e) {

@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.impl.Modules.CLIENT;
 
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Client.Client;
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.core.Render.BThackMatrix;
@@ -12,7 +13,6 @@ import com.ferra13671.BThack.api.Gui.Screen.HudEditor.HudEditorScreen;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.*;
 import com.ferra13671.BThack.api.Module.HudComponent;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.Utils.SpeedMathThread;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 
@@ -20,6 +20,7 @@ import java.awt.*;
 import java.util.Arrays;
 import java.util.function.Consumer;
 
+@ModuleInfo(name = "HUD", description = "lang.module.HUD", category = "CLIENT", autoEnabled = true)
 public class HUD extends Module {
 
     public BooleanSetting rainbow;
@@ -42,15 +43,6 @@ public class HUD extends Module {
     public final ColorSetting backGroundColor = new ColorSetting("BackGround Color", this, new Color(0, 0, 0, 150));
 
     public HUD() {
-        super("HUD",
-                "lang.module.HUD",
-                KeyboardUtils.RELEASE,
-                MCategory.CLIENT,
-                true
-        );
-
-        ModuleList.HUD = this;
-
         allowRemapKeyCode = false;
         allowRemapVisible = false;
         setVisible(false);

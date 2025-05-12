@@ -3,25 +3,18 @@ package com.ferra13671.BThack.impl.Modules.COMBAT;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.api.Utils.InventoryUtils;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.Utils.PlayerUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.item.Items;
 
+@ModuleInfo(name = "AutoTotemFall", description = "lang.module.AutoTotemFall", category = "COMBAT")
 public class AutoTotemFall extends Module {
 
     public final NumberSetting fallCheck = new NumberSetting("Fall Check", this, 10, 5, 20, true);
     public final NumberSetting toGround = new NumberSetting("To Ground", this, 5, 3, 10, true);
 
-    public AutoTotemFall() {
-        super("AutoTotemFall",
-                "lang.module.AutoTotemFall",
-                KeyboardUtils.RELEASE,
-                MCategory.COMBAT,
-                false
-        );
-    }
 
     boolean isFalling = false;
 

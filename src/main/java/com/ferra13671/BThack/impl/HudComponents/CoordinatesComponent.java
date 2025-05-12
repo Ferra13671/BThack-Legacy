@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.impl.HudComponents;
 
-
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Render.BThackRender;
 import com.ferra13671.BThack.core.Render.Font.FontRenderManager;
 import com.ferra13671.BThack.core.Render.Font.FontUtils;
@@ -8,14 +8,11 @@ import com.ferra13671.BThack.api.Module.HudComponent;
 import com.ferra13671.BThack.api.Utils.PlayerUtils;
 import net.minecraft.util.Formatting;
 
+@ModuleInfo(name = "Coordinates", category = "HUD", autoEnabled = true)
 public class CoordinatesComponent extends HudComponent {
 
     public CoordinatesComponent() {
-        super("Coordinates",
-                5,
-                62,
-                true
-        );
+        super(5, 62);
     }
 
     String xyz1 = "";

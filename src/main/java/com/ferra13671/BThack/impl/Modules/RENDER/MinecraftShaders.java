@@ -3,7 +3,7 @@ package com.ferra13671.BThack.impl.Modules.RENDER;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import org.ladysnake.satin.api.event.ShaderEffectRenderCallback;
 import org.ladysnake.satin.api.managed.ManagedShaderEffect;
 import org.ladysnake.satin.api.managed.ShaderEffectManager;
@@ -12,6 +12,7 @@ import net.minecraft.util.Identifier;
 import java.util.Arrays;
 import java.util.HashMap;
 
+@ModuleInfo(name = "MinecraftShaders", description = "lang.module.MinecraftShaders", category = "RENDER")
 public class MinecraftShaders extends Module {
 
     public final ModeSetting mode = new ModeSetting("Mode", this, Arrays.asList("One", "Some"));
@@ -57,13 +58,6 @@ public class MinecraftShaders extends Module {
     public final BooleanSetting wobble = new BooleanSetting("wobble", this, false, () -> mode.getValue().equals("Some"));
 
     public MinecraftShaders() {
-        super("MinecraftShaders",
-                "lang.module.MinecraftShaders",
-                KeyboardUtils.RELEASE,
-                MCategory.RENDER,
-                false
-        );
-
         ShaderEffectRenderCallback.EVENT.register(tickDelta -> {
             if (this.isEnabled()) {
                 if (mode.getValue().equals("One")) {

@@ -6,6 +6,7 @@ import com.ferra13671.BThack.api.Managers.managers.Build.BuildManager;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Module.Module;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.api.Utils.*;
 import com.ferra13671.BThack.api.Utils.Grim.GrimUtils;
 import com.ferra13671.BThack.api.Utils.Rotate.RotateUtils;
@@ -28,28 +29,17 @@ import net.minecraft.util.math.Direction;
 import java.util.Arrays;
 import java.util.HashMap;
 
+@ModuleInfo(name = "AutoFarm", description = "lang.module.AutoFarm", category = "MISC")
 public class AutoFarm extends Module {
 
     public final BooleanSetting rotate = new BooleanSetting("Rotate", this, false);
-
     public final ModeSetting swap = new ModeSetting("Swap", this, Arrays.asList("Packet", "Client"));
-
     public final BooleanSetting fortuneFilter = new BooleanSetting("Fortune Filter", this, true);
-
     public final BooleanSetting _break = new BooleanSetting("Break", this, true);
-
     public final BooleanSetting plant = new BooleanSetting("Plant", this, true);
     public final BooleanSetting logicPlant = new BooleanSetting("Logic Plant", this, true, plant::getValue);
     public final ModeSetting plantCrop = new ModeSetting("Plant Crop", this, Arrays.asList("Wheat", "Potato", "Carrot", "Beetroot"), plant::getValue);
 
-    public AutoFarm() {
-        super("AutoFarm",
-                "lang.module.AutoFarm",
-                KeyboardUtils.RELEASE,
-                MCategory.MISC,
-                false
-        );
-    }
 
     private HashMap<BlockPos, CropBlock> breakPoses = new HashMap<>();
     private HashMap<BlockPos, Item> prevBreakPoses = new HashMap<>();

@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.impl.Modules.MOVEMENT;
 
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Gui.Screen.ClickGui.ClickGuiScreen;
@@ -11,19 +12,12 @@ import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.option.KeyBinding;
 
+@ModuleInfo(name = "GuiMove", description = "lang.module.GuiMove", category = "MOVEMENT")
 public class GuiMove extends Module {
 
     public final BooleanSetting chat = new BooleanSetting("Chat", this, false);
     public final BooleanSetting clickGui = new BooleanSetting("ClickGui", this, true);
 
-    public GuiMove() {
-        super("GuiMove",
-                "lang.module.GuiMove",
-                KeyboardUtils.RELEASE,
-                MCategory.MOVEMENT,
-                false
-        );
-    }
 
     @EventSubscriber
     public void onTick(ClientTickEvent e) {

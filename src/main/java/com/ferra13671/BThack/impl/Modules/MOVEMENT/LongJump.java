@@ -1,6 +1,7 @@
 package com.ferra13671.BThack.impl.Modules.MOVEMENT;
 
 import com.ferra13671.BThack.BThack;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Events.Entity.SetVelocityEvent;
@@ -13,7 +14,6 @@ import com.ferra13671.BThack.api.Managers.managers.TravelChange.TravelChanger;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.Grim.GrimUtils;
 import com.ferra13671.BThack.api.Utils.InventoryUtils;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.Utils.Modules.StrafeUtils;
 import com.ferra13671.BThack.api.Utils.Ticker;
 import com.ferra13671.BThack.impl.Modules.PLAYER.AutoFirework;
@@ -30,6 +30,7 @@ import net.minecraft.util.math.Vec3d;
 
 import java.util.Arrays;
 
+@ModuleInfo(name = "LongJump", description = "lang.module.LongJump", category = "MOVEMENT")
 public class LongJump extends Module {
 
     public final ModeSetting mode = new ModeSetting("Mode", this, Arrays.asList("Normal", "Normal2", "Glide", "Elytra&Firework"));
@@ -42,14 +43,7 @@ public class LongJump extends Module {
     public final NumberSetting pitch = new NumberSetting("Pitch", this, 3, 0, 20, false, () -> mode.getValue().equals("Elytra&Firework"));
     public final BooleanSetting grim = new BooleanSetting("Grim", this, true, () -> mode.getValue().equals("Elytra&Firework"));
 
-    public LongJump() {
-        super("LongJump",
-                "lang.module.LongJump",
-                KeyboardUtils.RELEASE,
-                MCategory.MOVEMENT,
-                false
-        );
-    }
+
     private final ElytraAndFireworkMode elytraAndFireworkMode = new ElytraAndFireworkMode();
     private final GlideMode glideMode = new GlideMode();
     private final TravelChanger travelChanger = new TravelChanger(5000, () -> new Float[]{mc.player.getYaw(), (float) -pitch.getValue()}, () -> {

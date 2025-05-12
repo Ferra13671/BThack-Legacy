@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.impl.Modules.RENDER;
 
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Render.BThackRender;
 import com.ferra13671.BThack.core.Render.Line.RenderLine;
 import com.ferra13671.BThack.api.Events.Render.RenderWorldLastEvent;
@@ -9,7 +10,6 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.CategorySett
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ColorSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Managers.managers.Clans.Clan;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.Utils.Modules.KillAuraUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.entity.Entity;
@@ -19,6 +19,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import java.awt.*;
 import java.util.ArrayList;
 
+@ModuleInfo(name = "Tracers", description = "lang.module.Tracers", category = "RENDER")
 public class Tracers extends Module {
 
     public final CategorySetting targetsCategory = new CategorySetting("Targets", this);
@@ -32,14 +33,6 @@ public class Tracers extends Module {
     public final ColorSetting animalColor = new ColorSetting("Animal Color", this, new Color(176, 255, 87)).withBlockedAlpha().inCategory(colorsCategory);
     public final ColorSetting itemColor = new ColorSetting("Item Color", this, new Color(150, 150, 255)).withBlockedAlpha().inCategory(colorsCategory);
 
-    public Tracers() {
-        super("Tracers",
-                "lang.module.Tracers",
-                KeyboardUtils.RELEASE,
-                MCategory.RENDER,
-                false
-        );
-    }
 
     @EventSubscriber(priority = -1)
     @SuppressWarnings("unused")

@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.impl.Modules.MISC;
 
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Render.BThackRender;
 import com.ferra13671.BThack.core.Render.Box.RenderBox;
 import com.ferra13671.BThack.api.Animation.Animation;
@@ -21,6 +22,7 @@ import java.awt.*;
 import java.util.*;
 import java.util.List;
 
+@ModuleInfo(name = "Lawnmower", description = "lang.module.Lawnmower", category = "MISC")
 public class Lawnmower extends Module {
 
     public final NumberSetting range = new NumberSetting("Range", this, 4.0,1,7,false);
@@ -35,14 +37,7 @@ public class Lawnmower extends Module {
     public final NumberSetting linesAlpha = new NumberSetting("Lines Alpha", this, 255, 0, 255, true, render::getValue).inCategory(renderCategory);
     public final NumberSetting hideTime = new NumberSetting("Hide Time", this, 500, 100, 2000, true, render::getValue).inCategory(renderCategory);
 
-    public Lawnmower() {
-        super("Lawnmower",
-                "lang.module.Lawnmower",
-                KeyboardUtils.RELEASE,
-                MCategory.MISC,
-                false
-        );
-    }
+
     private final Map<BlockPos, Animation> breakedBoxes = new HashMap<>();
 
     @EventSubscriber

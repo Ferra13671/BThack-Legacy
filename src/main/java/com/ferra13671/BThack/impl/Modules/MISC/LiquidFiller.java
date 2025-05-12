@@ -6,9 +6,9 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetti
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.api.Utils.BlockUtils;
 import com.ferra13671.BThack.api.Utils.InventoryUtils;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.Utils.Rotate.RotateMode;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.block.Block;
@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@ModuleInfo(name = "LiquidFiller", description = "lang.module.LiquidFiller", category = "MISC")
 public class LiquidFiller extends Module {
 
     public final NumberSetting range = new NumberSetting("Range", this, 3, 3, 7, false);
@@ -36,14 +37,6 @@ public class LiquidFiller extends Module {
 
     public final ModeSetting swap = new ModeSetting("Swap", this, Arrays.asList("Client", "Packet"));
 
-    public LiquidFiller() {
-        super("LiquidFiller",
-                "lang.module.LiquidFiller",
-                KeyboardUtils.RELEASE,
-                MCategory.MISC,
-                false
-        );
-    }
 
     @EventSubscriber
     public void onTick(ClientTickEvent e) {

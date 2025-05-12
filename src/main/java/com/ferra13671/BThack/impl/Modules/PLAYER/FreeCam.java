@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.impl.Modules.PLAYER;
 
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.api.Events.Camera.PositionCameraEvent;
 import com.ferra13671.BThack.api.Events.Camera.RotateCameraEvent;
@@ -8,7 +9,6 @@ import com.ferra13671.BThack.api.Events.SetOpaqueCubeEvent;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.Utils.Rotate.RotateUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.client.input.Input;
@@ -18,19 +18,12 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec2f;
 import net.minecraft.util.math.Vec3d;
 
+@ModuleInfo(name = "FreeCam", description = "lang.module.FreeCam", category = "PLAYER")
 public class FreeCam extends Module {
 
     public final NumberSetting verticalSpeed = new NumberSetting("V. Speed", this, 10, 1, 100, false);
     public final NumberSetting horizontalSpeed = new NumberSetting("H. Speed", this, 10, 1, 100, false);
 
-    public FreeCam() {
-        super("FreeCam",
-                "lang.module.FreeCam",
-                KeyboardUtils.RELEASE,
-                MCategory.PLAYER,
-                false
-        );
-    }
 
     private final FreeCamData freeCamData = new FreeCamData();
 

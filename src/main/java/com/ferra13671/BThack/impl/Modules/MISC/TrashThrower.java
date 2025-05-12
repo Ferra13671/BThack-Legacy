@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.impl.Modules.MISC;
 
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Client.Client;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
@@ -7,24 +8,17 @@ import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.ChatUtils;
 import com.ferra13671.BThack.api.Utils.DataList.DataLists;
 import com.ferra13671.BThack.api.Utils.DataList.ItemList;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.Utils.Ticker;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.util.Formatting;
 
+@ModuleInfo(name = "TrashThrower", description = "lang.module.TrashThrower", category = "MISC")
 public class TrashThrower extends Module {
 
     public final NumberSetting delay = new NumberSetting("Delay", this, 200, 50, 1000, true);
 
-    public TrashThrower() {
-        super("TrashThrower",
-                "lang.module.TrashThrower",
-                KeyboardUtils.RELEASE,
-                MCategory.MISC,
-                false
-        );
-    }
+
     private boolean firstOpened = true;
     private final Ticker ticker = new Ticker();
 

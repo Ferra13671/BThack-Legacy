@@ -3,23 +3,16 @@ package com.ferra13671.BThack.impl.Modules.MOVEMENT;
 
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.api.Module.OneActionModule;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import net.minecraft.util.math.Vec3d;
 
+@ModuleInfo(name = "Impulse", description = "lang.module.Impulse", category = "MOVEMENT")
 public class Impulse extends OneActionModule {
 
     public final BooleanSetting considerY = new BooleanSetting("Consider Y", this, true);
     public final NumberSetting factor = new NumberSetting("Impulse factor", this, 0.1, 0.1, 100, false);
 
-    public Impulse() {
-        super("Impulse",
-                "lang.module.Impulse",
-                KeyboardUtils.RELEASE,
-                MCategory.MOVEMENT,
-                false
-        );
-    }
 
     @Override
     public void onEnable() {

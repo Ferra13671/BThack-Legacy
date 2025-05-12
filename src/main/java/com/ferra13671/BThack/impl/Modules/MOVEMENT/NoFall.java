@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.impl.Modules.MOVEMENT;
 
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Client.Systems.GrimNoFallSystem;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Events.PacketEvent;
@@ -7,7 +8,6 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.Setting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.ChatUtils;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.mixins.accessor.entity.ILivingEntity;
 import com.ferra13671.BThack.mixins.accessor.packet.IPlayerMoveC2SPacket;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
@@ -23,18 +23,11 @@ For Grim NoFall to work, you need to take fall damage 5 times when NoFall enable
 
 I never understood why 5, but the most important thing is that it works.
  */
+@ModuleInfo(name = "NoFall", description = "lang.module.NoFall", category = "MOVEMENT")
 public class NoFall extends Module {
 
     public ModeSetting mode = new ModeSetting("Mode", this, Arrays.asList("Grim", "Default"));
 
-    public NoFall() {
-        super("NoFall",
-                "lang.module.NoFall",
-                KeyboardUtils.RELEASE,
-                MCategory.MOVEMENT,
-                false
-        );
-    }
 
     private boolean started = false;
     private boolean skipTick = true;

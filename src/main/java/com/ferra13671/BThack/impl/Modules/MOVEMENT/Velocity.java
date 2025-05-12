@@ -8,7 +8,7 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.Setting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.mixins.accessor.packet.IEntityVelocityUpdateS2CPacket;
 import com.ferra13671.BThack.mixins.accessor.packet.IExplosionS2CPacket;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
@@ -23,7 +23,7 @@ import net.minecraft.util.math.Direction;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-
+@ModuleInfo(name = "Velocity", description = "lang.module.Velocity", category = "MOVEMENT")
 public class Velocity extends Module {
 
     public final ModeSetting mode = new ModeSetting("Mode", this, new ArrayList<>(Arrays.asList("Grim" ,"Normal", "Cancel")));
@@ -39,14 +39,6 @@ public class Velocity extends Module {
     public final NumberSetting explosionV = new NumberSetting("Expl Vertical", this, 0.0,0.0,100.0,true, () -> explosion.getValue() && mode.getValue().equals("Normal"));
     public final NumberSetting explosionH = new NumberSetting("Expl Horizontal", this, 0.0,0.0,100.0,true, () -> explosion.getValue() && mode.getValue().equals("Normal"));
 
-    public Velocity() {
-        super("Velocity",
-                "lang.module.Velocity",
-                KeyboardUtils.RELEASE,
-                MCategory.MOVEMENT,
-                false
-        );
-    }
 
     private boolean flag;
     private int ticks;

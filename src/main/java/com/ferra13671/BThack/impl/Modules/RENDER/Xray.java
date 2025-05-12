@@ -1,27 +1,20 @@
 package com.ferra13671.BThack.impl.Modules.RENDER;
 
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Client.Client;
 import com.ferra13671.BThack.api.Events.SetOpaqueCubeEvent;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.ChatUtils;
 import com.ferra13671.BThack.api.Utils.DataList.BlockList;
 import com.ferra13671.BThack.api.Utils.DataList.DataLists;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.util.Formatting;
 
+@ModuleInfo(name = "Xray", description = "lang.module.Xray", category = "RENDER")
 public class Xray extends Module {
 
     public static boolean doXray = false;
 
-    public Xray() {
-        super("Xray",
-                "lang.module.Xray",
-                KeyboardUtils.RELEASE,
-                MCategory.RENDER,
-                false
-        );
-    }
 
     @Override
     public void onEnable() {

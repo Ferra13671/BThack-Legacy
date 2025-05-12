@@ -1,6 +1,7 @@
 package com.ferra13671.BThack.impl.HudComponents;
 
 import com.ferra13671.BThack.Constants;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Render.BThackRender;
 import com.ferra13671.BThack.core.Render.Font.FontRenderManager;
 import com.ferra13671.BThack.core.Render.Font.FontUtils;
@@ -8,14 +9,11 @@ import com.ferra13671.BThack.api.Module.HudComponent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Formatting;
 
+@ModuleInfo(name = "TextRadar", category = "HUD", autoEnabled = true)
 public class TextRadarComponent extends HudComponent {
 
     public TextRadarComponent() {
-        super("TextRadar",
-                250,
-                5,
-                true
-        );
+        super(250, 5);
     }
 
     @Override

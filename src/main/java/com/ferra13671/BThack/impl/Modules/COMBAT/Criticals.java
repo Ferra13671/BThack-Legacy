@@ -5,7 +5,7 @@ import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.api.Utils.PlayerUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.entity.decoration.EndCrystalEntity;
@@ -15,18 +15,11 @@ import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+@ModuleInfo(name = "Criticals", description = "lang.module.Criticals", category = "COMBAT")
 public class Criticals extends Module {
 
     public final ModeSetting mode = new ModeSetting("Mode", this, new ArrayList<>(Arrays.asList("Packet", "Bypass")));
 
-    public Criticals() {
-        super("Criticals",
-                "lang.module.Criticals",
-                KeyboardUtils.RELEASE,
-                MCategory.COMBAT,
-                false
-        );
-    }
 
     @EventSubscriber
     public void onUpdate(AttackEntityEvent e) {

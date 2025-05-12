@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.impl.Modules.RENDER;
 
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Render.BThackRender;
 import com.ferra13671.BThack.core.Render.Box.RenderBox;
 import com.ferra13671.BThack.api.Events.PacketEvent;
@@ -7,7 +8,6 @@ import com.ferra13671.BThack.api.Events.Render.RenderWorldLastEvent;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.*;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.Utils.PlayerUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.block.Block;
@@ -38,7 +38,7 @@ import java.util.concurrent.Executors;
 
 //Taken and modified from here   :3
 //https://github.com/etianl/Trouser-Streak/blob/1.20.4/src/main/java/pwn/noobs/trouserstreak/modules/NewerNewChunks.java
-
+@ModuleInfo(name = "NewChunks", description = "lang.module.NewChunks", category = "RENDER")
 public class NewChunks extends Module {
 
     public final CategorySetting searchCategory = new CategorySetting("Search", this);
@@ -64,15 +64,6 @@ public class NewChunks extends Module {
     public final ColorSetting oldColor = new ColorSetting("Old Color", this, new Color(255, 255, 0, 100), oldChunkRender::getValue).inCategory(oldChunksCategory);
     public final ColorSetting oldLineColor = new ColorSetting("Old Line Color", this, new Color(255, 255, 0, 255), oldChunkRender::getValue).inCategory(oldChunksCategory);
 
-
-    public NewChunks() {
-        super("NewChunks",
-                "lang.module.NewChunks",
-                KeyboardUtils.RELEASE,
-                MCategory.RENDER,
-                false
-        );
-    }
 
     private static final Direction[] searchDirs = new Direction[] { Direction.EAST, Direction.NORTH, Direction.WEST, Direction.SOUTH, Direction.UP };
 

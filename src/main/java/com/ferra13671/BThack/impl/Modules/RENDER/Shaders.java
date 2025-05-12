@@ -3,7 +3,7 @@ package com.ferra13671.BThack.impl.Modules.RENDER;
 import com.ferra13671.BThack.api.IMixin.ModifyPostEffectProcessor;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.*;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import net.minecraft.client.gl.PostEffectProcessor;
 import net.minecraft.util.Identifier;
 import org.ladysnake.satin.api.managed.ManagedShaderEffect;
@@ -12,6 +12,7 @@ import org.ladysnake.satin.api.managed.ShaderEffectManager;
 import java.awt.*;
 import java.util.Arrays;
 
+@ModuleInfo(name = "Shaders", description = "lang.module.Shaders", category = "RENDER")
 public class Shaders extends Module {
     public ManagedShaderEffect defaultShader;
     public ManagedShaderEffect gradientShader;
@@ -52,14 +53,6 @@ public class Shaders extends Module {
     public final BooleanSetting self = new BooleanSetting("Self", this, true).inCategory(targetsCategory);
     public final BooleanSetting crystals = new BooleanSetting("Crystals", this, true).inCategory(targetsCategory);
 
-    public Shaders() {
-        super("Shaders",
-                "lang.module.Shaders",
-                KeyboardUtils.RELEASE,
-                MCategory.RENDER,
-                false
-        );
-    }
 
     public void drawShader(float tickDelta) {
         switch (shaderMode.getValue()) {

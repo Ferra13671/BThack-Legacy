@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.impl.Modules.CLIENT;
 
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Client.Client;
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.core.Render.Utils.ColorUtils;
@@ -17,6 +18,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@ModuleInfo(name = "ClickGui", description = "lang.module.ClickGui", key = KeyboardUtils.KEY_RSHIFT, category = "CLIENT")
 public class ClickGui extends OneActionModule {
     public static int INT_OPACITY;
     public static int BACKGROUND_COLOR;
@@ -59,13 +61,6 @@ public class ClickGui extends OneActionModule {
     public final NumberSetting guiScale = new NumberSetting("Gui Scale", this, 1, 0.5, 1.5, false, () -> false);
 
     public ClickGui() {
-        super("ClickGui",
-                "lang.module.ClickGui",
-                KeyboardUtils.KEY_RSHIFT,
-                MCategory.CLIENT,
-                false
-        );
-
         rainbow = new BooleanSetting("Rainbow", this, false, () -> !gradient.getValue());
         gradient = new BooleanSetting("Gradient", this, true, () -> !(rainbow.getValue() && !this.gradient.getValue()));
 

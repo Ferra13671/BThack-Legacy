@@ -3,19 +3,11 @@ package com.ferra13671.BThack.impl.Modules.COMBAT;
 import com.ferra13671.BThack.api.Events.Entity.AttackEntityEvent;
 import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 
+@ModuleInfo(name = "NoFriendDamage", description = "lang.module.NoFriendDamage", category = "COMBAT")
 public class NoFriendDamage extends Module {
-
-    public NoFriendDamage() {
-        super("NoFriendDamage",
-                "lang.module.NoFriendDamage",
-                KeyboardUtils.RELEASE,
-                MCategory.COMBAT,
-                false
-        );
-    }
 
     @EventSubscriber
     public void onAttack(AttackEntityEvent e) {

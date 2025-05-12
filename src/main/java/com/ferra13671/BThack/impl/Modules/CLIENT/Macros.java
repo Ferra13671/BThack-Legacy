@@ -3,22 +3,16 @@ package com.ferra13671.BThack.impl.Modules.CLIENT;
 import com.ferra13671.BThack.api.Events.InputEvent;
 import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 
+@ModuleInfo(name = "Macros", description = "lang.module.Macros", category = "CLIENT", autoEnabled = true)
 public class Macros extends Module {
 
     public Macros() {
-        super("Macros",
-                "lang.module.Macros",
-                KeyboardUtils.RELEASE,
-                MCategory.CLIENT,
-                true
-        );
-
         allowRemapVisible = false;
-        setVisible(false);
         allowRemapKeyCode = false;
+        setVisible(false);
     }
 
     @EventSubscriber

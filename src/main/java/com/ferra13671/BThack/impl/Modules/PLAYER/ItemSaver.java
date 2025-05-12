@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.impl.Modules.PLAYER;
 
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Render.BThackRender;
 import com.ferra13671.BThack.core.Render.Font.FontUtils;
 import com.ferra13671.BThack.core.Render.Utils.ColorUtils;
@@ -13,26 +14,18 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.Setting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.InventoryUtils;
 import com.ferra13671.BThack.api.Utils.ItemUtils;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.MegaEvents.Base.Event;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 
+@ModuleInfo(name = "ItemSaver", description = "lang.module.ItemSaver", category = "PLAYER")
 public class ItemSaver extends Module {
 
     public final NumberSetting minStrength = new NumberSetting("Min Strength(%)", this, 5, 1, 90, false);
     public final BooleanSetting attackSaver = new BooleanSetting("Attack Saver", this, true);
 
-    public ItemSaver() {
-        super("ItemSaver",
-                "lang.module.ItemSaver",
-                KeyboardUtils.RELEASE,
-                MCategory.PLAYER,
-                false
-        );
-    }
 
     private int alpha = 0;
 

@@ -6,7 +6,7 @@ import com.ferra13671.BThack.api.Events.Entity.UpdateInputEvent;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.api.Utils.Modules.StrafeUtils;
 import com.ferra13671.BThack.api.Utils.PlayerUtils;
 import com.ferra13671.BThack.mixins.accessor.entity.ILivingEntity;
@@ -15,6 +15,7 @@ import net.minecraft.util.math.MathHelper;
 
 import java.util.Arrays;
 
+@ModuleInfo(name = "Speed", description = "lang.module.Speed", category = "MOVEMENT")
 public class Speed extends Module {
 
     public final ModeSetting mode = new ModeSetting("Mode", this, Arrays.asList("Normal", "3b3t"));
@@ -22,14 +23,6 @@ public class Speed extends Module {
     public final NumberSetting speed = new NumberSetting("Speed", this, 0.25,0.1,1,false, () -> mode.getValue().equals("Normal"));
     public final NumberSetting jumpHeight = new NumberSetting("Jump Height", this, 0.11, 0.05, 0.42, false, () -> mode.getValue().equals("Normal"));
 
-    public Speed() {
-        super("Speed",
-                "lang.module.Speed",
-                KeyboardUtils.RELEASE,
-                MCategory.MOVEMENT,
-                false
-        );
-    }
 
     @EventSubscriber
     public void onPlayerTick(ClientTickEvent e) {

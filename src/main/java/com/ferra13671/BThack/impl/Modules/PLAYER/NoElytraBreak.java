@@ -5,27 +5,19 @@ import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.api.Utils.Ticker;
 import com.ferra13671.BThack.mixins.accessor.entity.IEntity;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket;
 
+@ModuleInfo(name = "NoElytraBreak", description = "lang.module.NoElytraBreak", category = "PLAYER")
 public class NoElytraBreak extends Module {
 
     public final NumberSetting abuseDelay = new NumberSetting("Abuse Delay", this, 500, 100, 500, true);
 
     public final BooleanSetting pauseIfFirework = new BooleanSetting("Pause If Firework", this, true);
-
-    public NoElytraBreak() {
-        super("NoElytraBreak",
-                "lang.module.NoElytraBreak",
-                KeyboardUtils.RELEASE,
-                MCategory.PLAYER,
-                false
-        );
-    }
 
     private final Ticker ticker = new Ticker();
     private boolean startAbuse = false;

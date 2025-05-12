@@ -6,8 +6,8 @@ import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.Setting;
 import com.ferra13671.BThack.api.Module.Module;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.api.Utils.Grim.GrimFreezeUtils;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.Utils.Ticker;
 import com.ferra13671.BThack.mixins.accessor.entity.IFireworkRocketEntity;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
@@ -16,18 +16,11 @@ import net.minecraft.network.packet.c2s.common.CommonPongC2SPacket;
 import net.minecraft.network.packet.s2c.play.EntitiesDestroyS2CPacket;
 import net.minecraft.network.packet.s2c.play.PlayerPositionLookS2CPacket;
 
+@ModuleInfo(name = "ExtendedFirework", description = "lang.module.ExtendedFirework", category = "MOVEMENT")
 public class ExtendedFirework extends Module {
 
     public final NumberSetting maxTime = new NumberSetting("Max Time", this, 55, 45, 59, false);
 
-    public ExtendedFirework() {
-        super("ExtendedFirework",
-                "lang.module.ExtendedFirework",
-                KeyboardUtils.RELEASE,
-                MCategory.MOVEMENT,
-                false
-        );
-    }
 
     private boolean extendFirework;
     private final Ticker ticker = new Ticker();

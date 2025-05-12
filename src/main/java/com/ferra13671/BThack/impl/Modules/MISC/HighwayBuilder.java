@@ -16,9 +16,9 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSettin
 import com.ferra13671.BThack.api.Managers.managers.Thread.BThackThread;
 import com.ferra13671.BThack.api.Managers.managers.Thread.ThreadManager;
 import com.ferra13671.BThack.api.Module.Module;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.api.Utils.ChatUtils;
 import com.ferra13671.BThack.api.Utils.InventoryUtils;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.Utils.MathUtils;
 import com.ferra13671.BThack.api.Utils.Rotate.RotateMode;
 import com.ferra13671.BThack.api.Utils.Rotate.RotateUtils;
@@ -43,6 +43,7 @@ import java.util.List;
         Ability to freely rotate the camera when working
         More settings
  */
+@ModuleInfo(name = "HighwayBuilder", description = "lang.module.HighwayBuilder", category = "MISC")
 public class HighwayBuilder extends Module {
 
     public final ModeSetting mode = new ModeSetting("Mode", this, new ArrayList<>(Arrays.asList("Highway", "Tunnel")));
@@ -72,15 +73,6 @@ public class HighwayBuilder extends Module {
     public final NumberSetting minHealth = new NumberSetting("Min Health", this, 5, 1, 15, false, disableIfHealth::getValue).inCategory(autoDisableCategory);
     public final BooleanSetting disableIfChangeY = new BooleanSetting("If Change Y", this, true).inCategory(autoDisableCategory);
 
-
-    public HighwayBuilder() {
-        super("HighwayBuilder",
-                "lang.module.HighwayBuilder",
-                KeyboardUtils.RELEASE,
-                MCategory.MISC,
-                false
-        );
-    }
 
     /**
      * List of all active HighwayBuilder threads.

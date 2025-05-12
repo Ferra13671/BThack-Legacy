@@ -1,17 +1,15 @@
 package com.ferra13671.BThack.impl.HudComponents.OneTextComponents;
 
 import com.ferra13671.BThack.Constants;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.impl.HudComponents.AbstractOneTextComponent;
 import net.minecraft.util.Formatting;
 
+@ModuleInfo(name = "Rotation", category = "HUD", autoEnabled = true)
 public class RotationComponent extends AbstractOneTextComponent {
 
     public RotationComponent() {
-        super("Rotation",
-                5,
-                85,
-                true
-        );
+        super(5, 85);
     }
 
     @Override

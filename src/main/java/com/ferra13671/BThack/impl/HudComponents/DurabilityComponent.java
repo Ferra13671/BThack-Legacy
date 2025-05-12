@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.impl.HudComponents;
 
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Render.BThackRender;
 import com.ferra13671.BThack.core.Render.Font.FontRenderManager;
 import com.ferra13671.BThack.core.Render.Font.FontUtils;
@@ -10,16 +11,13 @@ import net.minecraft.util.Formatting;
 
 import java.util.Arrays;
 
+@ModuleInfo(name = "Durability", category = "HUD")
 public class DurabilityComponent extends HudComponent {
 
     public final ModeSetting mode = new ModeSetting("Info", this, Arrays.asList("Normal", "Full 1"));
 
     public DurabilityComponent() {
-        super("Durability",
-                5,
-                220,
-                false
-        );
+        super(5, 220);
     }
 
     @Override

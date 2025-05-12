@@ -2,21 +2,14 @@ package com.ferra13671.BThack.impl.Modules.COMBAT;
 
 import com.ferra13671.BThack.api.Events.Entity.AttackEntityEvent;
 import com.ferra13671.BThack.api.Module.Module;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.api.Utils.InventoryUtils;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.entity.decoration.EndCrystalEntity;
 import net.minecraft.item.SwordItem;
 
+@ModuleInfo(name = "AutoSword", description = "lang.module.AutoSword", category = "COMBAT")
 public class AutoSword extends Module {
-    public AutoSword() {
-        super("AutoSword",
-                "lang.module.AutoSword",
-                KeyboardUtils.RELEASE,
-                MCategory.COMBAT,
-                false
-        );
-    }
 
     @EventSubscriber
     public void onPacket(AttackEntityEvent e) {

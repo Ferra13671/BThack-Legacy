@@ -5,6 +5,7 @@ import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.api.Utils.*;
 import com.ferra13671.BThack.api.Utils.Rotate.RotateUtils;
 import com.ferra13671.BThack.impl.Modules.PLAYER.AutoTool;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+@ModuleInfo(name = "InstaNuker", description = "lang.module.InstaNuker", category = "MISC")
 public class InstaNuker extends Module {
 
     public final NumberSetting range = new NumberSetting("Range", this, 4, 1, 15, false);
@@ -30,14 +32,6 @@ public class InstaNuker extends Module {
     public final BooleanSetting sequence = new BooleanSetting("Sequence", this, true);
     public final BooleanSetting pauseIfJump = new BooleanSetting("Pause If Jump", this, true);
 
-    public InstaNuker() {
-        super("InstaNuker",
-                "lang.module.InstaNuker",
-                KeyboardUtils.RELEASE,
-                MCategory.MISC,
-                false
-        );
-    }
 
     private final HashMap<Block, ArrayList<BlockPos>> poses = new HashMap<>();
     private final Ticker ticker = new Ticker();

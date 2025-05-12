@@ -1,6 +1,7 @@
 package com.ferra13671.BThack.impl.Modules.PLAYER;
 
 
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Managers.Managers;
@@ -19,20 +20,13 @@ import net.minecraft.util.Hand;
 
 import java.util.Arrays;
 
+@ModuleInfo(name = "AutoFirework", description = "lang.module.AutoFirework", category = "PLAYER")
 public class AutoFirework extends Module {
 
     public final ModeSetting mode = new ModeSetting("Mode", this, Arrays.asList("One", "Always"));
     public final NumberSetting delay = new NumberSetting("Delay", this, 0, 0, 5000, true, () -> mode.getValue().equals("Always"));
     public final BooleanSetting swingHand = new BooleanSetting("Swing Hand", this, true);
 
-    public AutoFirework() {
-        super("AutoFirework",
-                "lang.module.AutoFirework",
-                KeyboardUtils.RELEASE,
-                MCategory.PLAYER,
-                false
-        );
-    }
 
     private final Ticker ticker = new Ticker();
 

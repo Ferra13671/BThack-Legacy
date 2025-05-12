@@ -7,13 +7,14 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.Setting;
 import com.ferra13671.BThack.api.Module.Module;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.api.Shader.MainMenu.MainMenuShader;
 import com.ferra13671.BThack.api.Shader.MainMenu.MainMenuShaders;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@ModuleInfo(name = "MenuShader", description = "lang.module.MenuShader", category = "CLIENT", autoEnabled = true)
 public class MenuShader extends Module {
 
     public final BooleanSetting random = new BooleanSetting("Random", this, false);
@@ -22,13 +23,6 @@ public class MenuShader extends Module {
     public final NumberSetting speed = new NumberSetting("Speed", this, 1, 0.1, 3, false);
 
     public MenuShader() {
-        super("MenuShader",
-                "lang.module.MenuShader",
-                KeyboardUtils.RELEASE,
-                MCategory.CLIENT,
-                true
-        );
-
         allowRemapVisible = false;
         setVisible(false);
 

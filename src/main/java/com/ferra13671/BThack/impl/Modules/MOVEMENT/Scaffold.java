@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.impl.Modules.MOVEMENT;
 
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Managers.managers.Build.BuildManager;
@@ -7,7 +8,6 @@ import com.ferra13671.BThack.api.Managers.managers.Build.FacingBlock;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.InventoryUtils;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.block.Block;
@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * @author Ferra13671 and Nikitadan4pi
  */
-
+@ModuleInfo(name = "Scaffold", description = "lang.module.Scaffold", category = "MOVEMENT")
 public class Scaffold extends Module {
 
     public final BooleanSetting keepY = new BooleanSetting ("Keep Y", this, false);
@@ -29,14 +29,6 @@ public class Scaffold extends Module {
     public final BooleanSetting extraWidth = new BooleanSetting("Extra Width", this, false);
     public final BooleanSetting placeDelay = new BooleanSetting("Place Delay", this, true, extraWidth::getValue);
 
-    public Scaffold() {
-        super("Scaffold",
-                "lang.module.Scaffold",
-                KeyboardUtils.RELEASE,
-                MCategory.MOVEMENT,
-                false
-        );
-    }
 
     private double yFlag;
     private BlockPos oldPos;

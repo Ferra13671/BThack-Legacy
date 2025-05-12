@@ -9,8 +9,8 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSettin
 import com.ferra13671.BThack.api.Managers.managers.Thread.ThreadManager;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Managers.managers.Clans.ClanSettingsBuilder;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.api.Utils.ChatUtils;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.Utils.Modules.KillAuraUtils;
 import com.ferra13671.BThack.api.Utils.Rotate.RotateUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
@@ -29,6 +29,7 @@ import net.minecraft.util.Formatting;
 
 import java.util.ArrayList;
 
+@ModuleInfo(name = "TopperRadar", description = "lang.module.TopperRadar", category = "MISC")
 public class TopperRadar extends Module {
 
     public final NumberSetting threshold = new NumberSetting("Min Matches", this, 3, 1, 4, true);
@@ -43,14 +44,6 @@ public class TopperRadar extends Module {
     public final BooleanSetting autoDisconnect = new BooleanSetting("AutoDisconnect", this, false);
     public final NumberSetting shutdownDelay = new NumberSetting("Shutdown Delay", this, 3, 1, 10, true, autoDisconnect::getValue);
 
-    public TopperRadar() {
-        super("TopperRadar",
-                "lang.module.TopperRadar",
-                KeyboardUtils.RELEASE,
-                MCategory.MISC,
-                false
-        );
-    }
 
     private final ArrayList<AbstractClientPlayerEntity> reportedToppers = new ArrayList<>();
     protected boolean pause = false;

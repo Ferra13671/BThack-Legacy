@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.impl.Modules.MOVEMENT;
 
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Events.Entity.UpdateInputEvent;
@@ -10,7 +11,6 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.Setting;
 import com.ferra13671.BThack.api.Managers.managers.TravelChange.TravelChanger;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.Grim.GrimUtils;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.Utils.Modules.StrafeUtils;
 import com.ferra13671.BThack.api.Utils.Rotate.RotateUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
@@ -20,19 +20,13 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+@ModuleInfo(name = "Sprint", description = "lang.module.Sprint", category = "MOVEMENT")
 public class Sprint extends Module {
 
     public final ModeSetting mode = new ModeSetting("Mode", this, new ArrayList<>(Arrays.asList("Standard", "Legal")));
     public final BooleanSetting strafe = new BooleanSetting("Strafe", this, true);
 
-    public Sprint() {
-        super("Sprint",
-                "lang.module.Sprint",
-                KeyboardUtils.RELEASE,
-                MCategory.MOVEMENT,
-                false
-        );
-    }
+
     private float yaw;
     private final TravelChanger travelChanger = new TravelChanger(500,
             () -> new Float[]{yaw, RotateUtils.getCameraPitch()},

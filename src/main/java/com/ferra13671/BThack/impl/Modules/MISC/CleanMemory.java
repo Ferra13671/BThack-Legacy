@@ -2,18 +2,10 @@ package com.ferra13671.BThack.impl.Modules.MISC;
 
 import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 
+@ModuleInfo(name = "CleanMemory", description = "lang.module.CleanMemory", category = "MISC")
 public class CleanMemory extends Module {
-
-    public CleanMemory() {
-        super("CleanMemory",
-                "lang.module.CleanMemory",
-                KeyboardUtils.RELEASE,
-                MCategory.MISC,
-                false
-        );
-    }
 
     @Override
     public void onEnable() {

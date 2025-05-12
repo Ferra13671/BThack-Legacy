@@ -7,8 +7,8 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetti
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.CategorySetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.api.Utils.InventoryUtils;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
 import net.minecraft.item.BlockItem;
@@ -19,6 +19,7 @@ import net.minecraft.util.math.BlockPos;
 import java.util.ArrayList;
 import java.util.List;
 
+@ModuleInfo(name = "Surround", description = "lang.module.Surround", category = "COMBAT")
 public class Surround extends Module {
 
     public final NumberSetting blocksPerTick = new NumberSetting("Blocks Per Tick", this, 4, 1, 8, true);
@@ -32,14 +33,6 @@ public class Surround extends Module {
     public final BooleanSetting disableOnDeath = new BooleanSetting("Disable On Death", this, true, autoDisable::getValue).inCategory(autoDisableCategory);
     public final BooleanSetting disableIfNoBlocks = new BooleanSetting("Disable If No Blocks", this, true, autoDisable::getValue).inCategory(autoDisableCategory);
 
-    public Surround() {
-        super("Surround",
-                "lang.module.Surround",
-                KeyboardUtils.RELEASE,
-                MCategory.COMBAT,
-                false
-        );
-    }
 
     private double prevY;
 

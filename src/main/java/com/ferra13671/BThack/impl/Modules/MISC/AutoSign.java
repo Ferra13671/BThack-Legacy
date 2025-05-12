@@ -5,25 +5,18 @@ import com.ferra13671.BThack.api.Events.PacketEvent;
 import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.mixins.accessor.IAbstractSignEditScreen;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.block.entity.SignBlockEntity;
 import net.minecraft.client.gui.screen.ingame.AbstractSignEditScreen;
 import net.minecraft.network.packet.c2s.play.UpdateSignC2SPacket;
 
+@ModuleInfo(name = "AutoSign", description = "lang.module.AutoSign", category = "MISC")
 public class AutoSign extends Module {
 
     public final BooleanSetting closeScreen = new BooleanSetting("Close Screen", this, true);
 
-    public AutoSign() {
-        super("AutoSign",
-                "lang.module.AutoSign",
-                KeyboardUtils.RELEASE,
-                MCategory.MISC,
-                false
-        );
-    }
 
     private String[] text;
 

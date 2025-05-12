@@ -1,11 +1,11 @@
 package com.ferra13671.BThack.impl.Modules.MISC;
 
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.api.Events.Block.AttackBlockEvent;
 import com.ferra13671.BThack.api.Managers.managers.Destroy.DestroyManager;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
 import net.minecraft.registry.tag.BlockTags;
@@ -17,18 +17,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@ModuleInfo(name = "TreeCutter", description = "lang.module.TreeCutter", category = "MISC")
 public class TreeCutter extends Module {
 
     public final ModeSetting mode = new ModeSetting("Mode", this, Arrays.asList("Only Up", "Only Down", "Both")).defaultValue("Both");
 
-    public TreeCutter() {
-        super("TreeCutter",
-                "lang.module.TreeCutter",
-                KeyboardUtils.RELEASE,
-                MCategory.MISC,
-                false
-        );
-    }
 
     @Override
     public void onEnable() {

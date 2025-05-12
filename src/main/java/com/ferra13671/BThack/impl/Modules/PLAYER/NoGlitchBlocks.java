@@ -4,26 +4,19 @@ import com.ferra13671.BThack.api.Events.Block.UseBlockEvent;
 import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.block.BlockState;
 import net.minecraft.network.packet.c2s.play.PlayerInteractBlockC2SPacket;
 import net.minecraft.util.math.BlockPos;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+@ModuleInfo(name = "NoGlitchBlocks", description = "lang.module.NoGlitchBlocks", category = "PLAYER")
 public class NoGlitchBlocks extends Module {
 
     public final BooleanSetting _break = new BooleanSetting("Break", this, true);
     public final BooleanSetting _place = new BooleanSetting("Place", this, true);
 
-    public NoGlitchBlocks() {
-        super("NoGlitchBlocks",
-                "lang.module.NoGlitchBlocks",
-                KeyboardUtils.RELEASE,
-                MCategory.PLAYER,
-                false
-        );
-    }
 
     @EventSubscriber
     public void onUseBlock(UseBlockEvent e) {

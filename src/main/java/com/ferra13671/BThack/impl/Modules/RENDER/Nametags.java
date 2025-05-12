@@ -1,6 +1,7 @@
 package com.ferra13671.BThack.impl.Modules.RENDER;
 
 import com.ferra13671.BThack.Constants;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Render.BThackMatrix;
 import com.ferra13671.BThack.core.Render.BThackRender;
 import com.ferra13671.BThack.core.Render.Font.FontRenderManager;
@@ -15,7 +16,6 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Shader.Shaders;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.impl.Modules.CLIENT.ClientSettings;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.entity.Entity;
@@ -29,6 +29,7 @@ import net.minecraft.util.math.Vec3d;
 import java.awt.*;
 import java.util.Arrays;
 
+@ModuleInfo(name = "Nametags", description = "lang.module.Nametags", category = "RENDER")
 public class Nametags extends Module {
 
     public final BooleanSetting players = new BooleanSetting("Players", this, true);
@@ -41,14 +42,6 @@ public class Nametags extends Module {
     public final NumberSetting iSize = new NumberSetting("ISize", this, 1, 0.5, 2, false, items::getValue);
     public final BooleanSetting itemName = new BooleanSetting("Item Name", this, true, items::getValue);
 
-    public Nametags() {
-        super("Nametags",
-                "lang.module.Nametags",
-                KeyboardUtils.RELEASE,
-                MCategory.RENDER,
-                false
-        );
-    }
 
     @EventSubscriber
     public void onRenderHud(RenderHudPreEvent e) {

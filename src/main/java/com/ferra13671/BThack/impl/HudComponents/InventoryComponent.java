@@ -1,17 +1,18 @@
 package com.ferra13671.BThack.impl.HudComponents;
 
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Render.BThackRender;
 import com.ferra13671.BThack.api.Module.HudComponent;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.item.ItemStack;
 
+@ModuleInfo(name = "Inventory", category = "HUD", autoEnabled = true)
 public class InventoryComponent extends HudComponent {
 
     public InventoryComponent() {
-        super("Inventory",
+        super(
                 (MinecraftClient.getInstance().getWindow().getScaledWidth() / 2f) + (MinecraftClient.getInstance().getWindow().getScaledWidth() / 7.5f),
-                MinecraftClient.getInstance().getWindow().getScaledHeight() - 60,
-                true
+                MinecraftClient.getInstance().getWindow().getScaledHeight() - 60
         );
 
         this.width = 145 + 6;

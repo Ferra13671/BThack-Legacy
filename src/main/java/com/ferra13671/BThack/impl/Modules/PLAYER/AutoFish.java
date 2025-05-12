@@ -4,9 +4,9 @@ import com.ferra13671.BThack.api.Events.PacketEvent;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.api.Utils.InventoryUtils;
 import com.ferra13671.BThack.api.Utils.ItemUtils;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.Utils.MathUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.component.EnchantmentEffectComponentTypes;
@@ -24,6 +24,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.Vec3d;
 
+@ModuleInfo(name = "AutoFish", description = "lang.module.AutoFish", category = "PLAYER")
 public class AutoFish extends Module {
 
     public final NumberSetting patience = new NumberSetting("Patience", this, 150, 50, 500, true);
@@ -32,14 +33,6 @@ public class AutoFish extends Module {
 
     public final NumberSetting validRange = new NumberSetting("Valid Range", this, 30, 10, 50, false);
 
-    public AutoFish() {
-        super("AutoFish",
-                "lang.module.AutoFish",
-                KeyboardUtils.RELEASE,
-                MCategory.PLAYER,
-                false
-        );
-    }
 
     private int castRodTimer;
     private int reelInTimer;

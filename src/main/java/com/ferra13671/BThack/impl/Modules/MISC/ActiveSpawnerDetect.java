@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.impl.Modules.MISC;
 
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Render.BThackRender;
 import com.ferra13671.BThack.core.Render.Box.RenderBox;
 import com.ferra13671.BThack.core.Render.Line.RenderLine;
@@ -13,7 +14,6 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSettin
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.BlockUtils;
 import com.ferra13671.BThack.api.Utils.ChatUtils;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.Utils.PlayerUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import com.google.common.collect.Sets;
@@ -36,7 +36,7 @@ import java.util.List;
 
 //Taken and modified from here   :3
 //https://github.com/etianl/Trouser-Streak/blob/main/src/main/java/pwn/noobs/trouserstreak/modules/ActivatedSpawnerDetector.java
-
+@ModuleInfo(name = "ActiveSpawnerDetect", description = "lang.module.ActiveSpawnerDetect", category = "MISC")
 public class ActiveSpawnerDetect extends Module {
 
     public final ModeSetting page = new ModeSetting("Page", this, Arrays.asList("General", "Render"));
@@ -61,14 +61,7 @@ public class ActiveSpawnerDetect extends Module {
     public final ColorSetting trialColor = new ColorSetting("Trial Color", this, new Color(255, 100, 0, 235), () -> page.getValue().equals("Render"));
     public final ColorSetting despawnerColor = new ColorSetting("Despawner Color", this, new Color(251, 5, 251, 235), () -> page.getValue().equals("Render"));
 
-    public ActiveSpawnerDetect() {
-        super("ActiveSpawnerDetect",
-                "lang.module.ActiveSpawnerDetect",
-                KeyboardUtils.RELEASE,
-                MCategory.MISC,
-                false
-        );
-    }
+
     private final Set<Block> goodBlocks = Sets.newHashSet(
             Blocks.CHEST,
             Blocks.BARREL,

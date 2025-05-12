@@ -1,11 +1,11 @@
 package com.ferra13671.BThack.impl.Modules.RENDER;
 
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.api.Events.Render.RenderWorldLastEvent;
 import com.ferra13671.BThack.api.IMixin.ModifyWorldRenderer;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.*;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.Utils.Ticker;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.client.render.*;
@@ -18,6 +18,7 @@ import org.joml.Vector3f;
 import java.awt.*;
 import java.util.Arrays;
 
+@ModuleInfo(name = "Ambience", description = "lang.module.Ambience", category = "RENDER")
 public class Ambience extends Module {
 
     public final CategorySetting fogCategory = new CategorySetting("Fog", this);
@@ -60,14 +61,7 @@ public class Ambience extends Module {
     public final ModeSetting weather = new ModeSetting("Weather", this, Arrays.asList("Clear", "Rain", "Thunder", "Ash", "Snow"), customWeather::getValue).inCategory(weatherCategory);
     public final NumberSetting ashProbability = new NumberSetting("Ash Probability", this, 1, 0.1, 10, false, () -> customWeather.getValue() && weather.getValue().equals("Ash")).inCategory(weatherCategory);
 
-    public Ambience() {
-        super("Ambience",
-                "lang.module.Ambience",
-                KeyboardUtils.RELEASE,
-                MCategory.RENDER,
-                false
-        );
-    }
+
     private final Ticker ticker = new Ticker();
 
     @Override

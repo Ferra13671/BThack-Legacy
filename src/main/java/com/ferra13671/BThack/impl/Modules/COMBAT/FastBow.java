@@ -4,7 +4,7 @@ import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.item.BowItem;
 import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
@@ -12,18 +12,11 @@ import net.minecraft.network.packet.c2s.play.PlayerInteractItemC2SPacket;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 
+@ModuleInfo(name = "FastBow", description = "lang.module.FastBow", category = "COMBAT")
 public class FastBow extends Module {
                                                                                                             //2.14 is the smallest value the server can handle
     public final NumberSetting delay = new NumberSetting("Delay", this, 5.0, 2.14, 20.0, false);
 
-    public FastBow() {
-        super("FastBow",
-                "lang.module.FastBow",
-                KeyboardUtils.RELEASE,
-                MCategory.COMBAT,
-                false
-        );
-    }
 
     @EventSubscriber
     public void onClientTick(ClientTickEvent e) {

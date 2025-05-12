@@ -1,6 +1,7 @@
 package com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components;
 
 import com.ferra13671.BThack.Constants;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.core.Render.BThackRender;
 import com.ferra13671.BThack.core.Render.Font.FontRenderManager;
@@ -25,7 +26,7 @@ public class SearchModuleButton extends ModuleButton {
     };
 
     public SearchModuleButton(Frame parent, int offset) {
-        super(new Module("", "", 0, Module.MCategory.CLIENT, false), parent, offset);
+        super(new TempModule(), parent, offset);
     }
 
     public void reset() {
@@ -107,4 +108,7 @@ public class SearchModuleButton extends ModuleButton {
     public String getSearchText() {
         return textFrameButton.getText();
     }
+
+    @ModuleInfo(name = "", category = "")
+    private static class TempModule extends Module {}
 }

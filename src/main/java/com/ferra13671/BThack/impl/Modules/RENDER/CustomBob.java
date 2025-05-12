@@ -2,12 +2,13 @@ package com.ferra13671.BThack.impl.Modules.RENDER;
 
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RotationAxis;
 
+@ModuleInfo(name = "CustomBob", description = "lang.module.CustomBob", category = "RENDER")
 public class CustomBob extends Module {
 
     public final NumberSetting TXStrength = new NumberSetting("TX Strength", this, 0.45, 0, 10, false);
@@ -15,14 +16,6 @@ public class CustomBob extends Module {
     public final NumberSetting RXStrength = new NumberSetting("RX Strength", this, 1.35, 0, 10, false);
     public final NumberSetting RZStrength = new NumberSetting("RZ Strength", this, 1.5, 0, 10, false);
 
-    public CustomBob() {
-        super("CustomBob",
-                "lang.module.CustomBob",
-                KeyboardUtils.RELEASE,
-                MCategory.RENDER,
-                false
-        );
-    }
 
     public void customBob(MatrixStack matrices) {
         PlayerEntity playerEntity = (PlayerEntity) mc.getCameraEntity();

@@ -5,12 +5,13 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetti
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.Setting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.network.packet.s2c.play.ExplosionS2CPacket;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 
+@ModuleInfo(name = "NoRender", description = "lang.module.NoRender", category = "RENDER")
 public class NoRender extends Module {
 
     public final BooleanSetting explosions = new BooleanSetting("Explosions", this, true);
@@ -35,14 +36,6 @@ public class NoRender extends Module {
     public final BooleanSetting eTableRender = new BooleanSetting("ETable Render", this, false);
     public final NumberSetting eTableRadius = new NumberSetting("ETRender Range", this, 10, 5, 50, false, eTableRender::getValue);
 
-    public NoRender() {
-        super("NoRender",
-                "lang.module.NoRender",
-                KeyboardUtils.RELEASE,
-                MCategory.RENDER,
-                false
-        );
-    }
 
     @Override
     public void onChangeSetting(Setting<?> setting) {

@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.impl.Modules.MISC;
 
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Client.Client;
 import com.ferra13671.BThack.api.Events.PacketEvent;
 import com.ferra13671.BThack.api.Managers.Managers;
@@ -8,25 +9,16 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSettin
 import com.ferra13671.BThack.api.Managers.managers.Thread.ThreadManager;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.ChatUtils;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.network.packet.s2c.play.GameMessageS2CPacket;
 import net.minecraft.util.Formatting;
 
+@ModuleInfo(name = "AutoAuth", description = "lang.module.AutoAuth", category = "MISC")
 public class AutoAuth extends Module {
 
     public final BooleanSetting autoToggle = new BooleanSetting("AutoToggle", this, false);
     public final NumberSetting delay = new NumberSetting("Delay", this, 1000, 500, 5000, true);
     public final BooleanSetting antiFake = new BooleanSetting("AntiFake", this, true);
-
-    public AutoAuth() {
-        super("AutoAuth",
-                "lang.module.AutoAuth",
-                KeyboardUtils.RELEASE,
-                MCategory.MISC,
-                false
-        );
-    }
 
     @Override
     public void onEnable() {

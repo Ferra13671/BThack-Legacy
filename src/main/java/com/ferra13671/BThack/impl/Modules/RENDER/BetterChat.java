@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.impl.Modules.RENDER;
 
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Client.Client;
 import com.ferra13671.BThack.api.Events.PacketEvent;
 import com.ferra13671.BThack.api.Managers.Managers;
@@ -7,7 +8,6 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetti
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.impl.Modules.CLIENT.ClientSettings;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.network.packet.s2c.play.GameMessageS2CPacket;
@@ -18,6 +18,7 @@ import net.minecraft.util.Formatting;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+@ModuleInfo(name = "BetterChat", description = "lang.module.BetterChat", category = "RENDER")
 public class BetterChat extends Module {
 
     public final BooleanSetting time = new BooleanSetting("Time", this, true);
@@ -42,15 +43,6 @@ public class BetterChat extends Module {
      */
     public final BooleanSetting chatAnimation = new BooleanSetting("Chat Animation", this, true);
     public final NumberSetting fadeTime = new NumberSetting("Fade Time", this, 170, 100, 300, true, chatAnimation::getValue);
-
-    public BetterChat() {
-        super("BetterChat",
-                "lang.module.BetterChat",
-                KeyboardUtils.RELEASE,
-                MCategory.RENDER,
-                false
-        );
-    }
 
 
     @EventSubscriber

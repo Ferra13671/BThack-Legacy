@@ -1,6 +1,7 @@
 package com.ferra13671.BThack.impl.Modules.RENDER;
 
 import com.ferra13671.BThack.Constants;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Render.BThackMatrix;
 import com.ferra13671.BThack.core.Render.BThackRender;
 import com.ferra13671.BThack.core.Render.Font.FontRenderManager;
@@ -12,26 +13,18 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetti
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Managers.managers.Waypoint.Waypoint;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.Utils.MathUtils;
 import com.ferra13671.BThack.api.Utils.PlayerUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.util.math.Vec3d;
 
+@ModuleInfo(name = "Waypoints", description = "lang.module.Waypoints", category = "RENDER")
 public class Waypoints extends Module {
 
     public final NumberSetting scale = new NumberSetting("Scale", this, 1, 1, 2, false);
     public final BooleanSetting convertNether = new BooleanSetting("Convert Nether", this, true);
     public final BooleanSetting convertOverworld = new BooleanSetting("Convert Overworld", this, true);
 
-    public Waypoints() {
-        super("Waypoints",
-                "lang.module.Waypoints",
-                KeyboardUtils.RELEASE,
-                MCategory.RENDER,
-                false
-        );
-    }
 
     @EventSubscriber
     public void onHudRender(RenderHudPreEvent e) {

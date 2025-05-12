@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.impl.Modules.COMBAT;
 
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
@@ -10,7 +11,6 @@ import com.ferra13671.BThack.api.SoundSystem.SoundSystem;
 import com.ferra13671.BThack.api.SoundSystem.Sounds;
 import com.ferra13671.BThack.api.Utils.*;
 import com.ferra13671.BThack.api.Utils.Grim.GrimUtils;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.Utils.Rotate.RotateUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.item.Items;
@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * @author Ferra13671 and Nikitadan4pi
  */
-
+@ModuleInfo(name = "PearlPhase", description = "lang.module.PearlPhase", category = "COMBAT")
 public class PearlPhase extends Module {
 
     public final ModeSetting mode = new ModeSetting("Mode", this, Arrays.asList("One", "Always"));
@@ -34,15 +34,6 @@ public class PearlPhase extends Module {
     public final BooleanSetting swingHand = new BooleanSetting("Swing Hand", this, true);
     public final NumberSetting phasePitch = new NumberSetting("Pitch", this, 85, 0, 180, true);
 
-    public PearlPhase() {
-
-        super("PearlPhase",
-                "lang.module.PearlPhase",
-                KeyboardUtils.RELEASE,
-                MCategory.COMBAT,
-                false
-        );
-    }
 
     private final List<Vec3i> phasePoses = Arrays.asList(
             new Vec3i(1, 0, 0),

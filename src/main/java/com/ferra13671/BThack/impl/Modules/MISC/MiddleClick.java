@@ -6,8 +6,8 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetti
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.Setting;
 import com.ferra13671.BThack.api.Module.Module;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.api.Utils.ItemUtils;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.impl.Modules.PLAYER.AutoFirework;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.entity.player.PlayerEntity;
@@ -16,19 +16,12 @@ import org.lwjgl.glfw.GLFW;
 
 import java.util.Arrays;
 
+@ModuleInfo(name = "MiddleClick", description = "lang.module.MiddleClick", category = "MISC")
 public class MiddleClick extends Module {
 
     public final ModeSetting mode = new ModeSetting("Mode", this, Arrays.asList("Friend", "Pearl", "Firework"));
     public final BooleanSetting swingHand = new BooleanSetting("Swing Hand", this, false, () -> mode.getValue().equals("Pearl") || mode.getValue().equals("Firework"));
 
-    public MiddleClick() {
-        super("MiddleClick",
-                "lang.module.MiddleClick",
-                KeyboardUtils.RELEASE,
-                MCategory.MISC,
-                false
-        );
-    }
 
     @Override
     public void onChangeSetting(Setting<?> setting) {

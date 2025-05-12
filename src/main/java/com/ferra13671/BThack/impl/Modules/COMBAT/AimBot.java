@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.impl.Modules.COMBAT;
 
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.api.Events.Render.RenderWorldLastEvent;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
@@ -8,7 +9,6 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Managers.managers.Clans.ClanSettingsBuilder;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.Utils.Modules.KillAuraUtils;
 import com.ferra13671.BThack.api.Utils.Rotate.RotateUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
@@ -16,6 +16,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 
+@ModuleInfo(name = "AimBot", description = "lang.module.AimBot", category = "COMBAT")
 public class AimBot extends Module {
 
     public final NumberSetting range = new NumberSetting("Range", this, 4.0,1,5,false);
@@ -28,16 +29,6 @@ public class AimBot extends Module {
     public final BooleanSetting clanManager = ClanSettingsBuilder.buildToggle(this);
     public final ModeSetting clanMode = ClanSettingsBuilder.buildStatusMode(this, clanManager);
     public final ModeSetting target = ClanSettingsBuilder.buildClanTargetMode(this, clanManager, clanMode);
-
-    public AimBot() {
-        super(
-                "AimBot",
-                "lang.module.AimBot",
-                KeyboardUtils.RELEASE,
-                MCategory.COMBAT,
-                false
-        );
-    }
 
     @EventSubscriber
     public void onUpdate(RenderWorldLastEvent e) {

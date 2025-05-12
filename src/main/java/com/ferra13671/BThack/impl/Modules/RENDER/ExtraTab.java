@@ -5,12 +5,13 @@ import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.impl.Modules.CLIENT.ClientSettings;
 import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
+@ModuleInfo(name = "ExtraTab", description = "lang.module.ExtraTab", category = "RENDER")
 public class ExtraTab extends Module {
 
     public final NumberSetting tabSize = new NumberSetting("Tab Size", this, 200, 100, 2000, true);
@@ -18,14 +19,6 @@ public class ExtraTab extends Module {
     public final BooleanSetting enemies = new BooleanSetting("Enemies", this, true);
     public final BooleanSetting yourself = new BooleanSetting("Yourself", this, true);
 
-    public ExtraTab() {
-        super("ExtraTab",
-                "lang.module.ExtraTab",
-                KeyboardUtils.RELEASE,
-                MCategory.RENDER,
-                false
-        );
-    }
 
     @Override
     public void onEnable() {

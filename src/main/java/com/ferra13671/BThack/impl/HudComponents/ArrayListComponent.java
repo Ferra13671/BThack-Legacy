@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.impl.HudComponents;
 
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.core.Render.BThackMatrix;
 import com.ferra13671.BThack.core.Render.BThackRender;
@@ -18,6 +19,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+@ModuleInfo(name = "ArrayList", category = "HUD", autoEnabled = true)
 public class ArrayListComponent extends HudComponent {
     protected static ArrayListComponent INSTANCE;
 
@@ -26,10 +28,9 @@ public class ArrayListComponent extends HudComponent {
     public final NumberSetting backGroundAlpha = new NumberSetting("BGAlpha", this, 170, 20, 255, true, backGround::getValue);
 
     public ArrayListComponent() {
-        super("ArrayList",
+        super(
                 MinecraftClient.getInstance().getWindow().getScaledWidth(),
-                5,
-                true
+                5
         );
 
         INSTANCE = this;

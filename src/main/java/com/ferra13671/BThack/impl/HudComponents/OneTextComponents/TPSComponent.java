@@ -1,17 +1,15 @@
 package com.ferra13671.BThack.impl.HudComponents.OneTextComponents;
 
 import com.ferra13671.BThack.api.Managers.Managers;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.impl.HudComponents.AbstractOneTextComponent;
 import net.minecraft.util.Formatting;
 
+@ModuleInfo(name = "TPS", category = "HUD", autoEnabled = true)
 public class TPSComponent extends AbstractOneTextComponent {
 
     public TPSComponent() {
-        super("TPS",
-                5,
-                160,
-                true
-        );
+        super(5, 160);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.impl.Modules.MOVEMENT;
 
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.api.Events.Entity.JumpHeightEvent;
 import com.ferra13671.BThack.api.Events.Entity.SetVelocityEvent;
@@ -44,7 +45,7 @@ import java.util.Arrays;
        @SuppressWarnings({"ConstantConditions", "unused"})    <------  Fuck
 
  */
-
+@ModuleInfo(name = "ElytraFlight", description = "lang.module.ElytraFlight", category = "MOVEMENT")
 public class ElytraFlight extends Module {
 
     public final ModeSetting mode = new ModeSetting("Mode", this, new ArrayList<>(Arrays.asList("Bounce", "Firework", "Pitch40", "Boost", "Timer", "Auto Glide", "1.12.2 Control")));
@@ -154,14 +155,6 @@ public class ElytraFlight extends Module {
     public final NumberSetting dynamicDownSpeedC = new NumberSetting("Dynamic Down Speed C", this, 2.0f, 1.0f, 5.0f, false, () -> mode.getValue().equals("1.12.2 Control") && page.getValue().equals("Extra"));
     /////////
 
-    public ElytraFlight() {
-        super("ElytraFlight",
-                "lang.module.ElytraFlight",
-                KeyboardUtils.RELEASE,
-                MCategory.MOVEMENT,
-                false
-        );
-    }
 
     //Bounce fields
     public static boolean fireworkUsed = false;

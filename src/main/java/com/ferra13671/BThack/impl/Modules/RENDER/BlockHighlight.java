@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.impl.Modules.RENDER;
 
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Render.BThackRender;
 import com.ferra13671.BThack.core.Render.Box.RenderBox;
 import com.ferra13671.BThack.api.Animation.Animation;
@@ -10,7 +11,6 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSettin
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.Setting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.BlockUtils;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.block.FluidBlock;
 import net.minecraft.util.hit.BlockHitResult;
@@ -21,20 +21,13 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@ModuleInfo(name = "BlockHighlight", description = "lang.module.BlockHighlight", category = "RENDER")
 public class BlockHighlight extends Module {
 
     public final ColorSetting boxColor = new ColorSetting("Box Color", this, new Color(200, 200, 200, 220));
     public final NumberSetting linesAlpha = new NumberSetting("Lines Alpha", this, 255, 0, 255, true);
     public final NumberSetting animTime = new NumberSetting("Anim. Time", this, 350, 100, 1000, true);
 
-    public BlockHighlight() {
-        super("BlockHighlight",
-                "lang.module.BlockHighlight",
-                KeyboardUtils.RELEASE,
-                MCategory.RENDER,
-                false
-        );
-    }
 
     private Box currentBox = null;
     private Box prevBox = null;

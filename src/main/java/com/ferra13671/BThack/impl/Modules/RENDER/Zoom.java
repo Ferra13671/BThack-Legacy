@@ -5,12 +5,13 @@ import com.ferra13671.BThack.api.Animation.Easing;
 import com.ferra13671.BThack.api.Events.InputEvent;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.*;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.util.math.MathHelper;
 
 import java.util.Arrays;
 
+@ModuleInfo(name = "Zoom", description = "lang.module.Zoom", category = "RENDER")
 public class Zoom extends Module {
 
     public final NumberSetting zoom = new NumberSetting("Zoom", this, 0.3, 0.01, 0.9, false);
@@ -20,14 +21,7 @@ public class Zoom extends Module {
     public final ModeSetting toggleMode = new ModeSetting("Toggle Mode", this, Arrays.asList("Toggle", "Hold"));
     public final KeyCodeSetting holdKey = new KeyCodeSetting("Hold Key", this, () -> toggleMode.getValue().equals("Hold"));
 
-    public Zoom() {
-        super("Zoom",
-                "lang.module.Zoom",
-                KeyboardUtils.RELEASE,
-                MCategory.RENDER,
-                false
-        );
-    }
+
     private final Animation animation = new Animation(Easing.CUBIC_OUT, 750);
     private double prevMouseSensitivity;
     private boolean prevHudHidden;

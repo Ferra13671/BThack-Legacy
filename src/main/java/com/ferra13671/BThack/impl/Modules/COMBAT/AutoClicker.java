@@ -5,7 +5,7 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetti
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.api.Utils.Ticker;
 import com.ferra13671.BThack.mixins.accessor.IMinecraftClient;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
@@ -13,6 +13,7 @@ import net.minecraft.item.SwordItem;
 
 import java.util.Arrays;
 
+@ModuleInfo(name = "AutoClicker", description = "lang.module.AutoClicker", category = "COMBAT")
 public class AutoClicker extends Module {
 
     public final ModeSetting mode = new ModeSetting("Mode", this, Arrays.asList("Cooldown", "Delay"));
@@ -21,14 +22,6 @@ public class AutoClicker extends Module {
     public final BooleanSetting onlySword = new BooleanSetting("Only Sword", this, false);
     public final BooleanSetting ifPressing = new BooleanSetting("If Pressing", this, true);
 
-    public AutoClicker() {
-        super("AutoClicker",
-                "lang.module.AutoClicker",
-                KeyboardUtils.RELEASE,
-                MCategory.COMBAT,
-                false
-        );
-    }
 
     private final Ticker ticker = new Ticker();
 

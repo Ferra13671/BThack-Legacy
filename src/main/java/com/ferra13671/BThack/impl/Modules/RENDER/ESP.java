@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.impl.Modules.RENDER;
 
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Render.BThackRender;
 import com.ferra13671.BThack.core.Render.Box.RenderBox;
 import com.ferra13671.BThack.api.Events.Render.RenderWorldLastEvent;
@@ -8,7 +9,6 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.CategorySett
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ColorSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.EntityUtils;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.Utils.Modules.KillAuraUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.entity.Entity;
@@ -18,6 +18,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import java.awt.*;
 import java.util.ArrayList;
 
+@ModuleInfo(name = "ESP", description = "lang.module.ESP", category = "RENDER")
 public class ESP extends Module {
 
     public final CategorySetting targetsCategory = new CategorySetting("Targets", this);
@@ -32,14 +33,6 @@ public class ESP extends Module {
     public final ColorSetting monsterColor = new ColorSetting("Monster Color", this, new Color(211, 234, 43)).withBlockedAlpha().inCategory(colorsCategory);
     public final ColorSetting animalColor = new ColorSetting("Animal Color", this, new Color(176, 255, 86)).withBlockedAlpha().inCategory(colorsCategory);
 
-    public ESP() {
-        super("ESP",
-                "lang.module.ESP",
-                KeyboardUtils.RELEASE,
-                MCategory.RENDER,
-                false
-        );
-    }
 
     @EventSubscriber
     public void onRender(RenderWorldLastEvent e) {

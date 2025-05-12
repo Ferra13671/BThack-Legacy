@@ -6,8 +6,8 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetti
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.api.Utils.ItemUtils;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.mixins.accessor.IMinecraftClient;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.item.*;
@@ -17,6 +17,7 @@ import net.minecraft.util.Hand;
 
 import java.util.Arrays;
 
+@ModuleInfo(name = "FastUse", description = "lang.module.FastUse", category = "PLAYER")
 public class FastUse extends Module {
 
     public final ModeSetting mode = new ModeSetting("Mode", this, Arrays.asList("Normal", "Ultra"));
@@ -28,15 +29,6 @@ public class FastUse extends Module {
     public final BooleanSetting expBottle = new BooleanSetting("ExpBottle", this, true, () -> !throwables.getValue());
     public final BooleanSetting others = new BooleanSetting("Others", this, true);
 
-
-    public FastUse() {
-        super("FastUse",
-                "lang.module.FastUse",
-                KeyboardUtils.RELEASE,
-                MCategory.PLAYER,
-                false
-        );
-    }
 
     private boolean sending = false;
 

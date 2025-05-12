@@ -8,9 +8,9 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Managers.managers.Thread.ThreadManager;
 import com.ferra13671.BThack.api.Module.Module;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.api.Utils.ChatUtils;
 import com.ferra13671.BThack.Constants;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,6 +21,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+@ModuleInfo(name = "Spammer", description = "lang.module.Spammer", category = "PLAYER")
 public class Spammer extends Module {
 
     public final ModeSetting spamMode = new ModeSetting("Mode", this, new ArrayList<>(Arrays.asList("InOrder", "Random")));
@@ -36,14 +37,6 @@ public class Spammer extends Module {
     public final BooleanSetting aSpamNumbers = new BooleanSetting("ASpam Numbers", this, true, antiSpam::getValue).inCategory(antiSpamCategory);
     public final BooleanSetting aSpamSymbols = new BooleanSetting("ASpam Symbols", this, true, antiSpam::getValue).inCategory(antiSpamCategory);
 
-    public Spammer() {
-        super("Spammer",
-                "lang.module.Spammer",
-                KeyboardUtils.RELEASE,
-                MCategory.PLAYER,
-                false
-        );
-    }
 
     private final ReadTXT readTXT = new ReadTXT();
 

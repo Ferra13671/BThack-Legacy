@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.impl.Modules.PLAYER;
 
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Client.Client;
 import com.ferra13671.BThack.api.Events.SendMessageEvent;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
@@ -9,7 +10,6 @@ import com.ferra13671.BThack.api.Utils.BaritoneUtils;
 import com.ferra13671.BThack.api.Utils.ChatUtils;
 import com.ferra13671.BThack.api.Utils.DataList.BlockList;
 import com.ferra13671.BThack.api.Utils.DataList.DataLists;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -18,6 +18,7 @@ import net.minecraft.util.Formatting;
 import java.util.ArrayList;
 import java.util.List;
 
+@ModuleInfo(name = "AutoMine", description = "lang.module.AutoMine", category = "PLAYER")
 public class AutoMine extends Module {
 
     public final BooleanSetting ancientDebris = new BooleanSetting("Ancient Debris", this, true);
@@ -38,14 +39,6 @@ public class AutoMine extends Module {
 
     public final BooleanSetting extraBlocks = new BooleanSetting("Extra Blocks", this, false);
 
-    public AutoMine() {
-        super("AutoMine",
-                "lang.module.AutoMine",
-                KeyboardUtils.RELEASE,
-                MCategory.PLAYER,
-                false
-        );
-    }
 
     @Override
     public void onChangeSetting(Setting<?> setting) {

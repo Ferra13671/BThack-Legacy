@@ -6,6 +6,7 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetti
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.api.Utils.*;
 import com.ferra13671.BThack.api.Utils.Modules.KillAuraUtils;
 import com.ferra13671.BThack.api.Utils.Grim.GrimUtils;
@@ -22,25 +23,15 @@ import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 
 import java.util.*;
 
+@ModuleInfo(name = "FireBallAura", description = "lang.module.FireBallAura", category = "COMBAT")
 public class FireBallAura extends Module {
 
     public final NumberSetting range = new NumberSetting("Range", this, 3, 2, 6, false);
-
     public final BooleanSetting rotate = new BooleanSetting("Rotate", this, true);
     public final ModeSetting rotateMode = new ModeSetting("Rotate Mode", this, Arrays.asList("Packet", "Grim"));
-
     public final BooleanSetting shulkerBullets = new BooleanSetting("Shulker Bullets", this, true);
-
     public final BooleanSetting noDurability = new BooleanSetting("No Durability", this, false);
 
-    public FireBallAura() {
-        super("FireBallAura",
-                "lang.module.FireBallAura",
-                KeyboardUtils.RELEASE,
-                MCategory.COMBAT,
-                false
-        );
-    }
 
     private final Set<Entity> fireBalls = Sets.newHashSet();
 

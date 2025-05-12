@@ -3,25 +3,18 @@ package com.ferra13671.BThack.impl.Modules.PLAYER;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.api.Utils.InventoryUtils;
 import com.ferra13671.BThack.api.Utils.ItemUtils;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 
+@ModuleInfo(name = "ElytraReplace", description = "lang.module.ElytraReplace", category = "PLAYER")
 public class ElytraReplace extends Module {
 
     public final NumberSetting minDurability = new NumberSetting("Min Durability", this, 15, 1, 100, true);
 
-    public ElytraReplace() {
-        super("ElytraReplace",
-                "lang.module.ElytraReplace",
-                KeyboardUtils.RELEASE,
-                MCategory.PLAYER,
-                false
-        );
-    }
 
     boolean needReplace = true;
 

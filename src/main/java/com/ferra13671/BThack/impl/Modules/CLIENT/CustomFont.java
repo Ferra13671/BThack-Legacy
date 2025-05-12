@@ -1,19 +1,11 @@
 package com.ferra13671.BThack.impl.Modules.CLIENT;
 
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.impl.HudComponents.ArrayListComponent;
 
+@ModuleInfo(name = "CustomFont", description = "lang.module.CustomFont", category = "CLIENT", autoEnabled = true)
 public class CustomFont extends Module {
-
-    public CustomFont() {
-        super("CustomFont",
-                "lang.module.CustomFont",
-                KeyboardUtils.RELEASE,
-                MCategory.CLIENT,
-                true
-        );
-    }
 
     @Override
     public void onEnable() {

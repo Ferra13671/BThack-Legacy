@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.impl.Modules.RENDER;
 
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Render.BThackRender;
 import com.ferra13671.BThack.core.Render.Box.RenderBox;
 import com.ferra13671.BThack.api.Events.Block.UseBlockEvent;
@@ -9,7 +10,6 @@ import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ColorSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.BlockUtils;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.Utils.MathUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.block.Block;
@@ -25,18 +25,11 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@ModuleInfo(name = "LastOpenChest", description = "lang.module.LastOpenChest", category = "RENDER")
 public class LastOpenChest extends Module {
 
     public final ColorSetting colorSet = new ColorSetting("Color", this, new Color(0, 255, 255)).withBlockedAlpha();
 
-    public LastOpenChest() {
-        super("LastOpenChest",
-                "lang.module.LastOpenChest",
-                KeyboardUtils.RELEASE,
-                MCategory.RENDER,
-                false
-        );
-    }
 
     private BlockPos chestPos;
     private boolean needRender = false;

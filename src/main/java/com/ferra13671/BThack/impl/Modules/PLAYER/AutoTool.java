@@ -2,24 +2,17 @@ package com.ferra13671.BThack.impl.Modules.PLAYER;
 
 import com.ferra13671.BThack.api.Events.Block.AttackBlockEvent;
 import com.ferra13671.BThack.api.Module.Module;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.api.Utils.InventoryUtils;
 import com.ferra13671.BThack.api.Utils.ItemUtils;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.item.ItemStack;
 
+@ModuleInfo(name = "AutoTool", description = "lang.module.AutoTool", category = "PLAYER")
 public class AutoTool extends Module {
 
-    public AutoTool() {
-        super("AutoTool",
-                "lang.module.AutoTool",
-                KeyboardUtils.RELEASE,
-                MCategory.PLAYER,
-                false
-        );
-    }
 
     @EventSubscriber(priority = Integer.MIN_VALUE)
     public void onLeftClick(AttackBlockEvent e) {

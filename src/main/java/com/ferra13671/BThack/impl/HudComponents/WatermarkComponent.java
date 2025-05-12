@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.impl.HudComponents;
 
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Client.Client;
 import com.ferra13671.BThack.core.Render.BThackRender;
 import com.ferra13671.BThack.core.Render.Font.FontRenderManager;
@@ -10,16 +11,13 @@ import com.ferra13671.BThack.api.Utils.Textures;
 
 import java.util.Arrays;
 
+@ModuleInfo(name = "Watermark", category = "HUD", autoEnabled = true)
 public class WatermarkComponent extends HudComponent {
 
     public final ModeSetting logoType = new ModeSetting("Logo Type", this, Arrays.asList("Logo", "Text"));
 
     public WatermarkComponent() {
-        super("Watermark",
-                5,
-                5,
-                true
-        );
+        super(5, 5);
     }
 
     @Override

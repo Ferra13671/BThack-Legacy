@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.impl.Modules.COMBAT;
 
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Managers.Managers;
@@ -28,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.function.Predicate;
 
+@ModuleInfo(name = "KillAura", description = "lang.module.KillAura", category = "COMBAT")
 public class KillAura extends Module {
 
     public final ModeSetting mode = new ModeSetting("Mode", this, new ArrayList<>(Arrays.asList("Aura", "TriggerBot")));
@@ -63,14 +65,6 @@ public class KillAura extends Module {
     public final BooleanSetting pauseIfEat = new BooleanSetting("Pause If Eat", this, true).inCategory(pauseCategory);
     public final BooleanSetting pauseIfMine = new BooleanSetting("Pause If Mine", this, true).inCategory(pauseCategory);
 
-    public KillAura() {
-        super("KillAura",
-                "lang.module.KillAura",
-                KeyboardUtils.RELEASE,
-                MCategory.COMBAT,
-                false
-        );
-    }
 
     private Predicate<Entity> entityFilter;
 

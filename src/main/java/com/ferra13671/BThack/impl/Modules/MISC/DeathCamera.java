@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.impl.Modules.MISC;
 
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.core.Render.BThackRender;
 import com.ferra13671.BThack.core.Render.Utils.ColorUtils;
@@ -21,18 +22,11 @@ import net.minecraft.client.gui.screen.DeathScreen;
 import net.minecraft.client.input.KeyboardInput;
 import net.minecraft.util.math.Vec2f;
 
+@ModuleInfo(name = "DeathCamera", description = "lang.module.DeathCamera", category = "MISC")
 public class DeathCamera extends Module {
 
     public final KeyCodeSetting respawnKey = new KeyCodeSetting("Respawn Key", this);
 
-    public DeathCamera() {
-        super("DeathCamera",
-                "lang.module.DeathCamera",
-                KeyboardUtils.RELEASE,
-                MCategory.MISC,
-                false
-        );
-    }
 
     private boolean death = false;
     private final FreeCam.FreeCamData freeCamData = new FreeCam.FreeCamData();

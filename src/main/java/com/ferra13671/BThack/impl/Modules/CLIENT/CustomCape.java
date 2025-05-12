@@ -2,18 +2,12 @@ package com.ferra13671.BThack.impl.Modules.CLIENT;
 
 import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 
+@ModuleInfo(name = "CustomCape", description = "lang.module.CustomCape", category = "CLIENT", autoEnabled = true)
 public class CustomCape extends Module {
 
     public CustomCape() {
-        super("CustomCape",
-                "lang.module.CustomCape",
-                KeyboardUtils.RELEASE,
-                MCategory.CLIENT,
-                true
-        );
-
         allowRemapKeyCode = false;
         allowRemapVisible = false;
         setVisible(false);

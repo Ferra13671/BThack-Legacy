@@ -4,7 +4,7 @@ import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.api.Utils.Ticker;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.item.Item;
@@ -15,20 +15,13 @@ import net.minecraft.screen.slot.SlotActionType;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+@ModuleInfo(name = "Replanish", description = "lang.module.Replanish", category = "PLAYER")
 public class Replanish extends Module {
 
     public final NumberSetting count = new NumberSetting("Item threshold", this, 32,1,63, false);
     public final ModeSetting delayMode = new ModeSetting("Delay Mode", this, Arrays.asList("None", "Ms"));
     public final NumberSetting delay = new NumberSetting("Delay", this, 500, 100, 1000, true, () -> delayMode.getValue().equals("Ms"));
 
-    public Replanish() {
-        super("Replanish",
-                "lang.module.Replanish",
-                KeyboardUtils.RELEASE,
-                MCategory.PLAYER,
-                false
-        );
-    }
 
     private final Ticker delayTicker = new Ticker();
     private final ArrayList<ItemInfo> itemInfos = new ArrayList<>();

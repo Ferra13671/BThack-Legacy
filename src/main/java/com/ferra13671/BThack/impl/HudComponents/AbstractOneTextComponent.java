@@ -7,8 +7,8 @@ import com.ferra13671.BThack.api.Module.HudComponent;
 
 public abstract class AbstractOneTextComponent extends HudComponent {
 
-    public AbstractOneTextComponent(String name, float x, float y, boolean autoToggled) {
-        super(name, x, y, autoToggled);
+    public AbstractOneTextComponent(float x, float y) {
+        super(x, y);
     }
 
     String text = "";

@@ -4,8 +4,8 @@ import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Module.Module;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.api.Utils.InventoryUtils;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@ModuleInfo(name = "AutoArmor", description = "lang.module.AutoArmor", category = "COMBAT")
 public class AutoArmor extends Module {
 
     public final ModeSetting swap = new ModeSetting("Swap", this, Arrays.asList("Client", "Packet"));
@@ -24,14 +25,6 @@ public class AutoArmor extends Module {
     public final BooleanSetting allowInventory = new BooleanSetting("Allow Inventory", this, true);
     public final BooleanSetting allowReplace = new BooleanSetting("Allow Replace", this, true);
 
-    public AutoArmor() {
-        super("AutoArmor",
-                "lang.module.AutoArmor",
-                KeyboardUtils.RELEASE,
-                MCategory.COMBAT,
-                false
-        );
-    }
 
     public List<SlotInfo> slotInfos = new ArrayList<>();
     public List<SlotInfo> bestSlots = new ArrayList<>();

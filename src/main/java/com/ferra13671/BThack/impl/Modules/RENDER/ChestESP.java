@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.impl.Modules.RENDER;
 
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Render.BThackRender;
 import com.ferra13671.BThack.core.Render.Box.RenderBox;
 import com.ferra13671.BThack.core.Render.Line.RenderLine;
@@ -7,7 +8,6 @@ import com.ferra13671.BThack.api.Events.Render.RenderWorldLastEvent;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.*;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.*;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ChestBlock;
@@ -19,6 +19,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+@ModuleInfo(name = "ChestESP", description = "lang.module.ChestESP", category = "RENDER")
 public class ChestESP extends Module {
 
     public final BooleanSetting chests = new BooleanSetting("Chests", this, true);
@@ -51,14 +52,6 @@ public class ChestESP extends Module {
 
     public final NumberSetting renderRange = new NumberSetting("Range", this, 200, 50, 600, false);
 
-    public ChestESP() {
-        super("ChestESP",
-                "lang.module.ChestESP",
-                KeyboardUtils.RELEASE,
-                MCategory.RENDER,
-                false
-        );
-    }
 
     @EventSubscriber
     public void onRender(RenderWorldLastEvent e) {

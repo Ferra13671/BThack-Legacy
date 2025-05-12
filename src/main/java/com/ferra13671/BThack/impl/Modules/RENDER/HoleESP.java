@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.impl.Modules.RENDER;
 
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.core.Render.BThackRender;
 import com.ferra13671.BThack.core.Render.Box.RenderBox;
@@ -8,7 +9,6 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.*;
 import com.ferra13671.BThack.api.Managers.managers.Thread.BThackThread;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.*;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
@@ -19,6 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@ModuleInfo(name = "HoleESP", description = "lang.module.HoleESP", category = "RENDER")
 public class HoleESP extends Module {
 
     public final CategorySetting rangeCategory = new CategorySetting("Range", this);
@@ -43,15 +44,6 @@ public class HoleESP extends Module {
     public final BooleanSetting bedrockHoles = new BooleanSetting("Bedrock Holes", this, true).inCategory(holesCategory);
     public final ColorSetting bedrockColor = new ColorSetting("Bedrock Color", this, new Color(61, 194, 46), bedrockHoles::getValue).withBlockedAlpha().inCategory(holesCategory);
 
-
-    public HoleESP() {
-        super("HoleESP",
-                "lang.module.HoleESP",
-                KeyboardUtils.RELEASE,
-                MCategory.RENDER,
-                false
-        );
-    }
 
     private BThackThread searchThread = new SearchThread();
 

@@ -4,9 +4,9 @@ import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Module.Module;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.api.Utils.Grim.GrimUtils;
 import com.ferra13671.BThack.api.Utils.InventoryUtils;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.Utils.Modules.KillAuraUtils;
 import com.ferra13671.BThack.api.Utils.Rotate.RotateUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
@@ -18,21 +18,13 @@ import net.minecraft.util.Hand;
 import java.util.Arrays;
 import java.util.function.Predicate;
 
+@ModuleInfo(name = "AutoShear", description = "lang.module.AutoShear", category = "MISC")
 public class AutoShear extends Module {
 
     public final BooleanSetting rotate = new BooleanSetting("Rotate", this, false);
     public final ModeSetting rotateMode = new ModeSetting("Rotate Mode", this, Arrays.asList("Grim", "Packet"), rotate::getValue);
-
     public final ModeSetting swap = new ModeSetting("Swap", this, Arrays.asList("Packet", "Client"));
 
-    public AutoShear() {
-        super("AutoShear",
-                "lang.module.AutoShear",
-                KeyboardUtils.RELEASE,
-                MCategory.MISC,
-                false
-        );
-    }
 
     private Predicate<Entity> filter;
 

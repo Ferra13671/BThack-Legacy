@@ -2,32 +2,24 @@ package com.ferra13671.BThack.api.Module;
 
 import com.ferra13671.BThack.core.Render.BThackRender;
 import com.ferra13671.BThack.core.Render.Font.FontRenderManager;
-import com.ferra13671.BThack.api.Category.Categories;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.impl.Modules.CLIENT.HUD;
 
 public abstract class HudComponent extends Module {
     private float x; //Left edge
     private float y; //Upper edge
 
-    /*
-    These values are needed to correctly transform the position of HudComponent when resizing the window
-
-    (If you don't think these variables are really necessary, think again about it)
-     */
-    private int scaledWidth;//  <--
-    private int scaledHeight;//  <--
+    private int scaledWidth;
+    private int scaledHeight;
 
     public float width;  //Right
     public float height; //Down
 
-    public HudComponent(String name, float x, float y, boolean autoToggled) {
-        super(name, "", KeyboardUtils.RELEASE, Categories.HUD, autoToggled);
+    public HudComponent(float x, float y) {
         allowRemapKeyCode = false;
 
         setX(x, mc.getWindow().getScaledWidth());
         setY(y, mc.getWindow().getScaledHeight());
-        if (autoToggled)
+        if (isAutoEnabled())
             setToggled(true);
 
         allowRemapVisible = false;

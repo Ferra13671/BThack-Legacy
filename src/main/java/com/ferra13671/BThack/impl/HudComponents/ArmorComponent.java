@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.impl.HudComponents;
 
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Render.BThackRender;
 import com.ferra13671.BThack.core.Render.Font.FontRenderManager;
 import com.ferra13671.BThack.core.Render.Font.FontUtils;
@@ -13,15 +14,15 @@ import net.minecraft.item.Items;
 
 import java.util.Arrays;
 
+@ModuleInfo(name = "Armor", category = "HUD", autoEnabled = true)
 public class ArmorComponent extends HudComponent {
 
     public final ModeSetting mode = new ModeSetting("Mode", this, Arrays.asList("Vertically", "Horizontally"));
 
     public ArmorComponent() {
-        super("Armor",
+        super(
                 (MinecraftClient.getInstance().getWindow().getScaledWidth() / 2f) + (MinecraftClient.getInstance().getWindow().getScaledWidth() / 7.5f),
-                MinecraftClient.getInstance().getWindow().getScaledHeight() - 140,
-                true
+                MinecraftClient.getInstance().getWindow().getScaledHeight() - 140
         );
     }
 

@@ -1,22 +1,14 @@
 package com.ferra13671.BThack.impl.Modules.RENDER;
 
-
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.entity.effect.StatusEffects;
 
+@ModuleInfo(name = "AntiHazard", description = "lang.module.AntiHazard", category = "RENDER")
 public class AntiHazard extends Module {
 
-    public AntiHazard() {
-        super("AntiHazard",
-                "lang.module.AntiHazard",
-                KeyboardUtils.RELEASE,
-                MCategory.RENDER,
-                false
-        );
-    }
 
     @EventSubscriber
     public void onTick(ClientTickEvent e) {

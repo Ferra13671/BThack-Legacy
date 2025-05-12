@@ -1,18 +1,19 @@
 package com.ferra13671.BThack.impl.Modules.CLIENT;
 
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
 import net.minecraft.util.Formatting;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
+@ModuleInfo(name = "ClientSettings", description = "lang.module.ClientSettings", category = "CLIENT", autoEnabled = true)
 public class ClientSettings extends Module {
 
     public final BooleanSetting startSound = new BooleanSetting("Start Sound", this, true);
@@ -53,13 +54,6 @@ public class ClientSettings extends Module {
     ));
 
     public ClientSettings() {
-        super("ClientSettings",
-                "lang.module.ClientSettings",
-                KeyboardUtils.RELEASE,
-                MCategory.CLIENT,
-                true
-        );
-
         allowRemapKeyCode = false;
         allowRemapVisible = false;
         setVisible(false);

@@ -1,27 +1,19 @@
 package com.ferra13671.BThack.impl.Modules.CLIENT;
 
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.api.Module.OneActionModule;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.GuiSystem.BThackScreens;
 
+@ModuleInfo(name = "HudEditor", description = "lang.module.HudEditor", category = "CLIENT")
 public class HudEditor extends OneActionModule {
 
     public HudEditor() {
-        super("HudEditor",
-                "lang.module.HudEditor",
-                KeyboardUtils.RELEASE,
-                MCategory.CLIENT,
-                false
-        );
-
         allowRemapKeyCode = false;
         allowRemapVisible = false;
     }
 
     @Override
-    public void playOnSound() {
-        //No action
-    }
+    public void playOnSound() {}
 
     @Override
     public void onEnable() {

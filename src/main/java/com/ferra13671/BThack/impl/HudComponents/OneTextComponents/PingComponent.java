@@ -1,22 +1,20 @@
 package com.ferra13671.BThack.impl.HudComponents.OneTextComponents;
 
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.impl.HudComponents.AbstractOneTextComponent;
 import net.minecraft.util.Formatting;
 
 import java.util.Arrays;
 import java.util.Objects;
 
+@ModuleInfo(name = "Ping", category = "HUD", autoEnabled = true)
 public class PingComponent extends AbstractOneTextComponent {
 
     public final ModeSetting mode = new ModeSetting("Ping Mode", this, Arrays.asList("Normal", "Short"));
 
     public PingComponent() {
-        super("Ping",
-                5,
-                145,
-                true
-        );
+        super(5, 145);
     }
 
     @Override

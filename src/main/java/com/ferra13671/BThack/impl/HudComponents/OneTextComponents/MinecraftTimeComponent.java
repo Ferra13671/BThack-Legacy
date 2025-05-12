@@ -1,17 +1,15 @@
 package com.ferra13671.BThack.impl.HudComponents.OneTextComponents;
 
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.impl.HudComponents.AbstractOneTextComponent;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.util.Formatting;
 
+@ModuleInfo(name = "MinecraftTime", category = "HUD", autoEnabled = true)
 public class MinecraftTimeComponent extends AbstractOneTextComponent {
 
     public MinecraftTimeComponent() {
-        super("MinecraftTime",
-                MinecraftClient.getInstance().getWindow().getScaledWidth() / 2f,
-                25,
-                true
-        );
+        super(MinecraftClient.getInstance().getWindow().getScaledWidth() / 2f, 25);
     }
 
     @Override

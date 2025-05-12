@@ -9,7 +9,7 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetti
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.Setting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.client.gui.screen.DisconnectedScreen;
 import net.minecraft.client.gui.screen.ingame.InventoryScreen;
@@ -22,6 +22,7 @@ import net.minecraft.util.math.Direction;
 
 import java.util.*;
 
+@ModuleInfo(name = "TridentDupe", description = "lang.module.TridentDupe", category = "MISC")
 public class TridentDupe extends Module {
 
     public final NumberSetting delay = new NumberSetting("Delay", this, 9, 1, 20, true);
@@ -29,14 +30,6 @@ public class TridentDupe extends Module {
 
     public final BooleanSetting autoInventory = new BooleanSetting("Auto Inventory", this, true);
 
-    public TridentDupe() {
-        super("TridentDupe",
-                "lang.module.TridentDupe",
-                KeyboardUtils.RELEASE,
-                MCategory.MISC,
-                false
-        );
-    }
 
     @Override
     public void onChangeSetting(Setting<?> setting) {

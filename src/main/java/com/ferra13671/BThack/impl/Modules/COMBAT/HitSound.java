@@ -4,7 +4,7 @@ import com.ferra13671.BThack.api.Events.Entity.AttackEntityEvent;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.entity.decoration.EndCrystalEntity;
 import net.minecraft.sound.SoundEvents;
@@ -12,19 +12,12 @@ import net.minecraft.sound.SoundEvents;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+@ModuleInfo(name = "HitSound", description = "lang.module.HitSound", category = "COMBAT")
 public class HitSound extends Module {
 
     public final ModeSetting sound = new ModeSetting("Sound", this, new ArrayList<>(Arrays.asList("Ding","Meow","Villager","Enderman","EnderDragon","Blaze","Chicken","Cow")));
     public final NumberSetting volume = new NumberSetting("Volume", this, 1, 0.5, 3, false);
 
-    public HitSound() {
-        super("HitSound",
-                "lang.module.HitSound",
-                KeyboardUtils.RELEASE,
-                MCategory.COMBAT,
-                false
-        );
-    }
 
     @EventSubscriber
     public void onUpdate(AttackEntityEvent e) {

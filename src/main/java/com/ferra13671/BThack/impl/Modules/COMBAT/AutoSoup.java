@@ -5,15 +5,16 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetti
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.api.Utils.InventoryUtils;
 import com.ferra13671.BThack.api.Utils.ItemUtils;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.item.Items;
 import net.minecraft.util.Hand;
 
 import java.util.Arrays;
 
+@ModuleInfo(name = "AutoSoup", description = "lang.module.AutoSoup", category = "COMBAT")
 public class AutoSoup extends Module {
 
     public final ModeSetting swap = new ModeSetting("Swap", this, Arrays.asList("Client", "Packet"));
@@ -21,14 +22,6 @@ public class AutoSoup extends Module {
 
     public final NumberSetting minHealth = new NumberSetting("Min Health", this, 14, 1, 20, false);
 
-    public AutoSoup() {
-        super("AutoSoup",
-                "lang.module.AutoSoup",
-                KeyboardUtils.RELEASE,
-                MCategory.COMBAT,
-                false
-        );
-    }
 
     @EventSubscriber
     public void onTick(ClientTickEvent e) {

@@ -17,7 +17,7 @@
       "com.ferra13671.BThack.BThack"
     ],
     "preLaunch": [
-      "com.ferra13671.BThack.Core.BThackUpdater.BThackUpdater"
+      "com.ferra13671.BThack.core.BThackUpdater.BThackUpdater"
     ],
     "bthack": []
   },

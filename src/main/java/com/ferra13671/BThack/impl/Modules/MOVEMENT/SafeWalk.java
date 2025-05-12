@@ -6,6 +6,7 @@ import com.ferra13671.BThack.api.Managers.managers.Build.BuildManager;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.client.option.KeyBinding;
@@ -15,19 +16,11 @@ import net.minecraft.util.math.Box;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+@ModuleInfo(name = "SafeWalk", description = "lang.module.SafeWalk", category = "MOVEMENT")
 public class SafeWalk extends Module {
 
     public final ModeSetting mode = new ModeSetting("Mode", this, new ArrayList<>(Arrays.asList("Normal", "Shift", "Legit Shift")));
     public final NumberSetting edgeDistance = new NumberSetting("Edge Distance", this, 0.05, 0.05, 0.25, false);
-
-    public SafeWalk() {
-        super("SafeWalk",
-                "lang.module.SafeWalk",
-                KeyboardUtils.RELEASE,
-                MCategory.MOVEMENT,
-                false
-        );
-    }
 
     private boolean sneaking;
 

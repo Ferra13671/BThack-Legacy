@@ -2,24 +2,18 @@ package com.ferra13671.BThack.impl.Modules.RENDER;
 
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import org.ladysnake.satin.api.event.ShaderEffectRenderCallback;
 import org.ladysnake.satin.api.managed.ManagedShaderEffect;
 import org.ladysnake.satin.api.managed.ShaderEffectManager;
 import net.minecraft.util.Identifier;
 
+@ModuleInfo(name = "MotionBlur", description = "lang.module.MotionBlur", category = "RENDER")
 public class MotionBlur extends Module {
 
     public final NumberSetting blur = new NumberSetting("Blur", this, 50, 0, 99, false);
 
     public MotionBlur() {
-        super("MotionBlur",
-                "lang.module.MotionBlur",
-                KeyboardUtils.RELEASE,
-                MCategory.RENDER,
-                false
-        );
-
         ShaderEffectRenderCallback.EVENT.register(tickDelta -> {
             if (this.isEnabled()) {
                 if (getBlur() != 0) {

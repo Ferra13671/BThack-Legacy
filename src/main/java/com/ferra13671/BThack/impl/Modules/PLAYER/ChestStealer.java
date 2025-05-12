@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.impl.Modules.PLAYER;
 
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Client.Client;
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
@@ -13,7 +14,6 @@ import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.ChatUtils;
 import com.ferra13671.BThack.api.Utils.DataList.DataLists;
 import com.ferra13671.BThack.api.Utils.DataList.ItemList;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.client.gui.screen.ingame.GenericContainerScreen;
 import net.minecraft.item.ItemStack;
@@ -24,6 +24,7 @@ import net.minecraft.util.Formatting;
 
 import java.util.Arrays;
 
+@ModuleInfo(name = "ChestStealer", description = "lang.module.ChestStealer", category = "PLAYER")
 public class ChestStealer extends Module {
 
     public final NumberSetting stealDelay = new NumberSetting("Steal Delay", this, 100,0,1000,true);
@@ -33,14 +34,6 @@ public class ChestStealer extends Module {
 
     public final BooleanSetting autoClose = new BooleanSetting("Auto Close", this, true);
 
-    public ChestStealer() {
-        super("ChestStealer",
-                "lang.module.ChestStealer",
-                KeyboardUtils.RELEASE,
-                MCategory.PLAYER,
-                false
-        );
-    }
 
     public static boolean active = false;
 

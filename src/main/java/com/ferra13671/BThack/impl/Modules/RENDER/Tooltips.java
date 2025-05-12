@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.impl.Modules.RENDER;
 
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Render.BThackMatrix;
 import com.ferra13671.BThack.core.Render.BThackRender;
 import com.ferra13671.BThack.core.Render.Font.FontRenderManager;
@@ -10,7 +11,6 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSettin
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Shader.ShaderProgram;
 import com.ferra13671.BThack.api.Shader.Shaders;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.component.DataComponentTypes;
@@ -21,6 +21,7 @@ import net.minecraft.item.map.MapState;
 import java.awt.*;
 import java.util.List;
 
+@ModuleInfo(name = "Tooltips", description = "lang.module.Tooltips", category = "RENDER")
 public class Tooltips extends Module {
 
     public final BooleanSetting shulkers = new BooleanSetting("Shulkers", this, true);
@@ -41,13 +42,6 @@ public class Tooltips extends Module {
     public final ColorSetting backGroundColor = new ColorSetting("BackGround", this, new Color(5, 5, 5, 255));
 
     public Tooltips() {
-        super("Tooltips",
-                "lang.module.Tooltips",
-                KeyboardUtils.RELEASE,
-                MCategory.RENDER,
-                false
-        );
-
         rainbow = new BooleanSetting("Rainbow", this, false, () -> !gradient.getValue());
         rainbowAlpha = new NumberSetting("Rainbow Alpha", this, 255, 0, 255, true, () -> rainbow.getValue() && !gradient.getValue());
 

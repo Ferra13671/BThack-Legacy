@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.impl.HudComponents;
 
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Client.Client;
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.core.Render.BThackRender;
@@ -15,13 +16,13 @@ import com.ferra13671.BThack.impl.Modules.CLIENT.HUD;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.util.Formatting;
 
+@ModuleInfo(name = "KeyBinds", category = "HUD", autoEnabled = true)
 public class KeyBindsComponent extends HudComponent {
 
     public KeyBindsComponent() {
-        super("KeyBinds",
+        super(
                 MinecraftClient.getInstance().getWindow().getScaledWidth() / 2f,
-                MinecraftClient.getInstance().getWindow().getScaledHeight() / 2f,
-                false
+                MinecraftClient.getInstance().getWindow().getScaledHeight() / 2f
         );
     }
 

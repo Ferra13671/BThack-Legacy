@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.impl.Modules.MISC;
 
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.api.Events.Block.AttackBlockEvent;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+@ModuleInfo(name = "SuperInstaMine", description = "lang.module.SuperInstaMine", category = "MISC")
 public class SuperInstaMine extends Module {
 
     public final BooleanSetting packetSwitch = new BooleanSetting("Packet Switch", this, true);
@@ -36,14 +38,6 @@ public class SuperInstaMine extends Module {
     public final BooleanSetting infinityAttempts = new BooleanSetting("Infinity Attempts", this, false);
     public final NumberSetting maxAttempts = new NumberSetting("Max Attempts", this, 7, 1, 25, true, () -> !infinityAttempts.getValue());
 
-    public SuperInstaMine() {
-        super("SuperInstaMine",
-                "lang.module.SuperInstaMine",
-                KeyboardUtils.RELEASE,
-                MCategory.MISC,
-                false
-        );
-    }
 
     private Matrix4f matrix4f;
     private final HashMap<BlockState, ArrayList<BlockInfo>> poses = new HashMap<>();

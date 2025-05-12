@@ -5,7 +5,7 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetti
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.CategorySetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.api.Utils.MathUtils;
 import com.ferra13671.BThack.api.Utils.Ticker;
 import com.ferra13671.BThack.mixins.accessor.IRenderTickCounter$Dynamic;
@@ -18,6 +18,7 @@ import net.minecraft.entity.vehicle.BoatEntity;
 import net.minecraft.entity.vehicle.ChestBoatEntity;
 import net.minecraft.util.Hand;
 
+@ModuleInfo(name = "AutoMount", description = "lang.module.AutoMount", category = "PLAYER")
 public class AutoMount extends Module {
 
     public final NumberSetting range = new NumberSetting("Range", this, 4.3, 2, 7, false);
@@ -32,15 +33,6 @@ public class AutoMount extends Module {
     public final BooleanSetting pigs = new BooleanSetting("Pigs", this, true).inCategory(targetsCategory);
     public final BooleanSetting llamas = new BooleanSetting("Llamas", this, true).inCategory(targetsCategory);
 
-
-    public AutoMount() {
-        super("AutoMount",
-                "lang.module.AutoMount",
-                KeyboardUtils.RELEASE,
-                MCategory.PLAYER,
-                false
-        );
-    }
 
     private final Ticker delayTicker = new Ticker();
 

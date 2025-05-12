@@ -5,9 +5,9 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetti
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Managers.managers.Clans.ClanSettingsBuilder;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.api.Utils.InventoryUtils;
 import com.ferra13671.BThack.api.Utils.ItemUtils;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.Utils.Modules.KillAuraUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.entity.Entity;
@@ -18,6 +18,7 @@ import net.minecraft.util.math.BlockPos;
 
 import java.util.Arrays;
 
+@ModuleInfo(name = "WebAura", description = "lang.module.WebAura", category = "COMBAT")
 public class WebAura extends Module {
 
     public final BooleanSetting allowInventory = new BooleanSetting("Allow Inventory", this, true);
@@ -25,22 +26,13 @@ public class WebAura extends Module {
     public final BooleanSetting ignoreWalls = new BooleanSetting("Ignore Walls", this, true);
 
     public final BooleanSetting players = new BooleanSetting("Players", this, true);
+    public final BooleanSetting mobs = new BooleanSetting("Mobs", this, false);
     public final BooleanSetting friends = new BooleanSetting("Friends", this, false);
     public final BooleanSetting teammates = new BooleanSetting("Teammates", this, false);
     public final BooleanSetting clanManager = ClanSettingsBuilder.buildToggle(this);
     public final ModeSetting clanMode = ClanSettingsBuilder.buildStatusMode(this, clanManager);
     public final ModeSetting targetClan = ClanSettingsBuilder.buildClanTargetMode(this, clanManager, clanMode);
 
-    public final BooleanSetting mobs = new BooleanSetting("Mobs", this, false);
-
-    public WebAura() {
-        super("WebAura",
-                "lang.module.WebAura",
-                KeyboardUtils.RELEASE,
-                MCategory.COMBAT,
-                false
-        );
-    }
 
     @EventSubscriber
     public void onTick(ClientTickEvent e) {

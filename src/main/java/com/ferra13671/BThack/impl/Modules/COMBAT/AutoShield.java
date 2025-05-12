@@ -3,8 +3,8 @@ package com.ferra13671.BThack.impl.Modules.COMBAT;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Module.Module;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.api.Utils.ItemUtils;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.Utils.Rotate.RotateUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.entity.Entity;
@@ -16,17 +16,8 @@ import net.minecraft.util.Hand;
 import java.util.ArrayList;
 import java.util.Comparator;
 
+@ModuleInfo(name = "AutoShield", description = "lang.module.AutoShield", category = "COMBAT")
 public class AutoShield extends Module {
-
-    public AutoShield() {
-        super("AutoShield",
-                "lang.module.AutoShield",
-                KeyboardUtils.RELEASE,
-                MCategory.COMBAT,
-                false
-        );
-    }
-
 
     private boolean pressed = false;
     private short delayTick = 0;

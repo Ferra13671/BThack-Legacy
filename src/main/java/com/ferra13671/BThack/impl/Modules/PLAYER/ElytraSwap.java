@@ -1,9 +1,9 @@
 package com.ferra13671.BThack.impl.Modules.PLAYER;
 
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.api.Module.OneActionModule;
 import com.ferra13671.BThack.api.Utils.InventoryUtils;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ElytraItem;
@@ -12,18 +12,11 @@ import net.minecraft.screen.slot.SlotActionType;
 
 import java.util.Arrays;
 
+@ModuleInfo(name = "ElytraSwap", description = "lang.module.ElytraSwap", category = "PLAYER")
 public class ElytraSwap extends OneActionModule {
 
     public final ModeSetting moveType = new ModeSetting("Move Type", this, Arrays.asList("Swap", "Pickup"));
 
-    public ElytraSwap() {
-        super("ElytraSwap",
-                "lang.module.ElytraSwap",
-                KeyboardUtils.RELEASE,
-                MCategory.PLAYER,
-                false
-        );
-    }
 
     @Override
     public void onEnable() {

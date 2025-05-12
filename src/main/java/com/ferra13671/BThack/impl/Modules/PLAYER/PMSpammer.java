@@ -1,8 +1,8 @@
 package com.ferra13671.BThack.impl.Modules.PLAYER;
 
-
 import com.ferra13671.BTbot.api.Utils.Generate.StringGenerator;
 import com.ferra13671.BTbot.api.Utils.Generate.NumberGenerator;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.CategorySetting;
@@ -11,7 +11,6 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSettin
 import com.ferra13671.BThack.api.Managers.managers.Thread.ThreadManager;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.Constants;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.impl.Modules.PLAYER.Spammer.ReadTXT;
 import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
 import net.minecraft.client.network.PlayerListEntry;
@@ -27,6 +26,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
+@ModuleInfo(name = "PMSpammer", description = "lang.module.PMSpammer", category = "PLAYER")
 public class PMSpammer extends Module {
 
     public final ModeSetting spamMode = new ModeSetting("Mode", this, new ArrayList<>(Arrays.asList("InOrder", "Random")));
@@ -42,14 +42,6 @@ public class PMSpammer extends Module {
     public final BooleanSetting aSpamNumbers = new BooleanSetting("ASpam Numbers", this, true, antiSpam::getValue).inCategory(antiSpamCategory);
     public final BooleanSetting aSpamSymbols = new BooleanSetting("ASpam Symbols", this, true, antiSpam::getValue).inCategory(antiSpamCategory);
 
-    public PMSpammer() {
-        super("PMSpammer",
-                "lang.module.PMSpammer",
-                KeyboardUtils.RELEASE,
-                MCategory.PLAYER,
-                false
-        );
-    }
 
     protected final ReadTXT readTXT = new ReadTXT();
 

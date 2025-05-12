@@ -3,22 +3,15 @@ package com.ferra13671.BThack.impl.Modules.MOVEMENT;
 import com.ferra13671.BThack.api.Events.Player.PlayerTravelEvent;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.entity.vehicle.BoatEntity;
 
+@ModuleInfo(name = "EntitySpeed", description = "lang.module.EntitySpeed", category = "MOVEMENT")
 public class EntitySpeed extends Module {
 
     public final NumberSetting boatSpeed = new NumberSetting("BoatSpeed", this, 0.3, 0.1, 1.2, false);
 
-    public EntitySpeed() {
-        super("EntitySpeed",
-                "lang.module.EntitySpeed",
-                KeyboardUtils.RELEASE,
-                MCategory.MOVEMENT,
-                false
-        );
-    }
 
     @EventSubscriber
     public void onTravel(PlayerTravelEvent e) {

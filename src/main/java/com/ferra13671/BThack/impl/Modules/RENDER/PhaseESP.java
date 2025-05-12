@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.impl.Modules.RENDER;
 
+import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Render.BThackRender;
 import com.ferra13671.BThack.core.Render.Box.RenderBox;
 import com.ferra13671.BThack.api.Events.Render.RenderWorldLastEvent;
@@ -8,7 +9,6 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ColorSetting
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.BlockUtils;
-import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -22,6 +22,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+@ModuleInfo(name = "PhaseESP", description = "lang.module.PhaseESP", category = "RENDER")
 public class PhaseESP extends Module {
 
     public final NumberSetting extraRange = new NumberSetting("Extra Range", this, 0, 0, 3, true);
@@ -32,14 +33,6 @@ public class PhaseESP extends Module {
     public final ColorSetting normalColor = new ColorSetting("Normal Color", this, new Color(0, 0, 178)).withBlockedAlpha();
     public final ColorSetting dangerColor = new ColorSetting("Danger Color", this, new Color(178, 0, 0)).withBlockedAlpha();
 
-    public PhaseESP() {
-        super("PhaseESP",
-                "lang.module.PhaseESP",
-                KeyboardUtils.RELEASE,
-                Module.MCategory.RENDER,
-                false
-        );
-    }
 
     private final List<Block> normalBlocks = Arrays.asList(Blocks.OBSIDIAN, Blocks.CRYING_OBSIDIAN);
     private final List<Block> goodBlocks = Arrays.asList(Blocks.BEDROCK, Blocks.BARRIER, Blocks.END_PORTAL_FRAME, Blocks.COMMAND_BLOCK, Blocks.STRUCTURE_BLOCK);
