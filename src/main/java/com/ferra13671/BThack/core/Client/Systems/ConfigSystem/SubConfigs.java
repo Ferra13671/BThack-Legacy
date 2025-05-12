@@ -76,7 +76,11 @@ public final class SubConfigs {
                             settingValueObject = settingObject.get(s.getName());
 
                             if (settingValueObject != null) {
-                                s.load(settingObject, settingValueObject);
+                                try {
+                                    s.load(settingObject, settingValueObject);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }
                     }
