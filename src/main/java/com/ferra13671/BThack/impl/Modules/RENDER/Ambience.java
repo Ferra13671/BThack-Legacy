@@ -42,7 +42,7 @@ public class Ambience extends Module {
     public final CategorySetting worldTimeCategory = new CategorySetting("World Time", this);
     public final BooleanSetting customWorldTime = new BooleanSetting("Custom Time", this, true).inCategory(worldTimeCategory);
     public final ModeSetting worldTimeMode = new ModeSetting("Mode", this, Arrays.asList("Day", "Night", "Morning", "Sunset", "Spin", "Custom"), customWorldTime::getValue).defaultValue("Night").inCategory(worldTimeCategory);
-    public final NumberSetting customTime = new NumberSetting("Custom Time", this, 10000, 1, 24000, true, () -> customWorldTime.getValue() && worldTimeMode.getValue().equals("Custom")).inCategory(worldTimeCategory);
+    public final NumberSetting customTime = new NumberSetting("Time", this, 10000, 1, 24000, true, () -> customWorldTime.getValue() && worldTimeMode.getValue().equals("Custom")).inCategory(worldTimeCategory);
     public final NumberSetting spinSpeed = new NumberSetting("Spin Speed", this, 1, 0.5, 5, false, () -> customWorldTime.getValue() && worldTimeMode.getValue().equals("Spin")).inCategory(worldTimeCategory);
 
     public final CategorySetting starsCategory = new CategorySetting("Stars", this);
