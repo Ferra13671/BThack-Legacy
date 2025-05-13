@@ -209,8 +209,8 @@ public class ElytraFlight extends Module {
                 case "Auto Glide" -> new Float[]{RotateUtils.getCameraYaw(), getAutoGlidePitch()};
                 default -> new Float[]{RotateUtils.getCameraYaw(), RotateUtils.getCameraPitch()};
             },
-            () -> {},
-            () -> true
+            () -> false,
+            () -> false
     );
 
     @Override

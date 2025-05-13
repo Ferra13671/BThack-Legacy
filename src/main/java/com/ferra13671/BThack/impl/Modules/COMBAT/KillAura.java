@@ -12,7 +12,6 @@ import com.ferra13671.BThack.api.Managers.managers.TravelChange.TravelChanger;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Managers.managers.Clans.ClanSettingsBuilder;
 import com.ferra13671.BThack.api.Utils.*;
-import com.ferra13671.BThack.api.Utils.Grim.GrimUtils;
 import com.ferra13671.BThack.api.Utils.Modules.KillAuraUtils;
 import com.ferra13671.BThack.api.Utils.Rotate.RotateMode;
 import com.ferra13671.BThack.api.Utils.Rotate.RotateUtils;
@@ -34,6 +33,7 @@ public class KillAura extends Module {
 
     public final ModeSetting mode = new ModeSetting("Mode", this, new ArrayList<>(Arrays.asList("Aura", "TriggerBot")));
     public final ModeSetting attackMode = new ModeSetting("AttackMode", this, new ArrayList<>(Arrays.asList("CoolDown", "Delay")));
+    public final NumberSetting delay = new NumberSetting("Delay(Second)", this, 1.4, 0.1, 4, false, () -> attackMode.getValue().equals("Delay"));
     public final NumberSetting range = new NumberSetting("Range", this, 3.62, 1, 10, false, () -> mode.getValue().equals("Aura"));
 
     public final CategorySetting rotateCategory = new CategorySetting("Rotate", this);
@@ -45,7 +45,10 @@ public class KillAura extends Module {
     public final BooleanSetting grim = new BooleanSetting("Grim", this, true, () ->  mode.getValue().equals("Aura")).inCategory(rotateCategory);
     public final ModeSetting rotateMode = new ModeSetting("RotateMode", this, new ArrayList<>(Arrays.asList("Packet", "Vanilla", "None")), () ->  mode.getValue().equals("Aura") && instaRotate.getValue()).inCategory(rotateCategory);
     public final NumberSetting packets = new NumberSetting("Packets", this, 1, 1, 5, true, () -> rotateMode.getValue().equals("Packet") && mode.getValue().equals("Aura")).inCategory(rotateCategory);
-    public final NumberSetting delay = new NumberSetting("Delay(Second)", this, 1.4, 0.1, 4, false, () -> attackMode.getValue().equals("Delay")).inCategory(rotateCategory);
+
+    public final CategorySetting moveFixCategory = new CategorySetting("Move Fix", this);
+    public final BooleanSetting moveFix = new BooleanSetting("Move Fix", this, true).inCategory(moveFixCategory);
+    public final ModeSetting moveFixMode = new ModeSetting("Mode", this, Arrays.asList("Legal", "Strong")).inCategory(moveFixCategory);
 
     public final BooleanSetting ignoreWalls = new BooleanSetting("Ignore Walls", this, false);
 
@@ -76,9 +79,8 @@ public class KillAura extends Module {
     private float[] currentRotation;
     private final TravelChanger travelChanger = new TravelChanger(10000,
             () -> new Float[]{currentRotation[0], currentRotation[1]},
-            () -> {if (grim.getValue()) GrimUtils.sendPreActionGrimPackets(Managers.TRAVEL_CHANGE_MANAGER.getLastYaw(), Managers.TRAVEL_CHANGE_MANAGER.getLastPitch());
-            },
-            () -> currentRotation != null && !needPause() && mode.getValue().equals("Aura") && !instaRotate.getValue() && targetedEntity != null
+            moveFix::getValue,
+            () -> moveFixMode.getValue().equals("Strong")
     );
     private Entity prevAttackedEntity;
 

@@ -1,6 +1,8 @@
 package com.ferra13671.BThack.api.Managers.managers.TravelChange;
 
 import com.ferra13671.BThack.BThack;
+import com.ferra13671.BThack.api.Events.Entity.UpdateInputEvent;
+import com.ferra13671.BThack.api.Utils.MathUtils;
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.api.Events.Camera.RotateCameraEvent;
 import com.ferra13671.BThack.api.Events.Player.ChangePlayerLookEvent;
@@ -11,7 +13,10 @@ import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.Rotate.RotateUtils;
 import com.ferra13671.BThack.impl.Modules.PLAYER.FreeCam;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.util.math.Vec2f;
+import net.minecraft.util.math.Vec3d;
+import org.joml.Matrix4f;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -65,7 +70,7 @@ public class TravelChangeManager implements Initializable, Mc {
     }
 
     private void filterChangers() {
-        changers.sort(Comparator.comparing(changer -> changer.priority));
+        changers.sort(Comparator.comparing(TravelChanger::priority));
         Collections.reverse(changers);
     }
 
@@ -95,11 +100,34 @@ public class TravelChangeManager implements Initializable, Mc {
     @EventSubscriber
     public void onPlayerTravel(PlayerTravelEvent e) {
         if (!changers.isEmpty()) {
-            Float[] rots = changers.getFirst().rotateGetter.get();
+            Float[] rots = changers.getFirst().rotateGetter().get();
             lastYaw = rots[0];
             lastPitch = rots[1];
             mc.player.setYaw(lastYaw);
             mc.player.setPitch(lastPitch);
         }
+    }
+
+    @EventSubscriber
+    public void onInputUpdate(UpdateInputEvent e) {
+        if (!changers.isEmpty()) {
+            moveFix(mc.player.isSneaking());
+        }
+    }
+
+    /*
+    I'm too lazy to write all the math myself, so I just use a matrix for transform player input.
+     */
+    private void moveFix(boolean sneaking) {
+        TravelChanger travelChanger = changers.getFirst();
+        float forward = (mc.player.input.pressingForward ? 1 : mc.player.input.pressingBack ? -1 : 0);
+        float sideways = (mc.player.input.pressingLeft ? 1 : mc.player.input.pressingRight ? -1 : 0);
+
+        Matrix4f matrix = new Matrix4f();
+        matrix.rotate((float) Math.toRadians(mc.player.getYaw() - RotateUtils.getCameraYaw()), 0, 1, 0);
+        Vec3d updatedInput = MathUtils.transformPos(matrix, sideways, 0, forward);
+
+        mc.player.input.movementForward = (float) (travelChanger.strongMoveFix().get() ? updatedInput.getZ() : Math.round(updatedInput.getZ())) * (sneaking ? (float) mc.player.getAttributeValue(EntityAttributes.PLAYER_SNEAKING_SPEED) : 1);
+        mc.player.input.movementSideways = (float) (travelChanger.strongMoveFix().get() ? updatedInput.getX() : Math.round(updatedInput.getX())) * (sneaking ? (float) mc.player.getAttributeValue(EntityAttributes.PLAYER_SNEAKING_SPEED) : 1);
     }
 }

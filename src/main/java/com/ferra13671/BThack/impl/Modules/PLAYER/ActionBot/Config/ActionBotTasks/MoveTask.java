@@ -12,7 +12,6 @@ import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Thread.ThreadClosedException;
 import com.ferra13671.BThack.api.Managers.managers.TravelChange.TravelChanger;
 import com.ferra13671.BThack.api.Utils.ChatUtils;
-import com.ferra13671.BThack.api.Utils.Grim.GrimUtils;
 import com.ferra13671.BThack.api.Utils.Rotate.RotateUtils;
 import com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.ActionBotConfig;
 import com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.ActionBotTask;
@@ -62,8 +61,8 @@ public class MoveTask extends ActionBotTask {
     private boolean jumping = false;
     private final TravelChanger travelChanger = new TravelChanger(1000,
             () -> new Float[]{yaw, mc.player.getPitch()},
-            () -> GrimUtils.sendPreActionGrimPackets(Managers.TRAVEL_CHANGE_MANAGER.getLastYaw(), Managers.TRAVEL_CHANGE_MANAGER.getLastPitch()),
-            () -> true
+            () -> false,
+            () -> false
     );
 
     @EventSubscriber

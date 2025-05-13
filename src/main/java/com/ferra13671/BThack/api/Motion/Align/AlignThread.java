@@ -7,7 +7,6 @@ import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Thread.BThackThread;
 import com.ferra13671.BThack.api.Managers.managers.Thread.ThreadClosedException;
 import com.ferra13671.BThack.api.Managers.managers.TravelChange.TravelChanger;
-import com.ferra13671.BThack.api.Utils.Grim.GrimUtils;
 import com.ferra13671.BThack.api.Utils.Rotate.RotateUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.util.math.Vec3d;
@@ -25,8 +24,8 @@ public class AlignThread extends BThackThread implements Mc {
     public float yaw = -99999999;
     private final TravelChanger travelChanger = new TravelChanger(1000,
             () -> new Float[]{yaw, mc.player.getPitch()},
-            () -> GrimUtils.sendPreActionGrimPackets(yaw, mc.player.getPitch()),
-            () -> true
+            () -> false,
+            () -> false
     );
 
     public AlignThread(double needX, double needZ, double minX, double maxX, double minZ, double maxZ) {

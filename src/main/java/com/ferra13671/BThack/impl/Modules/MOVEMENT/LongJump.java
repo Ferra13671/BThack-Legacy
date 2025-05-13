@@ -12,7 +12,6 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Managers.managers.TravelChange.TravelChanger;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Utils.Grim.GrimUtils;
 import com.ferra13671.BThack.api.Utils.InventoryUtils;
 import com.ferra13671.BThack.api.Utils.Modules.StrafeUtils;
 import com.ferra13671.BThack.api.Utils.Ticker;
@@ -46,10 +45,7 @@ public class LongJump extends Module {
 
     private final ElytraAndFireworkMode elytraAndFireworkMode = new ElytraAndFireworkMode();
     private final GlideMode glideMode = new GlideMode();
-    private final TravelChanger travelChanger = new TravelChanger(5000, () -> new Float[]{mc.player.getYaw(), (float) -pitch.getValue()}, () -> {
-        if (grim.getValue())
-            GrimUtils.sendPreActionGrimPackets(Managers.TRAVEL_CHANGE_MANAGER.getLastYaw(), Managers.TRAVEL_CHANGE_MANAGER.getLastPitch());
-    }, () -> true);
+    private final TravelChanger travelChanger = new TravelChanger(5000, () -> new Float[]{mc.player.getYaw(), (float) -pitch.getValue()}, () -> false, () -> false);
 
     @Override
     public void onEnable() {
