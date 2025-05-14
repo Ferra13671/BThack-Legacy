@@ -111,15 +111,16 @@ public class TravelChangeManager implements Initializable, Mc {
     @EventSubscriber
     public void onInputUpdate(UpdateInputEvent e) {
         if (!changers.isEmpty()) {
-            moveFix(mc.player.isSneaking());
+            TravelChanger travelChanger = changers.getFirst();
+            if (travelChanger.withMoveFix().get())
+                moveFix(mc.player.isSneaking(), travelChanger);
         }
     }
 
     /*
     I'm too lazy to write all the math myself, so I just use a matrix for transform player input.
      */
-    private void moveFix(boolean sneaking) {
-        TravelChanger travelChanger = changers.getFirst();
+    private void moveFix(boolean sneaking, TravelChanger travelChanger) {
         float forward = (mc.player.input.pressingForward ? 1 : mc.player.input.pressingBack ? -1 : 0);
         float sideways = (mc.player.input.pressingLeft ? 1 : mc.player.input.pressingRight ? -1 : 0);
 

@@ -148,8 +148,10 @@ public class HighwayBuilder extends Module {
                 byte[] moveFactor = RotateUtils.getCordFactorFromDirection(highwayYaw);
 
                 waterAndLavaCheckAction(thread);
+                thread.checkThreadStopped();
 
                 breakAction(thread, moveFactor);
+                thread.checkThreadStopped();
 
                 if (!BuildManager.pickUpPlaceBlocks(true, onlyObsidian.getValue() && mode.getValue().equals("Highway") ? Arrays.asList(Blocks.OBSIDIAN, Blocks.CRYING_OBSIDIAN) : new ArrayList<>())) {
                     ChatUtils.sendMessage(this.getChatName() + " " + Formatting.RED + LanguageSystem.translate("lang.module.Scaffold.noBlocks"));
@@ -158,10 +160,13 @@ public class HighwayBuilder extends Module {
                 }
 
                 gotoAction(thread, moveFactor);
+                thread.checkThreadStopped();
                 if (postMoveAlign.getValue())
                     alignAction(thread);
+                thread.checkThreadStopped();
 
                 buildAction(thread);
+                thread.checkThreadStopped();
             }
         }));
     }

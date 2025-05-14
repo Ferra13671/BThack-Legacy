@@ -4,6 +4,8 @@ import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.api.Managers.managers.Cape.CapeManager;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 
+import java.time.LocalDate;
+
 public final class ClientInfo implements Mc {
     private String name = "BThack " + BThack.instance.VERSION + " | " + mc.getSession().getUsername();
     private final String cName = "BThack " + BThack.instance.VERSION;
@@ -11,9 +13,12 @@ public final class ClientInfo implements Mc {
     private String font = "default";
     private String currentConfigName = "";
     private CapeInfo capeInfo = CapeManager.DEFAULT_CAPE_INFO;
-    private boolean isWinter = false;
+    private final boolean isWinter;
 
-    ClientInfo() {}
+    ClientInfo() {
+        int month = LocalDate.now().getMonth().getValue();
+        isWinter = month == 12 || month == 1 || month == 2;
+    }
 
     public void updateName() {
         name = "BThack " + BThack.instance.VERSION + " | " + mc.getSession().getUsername();
@@ -63,10 +68,6 @@ public final class ClientInfo implements Mc {
 
     public void setCapeInfo(CapeInfo capeInfo) {
         this.capeInfo = capeInfo;
-    }
-
-    public void setWinter(boolean winter) {
-        isWinter = winter;
     }
 
     public record CapeInfo(String dataPath, CapeDataType dataType) {}

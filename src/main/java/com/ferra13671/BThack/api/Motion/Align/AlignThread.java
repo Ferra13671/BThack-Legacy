@@ -49,7 +49,7 @@ public class AlignThread extends BThackThread implements Mc {
         Managers.TRAVEL_CHANGE_MANAGER.addChanger(travelChanger);
         isMoving = true;
         try {
-            while (!check()) {
+            while (toFarX() || toFarZ()) {
                 checkThreadStopped();
                 rotate();
                 Thread.yield();
@@ -73,7 +73,11 @@ public class AlignThread extends BThackThread implements Mc {
         yaw = RotateUtils.rotations(new Vec3d(needX, mc.player.getY(), needZ))[0];
     }
 
-    private boolean check() {
-        return (mc.player.getX() > minX && mc.player.getX() < maxX) && (mc.player.getZ() > minZ && mc.player.getZ() < maxZ);
+    private boolean toFarX() {
+        return mc.player.getX() > maxX || mc.player.getX() < minX;
+    }
+
+    private boolean toFarZ() {
+        return mc.player.getZ() > maxZ || mc.player.getZ() < minZ;
     }
 }
