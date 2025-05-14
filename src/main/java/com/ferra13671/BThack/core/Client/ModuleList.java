@@ -184,7 +184,6 @@ public final class ModuleList {
     public static ESP ESP;
     public static ExtraTab extraTab;
     public static FullBright fullBright;
-    public static FXAA FXAA;
     public static HandTweaks handTweaks;
     public static HoleESP holeESP;
     public static LastOpenChest lastOpenChest;
@@ -374,7 +373,6 @@ public final class ModuleList {
         ESP = register(new ESP());
         extraTab = register(new ExtraTab());
         fullBright = register(new FullBright());
-        FXAA = register(new FXAA());
         handTweaks = register(new HandTweaks());
         holeESP = register(new HoleESP());
         lastOpenChest = register(new LastOpenChest());
