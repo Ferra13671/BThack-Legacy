@@ -117,7 +117,7 @@ public final class ModuleList {
     public static Flip flip = register(new Flip());
     public static GuiMove guiMove = register(new GuiMove());
     public static Impulse impulse = register(new Impulse());
-    public static KeepSprint keepSprint = new KeepSprint();
+    public static KeepSprint keepSprint = register(new KeepSprint());
     public static LevitationControl levitationControl = register(new LevitationControl());
     public static LongJump longJump = register(new LongJump());
     public static NinjaBridge ninjaBridge = register(new NinjaBridge());
