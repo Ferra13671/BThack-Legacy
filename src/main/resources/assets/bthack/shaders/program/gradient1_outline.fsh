@@ -37,8 +37,6 @@ void main() {
     if(centerCol.a != 0) {
         fragColor = vec4(gradientColor, fillAlpha);
     } else {
-        float alphaOutline = 0;
-        vec3 colorFinal = vec3(-1);
         for (int x = -quality; x < quality + 1; x++) {
             for (int y = -quality; y < quality + 1; y++) {
                 vec2 offset = vec2(x, y);
@@ -50,6 +48,6 @@ void main() {
                 }
             }
         }
-        fragColor = vec4(colorFinal, alphaOutline);
+        fragColor = vec4(0., 0., 0., 0.);
     }
 }
