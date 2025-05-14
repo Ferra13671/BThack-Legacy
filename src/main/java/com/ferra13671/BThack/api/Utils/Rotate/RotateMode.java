@@ -7,7 +7,7 @@ import java.util.function.BiConsumer;
 
 public enum RotateMode implements Mc {
     NONE((yaw, pitch) -> {}, () -> {}),
-    PACKET1(RotateUtils::packetRotate, () -> RotateUtils.packetRotate(mc.player.getYaw(), mc.player.getPitch())),
+    PACKET(RotateUtils::packetRotate, () -> RotateUtils.packetRotate(mc.player.getYaw(), mc.player.getPitch())),
     PACKET2(RotateUtils::packetRotate, () -> {}),
     GRIM(GrimUtils::sendPreActionGrimPackets, GrimUtils::sendPostActionGrimPackets),
     VANILLA(RotateUtils::rotate, () -> {});

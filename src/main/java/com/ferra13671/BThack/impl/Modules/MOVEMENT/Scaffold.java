@@ -1,6 +1,7 @@
 package com.ferra13671.BThack.impl.Modules.MOVEMENT;
 
 import com.ferra13671.BThack.api.Module.ModuleInfo;
+import com.ferra13671.BThack.api.Utils.Rotate.RotateMode;
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Managers.managers.Build.BuildManager;
@@ -28,6 +29,8 @@ public class Scaffold extends Module {
 
     public final BooleanSetting extraWidth = new BooleanSetting("Extra Width", this, false);
     public final BooleanSetting placeDelay = new BooleanSetting("Place Delay", this, true, extraWidth::getValue);
+
+    public final ModeSetting rotateMode = new ModeSetting("Rotate Mode", this, Arrays.asList("Grim", "Packet", "None"));
 
 
     private double yFlag;
@@ -106,7 +109,7 @@ public class Scaffold extends Module {
                     continue;
                 }
 
-                BuildManager.placeBlock(pos);
+                BuildManager.placeBlock(pos, RotateMode.valueOf(rotateMode.getValue().toUpperCase()));
                 if (placeDelay.getValue())
                     return;
             }

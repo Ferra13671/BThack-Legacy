@@ -229,7 +229,7 @@ public class KillAura extends Module {
 
     public RotateMode getRotateMode() {
         return switch (rotateMode.getValue()) {
-            case "Packet" -> RotateMode.PACKET1;
+            case "Packet" -> RotateMode.PACKET;
             case "Vanilla" -> RotateMode.VANILLA;
             default -> RotateMode.NONE;
         };

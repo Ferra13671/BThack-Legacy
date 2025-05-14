@@ -49,7 +49,7 @@ public final class KillAuraUtils implements Mc {
     }
 
     public static void preAttackRotate(RotateMode rotateMode, float[] rotations, int packets) {
-        if (rotateMode == RotateMode.PACKET1)
+        if (rotateMode == RotateMode.PACKET)
             for (int i = 0; i < packets; i++)
                 rotateMode.preRotate(rotations[0], rotations[1]);
         else rotateMode.preRotate(rotations[0], rotations[1]);
