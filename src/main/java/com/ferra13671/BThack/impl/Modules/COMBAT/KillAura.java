@@ -65,8 +65,9 @@ public class KillAura extends Module {
     public final ModeSetting targetClan = ClanSettingsBuilder.buildClanTargetMode(this, clanManager, clanMode).inCategory(targetsCategory);
 
     public final CategorySetting pauseCategory = new CategorySetting("Pause", this);
-    public final BooleanSetting pauseIfEat = new BooleanSetting("Pause If Eat", this, true).inCategory(pauseCategory);
-    public final BooleanSetting pauseIfMine = new BooleanSetting("Pause If Mine", this, true).inCategory(pauseCategory);
+    public final BooleanSetting pauseIfEat = new BooleanSetting("If Eat", this, true).inCategory(pauseCategory);
+    public final BooleanSetting pauseIfMine = new BooleanSetting("If Mine", this, true).inCategory(pauseCategory);
+    public final BooleanSetting pauseIfBlink = new BooleanSetting("If Blink", this, false).inCategory(pauseCategory);
 
 
     private Predicate<Entity> entityFilter;
@@ -244,12 +245,12 @@ public class KillAura extends Module {
     }
 
     public boolean needPause() {
-        if (pauseIfMine.getValue()) {
+        if (pauseIfMine.getValue())
             return (mc.player.getActiveItem().getItem() instanceof ToolItem && mc.player.isUsingItem()) || (ModuleList.packetMine.isEnabled() && (ModuleList.packetMine.currentBreakingBlock != null || !ModuleList.packetMine.conveyorBlocks.isEmpty()));
-        }
-        if (pauseIfEat.getValue()) {
+        if (pauseIfEat.getValue())
             return ItemUtils.isFood(mc.player.getActiveItem()) && mc.player.isUsingItem();
-        }
+        if (pauseIfBlink.getValue())
+            return ModuleList.blink.isEnabled();
         return false;
     }
 
