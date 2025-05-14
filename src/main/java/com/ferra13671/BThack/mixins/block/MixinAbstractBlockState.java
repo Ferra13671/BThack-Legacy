@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.mixins.block;
 
+import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.core.Client.ModuleList;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.util.math.BlockPos;
@@ -14,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class MixinAbstractBlockState {
     @Inject(method = "getModelOffset", at = @At("HEAD"), cancellable = true)
     public void modifyGetModelOffset(BlockView world, BlockPos pos, CallbackInfoReturnable<Vec3d> cir) {
-        if (ModuleList.noRender != null)
+        if (BThack.instance != null)
             if (ModuleList.noRender.isEnabled() && ModuleList.noRender.textureRotations.getValue())
                 cir.setReturnValue(new Vec3d(0, 0, 0));
     }
