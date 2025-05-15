@@ -63,11 +63,9 @@ public class BThackScreen extends Screen implements Mc {
             for (Button button : buttons) {
                 if (!button.isHided()) {
                     button.mouseClicked((int) mouseX, (int) mouseY, mouseButton);
-                    if (button.isMouseOnButton((int) mouseX, (int) mouseY)) {
-                        if (mouseButton == 0) {
-                            activeButton = button;
-                            button.clickAction((int) mouseX, (int) mouseY, mouseButton);
-                        }
+                    if (button.isMouseOnButton((int) mouseX, (int) mouseY) && mouseButton == 0) {
+                        activeButton = button;
+                        button.clickAction((int) mouseX, (int) mouseY, mouseButton);
                     }
                 }
             }
@@ -86,9 +84,8 @@ public class BThackScreen extends Screen implements Mc {
 
     @Override
     public boolean mouseReleased(double mouseX, double mouseY, int mouseButton) {
-        for (Button button : buttons) {
+        for (Button button : buttons)
             button.mouseReleased((int) mouseX, (int) mouseY, mouseButton);
-        }
         widgetManage.mouseReleased(mouseX, mouseY, mouseButton);
         return super.mouseReleased(mouseX, mouseY, mouseButton);
     }
@@ -153,9 +150,8 @@ public class BThackScreen extends Screen implements Mc {
             Managers.MAIN_MENU_SHADER_MANAGER.getMainMenuShader().use();
             Managers.MAIN_MENU_SHADER_MANAGER.getMainMenuShader().setParameters(mouseX, mouseY, width, height, Managers.MAIN_MENU_SHADER_MANAGER.getShaderTime());
             BThackRender.drawShader(Managers.MAIN_MENU_SHADER_MANAGER.getMainMenuShader(), 0, 0, width, height);
-        } else {
+        } else
             ROTATING_PANORAMA_RENDERER.render(BThackRender.getGuiGraphics(), this.width, this.height, 1.0F, 0.25f);
-        }
     }
 
     public int getX100P() {
@@ -167,10 +163,11 @@ public class BThackScreen extends Screen implements Mc {
     }
 
     public static void changeScreen(Screen currentScreen, Supplier<Screen> nextScreen, Animation animation) {
-        if (ModuleList.bthackMainMenu.screenChangeAnimation.getValue())
-            mc.setScreen(new TransitionScreen(() -> currentScreen, nextScreen, animation));
-        else
-            mc.setScreen(nextScreen.get());
+        mc.setScreen(ModuleList.bthackMainMenu.screenChangeAnimation.getValue() ?
+                new TransitionScreen(() -> currentScreen, nextScreen, animation) :
+                nextScreen.get()
+        );
+
     }
 
     public void changeScreen(Supplier<Screen> screen) {
@@ -178,9 +175,9 @@ public class BThackScreen extends Screen implements Mc {
     }
 
     public static void changeScreen(Screen currentScreen, Supplier<Screen> nextScreen) {
-        if (ModuleList.bthackMainMenu.screenChangeAnimation.getValue())
-            mc.setScreen(new TransitionScreen(() -> currentScreen, nextScreen, Constants.STANDARD_FLIP_ANIMATION));
-        else
-            mc.setScreen(nextScreen.get());
+        mc.setScreen(ModuleList.bthackMainMenu.screenChangeAnimation.getValue() ?
+                new TransitionScreen(() -> currentScreen, nextScreen, Constants.STANDARD_FLIP_ANIMATION) :
+                nextScreen.get()
+        );
     }
 }

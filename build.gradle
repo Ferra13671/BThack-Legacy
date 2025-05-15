@@ -4,6 +4,7 @@ import java.time.LocalDate
 plugins {
     id 'fabric-loom' version '1.7-SNAPSHOT'
     id "com.github.johnrengelman.shadow" version "8.1.1"
+    id 'com.github.gmazzo.buildconfig' version '5.5.1'
 }
 
 //A switch that can be used to enable/disable Baritone integration in the jar file.
@@ -120,8 +121,7 @@ processResources {
         expand "version": project.version,
                 "minecraft_version": project.minecraft_version,
                 "loader_version": project.loader_version,
-                "bthack_version": project.ext.version,
-                "release_version": project.ext.releaseVersion
+                "bthack_version": project.ext.version
     }
 }
 
@@ -151,4 +151,15 @@ jar {
     from("LICENSE") {
         rename { "${it}_${project.archivesBaseName}"}
     }
+}
+
+
+buildConfig {
+    className("BThackData")
+    packageName(group)
+
+    buildConfigField(Boolean, "WITH_BARITONE", project.ext.withBaritone)
+    buildConfigField(String, "MC_VERSION", project.minecraft_version)
+    buildConfigField(String, "VERSION", project.minecraft_version + "-" + project.ext.version)
+    buildConfigField(String, "RELEASE_VERSION", project.minecraft_version + "-" + project.ext.releaseVersion)
 }

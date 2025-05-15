@@ -86,15 +86,12 @@ public class HUD extends Module {
         if (updateTickDelay < 3) return;
         updateTickDelay = 0;
 
-        for (HudComponent hudComponent : Client.hudComponents) {
-            if (hudComponent.isEnabled()) {
+        for (HudComponent hudComponent : Client.hudComponents)
+            if (hudComponent.isEnabled())
                 hudComponent.tick();
-            }
-        }
 
-        if (!SpeedMathThread.active) {
+        if (!SpeedMathThread.active)
             new SpeedMathThread().start();
-        }
     }
 
     @EventSubscriber(priority = Integer.MIN_VALUE)
@@ -103,23 +100,19 @@ public class HUD extends Module {
         BThackMatrix.push();
         BThackMatrix.translate(0,0,3000);
 
-        for (HudComponent hudComponent : Client.hudComponents) {
-            if (hudComponent.isEnabled()) {
+        for (HudComponent hudComponent : Client.hudComponents)
+            if (hudComponent.isEnabled())
                 hudComponent.render();
-            }
-        }
 
         BThackMatrix.pop();
     }
 
     public static int getHUDColor() {
-        if (ModuleList.HUD.gradient.getValue()) {
-            return ModuleList.HUD.textColor.getValue().hashCode();
-        } else if (ModuleList.HUD.rainbow.getValue()) {
-            return ColorUtils.rainbow(1, ModuleList.HUD.speed.getValue().floatValue());
-        } else {
-            return ModuleList.HUD.color.getValue().hashCode();
-        }
+        return  ModuleList.HUD.gradient.getValue() ?
+                        ModuleList.HUD.textColor.getValue().hashCode() :
+                ModuleList.HUD.rainbow.getValue() ?
+                        ColorUtils.rainbow(1, ModuleList.HUD.speed.getValue().floatValue()) :
+                        ModuleList.HUD.color.getValue().hashCode();
     }
 
     public enum HudStyle {

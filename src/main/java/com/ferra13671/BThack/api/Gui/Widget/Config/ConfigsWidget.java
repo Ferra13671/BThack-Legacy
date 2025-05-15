@@ -172,9 +172,8 @@ public class ConfigsWidget extends ScreenWidget {
             } else button.setSelected(false);
         }
 
-        if (selectedConfig != null) {
+        if (selectedConfig != null)
             init();
-        }
 
         return super.mouseClicked(mouseX, mouseY, mouseButton);
     }

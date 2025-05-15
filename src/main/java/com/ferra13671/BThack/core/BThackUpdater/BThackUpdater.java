@@ -55,9 +55,10 @@ public class BThackUpdater implements PreLaunchEntrypoint {
         }
     }
 
+    @SuppressWarnings("UnreachableCode")
     public static UpdaterThread startUpdate() throws Exception {
-        String fileName = "BThack-" + BThack.instance.MC_VERSION + "-fabric" + BThack.instance.versionInfo.getNewVersion().replace(BThack.instance.MC_VERSION, "") + (BThack.instance.withBaritone() ? "" : "-NoBaritone") + ".jar";
-        URL url = new URI("https://github.com/Ferra13671/BThack/releases/download/" + BThack.instance.versionInfo.getNewVersion() + "/" + fileName).toURL();
+        String fileName = "BThack-" + BThack.MC_VERSION + "-fabric" + BThack.VERSION_INFO.getNewVersion().replace(BThack.MC_VERSION, "") + (BThack.WITH_BARITONE ? "" : "-NoBaritone") + ".jar";
+        URL url = new URI("https://github.com/Ferra13671/BThack/releases/download/" + BThack.VERSION_INFO.getNewVersion() + "/" + fileName).toURL();
         BThack.initLog(url.toString());
         try {
             Files.createFile(UPDATE_DATA_PATH);

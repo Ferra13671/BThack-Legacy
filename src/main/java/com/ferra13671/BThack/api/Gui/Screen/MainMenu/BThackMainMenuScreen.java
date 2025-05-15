@@ -35,12 +35,12 @@ public class BThackMainMenuScreen extends BThackScreen {
         if (firstOpened) {
             ThreadManager.startNewThread(thread -> {
                 thread.sleepThread(1300);
-                if (BThack.instance.versionInfo.isFirstLaunched())
+                if (BThack.VERSION_INFO.isFirstLaunched())
                     widgetManage.addWidget(BThackWidgets.LANGUAGE_SELECTOR);
-                BThack.instance.versionInfo.setFirstLaunched(false);
-                if (BThack.instance.versionInfo.isOutdated()) {
-                    if (BThack.instance.versionInfo.isNeedShowAgainAllReleases()) {
-                        if (BThack.instance.versionInfo.isNeedShowAgainOneRelease()) {
+                BThack.VERSION_INFO.setFirstLaunched(false);
+                if (BThack.VERSION_INFO.isOutdated()) {
+                    if (BThack.VERSION_INFO.isNeedShowAgainAllReleases()) {
+                        if (BThack.VERSION_INFO.isNeedShowAgainOneRelease()) {
                             widgetManage.addWidget(BThackWidgets.OUTDATED_VERSION);
                         }
                     }

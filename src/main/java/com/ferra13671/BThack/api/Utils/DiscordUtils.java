@@ -58,7 +58,7 @@ public final class DiscordUtils implements Mc {
         ThreadManager.startNewThread("RPC-Callback-Handler", thread -> {
             while (!thread.isInterrupted()) {
                 try {
-                    details = "Version " + BThack.instance.VERSION;
+                    details = "Version " + BThack.VERSION;
                     state = "Main Menu";
 
                     if (mc.isIntegratedServerRunning()) {

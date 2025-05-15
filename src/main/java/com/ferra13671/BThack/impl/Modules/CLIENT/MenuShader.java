@@ -12,6 +12,7 @@ import com.ferra13671.BThack.api.Shader.MainMenu.MainMenuShaders;
 import com.ferra13671.BThack.api.Utils.MathUtils;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @ModuleInfo(name = "MenuShader", description = "lang.module.MenuShader", category = "CLIENT", autoEnabled = true)
@@ -25,36 +26,27 @@ public class MenuShader extends Module {
     public MenuShader() {
         allowRemapVisible = false;
         setVisible(false);
-
-        Managers.MAIN_MENU_SHADER_MANAGER.setPostResetAction(() -> {
-            if (this.isEnabled())
-                Managers.MAIN_MENU_SHADER_MANAGER.setMainMenuShader(getShader());
-        });
     }
 
     public List<String> getShaderList() {
         List<String> shaderNames = new ArrayList<>();
-        MainMenuShaders.getShaders().forEach((name, shader) -> shaderNames.add(name.toLowerCase()));
+        MainMenuShaders.getShaders().forEach((name, shader) -> shaderNames.add(name));
+        shaderNames.sort(Comparator.comparingInt(string -> (int) string.charAt(0)));
         return shaderNames;
     }
 
     @Override
     public void onEnable() {
-        Managers.MAIN_MENU_SHADER_MANAGER.setMainMenuShader(getShader());
     }
 
     @Override
     public void onChangeSetting(Setting<?> setting) {
-        if (this.isEnabled())
-            Managers.MAIN_MENU_SHADER_MANAGER.setMainMenuShader(getShader());
+        Managers.MAIN_MENU_SHADER_MANAGER.setMainMenuShader(getShader());
     }
 
     public MainMenuShader getShader() {
-        if (!random.getValue()) {
-            return MainMenuShaders.getShaders().get(shader.getValue().toUpperCase());
-        } else {
-            int randomShader = MathUtils.randomInt(0, MainMenuShaders.getShaders().size() - 1);
-            return MainMenuShaders.getShaders().get(shader.getOptions().get(randomShader).toUpperCase());
-        }
+        return random.getValue() ?
+                MainMenuShaders.getShaders().get(shader.getOptions().get(MathUtils.randomInt(0, MainMenuShaders.getShaders().size() - 1))) :
+                MainMenuShaders.getShaders().get(shader.getValue());
     }
 }

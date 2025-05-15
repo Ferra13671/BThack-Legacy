@@ -76,6 +76,6 @@ public final class InitializeHelper implements Mc {
         BThack.EVENT_BUS.register(new KeyHandler());
         BThack.EVENT_BUS.register(new HotbarSystem());
         BThack.EVENT_BUS.register(new GrimNoFallSystem());
-        if (BThack.instance.versionInfo.isFirstLaunched()) BThack.EVENT_BUS.register(new FirstLaunchWelcomer());
+        if (BThack.VERSION_INFO.isFirstLaunched()) BThack.EVENT_BUS.register(new FirstLaunchWelcomer());
     }
 }

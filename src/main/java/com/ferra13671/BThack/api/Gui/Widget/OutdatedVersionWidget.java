@@ -25,8 +25,6 @@ public class OutdatedVersionWidget extends ScreenWidget {
         buttons.clear();
         buttons.add(Button.of(1, (int) xRight - 70, (int) yUp + 100, 65, 10, "lang.widget.OutdatedVersion.Yes")
                 .withAction(buttonClickInfo -> {
-                    //DesktopUtils.openURI("https://github.com/Ferra13671/BThack/releases/download/" + BThack.instance.versionInfo.getNewVersion() + "/BThack-" + BThack.instance.MC_VERSION + "-fabric" + BThack.instance.versionInfo.getNewVersion().replace(BThack.instance.MC_VERSION, "") + ".jar");
-                    //mc.stop();
                     close();
                     ((UpdateWidget) BThackWidgets.UPDATE).startUpdate();
                     parent.widgetManage.addWidget(BThackWidgets.UPDATE);
@@ -34,13 +32,13 @@ public class OutdatedVersionWidget extends ScreenWidget {
         );
         buttons.add(Button.of(2, (int) xRight - 70, (int) yUp + 100 + 22, 65, 10, "lang.widget.OutdatedVersion.No")
                 .withAction(buttonClickInfo -> {
-                    BThack.instance.versionInfo.setNeedShowAgainOneRelease(false);
+                    BThack.VERSION_INFO.setNeedShowAgainOneRelease(false);
                     close();
                 })
         );
         buttons.add(Button.of(3, (int) xRight - 70, (int) yUp + 100 + 44, 65, 10, "lang.widget.OutdatedVersion.AlwaysNo")
                 .withAction(buttonClickInfo -> {
-                    BThack.instance.versionInfo.setNeedShowAgainAllReleases(false);
+                    BThack.VERSION_INFO.setNeedShowAgainAllReleases(false);
                     close();
                 })
         );
@@ -57,11 +55,11 @@ public class OutdatedVersionWidget extends ScreenWidget {
         BThackRender.drawString(LanguageSystem.translate("lang.widget.OutdatedVersion.helloMessage"), x, y, -1, true, FontRenderManager.DrawMode.NORMAL_BOLD);
         y += FontUtils.getTextHeight(LanguageSystem.translate("lang.widget.OutdatedVersion.helloMessage"), FontRenderManager.DrawMode.NORMAL_BOLD) + 15;
 
-        String currentText = String.format(LanguageSystem.translate("lang.widget.OutdatedVersion.Current"), Formatting.GRAY + BThack.instance.VERSION);
+        String currentText = String.format(LanguageSystem.translate("lang.widget.OutdatedVersion.Current"), Formatting.GRAY + BThack.VERSION);
         BThackRender.drawString(currentText, x, y, -1, true, FontRenderManager.DrawMode.NORMAL_BOLD);
         y += FontUtils.getTextHeight(currentText, FontRenderManager.DrawMode.NORMAL_BOLD) + 5;
 
-        String newText = String.format(LanguageSystem.translate("lang.widget.OutdatedVersion.New"), Formatting.GREEN + BThack.instance.versionInfo.getNewVersion());
+        String newText = String.format(LanguageSystem.translate("lang.widget.OutdatedVersion.New"), Formatting.GREEN + BThack.VERSION_INFO.getNewVersion());
         BThackRender.drawString(newText, x, y, -1, true, FontRenderManager.DrawMode.NORMAL_BOLD);
 
         String askText = LanguageSystem.translate("lang.widget.OutdatedVersion.UpdateMessage");

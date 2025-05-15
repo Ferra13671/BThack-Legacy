@@ -1,6 +1,8 @@
 package com.ferra13671.BThack.api.Managers.managers;
 
 import com.ferra13671.BThack.BThack;
+import com.ferra13671.BThack.api.Managers.Managers;
+import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.api.Events.DisconnectEvent;
 import com.ferra13671.BThack.api.Interfaces.Mc;
@@ -12,11 +14,8 @@ import com.ferra13671.MegaEvents.Base.EventSubscriber;
 public class MainMenuShaderManager implements Initializable, Mc {
     private final ShaderTicker shaderTicker = new ShaderTicker();
     private MainMenuShader shader;
-    private Runnable postResetAction;
 
-    public MainMenuShaderManager() {
-        shaderTicker.reset();
-    }
+    public MainMenuShaderManager() {}
 
     @Override
     public void init() {
@@ -26,7 +25,7 @@ public class MainMenuShaderManager implements Initializable, Mc {
 
     @EventSubscriber
     public void onDisconnect(DisconnectEvent e) {
-        if (mc.player == null || mc.world == null) return;
+        if (Module.nullCheck()) return;
         resetShaderTime();
     }
 
@@ -38,17 +37,14 @@ public class MainMenuShaderManager implements Initializable, Mc {
         }
     }
 
-    public void setPostResetAction(Runnable runnable) {
-        postResetAction = runnable;
-    }
-
     public MainMenuShader getMainMenuShader() {
         return shader;
     }
 
     public void resetShaderTime() {
         shaderTicker.reset();
-        if (postResetAction != null) postResetAction.run();
+        if (ModuleList.menuShader.isEnabled())
+            Managers.MAIN_MENU_SHADER_MANAGER.setMainMenuShader(ModuleList.menuShader.getShader());
     }
 
     public void update() {

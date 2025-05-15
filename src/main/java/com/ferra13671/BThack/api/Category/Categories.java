@@ -21,14 +21,13 @@ public class Categories {
 
     public static Category get(String name) {
         if (HUD.name().equals(name)) return HUD;
-        for (Category category : categories) {
+        for (Category category : categories)
             if (category.name().equals(name)) return category;
-        }
         return null;
     }
 
     public static Category register(String name) {
-        Category category = Category.of(name);
+        Category category = new Category(name);
         categories.add(category);
         return category;
     }

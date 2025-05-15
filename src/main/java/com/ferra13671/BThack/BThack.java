@@ -17,12 +17,12 @@ import com.ferra13671.BThack.api.SoundSystem.Sounds;
 import com.ferra13671.BThack.api.SoundSystem.yaw.TinySound;
 import com.ferra13671.BThack.api.GuiSystem.BThackScreens;
 import com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.ActionBotConfig;
+import com.ferra13671.BThackData;
 import com.ferra13671.MegaEvents.Base.IEventBus;
 import com.ferra13671.MegaEvents.Base.EventBus;
 import com.google.gson.JsonPrimitive;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
-import net.fabricmc.loader.api.metadata.ModMetadata;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -31,24 +31,15 @@ import java.net.URI;
 
 public final class BThack implements ClientModInitializer, Mc {
     public static final IEventBus EVENT_BUS = new EventBus();
-
-    public final VersionInfo versionInfo = new VersionInfo();
-    public final String MC_VERSION;
-    public final String VERSION;
-    private final String RELEASE_VERSION;
-    private final boolean withBaritone;
+    public static final VersionInfo VERSION_INFO = new VersionInfo();
+    public static final String MC_VERSION = BThackData.MC_VERSION;
+    public static final String VERSION = BThackData.VERSION;
+    public static final String RELEASE_VERSION = BThackData.RELEASE_VERSION;
+    public static final boolean WITH_BARITONE = BThackData.WITH_BARITONE;
 
     private InitStage initStage = InitStage.NOT_INITED;
 
     public static BThack instance;
-
-    public BThack() {
-        ModMetadata mod = FabricLoader.getInstance().getModContainer("bthack").get().getMetadata();
-        MC_VERSION = mod.getCustomValue("mcVersion").getAsString();
-        withBaritone = !mod.getVersion().getFriendlyString().contains("-NoBaritone");
-        VERSION = mod.getVersion().getFriendlyString();
-        RELEASE_VERSION = mod.getCustomValue("releaseVersion").getAsString();
-    }
 
     public static void log(String message) {
         Constants.BTHACK_LOGGER.info(message);
@@ -59,7 +50,7 @@ public final class BThack implements ClientModInitializer, Mc {
     }
 
     public static void debug(String message) {
-        if (instance.versionInfo.isSendDebug())
+        if (VERSION_INFO.isSendDebug())
             Constants.BTHACK_LOGGER.info("[DEBUG] {}", message);
     }
 
@@ -70,10 +61,6 @@ public final class BThack implements ClientModInitializer, Mc {
 
     public static boolean isFuturePresent() {
         return FabricLoader.getInstance().getModContainer("future").isPresent();
-    }
-
-    public boolean withBaritone() {
-        return withBaritone;
     }
 
     public InitStage getInitStage() {
@@ -183,8 +170,8 @@ public final class BThack implements ClientModInitializer, Mc {
         try {
             String text = new BufferedReader(new InputStreamReader(new URI("https://raw.githubusercontent.com/Ferra13671/BThack/" + MC_VERSION + "/currentVersion.txt").toURL().openStream())).readLine();
             if (!text.equals(RELEASE_VERSION)) {
-                versionInfo.setOutdated(true);
-                versionInfo.setNewVersion(text);
+                VERSION_INFO.setOutdated(true);
+                VERSION_INFO.setNewVersion(text);
             }
         } catch (Exception ignored) {
             error("Failed getting information on the current release.");
@@ -195,19 +182,19 @@ public final class BThack implements ClientModInitializer, Mc {
         try {
             ConfigUtils.loadFromJson("VersionInfo", "", jsonObject -> {
                 if (!JsonUtils.equalsNull(jsonObject, "lastCheckVersion", "needShowAgainOneRelease")) {
-                    if (!jsonObject.get("lastCheckVersion").getAsString().equals(versionInfo.getNewVersion())) {
-                        versionInfo.setNeedShowAgainOneRelease(true);
+                    if (!jsonObject.get("lastCheckVersion").getAsString().equals(VERSION_INFO.getNewVersion())) {
+                        VERSION_INFO.setNeedShowAgainOneRelease(true);
                     } else {
-                        versionInfo.setNewVersion(jsonObject.get("lastCheckVersion").getAsString());
-                        versionInfo.setNeedShowAgainOneRelease(jsonObject.get("needShowAgainOneRelease").getAsBoolean());
+                        VERSION_INFO.setNewVersion(jsonObject.get("lastCheckVersion").getAsString());
+                        VERSION_INFO.setNeedShowAgainOneRelease(jsonObject.get("needShowAgainOneRelease").getAsBoolean());
                     }
                 }
                 if (!JsonUtils._null(jsonObject, "needShowAgainAllReleases"))
-                    versionInfo.setNeedShowAgainAllReleases(jsonObject.get("needShowAgainAllReleases").getAsBoolean());
+                    VERSION_INFO.setNeedShowAgainAllReleases(jsonObject.get("needShowAgainAllReleases").getAsBoolean());
                 if (!JsonUtils._null(jsonObject, "firstLaunched"))
-                    versionInfo.setFirstLaunched(jsonObject.get("firstLaunched").getAsBoolean());
+                    VERSION_INFO.setFirstLaunched(jsonObject.get("firstLaunched").getAsBoolean());
                 if (!JsonUtils._null(jsonObject, "sendDebug"))
-                    versionInfo.setSendDebug(jsonObject.get("sendDebug").getAsBoolean());
+                    VERSION_INFO.setSendDebug(jsonObject.get("sendDebug").getAsBoolean());
             }, () -> {});
         } catch (IOException ignored) {}
     }
@@ -215,11 +202,11 @@ public final class BThack implements ClientModInitializer, Mc {
     public void saveVersionInfo() {
         try {
             ConfigUtils.saveInJson("VersionInfo", "", jsonObject -> {
-                jsonObject.add("lastCheckVersion", new JsonPrimitive(versionInfo.getNewVersion()));
-                jsonObject.add("needShowAgainOneRelease", new JsonPrimitive(versionInfo.isNeedShowAgainOneRelease()));
-                jsonObject.add("needShowAgainAllReleases", new JsonPrimitive(versionInfo.isNeedShowAgainAllReleases()));
-                jsonObject.add("firstLaunched", new JsonPrimitive(versionInfo.isFirstLaunched()));
-                jsonObject.add("sendDebug", new JsonPrimitive(versionInfo.isSendDebug()));
+                jsonObject.add("lastCheckVersion", new JsonPrimitive(VERSION_INFO.getNewVersion()));
+                jsonObject.add("needShowAgainOneRelease", new JsonPrimitive(VERSION_INFO.isNeedShowAgainOneRelease()));
+                jsonObject.add("needShowAgainAllReleases", new JsonPrimitive(VERSION_INFO.isNeedShowAgainAllReleases()));
+                jsonObject.add("firstLaunched", new JsonPrimitive(VERSION_INFO.isFirstLaunched()));
+                jsonObject.add("sendDebug", new JsonPrimitive(VERSION_INFO.isSendDebug()));
             });
         } catch (IOException ignored) {}
     }

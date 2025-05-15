@@ -7,8 +7,8 @@ import com.ferra13671.BThack.api.Interfaces.Mc;
 import java.time.LocalDate;
 
 public final class ClientInfo implements Mc {
-    private String name = "BThack " + BThack.instance.VERSION + " | " + mc.getSession().getUsername();
-    private final String cName = "BThack " + BThack.instance.VERSION;
+    private String name = "BThack " + BThack.VERSION + " | " + mc.getSession().getUsername();
+    private final String cName = "BThack " + BThack.VERSION;
     private String chatPrefix = "$";
     private String font = "default";
     private String currentConfigName = "";
@@ -21,7 +21,7 @@ public final class ClientInfo implements Mc {
     }
 
     public void updateName() {
-        name = "BThack " + BThack.instance.VERSION + " | " + mc.getSession().getUsername();
+        name = "BThack " + BThack.VERSION + " | " + mc.getSession().getUsername();
     }
 
     //get
