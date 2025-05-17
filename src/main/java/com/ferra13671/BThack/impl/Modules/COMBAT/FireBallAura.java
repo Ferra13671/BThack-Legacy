@@ -18,7 +18,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.projectile.FireballEntity;
 import net.minecraft.entity.projectile.ShulkerBulletEntity;
 import net.minecraft.item.Item;
-import net.minecraft.item.ToolItem;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 
 import java.util.*;
@@ -72,7 +71,7 @@ public class FireBallAura extends Module {
             switch (rotateMode.getValue()) {
                 case "Packet" ->
                         Managers.NETWORK_MANAGER.sendPacket(
-                                new PlayerMoveC2SPacket.LookAndOnGround(rots[0], rots[1], mc.player.onGround)
+                                new PlayerMoveC2SPacket.LookAndOnGround(rots[0], rots[1], mc.player.onGround, mc.player.horizontalCollision)
                         );
                 case "Grim" -> GrimUtils.sendPreActionGrimPackets(rots[0], rots[1]);
             }
@@ -84,7 +83,7 @@ public class FireBallAura extends Module {
             switch (rotateMode.getValue()) {
                 case "Packet" ->
                         Managers.NETWORK_MANAGER.sendPacket(
-                                new PlayerMoveC2SPacket.LookAndOnGround(oldYaw, oldPitch, mc.player.onGround)
+                                new PlayerMoveC2SPacket.LookAndOnGround(oldYaw, oldPitch, mc.player.onGround, mc.player.horizontalCollision)
                         );
                 case "Grim" -> GrimUtils.sendPostActionGrimPackets();
             }
@@ -95,7 +94,7 @@ public class FireBallAura extends Module {
         if (!noDurability.getValue()) return;
         for (int i = 0; i < 9; i++) {
             Item item = mc.player.getInventory().getStack(i).getItem();
-            if (!(item instanceof ToolItem)) {
+            if (!ItemUtils.isTool(item)) {
                 InventoryUtils.swapItem(i);
                 return;
             }

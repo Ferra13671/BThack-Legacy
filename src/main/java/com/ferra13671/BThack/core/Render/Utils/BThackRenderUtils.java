@@ -7,14 +7,14 @@ import com.ferra13671.BThack.api.Utils.Rotate.RotateUtils;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gl.ShaderProgram;
+import net.minecraft.client.gl.ShaderProgramKey;
+import net.minecraft.client.gl.ShaderProgramKeys;
 import net.minecraft.client.render.*;
 import net.minecraft.util.math.*;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 import org.lwjgl.opengl.GL11;
-
-import java.util.function.Supplier;
 
 public final class BThackRenderUtils implements Mc {
     public static final Matrix4f lastWorldMatrix = new Matrix4f();
@@ -70,7 +70,16 @@ public final class BThackRenderUtils implements Mc {
         return !(convertedPosition.z > 0) || !(convertedPosition.z < 1);
     }
 
-    public static Tessellator prepareToDraw(Supplier<ShaderProgram> shader) {
+    public static Tessellator prepareToDraw(ShaderProgram shader) {
+        Tessellator tessellator = Tessellator.getInstance();
+        RenderSystem.setShader(shader);
+
+        applyBlend();
+
+        return tessellator;
+    }
+
+    public static Tessellator prepareToDraw(ShaderProgramKey shader) {
         Tessellator tessellator = Tessellator.getInstance();
         RenderSystem.setShader(shader);
 
@@ -97,7 +106,7 @@ public final class BThackRenderUtils implements Mc {
     }
 
     public static void resetShader() {
-        RenderSystem.setShader(GameRenderer::getPositionColorProgram);
+        RenderSystem.setShader(ShaderProgramKeys.POSITION_COLOR);
     }
 
     public static void applyBlend() {

@@ -142,7 +142,7 @@ public class Shaders extends Module {
     public void initShader(ManagedShaderEffect shaderEffect) {
         PostEffectProcessor effect = shaderEffect.getShaderEffect();
 
-        ((ModifyPostEffectProcessor) effect)._addTargetHook("bufIn", mc.worldRenderer.getEntityOutlinesFramebuffer());
-        ((ModifyPostEffectProcessor) effect)._addTargetHook("bufOut", mc.worldRenderer.getEntityOutlinesFramebuffer());
+        //((ModifyPostEffectProcessor) effect)._addTargetHook("bufIn", mc.worldRenderer.getEntityOutlinesFramebuffer());
+        //((ModifyPostEffectProcessor) effect)._addTargetHook("bufOut", mc.worldRenderer.getEntityOutlinesFramebuffer());
     }
 }

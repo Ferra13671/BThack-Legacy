@@ -9,18 +9,15 @@ import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.JumpingMount;
 import net.minecraft.scoreboard.ScoreboardObjective;
-import net.minecraft.util.Identifier;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArgs;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 @Mixin(InGameHud.class)
 public abstract class MixinInGameHud {
-
-	@Shadow @Final private static Identifier PUMPKIN_BLUR;
 
 	/*
 	The blur renderer doesn't like the font renderer, so to invoke the event should be at the
@@ -38,12 +35,6 @@ public abstract class MixinInGameHud {
 		}
 	}
 
-	@Inject(method = "renderOverlay", at = @At("HEAD"), cancellable = true)
-	public void modifyRenderPumpkinBlurOverlay(DrawContext context, Identifier texture, float opacity, CallbackInfo ci) {
-		if (texture == PUMPKIN_BLUR)
-			if (ModuleList.noOverlay.isEnabled() && ModuleList.noOverlay.pumpkin.getValue()) ci.cancel();
-	}
-
 	@Inject(method = "renderHotbar", at = @At("HEAD"), cancellable = true)
 	public void modifyRenderHotbar(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci) {
 		if (ModuleList.noOverlay.isEnabled() && ModuleList.noOverlay.hotbar.getValue()) ci.cancel();
@@ -57,6 +48,11 @@ public abstract class MixinInGameHud {
 	@Inject(method = "renderExperienceBar", at = @At("HEAD"), cancellable = true)
 	public void modifyRenderExperienceBar(DrawContext context, int x, CallbackInfo ci) {
 		if (ModuleList.noOverlay.isEnabled() && ModuleList.noOverlay.experiense.getValue()) ci.cancel();
+	}
+
+	@ModifyArgs(method = "renderMiscOverlays", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/hud/InGameHud;renderOverlay(Lnet/minecraft/client/gui/DrawContext;Lnet/minecraft/util/Identifier;F)V", ordinal = 0))
+	public void modifyRenderPumpkinOverlay(Args args) {
+		if (ModuleList.noOverlay.isEnabled() && ModuleList.noOverlay.pumpkin.getValue()) args.set(2, 0f);
 	}
 
 	@Inject(method = "renderStatusEffectOverlay", at = @At("HEAD"), cancellable = true)

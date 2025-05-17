@@ -14,7 +14,4 @@ public interface IFireworkRocketEntity {
 
     @Invoker("wasShotByEntity")
     boolean hookWasShotByEntity();
-
-    @Invoker("explodeAndRemove")
-    void hookExplodeAndRemove();
 }

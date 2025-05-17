@@ -30,7 +30,7 @@ public class HotbarSystem implements Mc {
                 return;
             }
 
-            currentSlot = packet.getSlot();
+            currentSlot = packet.slot();
         }
     }
 

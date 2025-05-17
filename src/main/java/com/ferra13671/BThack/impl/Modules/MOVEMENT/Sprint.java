@@ -71,7 +71,7 @@ public class Sprint extends Module {
                     } catch (Exception ignored) {}
                 }
             }
-            case "Legal" -> mc.options.sprintKey.setPressed(!mc.player.isFallFlying());
+            case "Legal" -> mc.options.sprintKey.setPressed(!mc.player.isGliding());
         }
 
         if (strafe.getValue()) {
@@ -86,7 +86,7 @@ public class Sprint extends Module {
         if (!(mc.player.input instanceof KeyboardInput)) return;
 
         if (mc.options.forwardKey.isPressed() || mc.options.backKey.isPressed() || mc.options.leftKey.isPressed() || mc.options.rightKey.isPressed()) {
-            mc.player.input.movementForward = mc.player.isSneaking() ? (float) mc.player.getAttributeValue(EntityAttributes.PLAYER_SNEAKING_SPEED) : 1;
+            mc.player.input.movementForward = mc.player.isSneaking() ? (float) mc.player.getAttributeValue(EntityAttributes.SNEAKING_SPEED) : 1;
             mc.player.input.movementSideways = 0;
         }
     }
@@ -96,7 +96,7 @@ public class Sprint extends Module {
 
         return
                 !mc.options.sneakKey.isPressed()
-                && !mc.player.isFallFlying()
+                && !mc.player.isGliding()
                 && mc.player.getHungerManager().getFoodLevel() > 6
                 && isMoving()
                 && !mc.player.getAbilities().flying;

@@ -16,10 +16,10 @@ public class FirstLaunchWelcomer implements Mc {
     @EventSubscriber
     public void onTick(ClientTickEvent e) {
         if (!Module.nullCheck()) {
-            mc.player.sendMessage(Text.literal("Welcome to " + Formatting.BLUE + "BThack" + Formatting.RESET + "!"));
-            mc.player.sendMessage(Text.literal("The ClickGui bind is " + Formatting.AQUA + KeyboardUtils.getKeyName(ModuleList.clickGui.getKey())));
-            mc.player.sendMessage(Text.literal("The command prefix is " + Formatting.AQUA + Client.clientInfo.getChatPrefix()));
-            mc.player.sendMessage(Text.literal("Type " + Formatting.AQUA + "$help" + Formatting.RESET + " to get a list of available commands"));
+            mc.player.sendMessage(Text.literal("Welcome to " + Formatting.BLUE + "BThack" + Formatting.RESET + "!"), false);
+            mc.player.sendMessage(Text.literal("The ClickGui bind is " + Formatting.AQUA + KeyboardUtils.getKeyName(ModuleList.clickGui.getKey())), false);
+            mc.player.sendMessage(Text.literal("The command prefix is " + Formatting.AQUA + Client.clientInfo.getChatPrefix()), false);
+            mc.player.sendMessage(Text.literal("Type " + Formatting.AQUA + "$help" + Formatting.RESET + " to get a list of available commands"), false);
 
             BThack.EVENT_BUS.unregister(this);
         }

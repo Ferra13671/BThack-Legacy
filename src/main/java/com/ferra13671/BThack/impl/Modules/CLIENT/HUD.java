@@ -47,7 +47,7 @@ public class HUD extends Module {
         allowRemapVisible = false;
         setVisible(false);
 
-        mc.getWindow().swapBuffers();
+        mc.getWindow().swapBuffers(null);
 
         rainbow = new BooleanSetting("Rainbow", this, false, () -> !gradient.getValue());
 

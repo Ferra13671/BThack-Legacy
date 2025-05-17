@@ -2,12 +2,12 @@ package com.ferra13671.BThack.mixins.render;
 
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.core.Render.Utils.BThackRenderUtils;
-import com.ferra13671.BThack.api.IMixin.ModifyWorldRenderer;
 import com.ferra13671.BThack.api.Utils.Modules.KillAuraUtils;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gl.VertexBuffer;
 import net.minecraft.client.render.*;
+import net.minecraft.client.util.Handle;
+import net.minecraft.client.util.ObjectAllocator;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
@@ -15,7 +15,8 @@ import net.minecraft.entity.decoration.EndCrystalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.math.ColorHelper;
-import org.jetbrains.annotations.Nullable;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.profiler.Profiler;
 import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -25,28 +26,13 @@ import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(WorldRenderer.class)
-public abstract class MixinWorldRenderer implements ModifyWorldRenderer {
+public abstract class MixinWorldRenderer {
 
     @Shadow @Final private BufferBuilderStorage bufferBuilders;
 
     @Shadow @Final private MinecraftClient client;
 
-    @Shadow @Nullable private VertexBuffer starsBuffer;
-
-    @Shadow protected abstract BuiltBuffer buildStarsBuffer(Tessellator tessellator);
-
     @Unique boolean allowShader = false;
-
-    @Override
-    public void generateStarsMap() {
-        if (starsBuffer != null)
-            starsBuffer.close();
-
-        starsBuffer = new VertexBuffer(VertexBuffer.Usage.STATIC);
-        starsBuffer.bind();
-        starsBuffer.upload(ModuleList.ambience.isEnabled() && ModuleList.ambience.customStars.getValue() ? ModuleList.ambience.buildStarsBuffer() : buildStarsBuffer(Tessellator.getInstance()));
-        VertexBuffer.unbind();
-    }
 
     @Inject(method = "reload(Lnet/minecraft/resource/ResourceManager;)V", at = @At("TAIL"))
     public void modifyReload(ResourceManager manager, CallbackInfo ci) {
@@ -55,52 +41,36 @@ public abstract class MixinWorldRenderer implements ModifyWorldRenderer {
     }
 
     @Inject(method = "render", at = @At("HEAD"))
-    private void beforeRender(RenderTickCounter tickCounter, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer, LightmapTextureManager lightmapTextureManager, Matrix4f positionMatrix, Matrix4f projectionMatrix, CallbackInfo ci) {
+    private void beforeRender(ObjectAllocator allocator, RenderTickCounter tickCounter, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer, Matrix4f positionMatrix, Matrix4f projectionMatrix, CallbackInfo ci) {
         BThackRenderUtils.lastWorldMatrix.set(positionMatrix);
         BThackRenderUtils.updateMatrixData();
     }
 
     @Inject(method = "renderWeather", at = @At("HEAD"), cancellable = true)
-    public void modifyRenderWeather(LightmapTextureManager manager, float tickDelta, double cameraX, double cameraY, double cameraZ, CallbackInfo ci) {
+    public void modifyRenderWeather(FrameGraphBuilder frameGraphBuilder, Vec3d pos, float tickDelta, Fog fog, CallbackInfo ci) {
         if (ModuleList.noWeather.isEnabled() && (!ModuleList.ambience.isEnabled() || !ModuleList.ambience.customWeather.getValue()))
             ci.cancel();
     }
 
-    @Redirect(method = "renderWeather", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/world/ClientWorld;getRainGradient(F)F"))
-    public float modifyGetRainGradientInRenderWeather(ClientWorld instance, float v) {
-        return ModuleList.ambience.getRainGradient(instance.getRainGradient(v));
-    }
-
-    @Inject(method = "tickRainSplashing", at = @At("HEAD"), cancellable = true)
-    public void modifyTickRainSplashing(Camera camera, CallbackInfo ci) {
-        if (ModuleList.noWeather.isEnabled() && (!ModuleList.ambience.isEnabled() || !ModuleList.ambience.customWeather.getValue()))
-            ci.cancel();
-    }
-
-    @Redirect(method = "tickRainSplashing", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/world/ClientWorld;getRainGradient(F)F"))
-    public float modifyGetRainGradientInTicRainSplashing(ClientWorld instance, float v) {
-        return ModuleList.ambience.getRainGradient(instance.getRainGradient(v));
-    }
-
-    @Redirect(method = "renderSky", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/world/ClientWorld;getRainGradient(F)F"))
+    @Redirect(method = "method_62215", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/world/ClientWorld;getRainGradient(F)F"))
     public float modifyGetRainGradientInRenderSky(ClientWorld instance, float v) {
         return ModuleList.ambience.getRainGradient(instance.getRainGradient(v));
     }
 
-    @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/MinecraftClient;hasOutline(Lnet/minecraft/entity/Entity;)Z"))
+    @Redirect(method = "getEntitiesToRender", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/MinecraftClient;hasOutline(Lnet/minecraft/entity/Entity;)Z"))
     public boolean modifyHasOutline(MinecraftClient instance, Entity entity) {
         if (ModuleList.shaders.isEnabled()) return false;
         else return instance.hasOutline(entity);
     }
 
-    @ModifyArg(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/WorldRenderer;renderEntity(Lnet/minecraft/entity/Entity;DDDFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;)V"), index = 6)
+    @ModifyArg(method = "renderEntities", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/WorldRenderer;renderEntity(Lnet/minecraft/entity/Entity;DDDFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;)V"), index = 6)
     public VertexConsumerProvider modifyArgRenderEntity(VertexConsumerProvider vertexConsumers,
                                                         @Local Entity entityLocalRef) {
         if (ModuleList.shaders.isEnabled() && hasAllowedEntity(entityLocalRef)) {
             allowShader = true;
             OutlineVertexConsumerProvider outlineVertexConsumerProvider = bufferBuilders.getOutlineVertexConsumers();
             int i = entityLocalRef.getTeamColorValue();
-            outlineVertexConsumerProvider.setColor(ColorHelper.Argb.getRed(i), ColorHelper.Argb.getGreen(i), ColorHelper.Argb.getBlue(i), 255);
+            outlineVertexConsumerProvider.setColor(ColorHelper.getRed(i), ColorHelper.getGreen(i), ColorHelper.getBlue(i), 255);
             return outlineVertexConsumerProvider;
         } else {
             allowShader = false;
@@ -108,8 +78,8 @@ public abstract class MixinWorldRenderer implements ModifyWorldRenderer {
         }
     }
 
-    @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/OutlineVertexConsumerProvider;draw()V", shift = At.Shift.AFTER))
-    public void modifyRenderBeforeOutlineRender(RenderTickCounter tickCounter, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer, LightmapTextureManager lightmapTextureManager, Matrix4f matrix4f, Matrix4f matrix4f2, CallbackInfo ci) {
+    @Inject(method = "method_62214", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/OutlineVertexConsumerProvider;draw()V", shift = At.Shift.AFTER))
+    public void modifyRenderBeforeOutlineRender(Fog fog, RenderTickCounter renderTickCounter, Camera camera, Profiler profiler, Matrix4f matrix4f, Matrix4f matrix4f2, Handle handle, Handle handle2, Handle handle3, Handle handle4, boolean bl, Frustum frustum, Handle handle5, CallbackInfo ci) {
         if (ModuleList.shaders.isEnabled()) {
             if (!ModuleList.shaders.shaderInited) ModuleList.shaders.reloadShader();
             MinecraftClient.getInstance().getFramebuffer().beginWrite(false);

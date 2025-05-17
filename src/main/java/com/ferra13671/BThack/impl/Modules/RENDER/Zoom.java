@@ -90,7 +90,7 @@ public class Zoom extends Module {
         mc.options.getMouseSensitivity().setValue(prevMouseSensitivity / needZoomValue);
     }
 
-    public double getFov(double original) {
+    public float getFov(float original) {
         currentZoomValue = (float) MathHelper.lerp(animation.getEase(), currentZoomValue, needZoomValue);
         return original / currentZoomValue;
     }

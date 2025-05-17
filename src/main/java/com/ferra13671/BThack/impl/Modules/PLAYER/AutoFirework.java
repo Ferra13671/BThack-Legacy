@@ -72,7 +72,7 @@ public class AutoFirework extends Module {
     @EventSubscriber
     public void onTick(ClientTickEvent e) {
         if (nullCheck()) return;
-        if (!mc.player.isFallFlying()) return;
+        if (!mc.player.isGliding()) return;
         if (mode.getValue().equals("One")) {
             toggle();
             return;
@@ -87,7 +87,7 @@ public class AutoFirework extends Module {
 
     public static void useFirework(boolean swing) {
         MinecraftClient mc = MinecraftClient.getInstance();
-        if (mc.player != null && mc.player.isFallFlying()) {
+        if (mc.player != null && mc.player.isGliding()) {
             int oldSlot = mc.player.getInventory().selectedSlot;
             int inventorySlot = InventoryUtils.findItem(Items.FIREWORK_ROCKET);
             if (inventorySlot != -1) {

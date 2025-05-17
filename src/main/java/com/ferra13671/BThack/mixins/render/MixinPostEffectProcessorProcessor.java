@@ -1,24 +1,17 @@
 package com.ferra13671.BThack.mixins.render;
 
 import com.ferra13671.BThack.api.IMixin.ModifyPostEffectProcessor;
-import com.ferra13671.BThack.mixins.accessor.IPostEffectPass;
 import net.minecraft.client.gl.Framebuffer;
-import net.minecraft.client.gl.PostEffectPass;
 import net.minecraft.client.gl.PostEffectProcessor;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 @Mixin(PostEffectProcessor.class)
 public class MixinPostEffectProcessorProcessor implements ModifyPostEffectProcessor {
+    @Override
+    public void _addTargetHook(String name, Framebuffer buffer) {
+
+    }
+    /*
     @Unique
     private final List<String> fakedBufferNames = new ArrayList<>();
     @Shadow
@@ -51,4 +44,6 @@ public class MixinPostEffectProcessorProcessor implements ModifyPostEffectProces
         for (String fakedBufferName : fakedBufferNames)
             targetsByName.remove(fakedBufferName);
     }
+
+     */
 }

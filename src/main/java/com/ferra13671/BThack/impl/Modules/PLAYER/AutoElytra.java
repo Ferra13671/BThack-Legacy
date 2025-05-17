@@ -8,7 +8,6 @@ import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.api.Utils.InventoryUtils;
 import com.ferra13671.BThack.mixins.accessor.entity.IEntity;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
-import net.minecraft.item.ElytraItem;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket;
 
@@ -20,10 +19,10 @@ public class AutoElytra extends Module {
 
     @EventSubscriber
     public void onTick(ClientTickEvent e) {
-        if (nullCheck() || mc.player.isFallFlying()) return;
+        if (nullCheck() || mc.player.isGliding()) return;
 
         if (mc.player.fallDistance >= fallDist.getValue() && !mc.player.verticalCollision) {
-            if (!(mc.player.getInventory().getArmorStack(2).getItem() instanceof ElytraItem)) {
+            if (!(mc.player.getInventory().getArmorStack(2).getItem() == Items.ELYTRA)) {
                 if (equipAction())
                     startFlyAction();
             } else

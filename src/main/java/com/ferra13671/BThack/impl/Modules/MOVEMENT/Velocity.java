@@ -10,7 +10,6 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.Setting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.mixins.accessor.packet.IEntityVelocityUpdateS2CPacket;
-import com.ferra13671.BThack.mixins.accessor.packet.IExplosionS2CPacket;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
@@ -19,9 +18,11 @@ import net.minecraft.network.packet.s2c.play.ExplosionS2CPacket;
 import net.minecraft.network.packet.s2c.play.PlayerPositionLookS2CPacket;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3d;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Optional;
 
 @ModuleInfo(name = "Velocity", description = "lang.module.Velocity", category = "MOVEMENT")
 public class Velocity extends Module {
@@ -57,7 +58,7 @@ public class Velocity extends Module {
     @EventSubscriber
     public void onPacketReceive(PacketEvent.Receive e) {
         if (nullCheck()) return;
-        if (!fallFlying.getValue() && mc.player.isFallFlying()) return;
+        if (!fallFlying.getValue() && mc.player.isGliding()) return;
 
         if ((mc.player.isTouchingWater() || mc.player.isSubmergedInWater() || mc.player.isInLava()) && !liquid.getValue())
             return;
@@ -95,24 +96,24 @@ public class Velocity extends Module {
                 }
             }
         }
-        if (e.getPacket() instanceof ExplosionS2CPacket && explosion.getValue()) {
-            IExplosionS2CPacket packet = (IExplosionS2CPacket) e.getPacket();
+        if (e.getPacket() instanceof ExplosionS2CPacket packet && explosion.getValue()) {
+            Vec3d playerKnockback = packet.playerKnockback().orElse(null);
+            if (playerKnockback == null) return;
             switch (mode.getValue()) {
                 case "Normal" -> {
                     explV = explV / 100;
                     explH = explH / 100;
-                    packet.setPlayerVelocityX(packet._getPlayerVelocityX() * explH);
-                    packet.setPlayerVelocityY(packet._getPlayerVelocityY() * explV);
-                    packet.setPlayerVelocityZ(packet._getPlayerVelocityZ() * explH);
+                    playerKnockback.x *= explH;
+                    playerKnockback.y *= explV;
+                    playerKnockback.z *= explH;
                 }
                 case "Cancel" -> e.setCancelled(true);
                 case "Grim" -> {
-                    packet.setPlayerVelocityX(0);
-                    packet.setPlayerVelocityY(0);
-                    packet.setPlayerVelocityZ(0);
+                    playerKnockback = Vec3d.ZERO;
                     flag = true;
                 }
             }
+            e.setPacket(new ExplosionS2CPacket(packet.center(), Optional.of(playerKnockback), packet.explosionParticle(), packet.explosionSound()));
         }
     }
 
@@ -120,14 +121,14 @@ public class Velocity extends Module {
     public void onTick(ClientTickEvent e) {
         if (nullCheck() || !mode.getValue().equals("Grim")) return;
 
-        if (!fallFlying.getValue() && mc.player.isFallFlying()) return;
+        if (!fallFlying.getValue() && mc.player.isGliding()) return;
 
         if ((mc.player.isTouchingWater() || mc.player.isSubmergedInWater() || mc.player.isInLava()) && !liquid.getValue())
             return;
 
         if (flag) {
             if (ticks <= 0) {
-                Managers.NETWORK_MANAGER.sendPacket(new PlayerMoveC2SPacket.Full(mc.player.getX(), mc.player.getY(), mc.player.getZ(), mc.player.lastYaw, mc.player.lastPitch, mc.player.isOnGround()));
+                Managers.NETWORK_MANAGER.sendPacket(new PlayerMoveC2SPacket.Full(mc.player.getX(), mc.player.getY(), mc.player.getZ(), mc.player.lastYaw, mc.player.lastPitch, mc.player.isOnGround(), mc.player.horizontalCollision));
                 Managers.NETWORK_MANAGER.sendPacket(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.STOP_DESTROY_BLOCK, BlockPos.ofFloored(mc.player.getPos()), Direction.DOWN));
             }
             flag = false;

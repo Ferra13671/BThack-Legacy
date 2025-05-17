@@ -1,21 +1,18 @@
 {
-	"targets": [
-		"bufIn",
-		"swap",
-		"bufOut"
-	],
-	"passes": [
-		{
-			"name": "bthack:default_outline",
-			"intarget": "bufIn",
-			"outtarget": "swap",
-			"uniforms": []
-		},
-		{
-			"name": "blit",
-			"intarget": "swap",
-			"outtarget": "bufOut",
-			"uniforms": []
-		}
-	]
+    "vertex": "minecraft:post/sobel",
+    "fragment": "bthack:post/default_outline",
+    "attributes": [
+        "Position"
+    ],
+    "samplers": [
+        {"name": "DiffuseSampler"}
+    ],
+    "uniforms": [
+        { "name": "ProjMat", "type": "matrix4x4", "count": 16, "values": [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]},
+        { "name": "InSize", "type": "float", "count": 2, "values": [1.0, 1.0]},
+        { "name": "OutSize", "type": "float", "count": 2, "values": [1.0, 1.0]},
+        { "name": "color", "type": "float", "count": 4, "values": [ 1.0, 1.0, 1.0, 1.0 ] },
+        { "name": "outlinecolor", "type": "float", "count": 4, "values": [ 1.0, 1.0, 1.0, 1.0 ] },
+        { "name": "quality", "type": "int", "count": 1, "values": [ 1.0] }
+    ]
 }

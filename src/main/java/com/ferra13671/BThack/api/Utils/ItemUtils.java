@@ -3,10 +3,13 @@ package com.ferra13671.BThack.api.Utils;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Build.BuildManager;
+import it.unimi.dsi.fastutil.objects.Object2IntArrayMap;
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
+import it.unimi.dsi.fastutil.objects.Object2IntMaps;
 import net.minecraft.block.*;
 import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.ItemEnchantmentsComponent;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffects;
@@ -15,6 +18,7 @@ import net.minecraft.network.packet.c2s.play.PlayerInteractItemC2SPacket;
 import net.minecraft.registry.*;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.InvalidIdentifierException;
@@ -22,6 +26,7 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.Objects;
+import java.util.Set;
 import java.util.function.Predicate;
 
 public final class ItemUtils implements Mc {
@@ -83,7 +88,7 @@ public final class ItemUtils implements Mc {
         }
 
         try {
-            return Registries.ITEM.getOrEmpty(Identifier.of(nameOrId))
+            return Registries.ITEM.getOptionalValue(Identifier.of(nameOrId))
                     .orElse(null);
         } catch(InvalidIdentifierException e) {
             return null;
@@ -124,10 +129,43 @@ public final class ItemUtils implements Mc {
 
     public static boolean equalsEnchantment(ItemStack stack, RegistryKey<Enchantment> enchantment) {
         if (stack.isEmpty()) return false;
-        for (RegistryEntry<Enchantment> ench : stack.getEnchantments().getEnchantments()) {
-            if (ench.equals(mc.world.getRegistryManager().get(enchantment.getRegistryRef()).getEntry(enchantment).get())) return true;
+        Object2IntMap<RegistryEntry<Enchantment>> itemEnchantments = getEnchantments(stack);
+        return equalsEnchantmentInternal(itemEnchantments, enchantment);
+    }
+
+    private static boolean equalsEnchantmentInternal(Object2IntMap<RegistryEntry<Enchantment>> itemEnchantments, RegistryKey<Enchantment> enchantmentKey) {
+        for (RegistryEntry<Enchantment> enchantment : itemEnchantments.keySet()) {
+            if (enchantment.matchesKey(enchantmentKey)) return true;
         }
         return false;
+    }
+
+    public static Object2IntMap<RegistryEntry<Enchantment>> getEnchantments(ItemStack itemStack) {
+        Object2IntMap<RegistryEntry<Enchantment>> enchantments = new Object2IntArrayMap<>();
+
+        if (!itemStack.isEmpty()) {
+            Set<Object2IntMap.Entry<RegistryEntry<Enchantment>>> itemEnchantments = itemStack.getItem() == Items.ENCHANTED_BOOK
+                    ? itemStack.getOrDefault(DataComponentTypes.STORED_ENCHANTMENTS, ItemEnchantmentsComponent.DEFAULT).getEnchantmentEntries()
+                    : itemStack.getEnchantments().getEnchantmentEntries();
+
+            for (Object2IntMap.Entry<RegistryEntry<Enchantment>> entry : itemEnchantments) {
+                enchantments.put(entry.getKey(), entry.getIntValue());
+            }
+        }
+        return enchantments;
+    }
+
+    public static int getEnchantmentLevel(ItemStack itemStack, RegistryKey<Enchantment> enchantment) {
+        if (itemStack.isEmpty()) return 0;
+        Object2IntMap<RegistryEntry<Enchantment>> itemEnchantments = getEnchantments(itemStack);
+        return getEnchantmentLevelInternal(itemEnchantments, enchantment);
+    }
+
+    private static int getEnchantmentLevelInternal(Object2IntMap<RegistryEntry<Enchantment>> itemEnchantments, RegistryKey<Enchantment> enchantment) {
+        for (Object2IntMap.Entry<RegistryEntry<Enchantment>> entry : Object2IntMaps.fastIterable(itemEnchantments)) {
+            if (entry.getKey().matchesKey(enchantment)) return entry.getIntValue();
+        }
+        return 0;
     }
 
     public static double getScore(ItemStack itemStack, BlockState state, Predicate<ItemStack> good) {
@@ -137,14 +175,12 @@ public final class ItemUtils implements Mc {
         double score = 0;
 
         score += itemStack.getMiningSpeedMultiplier(state) * 1000;
-        DynamicRegistryManager dynamicRegistryManager = mc.world.getRegistryManager();
-        Registry<Enchantment> enchs = dynamicRegistryManager.get(RegistryKeys.ENCHANTMENT);
-        score += enchs.getEntry(Enchantments.UNBREAKING).map(entry -> EnchantmentHelper.getLevel(entry, itemStack)).orElse(0);
-        score += enchs.getEntry(Enchantments.EFFICIENCY).map(entry -> EnchantmentHelper.getLevel(entry, itemStack)).orElse(0);
-        score += enchs.getEntry(Enchantments.MENDING).map(entry -> EnchantmentHelper.getLevel(entry, itemStack)).orElse(0);
+        score += getEnchantmentLevel(itemStack, Enchantments.UNBREAKING);
+        score += getEnchantmentLevel(itemStack, Enchantments.EFFICIENCY);
+        score += getEnchantmentLevel(itemStack, Enchantments.MENDING);
 
-        if (itemStack.getItem() instanceof SwordItem item && (state.getBlock() instanceof BambooBlock || state.getBlock() instanceof BambooShootBlock))
-            score += 9000 + (item.getMaterial().getDurability());
+        if (itemStack.getItem() instanceof SwordItem && (state.getBlock() instanceof BambooBlock || state.getBlock() instanceof BambooShootBlock))
+            score += 9000 + (itemStack.get(DataComponentTypes.TOOL).getSpeed(state) * 1000);
 
 
         return score;
@@ -167,7 +203,7 @@ public final class ItemUtils implements Mc {
         float digSpeed = getDestroySpeed(state, itemStack);
 
         if (digSpeed > 1) {
-            int efficiencyModifier = EnchantmentHelper.getLevel(mc.world.getRegistryManager().get(Enchantments.EFFICIENCY.getRegistryRef()).getEntry(Enchantments.EFFICIENCY).get(), itemStack);
+            int efficiencyModifier = getEnchantmentLevel(itemStack, Enchantments.EFFICIENCY);
             if (efficiencyModifier > 0 && !itemStack.isEmpty()) {
                 digSpeed += (float) (StrictMath.pow(efficiencyModifier, 2) + 1);
             }
@@ -182,7 +218,7 @@ public final class ItemUtils implements Mc {
 
 
         if (mc.player.isSubmergedInWater())
-            digSpeed *= (float) mc.player.getAttributeInstance(EntityAttributes.PLAYER_SUBMERGED_MINING_SPEED).getValue();
+            digSpeed *= (float) mc.player.getAttributeInstance(EntityAttributes.SUBMERGED_MINING_SPEED).getValue();
 
         return digSpeed < 0 ? 0 : digSpeed;
     }
@@ -200,11 +236,11 @@ public final class ItemUtils implements Mc {
     }
 
     public static boolean isTool(Item item) {
-        return item instanceof ToolItem || item instanceof ShearsItem;
+        return isTool(item.getDefaultStack());
     }
 
     public static boolean isTool(ItemStack itemStack) {
-        return isTool(itemStack.getItem());
+        return itemStack.isIn(ItemTags.AXES) || itemStack.isIn(ItemTags.HOES) || itemStack.isIn(ItemTags.PICKAXES) || itemStack.isIn(ItemTags.SHOVELS) || itemStack.getItem() instanceof ShearsItem;
     }
 
     public static boolean isFood(ItemStack itemStack) {

@@ -97,7 +97,7 @@ public class ClickGuiScreen extends BThackScreen implements Mc {
         if (Module.nullCheck()) drawMainMenuWallpaper(mouseX, mouseY);
 
         if (ModuleList.clickGui.blur.getValue())
-            ClickGui.renderBlur(partialTicks);
+            ClickGui.renderBlur();
 
         if (Client.clientInfo.isWinter() && ModuleList.clickGui.snow.getValue()) {
             BThackRenderUtils.applyBlend();

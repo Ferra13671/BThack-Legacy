@@ -382,7 +382,7 @@ public class NewChunks extends Module {
             }
             if (liquidSearch.getValue()) {
                 for (int x = 0; x < 16; x++) {
-                    for (int y = mc.world.getBottomY(); y < mc.world.getTopY(); y++) {
+                    for (int y = mc.world.getBottomY(); y < mc.world.getBottomY() + mc.world.getHeight(); y++) {
                         for (int z = 0; z < 16; z++) {
                             FluidState fluid = chunk.getFluidState(x, y, z);
                             try {

@@ -27,6 +27,7 @@ import net.minecraft.client.render.*;
 import net.minecraft.client.util.Window;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 import org.joml.Matrix4f;
@@ -106,7 +107,7 @@ public final class BThackRender implements Mc {
     }
 
     public static void drawRoundedRect(float x1, float y1, float x2, float y2, float radius, int color) {
-        BufferBuilder buffer = BThackRenderUtils.prepareToDraw(() -> Shaders.INSTANCE.ROUNDED_RECT.shader.getProgram()).begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION);
+        BufferBuilder buffer = BThackRenderUtils.prepareToDraw(Shaders.INSTANCE.ROUNDED_RECT.shader.getProgram()).begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION);
 
         Matrix4f matrix4f = BThackMatrix.peek().getPositionMatrix();
         Vector3f startPos = matrix4f.transformPosition(x1, y1, 0, new Vector3f());
@@ -152,7 +153,7 @@ public final class BThackRender implements Mc {
     }
 
     public static void drawRoundedRectWithOutline(float x1, float y1, float x2, float y2, float radius, int color, int outlineColor, float depth) {
-        BufferBuilder buffer = BThackRenderUtils.prepareToDraw(() -> Shaders.INSTANCE.ROUNDED_RECT_WITH_OUTLINE.shader.getProgram()).begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION);
+        BufferBuilder buffer = BThackRenderUtils.prepareToDraw(Shaders.INSTANCE.ROUNDED_RECT_WITH_OUTLINE.shader.getProgram()).begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION);
 
         Matrix4f matrix4f = BThackMatrix.peek().getPositionMatrix();
         Vector3f startPos = matrix4f.transformPosition(x1, y1, 0, new Vector3f());
@@ -309,7 +310,7 @@ public final class BThackRender implements Mc {
             float size = drawMode.getSize();
             if (size != 1f)
                 BThackMatrix.scale(size, size, size);
-            mc.textRenderer.draw(text, x * (1 / size), y * (1 / size), color, shadow, BThackMatrix.peek().getPositionMatrix(), bufferSource, TextRenderer.TextLayerType.NORMAL, 0, 15728880, mc.textRenderer.isRightToLeft());
+            mc.textRenderer.draw(Text.literal(text), x * (1 / size), y * (1 / size), color, shadow, BThackMatrix.peek().getPositionMatrix(), bufferSource, TextRenderer.TextLayerType.NORMAL, 0, 15728880, mc.textRenderer.isRightToLeft());
             guiGraphics.draw();
             resetShader();
             BThackMatrix.pop();
@@ -357,16 +358,16 @@ public final class BThackRender implements Mc {
         Drawers.SHADER_DRAWER.end();
     }
 
-    public static void drawItem(ItemStack stack, int x, int y, String amountText, boolean onSlot) {
-        drawItem(stack, x, y, amountText, onSlot, 1);
+    public static void drawItem(ItemStack stack, int x, int y, boolean onSlot) {
+        drawItem(stack, x, y, onSlot, 1);
     }
 
-    public static void drawItem(ItemStack stack, int x, int y, String amountText, boolean onSlot, float size) {
+    public static void drawItem(ItemStack stack, int x, int y, boolean onSlot, float size) {
         BThackMatrix.push();
         BThackMatrix.scale(size, size, 1);
         guiGraphics.drawItem(stack, x, y);
         if (onSlot)
-            guiGraphics.drawItemInSlot(mc.textRenderer, stack, x, y, amountText);
+            guiGraphics.drawItemBar(stack, x, y);
         BThackMatrix.pop();
     }
 

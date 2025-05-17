@@ -2,7 +2,7 @@ package com.ferra13671.BThack.core.Render.Drawers;
 
 import com.ferra13671.BThack.core.Render.BThackMatrix;
 import com.ferra13671.BThack.core.Render.Utils.BThackRenderUtils;
-import net.minecraft.client.render.GameRenderer;
+import net.minecraft.client.gl.ShaderProgramKeys;
 import net.minecraft.client.render.VertexFormat;
 import net.minecraft.client.render.VertexFormats;
 import org.joml.Matrix4f;
@@ -13,7 +13,7 @@ import static com.ferra13671.BThack.core.Render.Utils.ColorUtils.hashCodeToRGBA;
 public class CustomColorsRectDrawer extends Drawer {
 
     public void begin() {
-        buffer = prepareToDraw(GameRenderer::getPositionColorProgram).begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
+        buffer = prepareToDraw(ShaderProgramKeys.POSITION_COLOR).begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
     }
 
     public void draw(float x1, float y1, float x2, float y2, int x1y1Color, int x2y1Color, int x1y2Color, int x2y2Color, Matrix4f matrix4f) {

@@ -2,6 +2,7 @@ package com.ferra13671.BThack.impl.Modules.MOVEMENT;
 
 import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.api.Module.ModuleInfo;
+import com.ferra13671.BThack.api.Utils.InputUtils;
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Events.Entity.SetVelocityEvent;
@@ -18,9 +19,10 @@ import com.ferra13671.BThack.api.Utils.Ticker;
 import com.ferra13671.BThack.impl.Modules.PLAYER.AutoFirework;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ArmorItem;
-import net.minecraft.item.ElytraItem;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket;
 import net.minecraft.screen.slot.SlotActionType;
@@ -74,7 +76,7 @@ public class LongJump extends Module {
                     return;
                 }
                 if (elytraSlot == -1) {
-                    if (!(mc.player.getInventory().getArmorStack(2).getItem() instanceof ElytraItem)) {
+                    if (!(mc.player.getInventory().getArmorStack(2).getItem() == Items.ELYTRA)) {
                         EFMstop();
                         return;
                     }
@@ -126,12 +128,12 @@ public class LongJump extends Module {
 
             switch (stage) {
                 case 0 -> {
-                    if (mc.player.getInventory().getArmorStack(2).getItem() instanceof ElytraItem) {
+                    if (mc.player.getInventory().getArmorStack(2).getItem() == Items.ELYTRA) {
                         nextStage();
                         return;
                     }
                     for (int needSlot = 0; needSlot < 36; needSlot++) {
-                        if (mc.player.getInventory().getStack(needSlot).getItem() instanceof ElytraItem) {
+                        if (mc.player.getInventory().getStack(needSlot).getItem() == Items.ELYTRA) {
                             int item;
                             if (needSlot < 9)
                                 item = needSlot + 36;
@@ -155,18 +157,18 @@ public class LongJump extends Module {
                         return;
                     }
                     if (!jumped) {
-                        mc.player.input.jumping = true;
+                        InputUtils.setJumping(true);
                         jumped = true;
                     }
                     if (ticker.passed(200)) nextStage();
                 }
                 case 2 -> {
-                    if (mc.player.isFallFlying()) {
+                    if (mc.player.isGliding()) {
                         nextStage();
                         return;
                     }
                     if (!sendFlying) {
-                        mc.player.startFallFlying();
+                        mc.player.startGliding();
                         Managers.NETWORK_MANAGER.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.START_FALL_FLYING));
                         sendFlying = true;
                     }
@@ -180,13 +182,14 @@ public class LongJump extends Module {
                     if (ticker.passed(flyTime.getValue() * 1000) || mc.player.verticalCollision) nextStage();
                 }
                 case 5 -> {
-                    if (!(mc.player.getInventory().getArmorStack(2).getItem() instanceof ElytraItem)) {
+                    if (!(mc.player.getInventory().getArmorStack(2).getItem() == Items.ELYTRA)) {
                         stop();
                         return;
                     }
                     for (int needSlot = 0; needSlot < 36; needSlot++) {
-                        if (mc.player.getInventory().getStack(needSlot).getItem() instanceof ArmorItem armorItem) {
-                            if (armorItem.getSlotType() == EquipmentSlot.CHEST) {
+                        ItemStack itemStack = mc.player.getInventory().getStack(needSlot);
+                        if (itemStack.getItem() instanceof ArmorItem armorItem) {
+                            if (itemStack.get(DataComponentTypes.EQUIPPABLE).slot().getEntitySlotId() == EquipmentSlot.CHEST.getEntitySlotId()) {
                                 int item;
                                 if (needSlot < 9)
                                     item = needSlot + 36;

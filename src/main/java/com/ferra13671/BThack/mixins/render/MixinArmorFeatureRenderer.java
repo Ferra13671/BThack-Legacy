@@ -4,9 +4,10 @@ import com.ferra13671.BThack.core.Client.ModuleList;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.feature.ArmorFeatureRenderer;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
+import net.minecraft.client.render.entity.state.BipedEntityRenderState;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -15,9 +16,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(ArmorFeatureRenderer.class)
 public class MixinArmorFeatureRenderer {
     @Inject(method = "renderArmor", at = @At("HEAD"), cancellable = true)
-    public <T extends LivingEntity, A extends BipedEntityModel<T>> void onRenderArmor(MatrixStack matrices, VertexConsumerProvider vertexConsumers, T livingEntity, EquipmentSlot equipmentSlot, int i, A bipedEntityModel, CallbackInfo info) {
-        if (ModuleList.noRender.isEnabled())
-            if (ModuleList.noRender.armor.getValue())
-                info.cancel();
+    public <S extends BipedEntityRenderState, A extends BipedEntityModel<S>> void modifyRenderArmor(MatrixStack matrices, VertexConsumerProvider vertexConsumers, ItemStack stack, EquipmentSlot slot, int light, A armorModel, CallbackInfo ci) {
+        if (ModuleList.noRender.isEnabled() && ModuleList.noRender.armor.getValue())
+            ci.cancel();
     }
 }

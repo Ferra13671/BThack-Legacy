@@ -32,7 +32,7 @@ public class FireworkManager implements Initializable, Mc {
 
     @EventSubscriber
     public void onFireworkTick(FireworkTickEvent e) {
-        if (mc.player.isFallFlying() && firework != e.firework
+        if (mc.player.isGliding() && firework != e.firework
                 && ((IFireworkRocketEntity) e.firework).hookWasShotByEntity()
                 && ((IFireworkRocketEntity) e.firework).getShooter() == mc.player) {
             firework = e.firework;

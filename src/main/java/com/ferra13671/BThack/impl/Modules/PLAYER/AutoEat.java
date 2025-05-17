@@ -11,11 +11,15 @@ import com.ferra13671.BThack.api.Utils.ItemUtils;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.FoodComponent;
-import net.minecraft.component.type.FoodComponents;
+import net.minecraft.component.type.ConsumableComponent;
 import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.*;
+import net.minecraft.item.consume.ApplyEffectsConsumeEffect;
+import net.minecraft.item.consume.ConsumeEffect;
+import net.minecraft.item.consume.TeleportRandomlyConsumeEffect;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Hand;
 
 @ModuleInfo(name = "AutoEat", description = "lang.module.AutoEat", category = "PLAYER")
@@ -57,7 +61,7 @@ public class AutoEat extends Module {
 
     public void onAutoEat() {
         if (pauseIfMine.getValue())
-            if (( mc.player.getActiveItem().getItem() instanceof ToolItem && mc.player.isUsingItem()) || (ModuleList.packetMine.isEnabled() && (ModuleList.packetMine.currentBreakingBlock != null || !ModuleList.packetMine.conveyorBlocks.isEmpty()))) return;
+            if ((ItemUtils.isTool(mc.player.getActiveItem().getItem()) && mc.player.isUsingItem()) || (ModuleList.packetMine.isEnabled() && (ModuleList.packetMine.currentBreakingBlock != null || !ModuleList.packetMine.conveyorBlocks.isEmpty()))) return;
         if (mc.player.getHealth() <= startHP.getValue() && hpRegen.getValue()) {
             if (!isGolderApple(mc.player.getMainHandStack())) {
                 for (int i = 0; i < 36; i++) {
@@ -126,21 +130,19 @@ public class AutoEat extends Module {
     }
 
     private boolean isAllowedFood(ItemStack stack) {
-        FoodComponent food = stack.get(DataComponentTypes.FOOD);
-        if (food == null) return false;
-        if(!allowChorus.getValue() && food == FoodComponents.CHORUS_FRUIT)
-            return false;
+        if (!allowGapples.getValue() && isGolderApple(stack)) return false;
+        ConsumableComponent component = stack.get(DataComponentTypes.CONSUMABLE);
 
-        if (!allowGapples.getValue() && isGolderApple(stack))
-            return false;
+        for (ConsumeEffect consumeEffect : component.onConsumeEffects()) {
+            if (!allowChorus.getValue() && consumeEffect instanceof TeleportRandomlyConsumeEffect) return false;
 
-        for (FoodComponent.StatusEffectEntry entry : food.effects()) {
-            StatusEffect effect = entry.effect().getEffectType().value();
+            if (!(consumeEffect instanceof ApplyEffectsConsumeEffect applyEffectsConsumeEffect)) continue;
 
-            if(effect == StatusEffects.HUNGER)
-                return false;
-            if(effect == StatusEffects.POISON)
-                return false;
+            for (StatusEffectInstance effect : applyEffectsConsumeEffect.effects()) {
+                RegistryEntry<StatusEffect> entry = effect.getEffectType();
+
+                if (entry == StatusEffects.HUNGER || entry == StatusEffects.POISON) return false;
+            }
         }
 
         return true;

@@ -10,9 +10,17 @@ import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 @Mixin(LightmapTextureManager.class)
 public class MixinLightmapTextureManager {
 
-    @ModifyArgs(method = "update", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/texture/NativeImage;setColor(III)V"))
-    private void hookUpdate(Args args) {
-        if (ModuleList.fullBright.isEnabled() && ModuleList.fullBright.mode.getValue().equals("Gamma"))
-            args.set(2, ModuleList.fullBright.getGammaColor());
+    @ModifyArgs(method = "update", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gl/Uniform;set(F)V", ordinal = 5))
+    public void modifySetDarkenWorldFactor(Args args) {
+        if (ModuleList.fullBright.isEnabled() && ModuleList.fullBright.mode.getValue().equals("Gamma")) {
+            args.set(0, 1f);
+        }
+    }
+
+    @ModifyArgs(method = "update", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gl/Uniform;set(Lorg/joml/Vector3f;)V"))
+    public void modifySetSkyLightColor(Args args) {
+        if (ModuleList.fullBright.isEnabled() && ModuleList.fullBright.mode.getValue().equals("Gamma")) {
+            args.set(0, ModuleList.fullBright.getGammaColor());
+        }
     }
 }

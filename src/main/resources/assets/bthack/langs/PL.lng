@@ -6,7 +6,6 @@
 "lang.module.CustomCape": Umożliwia wyświetlenie niestandardowego płaszcza.
 "lang.module.CustomFont": Umożliwia BThack renderowanie niestandardowej czcionki.
 "lang.module.DiscordRPC": Otrzymujesz aktywność BThack.
-"lang.module.FPSReducer": Ogranicza fps, jeśli gra jest nieostra.
 "lang.module.HUD": Włączanie i konfigurowanie modułów HUD.
 "lang.module.HudEditor": Otwiera menu HUD edytor.
 "lang.module.Macros": Zawiera systemu makrosów.
@@ -71,7 +70,6 @@
 "lang.module.Scrapper": Łamie bloki znajdujące się powyżej poziomu stóp.
 "lang.module.SuperInstaMine": Umożliwia natychmiastowe wydobycie dużej liczby bloków. (OSTRZEŻENIE: należy ostrożnie zmieniać ustawienia rozmiaru!)
 "lang.module.Timer": Przyspiesza/spowalnia tiki gry.
-"lang.module.TopperRadar": Ostrzega, jeśli w pobliżu znajduje się topper.
 "lang.module.TrashThrower": Wyrzuca wybrane śmieci z ekwipunku.
 "lang.module.TreeCutter": Wyodrębnia całe drzewo naraz. (Działa w połączeniu z PacketMine)
 "lang.module.TridentDupe": Automatycznie duplikuje trójząb. (Załatane w najnowszej wersji paper od 16 lutego 2025 r.; Załatane na 2b2t.org 18 lutego 2025 r.)

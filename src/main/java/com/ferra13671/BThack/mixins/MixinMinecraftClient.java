@@ -1,7 +1,6 @@
 package com.ferra13671.BThack.mixins;
 
 import com.ferra13671.BThack.BThack;
-import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.api.Events.GuiOpenEvent;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Interfaces.Mc;
@@ -42,16 +41,6 @@ public abstract class MixinMinecraftClient implements Mc {
     @Inject(method = "<init>", at = @At("TAIL"))
     public void modifyMinecraftInit(RunArgs args, CallbackInfo ci) {
         BThack.instance.onInitializePost();
-    }
-
-    @Inject(method = "getFramerateLimit", at = @At("HEAD"), cancellable = true)
-    public void modifyGetFramerateLimit(CallbackInfoReturnable<Integer> cir) {
-        if (ModuleList.fpsReducer.isEnabled()) {
-            if (!mc.isWindowFocused()) {
-                if (ModuleList.fpsReducer.lastFocusTicks <= 0)
-                    cir.setReturnValue(ModuleList.fpsReducer.fpsLimit.getValue().intValue());
-            }
-        }
     }
 
     @Inject(method = "getTargetMillisPerTick", at = @At("HEAD"), cancellable = true)

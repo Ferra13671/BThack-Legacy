@@ -37,9 +37,9 @@ public class EnchantColor extends Module {
         } else {
 
             int argb = ColorUtils.rainbow(1, ModuleList.enchantColor.speed.getValue().floatValue());
-            red = ColorHelper.Argb.getRed(argb) / 255f;
-            green = ColorHelper.Argb.getGreen(argb) / 255f;
-            blue = ColorHelper.Argb.getBlue(argb) / 255f;
+            red = ColorHelper.getRed(argb) / 255f;
+            green = ColorHelper.getGreen(argb) / 255f;
+            blue = ColorHelper.getBlue(argb) / 255f;
         }
         return new float[]{red, green, blue, alpha};
     }

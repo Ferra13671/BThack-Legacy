@@ -26,7 +26,7 @@ public class AntiHunger extends Module {
 
         if (e.getPacket() instanceof PlayerMoveC2SPacket) {
             IPlayerMoveC2SPacket packet = (IPlayerMoveC2SPacket) e.getPacket();
-            packet.setOnGround((mc.player.fallDistance <= 0 || mc.interactionManager.isBreakingBlock()) && mc.player.isFallFlying());
+            packet.setOnGround((mc.player.fallDistance <= 0 || mc.interactionManager.isBreakingBlock()) && mc.player.isGliding());
         }
 
         if (e.getPacket() instanceof ClientCommandC2SPacket) {

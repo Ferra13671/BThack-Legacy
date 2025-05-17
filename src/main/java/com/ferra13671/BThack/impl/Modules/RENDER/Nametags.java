@@ -65,7 +65,7 @@ public class Nametags extends Module {
         cords[0] /= iSize.getValue().floatValue();
         cords[1] /= iSize.getValue().floatValue();
 
-        BThackRender.drawItem(itemEntity.getStack(), (int) cords[0] - 8, (int) cords[1] - 18, null, true);
+        BThackRender.drawItem(itemEntity.getStack(), (int) cords[0] - 8, (int) cords[1] - 18, true);
         if (itemName.getValue())
             BThackRender.drawCenteredString(itemEntity.getName().getString(), cords[0], cords[1], -1, FontRenderManager.DrawMode.SMALL);
 
@@ -162,7 +162,7 @@ public class Nametags extends Module {
     public float drawArmor(float startX, float startY, LivingEntity entity) {
         for (ItemStack stack : entity.getArmorItems()) {
             if (stack != null) {
-                BThackRender.drawItem(stack, (int) startX, (int) startY, null, true);
+                BThackRender.drawItem(stack, (int) startX, (int) startY, true);
             }
             startX += 20;
         }
@@ -187,7 +187,7 @@ public class Nametags extends Module {
         BThackRender.drawString("L: ", startX, startY + 5, -1, false);
         startX += 12;
         if (player.getOffHandStack() != null) {
-            BThackRender.drawItem(player.getOffHandStack(), (int) startX, (int) startY, null, true);
+            BThackRender.drawItem(player.getOffHandStack(), (int) startX, (int) startY, true);
         }
 
         startX += 30;
@@ -195,7 +195,7 @@ public class Nametags extends Module {
         BThackRender.drawString("R: ", startX, startY + 5, -1, false);
         startX += 12;
         if (player.getMainHandStack() != null) {
-            BThackRender.drawItem(player.getMainHandStack(), (int) startX, (int) startY, null, false);
+            BThackRender.drawItem(player.getMainHandStack(), (int) startX, (int) startY, false);
         }
     }
 

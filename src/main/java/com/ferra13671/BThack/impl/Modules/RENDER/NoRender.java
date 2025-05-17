@@ -48,7 +48,7 @@ public class NoRender extends Module {
         if (nullCheck()) return;
 
         if (explosions.getValue() && e.getPacket() instanceof ExplosionS2CPacket packet) {
-            mc.world.playSound(mc.player ,packet.getX(), packet.getY(), packet.getZ(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.HOSTILE, 1, 1);
+            mc.world.playSound(mc.player, packet.center().getX(), packet.center().getY(), packet.center().getZ(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.HOSTILE, 1, 1);
             e.setCancelled(true);
         }
     }

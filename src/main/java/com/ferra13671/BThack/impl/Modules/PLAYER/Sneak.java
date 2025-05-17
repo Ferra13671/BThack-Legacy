@@ -4,6 +4,7 @@ import com.ferra13671.BThack.api.Events.Entity.UpdateInputEvent;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Module.ModuleInfo;
+import com.ferra13671.BThack.api.Utils.InputUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 
 import java.util.Arrays;
@@ -17,10 +18,10 @@ public class Sneak extends Module {
     @EventSubscriber
     public void onInputUpdate(UpdateInputEvent e) {
         if (mode.getValue().equals("Always"))
-            mc.player.input.sneaking = true;
+            InputUtils.setSneaking(true);
         else {
             if (mc.player.input.movementForward != 0 || mc.player.input.movementSideways != 0)
-                mc.player.input.sneaking = true;
+                InputUtils.setSneaking(true);
         }
     }
 }

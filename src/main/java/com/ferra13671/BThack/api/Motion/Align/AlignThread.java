@@ -7,6 +7,7 @@ import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Thread.BThackThread;
 import com.ferra13671.BThack.api.Managers.managers.Thread.ThreadClosedException;
 import com.ferra13671.BThack.api.Managers.managers.TravelChange.TravelChanger;
+import com.ferra13671.BThack.api.Utils.InputUtils;
 import com.ferra13671.BThack.api.Utils.Rotate.RotateUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.util.math.Vec3d;
@@ -64,9 +65,7 @@ public class AlignThread extends BThackThread implements Mc {
 
     @EventSubscriber
     public void onInput(UpdateInputEvent e) {
-        mc.player.input.movementForward = 1;
-        mc.player.input.movementSideways = 0;
-        mc.player.input.sneaking = false;
+        InputUtils.setInput(true, false, false, false, mc.player.input.playerInput.jump(), false, mc.player.input.playerInput.sprint());
     }
 
     private void rotate() {

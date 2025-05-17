@@ -62,7 +62,7 @@ public class HudEditorScreen extends BThackScreen {
     @Override
     public void render(DrawContext guiGraphics, int mouseX, int mouseY, float partialTicks) {
         if (ModuleList.clickGui.blur.getValue()) {
-            ClickGui.renderBlur(partialTicks);
+            ClickGui.renderBlur();
         }
 
         if (Client.clientInfo.isWinter() && ModuleList.clickGui.snow.getValue()) {

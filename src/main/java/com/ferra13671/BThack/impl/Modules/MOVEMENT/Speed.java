@@ -7,6 +7,7 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Module.ModuleInfo;
+import com.ferra13671.BThack.api.Utils.InputUtils;
 import com.ferra13671.BThack.api.Utils.Modules.StrafeUtils;
 import com.ferra13671.BThack.api.Utils.PlayerUtils;
 import com.ferra13671.BThack.mixins.accessor.entity.ILivingEntity;
@@ -66,7 +67,7 @@ public class Speed extends Module {
 
     @EventSubscriber
     public void onInput(UpdateInputEvent e) {
-        mc.player.input.jumping = true;
+        InputUtils.setJumping(true);
     }
 
     @Override

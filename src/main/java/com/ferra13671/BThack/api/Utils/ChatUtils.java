@@ -11,13 +11,13 @@ public final class ChatUtils implements Mc {
 
     public static void sendMessage(String message) {
         if (mc.player == null) return;
-        mc.player.sendMessage(Text.literal(Constants.BTHACK_PREFIX + message));
+        mc.player.sendMessage(Text.literal(Constants.BTHACK_PREFIX + message), false);
 
     }
 
     public static void sendMessage(String msg, SoundEvent soundEvent) {
         if (mc.player == null) return;
-        mc.player.sendMessage(Text.literal(Constants.BTHACK_PREFIX + msg));
+        mc.player.sendMessage(Text.literal(Constants.BTHACK_PREFIX + msg), false);
         mc.player.playSound(soundEvent,1,1);
     }
 

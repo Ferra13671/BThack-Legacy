@@ -31,7 +31,7 @@ public class BlockSearchManager implements Initializable, Mc {
                     if (!Module.nullCheck()) {
                         ArrayList<BlockPos> bloks = new ArrayList<>();
                         for (int x = (int) Math.floor(mc.player.getX() - 100); x <= Math.ceil(mc.player.getX() + 100); x++) {
-                            for (int y = mc.world.getBottomY() + 1; y <= mc.world.getTopY(); y++) {
+                            for (int y = mc.world.getBottomY() + 1; y <= mc.world.getBottomY() + mc.world.getHeight(); y++) {
                                 for (int z = (int) Math.floor(mc.player.getZ() - 100); z <= Math.ceil(mc.player.getZ() + 100); z++) {
                                     BlockPos pos = new BlockPos(x, y, z);
                                     if (mc.world.isAir(pos)) continue;

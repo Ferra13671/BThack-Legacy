@@ -51,3 +51,9 @@ accessible field net/minecraft/block/spawner/MobSpawnerLogic spawnDelay I
 accessible class net/minecraft/client/render/item/HeldItemRenderer$HandRenderType
 accessible field net/minecraft/client/render/item/HeldItemRenderer$HandRenderType renderMainHand Z
 accessible field net/minecraft/client/render/item/HeldItemRenderer$HandRenderType renderOffHand Z
+
+accessible field net/minecraft/client/render/GameRenderer pool Lnet/minecraft/client/util/Pool;
+
+accessible method net/minecraft/block/CropBlock getPickStack (Lnet/minecraft/world/WorldView;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;Z)Lnet/minecraft/item/ItemStack;
+
+accessible method net/minecraft/client/gui/DrawContext drawItemBar (Lnet/minecraft/item/ItemStack;II)V

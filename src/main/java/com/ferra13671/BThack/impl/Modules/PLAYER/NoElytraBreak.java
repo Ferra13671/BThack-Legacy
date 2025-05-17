@@ -37,7 +37,7 @@ public class NoElytraBreak extends Module {
         }
 
         if (!startAbuse)
-            if (mc.player.isFallFlying())
+            if (mc.player.isGliding())
                 startAbuse = true;
 
         if (startAbuse)
@@ -76,7 +76,7 @@ public class NoElytraBreak extends Module {
 
     private boolean flyCheck(IEntity entity) {
         if (mc.player.getInventory().getArmorStack(2).getItem() == Items.ELYTRA) {
-            return !mc.player.verticalCollision && !entity.invokeGetFlag(7) || !mc.player.isFallFlying();
+            return !mc.player.verticalCollision && !entity.invokeGetFlag(7) || !mc.player.isGliding();
         } else
             return false;
     }

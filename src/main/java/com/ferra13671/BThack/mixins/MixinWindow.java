@@ -66,7 +66,7 @@ public class MixinWindow implements Mc, ModifyWindow {
                 NativeImage nativeImage = NativeImage.read(imgList.get(i));
                 ByteBuffer bytebuffer = MemoryUtil.memAlloc(nativeImage.getWidth() * nativeImage.getHeight() * 4);
 
-                bytebuffer.asIntBuffer().put(nativeImage.copyPixelsRgba());
+                bytebuffer.asIntBuffer().put(nativeImage.copyPixelsAbgr());
                 buffer.position(i);
                 buffer.width(nativeImage.getWidth());
                 buffer.height(nativeImage.getHeight());

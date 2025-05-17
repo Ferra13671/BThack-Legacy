@@ -7,8 +7,10 @@ import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.api.Utils.InventoryUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.*;
 import net.minecraft.registry.entry.RegistryEntry;
 
@@ -75,34 +77,32 @@ public class AutoArmor extends Module {
         for (SlotInfo info : slotInfos) {
             if (info.stack.getItem() instanceof ArmorItem armor) {
                 int score = getScore(info.stack);
-                switch (armor.getSlotType()) {
-                    case HEAD -> {
-                        if (filter(bestHelmetScore, score)) {
-                            bestHelmetScore = score;
-                            bestHelmetSlot = info.slot;
-                            bestHelmetChest = info.chest;
-                        }
+                int slotId = info.stack.get(DataComponentTypes.EQUIPPABLE).slot().getEntitySlotId();
+                if (slotId == EquipmentSlot.HEAD.getEntitySlotId()) {
+                    if (filter(bestHelmetScore, score)) {
+                        bestHelmetScore = score;
+                        bestHelmetSlot = info.slot;
+                        bestHelmetChest = info.chest;
                     }
-                    case CHEST -> {
-                        if (filter(bestChestplateScore, score)) {
-                            bestChestplateScore = score;
-                            bestChestplateSlot = info.slot;
-                            bestChestplateChest = info.chest;
-                        }
+                } else
+                if (slotId == EquipmentSlot.CHEST.getEntitySlotId()) {
+                    if (filter(bestChestplateScore, score)) {
+                        bestChestplateScore = score;
+                        bestChestplateSlot = info.slot;
+                        bestChestplateChest = info.chest;
                     }
-                    case LEGS -> {
-                        if (filter(bestLegsScore, score)) {
-                            bestLegsScore = score;
-                            bestLegsSlot = info.slot;
-                            bestLegsChest = info.chest;
-                        }
+                } else
+                if (slotId == EquipmentSlot.LEGS.getEntitySlotId()) {
+                    if (filter(bestLegsScore, score)) {
+                        bestLegsScore = score;
+                        bestLegsSlot = info.slot;
+                        bestLegsChest = info.chest;
                     }
-                    case FEET -> {
-                        if (filter(bestBootsScore, score)) {
-                            bestBootsScore = score;
-                            bestBootsSlot = info.slot;
-                            bestBootsChest = info.chest;
-                        }
+                } else {
+                    if (filter(bestBootsScore, score)) {
+                        bestBootsScore = score;
+                        bestBootsSlot = info.slot;
+                        bestBootsChest = info.chest;
                     }
                 }
             }
@@ -145,6 +145,8 @@ public class AutoArmor extends Module {
         Item item = stack.getItem();
         int score = 0;
         if (item instanceof ArmorItem armor) {
+            score += stack.getMaxDamage();
+            /*
             ArmorMaterial material = armor.getMaterial().value();
             if (material == ArmorMaterials.LEATHER.value())
                 score++;
@@ -158,6 +160,8 @@ public class AutoArmor extends Module {
                 score += 5;
             if (material == ArmorMaterials.NETHERITE.value())
                 score += 6;
+
+             */
 
             if (enchFilter.getValue()) {
                 score += getEnchantmentScore(stack);
@@ -177,11 +181,11 @@ public class AutoArmor extends Module {
     }
 
     public boolean isGoodEnchantment(RegistryEntry<Enchantment> ench) {
-        return ench.equals(mc.world.getRegistryManager().get(Enchantments.BLAST_PROTECTION.getRegistryRef()).getEntry(Enchantments.BLAST_PROTECTION).get()) ||
-                ench.equals(mc.world.getRegistryManager().get(Enchantments.PROTECTION.getRegistryRef()).getEntry(Enchantments.PROTECTION).get()) ||
-                ench.equals(mc.world.getRegistryManager().get(Enchantments.THORNS.getRegistryRef()).getEntry(Enchantments.THORNS).get()) ||
-                ench.equals(mc.world.getRegistryManager().get(Enchantments.UNBREAKING.getRegistryRef()).getEntry(Enchantments.UNBREAKING).get()) ||
-                ench.equals(mc.world.getRegistryManager().get(Enchantments.MENDING.getRegistryRef()).getEntry(Enchantments.MENDING).get());
+        return ench.getKey().get().equals(Enchantments.BLAST_PROTECTION) ||
+                ench.getKey().get().equals(Enchantments.PROTECTION) ||
+                ench.getKey().get().equals(Enchantments.THORNS) ||
+                ench.getKey().get().equals(Enchantments.UNBREAKING) ||
+                ench.getKey().get().equals(Enchantments.MENDING);
     }
 
     public boolean isEmptyArmor(int slot) {

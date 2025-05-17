@@ -81,7 +81,7 @@ public abstract class MixinClientPlayerEntity extends AbstractClientPlayerEntity
         tempSidewaysInput = client.player.input.movementSideways;
     }
 
-    @Inject(method = "tickMovement", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/input/Input;tick(ZF)V", shift = At.Shift.AFTER))
+    @Inject(method = "tickMovement", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/input/Input;tick()V", shift = At.Shift.AFTER))
     public void modifyTickMovementAfterInputTick(CallbackInfo ci) {
         BThack.EVENT_BUS.activate(new UpdateInputEvent());
     }
@@ -91,7 +91,7 @@ public abstract class MixinClientPlayerEntity extends AbstractClientPlayerEntity
         if (ModuleList.noSlow.isEnabled() && ModuleList.noSlow.useItems.getValue()) {
             input.movementSideways = tempSidewaysInput;
             input.movementForward = tempForwardInput;
-            if (!input.sneaking)
+            if (!input.playerInput.sneak())
                 ticksLeftToDoubleTapSprint = tempTicksLeftToDoubleTapSprint;
         }
     }
@@ -102,7 +102,7 @@ public abstract class MixinClientPlayerEntity extends AbstractClientPlayerEntity
         if (ModuleList.elytraFlight.isEnabled() && ModuleList.elytraFlight.mode.getValue().equals("1.12.2 Control")) {
             if (ModuleList.elytraFlight.travelPacket != null) {
                 if (ModuleList.elytraFlight.travelPacket.rotate()) {
-                    Managers.NETWORK_MANAGER.sendPacket(new PlayerMoveC2SPacket.LookAndOnGround(ModuleList.elytraFlight.travelPacket.rot().x, ModuleList.elytraFlight.travelPacket.rot().y, client.player.isOnGround()));
+                    Managers.NETWORK_MANAGER.sendPacket(new PlayerMoveC2SPacket.LookAndOnGround(ModuleList.elytraFlight.travelPacket.rot().x, ModuleList.elytraFlight.travelPacket.rot().y, client.player.isOnGround(), client.player.horizontalCollision));
                 }
                 client.player.ticksSinceLastPositionPacketSent++;
             }

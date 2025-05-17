@@ -3,6 +3,7 @@ package com.ferra13671.BThack.impl.Modules.MOVEMENT;
 import com.ferra13671.BThack.api.Events.Entity.FireworkTickEvent;
 import com.ferra13671.BThack.api.Events.PacketEvent;
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
+import com.ferra13671.BThack.api.IMixin.ModifyFireworkRocket;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.Setting;
 import com.ferra13671.BThack.api.Module.Module;
@@ -35,7 +36,7 @@ public class ExtendedFirework extends Module {
     public void onDisable() {
         super.onDisable();
         if (firework != null) {
-            ((IFireworkRocketEntity) firework).hookExplodeAndRemove();
+            ((ModifyFireworkRocket) firework)._explodeAndRemove();
         }
         firework = null;
         extendFirework = false;
@@ -53,7 +54,7 @@ public class ExtendedFirework extends Module {
         if (mc.player == null) {
             return;
         }
-        if (mc.player.isFallFlying() && firework != e.firework
+        if (mc.player.isGliding() && firework != e.firework
                 && ((IFireworkRocketEntity) e.firework).hookWasShotByEntity()
                 && ((IFireworkRocketEntity) e.firework).getShooter() == mc.player) {
             extendFirework = true;
@@ -70,10 +71,10 @@ public class ExtendedFirework extends Module {
         if (!extendFirework) {
             return;
         }
-        if (!mc.player.isFallFlying() || mc.player.isOnGround() || ticker.passed(maxTime.getValue() * 1000)) {
+        if (!mc.player.isGliding() || mc.player.isOnGround() || ticker.passed(maxTime.getValue() * 1000)) {
             extendFirework = false;
             if (firework != null) {
-                ((IFireworkRocketEntity) firework).hookExplodeAndRemove();
+                ((ModifyFireworkRocket) firework)._explodeAndRemove();
                 firework = null;
             }
             GrimFreezeUtils.stopFreeze();
@@ -83,15 +84,15 @@ public class ExtendedFirework extends Module {
     @EventSubscriber
     public void onPacketSend(PacketEvent.Send e) {
         if (nullCheck()) return;
-        if (e.getPacket() instanceof CommonPongC2SPacket packet
-                && (!extendFirework || !mc.player.isFallFlying())) {
+        if (e.getPacket() instanceof CommonPongC2SPacket
+                && (!extendFirework || !mc.player.isGliding())) {
             GrimFreezeUtils.stopFreeze();
         }
     }
 
     @EventSubscriber
     public void onPacketReceive(PacketEvent.Receive e) {
-        if (nullCheck() || !mc.player.isFallFlying() || !extendFirework) {
+        if (nullCheck() || !mc.player.isGliding() || !extendFirework) {
             return;
         }
         if (e.getPacket() instanceof EntitiesDestroyS2CPacket packet && firework != null) {
@@ -105,7 +106,7 @@ public class ExtendedFirework extends Module {
         if (e.getPacket() instanceof PlayerPositionLookS2CPacket) {
             extendFirework = false;
             if (firework != null) {
-                ((IFireworkRocketEntity) firework).hookExplodeAndRemove();
+                ((ModifyFireworkRocket) firework)._explodeAndRemove();
                 firework = null;
             }
             GrimFreezeUtils.stopFreeze();

@@ -72,18 +72,18 @@ public final class ColorUtils {
 
     public static float[] hashCodeToRGB(int hashCode) {
         return new float[]{
-                (float) ColorHelper.Argb.getRed(hashCode) / 255.0F,
-                (float) ColorHelper.Argb.getGreen(hashCode) / 255.0F,
-                (float) ColorHelper.Argb.getBlue(hashCode) / 255.0F
+                (float) ColorHelper.getRed(hashCode) / 255.0F,
+                (float) ColorHelper.getGreen(hashCode) / 255.0F,
+                (float) ColorHelper.getBlue(hashCode) / 255.0F
         };
     }
 
     public static float[] hashCodeToRGBA(int hashCode) {
         return new float[]{
-                (float) ColorHelper.Argb.getRed(hashCode) / 255.0F,
-                (float) ColorHelper.Argb.getGreen(hashCode) / 255.0F,
-                (float) ColorHelper.Argb.getBlue(hashCode) / 255.0F,
-                (float) ColorHelper.Argb.getAlpha(hashCode) / 255.0F
+                (float) ColorHelper.getRed(hashCode) / 255.0F,
+                (float) ColorHelper.getGreen(hashCode) / 255.0F,
+                (float) ColorHelper.getBlue(hashCode) / 255.0F,
+                (float) ColorHelper.getAlpha(hashCode) / 255.0F
         };
     }
 

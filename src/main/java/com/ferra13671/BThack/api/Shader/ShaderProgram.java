@@ -17,7 +17,7 @@ public class ShaderProgram {
     }
 
     public void use() {
-        RenderSystem.setShader(shader::getProgram);
+        RenderSystem.setShader(shader.getProgram());
     }
 
     public void release() {

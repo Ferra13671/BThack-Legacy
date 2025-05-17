@@ -16,7 +16,7 @@ public class Strafe extends Module {
         if (nullCheck()) return;
 
         if (mc.player != null) {
-            if (!mc.player.isFallFlying()) {
+            if (!mc.player.isGliding()) {
                 Vec3d velocity = mc.player.getVelocity();
 
                 double currentPlayerSpeed = Math.sqrt(velocity.x * velocity.x + velocity.z * velocity.z);

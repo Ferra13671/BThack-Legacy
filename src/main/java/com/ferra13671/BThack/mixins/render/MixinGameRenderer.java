@@ -4,13 +4,14 @@ import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.core.Render.BThackRender;
 import com.ferra13671.BThack.api.Events.Render.RenderWorldLastEvent;
-import com.ferra13671.BThack.api.IMixin.ModifyHeldItemRenderer;
 import com.ferra13671.BThack.api.Shader.Shaders;
 import com.ferra13671.BThack.mixins.accessor.IWorldRenderer;
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.sugar.Local;
+import com.mojang.blaze3d.systems.ProjectionType;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameOverlayRenderer;
 import net.minecraft.client.render.*;
 import net.minecraft.client.render.item.HeldItemRenderer;
@@ -37,22 +38,22 @@ public abstract class MixinGameRenderer {
 
     @Shadow private boolean renderingPanorama;
 
-    @Shadow public abstract void loadProjectionMatrix(Matrix4f projectionMatrix);
-
-    @Shadow public abstract Matrix4f getBasicProjectionMatrix(double fov);
-
-    @Shadow protected abstract double getFov(Camera camera, float tickDelta, boolean changingFov);
+    @Shadow protected abstract float getFov(Camera camera, float tickDelta, boolean changingFov);
 
     @Shadow protected abstract void tiltViewWhenHurt(MatrixStack matrices, float tickDelta);
 
     @Shadow @Final
-    MinecraftClient client;
+    private MinecraftClient client;
 
     @Shadow protected abstract void bobView(MatrixStack matrices, float tickDelta);
 
     @Shadow @Final private LightmapTextureManager lightmapTextureManager;
 
     @Shadow @Final public HeldItemRenderer firstPersonRenderer;
+
+    @Shadow public abstract Matrix4f getBasicProjectionMatrix(float fovDegrees);
+
+    @Shadow @Final private BufferBuilderStorage buffers;
 
     @Inject(method = "shouldRenderBlockOutline", at = @At("HEAD"), cancellable = true)
     public void modifyShouldRenderBlockOutline(CallbackInfoReturnable<Boolean> cir) {
@@ -119,17 +120,16 @@ public abstract class MixinGameRenderer {
             ci.cancel();
     }
 
+    @ModifyExpressionValue(method = "renderWorld", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/math/MathHelper;lerp(FFF)F"))
+    public float modifyLerpInRenderWorld(float original) {
+        return (ModuleList.noRender.isEnabled() && ModuleList.noRender.nausea.getValue()) ? 0 : original;
+    }
+
     @Inject(method = "showFloatingItem", at = @At("HEAD"), cancellable = true)
-    private void onShowFloatingItem(ItemStack floatingItem, CallbackInfo info) {
+    public void modifyShowFloatingItem(ItemStack floatingItem, CallbackInfo info) {
         if (floatingItem.getItem() == Items.TOTEM_OF_UNDYING && ModuleList.noRender.isEnabled() && ModuleList.noRender.totemAnimation.getValue()) {
             info.cancel();
         }
-    }
-
-    @Inject(method = "renderNausea", at = @At("HEAD"), cancellable = true)
-    public void modifyRenderNausea(DrawContext context, float distortionStrength, CallbackInfo ci) {
-        if (ModuleList.noRender.isEnabled() && ModuleList.noRender.nausea.getValue())
-            ci.cancel();
     }
 
     @Inject(method = "render", at = @At("HEAD"))
@@ -138,36 +138,37 @@ public abstract class MixinGameRenderer {
     }
 
     @ModifyReturnValue(method = "getFov",at = @At("RETURN"))
-    public double modifyGetFov(double original) {
+    public float modifyGetFov(float original) {
         return ModuleList.zoom.isEnabled() && ModuleList.zoom.needZoom() ? ModuleList.zoom.getFov(original) : original;
     }
 
     @Unique
     public void renderShaderHand(Camera camera, float tickDelta) {
         if (!renderingPanorama) {
-            loadProjectionMatrix(getBasicProjectionMatrix(getFov(camera, tickDelta, false)));
+            Matrix4f matrix4f2 = getBasicProjectionMatrix(this.getFov(camera, tickDelta, false));
+            RenderSystem.setProjectionMatrix(matrix4f2, ProjectionType.PERSPECTIVE);
             MatrixStack matrixStack = new MatrixStack();
             matrixStack.push();
             if (!(ModuleList.handTweaks.isEnabled() && ModuleList.handTweaks.noBob.getValue())) {
                 tiltViewWhenHurt(matrixStack, tickDelta);
-                if (client.options.getBobView().getValue()) {
+                if (client.options.getBobView().getValue())
                     bobView(matrixStack, tickDelta);
-                }
             }
 
-            boolean bl = client.getCameraEntity() instanceof LivingEntity && ((LivingEntity) client.getCameraEntity()).isSleeping();
+            boolean bl = this.client.getCameraEntity() instanceof LivingEntity && ((LivingEntity) client.getCameraEntity()).isSleeping();
             if (client.options.getPerspective().isFirstPerson() && !bl && !client.options.hudHidden && client.interactionManager.getCurrentGameMode() != GameMode.SPECTATOR) {
                 lightmapTextureManager.enable();
-                OutlineVertexConsumerProvider outlineVertexConsumerProvider = ((IWorldRenderer) client.worldRenderer)._getBufferBuilders().getOutlineVertexConsumers();
-                outlineVertexConsumerProvider.setColor(255, 255, 255, 255);
-                ((ModifyHeldItemRenderer) firstPersonRenderer).renderShaderItem(tickDelta, matrixStack, outlineVertexConsumerProvider, client.player, client.getEntityRenderDispatcher().getLight(client.player, tickDelta));
+                firstPersonRenderer.renderItem(tickDelta, matrixStack, buffers.getEntityVertexConsumers(), client.player, client.getEntityRenderDispatcher().getLight(client.player, tickDelta));
                 lightmapTextureManager.disable();
             }
 
             matrixStack.pop();
             if (client.options.getPerspective().isFirstPerson() && !bl) {
-                InGameOverlayRenderer.renderOverlays(client, matrixStack);
+                VertexConsumerProvider.Immediate immediate = buffers.getEntityVertexConsumers();
+                InGameOverlayRenderer.renderOverlays(client, matrixStack, immediate);
+                immediate.draw();
             }
+
         }
     }
 }

@@ -14,15 +14,10 @@ import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CropBlock;
 import net.minecraft.block.FarmlandBlock;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.registry.DynamicRegistryManager;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 
@@ -93,7 +88,7 @@ public class AutoFarm extends Module {
             if (slot != -1)
                 InventoryUtils.swapAction(prevSlot, slot, true, swap.getValue());
 
-            prevBreakPoses.put(pos, crop.getPickStack(mc.world, pos, mc.world.getBlockState(pos)).getItem());
+            prevBreakPoses.put(pos, crop.getPickStack(mc.world, pos, mc.world.getBlockState(pos), true).getItem());
         });
     }
 
@@ -141,9 +136,7 @@ public class AutoFarm extends Module {
         for (int i = 0; i < 36; i++) {
             ItemStack itemStack = mc.player.getInventory().getStack(i);
 
-            DynamicRegistryManager dynamicRegistryManager = mc.world.getRegistryManager();
-            Registry<Enchantment> enchs = dynamicRegistryManager.get(RegistryKeys.ENCHANTMENT);
-            double score = enchs.getEntry(Enchantments.FORTUNE).map(entry -> EnchantmentHelper.getLevel(entry, itemStack)).orElse(0);
+            double score = ItemUtils.getEnchantmentLevel(itemStack, Enchantments.FORTUNE);
             if (score > bestScore) {
                 bestScore = score;
                 bestSlot = i;

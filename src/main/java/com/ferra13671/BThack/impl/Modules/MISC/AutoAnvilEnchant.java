@@ -20,7 +20,6 @@ import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.ItemEnchantmentsComponent;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -36,6 +35,7 @@ import net.minecraft.util.math.MathHelper;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 @ModuleInfo(name = "AutoAnvilEnchant", description = "lang.module.AutoAnvilEnchant", category = "MISC")
@@ -149,7 +149,7 @@ public class AutoAnvilEnchant extends Module {
         for (int i = 0; i < 36; i++) {
             ItemStack inventoryItem = mc.player.getInventory().getStack(i);
             enchantSearch: {
-                if (inventoryItem.getItem() instanceof EnchantedBookItem) {
+                if (inventoryItem.getItem() == Items.ENCHANTED_BOOK) {
                     for (RegistryKey<Enchantment> enchantment : itemInfo.needEnchantments.keySet()) {
                         for (Object2IntMap.Entry<RegistryEntry<Enchantment>> itemEnchantment : EnchantmentHelper.getEnchantments(inventoryItem).getEnchantmentEntries()) {
                             String ench = enchantment.getValue().toString();
@@ -232,7 +232,7 @@ public class AutoAnvilEnchant extends Module {
                 List<RegistryKey<Enchantment>> removableEnchantments = new ArrayList<>();
                 for (RegistryKey<Enchantment> enchantment : needEnchantments.keySet()) {
                     for (RegistryEntry<Enchantment> itemEnchantment : stack.getEnchantments().getEnchantments()) {
-                        if (itemEnchantment.equals(mc.world.getRegistryManager().get(enchantment.getRegistryRef()).getEntry(enchantment).get())) {
+                        if (itemEnchantment.getKey().get().equals(enchantment)) {
                             removableEnchantments.add(enchantment);
                             break;
                         }
@@ -249,53 +249,50 @@ public class AutoAnvilEnchant extends Module {
     }
 
     public int getLevelToMerge(ItemStack itemStack1, ItemStack itemStack2) {
-        int level;
-
+        int level = 1;
 
         int i = 0;
         long l = 0L;
         int j = 0;
         if (!itemStack1.isEmpty() && EnchantmentHelper.canHaveEnchantments(itemStack1)) {
-            ItemStack itemStack1Copy = itemStack1.copy();
-            ItemEnchantmentsComponent.Builder builder = new ItemEnchantmentsComponent.Builder(EnchantmentHelper.getEnchantments(itemStack1Copy));
-            l += (long)itemStack1.getOrDefault(DataComponentTypes.REPAIR_COST, 0) + (long)itemStack2.getOrDefault(DataComponentTypes.REPAIR_COST, 0);
-
+            ItemEnchantmentsComponent.Builder builder = new ItemEnchantmentsComponent.Builder(EnchantmentHelper.getEnchantments(itemStack1));
+            l += (long) itemStack1.getOrDefault(DataComponentTypes.REPAIR_COST, 0) + (long) itemStack2.getOrDefault(DataComponentTypes.REPAIR_COST, 0);
             int k;
             if (!itemStack2.isEmpty()) {
                 boolean bl = itemStack2.contains(DataComponentTypes.STORED_ENCHANTMENTS);
                 int m;
                 int n;
-                if (itemStack1Copy.isDamageable() && itemStack1Copy.getItem().canRepair(itemStack1, itemStack2)) {
-                    k = Math.min(itemStack1Copy.getDamage(), itemStack1Copy.getMaxDamage() / 4);
+                if (itemStack1.isDamageable() && itemStack1.canRepairWith(itemStack2)) {
+                    k = Math.min(itemStack1.getDamage(), itemStack1.getMaxDamage() / 4);
                     if (k <= 0) {
-                        level = 0;
+                        level = -1;
                         return level;
                     }
 
                     for(m = 0; k > 0 && m < itemStack2.getCount(); ++m) {
-                        n = itemStack1Copy.getDamage() - k;
-                        itemStack1Copy.setDamage(n);
+                        n = itemStack1.getDamage() - k;
+                        itemStack1.setDamage(n);
                         ++i;
-                        k = Math.min(itemStack1Copy.getDamage(), itemStack1Copy.getMaxDamage() / 4);
+                        k = Math.min(itemStack1.getDamage(), itemStack1.getMaxDamage() / 4);
                     }
                 } else {
-                    if (!bl && (!itemStack1Copy.isOf(itemStack2.getItem()) || !itemStack1Copy.isDamageable())) {
-                        level = 0;
+                    if (!bl && (!itemStack1.isOf(itemStack2.getItem()) || !itemStack1.isDamageable())) {
+                        level = -1;
                         return level;
                     }
 
-                    if (itemStack1Copy.isDamageable() && !bl) {
+                    if (itemStack1.isDamageable() && !bl) {
                         k = itemStack1.getMaxDamage() - itemStack1.getDamage();
                         m = itemStack2.getMaxDamage() - itemStack2.getDamage();
-                        n = m + itemStack1Copy.getMaxDamage() * 12 / 100;
+                        n = m + itemStack1.getMaxDamage() * 12 / 100;
                         int o = k + n;
-                        int p = itemStack1Copy.getMaxDamage() - o;
+                        int p = itemStack1.getMaxDamage() - o;
                         if (p < 0) {
                             p = 0;
                         }
 
-                        if (p < itemStack1Copy.getDamage()) {
-                            itemStack1Copy.setDamage(p);
+                        if (p < itemStack1.getDamage()) {
+                            itemStack1.setDamage(p);
                             i += 2;
                         }
                     }
@@ -303,11 +300,13 @@ public class AutoAnvilEnchant extends Module {
                     ItemEnchantmentsComponent itemEnchantmentsComponent = EnchantmentHelper.getEnchantments(itemStack2);
                     boolean bl2 = false;
                     boolean bl3 = false;
+                    Iterator var26 = itemEnchantmentsComponent.getEnchantmentEntries().iterator();
 
-                    for (Object2IntMap.Entry<RegistryEntry<Enchantment>> registryEntryEntry : itemEnchantmentsComponent.getEnchantmentEntries()) {
-                        RegistryEntry<Enchantment> registryEntry = registryEntryEntry.getKey();
+                    while(var26.hasNext()) {
+                        Object2IntMap.Entry<RegistryEntry<Enchantment>> entry = (Object2IntMap.Entry)var26.next();
+                        RegistryEntry<Enchantment> registryEntry = entry.getKey();
                         int q = builder.getLevel(registryEntry);
-                        int r = registryEntryEntry.getIntValue();
+                        int r = entry.getIntValue();
                         r = q == r ? r + 1 : Math.max(r, q);
                         Enchantment enchantment = registryEntry.value();
                         boolean bl4 = enchantment.isAcceptableItem(itemStack1);
@@ -315,8 +314,11 @@ public class AutoAnvilEnchant extends Module {
                             bl4 = true;
                         }
 
-                        for (RegistryEntry<Enchantment> enchantmentRegistryEntry : builder.getEnchantments()) {
-                            if (!enchantmentRegistryEntry.equals(registryEntry) && !Enchantment.canBeCombined(registryEntry, enchantmentRegistryEntry)) {
+                        Iterator var20 = builder.getEnchantments().iterator();
+
+                        while(var20.hasNext()) {
+                            RegistryEntry<Enchantment> registryEntry2 = (RegistryEntry)var20.next();
+                            if (!registryEntry2.equals(registryEntry) && !Enchantment.canBeCombined(registryEntry, registryEntry2)) {
                                 bl4 = false;
                                 ++i;
                             }
@@ -344,7 +346,7 @@ public class AutoAnvilEnchant extends Module {
                     }
 
                     if (bl3 && !bl2) {
-                        level = 0;
+                        level = -1;
                         return level;
                     }
                 }
@@ -353,24 +355,23 @@ public class AutoAnvilEnchant extends Module {
             if (itemStack1.contains(DataComponentTypes.CUSTOM_NAME)) {
                 j = 1;
                 i += j;
-                itemStack1Copy.remove(DataComponentTypes.CUSTOM_NAME);
+                itemStack1.remove(DataComponentTypes.CUSTOM_NAME);
             }
 
-            level = (int)MathHelper.clamp(l + (long)i, 0L, 2147483647L);
+            level = i <= 0 ? 0 : (int)MathHelper.clamp(l + (long)i, 0L, 2147483647L);
             if (i <= 0) {
-                itemStack1Copy = ItemStack.EMPTY;
+                itemStack1 = ItemStack.EMPTY;
             }
 
-            if (j == i && j > 0 && level >= 40) {
+            if (j == i && j > 0 && level >= 40)
                 level = 39;
-            }
 
             if (level >= 40 && !mc.player.getAbilities().creativeMode) {
-                itemStack1Copy = ItemStack.EMPTY;
+                itemStack1 = ItemStack.EMPTY;
             }
 
-            if (!itemStack1Copy.isEmpty()) {
-                k = itemStack1Copy.getOrDefault(DataComponentTypes.REPAIR_COST, 0);
+            if (!itemStack1.isEmpty()) {
+                k = itemStack1.getOrDefault(DataComponentTypes.REPAIR_COST, 0);
                 if (k < itemStack2.getOrDefault(DataComponentTypes.REPAIR_COST, 0)) {
                     k = itemStack2.getOrDefault(DataComponentTypes.REPAIR_COST, 0);
                 }
@@ -379,13 +380,13 @@ public class AutoAnvilEnchant extends Module {
                     k = getNextCost(k);
                 }
 
-                itemStack1Copy.set(DataComponentTypes.REPAIR_COST, k);
-                EnchantmentHelper.set(itemStack1Copy, builder.build());
+                itemStack1.set(DataComponentTypes.REPAIR_COST, k);
+                EnchantmentHelper.set(itemStack1, builder.build());
             }
 
-        } else {
             level = 0;
-            return level;
+        } else {
+            level = -1;
         }
         return level;
     }

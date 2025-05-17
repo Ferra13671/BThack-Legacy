@@ -3,8 +3,8 @@ package com.ferra13671.BThack.impl.Modules.RENDER;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Module.ModuleInfo;
+import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RotationAxis;
 
@@ -18,9 +18,9 @@ public class CustomBob extends Module {
 
 
     public void customBob(MatrixStack matrices) {
-        PlayerEntity playerEntity = (PlayerEntity) mc.getCameraEntity();
-        float f = playerEntity.horizontalSpeed - playerEntity.prevHorizontalSpeed;
-        float g = -(playerEntity.horizontalSpeed + f * mc.getRenderTickCounter().getTickDelta(true));
+        AbstractClientPlayerEntity playerEntity = (AbstractClientPlayerEntity) mc.getCameraEntity();
+        float f = playerEntity.distanceMoved - playerEntity.lastDistanceMoved;
+        float g = -(playerEntity.distanceMoved + f * mc.getRenderTickCounter().getTickDelta(true));
         float h = MathHelper.lerp(mc.getRenderTickCounter().getTickDelta(true), playerEntity.prevStrideDistance, playerEntity.strideDistance);
         matrices.translate((MathHelper.sin(g * 3.1415927F) * h * 0.5F) * TXStrength.getValue().floatValue(), (-Math.abs(MathHelper.cos(g * 3.1415927F) * h)) * TYStrength.getValue().floatValue(), 0.0F);
         matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees((MathHelper.sin(g * 3.1415927F) * h * 3.0F) * RZStrength.getValue().floatValue()));

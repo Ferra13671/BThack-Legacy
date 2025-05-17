@@ -8,9 +8,7 @@ import com.ferra13671.BThack.impl.Modules.RENDER.Xray;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.world.BlockView;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -19,18 +17,17 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(Block.class)
 public class MixinBlock implements Mc {
 
-    @Inject(at = @At("HEAD"), method = "shouldDrawSide(Lnet/minecraft/block/BlockState;Lnet/minecraft/world/BlockView;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/math/Direction;Lnet/minecraft/util/math/BlockPos;)Z", cancellable = true)
-    private static void onShouldDrawSide(BlockState state, BlockView world, BlockPos pos, Direction direction, BlockPos blockPos, CallbackInfoReturnable<Boolean> cir) {
+    @Inject(at = @At("HEAD"), method = "shouldDrawSide", cancellable = true)
+    private static void onShouldDrawSide(BlockState state, BlockState otherState, Direction side, CallbackInfoReturnable<Boolean> cir) {
 
         if (Xray.doXray) {
-            BlockState state2 = mc.world.getBlockState(pos);
             BlockList blockList = DataLists.get("Xray", BlockList.class);
             if (!blockList.values.contains(state.getBlock()))
                 cir.setReturnValue(false);
             else
                 cir.setReturnValue(true);
 
-            if (!blockList.values.contains(state2.getBlock()))
+            if (!blockList.values.contains(otherState.getBlock()))
                 cir.setReturnValue(false);
             else
                 cir.setReturnValue(true);

@@ -4,10 +4,12 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.api.Module.OneActionModule;
 import com.ferra13671.BThack.api.Utils.InventoryUtils;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ArmorItem;
-import net.minecraft.item.ElytraItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.screen.slot.SlotActionType;
 
 import java.util.Arrays;
@@ -26,7 +28,7 @@ public class ElytraSwap extends OneActionModule {
         }
 
         Item armor = mc.player.getInventory().getArmorStack(2).getItem();
-        if (armor instanceof ElytraItem) {
+        if (armor == Items.ELYTRA) {
             if (!equipChestplate()) removeChestplateOrElytra();
         } else if (armor instanceof ArmorItem){
             if (!equipElytra()) removeChestplateOrElytra();
@@ -35,8 +37,9 @@ public class ElytraSwap extends OneActionModule {
 
     private boolean equipChestplate() {
         for (int needSlot = 0; needSlot < 36; needSlot++) {
-            if (mc.player.getInventory().getStack(needSlot).getItem() instanceof ArmorItem armorItem) {
-                if (armorItem.getSlotType() == EquipmentSlot.CHEST) {
+            ItemStack itemStack = mc.player.getInventory().getStack(needSlot);
+            if (itemStack.getItem() instanceof ArmorItem) {
+                if (itemStack.get(DataComponentTypes.EQUIPPABLE).slot().getEntitySlotId() == EquipmentSlot.CHEST.getEntitySlotId()) {
                     int item = needSlot < 9 ? needSlot + 36 : needSlot;
 
                     if (moveType.getValue().equals("Swap")) {
@@ -54,7 +57,7 @@ public class ElytraSwap extends OneActionModule {
 
     private boolean equipElytra() {
         for (int needSlot = 0; needSlot < 36; needSlot++) {
-            if (mc.player.getInventory().getStack(needSlot).getItem() instanceof ElytraItem) {
+            if (mc.player.getInventory().getStack(needSlot).getItem() == Items.ELYTRA) {
                 int item;
                 if (needSlot < 9)
                     item = needSlot + 36;

@@ -14,22 +14,6 @@ import java.util.Map;
 
 @Mixin(SoundSystem.class)
 public class MixinSoundSystem {
-    /*
-    Why can't the Mojangs do their code right????
-    No bitch, we're the ones who have to take this shit and fix it.
-
-
-
-
-
-
-
-
-
-    Kill me, please...
-     */
-
-
     @Shadow private boolean started;
 
     @Shadow @Final private Map<SoundInstance, Integer> soundEndTicks;

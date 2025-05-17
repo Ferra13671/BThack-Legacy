@@ -13,6 +13,7 @@ import com.ferra13671.BThack.api.Shader.ShaderProgram;
 import com.ferra13671.BThack.api.Shader.Shaders;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.render.MapRenderState;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.FilledMapItem;
 import net.minecraft.item.ItemStack;
@@ -54,6 +55,8 @@ public class Tooltips extends Module {
         speed = new NumberSetting("Speed", this, 1, 0.3, 4, false, () -> rainbow.getValue() || gradient.getValue());
     }
 
+    private final MapRenderState mapRenderState = new MapRenderState();
+
     public void renderShulkerTooltip(ItemStack itemStack, List<ItemStack> stacks, int x, int y) {
         if (stacks.isEmpty()) return;
 
@@ -83,7 +86,7 @@ public class Tooltips extends Module {
             int offsetX = x + (slot % 9) * 16 + 11;
             int offsetY = y + (slot / 9) * 16 - 3;
 
-            BThackRender.drawItem(stack, offsetX, offsetY, null, true);
+            BThackRender.drawItem(stack, offsetX, offsetY, true);
             slot++;
         }
 
@@ -132,7 +135,8 @@ public class Tooltips extends Module {
 
             BThackMatrix.pop();
 
-            mc.gameRenderer.getMapRenderer().draw(context.getMatrices(), BThackRender.bufferSource, stack.get(DataComponentTypes.MAP_ID), mapState, false, 0xF000F0);
+            mc.getMapRenderer().update(stack.get(DataComponentTypes.MAP_ID), mapState, mapRenderState);
+            mc.getMapRenderer().draw(mapRenderState, context.getMatrices(), BThackRender.bufferSource, false, 0xF000F0);
         }
         context.getMatrices().pop();
     }

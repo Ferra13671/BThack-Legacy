@@ -19,10 +19,10 @@ The cheat client also has a plugin system that allows you to add your own module
 </div>
 
 ## Installing
-1. Install Minecraft 1.21.1
-2. install the latest Fabric loader for 1.21.1 [(fabric website)](https://fabricmc.net/)
-3. Get the latest 1.21.1 BThack version [(releases)](https://github.com/Ferra13671/BThack/releases)
-4. Get the latest 1.21.1 Fabric Api version [(modrinth)](https://modrinth.com/mod/fabric-api)
+1. Install Minecraft 1.21.4
+2. install the latest Fabric loader for 1.21.4 [(fabric website)](https://fabricmc.net/)
+3. Get the latest 1.21.4 BThack version [(releases)](https://github.com/Ferra13671/BThack/releases)
+4. Get the latest 1.21.4 Fabric Api version [(modrinth)](https://modrinth.com/mod/fabric-api)
 5. Put the files in your `.minecraft/mods` folder
 
 ## FAQ

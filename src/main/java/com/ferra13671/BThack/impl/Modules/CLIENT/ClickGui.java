@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.impl.Modules.CLIENT;
 
+import com.ferra13671.BThack.Constants;
 import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Client.Client;
 import com.ferra13671.BThack.core.Client.ModuleList;
@@ -11,8 +12,8 @@ import com.ferra13671.BThack.api.Shader.ShaderProgram;
 import com.ferra13671.BThack.api.Shader.Shaders;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.GuiSystem.BThackScreens;
-import com.ferra13671.BThack.mixins.accessor.IGameRenderer;
 import net.minecraft.client.gl.PostEffectProcessor;
+import net.minecraft.client.render.DefaultFramebufferSet;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -130,13 +131,12 @@ public class ClickGui extends OneActionModule {
         }
     }
 
-    public static void renderBlur(float tickDelta) {
-        PostEffectProcessor blurProcessor = ((IGameRenderer) mc.gameRenderer).getBlurPostProcessor();
-        if (blurProcessor != null) {
-            blurProcessor.setUniforms("Radius", ModuleList.clickGui.blurStrength.getValue().floatValue());
-            blurProcessor.render(tickDelta);
+    public static void renderBlur() {
+        PostEffectProcessor postEffectProcessor = mc.getShaderLoader().loadPostEffect(Constants.BLUR_IDENTIFIER, DefaultFramebufferSet.MAIN_ONLY);
+        if (postEffectProcessor != null) {
+            postEffectProcessor.setUniforms("Radius", ModuleList.clickGui.blurStrength.getValue().floatValue());
+            postEffectProcessor.render(mc.getFramebuffer(), mc.gameRenderer.pool);
         }
-        mc.getFramebuffer().beginWrite(false);
     }
 
     public static Easing getCurrentEasing() {

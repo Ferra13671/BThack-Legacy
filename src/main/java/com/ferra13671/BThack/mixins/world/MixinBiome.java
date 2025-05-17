@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class MixinBiome {
 
     @Inject(method = "getPrecipitation", at = @At("HEAD"), cancellable = true)
-    public void modifyGetPrecipitation(BlockPos pos, CallbackInfoReturnable<Biome.Precipitation> cir) {
+    public void modifyGetPrecipitation(BlockPos pos, int seaLevel, CallbackInfoReturnable<Biome.Precipitation> cir) {
         if (ModuleList.ambience.isEnabled() && ModuleList.ambience.customWeather.getValue()) {
             if (ModuleList.ambience.weather.getValue().equals("Rain") || ModuleList.ambience.weather.getValue().equals("Thunder"))
                 cir.setReturnValue(Biome.Precipitation.RAIN);

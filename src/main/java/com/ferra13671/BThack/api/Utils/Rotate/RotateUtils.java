@@ -27,7 +27,7 @@ public final class RotateUtils implements Mc {
     }
 
     public static void packetRotate(float yaw, float pitch) {
-        Managers.NETWORK_MANAGER.sendPacket(new PlayerMoveC2SPacket.LookAndOnGround(yaw, pitch, mc.player.onGround));
+        Managers.NETWORK_MANAGER.sendPacket(new PlayerMoveC2SPacket.LookAndOnGround(yaw, pitch, mc.player.onGround, mc.player.horizontalCollision));
         mc.player.lastYaw = yaw;
         mc.player.lastPitch = pitch;
         mc.player.lastOnGround = mc.player.onGround;

@@ -50,10 +50,10 @@ public final class BlockUtils implements Mc {
         }
 
         try {
-            Block block = Registries.BLOCK.getOrEmpty(Identifier.of(nameOrId))
+            Block block = Registries.BLOCK.getOptionalValue(Identifier.of(nameOrId))
                     .orElse(null);
             if (block == null)
-                block = Registries.BLOCK.getOrEmpty(Identifier.of("minecraft:" + nameOrId)).orElse(null);
+                block = Registries.BLOCK.getOptionalValue(Identifier.of("minecraft:" + nameOrId)).orElse(null);
 
             return block;
         } catch (InvalidIdentifierException e) {
@@ -83,7 +83,7 @@ public final class BlockUtils implements Mc {
     }
 
     public static boolean isOpaqueFullCube(BlockPos pos) {
-        return getState(pos).isOpaqueFullCube(mc.world, pos);
+        return getState(pos).isOpaqueFullCube();
     }
 
     public static BlockHitResult raycast(Vec3d from, Vec3d to, RaycastContext.FluidHandling fluidHandling) {

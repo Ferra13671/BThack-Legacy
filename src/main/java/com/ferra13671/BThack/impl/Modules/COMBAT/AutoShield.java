@@ -32,7 +32,7 @@ public class AutoShield extends Module {
             entities.add(entity);
         }
 
-        Entity entity1 = entities.stream().filter(entity -> entity instanceof PersistentProjectileEntity).filter(entity -> !((PersistentProjectileEntity) entity).inGround).min(Comparator.comparing(
+        Entity entity1 = entities.stream().filter(entity -> entity instanceof PersistentProjectileEntity).filter(entity -> !entity.onGround).min(Comparator.comparing(
                 entity -> entity.distanceTo(mc.player))).filter(entity -> entity.distanceTo(mc.player) <= 5).orElse(null);
 
         PersistentProjectileEntity arrow = (PersistentProjectileEntity) entity1;
@@ -41,7 +41,7 @@ public class AutoShield extends Module {
             if (mc.player.getOffHandStack() != null) {
                 if (mc.player.getOffHandStack().getItem() instanceof ShieldItem) {
                     float yaw = RotateUtils.rotations(arrow)[0];
-                    Managers.NETWORK_MANAGER.sendPacket(new PlayerMoveC2SPacket.LookAndOnGround(yaw, mc.player.pitch, mc.player.onGround));
+                    Managers.NETWORK_MANAGER.sendPacket(new PlayerMoveC2SPacket.LookAndOnGround(yaw, mc.player.pitch, mc.player.onGround, mc.player.horizontalCollision));
 
                     //I don't know why but without it, minecraft doesn't want to recognize that the shield is activated
                     mc.options.useKey.setPressed(true);

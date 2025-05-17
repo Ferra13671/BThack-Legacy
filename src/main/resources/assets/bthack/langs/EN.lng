@@ -7,7 +7,6 @@
 "lang.module.CustomCape": Allows you to see a custom cape.
 "lang.module.CustomFont": Allows BThack to render a custom font.
 "lang.module.DiscordRPC": You get BThack activity.
-"lang.module.FPSReducer": Limits fps if the game is unfocused.
 "lang.module.HUD": Enabling and configuring HUD modules.
 "lang.module.HudEditor": Opens the HUD Editor menu.
 "lang.module.Macros": Enables the macro system.
@@ -72,7 +71,6 @@
 "lang.module.Scrapper": Breaks blocks, above the level of your feet.
 "lang.module.SuperInstaMine": Allows you to instantly mine a lot of blocks. (WARNING: change the size settings with caution!)
 "lang.module.Timer": Speeds up/slows down game ticks.
-"lang.module.TopperRadar": Warns you if there is a topper nearby.
 "lang.module.TrashThrower": Throws selected trash out of inventory.
 "lang.module.TreeCutter": Mines the whole tree at once. (Works in conjunction with PacketMine)
 "lang.module.TridentDupe": Automatically dupes the trident. (Patched on latest version of paper as of 16 Feb, 2025; Patched on 2b2t.org 18 Feb, 2025)

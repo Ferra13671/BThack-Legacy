@@ -4,6 +4,7 @@ import com.ferra13671.BThack.core.Render.BThackMatrix;
 import com.ferra13671.BThack.core.Render.Utils.BThackRenderUtils;
 import com.ferra13671.TextureUtils.GlTex;
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.gl.ShaderProgramKeys;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.render.VertexFormat;
 import net.minecraft.client.render.VertexFormats;
@@ -16,12 +17,12 @@ public class TextureRectDrawer extends Drawer {
     @Deprecated
     public void begin(Identifier texture) {
         RenderSystem.setShaderTexture(0, texture);
-        buffer = BThackRenderUtils.prepareToDraw(GameRenderer::getPositionTexProgram).begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE);
+        buffer = BThackRenderUtils.prepareToDraw(ShaderProgramKeys.POSITION_TEX).begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE);
     }
 
     public void begin(GlTex texture) {
         RenderSystem.setShaderTexture(0, texture.getTexId());
-        buffer = BThackRenderUtils.prepareToDraw(GameRenderer::getPositionTexProgram).begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE);
+        buffer = BThackRenderUtils.prepareToDraw(ShaderProgramKeys.POSITION_TEX).begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE);
     }
 
     public void draw(float x1, float y1, float x2, float y2, Matrix4f matrix4f) {

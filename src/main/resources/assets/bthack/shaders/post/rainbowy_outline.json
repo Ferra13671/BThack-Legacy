@@ -1,21 +1,24 @@
 {
-	"targets": [
-		"bufIn",
-		"swap",
-		"bufOut"
-	],
-	"passes": [
-		{
-			"name": "bthack:rainbowy_outline",
-			"intarget": "bufIn",
-			"outtarget": "swap",
-			"uniforms": []
-		},
-		{
-			"name": "blit",
-			"intarget": "swap",
-			"outtarget": "bufOut",
-			"uniforms": []
-		}
-	]
+    "vertex": "minecraft:post/sobel",
+    "fragment": "bthack:post/rainbowy_outline",
+    "attributes": [
+        "Position"
+    ],
+    "samplers": [
+        {"name": "DiffuseSampler"}
+    ],
+    "uniforms": [
+        { "name": "ProjMat", "type": "matrix4x4", "count": 16, "values": [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]},
+        { "name": "InSize", "type": "float", "count": 2, "values": [1.0, 1.0]},
+        { "name": "OutSize", "type": "float", "count": 2, "values": [1.0, 1.0]},
+        { "name": "quality", "type": "int", "count": 1, "values": [ 1.0] },
+        { "name": "scale", "type": "float", "count": 1, "values": [ 1.0] },
+        { "name": "time",  "type": "float",	 "count": 1,  "values": [1.0] },
+        { "name": "resolution",  "type": "float", "count": 2,  "values": [1.0, 1.0] },
+        { "name": "brightness",  "type": "float",	 "count": 1,  "values": [1.0] },
+        { "name": "fillAlpha",  "type": "float",	 "count": 1,  "values": [1.0] },
+        { "name": "outlineAlpha",  "type": "float",	 "count": 1,  "values": [1.0] },
+        { "name": "speed",  "type": "float",	 "count": 1,  "values": [1.0] },
+        { "name": "saturation",  "type": "float",	 "count": 1,  "values": [1.0] }
+    ]
 }

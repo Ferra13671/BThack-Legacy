@@ -52,7 +52,7 @@ public class ArmorComponent extends HudComponent {
                     maxWidth = textWidth;
                 }
 
-                BThackRender.drawItem(armorStack, (int) getX() + 3, (int) getY() + 3 + y, null, false);
+                BThackRender.drawItem(armorStack, (int) getX() + 3, (int) getY() + 3 + y, false);
                 BThackRender.drawString(text, (int) getX() + 23, (int) getY() + y + 3, ColorUtils.fastRGBA(armorStack.getItemBarColor()), true, FontRenderManager.DrawMode.NORMAL_BOLD);
                 BThackRender.drawRect((int) getX() + 20 + 3, (int) (getY() + y + 2 + FontUtils.getTextHeight(text, FontRenderManager.DrawMode.NORMAL_BOLD)) + 3, (int) getX() + 20 + 50 + 3, (int) (getY() + y + FontUtils.getTextHeight(text, FontRenderManager.DrawMode.NORMAL_BOLD) + 8), ColorUtils.BLACK);
                 if (ItemUtils.getItemDurabilityInPercentages(armorStack) > 0)
@@ -72,7 +72,7 @@ public class ArmorComponent extends HudComponent {
         for (int i = 3; i > -1; i--) {
             ItemStack armorStack = mc.player.getInventory().armor.get(i);
             if (armorStack.getItem() != Items.AIR) {
-                BThackRender.drawItem(armorStack, (int) (getX() + x + 3), (int) (getY() + 6), null, false);
+                BThackRender.drawItem(armorStack, (int) (getX() + x + 3), (int) (getY() + 6), false);
                 String text = "" + ((int) ItemUtils.getItemDurabilityInPercentages(armorStack));
                 BThackRender.drawCenteredString(text, (int) (getX() + x + 11), (int) getY() + 3, ColorUtils.fastRGBA(armorStack.getItemBarColor()), FontRenderManager.DrawMode.SMALL);
             }

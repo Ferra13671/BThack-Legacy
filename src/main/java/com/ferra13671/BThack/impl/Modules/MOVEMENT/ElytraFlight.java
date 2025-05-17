@@ -23,9 +23,9 @@ import com.ferra13671.BThack.impl.Modules.PLAYER.AutoFirework;
 import com.ferra13671.BThack.mixins.accessor.entity.IEntity;
 import com.ferra13671.BThack.mixins.accessor.entity.ILivingEntity;
 import com.ferra13671.BThack.mixins.accessor.packet.IPlayerMoveC2SPacket;
-import com.ferra13671.BThack.mixins.accessor.packet.IPlayerPositionLookS2CPacket;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.client.input.Input;
+import net.minecraft.entity.player.PlayerPosition;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket;
@@ -373,10 +373,8 @@ public class ElytraFlight extends Module {
             case "1.12.2 Control" -> {
                 if (mc.player.isSpectator() || !_elytraIsEquipped || _elytraDurability <= 1 || !_isFlying) return;
 
-                if (e.getPacket() instanceof PlayerPositionLookS2CPacket) {
-                    IPlayerPositionLookS2CPacket packet = (IPlayerPositionLookS2CPacket) e.getPacket();
-                    packet.setPitch(0);
-                }
+                if (e.getPacket() instanceof PlayerPositionLookS2CPacket packet)
+                    e.setPacket(new PlayerPositionLookS2CPacket(packet.teleportId(), new PlayerPosition(packet.change().position(), packet.change().deltaMovement(), packet.change().yaw(), 0), packet.relatives()));
             }
         }
     }
@@ -463,8 +461,8 @@ public class ElytraFlight extends Module {
             }
         }
 
-        if (!mc.player.isFallFlying()) {
-            mc.player.startFallFlying();
+        if (!mc.player.isGliding()) {
+            mc.player.startGliding();
             Managers.NETWORK_MANAGER.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.START_FALL_FLYING));
             sendBounceGrimPacket();
         }
@@ -486,13 +484,12 @@ public class ElytraFlight extends Module {
     public void bounceInput() {
         Input input = mc.player.input;
         if (!alwaysPress.getValue().equals("Sprint") && !alwaysPress.getValue().equals("None"))
-            input.sneaking = true;
+            InputUtils.setSneaking(true);
         if (autoWalk.getValue()) {
-            input.pressingForward = true;
-            input.movementForward = 1;
+            InputUtils.setForward(true);
         }
         if (autoJump.getValue())
-            input.jumping = true;
+            InputUtils.setJumping(true);
 
         sendBounceGrimPacket();
     }
@@ -657,7 +654,7 @@ public class ElytraFlight extends Module {
     //---------Boost Mode---------//
     @SuppressWarnings("ConstantConditions")
     public void boostAction() {
-        if (PlayerUtils.getEntitySpeed(mc.player) < maxSpeed.getValue() && mc.player.isFallFlying()) {
+        if (PlayerUtils.getEntitySpeed(mc.player) < maxSpeed.getValue() && mc.player.isGliding()) {
             if (mc.player.pitch > startBoostPitch.getValue()) {
                 double boost = 1 + boostStrength.getValue();
                 mc.player.velocity.x *= boost;
@@ -672,7 +669,7 @@ public class ElytraFlight extends Module {
     //---------Timer Mode---------//
     @SuppressWarnings("ConstantConditions")
     public void timerMode() {
-        if (!mc.player.isFallFlying()) {
+        if (!mc.player.isGliding()) {
             return;
         }
 
@@ -734,7 +731,7 @@ public class ElytraFlight extends Module {
     //---------Auto Glide---------//
     @SuppressWarnings("ConstantConditions")
     public void autoGlideAction() {
-        if (mc.player.isFallFlying()) {
+        if (mc.player.isGliding()) {
             allowAutoGlide = true;
         } else {
             if (mc.player.getInventory().getArmorStack(2).getItem() == Items.ELYTRA) {
@@ -745,7 +742,7 @@ public class ElytraFlight extends Module {
             }
         }
 
-        if (!allowAutoGlide || !mc.player.isFallFlying()) return;
+        if (!allowAutoGlide || !mc.player.isGliding()) return;
 
         if (mc.player.getY() <= gUpHeight.getValue()) {
             if (autoGlideAction != AutoGlideModeAction.UP) {
@@ -981,7 +978,7 @@ public class ElytraFlight extends Module {
             sendNotification("Landed!");
             autoLanding.setValue(false);
             return;
-        } else if (mc.player.getAbilities().flying || !mc.player.isFallFlying()) { //|| isPacketFlying) {
+        } else if (mc.player.getAbilities().flying || !mc.player.isGliding()) { //|| isPacketFlying) {
             reset(true);
             takeoff(event);
             return;
@@ -1053,7 +1050,7 @@ public class ElytraFlight extends Module {
         }
 
         /* Elytra flying status check */
-        _isFlying = mc.player.isFallFlying();
+        _isFlying = mc.player.isGliding();
 
         /* Movement input check */
         _isStandingStillH = !mc.options.forwardKey.isPressed() && !mc.options.backKey.isPressed() && !mc.options.leftKey.isPressed() && !mc.options.rightKey.isPressed();

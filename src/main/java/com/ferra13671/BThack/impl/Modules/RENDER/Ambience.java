@@ -3,16 +3,17 @@ package com.ferra13671.BThack.impl.Modules.RENDER;
 import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.api.Events.Render.RenderWorldLastEvent;
-import com.ferra13671.BThack.api.IMixin.ModifyWorldRenderer;
+import com.ferra13671.BThack.api.IMixin.ModifySkyRendering;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.*;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.Ticker;
+import com.ferra13671.BThack.mixins.accessor.IWorldRenderer;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.client.render.*;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
-import org.joml.Quaternionf;
+import org.joml.Matrix3f;
 import org.joml.Vector3f;
 
 import java.awt.*;
@@ -68,7 +69,8 @@ public class Ambience extends Module {
     public void onChangeSetting(Setting<?> setting) {
         if (setting == worldTimeMode) ticker.reset();
         if (isEnabled()) {
-            if (setting == stars || setting == starsSeed || setting == customStars) ((ModifyWorldRenderer) mc.worldRenderer).generateStarsMap();
+            if (setting == stars || setting == starsSeed || setting == customStars)
+                ((ModifySkyRendering) ((IWorldRenderer)mc.worldRenderer)._getSkyRendering()).generateStarsMap();
         }
     }
 
@@ -76,13 +78,13 @@ public class Ambience extends Module {
     public void onEnable() {
         super.onEnable();
         ticker.reset();
-        ((ModifyWorldRenderer) mc.worldRenderer).generateStarsMap();
+        ((ModifySkyRendering) ((IWorldRenderer)mc.worldRenderer)._getSkyRendering()).generateStarsMap();
     }
 
     @Override
     public void onDisable() {
         super.onDisable();
-        ((ModifyWorldRenderer) mc.worldRenderer).generateStarsMap();
+        ((ModifySkyRendering) ((IWorldRenderer)mc.worldRenderer)._getSkyRendering()).generateStarsMap();
     }
 
     public Vec3d getFogColor() {
@@ -115,12 +117,11 @@ public class Ambience extends Module {
     @EventSubscriber
     public void onRender(RenderWorldLastEvent e) {
         if (customWorldTime.getValue() && worldTimeMode.getValue().equals("Spin") && !nullCheck())
-            mc.world.setTimeOfDay(0);
+            mc.world.getLevelProperties().setTimeOfDay(getWorldTime());
     }
 
-    public BuiltBuffer buildStarsBuffer() {
+    public void tessellateStar(VertexConsumer vertexConsumer) {
         Random random = Random.create(starsSeed.getValue().longValue());
-        BufferBuilder bufferBuilder = Tessellator.getInstance().begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION);
 
         for(int j = 0; j < stars.getValue(); ++j) {
             float g = random.nextFloat() * 2.0F - 1.0F;
@@ -131,15 +132,14 @@ public class Ambience extends Module {
             if (!(m <= 0.010000001F) && !(m >= 1.0F)) {
                 Vector3f vector3f = (new Vector3f(g, h, k)).normalize(100.0F);
                 float n = (float)(random.nextDouble() * 3.1415927410125732 * 2.0);
-                Quaternionf quaternionf = (new Quaternionf()).rotateTo(new Vector3f(0.0F, 0.0F, -1.0F), vector3f).rotateZ(n);
-                bufferBuilder.vertex(vector3f.add((new Vector3f(l, -l, 0.0F)).rotate(quaternionf)));
-                bufferBuilder.vertex(vector3f.add((new Vector3f(l, l, 0.0F)).rotate(quaternionf)));
-                bufferBuilder.vertex(vector3f.add((new Vector3f(-l, l, 0.0F)).rotate(quaternionf)));
-                bufferBuilder.vertex(vector3f.add((new Vector3f(-l, -l, 0.0F)).rotate(quaternionf)));
+                Matrix3f matrix3f = (new Matrix3f()).rotateTowards((new Vector3f(vector3f)).negate(), new Vector3f(0.0F, 1.0F, 0.0F)).rotateZ(-n);
+                vertexConsumer.vertex((new Vector3f(l, -l, 0.0F)).mul(matrix3f).add(vector3f));
+                vertexConsumer.vertex((new Vector3f(l, l, 0.0F)).mul(matrix3f).add(vector3f));
+                vertexConsumer.vertex((new Vector3f(-l, l, 0.0F)).mul(matrix3f).add(vector3f));
+                vertexConsumer.vertex((new Vector3f(-l, -l, 0.0F)).mul(matrix3f).add(vector3f));
             }
         }
 
-        return bufferBuilder.end();
     }
 
     public boolean isParticleWeather() {

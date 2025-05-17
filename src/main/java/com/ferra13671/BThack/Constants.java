@@ -6,6 +6,7 @@ import com.ferra13671.BThack.api.Animation.Easing;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.minecraft.util.Formatting;
+import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,6 +21,8 @@ public final class Constants {
     public static final String BTHACK_PREFIX = "[" + Formatting.BLUE + "BThack" + Formatting.RESET + "] ";
     public static final Logger BTHACK_LOGGER = LoggerFactory.getLogger("BThack");
     public static final String BTHACK_APP_ID = "1221431287852826676";
+
+    public static final Identifier BLUR_IDENTIFIER = Identifier.ofVanilla("blur");
 
     public static final int GUISYSTEM_BUTTON_RECT_COLOR = ColorUtils.fastRGBA(0, 0, 0, 76);
     public static final int GUISYSTEM_BUTTON_HOVERED_LIGHT_COLOR = ColorUtils.fastRGBA(255,255,255, 178);

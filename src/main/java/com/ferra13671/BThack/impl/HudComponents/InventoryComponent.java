@@ -31,7 +31,7 @@ public class InventoryComponent extends HudComponent {
             int offsetX = (int) getX() + (i % 9) * 16;
             int offsetY = (int) getY() + (i / 9) * 16;
 
-            BThackRender.drawItem(itemStack, offsetX + 3, offsetY + 3, null, true);
+            BThackRender.drawItem(itemStack, offsetX + 3, offsetY + 3, true);
         }
     }
 }

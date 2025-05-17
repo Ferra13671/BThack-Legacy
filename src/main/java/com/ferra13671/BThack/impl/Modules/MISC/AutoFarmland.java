@@ -14,13 +14,10 @@ import com.ferra13671.BThack.api.Utils.Rotate.RotateUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.PlayerInteractBlockC2SPacket;
-import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -153,22 +150,7 @@ public class AutoFarmland extends Module {
     public int findBestToolInternal(Item item) {
         return InventoryUtils.findItem(item, 36, stack -> {
             if (ItemUtils.getItemDurability(stack) < 30) return -999;
-            return filterEnchantments(stack);
+            return ItemUtils.getEnchantmentLevel(stack, Enchantments.UNBREAKING);
         });
-    }
-
-    public int filterEnchantments(ItemStack stack) {
-        int score = 0;
-
-
-        for (RegistryEntry<Enchantment> ench : stack.getEnchantments().getEnchantments()) {
-            int lvl = stack.getEnchantments().getLevel(ench);
-
-            if (ench.equals(mc.world.getRegistryManager().get(Enchantments.UNBREAKING.getRegistryRef()).getEntry(Enchantments.UNBREAKING).get()))
-                score += lvl;
-
-        }
-
-        return score;
     }
 }

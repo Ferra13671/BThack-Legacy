@@ -21,7 +21,7 @@ public final class SoundSystem implements Mc {
     public static void playSound(Sound sound, float pitch, float volume) {
         if (random == null) random = SoundInstance.createRandom();
         if (Module.nullCheck())
-            mc.getSoundManager().play(new PositionedSoundInstance(sound.getSoundEvent().getId(), SoundCategory.MASTER, volume, pitch, random, false, 0, SoundInstance.AttenuationType.NONE, 0.0, 0.0, 0.0, true));
+            mc.getSoundManager().play(new PositionedSoundInstance(sound.getSoundEvent().id(), SoundCategory.MASTER, volume, pitch, random, false, 0, SoundInstance.AttenuationType.NONE, 0.0, 0.0, 0.0, true));
         else
             mc.world.playSound(mc.player, mc.player.getBlockPos(), sound.getSoundEvent(), SoundCategory.MASTER, volume, pitch);
     }

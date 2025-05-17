@@ -10,16 +10,12 @@ import com.ferra13671.BThack.api.Utils.ItemUtils;
 import com.ferra13671.BThack.api.Utils.MathUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.component.EnchantmentEffectComponentTypes;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.FishingRodItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.s2c.play.PlaySoundS2CPacket;
-import net.minecraft.registry.DynamicRegistryManager;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKeys;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.Vec3d;
@@ -155,13 +151,10 @@ public class AutoFish extends Module {
         if(stack.isEmpty() || !(stack.getItem() instanceof FishingRodItem))
             return -1;
 
-        DynamicRegistryManager dynamicRegistryManager = mc.world.getRegistryManager();
-        Registry<Enchantment> enchs = dynamicRegistryManager.get(RegistryKeys.ENCHANTMENT);
-
-        int luckOfTheSeaLvl = enchs.getEntry(Enchantments.LUCK_OF_THE_SEA).map(entry -> EnchantmentHelper.getLevel(entry, stack)).orElse(0);
-        int lureLvl = enchs.getEntry(Enchantments.LURE).map(entry -> EnchantmentHelper.getLevel(entry, stack)).orElse(0);
-        int unbreakingLvl = enchs.getEntry(Enchantments.UNBREAKING).map(entry -> EnchantmentHelper.getLevel(entry, stack)).orElse(0);
-        int mendingLvl = enchs.getEntry(Enchantments.MENDING).map(entry -> EnchantmentHelper.getLevel(entry, stack)).orElse(0);
+        int luckOfTheSeaLvl = ItemUtils.getEnchantmentLevel(stack, Enchantments.LUCK_OF_THE_SEA);
+        int lureLvl = ItemUtils.getEnchantmentLevel(stack, Enchantments.LURE);
+        int unbreakingLvl = ItemUtils.getEnchantmentLevel(stack, Enchantments.UNBREAKING);
+        int mendingLvl = ItemUtils.getEnchantmentLevel(stack, Enchantments.MENDING);
         int noVanishLvl = EnchantmentHelper.hasAnyEnchantmentsWith(stack, EnchantmentEffectComponentTypes.PREVENT_EQUIPMENT_DROP) ? 0 : 1;
 
         return luckOfTheSeaLvl * 9 + lureLvl * 9 + unbreakingLvl * 2 + mendingLvl

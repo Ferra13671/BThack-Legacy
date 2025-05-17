@@ -2,6 +2,7 @@ package com.ferra13671.BThack.api.Managers.managers.TravelChange;
 
 import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.api.Events.Entity.UpdateInputEvent;
+import com.ferra13671.BThack.api.Utils.InputUtils;
 import com.ferra13671.BThack.api.Utils.MathUtils;
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.api.Events.Camera.RotateCameraEvent;
@@ -121,14 +122,24 @@ public class TravelChangeManager implements Initializable, Mc {
     I'm too lazy to write all the math myself, so I just use a matrix for transform player input.
      */
     private void moveFix(boolean sneaking, TravelChanger travelChanger) {
-        float forward = (mc.player.input.pressingForward ? 1 : mc.player.input.pressingBack ? -1 : 0);
-        float sideways = (mc.player.input.pressingLeft ? 1 : mc.player.input.pressingRight ? -1 : 0);
+        float forward = (mc.player.input.playerInput.forward() ? 1 : mc.player.input.playerInput.backward() ? -1 : 0);
+        float sideways = (mc.player.input.playerInput.left() ? 1 : mc.player.input.playerInput.right() ? -1 : 0);
 
         Matrix4f matrix = new Matrix4f();
         matrix.rotate((float) Math.toRadians(mc.player.getYaw() - RotateUtils.getCameraYaw()), 0, 1, 0);
         Vec3d updatedInput = MathUtils.transformPos(matrix, sideways, 0, forward);
 
-        mc.player.input.movementForward = (float) (travelChanger.strongMoveFix().get() ? updatedInput.getZ() : Math.round(updatedInput.getZ())) * (sneaking ? (float) mc.player.getAttributeValue(EntityAttributes.PLAYER_SNEAKING_SPEED) : 1);
-        mc.player.input.movementSideways = (float) (travelChanger.strongMoveFix().get() ? updatedInput.getX() : Math.round(updatedInput.getX())) * (sneaking ? (float) mc.player.getAttributeValue(EntityAttributes.PLAYER_SNEAKING_SPEED) : 1);
+        forward = (float) (travelChanger.strongMoveFix().get() ? updatedInput.getZ() : Math.round(updatedInput.getZ())) * (sneaking ? (float) mc.player.getAttributeValue(EntityAttributes.SNEAKING_SPEED) : 1);
+        sideways = (float) (travelChanger.strongMoveFix().get() ? updatedInput.getX() : Math.round(updatedInput.getX())) * (sneaking ? (float) mc.player.getAttributeValue(EntityAttributes.SNEAKING_SPEED) : 1);
+
+        InputUtils.setForward(forward > 0.0f);
+        InputUtils.setBackward(forward < 0.0f);
+        InputUtils.setLeft(sideways > 0.0f);
+        InputUtils.setRight(sideways < 0.0f);
+
+        if (travelChanger.strongMoveFix().get()) {
+            mc.player.input.movementForward = forward;
+            mc.player.input.movementSideways = sideways;
+        }
     }
 }

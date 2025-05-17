@@ -32,7 +32,6 @@ public final class ModuleList {
     public static CustomCape customCape = register(new CustomCape());
     public static CustomFont customFont = (DeviceSystem.getLaunchDevice() == DeviceSystem.LaunchDevice.PC) ? register(new CustomFont()) : null;
     public static DiscordRPC discordRPC = register(new DiscordRPC());
-    public static FPSReducer fpsReducer = register(new FPSReducer());
     public static HUD HUD = register(new HUD());
     public static HudEditor hudEditor = register(new HudEditor());
     public static Macros macros = register(new Macros());
@@ -96,7 +95,6 @@ public final class ModuleList {
     public static Scrapper scrapper = register(new Scrapper());
     public static SuperInstaMine superInstaMine = register(new SuperInstaMine());
     public static Timer timer = register(new Timer());
-    public static TopperRadar topperRadar = register(new TopperRadar());
     public static TrashThrower trashThrower = register(new TrashThrower());
     public static TreeCutter treeCutter = register(new TreeCutter());
     public static TridentDupe tridentDupe = register(new TridentDupe());
@@ -188,7 +186,6 @@ public final class ModuleList {
     public static HandTweaks handTweaks = register(new HandTweaks());
     public static HoleESP holeESP = register(new HoleESP());
     public static LastOpenChest lastOpenChest = register(new LastOpenChest());
-    public static MinecraftShaders minecraftShaders = register(new MinecraftShaders());
     public static ModifyCamera modifyCamera = register(new ModifyCamera());
     public static MotionBlur motionBlur = register(new MotionBlur());
     public static Nametags nametags = register(new Nametags());

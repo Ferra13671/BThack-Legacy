@@ -14,6 +14,7 @@ import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.client.input.Input;
 import net.minecraft.client.input.KeyboardInput;
 import net.minecraft.client.option.GameOptions;
+import net.minecraft.util.PlayerInput;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec2f;
 import net.minecraft.util.math.Vec3d;
@@ -83,7 +84,7 @@ public class FreeCam extends Module {
         }
 
         @Override
-        public void tick(boolean slowDown, float slowDownFactor) {
+        public void tick() {
             unset();
             float hSpeed = ModuleList.freeCam.horizontalSpeed.getValue().floatValue() / 10f;
             float vSpeed = ModuleList.freeCam.verticalSpeed.getValue().floatValue() / 10f;
@@ -103,14 +104,9 @@ public class FreeCam extends Module {
         }
 
         private void unset() {
-            this.pressingForward = false;
-            this.pressingBack = false;
-            this.pressingLeft = false;
-            this.pressingRight = false;
+            playerInput = new PlayerInput(false, false, false, false, false, false, false);
             this.movementForward = 0;
             this.movementSideways = 0;
-            this.jumping = false;
-            this.sneaking = false;
         }
 
         private float getMovementMultiplier(boolean positive, boolean negative) {
