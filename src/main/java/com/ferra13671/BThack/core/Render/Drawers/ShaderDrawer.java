@@ -2,7 +2,7 @@ package com.ferra13671.BThack.core.Render.Drawers;
 
 import com.ferra13671.BThack.core.Render.BThackMatrix;
 import com.ferra13671.BThack.core.Render.Utils.BThackRenderUtils;
-import com.ferra13671.BThack.api.Shader.ShaderProgram;
+import com.ferra13671.BThack.api.Shaders.BThackShaderProgram;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexFormat;
 import net.minecraft.client.render.VertexFormats;
@@ -11,9 +11,9 @@ import org.joml.Matrix4f;
 import static com.ferra13671.BThack.core.Render.Utils.BThackRenderUtils.prepareToDraw;
 
 public class ShaderDrawer extends Drawer {
-    private ShaderProgram shaderProgram;
+    private BThackShaderProgram shaderProgram;
 
-    public void begin(ShaderProgram shaderProgram) {
+    public void begin(BThackShaderProgram shaderProgram) {
         this.shaderProgram = shaderProgram;
         shaderProgram.use();
         Tessellator tessellator = prepareToDraw();

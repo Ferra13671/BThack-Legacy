@@ -14,6 +14,7 @@ public class MotionBlur extends Module {
     public final NumberSetting blur = new NumberSetting("Blur", this, 50, 0, 99, false);
 
     public MotionBlur() {
+        /*
         ShaderEffectRenderCallback.EVENT.register(tickDelta -> {
             if (this.isEnabled()) {
                 if (getBlur() != 0) {
@@ -25,6 +26,8 @@ public class MotionBlur extends Module {
                 }
             }
         });
+
+         */
     }
 
     private float prevBlur = 0;

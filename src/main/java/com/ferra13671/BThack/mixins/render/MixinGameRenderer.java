@@ -4,7 +4,7 @@ import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.core.Render.BThackRender;
 import com.ferra13671.BThack.api.Events.Render.RenderWorldLastEvent;
-import com.ferra13671.BThack.api.Shader.Shaders;
+import com.ferra13671.BThack.api.Shaders.Shaders;
 import com.ferra13671.BThack.mixins.accessor.IWorldRenderer;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;

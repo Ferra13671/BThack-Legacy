@@ -2,7 +2,7 @@ package com.ferra13671.BThack.core.Render.Box;
 
 import com.ferra13671.BThack.core.Render.BThackRender;
 import com.ferra13671.BThack.core.Render.Utils.BThackRenderUtils;
-import com.ferra13671.BThack.api.Shader.Shaders;
+import com.ferra13671.BThack.api.Shaders.Shaders;
 import com.ferra13671.BThack.api.Utils.RegionPos;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gl.GlUsage;

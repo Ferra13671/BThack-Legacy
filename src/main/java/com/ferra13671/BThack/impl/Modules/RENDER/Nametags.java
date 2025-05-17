@@ -15,7 +15,7 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ColorSetting
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Shader.Shaders;
+import com.ferra13671.BThack.api.Shaders.Shaders;
 import com.ferra13671.BThack.impl.Modules.CLIENT.ClientSettings;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.entity.Entity;

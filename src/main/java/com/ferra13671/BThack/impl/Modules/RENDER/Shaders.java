@@ -1,10 +1,8 @@
 package com.ferra13671.BThack.impl.Modules.RENDER;
 
-import com.ferra13671.BThack.api.IMixin.ModifyPostEffectProcessor;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.*;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Module.ModuleInfo;
-import net.minecraft.client.gl.PostEffectProcessor;
 import net.minecraft.util.Identifier;
 import org.ladysnake.satin.api.managed.ManagedShaderEffect;
 import org.ladysnake.satin.api.managed.ShaderEffectManager;
@@ -65,7 +63,7 @@ public class Shaders extends Module {
             case "Gradient" -> {
                 gradientShader.setUniformValue("quality", lineWidth.getValue().intValue());
                 gradientShader.setUniformValue("scale", (float) (int) (scale.getValue() * 1000));
-                gradientShader.setUniformValue("time", com.ferra13671.BThack.api.Shader.Shaders.INSTANCE.shaderTicker.getPassedTime() / 1000f);
+                gradientShader.setUniformValue("time", com.ferra13671.BThack.api.Shaders.Shaders.INSTANCE.shaderTicker.getPassedTime() / 1000f);
                 gradientShader.setUniformValue("resolution", (float) mc.getWindow().getWidth(), mc.getWindow().getHeight());
                 gradientShader.setUniformValue("fillAlpha", fillAlpha.getValue().floatValue() / 255f);
                 gradientShader.setUniformValue("outlineAlpha", outlineAlpha.getValue().floatValue() / 255f);
@@ -77,7 +75,7 @@ public class Shaders extends Module {
             case "Rainbow_xy" -> {
                 rainbowXYShader.setUniformValue("quality", lineWidth.getValue().intValue());
                 rainbowXYShader.setUniformValue("scale", (float) (int) (scale.getValue() * 1000));
-                rainbowXYShader.setUniformValue("time", com.ferra13671.BThack.api.Shader.Shaders.INSTANCE.shaderTicker.getPassedTime() / 1000f);
+                rainbowXYShader.setUniformValue("time", com.ferra13671.BThack.api.Shaders.Shaders.INSTANCE.shaderTicker.getPassedTime() / 1000f);
                 rainbowXYShader.setUniformValue("resolution", (float) mc.getWindow().getWidth(), mc.getWindow().getHeight());
                 rainbowXYShader.setUniformValue("brightness", brightness.getValue().floatValue());
                 rainbowXYShader.setUniformValue("saturation", saturation.getValue().floatValue());
@@ -89,7 +87,7 @@ public class Shaders extends Module {
             case "Rainbow_x" -> {
                 rainbowXShader.setUniformValue("quality", lineWidth.getValue().intValue());
                 rainbowXShader.setUniformValue("scale", (float) (int) (scale.getValue() * 1000));
-                rainbowXShader.setUniformValue("time", com.ferra13671.BThack.api.Shader.Shaders.INSTANCE.shaderTicker.getPassedTime() / 1000f);
+                rainbowXShader.setUniformValue("time", com.ferra13671.BThack.api.Shaders.Shaders.INSTANCE.shaderTicker.getPassedTime() / 1000f);
                 rainbowXShader.setUniformValue("resolution", (float) mc.getWindow().getWidth(), mc.getWindow().getHeight());
                 rainbowXShader.setUniformValue("brightness", brightness.getValue().floatValue());
                 rainbowXShader.setUniformValue("saturation", saturation.getValue().floatValue());
@@ -101,7 +99,7 @@ public class Shaders extends Module {
             case "Rainbow_y" -> {
                 rainbowYShader.setUniformValue("quality", lineWidth.getValue().intValue());
                 rainbowYShader.setUniformValue("scale", (float) (int) (scale.getValue() * 1000));
-                rainbowYShader.setUniformValue("time", com.ferra13671.BThack.api.Shader.Shaders.INSTANCE.shaderTicker.getPassedTime() / 1000f);
+                rainbowYShader.setUniformValue("time", com.ferra13671.BThack.api.Shaders.Shaders.INSTANCE.shaderTicker.getPassedTime() / 1000f);
                 rainbowYShader.setUniformValue("resolution", (float) mc.getWindow().getWidth(), mc.getWindow().getHeight());
                 rainbowYShader.setUniformValue("brightness", brightness.getValue().floatValue());
                 rainbowYShader.setUniformValue("saturation", saturation.getValue().floatValue());
@@ -140,7 +138,7 @@ public class Shaders extends Module {
     }
 
     public void initShader(ManagedShaderEffect shaderEffect) {
-        PostEffectProcessor effect = shaderEffect.getShaderEffect();
+        //PostEffectProcessor effect = shaderEffect.getShaderEffect();
 
         //((ModifyPostEffectProcessor) effect)._addTargetHook("bufIn", mc.worldRenderer.getEntityOutlinesFramebuffer());
         //((ModifyPostEffectProcessor) effect)._addTargetHook("bufOut", mc.worldRenderer.getEntityOutlinesFramebuffer());

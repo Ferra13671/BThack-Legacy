@@ -1,4 +1,4 @@
-package com.ferra13671.BThack.api.Shader;
+package com.ferra13671.BThack.api.Shaders;
 
 import com.ferra13671.BThack.api.Utils.Ticker;
 

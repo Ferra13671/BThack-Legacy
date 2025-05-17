@@ -16,7 +16,7 @@ import com.ferra13671.BThack.api.Gui.Screen.ClickGui.component.components.settin
 import com.ferra13671.BThack.api.Gui.Screen.HudEditor.Utils.HudComponentButton;
 import com.ferra13671.BThack.api.Module.HudComponent;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Shader.Shaders;
+import com.ferra13671.BThack.api.Shaders.Shaders;
 import com.ferra13671.BThack.Constants;
 import com.ferra13671.BThack.api.Utils.Data;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;

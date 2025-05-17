@@ -1,10 +1,12 @@
 package com.ferra13671.BThack.mixins.gui_and_hud;
 
+import com.ferra13671.BThack.api.Shaders.CoreShaderLoader;
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.api.Gui.Screen.MainMenu.BThackMainMenuScreen;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.SoundSystem.Sounds;
 import com.ferra13671.BThack.api.GuiSystem.BThackScreens;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.screen.TitleScreen;
 import net.minecraft.client.sound.PositionedSoundInstance;
 import org.spongepowered.asm.mixin.Mixin;
@@ -17,6 +19,7 @@ public class MixinTitleScreen implements Mc {
 
     @Inject(method = "init", at = @At("HEAD"))
     public void modifyInit(CallbackInfo ci) {
+        RenderSystem.recordRenderCall(CoreShaderLoader::loadPrograms);
         if (BThackMainMenuScreen.firstOpened) {
             if (ModuleList.clientSettings.startSound.getValue())
                 mc.getSoundManager().play(PositionedSoundInstance.master(Sounds.START.getSoundEvent(), 1, 1));

@@ -7,8 +7,8 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSettin
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.Setting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Module.ModuleInfo;
-import com.ferra13671.BThack.api.Shader.MainMenu.MainMenuShader;
-import com.ferra13671.BThack.api.Shader.MainMenu.MainMenuShaders;
+import com.ferra13671.BThack.api.Shaders.MainMenu.MainMenuBThackShader;
+import com.ferra13671.BThack.api.Shaders.MainMenu.MainMenuShaders;
 import com.ferra13671.BThack.api.Utils.MathUtils;
 
 import java.util.ArrayList;
@@ -44,7 +44,7 @@ public class MenuShader extends Module {
         Managers.MAIN_MENU_SHADER_MANAGER.setMainMenuShader(getShader());
     }
 
-    public MainMenuShader getShader() {
+    public MainMenuBThackShader getShader() {
         return random.getValue() ?
                 MainMenuShaders.getShaders().get(shader.getOptions().get(MathUtils.randomInt(0, MainMenuShaders.getShaders().size() - 1))) :
                 MainMenuShaders.getShaders().get(shader.getValue());

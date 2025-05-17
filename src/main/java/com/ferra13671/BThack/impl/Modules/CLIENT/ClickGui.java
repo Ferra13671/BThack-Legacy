@@ -8,8 +8,8 @@ import com.ferra13671.BThack.core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Animation.Easing;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.*;
 import com.ferra13671.BThack.api.Module.OneActionModule;
-import com.ferra13671.BThack.api.Shader.ShaderProgram;
-import com.ferra13671.BThack.api.Shader.Shaders;
+import com.ferra13671.BThack.api.Shaders.BThackShaderProgram;
+import com.ferra13671.BThack.api.Shaders.Shaders;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.GuiSystem.BThackScreens;
 import net.minecraft.client.gl.PostEffectProcessor;
@@ -111,7 +111,7 @@ public class ClickGui extends OneActionModule {
         }
     }
 
-    public ShaderProgram getCurrentShader() {
+    public BThackShaderProgram getCurrentShader() {
         if (gradient.getValue()) return Shaders.INSTANCE.XY_GRADIENT;
         else return Shaders.INSTANCE.X_RAINBOW;
     }
@@ -137,6 +137,7 @@ public class ClickGui extends OneActionModule {
             postEffectProcessor.setUniforms("Radius", ModuleList.clickGui.blurStrength.getValue().floatValue());
             postEffectProcessor.render(mc.getFramebuffer(), mc.gameRenderer.pool);
         }
+        mc.getFramebuffer().beginWrite(false);
     }
 
     public static Easing getCurrentEasing() {

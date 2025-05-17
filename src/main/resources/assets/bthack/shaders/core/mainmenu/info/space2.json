@@ -1,12 +1,6 @@
 {
-  "blend": {
-    "func": "add",
-    "srcrgb": "srcalpha",
-    "dstrgb": "1-srcalpha"
-  },
-  "vertex": "position",
-  "fragment": "bthack:mainmenu/fsh/space2",
-  "attributes": [],
+  "vertex": "minecraft:core/position",
+  "fragment": "bthack:core/mainmenu/fsh/space2",
   "samplers": [
   ],
   "uniforms": [

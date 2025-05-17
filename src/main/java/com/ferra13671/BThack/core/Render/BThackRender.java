@@ -13,8 +13,8 @@ import com.ferra13671.BThack.core.Render.Line.BThackLineRender;
 import com.ferra13671.BThack.core.Render.Utils.BThackRenderUtils;
 import com.ferra13671.BThack.core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.core.Render.Utils.ScissorStack;
-import com.ferra13671.BThack.api.Shader.ShaderProgram;
-import com.ferra13671.BThack.api.Shader.Shaders;
+import com.ferra13671.BThack.api.Shaders.BThackShaderProgram;
+import com.ferra13671.BThack.api.Shaders.Shaders;
 import com.ferra13671.BThack.api.Utils.RegionPos;
 import com.ferra13671.BThack.impl.HudComponents.ArrayListComponent;
 import com.ferra13671.TextureUtils.GlTex;
@@ -107,7 +107,7 @@ public final class BThackRender implements Mc {
     }
 
     public static void drawRoundedRect(float x1, float y1, float x2, float y2, float radius, int color) {
-        BufferBuilder buffer = BThackRenderUtils.prepareToDraw(Shaders.INSTANCE.ROUNDED_RECT.shader.getProgram()).begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION);
+        BufferBuilder buffer = BThackRenderUtils.prepareToDraw(Shaders.INSTANCE.ROUNDED_RECT.getShader()).begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION);
 
         Matrix4f matrix4f = BThackMatrix.peek().getPositionMatrix();
         Vector3f startPos = matrix4f.transformPosition(x1, y1, 0, new Vector3f());
@@ -153,7 +153,7 @@ public final class BThackRender implements Mc {
     }
 
     public static void drawRoundedRectWithOutline(float x1, float y1, float x2, float y2, float radius, int color, int outlineColor, float depth) {
-        BufferBuilder buffer = BThackRenderUtils.prepareToDraw(Shaders.INSTANCE.ROUNDED_RECT_WITH_OUTLINE.shader.getProgram()).begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION);
+        BufferBuilder buffer = BThackRenderUtils.prepareToDraw(Shaders.INSTANCE.ROUNDED_RECT_WITH_OUTLINE.getShader()).begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION);
 
         Matrix4f matrix4f = BThackMatrix.peek().getPositionMatrix();
         Vector3f startPos = matrix4f.transformPosition(x1, y1, 0, new Vector3f());
@@ -262,7 +262,7 @@ public final class BThackRender implements Mc {
         Drawers.GRADIENT_RECT.end();
     }
 
-    public static void drawShaderOutlineRect(ShaderProgram shaderProgram, float x1, float y1, float x2, float y2, float depth) {
+    public static void drawShaderOutlineRect(BThackShaderProgram shaderProgram, float x1, float y1, float x2, float y2, float depth) {
         Drawers.SHADER_DRAWER.begin(shaderProgram);
         Drawers.SHADER_DRAWER.draw(x1,y1, x1 + depth, y2); //left
         Drawers.SHADER_DRAWER.draw(x1 + depth, y2 - depth, x2, y2); //down
@@ -352,7 +352,7 @@ public final class BThackRender implements Mc {
         Drawers.TEXTURE_RECT.end();
     }
 
-    public static void drawShader(ShaderProgram shaderProgram, float x1, float y1, float x2, float y2) {
+    public static void drawShader(BThackShaderProgram shaderProgram, float x1, float y1, float x2, float y2) {
         Drawers.SHADER_DRAWER.begin(shaderProgram);
         Drawers.SHADER_DRAWER.draw(x1, y1, x2, y2);
         Drawers.SHADER_DRAWER.end();

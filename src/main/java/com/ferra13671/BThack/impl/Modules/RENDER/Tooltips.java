@@ -9,8 +9,8 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetti
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ColorSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.api.Shader.ShaderProgram;
-import com.ferra13671.BThack.api.Shader.Shaders;
+import com.ferra13671.BThack.api.Shaders.BThackShaderProgram;
+import com.ferra13671.BThack.api.Shaders.Shaders;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.MapRenderState;
@@ -65,7 +65,7 @@ public class Tooltips extends Module {
 
         BThackRender.drawVerticalGradientOutlineRect(x + 7, y - 22, x + 159, y + 49, 1, ColorUtils.WHITE, ColorUtils.fastRGBA(120, 120, 120, 255));
         if (isShaderRender()) {
-            ShaderProgram shader = getCurrentShader(); //Just ignore this warn
+            BThackShaderProgram shader = getCurrentShader(); //Just ignore this warn
             shader.setUniformValue("scale", scale.getValue().floatValue());
             shader.setUniformValue("speed", speed.getValue().floatValue());
             if (rainbow.getValue())
@@ -117,7 +117,7 @@ public class Tooltips extends Module {
             BThackMatrix.translate(0f, 0f, 600f);
             BThackRender.drawRect(x1, y1 - 10, x2, y2, ColorUtils.fastRGBA(backGroundColor.getValue().getRed(), backGroundColor.getValue().getGreen(), backGroundColor.getValue().getBlue(), backGroundColor.getValue().getAlpha()));
             if (isShaderRender()) {
-                ShaderProgram shader = getCurrentShader(); //Just ignore this warn
+                BThackShaderProgram shader = getCurrentShader(); //Just ignore this warn
                 shader.setUniformValue("scale", scale.getValue().floatValue());
                 shader.setUniformValue("speed", speed.getValue().floatValue());
                 if (rainbow.getValue())
@@ -145,7 +145,7 @@ public class Tooltips extends Module {
         return rainbow.getValue() || gradient.getValue();
     }
 
-    public ShaderProgram getCurrentShader() {
+    public BThackShaderProgram getCurrentShader() {
         return gradient.getValue() ? Shaders.INSTANCE.XY_GRADIENT : Shaders.INSTANCE.X_RAINBOW;
     }
 

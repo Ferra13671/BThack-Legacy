@@ -79,6 +79,7 @@
     "render.MixinPlayerEntityRenderer",
     "render.MixinPostEffectProcessorProcessor",
     "render.MixinRenderPhase",
+    "render.MixinShaderProgramKeys",
     "render.MixinSkyRendering",
     "render.MixinWeatherRendering",
     "render.MixinWorldRenderer",
