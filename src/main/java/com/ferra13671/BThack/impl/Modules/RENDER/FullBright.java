@@ -10,8 +10,8 @@ import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import org.joml.Vector3f;
 
-import java.awt.*;
 import java.util.Arrays;
 
 @ModuleInfo(name = "FullBright", description = "lang.module.FullBright", category = "RENDER")
@@ -40,7 +40,7 @@ public class FullBright extends Module {
         arrayListInfo = mode.getValue();
     }
 
-    public int getGammaColor() {
+    public Vector3f getGammaColor() {
         if (hasAppliedNightVision) {
             if (mc.player.hasStatusEffect(StatusEffects.NIGHT_VISION))
                 mc.player.removeStatusEffect(StatusEffects.NIGHT_VISION);
@@ -48,9 +48,9 @@ public class FullBright extends Module {
                 hasAppliedNightVision = false;
         }
         if (customColor.getValue())
-            return new Color(blue.getValue().intValue(), green.getValue().intValue(), red.getValue().intValue()).hashCode();
+            return new Vector3f(blue.getValue().intValue() / 255f, green.getValue().intValue() / 255f, red.getValue().intValue() / 255f);
         else
-            return  -1;
+            return new Vector3f(1, 1, 1);
     }
 
     @EventSubscriber

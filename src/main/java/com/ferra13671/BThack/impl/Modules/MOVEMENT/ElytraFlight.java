@@ -24,7 +24,6 @@ import com.ferra13671.BThack.mixins.accessor.entity.IEntity;
 import com.ferra13671.BThack.mixins.accessor.entity.ILivingEntity;
 import com.ferra13671.BThack.mixins.accessor.packet.IPlayerMoveC2SPacket;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
-import net.minecraft.client.input.Input;
 import net.minecraft.entity.player.PlayerPosition;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -159,6 +158,7 @@ public class ElytraFlight extends Module {
     //Bounce fields
     public static boolean fireworkUsed = false;
     public Ticker takeoffTicker;
+    private boolean skipTick = true;
 
     //Firework fields
     public Ticker fireworkDelayTicker = new Ticker();
@@ -461,7 +461,21 @@ public class ElytraFlight extends Module {
             }
         }
 
+        if (alwaysPress.getValue().equals("Sprint") || alwaysPress.getValue().equals("Multi"))
+            mc.player.setSprinting(true);
+        if (alwaysPress.getValue().equals("Shift") || alwaysPress.getValue().equals("Multi"))
+            mc.player.setSneaking(true);
+
+        if (mc.player.isOnGround()) {
+            mc.player.jump();
+        }
+
         if (!mc.player.isGliding()) {
+            if (skipTick) {
+                skipTick = false;
+                return;
+            }
+            skipTick = true;
             mc.player.startGliding();
             Managers.NETWORK_MANAGER.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.START_FALL_FLYING));
             sendBounceGrimPacket();
@@ -482,14 +496,17 @@ public class ElytraFlight extends Module {
 
     @SuppressWarnings("ConstantConditions")
     public void bounceInput() {
-        Input input = mc.player.input;
-        if (!alwaysPress.getValue().equals("Sprint") && !alwaysPress.getValue().equals("None"))
-            InputUtils.setSneaking(true);
         if (autoWalk.getValue()) {
             InputUtils.setForward(true);
+            mc.player.input.movementForward = 1;
         }
         if (autoJump.getValue())
             InputUtils.setJumping(true);
+
+        if (alwaysPress.getValue().equals("Sprint") || alwaysPress.getValue().equals("Multi"))
+            InputUtils.setSprinting(true);
+        if (alwaysPress.getValue().equals("Shift") || alwaysPress.getValue().equals("Multi"))
+            InputUtils.setSneaking(true);
 
         sendBounceGrimPacket();
     }

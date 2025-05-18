@@ -1,8 +1,6 @@
 package com.ferra13671.BThack.mixins.entity;
 
-import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.core.Client.ModuleList;
-import com.ferra13671.BThack.api.Events.Entity.UpdateInputEvent;
 import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Utils.ItemUtils;
 import com.mojang.authlib.GameProfile;
@@ -79,11 +77,6 @@ public abstract class MixinClientPlayerEntity extends AbstractClientPlayerEntity
         tempTicksLeftToDoubleTapSprint = ticksLeftToDoubleTapSprint;
         tempForwardInput = client.player.input.movementForward;
         tempSidewaysInput = client.player.input.movementSideways;
-    }
-
-    @Inject(method = "tickMovement", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/input/Input;tick()V", shift = At.Shift.AFTER))
-    public void modifyTickMovementAfterInputTick(CallbackInfo ci) {
-        BThack.EVENT_BUS.activate(new UpdateInputEvent());
     }
 
     @Inject(method = "tickMovement", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerEntity;canStartSprinting()Z"))

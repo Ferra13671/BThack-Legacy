@@ -98,7 +98,6 @@ public class HUD extends Module {
     public void onRender(RenderHudPreEvent e) {
         if (mc.currentScreen instanceof HudEditorScreen || mc.options.hudHidden) return;
         BThackMatrix.push();
-        BThackMatrix.translate(0,0,3000);
 
         for (HudComponent hudComponent : Client.hudComponents)
             if (hudComponent.isEnabled())

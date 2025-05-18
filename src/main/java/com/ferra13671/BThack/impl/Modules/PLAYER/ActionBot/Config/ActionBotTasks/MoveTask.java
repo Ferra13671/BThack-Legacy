@@ -69,6 +69,8 @@ public class MoveTask extends ActionBotTask {
     @EventSubscriber
     public void onInput(UpdateInputEvent e) {
         InputUtils.setInput(moving, false, false, false, jumping, mc.player.input.playerInput.sneak(), mc.player.input.playerInput.sprint());
+        mc.player.input.movementForward = moving ? 1 : 0;
+        mc.player.input.movementSideways = 0;
     }
 
     @Override

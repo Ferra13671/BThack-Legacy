@@ -3,9 +3,6 @@ accessWidener	v1	named
 #MinecraftClient
 accessible   field net/minecraft/client/MinecraftClient itemUseCooldown I
 
-#PersistentProjectileEntity
-accessible   field  net/minecraft/entity/projectile/PersistentProjectileEntity inGround Z
-
 #Entity
 accessible   field  net/minecraft/entity/Entity onGround Z
 accessible   field  net/minecraft/entity/Entity firstUpdate Z
@@ -57,3 +54,7 @@ accessible field net/minecraft/client/render/GameRenderer pool Lnet/minecraft/cl
 accessible method net/minecraft/block/CropBlock getPickStack (Lnet/minecraft/world/WorldView;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;Z)Lnet/minecraft/item/ItemStack;
 
 accessible method net/minecraft/client/gui/DrawContext drawItemBar (Lnet/minecraft/item/ItemStack;II)V
+
+accessible class net/minecraft/client/render/WeatherRendering$Piece
+
+accessible class net/minecraft/client/render/BackgroundRenderer$FogData

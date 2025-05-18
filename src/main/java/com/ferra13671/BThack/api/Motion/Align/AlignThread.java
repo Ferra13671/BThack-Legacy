@@ -66,6 +66,7 @@ public class AlignThread extends BThackThread implements Mc {
     @EventSubscriber
     public void onInput(UpdateInputEvent e) {
         InputUtils.setInput(true, false, false, false, mc.player.input.playerInput.jump(), false, mc.player.input.playerInput.sprint());
+        mc.player.input.movementForward = 1;
     }
 
     private void rotate() {

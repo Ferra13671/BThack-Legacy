@@ -3,11 +3,9 @@ package com.ferra13671.BThack.core.Render.Line;
 import com.ferra13671.BThack.core.Render.BThackRender;
 import com.ferra13671.BThack.core.Render.Utils.BThackRenderUtils;
 import com.ferra13671.BThack.api.Interfaces.Mc;
-import com.ferra13671.BThack.api.Utils.RegionPos;
 import com.ferra13671.BThack.api.Utils.Rotate.RotateUtils;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.util.math.Vec3d;
-import org.joml.Matrix4f;
 
 import java.util.List;
 
@@ -18,21 +16,16 @@ public final class BThackLineRender implements Mc {
     public void prepareLineRenderer() {
         BThackRender.worldMatrixStack.push();
 
-        RegionPos region = BThackRenderUtils.getCameraRegion();
-        BThackRender.applyRegionalRenderOffset(BThackRender.worldMatrixStack, region);
-
         BThackRenderUtils.applyBlend();
         RenderSystem.disableDepthTest();
     }
 
     public void renderLines(List<RenderLine> lines) {
-        Matrix4f matrix = BThackRender.worldMatrixStack.peek().getPositionMatrix();
-        Vec3d regionVec = BThackRenderUtils.getCameraRegion().toVec3d();
-
-        Vec3d start = RotateUtils.getClientLookVec().add(getCameraPos()).subtract(regionVec);
+        Vec3d offset = getCameraPos().negate();
+        Vec3d start = RotateUtils.getClientLookVec().multiply(10);
 
         for (RenderLine line : lines) {
-            BThackRender.trace(line.vec3d, matrix, start, line.red, line.green, line.blue, line.alpha, regionVec);
+            BThackRender.trace(BThackRender.worldMatrixStack, start, line.vec3d.add(offset), line.red, line.green, line.blue, line.alpha);
         }
         BThackRenderUtils.resetShader();
     }

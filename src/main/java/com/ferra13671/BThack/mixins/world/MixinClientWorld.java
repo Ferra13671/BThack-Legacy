@@ -41,13 +41,13 @@ public abstract class MixinClientWorld extends World {
 
 
     @Inject(method = "getCloudsColor", at = @At("HEAD"), cancellable = true)
-    public void modifyGetCloudColor(float p_getCloudColour_1_, CallbackInfoReturnable<Vec3d> cir) {
+    public void modifyGetCloudColor(float tickDelta, CallbackInfoReturnable<Integer> cir) {
         if (ModuleList.ambience.isEnabled() && ModuleList.ambience.customCloudsColor.getValue())
             cir.setReturnValue(ModuleList.ambience.getCloudsColor());
     }
 
     @Inject(method = "getSkyColor", at = @At("HEAD"), cancellable = true)
-    public void modifyGetSkyColor(Vec3d cameraPos, float tickDelta, CallbackInfoReturnable<Vec3d> cir) {
+    public void modifyGetSkyColor(Vec3d cameraPos, float tickDelta, CallbackInfoReturnable<Integer> cir) {
         if (ModuleList.ambience.isEnabled() && ModuleList.ambience.customSkyColor.getValue())
             cir.setReturnValue(ModuleList.ambience.getSkyColor());
     }

@@ -61,9 +61,9 @@ public abstract class MixinGameRenderer {
     }
 
     @Inject(method = "renderWorld", at = @At(value = "FIELD", target = "Lnet/minecraft/client/render/GameRenderer;renderHand:Z", opcode = Opcodes.GETFIELD, ordinal = 0))
-    private void modifyRenderHandOnRenderWorld(RenderTickCounter tickCounter, CallbackInfo ci, @Local(ordinal = 1) Matrix4f matrix4f2, @Local(ordinal = 1) float tickDelta) {
+    private void modifyRenderHandOnRenderWorld(RenderTickCounter tickCounter, CallbackInfo ci, @Local(ordinal = 2) Matrix4f matrix4f3, @Local(ordinal = 1) float tickDelta) {
         MatrixStack matrixStack = new MatrixStack();
-        matrixStack.multiplyPositionMatrix(matrix4f2);
+        matrixStack.multiplyPositionMatrix(matrix4f3);
         BThackRender.worldMatrixStack = matrixStack;
         GL11.glEnable(GL11.GL_LINE_SMOOTH);
         RenderWorldLastEvent event = new RenderWorldLastEvent(BThackRender.worldMatrixStack);

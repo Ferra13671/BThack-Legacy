@@ -7,6 +7,7 @@ import com.ferra13671.BThack.api.IMixin.ModifySkyRendering;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.*;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.Ticker;
+import com.ferra13671.BThack.core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.mixins.accessor.IWorldRenderer;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.client.render.*;
@@ -92,14 +93,14 @@ public class Ambience extends Module {
         return new Vec3d(color.getRed() / 255d, color.getGreen() / 255d, color.getBlue() / 255d);
     }
 
-    public Vec3d getSkyColor() {
+    public int getSkyColor() {
         Color color = skyColor.getValue();
-        return new Vec3d(color.getRed() / 255d, color.getGreen() / 255d, color.getBlue() / 255d);
+        return ColorUtils.fastRGBA(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
     }
 
-    public Vec3d getCloudsColor() {
+    public int getCloudsColor() {
         Color color = cloudsColor.getValue();
-        return new Vec3d(color.getRed() / 255d, color.getGreen() / 255d, color.getBlue() / 255d);
+        return ColorUtils.fastRGBA(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
     }
 
     public long getWorldTime() {

@@ -43,7 +43,7 @@ import static com.ferra13671.BThack.core.Render.Utils.BThackRenderUtils.*;
 public final class BThackRender implements Mc {
 
     public static final VertexConsumerProvider.Immediate bufferSource = mc.getBufferBuilders().getEntityVertexConsumers();
-    protected static final DrawContext guiGraphics = new DrawContext(mc, bufferSource);
+    static final DrawContext guiGraphics = new DrawContext(mc, bufferSource);
     public static MatrixStack worldMatrixStack = new MatrixStack();
     public static final BThackBoxRender boxRender = new BThackBoxRender();
     public static final BThackLineRender lineRender = new BThackLineRender();
@@ -82,16 +82,29 @@ public final class BThackRender implements Mc {
         ArrayListComponent.updateSizes();
     }
 
-    public static void trace(Vec3d vec3d, Matrix4f matrix, Vec3d start, float red, float green, float blue, float alpha, Vec3d regionVec) {
+    public static void trace(MatrixStack matrixStack, Vec3d start, Vec3d end, float red, float green, float blue, float alpha) {
         Shaders.INSTANCE.POSITION.use();
         Shaders.INSTANCE.POSITION.setUniformValue("color", red, green, blue, alpha);
 
         BufferBuilder bufferBuilder = Tessellator.getInstance().begin(VertexFormat.DrawMode.DEBUG_LINES, VertexFormats.POSITION);
 
-        Vec3d end = vec3d.subtract(new Vec3d(regionVec.x, regionVec.y, regionVec.z));
-        bufferBuilder.vertex(matrix, (float)start.x, (float)start.y, (float)start.z);
-        bufferBuilder.vertex(matrix, (float)end.x, (float)end.y, (float)end.z);
+        traceInternal(matrixStack.peek(), bufferBuilder, (float) start.x, (float) start.y, (float) start.z, (float) end.x, (float) end.y, (float) end.z);
         draw(bufferBuilder.end());
+    }
+
+    public static void traceInternal(MatrixStack.Entry matrixEntry, BufferBuilder buffer, float x1, float y1, float z1, float x2, float y2, float z2) {
+        Vector3f normal = new Vector3f(x2, y2, z2).sub(x1, y1, z1).normalize();
+        buffer.vertex(matrixEntry, x1, y1, z1).normal(matrixEntry, normal);
+
+        float t = new Vector3f(x1, y1, z1).negate().dot(normal);
+        float length = new Vector3f(x2, y2, z2).sub(x1, y1, z1).length();
+        if(t > 0 && t < length) {
+            Vector3f closeToCam = new Vector3f(normal).mul(t).add(x1, y1, z1);
+            buffer.vertex(matrixEntry, closeToCam).normal(matrixEntry, normal);
+            buffer.vertex(matrixEntry, closeToCam).normal(matrixEntry, normal);
+        }
+
+        buffer.vertex(matrixEntry, x2, y2, z2).normal(matrixEntry, normal);
     }
 
     public static void drawRect(float x1, float y1, float x2, float y2, int color) {

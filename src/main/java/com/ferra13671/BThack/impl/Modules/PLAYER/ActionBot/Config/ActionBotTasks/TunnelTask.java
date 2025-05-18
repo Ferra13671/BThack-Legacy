@@ -2,6 +2,7 @@ package com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.ActionBotTask
 
 import com.ferra13671.BThack.api.Motion.Align.AlignToBlockCenter;
 import com.ferra13671.BThack.BThack;
+import com.ferra13671.BThack.api.Utils.InputUtils;
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.core.Client.Systems.FileSystem.JsonUtils;
 import com.ferra13671.BThack.api.Events.Entity.UpdateInputEvent;
@@ -72,6 +73,7 @@ public class TunnelTask extends ActionBotTask {
 
     @EventSubscriber
     public void onInput(UpdateInputEvent e) {
+        InputUtils.setInput(moving, false, false, false, mc.player.input.playerInput.jump(), mc.player.input.playerInput.sneak(), mc.player.input.playerInput.sprint());
         mc.player.input.movementForward = moving ? 1 : 0;
         mc.player.input.movementSideways = 0;
     }
