@@ -137,9 +137,7 @@ public class TravelChangeManager implements Initializable, Mc {
         InputUtils.setLeft(sideways > 0.0f);
         InputUtils.setRight(sideways < 0.0f);
 
-        if (travelChanger.strongMoveFix().get()) {
-            mc.player.input.movementForward = forward;
-            mc.player.input.movementSideways = sideways;
-        }
+        mc.player.input.movementForward = forward;
+        mc.player.input.movementSideways = sideways;
     }
 }
