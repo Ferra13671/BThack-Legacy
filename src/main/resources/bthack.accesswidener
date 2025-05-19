@@ -58,3 +58,7 @@ accessible method net/minecraft/client/gui/DrawContext drawItemBar (Lnet/minecra
 accessible class net/minecraft/client/render/WeatherRendering$Piece
 
 accessible class net/minecraft/client/render/BackgroundRenderer$FogData
+
+accessible class net/minecraft/client/render/RenderPhase$Texturing
+
+accessible method net/minecraft/entity/projectile/ProjectileEntity <init> (Lnet/minecraft/entity/EntityType;Lnet/minecraft/world/World;)V

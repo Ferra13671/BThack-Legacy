@@ -1,16 +1,13 @@
 package com.ferra13671.BThack.impl.Modules.RENDER;
 
 import com.ferra13671.BThack.api.Events.ClientTickEvent;
-import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
-import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.Setting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
-import org.joml.Vector3f;
 
 import java.util.Arrays;
 
@@ -18,11 +15,6 @@ import java.util.Arrays;
 public class FullBright extends Module {
 
     public final ModeSetting mode = new ModeSetting("Mode", this, Arrays.asList("Gamma", "Potion"));
-
-    public final BooleanSetting customColor = new BooleanSetting("Custom Color", this, false, () -> mode.getValue().equals("Gamma"));
-    public final NumberSetting red = new NumberSetting("Red", this, 255, 0, 255, true, () -> mode.getValue().equals("Gamma") && customColor.getValue());
-    public final NumberSetting green = new NumberSetting("Green", this, 255, 0, 255, true, () -> mode.getValue().equals("Gamma") && customColor.getValue());
-    public final NumberSetting blue = new NumberSetting("Blue", this, 255, 0, 255, true, () -> mode.getValue().equals("Gamma") && customColor.getValue());
 
 
     private boolean hasAppliedNightVision = false;
@@ -38,19 +30,6 @@ public class FullBright extends Module {
         hasAppliedNightVision = false;
 
         arrayListInfo = mode.getValue();
-    }
-
-    public Vector3f getGammaColor() {
-        if (hasAppliedNightVision) {
-            if (mc.player.hasStatusEffect(StatusEffects.NIGHT_VISION))
-                mc.player.removeStatusEffect(StatusEffects.NIGHT_VISION);
-            else
-                hasAppliedNightVision = false;
-        }
-        if (customColor.getValue())
-            return new Vector3f(blue.getValue().intValue() / 255f, green.getValue().intValue() / 255f, red.getValue().intValue() / 255f);
-        else
-            return new Vector3f(1, 1, 1);
     }
 
     @EventSubscriber

@@ -5,18 +5,16 @@ import com.ferra13671.BThack.core.Render.Utils.BThackRenderUtils;
 import com.ferra13671.BThack.api.Utils.Modules.KillAuraUtils;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gl.PostEffectProcessor;
 import net.minecraft.client.render.*;
-import net.minecraft.client.util.Handle;
 import net.minecraft.client.util.ObjectAllocator;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.decoration.EndCrystalEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.math.ColorHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.profiler.Profiler;
 import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -24,6 +22,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(WorldRenderer.class)
 public abstract class MixinWorldRenderer {
@@ -33,12 +32,6 @@ public abstract class MixinWorldRenderer {
     @Shadow @Final private MinecraftClient client;
 
     @Unique boolean allowShader = false;
-
-    @Inject(method = "reload(Lnet/minecraft/resource/ResourceManager;)V", at = @At("TAIL"))
-    public void modifyReload(ResourceManager manager, CallbackInfo ci) {
-        ModuleList.shaders.shaderInited = false;
-        ModuleList.shaders.reloadShader();
-    }
 
     @Inject(method = "render", at = @At("HEAD"))
     private void beforeRender(ObjectAllocator allocator, RenderTickCounter tickCounter, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer, Matrix4f positionMatrix, Matrix4f projectionMatrix, CallbackInfo ci) {
@@ -52,6 +45,12 @@ public abstract class MixinWorldRenderer {
             ci.cancel();
     }
 
+    @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gl/PostEffectProcessor;render(Lnet/minecraft/client/render/FrameGraphBuilder;IILnet/minecraft/client/gl/PostEffectProcessor$FramebufferSet;)V", ordinal = 0))
+    public void modifyRenderOutlinePostProcessor(PostEffectProcessor instance, FrameGraphBuilder builder, int textureWidth, int textureHeight, PostEffectProcessor.FramebufferSet framebufferSet) {
+        if (!ModuleList.shaders.isEnabled())
+            instance.render(builder, textureWidth, textureHeight, framebufferSet);
+    }
+
     @Redirect(method = "method_62215", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/world/ClientWorld;getRainGradient(F)F"))
     public float modifyGetRainGradientInRenderSky(ClientWorld instance, float v) {
         return ModuleList.ambience.getRainGradient(instance.getRainGradient(v));
@@ -59,7 +58,7 @@ public abstract class MixinWorldRenderer {
 
     @Redirect(method = "getEntitiesToRender", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/MinecraftClient;hasOutline(Lnet/minecraft/entity/Entity;)Z"))
     public boolean modifyHasOutline(MinecraftClient instance, Entity entity) {
-        if (ModuleList.shaders.isEnabled()) return false;
+        if (ModuleList.shaders.isEnabled()) return true;
         else return instance.hasOutline(entity);
     }
 
@@ -78,12 +77,10 @@ public abstract class MixinWorldRenderer {
         }
     }
 
-    @Inject(method = "method_62214", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/OutlineVertexConsumerProvider;draw()V", shift = At.Shift.AFTER))
-    public void modifyRenderBeforeOutlineRender(Fog fog, RenderTickCounter renderTickCounter, Camera camera, Profiler profiler, Matrix4f matrix4f, Matrix4f matrix4f2, Handle handle, Handle handle2, Handle handle3, Handle handle4, boolean bl, Frustum frustum, Handle handle5, CallbackInfo ci) {
-        if (ModuleList.shaders.isEnabled()) {
-            if (!ModuleList.shaders.shaderInited) ModuleList.shaders.reloadShader();
-            MinecraftClient.getInstance().getFramebuffer().beginWrite(false);
-        }
+
+    @Inject(method = "canDrawEntityOutlines", at = @At("HEAD"), cancellable = true)
+    public void modifyCanDrawEntityOutlines(CallbackInfoReturnable<Boolean> cir) {
+        if (ModuleList.shaders.isEnabled()) cir.setReturnValue(true);
     }
 
     @Unique

@@ -91,10 +91,6 @@ dependencies {
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
-    // Fabric API. This is technically optional, but you probably want it anyway.
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-
-    modInclude "com.github.Ladysnake:Satin:${satin_version}"
     //This is to prevent warnings related to missing enum constants from appearing when launching the client in the IDE
     compileOnly "org.apiguardian:apiguardian-api:1.0.0"
 

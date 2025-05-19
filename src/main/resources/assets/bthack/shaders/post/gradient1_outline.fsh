@@ -4,7 +4,7 @@
 precision mediump float;
 #endif
 
-uniform sampler2D DiffuseSampler;
+uniform sampler2D InSampler;
 in vec2 texCoord;
 in vec2 oneTexel;
 out vec4 fragColor;
@@ -32,7 +32,7 @@ void main() {
 
     vec3 gradientColor = vec3(_step(color1.r, color2.r, colorState), _step(color1.g, color2.g, colorState), _step(color1.b, color2.b, colorState));
 
-    vec4 centerCol = texture(DiffuseSampler, texCoord);
+    vec4 centerCol = texture(InSampler, texCoord);
 
     if(centerCol.a != 0) {
         fragColor = vec4(gradientColor, fillAlpha);
@@ -41,7 +41,7 @@ void main() {
             for (int y = -quality; y < quality + 1; y++) {
                 vec2 offset = vec2(x, y);
                 vec2 coord = texCoord + offset * oneTexel;
-                vec4 t = texture(DiffuseSampler, coord);
+                vec4 t = texture(InSampler, coord);
                 if (t.a != 0){
                     fragColor = vec4(gradientColor, outlineAlpha);
                     return;

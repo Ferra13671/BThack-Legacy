@@ -1,10 +1,12 @@
 package com.ferra13671.BThack.mixins.render;
 
 import com.ferra13671.BThack.BThack;
+import com.ferra13671.BThack.api.IMixin.ModifyHeldItemRenderer;
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.core.Render.BThackRender;
 import com.ferra13671.BThack.api.Events.Render.RenderWorldLastEvent;
 import com.ferra13671.BThack.api.Shaders.Shaders;
+import com.ferra13671.BThack.mixins.accessor.IGameRenderer;
 import com.ferra13671.BThack.mixins.accessor.IWorldRenderer;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
@@ -70,10 +72,6 @@ public abstract class MixinGameRenderer {
         BThack.EVENT_BUS.activate(event);
     }
 
-    @Inject(method = "renderWorld", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/profiler/Profiler;pop()V", shift = At.Shift.BEFORE))
-    public void modifyRenderWorldAfterRenderHand(RenderTickCounter tickCounter, CallbackInfo ci) {
-        if (ModuleList.shaders.isEnabled()) ModuleList.shaders.drawShader(tickCounter.getTickDelta(true));
-    }
 
     @Redirect(method = "renderHand", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/GameRenderer;tiltViewWhenHurt(Lnet/minecraft/client/util/math/MatrixStack;F)V"))
     public void modifyTiltViewWhenHurtInRenderHand(GameRenderer instance, MatrixStack matrices, float tickDelta) {
@@ -92,12 +90,31 @@ public abstract class MixinGameRenderer {
             bobView(matrices, tickDelta);
     }
 
-    @Inject(method = "renderHand", at = @At("RETURN"))
+    @Inject(method = "renderHand", at = @At("HEAD"), cancellable = true)
     public void modifyRenderHandPost(Camera camera, float tickDelta, Matrix4f matrix4f, CallbackInfo ci) {
         if (ModuleList.shaders.isEnabled() && ModuleList.shaders.hands.getValue()) {
-            renderShaderHand(camera, tickDelta);
-            ((IWorldRenderer) client.worldRenderer)._getBufferBuilders().getOutlineVertexConsumers().draw();
+            DefaultFramebufferSet framebufferSet = ((IWorldRenderer) client.worldRenderer)._getFrameBufferSet();
+            FrameGraphBuilder frameGraphBuilder = new FrameGraphBuilder();
+            framebufferSet.mainFramebuffer = frameGraphBuilder.createObjectNode("main", client.getFramebuffer());
+            framebufferSet.entityOutlineFramebuffer = frameGraphBuilder.createObjectNode("entity_outline", ((IWorldRenderer) client.worldRenderer)._getEntityOutlineFramebuffer());
+            int frameBufferWith = client.getFramebuffer().textureWidth;
+            int frameBufferHeight = client.getFramebuffer().textureHeight;
+            RenderPass renderPass = frameGraphBuilder.createPass("main");
+            framebufferSet.mainFramebuffer = renderPass.transfer(framebufferSet.mainFramebuffer);
+            framebufferSet.entityOutlineFramebuffer = renderPass.transfer(framebufferSet.entityOutlineFramebuffer);
+            renderPass.setRenderer(() -> {
+                framebufferSet.entityOutlineFramebuffer.get().setClearColor(0.0F, 0.0F, 0.0F, 0.0F);
+                framebufferSet.entityOutlineFramebuffer.get().beginWrite(false);
+                renderShaderHand(camera, tickDelta);
+                ((IWorldRenderer) client.worldRenderer)._getBufferBuilders().getOutlineVertexConsumers().draw();
+            });
+            ModuleList.shaders.loadShaders();
+            ModuleList.shaders.setArguments(frameGraphBuilder, frameBufferWith, frameBufferHeight, framebufferSet);
+            ModuleList.shaders.drawShader();
+            frameGraphBuilder.run(((IGameRenderer) client.gameRenderer)._getPool());
             client.getFramebuffer().beginWrite(false);
+            framebufferSet.clear();
+            ci.cancel();
         }
     }
 
@@ -151,14 +168,17 @@ public abstract class MixinGameRenderer {
             matrixStack.push();
             if (!(ModuleList.handTweaks.isEnabled() && ModuleList.handTweaks.noBob.getValue())) {
                 tiltViewWhenHurt(matrixStack, tickDelta);
-                if (client.options.getBobView().getValue())
+                if (client.options.getBobView().getValue()) {
                     bobView(matrixStack, tickDelta);
+                }
             }
 
-            boolean bl = this.client.getCameraEntity() instanceof LivingEntity && ((LivingEntity) client.getCameraEntity()).isSleeping();
+            boolean bl = client.getCameraEntity() instanceof LivingEntity && ((LivingEntity)client.getCameraEntity()).isSleeping();
             if (client.options.getPerspective().isFirstPerson() && !bl && !client.options.hudHidden && client.interactionManager.getCurrentGameMode() != GameMode.SPECTATOR) {
                 lightmapTextureManager.enable();
-                firstPersonRenderer.renderItem(tickDelta, matrixStack, buffers.getEntityVertexConsumers(), client.player, client.getEntityRenderDispatcher().getLight(client.player, tickDelta));
+                OutlineVertexConsumerProvider outlineVertexConsumerProvider = ((IWorldRenderer) client.worldRenderer)._getBufferBuilders().getOutlineVertexConsumers();
+                outlineVertexConsumerProvider.setColor(0, 255, 255, 255);
+                ((ModifyHeldItemRenderer) firstPersonRenderer).renderShaderItem(tickDelta, matrixStack, outlineVertexConsumerProvider, client.player, client.getEntityRenderDispatcher().getLight(client.player, tickDelta));
                 lightmapTextureManager.disable();
             }
 
@@ -168,7 +188,6 @@ public abstract class MixinGameRenderer {
                 InGameOverlayRenderer.renderOverlays(client, matrixStack, immediate);
                 immediate.draw();
             }
-
         }
     }
 }

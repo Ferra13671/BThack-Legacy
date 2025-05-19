@@ -187,7 +187,6 @@ public final class ModuleList {
     public static HoleESP holeESP = register(new HoleESP());
     public static LastOpenChest lastOpenChest = register(new LastOpenChest());
     public static ModifyCamera modifyCamera = register(new ModifyCamera());
-    public static MotionBlur motionBlur = register(new MotionBlur());
     public static Nametags nametags = register(new Nametags());
     public static NewChunks newChunks = register(new NewChunks());
     public static NoFog noFog = register(new NoFog());

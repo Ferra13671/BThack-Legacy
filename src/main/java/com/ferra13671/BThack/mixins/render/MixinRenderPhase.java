@@ -16,10 +16,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class MixinRenderPhase implements Mc {
 
     @Mutable
-    @Shadow @Final public static RenderPhase.Texturing GLINT_TEXTURING;
+    @Shadow @Final
+    protected static RenderPhase.Texturing GLINT_TEXTURING;
 
     @Mutable
-    @Shadow @Final public static RenderPhase.Texturing ENTITY_GLINT_TEXTURING;
+    @Shadow @Final
+    protected static RenderPhase.Texturing ENTITY_GLINT_TEXTURING;
 
     @Inject(method = "<clinit>", at = @At("TAIL"))
     private static void modifyInitTexturing(CallbackInfo ci) {
