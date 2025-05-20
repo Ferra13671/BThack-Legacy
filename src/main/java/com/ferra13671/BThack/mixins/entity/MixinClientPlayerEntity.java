@@ -81,7 +81,7 @@ public abstract class MixinClientPlayerEntity extends AbstractClientPlayerEntity
 
     @Inject(method = "tickMovement", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerEntity;canStartSprinting()Z"))
     public void modifyTickMovementPostItemSlow(CallbackInfo ci) {
-        if (ModuleList.noSlow.isEnabled() && ModuleList.noSlow.useItems.getValue()) {
+        if (ModuleList.noSlow.isEnabled() && ModuleList.noSlow.useItems.getValue() && !ModuleList.noSlow.mode.getValue().equals("Grim V3")) {
             input.movementSideways = tempSidewaysInput;
             input.movementForward = tempForwardInput;
             if (!input.playerInput.sneak())
@@ -104,7 +104,7 @@ public abstract class MixinClientPlayerEntity extends AbstractClientPlayerEntity
 
     @Inject(method = "sendMovementPackets", at = @At("HEAD"))
     public void modifySendMovementPackets(CallbackInfo ci) {
-        if (ModuleList.noSlow.isEnabled() && ModuleList.noSlow.useItems.getValue() && ModuleList.noSlow.grim.getValue()) {
+        if (ModuleList.noSlow.isEnabled() && ModuleList.noSlow.useItems.getValue() && ModuleList.noSlow.mode.getValue().equals("Grim V2")) {
             if (client.player.isUsingItem() && !client.player.isSneaking()) {
                 ItemStack offHandStack = client.player.getOffHandStack();
                 if (client.player.getActiveHand() == Hand.OFF_HAND) {
