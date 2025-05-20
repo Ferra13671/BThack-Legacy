@@ -13,6 +13,11 @@ public class Timer extends Module {
 
     public final NumberSetting tickSpeed = new NumberSetting("Tick speed", this, 1,0.1,3,false);
 
+    @Override
+    public void onEnable() {
+        super.onEnable();
+        ModuleList.elytraFlight.setToggled(false);
+    }
 
     @EventSubscriber
     public void onTick(ClientTickEvent e) {

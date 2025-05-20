@@ -2,12 +2,10 @@ package com.ferra13671.BThack.impl.Modules.MOVEMENT;
 
 import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Client.ModuleList;
-import com.ferra13671.BThack.api.Events.Entity.JumpHeightEvent;
 import com.ferra13671.BThack.api.Events.Entity.SetVelocityEvent;
 import com.ferra13671.BThack.api.Events.Entity.UpdateInputEvent;
 import com.ferra13671.BThack.api.Events.PacketEvent;
 import com.ferra13671.BThack.api.Events.Player.PlayerTravelEvent;
-import com.ferra13671.BThack.api.Events.ClientTickEvent;
 import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
@@ -50,12 +48,11 @@ public class ElytraFlight extends Module {
     public final ModeSetting mode = new ModeSetting("Mode", this, new ArrayList<>(Arrays.asList("Bounce", "Firework", "Pitch40", "Boost", "Timer", "Auto Glide", "1.12.2 Control")));
 
     //Bounce Settings          <--------   One of the best free Bounce ElytraFly <3
-    public final NumberSetting jumpHeight = new NumberSetting("Jump Height", this, 0.42, 0.05, 0.42, false, () -> mode.getValue().equals("Bounce"));
     public final ModeSetting alwaysPress = new ModeSetting("Always Press", this, Arrays.asList("None", "Sprint", "Shift", "Multi"), () -> mode.getValue().equals("Bounce")).defaultValue("Sprint");
     public final BooleanSetting strafing = new BooleanSetting("Strafing", this, true, () -> mode.getValue().equals("Bounce"));
     public final BooleanSetting groundTakeoffFix = new BooleanSetting("Ground Takeoff Fix", this, true, () -> mode.getValue().equals("Bounce"));
     public final NumberSetting takeoffTime = new NumberSetting("Takeoff Time", this, 100, 50, 500, true, () -> mode.getValue().equals("Bounce"));
-    public final BooleanSetting grimV2 = new BooleanSetting("Grim V2", this, true, () -> mode.getValue().equals("Bounce"));
+    public final BooleanSetting grim = new BooleanSetting("Grim", this, true, () -> mode.getValue().equals("Bounce"));
 
     public final BooleanSetting autoWalk = new BooleanSetting("Auto Walk", this, true, () -> mode.getValue().equals("Bounce"));
     public final BooleanSetting autoJump = new BooleanSetting("Auto Jump", this, true, () -> mode.getValue().equals("Bounce"));
@@ -158,7 +155,6 @@ public class ElytraFlight extends Module {
     //Bounce fields
     public static boolean fireworkUsed = false;
     public Ticker takeoffTicker;
-    private boolean skipTick = true;
 
     //Firework fields
     public Ticker fireworkDelayTicker = new Ticker();
@@ -234,6 +230,7 @@ public class ElytraFlight extends Module {
             return;
         }
 
+        ModuleList.timer.setToggled(false);
         ModuleList.fastFall.setToggled(false);
         ModuleList.longJump.setToggled(false);
 
@@ -321,36 +318,6 @@ public class ElytraFlight extends Module {
 
     @EventSubscriber
     @SuppressWarnings({"ConstantConditions", "unused"})
-    public void onTick(ClientTickEvent e) {
-        if (nullCheck()) {
-            setToggled(false);
-            return;
-        }
-
-        arrayListInfo = mode.getValue();
-
-        if (mc.player.getInventory().getArmorStack(2).getItem() != Items.ELYTRA) return;
-
-        switch (mode.getValue()) {
-            case "Bounce" -> bounceMode();
-            case "Firework" -> fireworkMode();
-            case "Pitch40" -> pitch40Action();
-            case "Auto Glide" -> autoGlideAction();
-            case "Boost" -> boostAction();
-            case "Timer" -> timerMode();
-        }
-    }
-
-    @EventSubscriber
-    @SuppressWarnings({"ConstantConditions", "unused"})
-    public void onJumpHeight(JumpHeightEvent e) {
-        if (nullCheck() || !mode.getValue().equals("Bounce")) return;
-        if (mc.player.getInventory().getArmorStack(2).getItem() != Items.ELYTRA) return;
-        e.setJumpHeight(jumpHeight.getValue().floatValue());
-    }
-
-    @EventSubscriber
-    @SuppressWarnings({"ConstantConditions", "unused"})
     public void onSend(PacketEvent.Send e) {
         if (nullCheck()) return;
         if (mc.player.getInventory().getArmorStack(2).getItem() != Items.ELYTRA) return;
@@ -382,7 +349,22 @@ public class ElytraFlight extends Module {
     @EventSubscriber
     @SuppressWarnings({"ConstantConditions", "unused"})
     public void onTravel(PlayerTravelEvent e) {
+        if (nullCheck()) {
+            setToggled(false);
+            return;
+        }
+
+        arrayListInfo = mode.getValue();
+
+        if (mc.player.getInventory().getArmorStack(2).getItem() != Items.ELYTRA) return;
+
         switch (mode.getValue()) {
+            case "Bounce" -> bounceMode();
+            case "Firework" -> fireworkMode();
+            case "Pitch40" -> pitch40Action();
+            case "Auto Glide" -> autoGlideAction();
+            case "Boost" -> boostAction();
+            case "Timer" -> timerMode();
             case "1.12.2 Control" -> {
                 if (mc.player.isSpectator()) return;
                 stateUpdate(e);
@@ -401,16 +383,6 @@ public class ElytraFlight extends Module {
                     spoofRotation();
                 } else if (!_outOfDurability) {
                     reset(true);
-                }
-            }
-            case "Bounce" -> {
-                switch (alwaysPress.getValue()) {
-                    case "Sprint", "Multi" -> {
-                        if (!mc.player.isSprinting() && mc.player.isOnGround()) {
-                            Managers.NETWORK_MANAGER.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.START_SPRINTING));
-                            mc.player.setSprinting(true);
-                        }
-                    }
                 }
             }
         }
@@ -466,19 +438,10 @@ public class ElytraFlight extends Module {
         if (alwaysPress.getValue().equals("Shift") || alwaysPress.getValue().equals("Multi"))
             mc.player.setSneaking(true);
 
-        if (mc.player.isOnGround()) {
-            mc.player.jump();
-        }
 
         if (!mc.player.isGliding()) {
-            if (skipTick) {
-                skipTick = false;
-                return;
-            }
-            skipTick = true;
             mc.player.startGliding();
             Managers.NETWORK_MANAGER.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.START_FALL_FLYING));
-            sendBounceGrimPacket();
         }
 
         //Ground takeoff fix
@@ -492,6 +455,7 @@ public class ElytraFlight extends Module {
                 }
             }
         }
+        sendBounceGrimPacket();
     }
 
     @SuppressWarnings("ConstantConditions")
@@ -507,8 +471,6 @@ public class ElytraFlight extends Module {
             InputUtils.setSprinting(true);
         if (alwaysPress.getValue().equals("Shift") || alwaysPress.getValue().equals("Multi"))
             InputUtils.setSneaking(true);
-
-        sendBounceGrimPacket();
     }
 
     public float bouncePitchRotate(float standardValue) {
@@ -528,11 +490,11 @@ public class ElytraFlight extends Module {
             if (!mc.player.verticalCollision)
                 return StrafeUtils.getPlayerYawOnKeybindings();
         }
-        return standardValue;
+        return mc.player.isOnGround() ? Managers.TRAVEL_CHANGE_MANAGER.getLastYaw() : standardValue;
     }
 
     public void sendBounceGrimPacket() {
-        if (grimV2.getValue())
+        if (grim.getValue())
             GrimUtils.sendPreActionGrimPackets(Managers.TRAVEL_CHANGE_MANAGER.getLastYaw(), Managers.TRAVEL_CHANGE_MANAGER.getLastPitch());
     }
     //-----------------------------//
@@ -688,10 +650,6 @@ public class ElytraFlight extends Module {
     public void timerMode() {
         if (!mc.player.isGliding()) {
             return;
-        }
-
-        if (ModuleList.timer.isEnabled()) {
-            ModuleList.timer.setToggled(false);
         }
         if (ModuleList.noElytraBreak.isEnabled()) {
             ModuleList.noElytraBreak.setToggled(false);

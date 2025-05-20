@@ -18,6 +18,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Entity.class)
 public abstract class MixinEntity implements Mc {
@@ -36,7 +37,7 @@ public abstract class MixinEntity implements Mc {
     @Shadow public abstract void setVelocity(Vec3d velocity);
 
     @Shadow
-    private static Vec3d movementInputToVelocity(Vec3d movementInput, float speed, float yaw) {
+    protected static Vec3d movementInputToVelocity(Vec3d movementInput, float speed, float yaw) {
         return null;
     }
 
@@ -66,6 +67,12 @@ public abstract class MixinEntity implements Mc {
         if (!event.isCancelled())
             this.velocity = event.getVelocity();
         ci.cancel();
+    }
+
+    @Inject(method = "isSprinting", at = @At("HEAD"), cancellable = true)
+    public void modifyIsSprinting(CallbackInfoReturnable<Boolean> cir) {
+        if (ModuleList.elytraFlight.isEnabled() && ModuleList.elytraFlight.mode.getValue().equals("Bounce") && (ModuleList.elytraFlight.alwaysPress.getValue().equals("Sprint") || ModuleList.elytraFlight.alwaysPress.getValue().equals("Multi")))
+            cir.setReturnValue(true);
     }
 
     @Inject(method = "setYaw", at = @At("HEAD"), cancellable = true)
