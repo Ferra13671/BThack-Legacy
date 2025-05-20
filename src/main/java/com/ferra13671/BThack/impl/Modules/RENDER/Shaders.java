@@ -161,16 +161,6 @@ public class Shaders extends Module {
         this.framebufferSet = framebufferSet;
     }
 
-    public PostEffectProcessor getShader() {
-        return switch (shaderMode.getValue()) {
-            default -> defaultShader;
-            case "Gradient" -> gradientShader;
-            case "Rainbow_xy" -> rainbowXYShader;
-            case "Rainbow_x" -> rainbowXShader;
-            case "Rainbow_y" -> rainbowYShader;
-        };
-    }
-
     public void loadShaders() {
         defaultShader = mc.getShaderLoader().loadPostEffect(Identifier.of("bthack", "default_outline"), DefaultFramebufferSet.MAIN_AND_ENTITY_OUTLINE);
         gradientShader = mc.getShaderLoader().loadPostEffect(Identifier.of("bthack", "gradient1_outline"), DefaultFramebufferSet.MAIN_AND_ENTITY_OUTLINE);
