@@ -2,31 +2,27 @@ package com.ferra13671.BThack.mixins.render;
 
 import com.ferra13671.BThack.core.Client.ModuleList;
 import net.minecraft.client.render.Frustum;
-import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRenderer;
-import net.minecraft.client.render.entity.state.EntityRenderState;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.FallingBlockEntity;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.decoration.ArmorStandEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(EntityRenderer.class)
 public class MixinEntityRenderer {
 
-    @Inject(method = "renderLabelIfPresent", at = @At("HEAD"), cancellable = true)
-    public <S extends EntityRenderState> void modifyRenderLabelIfPresent(S state, Text text, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, CallbackInfo ci) {
-        if (ModuleList.nametags.isEnabled()) ci.cancel();
-        /*
-            if (ModuleList.nametags.players.getValue() && entity instanceof PlayerEntity) ci.cancel();
-            if (ModuleList.nametags.items.getValue() && entity instanceof ItemEntity) ci.cancel();
-
-         */
+    @Inject(method = "getDisplayName", at = @At("HEAD"), cancellable = true)
+    public <T extends Entity> void modifyGetDisplayName(T entity, CallbackInfoReturnable<Text> cir) {
+        if (ModuleList.nametags.isEnabled()) {
+            if (ModuleList.nametags.players.getValue() && entity instanceof PlayerEntity) cir.setReturnValue(null);
+            if (ModuleList.nametags.items.getValue() && entity instanceof ItemEntity) cir.setReturnValue(null);
+        }
     }
 
     @Inject(method = "shouldRender", at = @At("HEAD"), cancellable = true)
