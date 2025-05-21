@@ -9,6 +9,8 @@ in vec2 texCoord;
 in vec2 oneTexel;
 out vec4 fragColor;
 uniform int quality;
+uniform int quality_multiplier;
+uniform int extra_quality;
 uniform float scale;
 uniform float time;
 uniform vec2 resolution;
@@ -34,11 +36,13 @@ void main() {
 
     vec4 centerCol = texture(InSampler, texCoord);
 
+    int qualityInternal = quality + (extra_quality * quality_multiplier);
+
     if(centerCol.a != 0) {
         fragColor = vec4(rainbowColor, fillAlpha);
     } else {
-        for (int x = -quality; x < quality + 1; x++) {
-            for (int y = -quality; y < quality + 1; y++) {
+        for (int x = -qualityInternal; x < qualityInternal + 1; x++) {
+            for (int y = -qualityInternal; y < qualityInternal + 1; y++) {
                 vec2 offset = vec2(x, y);
                 vec2 coord = texCoord + offset * oneTexel;
                 vec4 t = texture(InSampler, coord);

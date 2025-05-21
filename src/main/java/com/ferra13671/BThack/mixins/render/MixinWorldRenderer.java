@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.mixins.render;
 
+import com.ferra13671.BThack.api.Shaders.CoreShaderLoader;
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.core.Render.Utils.BThackRenderUtils;
 import com.ferra13671.BThack.api.Utils.Modules.KillAuraUtils;
@@ -13,6 +14,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.decoration.EndCrystalEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.math.ColorHelper;
 import net.minecraft.util.math.Vec3d;
 import org.joml.Matrix4f;
@@ -32,6 +34,11 @@ public abstract class MixinWorldRenderer {
     @Shadow @Final private MinecraftClient client;
 
     @Unique boolean allowShader = false;
+
+    @Inject(method = "reload(Lnet/minecraft/resource/ResourceManager;)V", at = @At("TAIL"))
+    public void modifyReload(ResourceManager manager, CallbackInfo ci) {
+        CoreShaderLoader.loadPrograms();
+    }
 
     @Inject(method = "render", at = @At("HEAD"))
     private void beforeRender(ObjectAllocator allocator, RenderTickCounter tickCounter, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer, Matrix4f positionMatrix, Matrix4f projectionMatrix, CallbackInfo ci) {

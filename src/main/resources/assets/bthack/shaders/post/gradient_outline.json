@@ -1,6 +1,6 @@
 {
     "vertex": "minecraft:post/sobel",
-    "fragment": "bthack:post/gradient1_outline",
+    "fragment": "bthack:post/gradient_outline",
     "attributes": [
         "Position"
     ],
@@ -12,6 +12,8 @@
         { "name": "InSize", "type": "float", "count": 2, "values": [1.0, 1.0]},
         { "name": "OutSize", "type": "float", "count": 2, "values": [1.0, 1.0]},
         { "name": "quality", "type": "int", "count": 1, "values": [ 1.0] },
+        { "name": "quality_multiplier", "type": "int", "count": 1, "values": [ 0.0 ] },
+        { "name": "extra_quality", "type": "int", "count": 1, "values": [ 0.0 ] },
         { "name": "scale", "type": "float", "count": 1, "values": [ 1.0] },
         { "name": "time",  "type": "float",	 "count": 1,  "values": [1.0] },
         { "name": "resolution",  "type": "float", "count": 2,  "values": [1.0, 1.0] },

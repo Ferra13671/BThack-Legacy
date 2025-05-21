@@ -4,7 +4,7 @@
   },
   "passes": [
     {
-      "program": "bthack:post/gradient1_outline",
+      "program": "bthack:post/gradient_outline",
       "inputs": [
         {
           "sampler_name": "In",

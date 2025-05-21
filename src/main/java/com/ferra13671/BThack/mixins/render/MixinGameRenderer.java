@@ -63,15 +63,19 @@ public abstract class MixinGameRenderer {
     }
 
     @Inject(method = "renderWorld", at = @At(value = "FIELD", target = "Lnet/minecraft/client/render/GameRenderer;renderHand:Z", opcode = Opcodes.GETFIELD, ordinal = 0))
-    private void modifyRenderHandOnRenderWorld(RenderTickCounter tickCounter, CallbackInfo ci, @Local(ordinal = 2) Matrix4f matrix4f3, @Local(ordinal = 1) float tickDelta) {
+    public void modifyRenderHandOnRenderWorld(RenderTickCounter tickCounter, CallbackInfo ci, @Local(ordinal = 2) Matrix4f matrix4f3, @Local(ordinal = 1) float tickDelta) {
         MatrixStack matrixStack = new MatrixStack();
         matrixStack.multiplyPositionMatrix(matrix4f3);
         BThackRender.worldMatrixStack = matrixStack;
+    }
+
+    @Inject(method = "renderWorld", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/profiler/Profiler;pop()V", shift = At.Shift.BEFORE))
+    public void modifyRenderWorldLast(RenderTickCounter renderTickCounter, CallbackInfo ci, @Local(ordinal = 1) Matrix4f matrix4f) {
+        RenderSystem.setProjectionMatrix(matrix4f, ProjectionType.PERSPECTIVE);
         GL11.glEnable(GL11.GL_LINE_SMOOTH);
         RenderWorldLastEvent event = new RenderWorldLastEvent(BThackRender.worldMatrixStack);
         BThack.EVENT_BUS.activate(event);
     }
-
 
     @Redirect(method = "renderHand", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/GameRenderer;tiltViewWhenHurt(Lnet/minecraft/client/util/math/MatrixStack;F)V"))
     public void modifyTiltViewWhenHurtInRenderHand(GameRenderer instance, MatrixStack matrices, float tickDelta) {
@@ -92,7 +96,9 @@ public abstract class MixinGameRenderer {
 
     @Inject(method = "renderHand", at = @At("HEAD"), cancellable = true)
     public void modifyRenderHandPost(Camera camera, float tickDelta, Matrix4f matrix4f, CallbackInfo ci) {
-        if (ModuleList.shaders.isEnabled() && ModuleList.shaders.hands.getValue()) {
+        if (ModuleList.shaders.isEnabled()) {
+            boolean shaderHands = ModuleList.shaders.hands.getValue();
+
             DefaultFramebufferSet framebufferSet = ((IWorldRenderer) client.worldRenderer)._getFrameBufferSet();
             FrameGraphBuilder frameGraphBuilder = new FrameGraphBuilder();
             framebufferSet.mainFramebuffer = frameGraphBuilder.createObjectNode("main", client.getFramebuffer());
@@ -103,18 +109,20 @@ public abstract class MixinGameRenderer {
             framebufferSet.mainFramebuffer = renderPass.transfer(framebufferSet.mainFramebuffer);
             framebufferSet.entityOutlineFramebuffer = renderPass.transfer(framebufferSet.entityOutlineFramebuffer);
             renderPass.setRenderer(() -> {
-                framebufferSet.entityOutlineFramebuffer.get().setClearColor(0.0F, 0.0F, 0.0F, 0.0F);
+                framebufferSet.entityOutlineFramebuffer.get().setClearColor(1F, 1F, 1F, 0.0F);
                 framebufferSet.entityOutlineFramebuffer.get().beginWrite(false);
-                renderShaderHand(camera, tickDelta);
+                if (shaderHands)
+                    renderShaderHand(camera, tickDelta);
+                buffers.getEntityVertexConsumers().draw();
                 ((IWorldRenderer) client.worldRenderer)._getBufferBuilders().getOutlineVertexConsumers().draw();
             });
             ModuleList.shaders.loadShaders();
-            ModuleList.shaders.setArguments(frameGraphBuilder, frameBufferWith, frameBufferHeight, framebufferSet);
-            ModuleList.shaders.drawShader();
+            ModuleList.shaders.drawShader(frameGraphBuilder, frameBufferWith, frameBufferHeight, framebufferSet);
             frameGraphBuilder.run(((IGameRenderer) client.gameRenderer)._getPool());
             client.getFramebuffer().beginWrite(false);
             framebufferSet.clear();
-            ci.cancel();
+            if (shaderHands)
+                ci.cancel();
         }
     }
 
@@ -177,17 +185,14 @@ public abstract class MixinGameRenderer {
             if (client.options.getPerspective().isFirstPerson() && !bl && !client.options.hudHidden && client.interactionManager.getCurrentGameMode() != GameMode.SPECTATOR) {
                 lightmapTextureManager.enable();
                 OutlineVertexConsumerProvider outlineVertexConsumerProvider = ((IWorldRenderer) client.worldRenderer)._getBufferBuilders().getOutlineVertexConsumers();
-                outlineVertexConsumerProvider.setColor(0, 255, 255, 255);
+                outlineVertexConsumerProvider.setColor(255, 255, 255, 255);
                 ((ModifyHeldItemRenderer) firstPersonRenderer).renderShaderItem(tickDelta, matrixStack, outlineVertexConsumerProvider, client.player, client.getEntityRenderDispatcher().getLight(client.player, tickDelta));
                 lightmapTextureManager.disable();
             }
 
             matrixStack.pop();
-            if (client.options.getPerspective().isFirstPerson() && !bl) {
-                VertexConsumerProvider.Immediate immediate = buffers.getEntityVertexConsumers();
-                InGameOverlayRenderer.renderOverlays(client, matrixStack, immediate);
-                immediate.draw();
-            }
+            if (client.options.getPerspective().isFirstPerson() && !bl)
+                InGameOverlayRenderer.renderOverlays(client, matrixStack, buffers.getEntityVertexConsumers());
         }
     }
 }

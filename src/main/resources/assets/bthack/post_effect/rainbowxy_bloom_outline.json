@@ -1,0 +1,167 @@
+{
+  "targets": {
+    "swap": {},
+    "bloom": {},
+    "outline": {}
+  },
+  "passes": [
+    {
+      "program": "bthack:post/rainbowxy_outline",
+      "inputs": [
+        {
+          "sampler_name": "In",
+          "target": "minecraft:entity_outline"
+        }
+      ],
+      "output": "outline",
+      "uniforms": [
+        {
+          "name": "quality_multiplier",
+          "values": [ 1.0 ]
+        }
+      ]
+    },
+    {
+      "program": "minecraft:post/box_blur",
+      "inputs": [
+        {
+          "sampler_name": "In",
+          "target": "outline",
+          "bilinear": true
+        }
+      ],
+      "output": "swap",
+      "uniforms": [
+        {
+          "name": "BlurDir",
+          "values": [ 1.0, 0.0 ]
+        }
+      ]
+    },
+    {
+      "program": "minecraft:post/box_blur",
+      "inputs": [
+        {
+          "sampler_name": "In",
+          "target": "swap",
+          "bilinear": true
+        }
+      ],
+      "output": "bloom",
+      "uniforms": [
+        {
+          "name": "BlurDir",
+          "values": [ 0.0, 1.0 ]
+        }
+      ]
+    },
+    {
+      "program": "minecraft:post/box_blur",
+      "inputs": [
+        {
+          "sampler_name": "In",
+          "target": "bloom",
+          "bilinear": true
+        }
+      ],
+      "output": "swap",
+      "uniforms": [
+        {
+          "name": "BlurDir",
+          "values": [ 1.0, 0.0 ]
+        }
+      ]
+    },
+    {
+      "program": "minecraft:post/box_blur",
+      "inputs": [
+        {
+          "sampler_name": "In",
+          "target": "swap",
+          "bilinear": true
+        }
+      ],
+      "output": "bloom",
+      "uniforms": [
+        {
+          "name": "BlurDir",
+          "values": [ 0.0, 1.0 ]
+        }
+      ]
+    },
+    {
+      "program": "minecraft:post/box_blur",
+      "inputs": [
+        {
+          "sampler_name": "In",
+          "target": "bloom",
+          "bilinear": true
+        }
+      ],
+      "output": "swap",
+      "uniforms": [
+        {
+          "name": "BlurDir",
+          "values": [ 1.0, 0.0 ]
+        }
+      ]
+    },
+    {
+      "program": "minecraft:post/box_blur",
+      "inputs": [
+        {
+          "sampler_name": "In",
+          "target": "swap",
+          "bilinear": true
+        }
+      ],
+      "output": "bloom",
+      "uniforms": [
+        {
+          "name": "BlurDir",
+          "values": [ 0.0, 1.0 ]
+        }
+      ]
+    },
+    {
+      "program": "bthack:post/rainbowxy_outline",
+      "inputs": [
+        {
+          "sampler_name": "In",
+          "target": "minecraft:entity_outline"
+        }
+      ],
+      "output": "outline",
+      "uniforms": [
+        {
+          "name": "quality_multiplier",
+          "values": [ 0.0 ]
+        }
+      ]
+    },
+    {
+      "program": "bthack:post/mix_samplers",
+      "inputs": [
+        {
+          "sampler_name": "Up",
+          "target": "outline"
+        },
+        {
+          "sampler_name": "Down",
+          "target": "bloom"
+        }
+      ],
+      "output": "swap"
+    },
+    {
+      "program": "minecraft:post/blit",
+      "inputs": [
+        {
+          "sampler_name": "In",
+          "target": "swap"
+        }
+      ],
+      "output": "minecraft:entity_outline"
+    }
+  ]
+}

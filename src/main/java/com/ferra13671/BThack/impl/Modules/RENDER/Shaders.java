@@ -5,6 +5,7 @@ import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.mixins.accessor.IPostEffectProcessor;
 import com.ferra13671.BThack.mixins.accessor.IShaderProgram;
+import net.minecraft.client.gl.GlUniform;
 import net.minecraft.client.gl.PostEffectProcessor;
 import net.minecraft.client.gl.ShaderProgram;
 import net.minecraft.client.render.DefaultFramebufferSet;
@@ -13,6 +14,7 @@ import net.minecraft.util.Identifier;
 
 import java.awt.*;
 import java.util.Arrays;
+import java.util.function.BiConsumer;
 
 @ModuleInfo(name = "Shaders", description = "lang.module.Shaders", category = "RENDER")
 public class Shaders extends Module {
@@ -21,6 +23,11 @@ public class Shaders extends Module {
     public PostEffectProcessor rainbowXShader;
     public PostEffectProcessor rainbowYShader;
     public PostEffectProcessor rainbowXYShader;
+    public PostEffectProcessor defaultBloomShader;
+    public PostEffectProcessor gradientBloomShader;
+    public PostEffectProcessor rainbowXBloomShader;
+    public PostEffectProcessor rainbowYBloomShader;
+    public PostEffectProcessor rainbowXYBloomShader;
 
     public final ModeSetting shaderMode = new ModeSetting("Shader", this, Arrays.asList("Default", "Gradient", "Rainbow_xy", "Rainbow_x", "Rainbow_y"));
 
@@ -43,6 +50,10 @@ public class Shaders extends Module {
     public final NumberSetting outlineAlpha = new NumberSetting("Outline Alpha", this, 255, 0, 255, true, () -> !shaderMode.getValue().equals("Default"));
 
     public final NumberSetting lineWidth = new NumberSetting("Line Width", this, 2, 0, 6, true);
+    public final CategorySetting bloomCategory = new CategorySetting("Bloom", this);
+    public final BooleanSetting bloom = new BooleanSetting("Bloom", this, true).inCategory(bloomCategory);
+    public final NumberSetting bloomWidth = new NumberSetting("Bloom Width", this, 5, 0, 15, true, bloom::getValue).inCategory(bloomCategory);
+    public final NumberSetting bloomFactor = new NumberSetting("Bloom Factor", this, 5, 1, 20, false, bloom::getValue).inCategory(bloomCategory);
 
     public final CategorySetting targetsCategory = new CategorySetting("Targets", this);
     public final BooleanSetting players = new BooleanSetting("Players", this, true).inCategory(targetsCategory);
@@ -54,118 +65,127 @@ public class Shaders extends Module {
     public final BooleanSetting self = new BooleanSetting("Self", this, true).inCategory(targetsCategory);
     public final BooleanSetting crystals = new BooleanSetting("Crystals", this, true).inCategory(targetsCategory);
 
-
-    private FrameGraphBuilder builder;
-    private int textureWidth, textureHeight;
-    private PostEffectProcessor.FramebufferSet framebufferSet;
-
-    public void drawShader() {
-
-        switch (shaderMode.getValue()) {
+    public void drawShader(FrameGraphBuilder builder, int textureWidth, int textureHeight, PostEffectProcessor.FramebufferSet framebufferSet) {
+        PostEffectProcessor postEffectProcessor = switch (shaderMode.getValue()) {
             case "Default" -> {
-                ((IPostEffectProcessor) defaultShader)._getPasses().forEach(postEffectPass -> {
-                    ShaderProgram shaderProgram = postEffectPass.getProgram();
-                    ((IShaderProgram) shaderProgram)._getUniforms().forEach((name, uniform) -> {
-                        switch (name) {
-                            case "quality" -> uniform.set(lineWidth.getValue().intValue());
-                            case "color" -> uniform.set(fillColor.getValue().getRed() / 255f, fillColor.getValue().getGreen() / 255f, fillColor.getValue().getBlue() / 255f, fillColor.getValue().getAlpha() / 255f);
-                            case "outlinecolor" -> uniform.set(outlineColor.getValue().getRed() / 255f, outlineColor.getValue().getGreen() / 255f, outlineColor.getValue().getBlue() / 255f, outlineColor.getValue().getAlpha() / 255f);
-                        }
-                    });
+                PostEffectProcessor processor = getDefaultOrBloomShader(defaultShader, defaultBloomShader);
+                setupUniforms(processor, (name, uniform) -> {
+                    switch (name) {
+                        case "quality" -> uniform.set(lineWidth.getValue().intValue());
+                        case "color" -> uniform.set(fillColor.getValue().getRed() / 255f, fillColor.getValue().getGreen() / 255f, fillColor.getValue().getBlue() / 255f, fillColor.getValue().getAlpha() / 255f);
+                        case "outlinecolor" -> uniform.set(outlineColor.getValue().getRed() / 255f, outlineColor.getValue().getGreen() / 255f, outlineColor.getValue().getBlue() / 255f, outlineColor.getValue().getAlpha() / 255f);
+                        case "extra_quality" -> uniform.set(bloomWidth.getValue().intValue());
+                        case "Radius" -> uniform.set(bloomFactor.getValue().floatValue());
+                    }
                 });
-                defaultShader.render(builder, textureWidth, textureHeight, framebufferSet);
+                yield processor;
             }
             case "Gradient" -> {
-                ((IPostEffectProcessor) gradientShader)._getPasses().forEach(postEffectPass -> {
-                    ShaderProgram shaderProgram = postEffectPass.getProgram();
-                    ((IShaderProgram) shaderProgram)._getUniforms().forEach((name, uniform) -> {
-                        switch (name) {
-                            case "quality" -> uniform.set(lineWidth.getValue().intValue());
-                            case "scale" -> uniform.set((float) (scale.getValue() * 1000));
-                            case "time" -> uniform.set(com.ferra13671.BThack.api.Shaders.Shaders.INSTANCE.shaderTicker.getPassedTime() / 1000f);
-                            case "resolution" -> uniform.set((float) mc.getWindow().getWidth(), mc.getWindow().getHeight());
-                            case "fillAlpha" -> uniform.set(fillAlpha.getValue().floatValue() / 255f);
-                            case "outlineAlpha" -> uniform.set(outlineAlpha.getValue().floatValue() / 255f);
-                            case "color1" -> uniform.set((float) color1.getValue().getRed() / 255f, (float) color1.getValue().getGreen() / 255f, (float) color1.getValue().getBlue() / 255f);
-                            case "color2" -> uniform.set((float) color2.getValue().getRed() / 255f, (float) color2.getValue().getGreen() / 255f, (float) color2.getValue().getBlue() / 255f);
-                            case "speed" -> uniform.set(speed.getValue().floatValue() * 3);
-                        }
-                    });
+                PostEffectProcessor processor = getDefaultOrBloomShader(gradientShader, gradientBloomShader);
+                setupUniforms(processor, (name, uniform) -> {
+                    switch (name) {
+                        case "quality" -> uniform.set(lineWidth.getValue().intValue());
+                        case "scale" -> uniform.set((float) (scale.getValue() * 1000));
+                        case "time" -> uniform.set(com.ferra13671.BThack.api.Shaders.Shaders.INSTANCE.shaderTicker.getPassedTime() / 1000f);
+                        case "resolution" -> uniform.set((float) mc.getWindow().getWidth(), mc.getWindow().getHeight());
+                        case "fillAlpha" -> uniform.set(fillAlpha.getValue().floatValue() / 255f);
+                        case "outlineAlpha" -> uniform.set(outlineAlpha.getValue().floatValue() / 255f);
+                        case "color1" -> uniform.set((float) color1.getValue().getRed() / 255f, (float) color1.getValue().getGreen() / 255f, (float) color1.getValue().getBlue() / 255f);
+                        case "color2" -> uniform.set((float) color2.getValue().getRed() / 255f, (float) color2.getValue().getGreen() / 255f, (float) color2.getValue().getBlue() / 255f);
+                        case "speed" -> uniform.set(speed.getValue().floatValue() * 3);
+                        case "extra_quality" -> uniform.set(bloomWidth.getValue().intValue());
+                        case "Radius" -> uniform.set(bloomFactor.getValue().floatValue());
+                    }
                 });
-                gradientShader.render(builder, textureWidth, textureHeight, framebufferSet);
+                yield processor;
             }
             case "Rainbow_xy" -> {
-                ((IPostEffectProcessor) rainbowXYShader)._getPasses().forEach(postEffectPass -> {
-                    ShaderProgram shaderProgram = postEffectPass.getProgram();
-                    ((IShaderProgram) shaderProgram)._getUniforms().forEach((name, uniform) -> {
-                        switch (name) {
-                            case "quality" -> uniform.set(lineWidth.getValue().intValue());
-                            case "scale" -> uniform.set((float) (scale.getValue() * 1000));
-                            case "time" -> uniform.set(com.ferra13671.BThack.api.Shaders.Shaders.INSTANCE.shaderTicker.getPassedTime() / 1000f);
-                            case "resolution" -> uniform.set((float) mc.getWindow().getWidth(), mc.getWindow().getHeight());
-                            case "brightness" -> uniform.set(brightness.getValue().floatValue());
-                            case "saturation" -> uniform.set(saturation.getValue().floatValue());
-                            case "fillAlpha" -> uniform.set(fillAlpha.getValue().floatValue() / 255f);
-                            case "outlineAlpha" -> uniform.set(outlineAlpha.getValue().floatValue() / 255f);
-                            case "speed" -> uniform.set(speed.getValue().floatValue() * 3);
-                        }
-                    });
+                PostEffectProcessor processor = getDefaultOrBloomShader(rainbowXYShader, rainbowXYBloomShader);
+                setupUniforms(processor, (name, uniform) -> {
+                    switch (name) {
+                        case "quality" -> uniform.set(lineWidth.getValue().intValue());
+                        case "scale" -> uniform.set((float) (scale.getValue() * 1000));
+                        case "time" -> uniform.set(com.ferra13671.BThack.api.Shaders.Shaders.INSTANCE.shaderTicker.getPassedTime() / 1000f);
+                        case "resolution" -> uniform.set((float) mc.getWindow().getWidth(), mc.getWindow().getHeight());
+                        case "brightness" -> uniform.set(brightness.getValue().floatValue());
+                        case "saturation" -> uniform.set(saturation.getValue().floatValue());
+                        case "fillAlpha" -> uniform.set(fillAlpha.getValue().floatValue() / 255f);
+                        case "outlineAlpha" -> uniform.set(outlineAlpha.getValue().floatValue() / 255f);
+                        case "speed" -> uniform.set(speed.getValue().floatValue() * 3);
+                        case "extra_quality" -> uniform.set(bloomWidth.getValue().intValue());
+                        case "Radius" -> uniform.set(bloomFactor.getValue().floatValue());
+                    }
                 });
-                rainbowXYShader.render(builder, textureWidth, textureHeight, framebufferSet);
+                yield processor;
             }
             case "Rainbow_x" -> {
-                ((IPostEffectProcessor) rainbowXShader)._getPasses().forEach(postEffectPass -> {
-                    ShaderProgram shaderProgram = postEffectPass.getProgram();
-                    ((IShaderProgram) shaderProgram)._getUniforms().forEach((name, uniform) -> {
-                        switch (name) {
-                            case "quality" -> uniform.set(lineWidth.getValue().intValue());
-                            case "scale" -> uniform.set((float) (scale.getValue() * 1000));
-                            case "time" -> uniform.set(com.ferra13671.BThack.api.Shaders.Shaders.INSTANCE.shaderTicker.getPassedTime() / 1000f);
-                            case "resolution" -> uniform.set((float) mc.getWindow().getWidth(), mc.getWindow().getHeight());
-                            case "brightness" -> uniform.set(brightness.getValue().floatValue());
-                            case "saturation" -> uniform.set(saturation.getValue().floatValue());
-                            case "fillAlpha" -> uniform.set(fillAlpha.getValue().floatValue() / 255f);
-                            case "outlineAlpha" -> uniform.set(outlineAlpha.getValue().floatValue() / 255f);
-                            case "speed" -> uniform.set(speed.getValue().floatValue() * 3);
-                        }
-                    });
+                PostEffectProcessor processor = getDefaultOrBloomShader(rainbowXShader, rainbowXBloomShader);
+                setupUniforms(processor, (name, uniform) -> {
+                    switch (name) {
+                        case "quality" -> uniform.set(lineWidth.getValue().intValue());
+                        case "scale" -> uniform.set((float) (scale.getValue() * 1000));
+                        case "time" -> uniform.set(com.ferra13671.BThack.api.Shaders.Shaders.INSTANCE.shaderTicker.getPassedTime() / 1000f);
+                        case "resolution" -> uniform.set((float) mc.getWindow().getWidth(), mc.getWindow().getHeight());
+                        case "brightness" -> uniform.set(brightness.getValue().floatValue());
+                        case "saturation" -> uniform.set(saturation.getValue().floatValue());
+                        case "fillAlpha" -> uniform.set(fillAlpha.getValue().floatValue() / 255f);
+                        case "outlineAlpha" -> uniform.set(outlineAlpha.getValue().floatValue() / 255f);
+                        case "speed" -> uniform.set(speed.getValue().floatValue() * 3);
+                        case "extra_quality" -> uniform.set(bloomWidth.getValue().intValue());
+                        case "Radius" -> uniform.set(bloomFactor.getValue().floatValue());
+                    }
                 });
-                rainbowXShader.render(builder, textureWidth, textureHeight, framebufferSet);
+                yield processor;
             }
             case "Rainbow_y" -> {
-                ((IPostEffectProcessor) rainbowYShader)._getPasses().forEach(postEffectPass -> {
-                    ShaderProgram shaderProgram = postEffectPass.getProgram();
-                    ((IShaderProgram) shaderProgram)._getUniforms().forEach((name, uniform) -> {
-                        switch (name) {
-                            case "quality" -> uniform.set(lineWidth.getValue().intValue());
-                            case "scale" -> uniform.set((float) (scale.getValue() * 1000));
-                            case "time" -> uniform.set(com.ferra13671.BThack.api.Shaders.Shaders.INSTANCE.shaderTicker.getPassedTime() / 1000f);
-                            case "resolution" -> uniform.set((float) mc.getWindow().getWidth(), mc.getWindow().getHeight());
-                            case "brightness" -> uniform.set(brightness.getValue().floatValue());
-                            case "saturation" -> uniform.set(saturation.getValue().floatValue());
-                            case "fillAlpha" -> uniform.set(fillAlpha.getValue().floatValue() / 255f);
-                            case "outlineAlpha" -> uniform.set(outlineAlpha.getValue().floatValue() / 255f);
-                            case "speed" -> uniform.set(speed.getValue().floatValue() * 3);
-                        }
-                    });
+                PostEffectProcessor processor = getDefaultOrBloomShader(rainbowYShader, rainbowYBloomShader);
+                setupUniforms(processor, (name, uniform) -> {
+                    switch (name) {
+                        case "quality" -> uniform.set(lineWidth.getValue().intValue());
+                        case "scale" -> uniform.set((float) (scale.getValue() * 1000));
+                        case "time" -> uniform.set(com.ferra13671.BThack.api.Shaders.Shaders.INSTANCE.shaderTicker.getPassedTime() / 1000f);
+                        case "resolution" -> uniform.set((float) mc.getWindow().getWidth(), mc.getWindow().getHeight());
+                        case "brightness" -> uniform.set(brightness.getValue().floatValue());
+                        case "saturation" -> uniform.set(saturation.getValue().floatValue());
+                        case "fillAlpha" -> uniform.set(fillAlpha.getValue().floatValue() / 255f);
+                        case "outlineAlpha" -> uniform.set(outlineAlpha.getValue().floatValue() / 255f);
+                        case "speed" -> uniform.set(speed.getValue().floatValue() * 3);
+                        case "extra_quality" -> uniform.set(bloomWidth.getValue().intValue());
+                        case "Radius" -> uniform.set(bloomFactor.getValue().floatValue());
+                    }
                 });
-                rainbowYShader.render(builder, textureWidth, textureHeight, framebufferSet);
+                yield processor;
             }
-        }
+            default -> null;
+        };
+        postEffectProcessor.render(builder, textureWidth, textureHeight, framebufferSet);
     }
 
-    public void setArguments(FrameGraphBuilder builder, int textureWidth, int textureHeight, PostEffectProcessor.FramebufferSet framebufferSet) {
-        this.builder = builder;
-        this.textureWidth = textureWidth;
-        this.textureHeight = textureHeight;
-        this.framebufferSet = framebufferSet;
+    public PostEffectProcessor getDefaultOrBloomShader(PostEffectProcessor defaultShader, PostEffectProcessor bloomShader) {
+        return bloom.getValue() ? bloomShader : defaultShader;
+    }
+
+    public void setupUniforms(PostEffectProcessor postEffectProcessor, BiConsumer<String, GlUniform> biConsumer) {
+        ((IPostEffectProcessor) postEffectProcessor)._getPasses().forEach(postEffectPass -> {
+            ShaderProgram shaderProgram = postEffectPass.getProgram();
+            ((IShaderProgram) shaderProgram)._getUniforms().forEach(biConsumer);
+        });
     }
 
     public void loadShaders() {
-        defaultShader = mc.getShaderLoader().loadPostEffect(Identifier.of("bthack", "default_outline"), DefaultFramebufferSet.MAIN_AND_ENTITY_OUTLINE);
-        gradientShader = mc.getShaderLoader().loadPostEffect(Identifier.of("bthack", "gradient1_outline"), DefaultFramebufferSet.MAIN_AND_ENTITY_OUTLINE);
-        rainbowXShader = mc.getShaderLoader().loadPostEffect(Identifier.of("bthack", "rainbowx_outline"), DefaultFramebufferSet.MAIN_AND_ENTITY_OUTLINE);
-        rainbowYShader = mc.getShaderLoader().loadPostEffect(Identifier.of("bthack", "rainbowy_outline"), DefaultFramebufferSet.MAIN_AND_ENTITY_OUTLINE);
-        rainbowXYShader = mc.getShaderLoader().loadPostEffect(Identifier.of("bthack", "rainbowxy_outline"), DefaultFramebufferSet.MAIN_AND_ENTITY_OUTLINE);
+        defaultShader = loadShader("default_outline");
+        gradientShader = loadShader("gradient_outline");
+        rainbowXShader = loadShader("rainbowx_outline");
+        rainbowYShader = loadShader("rainbowy_outline");
+        rainbowXYShader = loadShader("rainbowxy_outline");
+        defaultBloomShader = loadShader("default_bloom_outline");
+        gradientBloomShader = loadShader("gradient_bloom_outline");
+        rainbowXBloomShader = loadShader("rainbowx_bloom_outline");
+        rainbowYBloomShader = loadShader("rainbowy_bloom_outline");
+        rainbowXYBloomShader = loadShader("rainbowxy_bloom_outline");
+    }
+
+    private PostEffectProcessor loadShader(String path) {
+        return mc.getShaderLoader().loadPostEffect(Identifier.of("bthack", path), DefaultFramebufferSet.MAIN_AND_ENTITY_OUTLINE);
     }
 }
