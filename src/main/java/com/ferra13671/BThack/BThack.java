@@ -98,7 +98,6 @@ public final class BThack implements ClientModInitializer, Mc {
 
         initDebug("Starting initialization of the sound engine...");
         TinySound.init();
-        Sounds.initSounds();
         if (TinySound.isInitialized()) {
             initDebug("The sound engine has been successfully initialized!");
         } else {
