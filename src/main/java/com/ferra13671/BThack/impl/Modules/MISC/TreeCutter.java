@@ -33,12 +33,12 @@ public class TreeCutter extends Module {
         if (!ModuleList.packetMine.conveyorMode.getValue()) {
             sendNotification(Formatting.YELLOW + LanguageSystem.translate("lang.module.TreeCutter.ConveyorNotEnabled"));
             mc.player.playSound(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP);
-            setToggled(false);
+            setEnabled(false);
             return;
         }
 
         super.onEnable();
-        ModuleList.packetMine.setToggled(true);
+        ModuleList.packetMine.setEnabled(true);
     }
 
     @EventSubscriber

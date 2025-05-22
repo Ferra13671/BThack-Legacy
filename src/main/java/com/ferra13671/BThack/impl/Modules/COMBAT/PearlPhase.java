@@ -90,7 +90,7 @@ public class PearlPhase extends Module {
                     if (minPos != null) {
                         pearlPhaseAction(RotateUtils.rotations(minPos)[0]);
                         if (autoToggle.getValue())
-                            setToggled(false);
+                            setEnabled(false);
                         ticker.reset();
                     }
                 }

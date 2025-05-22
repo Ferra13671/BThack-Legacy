@@ -89,7 +89,7 @@ public class MoveTask extends ActionBotTask {
 
             if (scaffold) {
                 scaffoldActivated = ModuleList.scaffold.isEnabled();
-                ModuleList.scaffold.setToggled(true);
+                ModuleList.scaffold.setEnabled(true);
             }
 
 
@@ -105,7 +105,7 @@ public class MoveTask extends ActionBotTask {
 
                 if (scaffold) {
                     if (!ModuleList.scaffold.isEnabled()) {
-                        ModuleList.scaffold.setToggled(true);
+                        ModuleList.scaffold.setEnabled(true);
                     }
                 }
 
@@ -159,7 +159,7 @@ public class MoveTask extends ActionBotTask {
     private void disableScaffold(boolean scaffoldEnabled) {
         if (scaffold) {
             if (!scaffoldEnabled) {
-                ModuleList.scaffold.setToggled(false);
+                ModuleList.scaffold.setEnabled(false);
             }
         }
     }

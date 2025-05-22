@@ -18,21 +18,23 @@ import java.lang.reflect.Field;
 
 public class Module {
     private final ModuleInfo moduleInfo = getClass().getAnnotation(ModuleInfo.class);
+    public static final MinecraftClient mc = MinecraftClient.getInstance();
+
     public final String name = moduleInfo.name();
     private final String description = moduleInfo.description();
     private final Category category = Categories.get(moduleInfo.category());
     private final boolean autoEnabled = moduleInfo.autoEnabled();
-
+    private final boolean allowRemapVisible = moduleInfo.allowRemapVisible();
+    private final boolean allowRemapKeyCode = moduleInfo.allowRemapKeyCode();
+    public boolean visible = true;
     private int keyCode = moduleInfo.key();
-    public boolean toggled;
+    public boolean enabled;
 
     public String arrayListInfo = "";
 
-    public boolean visible = true;
-    public boolean allowRemapVisible = true;
-    public boolean allowRemapKeyCode = true;
-
-    public static final MinecraftClient mc = MinecraftClient.getInstance();
+    public static boolean nullCheck() {
+        return mc.player == null || mc.world == null;
+    }
 
     public void initSettings() {
         if (category == null) throw new IllegalStateException("Category equals null");
@@ -47,25 +49,104 @@ public class Module {
         }
     }
 
+    public String getName() {
+        return this.name;
+    }
+
     public String getArrayListName() {
         return name + (arrayListInfo.isEmpty() ? "" : Formatting.GRAY + "[" + Formatting.WHITE +  arrayListInfo + Formatting.GRAY + "]");
     }
 
-    public boolean isEnabled() {
-        return toggled;
+    public String getChatName() {
+        return "[" + name + "]";
+    }
+
+    public String getDescription() {
+        return description.startsWith("lang.") ? LanguageSystem.translate(description) : description;
+    }
+
+    public Category getCategory() {
+        return category;
     }
 
     public boolean isAutoEnabled() {
         return autoEnabled;
     }
 
+    public boolean isAllowRemapVisible() {
+        return allowRemapVisible;
+    }
+
+    public boolean isAllowRemapKeyCode() {
+        return allowRemapKeyCode;
+    }
+
     public int getKey() {
         return keyCode;
     }
 
-    public static boolean nullCheck() {
-        MinecraftClient mc = MinecraftClient.getInstance();
-        return mc.player == null || mc.world == null;
+    public void setKey(int key) {
+        if (!isAllowRemapKeyCode()) return;
+        this.keyCode = key;
+    }
+
+    public boolean isVisible() {
+        return visible;
+    }
+
+    public void setVisible(boolean visible) {
+        if (!isAllowRemapVisible()) return;
+        this.visible = visible;
+        if (this.visible && isEnabled())
+            ArrayListComponent.addModule(this);
+        else ArrayListComponent.removeModule(this);
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        if (this.enabled == enabled) return;
+        this.enabled = enabled;
+        if (this.enabled) {
+            sendToggleMessage();
+            playOnSound();
+            addToArrayList();
+            onEnable();
+        } else {
+            sendToggleMessage();
+            playOffSound();
+            removeFromArrayList();
+            onDisable();
+        }
+    }
+
+    public void setEnabledQuietly(boolean enabled) {
+        if (this.enabled == enabled) return;
+        this.enabled = enabled;
+        if (this.enabled) {
+            addToArrayList();
+            onEnable();
+        } else {
+            removeFromArrayList();
+            onDisable();
+        }
+    }
+
+    public void toggle() {
+        enabled = !enabled;
+        if (enabled) {
+            sendToggleMessage();
+            playOnSound();
+            onEnable();
+            addToArrayList();
+        } else {
+            sendToggleMessage();
+            playOffSound();
+            onDisable();
+            removeFromArrayList();
+        }
     }
 
     public void onEnable() {
@@ -88,61 +169,9 @@ public class Module {
             SoundSystem.playSound(Sounds.MODULE_OFF, ModuleList.clientSettings.soundVolume.getValue().floatValue());
     }
 
-
-    public void setKey(int key) {
-        this.keyCode = key;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public String getDescription() {
-        if (description.startsWith("lang.")) {
-            return LanguageSystem.translate(description);
-        } else {
-            return this.description;
-        }
-    }
-
-    public String getChatName() {
-        return "[" + this.name + "]";
-    }
-
-    public void setVisible(boolean visible) {
-        this.visible = visible;
-        if (this.visible) {
-            if (isEnabled()) ArrayListComponent.addModule(this);
-        } else ArrayListComponent.removeModule(this);
-    }
-
-    public boolean isVisible() {
-        return visible;
-    }
-
     public void sendNotification(String text) {
-        if (ModuleList.chatNotifications.isEnabled() && ModuleList.chatNotifications.moduleMessages.getValue()) {
+        if (ModuleList.chatNotifications.isEnabled() && ModuleList.chatNotifications.moduleMessages.getValue())
             ChatUtils.sendMessage(getChatName() + Formatting.GRAY + " " + text);
-        }
-    }
-
-    public void toggle() {
-        toggled = !toggled;
-        if (toggled) {
-            sendToggleMessage();
-            playOnSound();
-            onEnable();
-            addToArrayList();
-        } else {
-            sendToggleMessage();
-            playOffSound();
-            onDisable();
-            removeFromArrayList();
-        }
     }
 
     protected void addToArrayList() {
@@ -153,42 +182,8 @@ public class Module {
         ArrayListComponent.removeModule(this);
     }
 
-    public void setToggled(boolean toggled) {
-        if (this.toggled == toggled) return;
-        this.toggled = toggled;
-        if (this.toggled) {
-            sendToggleMessage();
-            playOnSound();
-            addToArrayList();
-            onEnable();
-        } else {
-            sendToggleMessage();
-            playOffSound();
-            removeFromArrayList();
-            onDisable();
-        }
-    }
-
-    public void setQuietlyToggled(boolean toggled) {
-        if (this.toggled == toggled) return;
-        this.toggled = toggled;
-        if (this.toggled) {
-            addToArrayList();
-            onEnable();
-        } else {
-            removeFromArrayList();
-            onDisable();
-        }
-    }
-
     public void sendToggleMessage() {
-        if (ModuleList.chatNotifications.isEnabled() && ModuleList.chatNotifications.moduleToggle.getValue()) {
-            if (toggled) {
-                ChatUtils.sendMessage(this.getName() + ": " + Formatting.GREEN + "Enabled");
-            } else {
-                ChatUtils.sendMessage(this.getName() + ": " + Formatting.RED + "Disabled");
-            }
-        }
+        if (ModuleList.chatNotifications.isEnabled() && ModuleList.chatNotifications.moduleToggle.getValue())
+            ChatUtils.sendMessage(getName() + ": " + (enabled ? Formatting.GREEN + "Enabled" : Formatting.RED + "Disabled"));
     }
-
 }

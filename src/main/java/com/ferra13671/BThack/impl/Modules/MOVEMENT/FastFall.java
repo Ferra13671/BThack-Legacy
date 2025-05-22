@@ -24,7 +24,7 @@ public class FastFall extends Module {
     public void onEnable() {
         super.onEnable();
 
-        ModuleList.elytraFlight.setToggled(false);
+        ModuleList.elytraFlight.setEnabled(false);
     }
 
     @EventSubscriber
@@ -44,7 +44,7 @@ public class FastFall extends Module {
 
     public void timerAction() {
         if (ModuleList.timer.isEnabled())
-            ModuleList.timer.setToggled(false);
+            ModuleList.timer.setEnabled(false);
 
         if (mc.player.verticalCollision)
             Managers.TICK_MANAGER.applyTickModifier(1);

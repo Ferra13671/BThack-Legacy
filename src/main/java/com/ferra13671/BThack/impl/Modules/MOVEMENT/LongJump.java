@@ -52,7 +52,7 @@ public class LongJump extends Module {
     @Override
     public void onEnable() {
         super.onEnable();
-        ModuleList.elytraFlight.setToggled(false);
+        ModuleList.elytraFlight.setEnabled(false);
     }
 
     @EventSubscriber
@@ -89,7 +89,7 @@ public class LongJump extends Module {
 
     public void EFMstop() {
         sendNotification(Formatting.RED + LanguageSystem.translate("lang.module.LongJump.ItemsNotFound"));
-        setToggled(false);
+        setEnabled(false);
     }
 
 

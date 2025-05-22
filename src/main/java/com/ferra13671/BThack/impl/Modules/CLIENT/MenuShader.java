@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-@ModuleInfo(name = "MenuShader", description = "lang.module.MenuShader", category = "CLIENT", autoEnabled = true)
+@ModuleInfo(name = "MenuShader", description = "lang.module.MenuShader", category = "CLIENT", autoEnabled = true, visible = false, allowRemapVisible = false, allowRemapKeyCode = false)
 public class MenuShader extends Module {
 
     public final BooleanSetting random = new BooleanSetting("Random", this, false);
@@ -23,10 +23,6 @@ public class MenuShader extends Module {
 
     public final NumberSetting speed = new NumberSetting("Speed", this, 1, 0.1, 3, false);
 
-    public MenuShader() {
-        allowRemapVisible = false;
-        setVisible(false);
-    }
 
     public List<String> getShaderList() {
         List<String> shaderNames = new ArrayList<>();

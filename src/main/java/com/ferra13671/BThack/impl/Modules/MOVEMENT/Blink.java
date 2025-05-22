@@ -77,14 +77,14 @@ public class Blink extends Module {
         if (nullCheck() || mc.isInSingleplayer()) return;
 
         if (autoDisable.getValue() && disableIfVelocity.getValue() && e.getPacket() instanceof EntityVelocityUpdateS2CPacket packet && packet.getEntityId() == mc.player.getId()) {
-            setToggled(false);
+            setEnabled(false);
         }
     }
 
     @EventSubscriber
     public void onAttack(AttackEntityEvent e) {
         if (autoDisable.getValue() && disableIfAttack.getValue() && e.getPlayer() == mc.player)
-            setToggled(false);
+            setEnabled(false);
     }
 
     @EventSubscriber

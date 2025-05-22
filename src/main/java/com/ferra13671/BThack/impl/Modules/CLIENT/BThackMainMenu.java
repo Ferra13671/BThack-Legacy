@@ -5,15 +5,8 @@ import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSettin
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Module.ModuleInfo;
 
-@ModuleInfo(name = "BThackMainMenu", description = "lang.module.BThackMainMenu", category = "CLIENT", autoEnabled = true)
+@ModuleInfo(name = "BThackMainMenu", description = "lang.module.BThackMainMenu", category = "CLIENT", autoEnabled = true, visible = false, allowRemapVisible = false, allowRemapKeyCode = false)
 public class BThackMainMenu extends Module {
-
     public final BooleanSetting screenChangeAnimation = new BooleanSetting("Screen Change Animation", this, true);
     public final NumberSetting animationSpeed = new NumberSetting("Anim. Speed", this, 1, 0.5, 3, false, screenChangeAnimation::getValue);
-
-    public BThackMainMenu() {
-        allowRemapKeyCode = false;
-        allowRemapVisible = false;
-        setVisible(false);
-    }
 }

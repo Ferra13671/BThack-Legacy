@@ -174,7 +174,7 @@ public class NewChunks extends Module {
     public void onTick(ClientTickEvent e) {
         if (nullCheck()) {
             clearChunks();
-            setToggled(false);
+            setEnabled(false);
             return;
         }
         if (!PlayerUtils.getDimension().equals(prevDimension)) {

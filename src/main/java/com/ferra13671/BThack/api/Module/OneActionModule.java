@@ -8,7 +8,7 @@ public class OneActionModule extends Module {
 
     @Override
     public void sendToggleMessage() {
-        if (toggled && ModuleList.chatNotifications.isEnabled() && ModuleList.chatNotifications.moduleToggle.getValue()) {
+        if (enabled && ModuleList.chatNotifications.isEnabled() && ModuleList.chatNotifications.moduleToggle.getValue()) {
             ChatUtils.sendMessage(this.getName() + ": " + Formatting.YELLOW + "Toggled");
         }
     }
@@ -20,13 +20,13 @@ public class OneActionModule extends Module {
 
     @Override
     public void toggle() {
-        toggled = !toggled;
-        if (toggled) {
+        enabled = !enabled;
+        if (enabled) {
             sendToggleMessage();
             playOnSound();
             onEnable();
             onDisable();
-            toggled = false;
+            enabled = false;
         } else {
             onDisable();
         }
@@ -39,26 +39,26 @@ public class OneActionModule extends Module {
     protected final void removeFromArrayList() {}
 
     @Override
-    public void setToggled(boolean toggled) {
-        this.toggled = toggled;
-        if (this.toggled) {
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+        if (this.enabled) {
             sendToggleMessage();
             playOnSound();
             onEnable();
             onDisable();
-            this.toggled = false;
+            this.enabled = false;
         } else {
             onDisable();
         }
     }
 
     @Override
-    public void setQuietlyToggled(boolean toggled) {
-        this.toggled = toggled;
-        if (this.toggled) {
+    public void setEnabledQuietly(boolean enabled) {
+        this.enabled = enabled;
+        if (this.enabled) {
             onEnable();
             onDisable();
-            this.toggled = false;
+            this.enabled = false;
         } else {
             onDisable();
         }

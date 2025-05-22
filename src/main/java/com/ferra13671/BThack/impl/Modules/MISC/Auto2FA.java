@@ -47,7 +47,7 @@ public class Auto2FA extends Module {
             thread.sleepThread(delay.getValue().longValue());
             ChatUtils.sendCommand(command);
             if (autoToggle.getValue())
-                setToggled(false);
+                setEnabled(false);
         });
     }
 }

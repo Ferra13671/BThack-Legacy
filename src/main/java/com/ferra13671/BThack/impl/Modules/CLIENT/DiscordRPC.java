@@ -5,14 +5,12 @@ import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.api.Utils.DiscordUtils;
 
-@ModuleInfo(name = "DiscordRPC", description = "lang.module.DiscordRPC", category = "CLIENT", autoEnabled = true)
+@ModuleInfo(name = "DiscordRPC", description = "lang.module.DiscordRPC", category = "CLIENT", autoEnabled = true, allowRemapKeyCode = false)
 public class DiscordRPC extends Module {
 
     public final BooleanSetting secret = new BooleanSetting("Secret :3", this, false);
 
     public DiscordRPC() {
-        allowRemapKeyCode = false;
-
         DiscordUtils.init();
     }
 

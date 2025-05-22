@@ -38,7 +38,7 @@ public class DeathCamera extends Module {
             return;
         }
 
-        ModuleList.freeCam.setToggled(false);
+        ModuleList.freeCam.setEnabled(false);
 
         super.onEnable();
     }

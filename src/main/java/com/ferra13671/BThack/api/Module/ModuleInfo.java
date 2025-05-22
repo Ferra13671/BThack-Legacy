@@ -13,4 +13,7 @@ public @interface ModuleInfo {
     int key() default 0;
     String category();
     boolean autoEnabled() default false;
+    boolean visible() default true;
+    boolean allowRemapVisible() default true;
+    boolean allowRemapKeyCode() default true;
 }

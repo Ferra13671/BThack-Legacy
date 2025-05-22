@@ -70,8 +70,8 @@ public final class ConfigSystem {
                 add(moduleObject, "Bind", module.getKey());
                 add(moduleObject, "Visible", module.isVisible());
 
-                if (Managers.SETTINGS_MANAGER.getSettingsByMod(module) != null) {
-                    for (Setting<?> s : Managers.SETTINGS_MANAGER.getSettingsByMod(module)) {
+                if (Managers.SETTINGS_MANAGER.getSettingsByModule(module) != null) {
+                    for (Setting<?> s : Managers.SETTINGS_MANAGER.getSettingsByModule(module)) {
                         s.save(settingObject);
                     }
                 }
@@ -93,8 +93,8 @@ public final class ConfigSystem {
 
                             JsonObject settingObject = moduleObject.get("Settings").getAsJsonObject();
 
-                            if (Managers.SETTINGS_MANAGER.getSettingsByMod(module) != null) {
-                                for (Setting<?> s : Managers.SETTINGS_MANAGER.getSettingsByMod(module)) {
+                            if (Managers.SETTINGS_MANAGER.getSettingsByModule(module) != null) {
+                                for (Setting<?> s : Managers.SETTINGS_MANAGER.getSettingsByModule(module)) {
                                     JsonElement settingValueObject;
 
                                     settingValueObject = settingObject.get(s.getName());
@@ -109,7 +109,7 @@ public final class ConfigSystem {
                                 }
                             }
 
-                            module.setQuietlyToggled(moduleObject.get("Enabled").getAsBoolean());
+                            module.setEnabledQuietly(moduleObject.get("Enabled").getAsBoolean());
                             module.setKey(moduleObject.get("Bind").getAsInt());
                             module.setVisible(moduleObject.get("Visible").getAsBoolean());
                         }

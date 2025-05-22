@@ -39,8 +39,8 @@ public class EnableModuleTask extends ActionBotTask {
             ChatUtils.sendMessage("[ActionBot: EnableModuleTask] " + Formatting.YELLOW + "Module was not found. Skipping a task.");
             return;
         }
-        if (quietly) m.setQuietlyToggled(true);
-        else m.setToggled(true);
+        if (quietly) m.setEnabledQuietly(true);
+        else m.setEnabled(true);
     }
 
     @Override

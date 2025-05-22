@@ -16,7 +16,7 @@ public class Timer extends Module {
     @Override
     public void onEnable() {
         super.onEnable();
-        ModuleList.elytraFlight.setToggled(false);
+        ModuleList.elytraFlight.setEnabled(false);
     }
 
     @EventSubscriber

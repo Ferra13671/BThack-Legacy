@@ -51,7 +51,7 @@ public class AutoAuth extends Module {
             thread.sleepThread(delay.getValue().longValue());
             ChatUtils.sendCommand(command);
             if (autoToggle.getValue())
-                setToggled(false);
+                setEnabled(false);
         });
     }
 

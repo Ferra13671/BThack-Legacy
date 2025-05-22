@@ -151,10 +151,10 @@ public class TridentDupe extends Module {
     @EventSubscriber
     public void onGui(GuiOpenEvent e) {
         if (autoInventory.getValue()) {
-            if (e.getScreen() == null || !(e.getScreen() instanceof InventoryScreen)) setToggled(false);
+            if (e.getScreen() == null || !(e.getScreen() instanceof InventoryScreen)) setEnabled(false);
         }
         if (e.getScreen() instanceof DisconnectedScreen) {
-            setToggled(false);
+            setEnabled(false);
         }
     }
 }

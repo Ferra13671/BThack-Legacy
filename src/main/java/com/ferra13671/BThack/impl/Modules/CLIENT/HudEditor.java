@@ -4,13 +4,8 @@ import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.api.Module.OneActionModule;
 import com.ferra13671.BThack.api.GuiSystem.BThackScreens;
 
-@ModuleInfo(name = "HudEditor", description = "lang.module.HudEditor", category = "CLIENT")
+@ModuleInfo(name = "HudEditor", description = "lang.module.HudEditor", category = "CLIENT", visible = false, allowRemapVisible = false, allowRemapKeyCode = false)
 public class HudEditor extends OneActionModule {
-
-    public HudEditor() {
-        allowRemapKeyCode = false;
-        allowRemapVisible = false;
-    }
 
     @Override
     public void playOnSound() {}

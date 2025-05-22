@@ -21,11 +21,11 @@ public class ActionBotRunTimeThread extends BThackThread {
                 play();
             }
 
-            ModuleList.actionBot.setToggled(false);
+            ModuleList.actionBot.setEnabled(false);
         } else {
             play();
 
-            ModuleList.actionBot.setToggled(false);
+            ModuleList.actionBot.setEnabled(false);
         }
     }
 

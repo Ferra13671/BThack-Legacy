@@ -51,8 +51,8 @@ public final class SubConfigs {
                     add(jsonObject, "Bind", module.getKey());
                     add(jsonObject, "Visible", module.isVisible());
 
-                    if (Managers.SETTINGS_MANAGER.getSettingsByMod(module) != null) {
-                        for (Setting<?> s : Managers.SETTINGS_MANAGER.getSettingsByMod(module)) {
+                    if (Managers.SETTINGS_MANAGER.getSettingsByModule(module) != null) {
+                        for (Setting<?> s : Managers.SETTINGS_MANAGER.getSettingsByModule(module)) {
                             s.save(settingObject);
                         }
                     }
@@ -69,8 +69,8 @@ public final class SubConfigs {
 
                     JsonObject settingObject = jsonObject.get("Settings").getAsJsonObject();
 
-                    if (Managers.SETTINGS_MANAGER.getSettingsByMod(module) != null) {
-                        for (Setting<?> s : Managers.SETTINGS_MANAGER.getSettingsByMod(module)) {
+                    if (Managers.SETTINGS_MANAGER.getSettingsByModule(module) != null) {
+                        for (Setting<?> s : Managers.SETTINGS_MANAGER.getSettingsByModule(module)) {
                             JsonElement settingValueObject;
 
                             settingValueObject = settingObject.get(s.getName());
@@ -84,12 +84,12 @@ public final class SubConfigs {
                             }
                         }
                     }
-                    module.setToggled(jsonObject.get("Enabled").getAsBoolean());
+                    module.setEnabled(jsonObject.get("Enabled").getAsBoolean());
                     module.setKey(jsonObject.get("Bind").getAsInt());
                     module.setVisible(jsonObject.get("Visible").getAsBoolean());
                 }, () -> {
                     if (module.isAutoEnabled()) {
-                        module.setToggled(true);
+                        module.setEnabled(true);
                     }
                 });
             }
@@ -143,8 +143,8 @@ public final class SubConfigs {
                     add(jsonObject, "ScaledHeight", hudComponent.getScaledHeight());
                     add(jsonObject, "Enabled", hudComponent.isEnabled());
 
-                    if (Managers.SETTINGS_MANAGER.getSettingsByMod(module) != null) {
-                        for (Setting<?> s : Managers.SETTINGS_MANAGER.getSettingsByMod(module)) {
+                    if (Managers.SETTINGS_MANAGER.getSettingsByModule(module) != null) {
+                        for (Setting<?> s : Managers.SETTINGS_MANAGER.getSettingsByModule(module)) {
                             s.save(settingObject);
                         }
                     }
@@ -171,14 +171,14 @@ public final class SubConfigs {
                                 hudComponent.setX(jsonObject.get("X").getAsFloat(), jsonObject.get("ScaledWidth").getAsInt());
                                 hudComponent.setY(jsonObject.get("Y").getAsFloat(), jsonObject.get("ScaledHeight").getAsInt());
                                 if (jsonObject.get("Enabled") != null) {
-                                    hudComponent.setToggled(jsonObject.get("Enabled").getAsBoolean());
+                                    hudComponent.setEnabled(jsonObject.get("Enabled").getAsBoolean());
                                 }
 
                                 if (!_null(jsonObject, "Settings")) {
                                     JsonObject settingObject = jsonObject.get("Settings").getAsJsonObject();
 
-                                    if (Managers.SETTINGS_MANAGER.getSettingsByMod(module) != null) {
-                                        for (Setting<?> s : Managers.SETTINGS_MANAGER.getSettingsByMod(module)) {
+                                    if (Managers.SETTINGS_MANAGER.getSettingsByModule(module) != null) {
+                                        for (Setting<?> s : Managers.SETTINGS_MANAGER.getSettingsByModule(module)) {
                                             JsonElement settingValueObject;
 
                                             settingValueObject = settingObject.get(s.getName());

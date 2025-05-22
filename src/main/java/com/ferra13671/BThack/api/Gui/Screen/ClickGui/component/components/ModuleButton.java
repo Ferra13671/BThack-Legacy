@@ -45,7 +45,7 @@ public class ModuleButton extends Component implements Mc {
 		this.offset = offset;
 		final Data<Integer> opY = new Data<>(offset + Constants.CLICKGUI_BUTTON_HEIGHT);
 		final Data<AbstractSetting<?>> setting = new Data<>();
-		Managers.SETTINGS_MANAGER.getSettingsByMod(module).forEach(s -> {
+		Managers.SETTINGS_MANAGER.getSettingsByModule(module).forEach(s -> {
 			if (s != null) {
 				setting.set(s.asSettingButton(this, opY.get()));
 				settings.add(setting.get());
@@ -54,13 +54,13 @@ public class ModuleButton extends Component implements Mc {
 		});
 
 		int h = 0;
-		if (module.allowRemapVisible) {
+		if (module.isAllowRemapVisible()) {
 			setting.set(new Visible(this, opY.get(), module));
 			h = setting.get().getHeight();
 			settings.add(setting.get());
 		}
-		if (module.allowRemapKeyCode) {
-			if (module.allowRemapVisible)
+		if (module.isAllowRemapKeyCode()) {
+			if (module.isAllowRemapVisible())
 				opY.set(opY.get() + h);
 			settings.add(new Keybind(this, opY.get()));
 		}

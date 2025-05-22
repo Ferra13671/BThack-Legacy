@@ -25,7 +25,7 @@ public class AutoMend extends Module {
         if (slot == -1) {
             if (autoToggle.getValue()) {
                 sendNotification(LanguageSystem.translate("lang.module.AutoMend.toggleMessage"));
-                setToggled(false);
+                setEnabled(false);
             }
             return;
         }

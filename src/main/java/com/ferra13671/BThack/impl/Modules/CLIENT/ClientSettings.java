@@ -13,7 +13,7 @@ import net.minecraft.util.Formatting;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-@ModuleInfo(name = "ClientSettings", description = "lang.module.ClientSettings", category = "CLIENT", autoEnabled = true)
+@ModuleInfo(name = "ClientSettings", description = "lang.module.ClientSettings", category = "CLIENT", autoEnabled = true, visible = false, allowRemapVisible = false, allowRemapKeyCode = false)
 public class ClientSettings extends Module {
 
     public final BooleanSetting startSound = new BooleanSetting("Start Sound", this, true);
@@ -53,11 +53,6 @@ public class ClientSettings extends Module {
             "GOLD"
     ));
 
-    public ClientSettings() {
-        allowRemapKeyCode = false;
-        allowRemapVisible = false;
-        setVisible(false);
-    }
 
     @Override
     protected void addToArrayList() {}
@@ -82,7 +77,7 @@ public class ClientSettings extends Module {
 
     @Override
     public void onDisable() {
-        setToggled(true);
+        setEnabled(true);
     }
 
     public static Formatting getFriendColor() {

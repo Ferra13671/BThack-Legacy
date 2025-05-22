@@ -20,7 +20,7 @@ import java.awt.*;
 import java.util.Arrays;
 import java.util.function.Consumer;
 
-@ModuleInfo(name = "HUD", description = "lang.module.HUD", category = "CLIENT", autoEnabled = true)
+@ModuleInfo(name = "HUD", description = "lang.module.HUD", category = "CLIENT", autoEnabled = true, visible = false, allowRemapVisible = false, allowRemapKeyCode = false)
 public class HUD extends Module {
 
     public BooleanSetting rainbow;
@@ -43,10 +43,6 @@ public class HUD extends Module {
     public final ColorSetting backGroundColor = new ColorSetting("BackGround Color", this, new Color(0, 0, 0, 150));
 
     public HUD() {
-        allowRemapKeyCode = false;
-        allowRemapVisible = false;
-        setVisible(false);
-
         mc.getWindow().swapBuffers(null);
 
         rainbow = new BooleanSetting("Rainbow", this, false, () -> !gradient.getValue());

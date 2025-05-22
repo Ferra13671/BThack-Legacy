@@ -20,7 +20,7 @@ public abstract class MixinMineProcess implements Helper {
         if (var1.startsWith("Unable to find any path to ") && var1.contains(", canceling mine")) {
             if (ModuleList.autoMine != null)
                 if (ModuleList.autoMine.isEnabled())
-                    ModuleList.autoMine.setToggled(false);
+                    ModuleList.autoMine.setEnabled(false);
         }
         Stream.of(var1.split("\n")).forEach((var3x) -> {
             MutableText var4;

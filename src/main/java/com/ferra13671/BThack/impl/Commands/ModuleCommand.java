@@ -19,20 +19,20 @@ public class ModuleCommand extends AbstractCommand {
     @Override
     public void compile(LiteralArgumentBuilder<CommandSource> builder) {
         builder.then(arg("module", Arguments.MODULE).then(literal("enable").executes(context -> {
-            context.getArgument("module", Module.class).setToggled(true);
+            context.getArgument("module", Module.class).setEnabled(true);
             return SUCCESFUL;
         })).then(literal("disable").executes(context -> {
-            context.getArgument("module", Module.class).setToggled(false);
+            context.getArgument("module", Module.class).setEnabled(false);
             return SUCCESFUL;
         })).then(literal("visible").then(arg("visible", Arguments.BOOLEAN).executes(context -> {
             Module module = context.getArgument("module", Module.class);
-            if (!module.allowRemapVisible) error(String.format(LanguageSystem.translate("lang.command.Module.notAllowedRemapVisible"), module.getName()));
+            if (!module.isAllowRemapVisible()) error(String.format(LanguageSystem.translate("lang.command.Module.notAllowedRemapVisible"), module.getName()));
             else module.setVisible(context.getArgument("visible", Boolean.class));
             sendMessage(Formatting.AQUA + LanguageSystem.translate(module.isVisible() ? "lang.command.Module.visible" : "lang.command.Module.notVisible"));
             return SUCCESFUL;
         }))).then(literal("reset").executes(context -> {
             final Module module = context.getArgument("module", Module.class);
-            for (Setting<?> setting : Managers.SETTINGS_MANAGER.getSettingsByMod(module)) {
+            for (Setting<?> setting : Managers.SETTINGS_MANAGER.getSettingsByModule(module)) {
                 setting.toDefault();
             }
             sendMessage(Formatting.AQUA + String.format(LanguageSystem.translate("lang.command.Module.reset"), module.getName()));
@@ -41,7 +41,7 @@ public class ModuleCommand extends AbstractCommand {
         })).then(literal("bind").then(literal("set").then(arg("key", Arguments.STRING_ONE).executes(context -> {
             Module module = context.getArgument("module", Module.class);
 
-            if (!module.allowRemapKeyCode) error(String.format(LanguageSystem.translate("lang.command.Module.notAllowedRemapKeyCode"), module.getName()));
+            if (!module.isAllowRemapKeyCode()) error(String.format(LanguageSystem.translate("lang.command.Module.notAllowedRemapKeyCode"), module.getName()));
             else {
 
                 String key = context.getArgument("key", String.class);
@@ -51,7 +51,7 @@ public class ModuleCommand extends AbstractCommand {
             return SUCCESFUL;
         })))).then(literal("bind").then(literal("clear").executes(context -> {
             Module module = context.getArgument("module", Module.class);
-            if (!module.allowRemapKeyCode) error(String.format(LanguageSystem.translate("lang.command.Module.notAllowedRemapKeyCode"), module.getName()));
+            if (!module.isAllowRemapKeyCode()) error(String.format(LanguageSystem.translate("lang.command.Module.notAllowedRemapKeyCode"), module.getName()));
             else {
                 module.setKey(KeyboardUtils.RELEASE);
                 sendMessage(String.format(Formatting.AQUA + LanguageSystem.translate("lang.command.Bind.bound"), Formatting.WHITE + module.getName() + Formatting.AQUA, Formatting.WHITE + "NONE" + Formatting.AQUA));

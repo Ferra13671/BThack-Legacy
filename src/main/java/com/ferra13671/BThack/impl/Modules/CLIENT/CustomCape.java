@@ -4,14 +4,8 @@ import com.ferra13671.BThack.api.Managers.Managers;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Module.ModuleInfo;
 
-@ModuleInfo(name = "CustomCape", description = "lang.module.CustomCape", category = "CLIENT", autoEnabled = true)
+@ModuleInfo(name = "CustomCape", description = "lang.module.CustomCape", category = "CLIENT", autoEnabled = true, visible = false, allowRemapVisible = false, allowRemapKeyCode = false)
 public class CustomCape extends Module {
-
-    public CustomCape() {
-        allowRemapKeyCode = false;
-        allowRemapVisible = false;
-        setVisible(false);
-    }
 
     @Override
     public void onEnable() {

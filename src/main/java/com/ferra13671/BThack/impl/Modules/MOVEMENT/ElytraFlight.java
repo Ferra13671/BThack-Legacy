@@ -200,7 +200,7 @@ public class ElytraFlight extends Module {
     public final TravelChanger travelChanger = new TravelChanger(5000,
             () -> switch (mode.getValue()) {
                 case "Bounce" -> new Float[]{bounceYawRotate(RotateUtils.getCameraYaw()), bouncePitchRotate(RotateUtils.getCameraPitch())};
-                case "Firework" -> getFireworkModeRots();
+                case "Firework" -> new Float[]{fireworkYaw, fireworkPitch};
                 case "Pitch40" -> new Float[]{RotateUtils.getCameraYaw(), (travelMode.getValue().equals("Rewrite") ? pitch40pitch : RotateUtils.getCameraPitch())};
                 case "Auto Glide" -> new Float[]{RotateUtils.getCameraYaw(), getAutoGlidePitch()};
                 default -> new Float[]{RotateUtils.getCameraYaw(), RotateUtils.getCameraPitch()};
@@ -230,9 +230,9 @@ public class ElytraFlight extends Module {
             return;
         }
 
-        ModuleList.timer.setToggled(false);
-        ModuleList.fastFall.setToggled(false);
-        ModuleList.longJump.setToggled(false);
+        ModuleList.timer.setEnabled(false);
+        ModuleList.fastFall.setEnabled(false);
+        ModuleList.longJump.setEnabled(false);
 
         super.onEnable();
         fireworkUsed = false;
@@ -350,7 +350,7 @@ public class ElytraFlight extends Module {
     @SuppressWarnings({"ConstantConditions", "unused"})
     public void onTravel(PlayerTravelEvent e) {
         if (nullCheck()) {
-            setToggled(false);
+            setEnabled(false);
             return;
         }
 
@@ -550,6 +550,7 @@ public class ElytraFlight extends Module {
         GrimUtils.sendPreActionGrimPackets(fireworkYaw, fireworkPitch);
     }
 
+    /*
     public Float[] getFireworkModeRots() {
         float yaw;
         float pitch;
@@ -562,6 +563,8 @@ public class ElytraFlight extends Module {
 
         return new Float[]{yaw, pitch};
     }
+
+     */
 
     @SuppressWarnings("ConstantConditions")
     public void fireworkPacket(PacketEvent.Send e) {
@@ -652,7 +655,7 @@ public class ElytraFlight extends Module {
             return;
         }
         if (ModuleList.noElytraBreak.isEnabled()) {
-            ModuleList.noElytraBreak.setToggled(false);
+            ModuleList.noElytraBreak.setEnabled(false);
         }
 
         switch (timerAction) {
@@ -743,10 +746,10 @@ public class ElytraFlight extends Module {
         }
         autoGlidePitch = gUpPitch.getValue().floatValue();
         if (ModuleList.noElytraBreak.isEnabled())
-            ModuleList.noElytraBreak.setToggled(false);
+            ModuleList.noElytraBreak.setEnabled(false);
         if (grimRocket.getValue()) {
             if (!ModuleList.extendedFirework.isEnabled()) {
-                ModuleList.extendedFirework.setToggled(true);
+                ModuleList.extendedFirework.setEnabled(true);
             }
         }
     }
@@ -755,7 +758,7 @@ public class ElytraFlight extends Module {
         autoGlidePitch = Managers.FIREWORK_MANAGER.isUsingFireWork() ? -0.8f : gDownPitch.getValue().floatValue();
         if (noElytraBreak.getValue()) {
             if (!ModuleList.noElytraBreak.isEnabled())
-                ModuleList.noElytraBreak.setToggled(true);
+                ModuleList.noElytraBreak.setEnabled(true);
         }
     }
 

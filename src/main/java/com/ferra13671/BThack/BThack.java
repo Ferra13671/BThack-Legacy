@@ -153,7 +153,7 @@ public final class BThack implements ClientModInitializer, Mc {
 
         ShutdownSystem.init();
         ShutdownSystem.addShutdownHook(() -> {
-            ModuleList.timer.setToggled(false);
+            ModuleList.timer.setEnabled(false);
             ConfigSystem.saveConfig();
             BThack.instance.saveVersionInfo();
             BThack.log("Config Saved!");

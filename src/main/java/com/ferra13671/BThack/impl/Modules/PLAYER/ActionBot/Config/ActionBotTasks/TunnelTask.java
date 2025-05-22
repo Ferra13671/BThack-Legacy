@@ -93,7 +93,7 @@ public class TunnelTask extends ActionBotTask {
             double tempZ = mc.player.getZ() + needZ;
 
 
-            ModuleList.scaffold.setToggled(true);
+            ModuleList.scaffold.setEnabled(true);
 
 
             maxX = tempX + 0.15;
@@ -109,7 +109,7 @@ public class TunnelTask extends ActionBotTask {
                 moving = !DestroyManager.isDestroying;
 
                 if (!ModuleList.scaffold.isEnabled()) {
-                    ModuleList.scaffold.setQuietlyToggled(true);
+                    ModuleList.scaffold.setEnabledQuietly(true);
                 }
 
                 BlockPos blockPos1;
@@ -179,7 +179,7 @@ public class TunnelTask extends ActionBotTask {
     }
     private void disableScaffold(boolean scaffoldEnabled) {
         if (!scaffoldEnabled) {
-            ModuleList.scaffold.setQuietlyToggled(false);
+            ModuleList.scaffold.setEnabledQuietly(false);
         }
     }
 

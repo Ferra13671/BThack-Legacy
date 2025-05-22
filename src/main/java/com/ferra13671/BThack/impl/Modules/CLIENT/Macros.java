@@ -6,14 +6,9 @@ import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 
-@ModuleInfo(name = "Macros", description = "lang.module.Macros", category = "CLIENT", autoEnabled = true)
+@ModuleInfo(name = "Macros", description = "lang.module.Macros", category = "CLIENT", autoEnabled = true, visible = false, allowRemapVisible = false, allowRemapKeyCode = false)
 public class Macros extends Module {
 
-    public Macros() {
-        allowRemapVisible = false;
-        allowRemapKeyCode = false;
-        setVisible(false);
-    }
 
     @EventSubscriber
     public void onKey(InputEvent.KeyInputEvent e) {

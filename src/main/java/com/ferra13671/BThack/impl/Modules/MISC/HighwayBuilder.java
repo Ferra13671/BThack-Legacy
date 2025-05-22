@@ -91,7 +91,7 @@ public class HighwayBuilder extends Module {
         if (nullCheck()) return;
 
         if (confirmDisabling()) {
-            setToggled(false);
+            setEnabled(false);
             return;
         }
 
@@ -119,7 +119,7 @@ public class HighwayBuilder extends Module {
         }
         if (slot == -1) {
             ChatUtils.sendMessage(this.getChatName() + " " + Formatting.RED + LanguageSystem.translate("lang.module.Scaffold.noBlocks"));
-            setToggled(false);
+            setEnabled(false);
             return;
         }
 
@@ -133,7 +133,7 @@ public class HighwayBuilder extends Module {
     @SuppressWarnings("DataFlowIssue")
     public void onEnable() {
         if (nullCheck()) {
-            setToggled(false);
+            setEnabled(false);
             return;
         }
         super.onEnable();
@@ -155,7 +155,7 @@ public class HighwayBuilder extends Module {
 
                 if (!BuildManager.pickUpPlaceBlocks(true, onlyObsidian.getValue() && mode.getValue().equals("Highway") ? Arrays.asList(Blocks.OBSIDIAN, Blocks.CRYING_OBSIDIAN) : new ArrayList<>())) {
                     ChatUtils.sendMessage(this.getChatName() + " " + Formatting.RED + LanguageSystem.translate("lang.module.Scaffold.noBlocks"));
-                    setToggled(false);
+                    setEnabled(false);
                     return;
                 }
 

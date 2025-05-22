@@ -24,7 +24,7 @@ public class ExtraTab extends Module {
     public void onEnable() {
         if (BThack.isFuturePresent()) {
             if (!nullCheck()) sendNotification(Formatting.RED + LanguageSystem.translate("lang.module.ExtraTab.futurePresentMessage"));
-            setToggled(false);
+            setEnabled(false);
             return;
         }
 

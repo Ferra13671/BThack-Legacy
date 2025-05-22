@@ -20,7 +20,7 @@ public class DisableAllCommand extends AbstractCommand {
         builder.executes(context -> {
             for (Module module : Client.getAllModules()) {
                 if (!module.getCategory().equals(Categories.CLIENT))
-                    module.setQuietlyToggled(false);
+                    module.setEnabledQuietly(false);
             }
             sendMessage(Formatting.AQUA + LanguageSystem.translate("lang.command.DisableAll.message"));
             return SUCCESFUL;

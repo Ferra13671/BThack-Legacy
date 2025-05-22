@@ -36,7 +36,7 @@ public class MemoryManager implements Initializable, Mc {
             BThack.log("Memory cleaner thread finished!");
 
             if (ModuleList.cleanMemory.isEnabled()) {
-               ModuleList.cleanMemory.setToggled(false);
+               ModuleList.cleanMemory.setEnabled(false);
             }
          }, "MemoryCleaner GC Thread");
          gcThread.setDaemon(true);
@@ -45,7 +45,7 @@ public class MemoryManager implements Initializable, Mc {
          if (mc.player != null && mc.world != null) {
             ChatUtils.sendMessage(Formatting.YELLOW + "Memory Cleaner module is disabled, please enable it before next use.");
             if (ModuleList.cleanMemory.isEnabled()) {
-               ModuleList.cleanMemory.setToggled(false);
+               ModuleList.cleanMemory.setEnabled(false);
             }
          }
       }

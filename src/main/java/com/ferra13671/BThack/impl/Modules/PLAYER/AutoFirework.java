@@ -41,11 +41,11 @@ public class AutoFirework extends Module {
     public void sendToggleMessage() {
         if (ModuleList.chatNotifications.isEnabled() && ModuleList.chatNotifications.moduleToggle.getValue()) {
             if (mode.getValue().equals("Always")) {
-                if (toggled)
+                if (enabled)
                     ChatUtils.sendMessage(this.getName() + ": " + Formatting.GREEN + "Enabled");
                 else
                     ChatUtils.sendMessage(this.getName() + ": " + Formatting.RED + "Disabled");
-            } else if (toggled) ChatUtils.sendMessage(this.getName() + ": " + Formatting.YELLOW + "Toggled");
+            } else if (enabled) ChatUtils.sendMessage(this.getName() + ": " + Formatting.YELLOW + "Toggled");
         }
     }
 

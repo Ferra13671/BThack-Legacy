@@ -15,14 +15,20 @@ public abstract class HudComponent extends Module {
     public float height; //Down
 
     public HudComponent(float x, float y) {
-        allowRemapKeyCode = false;
-
         setX(x, mc.getWindow().getScaledWidth());
         setY(y, mc.getWindow().getScaledHeight());
         if (isAutoEnabled())
-            setToggled(true);
+            setEnabled(true);
+    }
 
-        allowRemapVisible = false;
+    @Override
+    public boolean isAllowRemapVisible() {
+        return false;
+    }
+
+    @Override
+    public boolean isAllowRemapKeyCode() {
+        return false;
     }
 
     public void setX(float value, int scaledWidth) {

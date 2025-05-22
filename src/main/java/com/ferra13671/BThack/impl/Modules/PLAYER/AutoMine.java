@@ -68,10 +68,10 @@ public class AutoMine extends Module {
     @EventSubscriber
     public void onSendMessage(SendMessageEvent e) {
         if (e.message.startsWith("#mine ")) {
-            setToggled(false);
+            setEnabled(false);
         }
         if (e.message.startsWith("#stop"))
-            setToggled(false);
+            setEnabled(false);
     }
 
     public void reMineAction() {

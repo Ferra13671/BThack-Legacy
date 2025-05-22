@@ -128,7 +128,7 @@ public class PacketMine extends Module {
         conveyorBlocks.clear();
         currentSlot = -1;
 
-        ModuleList.superInstaMine.setToggled(false);
+        ModuleList.superInstaMine.setEnabled(false);
 
         conveyorAnimation.reset();
         conveyorAnimation.setMillis(conveyorAnimTime.getValue().intValue());
@@ -150,7 +150,7 @@ public class PacketMine extends Module {
         if (!nullCheck())
             packetRemoveItem();
 
-        ModuleList.treeCutter.setToggled(false);
+        ModuleList.treeCutter.setEnabled(false);
     }
 
     @EventSubscriber(priority = Integer.MAX_VALUE)

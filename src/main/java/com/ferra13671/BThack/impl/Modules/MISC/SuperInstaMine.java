@@ -45,7 +45,7 @@ public class SuperInstaMine extends Module {
     @Override
     public void onEnable() {
         super.onEnable();
-        ModuleList.packetMine.setToggled(false);
+        ModuleList.packetMine.setEnabled(false);
         poses.clear();
     }
 

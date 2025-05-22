@@ -152,7 +152,7 @@ public class NinjaBridge extends Module {
         private void close(String message) {
             if (!message.isEmpty())
                 ChatUtils.sendMessage(Formatting.YELLOW + message);
-            setToggled(false);
+            setEnabled(false);
             close = true;
         }
 
