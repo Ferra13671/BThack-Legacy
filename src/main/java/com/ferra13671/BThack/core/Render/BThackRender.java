@@ -380,7 +380,7 @@ public final class BThackRender implements Mc {
         BThackMatrix.scale(size, size, 1);
         guiGraphics.drawItem(stack, x, y);
         if (onSlot)
-            guiGraphics.drawItemBar(stack, x, y);
+            guiGraphics.drawStackOverlay(mc.textRenderer ,stack, x, y);
         BThackMatrix.pop();
     }
 
