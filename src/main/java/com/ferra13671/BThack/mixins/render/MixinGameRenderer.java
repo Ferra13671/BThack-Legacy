@@ -24,7 +24,6 @@ import net.minecraft.item.Items;
 import net.minecraft.world.GameMode;
 import org.joml.Matrix4f;
 import org.lwjgl.opengl.GL11;
-import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -37,6 +36,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(GameRenderer.class)
 public abstract class MixinGameRenderer {
+    @Unique
+    private final Matrix4f[] matrices = new Matrix4f[3];
 
     @Shadow private boolean renderingPanorama;
 
@@ -57,21 +58,28 @@ public abstract class MixinGameRenderer {
 
     @Shadow @Final private BufferBuilderStorage buffers;
 
+    @Shadow @Final private Camera camera;
+
     @Inject(method = "shouldRenderBlockOutline", at = @At("HEAD"), cancellable = true)
     public void modifyShouldRenderBlockOutline(CallbackInfoReturnable<Boolean> cir) {
         if (ModuleList.blockHighlight.isEnabled()) cir.setReturnValue(false);
     }
 
-    @Inject(method = "renderWorld", at = @At(value = "FIELD", target = "Lnet/minecraft/client/render/GameRenderer;renderHand:Z", opcode = Opcodes.GETFIELD, ordinal = 0))
-    public void modifyRenderHandOnRenderWorld(RenderTickCounter tickCounter, CallbackInfo ci, @Local(ordinal = 2) Matrix4f matrix4f3, @Local(ordinal = 1) float tickDelta) {
-        MatrixStack matrixStack = new MatrixStack();
-        matrixStack.multiplyPositionMatrix(matrix4f3);
-        BThackRender.worldMatrixStack = matrixStack;
+    @Inject(method = "renderWorld", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/WorldRenderer;render(Lnet/minecraft/client/util/ObjectAllocator;Lnet/minecraft/client/render/RenderTickCounter;ZLnet/minecraft/client/render/Camera;Lnet/minecraft/client/render/GameRenderer;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;)V", shift = At.Shift.AFTER))
+    public void modifySetupFrustumInRenderWorld(RenderTickCounter renderTickCounter, CallbackInfo ci, @Local(ordinal = 0) Matrix4f matrix4f, @Local(ordinal = 1) Matrix4f matrix4f2, @Local(ordinal = 2) Matrix4f matrix4f3) {
+        matrices[0] = new Matrix4f().set(matrix4f);
+        matrices[1] = new Matrix4f().set(matrix4f2);
+        matrices[2] = new Matrix4f().set(matrix4f3);
     }
 
     @Inject(method = "renderWorld", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/profiler/Profiler;pop()V", shift = At.Shift.BEFORE))
     public void modifyRenderWorldLast(RenderTickCounter renderTickCounter, CallbackInfo ci, @Local(ordinal = 1) Matrix4f matrix4f) {
-        RenderSystem.setProjectionMatrix(matrix4f, ProjectionType.PERSPECTIVE);
+        RenderSystem.setProjectionMatrix(matrices[0], ProjectionType.PERSPECTIVE);
+        client.worldRenderer.setupFrustum(camera.getPos(), matrices[2], matrices[1]);
+        MatrixStack matrixStack = new MatrixStack();
+        matrixStack.multiplyPositionMatrix(matrices[2]);
+        BThackRender.worldMatrixStack = matrixStack;
+
         GL11.glEnable(GL11.GL_LINE_SMOOTH);
         RenderWorldLastEvent event = new RenderWorldLastEvent(BThackRender.worldMatrixStack);
         BThack.EVENT_BUS.activate(event);
