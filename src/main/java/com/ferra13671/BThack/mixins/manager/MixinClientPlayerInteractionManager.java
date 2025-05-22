@@ -2,11 +2,11 @@ package com.ferra13671.BThack.mixins.manager;
 
 import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.core.Client.ModuleList;
-import com.ferra13671.BThack.api.Events.Block.AttackBlockEvent;
-import com.ferra13671.BThack.api.Events.Block.UseBlockEvent;
-import com.ferra13671.BThack.api.Events.Entity.AttackEntityEvent;
+import com.ferra13671.BThack.events.Block.AttackBlockEvent;
+import com.ferra13671.BThack.events.Block.UseBlockEvent;
+import com.ferra13671.BThack.events.Entity.AttackEntityEvent;
 import com.ferra13671.BThack.api.IMixin.ModifyClientPlayerInteractionManager;
-import com.ferra13671.BThack.api.Managers.Managers;
+import com.ferra13671.BThack.managers.Managers;
 import com.ferra13671.MegaEvents.Base.Event;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;

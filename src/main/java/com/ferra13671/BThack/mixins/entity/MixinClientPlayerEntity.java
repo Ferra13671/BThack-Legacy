@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.mixins.entity;
 
 import com.ferra13671.BThack.core.Client.ModuleList;
-import com.ferra13671.BThack.api.Managers.Managers;
+import com.ferra13671.BThack.managers.Managers;
 import com.ferra13671.BThack.api.Utils.ItemUtils;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.client.MinecraftClient;

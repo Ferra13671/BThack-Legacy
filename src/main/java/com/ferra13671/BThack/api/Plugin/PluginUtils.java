@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.api.Plugin;
 
 import com.ferra13671.BThack.api.Module.HudComponent;
-import com.ferra13671.BThack.api.Managers.managers.Command.AbstractCommand;
+import com.ferra13671.BThack.managers.managers.Command.AbstractCommand;
 import com.ferra13671.BThack.api.Module.PluginModule;
 import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
 

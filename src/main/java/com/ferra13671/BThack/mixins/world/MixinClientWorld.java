@@ -2,7 +2,7 @@ package com.ferra13671.BThack.mixins.world;
 
 import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.core.Client.ModuleList;
-import com.ferra13671.BThack.api.Events.SoundPlayEvent;
+import com.ferra13671.BThack.events.SoundPlayEvent;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.sound.PositionedSoundInstance;
 import net.minecraft.client.world.ClientWorld;

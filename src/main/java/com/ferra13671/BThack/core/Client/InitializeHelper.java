@@ -7,7 +7,7 @@ import com.ferra13671.BThack.core.Client.Systems.HotbarSystem;
 import com.ferra13671.BThack.core.Client.Systems.KeyHandler;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Utils.Initializable;
-import com.ferra13671.BThack.api.Managers.Managers;
+import com.ferra13671.BThack.managers.Managers;
 import com.ferra13671.BThack.api.Plugin.*;
 import com.ferra13671.BThack.api.Utils.Grim.GrimFreezeUtils;
 import com.ferra13671.SimpleLanguageSystem.LanguageSystem;

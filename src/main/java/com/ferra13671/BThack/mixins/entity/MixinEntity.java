@@ -2,9 +2,8 @@ package com.ferra13671.BThack.mixins.entity;
 
 import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.core.Client.ModuleList;
-import com.ferra13671.BThack.api.Events.Entity.SetVelocityEvent;
-import com.ferra13671.BThack.api.Events.Player.VelocityUpdateEvent;
-import com.ferra13671.BThack.api.Events.Player.ChangePlayerLookEvent;
+import com.ferra13671.BThack.events.Entity.SetVelocityEvent;
+import com.ferra13671.BThack.events.Player.ChangePlayerLookEvent;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Utils.Modules.NoRotateMathUtils;
 import com.ferra13671.MegaEvents.Base.Event;
@@ -35,11 +34,6 @@ public abstract class MixinEntity implements Mc {
     @Shadow public abstract Vec3d getVelocity();
 
     @Shadow public abstract void setVelocity(Vec3d velocity);
-
-    @Shadow
-    protected static Vec3d movementInputToVelocity(Vec3d movementInput, float speed, float yaw) {
-        return null;
-    }
 
     @Shadow public float pitch;
 
@@ -111,18 +105,6 @@ public abstract class MixinEntity implements Mc {
             if (ModuleList.noPush.isEnabled())
                 if (ModuleList.noPush.entities.getValue())
                     ci.cancel();
-    }
-
-    @Inject(method = "updateVelocity", at = @At(value = "HEAD"), cancellable = true)
-    private void modifyUpdateVelocity(float speed, Vec3d movementInput, CallbackInfo ci) {
-        if ((Object) this == mc.player) {
-            VelocityUpdateEvent event = new VelocityUpdateEvent(movementInput, speed, movementInputToVelocity(movementInput, speed, mc.player.getYaw()));
-            BThack.EVENT_BUS.activate(event);
-            if (event.isCancelled()) {
-                ci.cancel();
-                mc.player.setVelocity(mc.player.getVelocity().add(event.getVelocity()));
-            }
-        }
     }
 
     @ModifyVariable(method = "updateMovementInFluid", at = @At("STORE"), ordinal = 1)

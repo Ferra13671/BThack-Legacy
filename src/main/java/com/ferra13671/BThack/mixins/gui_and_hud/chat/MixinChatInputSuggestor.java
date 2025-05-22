@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.mixins.gui_and_hud.chat;
 
 import com.ferra13671.BThack.core.Client.Client;
-import com.ferra13671.BThack.api.Managers.Managers;
+import com.ferra13671.BThack.managers.Managers;
 import com.ferra13671.BThack.api.Module.Module;
 import com.mojang.brigadier.ParseResults;
 import com.mojang.brigadier.StringReader;

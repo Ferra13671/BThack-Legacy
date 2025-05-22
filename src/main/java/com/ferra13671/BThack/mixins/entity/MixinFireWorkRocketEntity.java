@@ -1,9 +1,9 @@
 package com.ferra13671.BThack.mixins.entity;
 
 import com.ferra13671.BThack.BThack;
-import com.ferra13671.BThack.api.Events.Entity.FireworkTickEvent;
+import com.ferra13671.BThack.events.Entity.FireworkTickEvent;
 import com.ferra13671.BThack.api.IMixin.ModifyFireworkRocket;
-import com.ferra13671.BThack.api.Managers.Managers;
+import com.ferra13671.BThack.managers.Managers;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.projectile.FireworkRocketEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;

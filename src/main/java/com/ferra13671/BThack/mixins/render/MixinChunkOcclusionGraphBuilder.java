@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.mixins.render;
 
 import com.ferra13671.BThack.BThack;
-import com.ferra13671.BThack.api.Events.SetOpaqueCubeEvent;
+import com.ferra13671.BThack.events.SetOpaqueCubeEvent;
 import net.minecraft.client.render.chunk.ChunkOcclusionDataBuilder;
 import net.minecraft.util.math.BlockPos;
 import org.spongepowered.asm.mixin.Mixin;

@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.mixins.render;
 
-import com.ferra13671.BThack.api.Shaders.CoreShaderLoader;
+import com.ferra13671.BThack.shaders.CoreShaderLoader;
 import net.minecraft.client.gl.Defines;
 import net.minecraft.client.gl.ShaderProgramKey;
 import net.minecraft.client.gl.ShaderProgramKeys;

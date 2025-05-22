@@ -1,8 +1,8 @@
 package com.ferra13671.BThack.impl.Commands;
 
-import com.ferra13671.BThack.api.Managers.Managers;
-import com.ferra13671.BThack.api.Managers.managers.Command.AbstractCommand;
-import com.ferra13671.BThack.api.Managers.managers.Command.Arguments;
+import com.ferra13671.BThack.managers.Managers;
+import com.ferra13671.BThack.managers.managers.Command.AbstractCommand;
+import com.ferra13671.BThack.managers.managers.Command.Arguments;
 import com.ferra13671.BThack.api.Utils.ChatUtils;
 import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;

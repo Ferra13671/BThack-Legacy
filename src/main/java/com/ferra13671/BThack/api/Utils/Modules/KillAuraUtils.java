@@ -1,11 +1,11 @@
 package com.ferra13671.BThack.api.Utils.Modules;
 
 import com.ferra13671.BThack.api.Interfaces.Mc;
-import com.ferra13671.BThack.api.Managers.Managers;
-import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
-import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
-import com.ferra13671.BThack.api.Managers.managers.Clans.Clan;
-import com.ferra13671.BThack.api.Managers.managers.Clans.ClanStatus;
+import com.ferra13671.BThack.managers.Managers;
+import com.ferra13671.BThack.managers.managers.Setting.Settings.BooleanSetting;
+import com.ferra13671.BThack.managers.managers.Setting.Settings.ModeSetting;
+import com.ferra13671.BThack.managers.managers.Clans.Clan;
+import com.ferra13671.BThack.managers.managers.Clans.ClanStatus;
 import com.ferra13671.BThack.api.Utils.MathUtils;
 import com.ferra13671.BThack.api.Utils.PlayerUtils;
 import com.ferra13671.BThack.api.Utils.Rotate.RotateMode;

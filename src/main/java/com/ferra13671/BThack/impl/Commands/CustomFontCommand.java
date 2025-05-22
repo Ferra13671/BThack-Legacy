@@ -3,8 +3,8 @@ package com.ferra13671.BThack.impl.Commands;
 import com.ferra13671.BThack.core.Client.Client;
 import com.ferra13671.BThack.core.Client.Systems.ConfigSystem.SubConfigs;
 import com.ferra13671.BThack.core.Render.BThackRender;
-import com.ferra13671.BThack.api.Managers.managers.Command.AbstractCommand;
-import com.ferra13671.BThack.api.Managers.managers.Command.Arguments;
+import com.ferra13671.BThack.managers.managers.Command.AbstractCommand;
+import com.ferra13671.BThack.managers.managers.Command.Arguments;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.minecraft.command.CommandSource;
 

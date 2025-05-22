@@ -2,7 +2,7 @@ package com.ferra13671.BThack.mixins.render;
 
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.api.Interfaces.Mc;
-import com.ferra13671.BThack.impl.Modules.RENDER.EnchantColor;
+import com.ferra13671.BThack.impl.Modules.Render.EnchantColor;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.render.RenderPhase;
 import net.minecraft.util.Util;

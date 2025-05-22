@@ -2,7 +2,7 @@ package com.ferra13671.BThack.core.Render.Drawers;
 
 import com.ferra13671.BThack.core.Render.BThackMatrix;
 import com.ferra13671.BThack.core.Render.Utils.BThackRenderUtils;
-import com.ferra13671.BThack.api.Shaders.BThackShaderProgram;
+import com.ferra13671.BThack.shaders.BThackShaderProgram;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexFormat;
 import net.minecraft.client.render.VertexFormats;

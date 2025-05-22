@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.core.Client.Systems;
 
-import com.ferra13671.BThack.api.Events.DisconnectEvent;
+import com.ferra13671.BThack.events.DisconnectEvent;
 import com.ferra13671.BThack.api.Utils.ChatUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 

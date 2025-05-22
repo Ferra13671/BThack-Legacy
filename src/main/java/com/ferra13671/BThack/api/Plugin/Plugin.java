@@ -22,7 +22,5 @@ public abstract class Plugin {
 
     public void onInitCustomCategories() {}
 
-    public void onLoadColourThemes() {}
-
     public void onLoadLanguages() {}
 }

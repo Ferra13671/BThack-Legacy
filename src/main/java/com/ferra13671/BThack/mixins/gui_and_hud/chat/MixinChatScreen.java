@@ -4,7 +4,7 @@ import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.core.Render.BThackRender;
 import com.ferra13671.BThack.core.Render.Utils.ColorUtils;
-import com.ferra13671.BThack.api.Events.SendMessageEvent;
+import com.ferra13671.BThack.events.SendMessageEvent;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;

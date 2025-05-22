@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.core.Client.Systems;
 
 import com.ferra13671.BThack.core.Client.Client;
-import com.ferra13671.BThack.api.Events.InputEvent;
+import com.ferra13671.BThack.events.InputEvent;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;

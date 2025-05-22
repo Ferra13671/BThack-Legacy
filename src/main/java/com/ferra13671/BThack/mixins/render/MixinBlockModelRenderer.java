@@ -2,7 +2,7 @@ package com.ferra13671.BThack.mixins.render;
 
 import com.ferra13671.BThack.api.Utils.DataList.BlockList;
 import com.ferra13671.BThack.api.Utils.DataList.DataLists;
-import com.ferra13671.BThack.impl.Modules.RENDER.Xray;
+import com.ferra13671.BThack.impl.Modules.Render.Xray;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.block.BlockModelRenderer;

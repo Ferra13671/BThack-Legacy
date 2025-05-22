@@ -2,7 +2,7 @@ package com.ferra13671.BThack.mixins.gui_and_hud;
 
 import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.core.Client.ModuleList;
-import com.ferra13671.BThack.api.Events.Render.RenderHudPreEvent;
+import com.ferra13671.BThack.events.Render.RenderHudPreEvent;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.render.RenderTickCounter;

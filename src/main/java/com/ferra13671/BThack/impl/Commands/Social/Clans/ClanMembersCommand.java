@@ -1,8 +1,8 @@
 package com.ferra13671.BThack.impl.Commands.Social.Clans;
 
-import com.ferra13671.BThack.api.Managers.managers.Command.AbstractCommand;
-import com.ferra13671.BThack.api.Managers.managers.Command.Arguments;
-import com.ferra13671.BThack.api.Managers.managers.Clans.Clan;
+import com.ferra13671.BThack.managers.managers.Command.AbstractCommand;
+import com.ferra13671.BThack.managers.managers.Command.Arguments;
+import com.ferra13671.BThack.managers.managers.Clans.Clan;
 import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.minecraft.command.CommandSource;

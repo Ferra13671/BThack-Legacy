@@ -1,12 +1,12 @@
 package com.ferra13671.BThack.api.Motion.Align;
 
 import com.ferra13671.BThack.BThack;
-import com.ferra13671.BThack.api.Events.Entity.UpdateInputEvent;
+import com.ferra13671.BThack.events.Entity.UpdateInputEvent;
 import com.ferra13671.BThack.api.Interfaces.Mc;
-import com.ferra13671.BThack.api.Managers.Managers;
-import com.ferra13671.BThack.api.Managers.managers.Thread.BThackThread;
-import com.ferra13671.BThack.api.Managers.managers.Thread.ThreadClosedException;
-import com.ferra13671.BThack.api.Managers.managers.TravelChange.TravelChanger;
+import com.ferra13671.BThack.managers.Managers;
+import com.ferra13671.BThack.managers.managers.Thread.BThackThread;
+import com.ferra13671.BThack.managers.managers.Thread.ThreadClosedException;
+import com.ferra13671.BThack.managers.managers.TravelChange.TravelChanger;
 import com.ferra13671.BThack.api.Utils.InputUtils;
 import com.ferra13671.BThack.api.Utils.Rotate.RotateUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;

@@ -1,10 +1,10 @@
 package com.ferra13671.BThack.mixins;
 
 import com.ferra13671.BThack.BThack;
-import com.ferra13671.BThack.api.Events.GuiOpenEvent;
-import com.ferra13671.BThack.api.Events.ClientTickEvent;
+import com.ferra13671.BThack.events.GuiOpenEvent;
+import com.ferra13671.BThack.events.ClientTickEvent;
 import com.ferra13671.BThack.api.Interfaces.Mc;
-import com.ferra13671.BThack.api.Managers.Managers;
+import com.ferra13671.BThack.managers.Managers;
 import com.ferra13671.TextureUtils.GLTextureSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.Mouse;

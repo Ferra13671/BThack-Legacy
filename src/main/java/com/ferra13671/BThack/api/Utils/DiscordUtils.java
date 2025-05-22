@@ -5,7 +5,7 @@ import com.ferra13671.BThack.Constants;
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.core.DeviceSystem;
 import com.ferra13671.BThack.api.Interfaces.Mc;
-import com.ferra13671.BThack.api.Managers.managers.Thread.ThreadManager;
+import com.ferra13671.BThack.managers.managers.Thread.ThreadManager;
 import com.ferra13671.DiscordRPC.DiscordEventHandlers;
 import com.ferra13671.DiscordRPC.DiscordRPC;
 import com.ferra13671.DiscordRPC.DiscordRichPresence;

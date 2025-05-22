@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.mixins.render;
 
-import com.ferra13671.BThack.impl.Modules.RENDER.Xray;
+import com.ferra13671.BThack.impl.Modules.Render.Xray;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

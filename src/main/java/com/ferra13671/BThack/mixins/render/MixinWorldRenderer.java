@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.mixins.render;
 
-import com.ferra13671.BThack.api.Shaders.CoreShaderLoader;
+import com.ferra13671.BThack.shaders.CoreShaderLoader;
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.core.Render.Utils.BThackRenderUtils;
 import com.ferra13671.BThack.api.Utils.Modules.KillAuraUtils;

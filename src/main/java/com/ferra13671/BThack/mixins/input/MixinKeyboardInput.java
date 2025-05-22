@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.mixins.input;
 
 import com.ferra13671.BThack.BThack;
-import com.ferra13671.BThack.api.Events.Entity.UpdateInputEvent;
+import com.ferra13671.BThack.events.Entity.UpdateInputEvent;
 import net.minecraft.client.input.KeyboardInput;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

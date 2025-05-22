@@ -9,8 +9,8 @@ import com.ferra13671.BThack.core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Animation.Animation;
 import com.ferra13671.BThack.api.Animation.Easing;
 import com.ferra13671.BThack.api.Module.HudComponent;
-import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.BooleanSetting;
-import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.NumberSetting;
+import com.ferra13671.BThack.managers.managers.Setting.Settings.BooleanSetting;
+import com.ferra13671.BThack.managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import net.minecraft.client.MinecraftClient;
 

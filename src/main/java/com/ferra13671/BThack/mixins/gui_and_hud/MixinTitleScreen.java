@@ -1,8 +1,8 @@
 package com.ferra13671.BThack.mixins.gui_and_hud;
 
-import com.ferra13671.BThack.api.Shaders.CoreShaderLoader;
+import com.ferra13671.BThack.shaders.CoreShaderLoader;
 import com.ferra13671.BThack.core.Client.ModuleList;
-import com.ferra13671.BThack.api.Gui.Screen.MainMenu.BThackMainMenuScreen;
+import com.ferra13671.BThack.gui.Screen.MainMenu.BThackMainMenuScreen;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.SoundSystem.Sounds;
 import com.ferra13671.BThack.api.GuiSystem.BThackScreens;

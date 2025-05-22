@@ -1,10 +1,10 @@
 package com.ferra13671.BThack.api.GuiSystem;
 
-import com.ferra13671.BThack.api.Gui.Screen.ClickGui.ClickGuiScreen;
-import com.ferra13671.BThack.api.Gui.Screen.ExitScreen;
-import com.ferra13671.BThack.api.Gui.Screen.HudEditor.HudEditorScreen;
-import com.ferra13671.BThack.api.Gui.Screen.MainMenu.BThackCreditsScreen;
-import com.ferra13671.BThack.api.Gui.Screen.MainMenu.BThackMainMenuScreen;
+import com.ferra13671.BThack.gui.Screen.ClickGui.ClickGuiScreen;
+import com.ferra13671.BThack.gui.Screen.ExitScreen;
+import com.ferra13671.BThack.gui.Screen.HudEditor.HudEditorScreen;
+import com.ferra13671.BThack.gui.Screen.MainMenu.BThackCreditsScreen;
+import com.ferra13671.BThack.gui.Screen.MainMenu.BThackMainMenuScreen;
 
 public class BThackScreens {
     private static boolean inited = false;

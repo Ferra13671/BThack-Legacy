@@ -3,7 +3,7 @@ package com.ferra13671.BThack.mixins.gui_and_hud.chat;
 import com.ferra13671.BThack.core.Client.Client;
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.api.IMixin.ModifyChatHud;
-import com.ferra13671.BThack.impl.Modules.RENDER.BetterChat;
+import com.ferra13671.BThack.impl.Modules.Render.BetterChat;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.ChatHud;

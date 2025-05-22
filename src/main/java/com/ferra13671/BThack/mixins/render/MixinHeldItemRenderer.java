@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.mixins.render;
 
 import com.ferra13671.BThack.BThack;
-import com.ferra13671.BThack.api.Events.Render.TransformFirstPersonEvent;
+import com.ferra13671.BThack.events.Render.TransformFirstPersonEvent;
 import com.ferra13671.BThack.api.IMixin.ModifyHeldItemRenderer;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.MegaEvents.Base.Event;

@@ -1,8 +1,8 @@
 package com.ferra13671.BThack.api.Utils;
 
 import com.ferra13671.BThack.api.Interfaces.Mc;
-import com.ferra13671.BThack.api.Managers.Managers;
-import com.ferra13671.BThack.api.Managers.managers.Build.BuildManager;
+import com.ferra13671.BThack.managers.Managers;
+import com.ferra13671.BThack.managers.managers.Place.PlaceManager;
 import it.unimi.dsi.fastutil.objects.Object2IntArrayMap;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntMaps;
@@ -62,7 +62,7 @@ public final class ItemUtils implements Mc {
         } else {
             InventoryUtils.swapItemOnInventory(oldSlot, slot);
         }
-        BlockHitResult bhr = BuildManager.getHitResult(pos);
+        BlockHitResult bhr = PlaceManager.getHitResult(pos);
         if (bhr != null) {
             mc.interactionManager.interactBlock(mc.player, Hand.MAIN_HAND, bhr);
         }
@@ -96,7 +96,7 @@ public final class ItemUtils implements Mc {
     }
 
     public static void useItemOnBlock(BlockPos pos) {
-        BlockHitResult bhr = BuildManager.getHitResult(pos);
+        BlockHitResult bhr = PlaceManager.getHitResult(pos);
         useItemOnBlock(bhr);
     }
 

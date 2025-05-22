@@ -1,9 +1,9 @@
 package com.ferra13671.BThack.api.Utils.Grim;
 
-import com.ferra13671.BThack.api.Events.PacketEvent;
-import com.ferra13671.BThack.api.Events.ClientTickEvent;
+import com.ferra13671.BThack.events.PacketEvent;
+import com.ferra13671.BThack.events.ClientTickEvent;
 import com.ferra13671.BThack.api.Interfaces.Mc;
-import com.ferra13671.BThack.api.Managers.Managers;
+import com.ferra13671.BThack.managers.Managers;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.c2s.common.CommonPongC2SPacket;

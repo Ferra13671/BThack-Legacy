@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.core.Render.Utils;
 
-import com.ferra13671.BThack.api.Shaders.Shaders;
+import com.ferra13671.BThack.shaders.Shaders;
 import com.ferra13671.BThack.api.Utils.MathUtils;
 import net.minecraft.util.math.ColorHelper;
 import net.minecraft.util.math.MathHelper;

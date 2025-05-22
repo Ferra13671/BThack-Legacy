@@ -14,9 +14,8 @@ import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Plugin.Plugin;
 import com.ferra13671.BThack.api.Plugin.PluginSystem;
 import com.ferra13671.BThack.api.SoundSystem.Sounds;
-import com.ferra13671.BThack.api.SoundSystem.yaw.TinySound;
 import com.ferra13671.BThack.api.GuiSystem.BThackScreens;
-import com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.Config.ActionBotConfig;
+import com.ferra13671.BThack.impl.Modules.Player.ActionBot.Config.ActionBotConfig;
 import com.ferra13671.BThackData;
 import com.ferra13671.MegaEvents.Base.IEventBus;
 import com.ferra13671.MegaEvents.Base.EventBus;
@@ -36,8 +35,6 @@ public final class BThack implements ClientModInitializer, Mc {
     public static final String VERSION = BThackData.VERSION;
     public static final String RELEASE_VERSION = BThackData.RELEASE_VERSION;
     public static final boolean WITH_BARITONE = BThackData.WITH_BARITONE;
-
-    private InitStage initStage = InitStage.NOT_INITED;
 
     public static BThack instance;
 
@@ -63,18 +60,8 @@ public final class BThack implements ClientModInitializer, Mc {
         return FabricLoader.getInstance().getModContainer("future").isPresent();
     }
 
-    public InitStage getInitStage() {
-        return initStage;
-    }
-
     @Override
     public void onInitializeClient() {
-        if (initStage == InitStage.CLIENT_INIT) throw new UnsupportedOperationException("You cannot call client initialization inside client initialization");
-        if (initStage == InitStage.POST_INIT) throw new UnsupportedOperationException("You cannot call an already passed initialization stage");
-        if (initStage == InitStage.FULL_INITED) throw new UnsupportedOperationException("You cannot call initialization after a full initialization has been performed");
-
-        initStage = InitStage.CLIENT_INIT;
-
         instance = this;
 
         checkForOutdate();
@@ -96,14 +83,7 @@ public final class BThack implements ClientModInitializer, Mc {
             throw new RuntimeException(e);
         }
 
-        initDebug("Starting initialization of the sound engine...");
-        TinySound.init();
         Sounds.initSounds();
-        if (TinySound.isInitialized()) {
-            initDebug("The sound engine has been successfully initialized!");
-        } else {
-            initErr("The sound engine is not initialized!");
-        }
 
         initDebug("Starting loading languages...");
         try {
@@ -123,12 +103,6 @@ public final class BThack implements ClientModInitializer, Mc {
     }
 
     public void onInitializePost() {
-        if (initStage == InitStage.NOT_INITED) throw new UnsupportedOperationException("You cannot call post initialization if Client initialization has not been performed");
-        if (initStage == InitStage.POST_INIT) throw new UnsupportedOperationException("You cannot call post initialization inside post initialization");
-        if (initStage == InitStage.FULL_INITED) throw new UnsupportedOperationException("You cannot call initialization after a full initialization has been performed");
-
-        initStage = InitStage.POST_INIT;
-
         BThackRender.init();
         BThack.initDebug("Starting client initialization...");
         Client.startup();
@@ -163,7 +137,6 @@ public final class BThack implements ClientModInitializer, Mc {
 
 
         BThack.initLog("BThack is fully initialized and ready for further work. Enjoy your game!");
-        initStage = InitStage.FULL_INITED;
     }
 
     private void checkForOutdate() {

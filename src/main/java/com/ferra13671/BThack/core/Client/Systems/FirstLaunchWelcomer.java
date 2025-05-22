@@ -3,7 +3,7 @@ package com.ferra13671.BThack.core.Client.Systems;
 import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.core.Client.Client;
 import com.ferra13671.BThack.core.Client.ModuleList;
-import com.ferra13671.BThack.api.Events.ClientTickEvent;
+import com.ferra13671.BThack.events.ClientTickEvent;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;

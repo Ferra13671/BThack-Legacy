@@ -8,17 +8,17 @@ import com.ferra13671.BThack.api.Plugin.PluginSystem;
 import com.ferra13671.BThack.api.Plugin.PluginUtils;
 import com.ferra13671.BThack.impl.HudComponents.*;
 import com.ferra13671.BThack.impl.HudComponents.OneTextComponents.*;
-import com.ferra13671.BThack.impl.Modules.CLIENT.*;
-import com.ferra13671.BThack.impl.Modules.COMBAT.*;
-import com.ferra13671.BThack.impl.Modules.COMBAT.KillAura;
-import com.ferra13671.BThack.impl.Modules.MISC.*;
-import com.ferra13671.BThack.impl.Modules.MISC.PacketMine.PacketMine;
-import com.ferra13671.BThack.impl.Modules.MOVEMENT.*;
-import com.ferra13671.BThack.impl.Modules.PLAYER.*;
-import com.ferra13671.BThack.impl.Modules.PLAYER.ActionBot.ActionBot;
-import com.ferra13671.BThack.impl.Modules.PLAYER.Spammer.Spammer;
-import com.ferra13671.BThack.impl.Modules.RENDER.*;
-import com.ferra13671.BThack.impl.Modules.RENDER.HoleESP;
+import com.ferra13671.BThack.impl.Modules.Client.*;
+import com.ferra13671.BThack.impl.Modules.Combat.*;
+import com.ferra13671.BThack.impl.Modules.Combat.KillAura;
+import com.ferra13671.BThack.impl.Modules.Misc.*;
+import com.ferra13671.BThack.impl.Modules.Misc.PacketMine.PacketMine;
+import com.ferra13671.BThack.impl.Modules.Movement.*;
+import com.ferra13671.BThack.impl.Modules.Player.*;
+import com.ferra13671.BThack.impl.Modules.Player.ActionBot.ActionBot;
+import com.ferra13671.BThack.impl.Modules.Player.Spammer.Spammer;
+import com.ferra13671.BThack.impl.Modules.Render.*;
+import com.ferra13671.BThack.impl.Modules.Render.HoleESP;
 
 import java.util.Arrays;
 

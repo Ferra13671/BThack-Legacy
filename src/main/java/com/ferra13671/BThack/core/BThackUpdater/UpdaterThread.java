@@ -2,7 +2,7 @@ package com.ferra13671.BThack.core.BThackUpdater;
 
 import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.Constants;
-import com.ferra13671.BThack.api.Managers.managers.Thread.BThackThread;
+import com.ferra13671.BThack.managers.managers.Thread.BThackThread;
 
 import java.io.*;
 import java.net.URL;

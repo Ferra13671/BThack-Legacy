@@ -2,7 +2,7 @@ package com.ferra13671.BThack.api.Module;
 
 import com.ferra13671.BThack.core.Render.BThackRender;
 import com.ferra13671.BThack.core.Render.Font.FontRenderManager;
-import com.ferra13671.BThack.impl.Modules.CLIENT.HUD;
+import com.ferra13671.BThack.impl.Modules.Client.HUD;
 
 public abstract class HudComponent extends Module {
     private float x; //Left edge

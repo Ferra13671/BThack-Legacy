@@ -1,0 +1,82 @@
+package com.ferra13671.BThack.impl.Modules.Render;
+
+import com.ferra13671.BThack.api.Module.ModuleInfo;
+import com.ferra13671.BThack.core.Render.BThackRender;
+import com.ferra13671.BThack.core.Render.Line.RenderLine;
+import com.ferra13671.BThack.events.Render.RenderWorldLastEvent;
+import com.ferra13671.BThack.managers.Managers;
+import com.ferra13671.BThack.managers.managers.Setting.Settings.BooleanSetting;
+import com.ferra13671.BThack.managers.managers.Setting.Settings.CategorySetting;
+import com.ferra13671.BThack.managers.managers.Setting.Settings.ColorSetting;
+import com.ferra13671.BThack.api.Module.Module;
+import com.ferra13671.BThack.managers.managers.Clans.Clan;
+import com.ferra13671.BThack.api.Utils.Modules.KillAuraUtils;
+import com.ferra13671.MegaEvents.Base.EventSubscriber;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.player.PlayerEntity;
+
+import java.awt.*;
+import java.util.ArrayList;
+
+@ModuleInfo(name = "Tracers", description = "lang.module.Tracers", category = "RENDER")
+public class Tracers extends Module {
+
+    public final CategorySetting targetsCategory = new CategorySetting("Targets", this);
+    public final BooleanSetting players = new BooleanSetting("Players", this, true).inCategory(targetsCategory);
+    public final BooleanSetting hostile = new BooleanSetting("Mobs", this, true).inCategory(targetsCategory);
+    public final BooleanSetting animals = new BooleanSetting("Animals", this, true).inCategory(targetsCategory);
+    public final BooleanSetting items = new BooleanSetting("Items", this, false).inCategory(targetsCategory);
+
+    public final CategorySetting colorsCategory = new CategorySetting("Colors", this);
+    public final ColorSetting hostileColor = new ColorSetting("Hostile Color", this, new Color(212, 235, 43)).withBlockedAlpha().inCategory(colorsCategory);
+    public final ColorSetting animalColor = new ColorSetting("Animal Color", this, new Color(176, 255, 87)).withBlockedAlpha().inCategory(colorsCategory);
+    public final ColorSetting itemColor = new ColorSetting("Item Color", this, new Color(150, 150, 255)).withBlockedAlpha().inCategory(colorsCategory);
+
+
+    @EventSubscriber(priority = -1)
+    @SuppressWarnings("unused")
+    public void onRender(RenderWorldLastEvent e) {
+        if (nullCheck()) return;
+
+        ArrayList<RenderLine> lines = new ArrayList<>();
+
+        if (players.getValue()) {
+            for (PlayerEntity playerEntity : mc.world.getPlayers()) {
+                if (playerEntity != null && playerEntity != mc.player && !playerEntity.isDead()) {
+                    String name = playerEntity.getDisplayName().getString();
+                    if (Managers.FRIENDS_MANAGER.contains(name)) {
+                        lines.add(new RenderLine(playerEntity, 0.03f, 0.96f, 0.86f, 1f));
+                    } else if (Managers.ENEMIES_MANAGER.contains(name)) {
+                        lines.add(new RenderLine(playerEntity, 1f, 0, 0, 1f));
+                    } else if (Managers.CLAN_MANAGER.isAlly(name)) {
+                        Clan clan = Managers.CLAN_MANAGER.getFirstClanFromMember(name);
+                        if (clan != null) {
+                            lines.add(new RenderLine(playerEntity, clan.getR(), clan.getG(), clan.getB(), 1f));
+                        } else {
+                            lines.add(new RenderLine(playerEntity, 1f, 1f, 1f, 1f));
+                        }
+                    } else {
+                        lines.add(new RenderLine(playerEntity, 1f, 1f, 1f, 1f));
+                    }
+                }
+            }
+        }
+
+        if (hostile.getValue() || animals.getValue() || items.getValue()) {
+            for (Entity entity : mc.world.getEntities()) {
+                if (hostile.getValue() && KillAuraUtils.isHostile(entity)) {
+                    lines.add(new RenderLine(entity, hostileColor.getValue().getRed() / 255f,hostileColor.getValue().getGreen() / 255f,hostileColor.getValue().getBlue() / 255f, 1f));
+                } else if (animals.getValue() && KillAuraUtils.isPassive(entity)) {
+                    lines.add(new RenderLine(entity, animalColor.getValue().getRed() / 255f,animalColor.getValue().getGreen() / 255f,animalColor.getValue().getBlue() / 255f, 1f));
+                } else if (items.getValue() && entity instanceof ItemEntity) {
+                    lines.add(new RenderLine(entity, itemColor.getValue().getRed() / 255f,itemColor.getValue().getGreen() / 255f, itemColor.getValue().getBlue() / 255f, 1f));
+                }
+            }
+        }
+
+        BThackRender.lineRender.prepareLineRenderer();
+        BThackRender.lineRender.renderLines(lines);
+        BThackRender.lineRender.stopLineRenderer();
+    }
+}

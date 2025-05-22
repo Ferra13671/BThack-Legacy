@@ -6,7 +6,7 @@ import com.ferra13671.BThack.core.Render.BThackRender;
 import com.ferra13671.BThack.core.Render.Font.FontRenderManager;
 import com.ferra13671.BThack.core.Render.Font.FontUtils;
 import com.ferra13671.BThack.api.Module.HudComponent;
-import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.ModeSetting;
+import com.ferra13671.BThack.managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Utils.Textures;
 
 import java.util.Arrays;

@@ -3,7 +3,7 @@ package com.ferra13671.BThack.mixins;
 import com.ferra13671.BThack.core.Client.Client;
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.api.Interfaces.Mc;
-import com.ferra13671.BThack.api.Managers.Managers;
+import com.ferra13671.BThack.managers.Managers;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.ChatUtils;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;

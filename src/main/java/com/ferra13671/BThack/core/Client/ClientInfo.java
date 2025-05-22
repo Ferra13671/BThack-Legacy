@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.core.Client;
 
 import com.ferra13671.BThack.BThack;
-import com.ferra13671.BThack.api.Managers.managers.Cape.CapeManager;
+import com.ferra13671.BThack.managers.managers.Cape.CapeManager;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 
 import java.time.LocalDate;

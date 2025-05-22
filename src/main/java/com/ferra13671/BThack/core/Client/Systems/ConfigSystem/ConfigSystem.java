@@ -1,10 +1,10 @@
 package com.ferra13671.BThack.core.Client.Systems.ConfigSystem;
 
 import com.ferra13671.BThack.BThack;
+import com.ferra13671.BThack.managers.managers.Setting.Settings.Setting;
 import com.ferra13671.BThack.core.Client.Client;
-import com.ferra13671.BThack.api.Managers.managers.Thread.ThreadManager;
-import com.ferra13671.BThack.api.Managers.Managers;
-import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.*;
+import com.ferra13671.BThack.managers.managers.Thread.ThreadManager;
+import com.ferra13671.BThack.managers.Managers;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Plugin.Plugin;
 import com.ferra13671.BThack.api.Plugin.PluginSystem;

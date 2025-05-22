@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.api.Utils.Grim;
 
 import com.ferra13671.BThack.api.Interfaces.Mc;
-import com.ferra13671.BThack.api.Managers.Managers;
+import com.ferra13671.BThack.managers.Managers;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 
 public final class GrimUtils implements Mc {

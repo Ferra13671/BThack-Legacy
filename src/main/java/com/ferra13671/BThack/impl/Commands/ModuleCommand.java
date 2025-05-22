@@ -1,9 +1,9 @@
 package com.ferra13671.BThack.impl.Commands;
 
-import com.ferra13671.BThack.api.Managers.managers.Command.AbstractCommand;
-import com.ferra13671.BThack.api.Managers.managers.Command.Arguments;
-import com.ferra13671.BThack.api.Managers.Managers;
-import com.ferra13671.BThack.api.Managers.managers.Setting.Settings.Setting;
+import com.ferra13671.BThack.managers.managers.Command.AbstractCommand;
+import com.ferra13671.BThack.managers.managers.Command.Arguments;
+import com.ferra13671.BThack.managers.Managers;
+import com.ferra13671.BThack.managers.managers.Setting.Settings.Setting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
