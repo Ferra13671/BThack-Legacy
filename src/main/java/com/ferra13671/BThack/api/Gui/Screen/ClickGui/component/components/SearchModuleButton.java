@@ -19,9 +19,14 @@ public class SearchModuleButton extends ModuleButton {
         public void renderButton() {
             String text = this.textBuilder.toString();
             if (text.isEmpty() && !selected) text = Formatting.GRAY + nullText + "...";
-            BThackRender.enableScissor(getCenterX() - getWidth() + 2, getCenterY() - getHeight(), (getWidth() * 2) - 2, getHeight() * 2);
+            BThackRender.enableScissor(ClickGui.applyGuiScale(getCenterX() - getWidth() + 2), ClickGui.applyGuiScale(getCenterY() - getHeight()), ClickGui.applyGuiScale((getWidth() * 2) - 2), ClickGui.applyGuiScale(getHeight() * 2));
             BThackRender.drawString(text + (insertAdd && selected ? "|" : ""), FontUtils.getTextWidth(text, FontRenderManager.DrawMode.NORMAL_BOLD) > (getWidth() * 2) - 10 ? getCenterX() + getWidth() - FontUtils.getTextWidth(text, FontRenderManager.DrawMode.NORMAL_BOLD) - 10 : (getCenterX() - getWidth() + 5), getCenterY() - (FontUtils.getTextHeight(getText(), FontRenderManager.DrawMode.NORMAL_BOLD) / 2f), ColorUtils.WHITE, true, FontRenderManager.DrawMode.NORMAL_BOLD);
             BThackRender.disableScissor();
+        }
+
+        @Override
+        public boolean isMouseOnButton(int mouseX, int mouseY) {
+            return ClickGui.applyGuiScale(getCenterX() - width) <= mouseX && mouseX <= ClickGui.applyGuiScale(getCenterX() + width) && ClickGui.applyGuiScale(getCenterY() - height) <= mouseY && mouseY <= ClickGui.applyGuiScale(getCenterY() + height);
         }
     };
 
