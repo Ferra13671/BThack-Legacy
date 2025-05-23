@@ -32,8 +32,8 @@ public class Shaders extends Module {
     public final ModeSetting shaderMode = new ModeSetting("Shader", this, Arrays.asList("Default", "Gradient", "Rainbow_xy", "Rainbow_x", "Rainbow_y"));
 
     //Default
-    public final ColorSetting fillColor = new ColorSetting("Fill Color", this, new Color(118, 13, 179, 90), () -> shaderMode.getValue().equals("Default"));
-    public final ColorSetting outlineColor = new ColorSetting("Outline Color", this, new Color(161, 0, 255, 255), () -> shaderMode.getValue().equals("Default"));
+    public final ColorSetting fillColor = new ColorSetting("Fill Color", this, new Color(0, 0, 0, 0), () -> shaderMode.getValue().equals("Default"));
+    public final ColorSetting outlineColor = new ColorSetting("Outline Color", this, new Color(213, 142, 253, 255), () -> shaderMode.getValue().equals("Default"));
 
     //Gradient
     public final ColorSetting color1 = new ColorSetting("Color1", this, new Color(213, 142, 253), () -> shaderMode.getValue().equals("Gradient")).withBlockedAlpha();
@@ -49,11 +49,12 @@ public class Shaders extends Module {
     public final NumberSetting fillAlpha = new NumberSetting("Fill Alpha", this, 90, 0, 255, true, () -> !shaderMode.getValue().equals("Default"));
     public final NumberSetting outlineAlpha = new NumberSetting("Outline Alpha", this, 255, 0, 255, true, () -> !shaderMode.getValue().equals("Default"));
 
-    public final NumberSetting lineWidth = new NumberSetting("Line Width", this, 2, 0, 6, true);
+    public final NumberSetting lineWidth = new NumberSetting("Line Width", this, 1, 0, 6, true);
+    //Bloom
     public final CategorySetting bloomCategory = new CategorySetting("Bloom", this);
     public final BooleanSetting bloom = new BooleanSetting("Bloom", this, true).inCategory(bloomCategory);
     public final NumberSetting bloomWidth = new NumberSetting("Bloom Width", this, 5, 0, 15, true, bloom::getValue).inCategory(bloomCategory);
-    public final NumberSetting bloomFactor = new NumberSetting("Bloom Factor", this, 5, 1, 20, false, bloom::getValue).inCategory(bloomCategory);
+    public final NumberSetting bloomFactor = new NumberSetting("Bloom Factor", this, 5, 1, 20, true, bloom::getValue).inCategory(bloomCategory);
 
     public final CategorySetting targetsCategory = new CategorySetting("Targets", this);
     public final BooleanSetting players = new BooleanSetting("Players", this, true).inCategory(targetsCategory);
