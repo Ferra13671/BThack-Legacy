@@ -13,7 +13,7 @@
   "icon": "assets/bthack/textures/bthack_icon.png",
   "environment": "*",
   "entrypoints": {
-    "client": [
+    "main": [
       "com.ferra13671.BThack.BThack"
     ],
     "preLaunch": [

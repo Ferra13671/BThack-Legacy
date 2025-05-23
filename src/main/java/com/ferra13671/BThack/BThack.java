@@ -13,14 +13,13 @@ import com.ferra13671.BThack.api.GuiSystem.BThackWidgets;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Plugin.Plugin;
 import com.ferra13671.BThack.api.Plugin.PluginSystem;
-import com.ferra13671.BThack.api.SoundSystem.Sounds;
 import com.ferra13671.BThack.api.GuiSystem.BThackScreens;
 import com.ferra13671.BThack.impl.Modules.Player.ActionBot.Config.ActionBotConfig;
 import com.ferra13671.BThackData;
 import com.ferra13671.MegaEvents.Base.IEventBus;
 import com.ferra13671.MegaEvents.Base.EventBus;
 import com.google.gson.JsonPrimitive;
-import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 
 import java.io.BufferedReader;
@@ -28,7 +27,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URI;
 
-public final class BThack implements ClientModInitializer, Mc {
+public final class BThack implements ModInitializer, Mc {
     public static final IEventBus EVENT_BUS = new EventBus();
     public static final VersionInfo VERSION_INFO = new VersionInfo();
     public static final String MC_VERSION = BThackData.MC_VERSION;
@@ -61,15 +60,14 @@ public final class BThack implements ClientModInitializer, Mc {
     }
 
     @Override
-    public void onInitializeClient() {
+    public void onInitialize() {
+        logBThackLogo();
+        initLog("BThack initialization has begun. Your nickname: " + mc.getSession().getUsername());
         instance = this;
 
         checkForOutdate();
         loadVersionInfo();
 
-        logBThackLogo();
-
-        initLog("BThack initialization has begun. Your nickname: " + mc.getSession().getUsername());
         DeviceSystem.check();
 
         PluginSystem.loadPlugins();
@@ -82,8 +80,6 @@ public final class BThack implements ClientModInitializer, Mc {
             initErr("There was an error when creating the BThack directory.");
             throw new RuntimeException(e);
         }
-
-        Sounds.initSounds();
 
         initDebug("Starting loading languages...");
         try {

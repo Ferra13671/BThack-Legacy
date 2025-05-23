@@ -39,7 +39,7 @@ public abstract class MixinMinecraftClient implements Mc {
     @Unique GuiOpenEvent lastEvent;
 
     @Inject(method = "<init>", at = @At("TAIL"))
-    public void modifyMinecraftInit(RunArgs args, CallbackInfo ci) {
+    public void modifyInitLast(RunArgs args, CallbackInfo ci) {
         BThack.instance.onInitializePost();
     }
 
