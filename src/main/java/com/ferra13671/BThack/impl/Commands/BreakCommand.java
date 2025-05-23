@@ -11,7 +11,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 
 public class BreakCommand extends AbstractCommand {
     public BreakCommand() {
@@ -26,7 +26,7 @@ public class BreakCommand extends AbstractCommand {
                 return SUCCESFUL;
             }
             BreakThread3D thread3D = new BreakThread3D();
-            thread3D.set3DSchematic(new ArrayList<>(Arrays.asList(new Vec3d(context.getArgument("x delta", Double.class), context.getArgument("y delta", Double.class), context.getArgument("z delta", Double.class)))), BlockPos.ofFloored(mc.player.getX(), mc.player.getY(), mc.player.getZ()));
+            thread3D.set3DSchematic(new ArrayList<>(List.of(new Vec3d(context.getArgument("x delta", Double.class), context.getArgument("y delta", Double.class), context.getArgument("z delta", Double.class)))), BlockPos.ofFloored(mc.player.getX(), mc.player.getY(), mc.player.getZ()));
             thread3D.start();
             return SUCCESFUL;
         }))));

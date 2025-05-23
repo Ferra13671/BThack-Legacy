@@ -3,7 +3,6 @@ package com.ferra13671.BThack.api.Utils.Modules;
 import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.managers.Managers;
 import com.ferra13671.BThack.managers.managers.Setting.Settings.BooleanSetting;
-import com.ferra13671.BThack.managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.managers.managers.Clans.Clan;
 import com.ferra13671.BThack.managers.managers.Clans.ClanStatus;
 import com.ferra13671.BThack.api.Utils.MathUtils;
@@ -138,10 +137,6 @@ public final class KillAuraUtils implements Mc {
             return mc.player.isTeammate(player);
         }
         return false;
-    }
-
-    public static boolean isSuccessfulClanMember(PlayerEntity player, BooleanSetting clanManager, ModeSetting clanMode, ModeSetting targetClan) {
-        return isSuccessfulClanMember(player, clanManager.getValue(), clanMode.getValue(), targetClan.getValue());
     }
 
     public static boolean isSuccessfulClanMember(PlayerEntity player, boolean clanManager, String clanMode, String targetClan) {

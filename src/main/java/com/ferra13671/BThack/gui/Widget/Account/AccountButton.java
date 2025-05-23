@@ -67,9 +67,7 @@ public class AccountButton extends Button {
 
     @Override
     public void updateButton(int mouseX, int mouseY) {
-        subButtons.forEach(button -> {
-            button.updateButton(mouseX, mouseY);
-        });
+        subButtons.forEach(button -> button.updateButton(mouseX, mouseY));
     }
 
     @Override

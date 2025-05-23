@@ -5,7 +5,7 @@ import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.managers.managers.Place.PlaceManager;
 import com.ferra13671.BThack.api.Utils.BlockUtils;
 import com.ferra13671.BThack.api.Utils.Rotate.RotateUtils;
-import com.ferra13671.BThack.impl.Modules.PLAYER.AutoTool;
+import com.ferra13671.BThack.impl.Modules.Player.AutoTool;
 import net.minecraft.util.math.BlockPos;
 
 public class SimpleBreakThread extends AbstractBreakThread {

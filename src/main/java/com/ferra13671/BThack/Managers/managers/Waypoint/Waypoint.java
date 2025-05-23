@@ -73,10 +73,6 @@ public class Waypoint {
         return server;
     }
 
-    public void setServer(String server) {
-        this.server = server;
-    }
-
     public void setDimension(WaypointDimension dimension) {
         this.dimension = dimension;
     }

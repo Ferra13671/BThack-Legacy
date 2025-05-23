@@ -24,8 +24,6 @@ public final class CoreShaderLoader implements Mc {
     }
 
     public static void loadPrograms() {
-        bthackPrograms.forEach(program -> {
-            program.setShader(mc.getShaderLoader().getOrCreateProgram(program.getProgramKey()));
-        });
+        bthackPrograms.forEach(program -> program.setShader(mc.getShaderLoader().getOrCreateProgram(program.getProgramKey())));
     }
 }

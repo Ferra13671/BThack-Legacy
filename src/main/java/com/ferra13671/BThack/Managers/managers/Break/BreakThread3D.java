@@ -5,7 +5,7 @@ import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.managers.managers.Place.PlaceManager;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.BlockUtils;
-import com.ferra13671.BThack.impl.Modules.PLAYER.AutoTool;
+import com.ferra13671.BThack.impl.Modules.Player.AutoTool;
 import net.minecraft.block.Block;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -34,9 +34,6 @@ public class BreakThread3D extends AbstractBreakThread {
 
     public void setIgnoreBlocks(List<Block> ignoreBlocks) {
         if (ignoreBlocks != null) {
-            //PaskalABC and Java lore:
-            ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
             this.ignoreBlocks = ignoreBlocks;
             return;
         }
