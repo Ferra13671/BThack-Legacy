@@ -10,6 +10,7 @@ import org.spongepowered.asm.mixin.Shadow;
 public class MixinKeyBinding implements ModifyKeyBinding {
     @Shadow private InputUtil.Key boundKey;
 
+    @SuppressWarnings("AddedMixinMembersNamePattern")
     @Override
     public InputUtil.Key _getBoundKey() {
         return this.boundKey;

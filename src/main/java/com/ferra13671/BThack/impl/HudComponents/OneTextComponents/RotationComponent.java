@@ -13,6 +13,7 @@ public class RotationComponent extends AbstractOneTextComponent {
     }
 
     @Override
+    @SuppressWarnings("DataFlowIssue")
     public String getText() {
         double preYaw;
 
@@ -20,9 +21,8 @@ public class RotationComponent extends AbstractOneTextComponent {
         if (preYaw < 0) {
             preYaw = -preYaw;
             preYaw = (-(preYaw - ((int) preYaw))) * 360;
-        } else {
+        } else
             preYaw = (preYaw - ((int) preYaw)) * 360;
-        }
 
 
         return "Yaw: " + Formatting.WHITE + Constants.DECIMAL_FORMAT.format(preYaw) + Formatting.RESET + " " +

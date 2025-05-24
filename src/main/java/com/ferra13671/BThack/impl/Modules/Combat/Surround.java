@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.impl.Modules.Combat;
 
+import com.ferra13671.BThack.api.Utils.Rotate.RotateMode;
 import com.ferra13671.BThack.events.ClientTickEvent;
 import com.ferra13671.BThack.events.PacketEvent;
 import com.ferra13671.BThack.managers.managers.Place.PlaceManager;
@@ -37,6 +38,7 @@ public class Surround extends Module {
     private double prevY;
 
     @Override
+    @SuppressWarnings("DataFlowIssue")
     public void onEnable() {
         if (nullCheck()) toggle();
 
@@ -51,6 +53,7 @@ public class Surround extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onTick(ClientTickEvent e) {
         if (nullCheck()) {
             toggle();
@@ -97,11 +100,11 @@ public class Surround extends Module {
                         if (slot != -1) {
                             int oldSlot = mc.player.getInventory().selectedSlot;
                             InventoryUtils.swapAction(oldSlot, slot, false, "Client");
-                            PlaceManager.placeBlock(blockPos);
+                            PlaceManager.placeBlock(blockPos, RotateMode.GRIM);
                             InventoryUtils.swapAction(oldSlot, slot, true, "Client");
                         }
                     }
-                } else if (PlaceManager.pickUpPlaceBlocks(true, PlaceManager.obsidians)) PlaceManager.placeBlock(blockPos);
+                } else if (PlaceManager.pickUpPlaceBlocks(true, PlaceManager.obsidians)) PlaceManager.placeBlock(blockPos, RotateMode.GRIM);
                 count++;
                 if (count >= blocksPerTick.getValue()) break;
             }
@@ -112,13 +115,11 @@ public class Surround extends Module {
     public void onPacketReceive(PacketEvent.Receive e) {
         if (nullCheck()) return;
 
-        if (autoDisable.getValue() && disableOnTp.getValue()) {
-            if (e.getPacket() instanceof PlayerPositionLookS2CPacket) {
-                toggle();
-            }
-        }
+        if (autoDisable.getValue() && disableOnTp.getValue() && e.getPacket() instanceof PlayerPositionLookS2CPacket)
+            toggle();
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public List<BlockPos> getBlockPoses() {
         List<BlockPos> result = new ArrayList<>();
         BlockPos playerPos = BlockPos.ofFloored(mc.player.getX(), mc.player.getY(), mc.player.getZ());
@@ -135,17 +136,15 @@ public class Surround extends Module {
         return result;
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public int findSlot() {
-        if (mc.player.getMainHandStack().getItem() instanceof BlockItem item) {
+        if (mc.player.getMainHandStack().getItem() instanceof BlockItem item)
             if (PlaceManager.isNeedBlock(item.getBlock(), PlaceManager.obsidians)) return mc.player.getInventory().selectedSlot;
-        }
 
-        for (int i = 0; i < 36; i++) {
-            if (mc.player.getInventory().getStack(i).getItem() instanceof BlockItem blockItem) {
-                if (PlaceManager.isNeedBlock(blockItem.getBlock(), PlaceManager.obsidians))
-                    return i;
-            }
-        }
+        for (int i = 0; i < 36; i++)
+            if (mc.player.getInventory().getStack(i).getItem() instanceof BlockItem blockItem &&
+                    PlaceManager.isNeedBlock(blockItem.getBlock(), PlaceManager.obsidians))
+                return i;
         return -1;
     }
 }

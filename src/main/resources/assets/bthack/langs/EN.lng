@@ -93,7 +93,6 @@
 "lang.module.KeepSprint": Allows you to keep sprint after attack.
 "lang.module.LevitationControl": Allows you to control levitation.
 "lang.module.LongJump": Allows you to jump far.
-"lang.module.NinjaBridge": Automatically builds a NinjaBridge-style bridge in the direction you're facing.
 "lang.module.NoFall": Prevents damage from falling.
 "lang.module.NoJumpDelay": Disable jump delay.
 "lang.module.NoPush": Removes pushback from blocks, entities and liquids.

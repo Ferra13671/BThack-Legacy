@@ -17,8 +17,8 @@ public class FastBow extends Module {
                                                                                                             //2.14 is the smallest value the server can handle
     public final NumberSetting delay = new NumberSetting("Delay", this, 5.0, 2.14, 20.0, false);
 
-
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onClientTick(ClientTickEvent e) {
         if (nullCheck()) return;
 
@@ -29,6 +29,7 @@ public class FastBow extends Module {
         }
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public int getItemInUseMaxCount() {
         return mc.player.isUsingItem() ? mc.player.getActiveItem().getMaxUseTime(mc.player) - mc.player.itemUseTimeLeft : 0;
     }

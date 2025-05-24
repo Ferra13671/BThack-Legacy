@@ -17,6 +17,7 @@ public class TextRadarComponent extends HudComponent {
     }
 
     @Override
+    @SuppressWarnings("DataFlowIssue")
     public void render() {
         float y = 0;
         float maxWidth = 0;

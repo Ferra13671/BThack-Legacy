@@ -17,6 +17,7 @@ public class AutoJump extends Module {
     private boolean needRelease = false;
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onTick(ClientTickEvent e) {
         if (nullCheck()) return;
 

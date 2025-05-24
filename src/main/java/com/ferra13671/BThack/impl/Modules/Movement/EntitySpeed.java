@@ -14,6 +14,7 @@ public class EntitySpeed extends Module {
 
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onTravel(PlayerTravelEvent e) {
         if (mc.player.getControllingVehicle() != null) {
             double speed = boatSpeed.getValue();

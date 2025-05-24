@@ -22,6 +22,7 @@ public class WaypointCommand extends AbstractCommand {
     }
 
     @Override
+    @SuppressWarnings("DataFlowIssue")
     public void compile(LiteralArgumentBuilder<CommandSource> builder) {
         builder.then(literal("list").then(arg("mode", Arguments.MODE("OnlyNames", "Full")).executes(context -> {
             String currentServer = mc.isInSingleplayer() ? "SinglePlayer" : mc.getNetworkHandler().getServerInfo().address;
@@ -42,44 +43,37 @@ public class WaypointCommand extends AbstractCommand {
         })));
         builder.then(literal("add").then(
                 arg("name", Arguments.STRING_ONE).then(
-                        arg("x", Arguments.DOUBLE).then(arg("y", Arguments.DOUBLE).then(arg("z", Arguments.DOUBLE)
-                                .then(arg("visible", Arguments.BOOLEAN).then(arg("dimension", Arguments.MODE("OVERWORLD", "END", "NETHER"))
-                                        .then(arg("red", Arguments.INTEGER(0, 255))
-                                                .then(arg("green", Arguments.INTEGER(0, 255))
-                                                        .then(arg("blue", Arguments.INTEGER(0, 255))
-                                                                .executes(context -> {
-                                                                    Managers.WAYPOINT_MANAGER.addWaypoint(
-                                                                            new Waypoint(
-                                                                                    context.getArgument("name", String.class),
-                                                                                    new Vec3d(
-                                                                                            context.getArgument("x", Double.class),
-                                                                                            context.getArgument("y", Double.class),
-                                                                                            context.getArgument("z", Double.class)
-                                                                                    ),
-                                                                                    context.getArgument("visible", Boolean.class),
-                                                                                    Waypoint.WaypointDimension.valueOf(context.getArgument("dimension", String.class)),
-                                                                                    ColorUtils.fastRGBA(
-                                                                                            context.getArgument("red", Integer.class),
-                                                                                            context.getArgument("green", Integer.class),
-                                                                                            context.getArgument("blue", Integer.class),
-                                                                                            255
-                                                                                    ),
-                                                                                    mc.isInSingleplayer() ? "SinglePlayer" : mc.getNetworkHandler().getServerInfo().address
-                                                                            )
-                                                                    );
-                                                                    SubConfigs.WAYPOINTS.save();
+                arg("x", Arguments.DOUBLE).then(arg("y", Arguments.DOUBLE).then(arg("z", Arguments.DOUBLE)
+                .then(arg("visible", Arguments.BOOLEAN).then(arg("dimension", Arguments.MODE("OVERWORLD", "END", "NETHER"))
+                .then(arg("red", Arguments.INTEGER(0, 255))
+                .then(arg("green", Arguments.INTEGER(0, 255))
+                .then(arg("blue", Arguments.INTEGER(0, 255))
+                .executes(context -> {
+                    Managers.WAYPOINT_MANAGER.addWaypoint(
+                            new Waypoint(
+                                    context.getArgument("name", String.class),
+                                    new Vec3d(
+                                            context.getArgument("x", Double.class),
+                                            context.getArgument("y", Double.class),
+                                            context.getArgument("z", Double.class)
+                                    ),
+                                    context.getArgument("visible", Boolean.class),
+                                    Waypoint.WaypointDimension.valueOf(context.getArgument("dimension", String.class)),
+                                    ColorUtils.fastRGBA(
+                                            context.getArgument("red", Integer.class),
+                                            context.getArgument("green", Integer.class),
+                                            context.getArgument("blue", Integer.class),
+                                            255
+                                    ),
+                                    mc.isInSingleplayer() ? "SinglePlayer" : mc.getNetworkHandler().getServerInfo().address
+                            )
+                    );
+                    SubConfigs.WAYPOINTS.save();
 
-                                                                    sendMessage(Formatting.AQUA + String.format(LanguageSystem.translate("lang.command.Waypoint.added"), context.getArgument("name", String.class)));
+                    sendMessage(Formatting.AQUA + String.format(LanguageSystem.translate("lang.command.Waypoint.added"), context.getArgument("name", String.class)));
 
-                                                                    return SUCCESFUL;
-                                                                })
-                                                        )
-                                                )
-                                        )
-                                ))
-                        ))
-                )
-        ));
+                    return SUCCESFUL;
+        })))))))))));
         builder.then(literal("remove").then(arg("waypoint", Arguments.WAYPOINT).executes(context -> {
             Managers.WAYPOINT_MANAGER.removeWaypoint(context.getArgument("waypoint", Waypoint.class));
             SubConfigs.WAYPOINTS.save();

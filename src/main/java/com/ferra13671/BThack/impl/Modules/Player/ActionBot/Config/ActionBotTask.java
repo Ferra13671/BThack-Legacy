@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.impl.Modules.Player.ActionBot.Config;
 
 
-import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Mc;
 import com.ferra13671.BThack.managers.managers.Thread.BThackThread;
 import com.ferra13671.BThack.managers.managers.Thread.ThreadClosedException;
 import com.google.gson.JsonObject;

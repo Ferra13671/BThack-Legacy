@@ -2,16 +2,16 @@ package com.ferra13671.BThack.core.Client;
 
 import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.managers.managers.Cape.CapeManager;
-import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Mc;
 
 import java.time.LocalDate;
 
 public final class ClientInfo implements Mc {
     private String name = "BThack " + BThack.VERSION + " | " + mc.getSession().getUsername();
+    @SuppressWarnings("FieldCanBeLocal")
     private final String cName = "BThack " + BThack.VERSION;
     private String chatPrefix = "$";
     private String font = "default";
-    private String currentConfigName = "";
     private CapeInfo capeInfo = CapeManager.DEFAULT_CAPE_INFO;
     private final boolean isWinter;
 
@@ -37,10 +37,6 @@ public final class ClientInfo implements Mc {
         return chatPrefix;
     }
 
-    public String getCurrentConfigName() {
-        return currentConfigName;
-    }
-
     public String getFont() {
         return font;
     }
@@ -56,10 +52,6 @@ public final class ClientInfo implements Mc {
     //set
     public void setChatPrefix(String chatPrefix) {
         this.chatPrefix = chatPrefix;
-    }
-
-    public void setCurrentConfigName(String currentConfigName) {
-        this.currentConfigName = currentConfigName;
     }
 
     public void setFont(String font) {

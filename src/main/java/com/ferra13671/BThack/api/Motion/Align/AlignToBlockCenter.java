@@ -1,11 +1,12 @@
 package com.ferra13671.BThack.api.Motion.Align;
 
 
-import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Mc;
 
 public class AlignToBlockCenter implements Mc {
     private AlignThread thread;
 
+    @SuppressWarnings("DataFlowIssue")
     public void align() {
         double needX = Math.floor(mc.player.getX()) + 0.5;
         double needZ = Math.floor(mc.player.getZ()) + 0.5;

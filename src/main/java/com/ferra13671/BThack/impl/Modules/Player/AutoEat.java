@@ -53,12 +53,14 @@ public class AutoEat extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onTick(ClientTickEvent e) {
         if (nullCheck()) return;
 
         onAutoEat();
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public void onAutoEat() {
         if (pauseIfMine.getValue())
             if ((ItemUtils.isTool(mc.player.getActiveItem().getItem()) && mc.player.isUsingItem()) || (ModuleList.packetMine.isEnabled() && (ModuleList.packetMine.currentBreakingBlock != null || !ModuleList.packetMine.conveyorBlocks.isEmpty()))) return;
@@ -129,6 +131,7 @@ public class AutoEat extends Module {
         }
     }
 
+    @SuppressWarnings("DataFlowIssue")
     private boolean isAllowedFood(ItemStack stack) {
         if (!allowGapples.getValue() && isGolderApple(stack)) return false;
         ConsumableComponent component = stack.get(DataComponentTypes.CONSUMABLE);

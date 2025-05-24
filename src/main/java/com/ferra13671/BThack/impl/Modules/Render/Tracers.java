@@ -35,7 +35,7 @@ public class Tracers extends Module {
 
 
     @EventSubscriber(priority = -1)
-    @SuppressWarnings("unused")
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onRender(RenderWorldLastEvent e) {
         if (nullCheck()) return;
 

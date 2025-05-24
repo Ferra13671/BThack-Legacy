@@ -13,7 +13,6 @@ public class ShiftSpam extends Module {
     public final NumberSetting activeDelay = new NumberSetting("Delay Active", this, 0.1,0.05,1,false);
     public final NumberSetting deActiveDelay = new NumberSetting("Delay deActive", this, 0.1,0.05,1,false);
 
-
     private final Ticker ticker = new Ticker();
     private boolean sneaked = false;
 
@@ -25,6 +24,7 @@ public class ShiftSpam extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onTick(RenderWorldLastEvent e) {
         if (nullCheck()) return;
 

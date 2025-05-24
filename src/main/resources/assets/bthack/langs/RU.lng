@@ -92,7 +92,6 @@
 "lang.module.KeepSprint": Позволяет сохранять спринт после атаки.
 "lang.module.LevitationControl": Позволяет управлять левитацией.
 "lang.module.LongJump": Позволяет далеко прыгать.
-"lang.module.NinjaBridge": Автоматически строит мост в стиле NinjaBridge в том направлении, в котором вы смотрите.
 "lang.module.NoFall": Предотвращает урон от падения.
 "lang.module.NoJumpDelay": Отключает задержку прыжка.
 "lang.module.NoPush": Убирает отталкивание от блоков, сущностей и жидкостей.

@@ -47,6 +47,7 @@ public class PMSpammer extends Module {
     private int m = 1;
 
     @Override
+    @SuppressWarnings("DataFlowIssue")
     public void onEnable() {
         if (nullCheck()) {
             toggle();
@@ -171,21 +172,19 @@ public class PMSpammer extends Module {
         return networkPlayerInfoIn.getDisplayName() != null ? networkPlayerInfoIn.getDisplayName().getString() : networkPlayerInfoIn.getProfile().getName();
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public boolean sendMessage(String chatText) {
         chatText = this.normalize(chatText);
-        if (chatText.isEmpty()) {
-            return true;
-        } else {
+        if (!chatText.isEmpty()) {
             mc.inGameHud.getChatHud().addToMessageHistory(chatText);
 
-            if (chatText.startsWith("/")) {
+            if (chatText.startsWith("/"))
                 mc.player.networkHandler.sendChatCommand(chatText.substring(1));
-            } else {
+            else
                 mc.player.networkHandler.sendChatMessage(chatText);
-            }
 
-            return true;
         }
+        return true;
     }
 
     public String normalize(String chatText) {

@@ -11,6 +11,7 @@ import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.util.Formatting;
 
 @ModuleInfo(name = "PacketCanceller", description = "lang.module.PacketCanceller", category = "MISC")
+@SuppressWarnings("SuspiciousMethodCalls")
 public class PacketCanceller extends Module {
 
     @Override
@@ -21,6 +22,7 @@ public class PacketCanceller extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onPacketSend(PacketEvent.Send e) {
         if (DataLists.get("PacketCanceller", PacketList.class).values.contains(e.getPacket().getClass())) e.setCancelled(true);
     }

@@ -6,7 +6,7 @@ import com.ferra13671.BThack.core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Animation.Animation;
 import com.ferra13671.BThack.api.Animation.Easing;
 import com.ferra13671.BThack.api.GuiSystem.ScreenWidget;
-import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Mc;
 import com.ferra13671.BThack.api.SoundSystem.SoundSystem;
 import com.ferra13671.BThack.api.SoundSystem.Sounds;
 import net.minecraft.client.gui.DrawContext;
@@ -28,17 +28,6 @@ public class WidgetManage implements Mc {
         widgets.add(new WidgetInfo(screenWidget));
         screenWidget.setParent(parent);
         screenWidget.init();
-    }
-
-    public void removeWidget(ScreenWidget screenWidget) {
-        for (WidgetInfo widgetInfo : widgets) {
-            if (widgetInfo.screenWidget.equals(screenWidget)) {
-                if (widgetInfo.status == WidgetStatus.NOT_OPENED) {
-                    widgets.remove(widgetInfo);
-                    return;
-                } else widgetInfo.setStatus(WidgetStatus.CLOSED);
-            }
-        }
     }
 
     public void init() {

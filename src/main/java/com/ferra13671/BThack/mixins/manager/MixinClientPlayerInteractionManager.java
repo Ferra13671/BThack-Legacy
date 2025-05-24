@@ -108,11 +108,13 @@ public abstract class MixinClientPlayerInteractionManager implements ModifyClien
         ci.setReturnValue(internalAttackBlock(pos, direction));
     }
 
+    @SuppressWarnings("AddedMixinMembersNamePattern")
     @Override
     public void attackBlockNoEvent(BlockPos pos, Direction direction) {
         internalAttackBlock(pos, direction);
     }
 
+    @SuppressWarnings("DataFlowIssue")
     @Unique
     public boolean internalAttackBlock(BlockPos pos, Direction direction) {
         if (client.player.isBlockBreakingRestricted(client.world, pos, gameMode)) {
@@ -165,6 +167,7 @@ public abstract class MixinClientPlayerInteractionManager implements ModifyClien
             ModuleList.noGlitchBlocks.onBreakBlock(pos, cir);
     }
 
+    @SuppressWarnings("DataFlowIssue")
     @Inject(method = "updateBlockBreakingProgress", at = @At("HEAD"), cancellable = true)
     public void modifyUpdateBlockBreakingProgress(BlockPos pos, Direction direction, CallbackInfoReturnable<Boolean> cir) {
         cir.cancel();

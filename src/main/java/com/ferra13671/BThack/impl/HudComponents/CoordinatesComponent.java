@@ -29,6 +29,7 @@ public class CoordinatesComponent extends HudComponent {
     }
 
     @Override
+    @SuppressWarnings("DataFlowIssue")
     public void tick() {
         int overWorldX;
         int overWorldZ;

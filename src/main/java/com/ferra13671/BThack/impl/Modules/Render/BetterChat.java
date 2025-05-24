@@ -41,11 +41,13 @@ public class BetterChat extends Module {
      * @see com.ferra13671.BThack.mixins.gui_and_hud.chat.MixinChatHud
      * @see com.ferra13671.BThack.mixins.gui_and_hud.chat.MixinChatScreen
      */
+    @SuppressWarnings("JavadocDeclaration")
     public final BooleanSetting chatAnimation = new BooleanSetting("Chat Animation", this, true);
     public final NumberSetting fadeTime = new NumberSetting("Fade Time", this, 170, 100, 300, true, chatAnimation::getValue);
 
 
     @EventSubscriber
+    @SuppressWarnings("DataFlowIssue")
     public void onPacketReceive(PacketEvent.Receive e) {
         if (nullCheck()) return;
         if (e.getPacket() instanceof GameMessageS2CPacket packet) {

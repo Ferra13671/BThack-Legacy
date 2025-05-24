@@ -19,13 +19,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class MixinSodiumDefaultFluidRenderer {
 
 
-	@Inject(at = @At("HEAD"), method = "isFluidOccluded(Lnet/minecraft/class_1920;IIILnet/minecraft/class_2350;Lnet/minecraft/class_2680;Lnet/minecraft/class_3611;)Z", cancellable = true, require = 0)
+	@SuppressWarnings("UnresolvedMixinReference")
+    @Inject(at = @At("HEAD"), method = "isFluidOccluded(Lnet/minecraft/class_1920;IIILnet/minecraft/class_2350;Lnet/minecraft/class_2680;Lnet/minecraft/class_3611;)Z", cancellable = true, require = 0)
 	private void modifyIsFluidOccludedInOldSodium(BlockRenderView world, int x, int y, int z, Direction dir, BlockState state, Fluid fluid, CallbackInfoReturnable<Boolean> cir) {
 		if (Xray.doXray)
 			cir.setReturnValue(true);
 	}
 
-	@Inject(at = @At("HEAD"),
+	@SuppressWarnings("UnresolvedMixinReference")
+    @Inject(at = @At("HEAD"),
 			method = "isFluidOccluded(Lnet/minecraft/class_1920;IIILnet/minecraft/class_2350;Lnet/minecraft/class_2680;Lnet/minecraft/class_3610;)Z",
 			cancellable = true,
 			require = 0)

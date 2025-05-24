@@ -19,6 +19,7 @@ public class Scrapper extends Module {
     private BreakThread3D thread3D;
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onTick(ClientTickEvent e) {
         if (nullCheck() || BreakManager.isDestroying) return;
 
@@ -43,8 +44,7 @@ public class Scrapper extends Module {
     }
 
     public void reset() {
-        if (thread3D != null) {
+        if (thread3D != null)
             thread3D.closeThread();
-        }
     }
 }

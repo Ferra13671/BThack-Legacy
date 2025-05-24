@@ -15,10 +15,10 @@ public class ElytraReplace extends Module {
 
     public final NumberSetting minDurability = new NumberSetting("Min Durability", this, 15, 1, 100, true);
 
-
     boolean needReplace = true;
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onClientTick(ClientTickEvent e) {
         if (nullCheck()) return;
 
@@ -36,18 +36,16 @@ public class ElytraReplace extends Module {
                         if (durability > minDurability.getValue()) {
                             int needItem = i;
 
-                            if (needItem < 9) {
+                            if (needItem < 9)
                                 needItem = needItem + 36;
-                            }
 
                             InventoryUtils.replaceItems(6, needItem, 50);
                             needReplace = false;
                         }
                     }
                 }
-            } else {
+            } else
                 needReplace = true;
-            }
         }
     }
 }

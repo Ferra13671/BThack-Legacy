@@ -16,10 +16,8 @@ import java.util.Set;
 public class AutoAuthManager implements Initializable {
     private final HashMap<String, String> passwords = new HashMap<>();
 
-
     @Override
-    public void init() {
-    }
+    public void init() {}
 
     public String getPassword(String nickname) {
         Data<String> password = new Data<>(passwords.getOrDefault(nickname, null));

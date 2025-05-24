@@ -60,6 +60,7 @@ public class MoveTask extends ActionBotTask {
 
     private boolean moving = false;
     private boolean jumping = false;
+    @SuppressWarnings("DataFlowIssue")
     private final TravelChanger travelChanger = new TravelChanger(1000,
             () -> new Float[]{yaw, mc.player.getPitch()},
             () -> false,
@@ -67,6 +68,7 @@ public class MoveTask extends ActionBotTask {
     );
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onInput(UpdateInputEvent e) {
         InputUtils.setInput(moving, false, false, false, jumping, mc.player.input.playerInput.sneak(), mc.player.input.playerInput.sprint());
         mc.player.input.movementForward = moving ? 1 : 0;
@@ -74,6 +76,7 @@ public class MoveTask extends ActionBotTask {
     }
 
     @Override
+    @SuppressWarnings("DataFlowIssue")
     public void play() throws ThreadClosedException {
         alignAction();
 
@@ -111,14 +114,12 @@ public class MoveTask extends ActionBotTask {
 
                 if (mc.player.horizontalCollision) {
                     switch (type) {
-                        case Default:
+                        case Default -> {
                             ChatUtils.sendMessage("[ActionBot: MoveTask] " + Formatting.YELLOW + "The player ran into an obstacle. Skipping a task.");
                             disableAction(scaffoldActivated);
-                            return;
-                        case AutoJump:
-                            tryJump();
-                            break;
-                        case Through_Obstacles:
+                        }
+                        case AutoJump -> tryJump();
+                        case Through_Obstacles -> {
                             moving = false;
                             if (!BreakManager.isDestroying) {
                                 double x = mc.player.getX() + RotateUtils.getCordFactorFromDirection((int) yaw)[0];
@@ -131,7 +132,7 @@ public class MoveTask extends ActionBotTask {
                                 SimpleBreakThread destroyThread = new SimpleBreakThread(blockPos);
                                 destroyThread.start();
                             }
-                            break;
+                        }
                     }
                 }
 
@@ -164,14 +165,17 @@ public class MoveTask extends ActionBotTask {
         }
     }
 
+    @SuppressWarnings("DataFlowIssue")
     private boolean toFarX() {
         return mc.player.getX() > maxX || mc.player.getX() < minX;
     }
 
+    @SuppressWarnings("DataFlowIssue")
     private boolean toFarZ() {
         return mc.player.getZ() > maxZ || mc.player.getZ() < minZ;
     }
 
+    @SuppressWarnings("DataFlowIssue")
     private void tryJump() throws ThreadClosedException {
         double oldPosY = mc.player.getY();
         jumping = true;
@@ -225,10 +229,6 @@ public class MoveTask extends ActionBotTask {
         cancel = false;
         disableScaffold(scaffoldActivated);
     }
-
-
-
-
 
     public double getNeedX() {
         return this.needX;

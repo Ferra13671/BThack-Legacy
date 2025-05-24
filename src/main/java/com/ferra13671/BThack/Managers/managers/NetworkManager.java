@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.managers.managers;
 
 import com.ferra13671.BThack.api.IMixin.ModifyClientConnection;
-import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Mc;
 import com.ferra13671.BThack.api.Utils.Initializable;
 import com.ferra13671.BThack.mixins.accessor.IClientWorld;
 import net.minecraft.client.network.PendingUpdateManager;
@@ -18,16 +18,16 @@ public class NetworkManager implements Initializable, Mc {
         }
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public void sendPacket(Packet<?> packet) {
         mc.getNetworkHandler().sendPacket(packet);
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public void sendPacketNoEvent(Packet<?> packet) {
         ((ModifyClientConnection) mc.getNetworkHandler().getConnection()).sendPacketNoEvent(packet);
     }
 
     @Override
-    public void init() {
-        //no action
-    }
+    public void init() {}
 }

@@ -1,6 +1,5 @@
 package com.ferra13671.BThack.api.Utils;
 
-import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Utils.Rotate.RotateUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -28,6 +27,7 @@ import java.util.List;
 
 public final class BlockUtils implements Mc {
 
+    @SuppressWarnings("DataFlowIssue")
     public static BlockState getState(BlockPos pos) {
         return mc.world.getBlockState(pos);
     }
@@ -71,11 +71,7 @@ public final class BlockUtils implements Mc {
 
     public static Box getBoundingBox(BlockPos pos) {
         VoxelShape shape = getOutlineShape(pos);
-        if (!shape.isEmpty()) {
-            return shape.getBoundingBox().offset(pos);
-        } else {
-            return createBox(pos, 0.5, 0.5, 1, false);
-        }
+        return !shape.isEmpty() ? shape.getBoundingBox().offset(pos) : createBox(pos, 0.5, 0.5, 1, false);
     }
 
     public static boolean canBeClicked(BlockPos pos) {
@@ -86,11 +82,9 @@ public final class BlockUtils implements Mc {
         return getState(pos).isOpaqueFullCube();
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public static BlockHitResult raycast(Vec3d from, Vec3d to, RaycastContext.FluidHandling fluidHandling) {
-        RaycastContext context = new RaycastContext(from, to,
-                RaycastContext.ShapeType.COLLIDER, fluidHandling, mc.player);
-
-        return mc.world.raycast(context);
+        return mc.world.raycast(new RaycastContext(from, to, RaycastContext.ShapeType.COLLIDER, fluidHandling, mc.player));
     }
 
     public static BlockHitResult raycast(Vec3d from, Vec3d to) {
@@ -111,17 +105,13 @@ public final class BlockUtils implements Mc {
 
         int range = (int) MathUtils.roundNumber(blockRange, 0);
 
-        if (motion) {
+        if (motion)
             entityPlayer.getPos().add(new Vec3d(entityPlayer.velocity.x, entityPlayer.velocity.y, entityPlayer.velocity.z));
-        }
 
-        for (int x = -range; x <= range; x++) {
-            for (int y = -range; y <= range; y++) {
-                for (int z = -range; z <= range; z++) {
+        for (int x = -range; x <= range; x++)
+            for (int y = -range; y <= range; y++)
+                for (int z = -range; z <= range; z++)
                     nearbyBlocks.add(entityPlayer.getBlockPos().add(x, y, z));
-                }
-            }
-        }
 
         return nearbyBlocks;
     }
@@ -150,11 +140,10 @@ public final class BlockUtils implements Mc {
         if(!canBeClicked(pos))
             return null;
 
-        if(be instanceof ChestBlockEntity) {
+        if(be instanceof ChestBlockEntity)
             return getChestBox(be);
-        } else if (be instanceof EnderChestBlockEntity) {
+        else if (be instanceof EnderChestBlockEntity)
             return getEnderChestBox(be);
-        }
 
         return getBoundingBox(pos);
     }
@@ -193,6 +182,7 @@ public final class BlockUtils implements Mc {
         return new Box(pos.x - length, (yOnCenter ? (pos.y - height) : pos.y ), pos.z - width, pos.x + length, pos.y + height, pos.z + width);
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public static boolean canBreak(BlockPos pos, BlockState state) {
         if (!mc.player.isCreative() && state.getHardness(mc.world, pos) < 0) return false;
         if (mc.world.isAir(pos)) return false;
@@ -200,6 +190,7 @@ public final class BlockUtils implements Mc {
         return state.getOutlineShape(mc.world, pos) != VoxelShapes.empty();
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public static boolean canBreak(BlockPos pos) {
         return canBreak(pos, mc.world.getBlockState(pos));
     }

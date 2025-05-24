@@ -3,8 +3,7 @@ package com.ferra13671.BThack.managers.managers.Thread;
 public abstract class BThackThread extends Thread {
     private boolean closed;
 
-    public BThackThread() {
-    }
+    public BThackThread() {}
 
     public BThackThread(String threadName) {
         super(threadName);
@@ -22,9 +21,7 @@ public abstract class BThackThread extends Thread {
 
     public abstract void threadAction() throws ThreadClosedException;
 
-    public void cancelAction() {
-
-    }
+    public void cancelAction() {}
 
     public void sleepThread(long millis) {
         try {

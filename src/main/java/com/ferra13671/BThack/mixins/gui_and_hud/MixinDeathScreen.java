@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.mixins.gui_and_hud;
 
 import com.ferra13671.BThack.core.Client.ModuleList;
-import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Mc;
 import net.minecraft.client.gui.screen.DeathScreen;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -14,6 +14,7 @@ public class MixinDeathScreen implements Mc {
 
     @Shadow private int ticksSinceDeath;
 
+    @SuppressWarnings("DataFlowIssue")
     @Inject(method = "tick", at = @At("HEAD"), cancellable = true)
     public void modifyTick(CallbackInfo ci) {
         if (ticksSinceDeath >= 20) {

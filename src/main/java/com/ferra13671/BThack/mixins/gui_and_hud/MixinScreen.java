@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.mixins.gui_and_hud;
 
 import com.ferra13671.BThack.core.Client.ModuleList;
-import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Mc;
 import com.ferra13671.BThack.api.GuiSystem.BThackScreens;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.AbstractParentElement;
@@ -38,6 +38,7 @@ public abstract class MixinScreen extends AbstractParentElement implements Drawa
         }
     }
 
+    @SuppressWarnings("DataFlowIssue")
     @Inject(method = "render", at = @At("HEAD"))
     public void modifyRender(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
         if (client.world == null) {

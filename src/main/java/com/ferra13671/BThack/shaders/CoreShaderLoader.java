@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.shaders;
 
-import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Mc;
 import net.minecraft.client.gl.ShaderProgramKey;
 
 import java.util.ArrayList;

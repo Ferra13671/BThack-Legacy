@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.mixins.render;
 
 import com.ferra13671.BThack.core.Client.ModuleList;
-import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Mc;
 import com.ferra13671.BThack.api.Utils.MathUtils;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.ChestBlockEntity;
@@ -18,6 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(BlockEntityRenderDispatcher.class)
 public class MixinBlockEntityRenderDispatcher implements Mc {
 
+    @SuppressWarnings("DataFlowIssue")
     @Inject(method = "render(Lnet/minecraft/block/entity/BlockEntity;FLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;)V", at = @At("HEAD"), cancellable = true)
     public <E extends BlockEntity> void modifyBlockEntityRender(E blockEntity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, CallbackInfo ci) {
         if (ModuleList.noRender.isEnabled()) {

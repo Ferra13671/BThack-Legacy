@@ -3,7 +3,7 @@ package com.ferra13671.BThack.managers.managers;
 import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.events.Entity.FireworkTickEvent;
 import com.ferra13671.BThack.events.ClientTickEvent;
-import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Mc;
 import com.ferra13671.BThack.api.Utils.Initializable;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.Ticker;
@@ -31,6 +31,7 @@ public class FireworkManager implements Initializable, Mc {
     }
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onFireworkTick(FireworkTickEvent e) {
         if (mc.player.isGliding() && firework != e.firework
                 && ((IFireworkRocketEntity) e.firework).hookWasShotByEntity()
@@ -40,6 +41,7 @@ public class FireworkManager implements Initializable, Mc {
     }
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onTick(ClientTickEvent e) {
         if (Module.nullCheck()) {
             if (firework != null) {
@@ -73,13 +75,6 @@ public class FireworkManager implements Initializable, Mc {
         if (!lastClientUseFireworkTicker.passed(500)) return true;
         return firework != null && !firework.isRemoved();
     }
-
-    /*
-    public boolean timePassedFromLastFireWorkUse(int millis) {
-        return (System.currentTimeMillis() - lastFireWorkTick) > (mc.renderTickCounter.tickTime + 80 + millis);
-    }
-
-     */
 
     public void onExplode(FireworkRocketEntity firework) {
         if (firework == this.firework)

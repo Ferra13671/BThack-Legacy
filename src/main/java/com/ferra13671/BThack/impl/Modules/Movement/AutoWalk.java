@@ -18,16 +18,16 @@ public class AutoWalk extends Module {
     public final BooleanSetting disableOnDisconnect = new BooleanSetting("Disable On Disconnect", this, true);
     public final ModeSetting mode = new ModeSetting("Mode", this, Arrays.asList("Forward", "Baritone"));
 
-
     @Override
     public void onDisable() {
         super.onDisable();
 
-        if (mode.getValue().equals("Baritone"))
-            if (BThack.isBaritonePresent()) BaritoneUtils.cancelAllPathing();
+        if (mode.getValue().equals("Baritone") && BThack.isBaritonePresent())
+            BaritoneUtils.cancelAllPathing();
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onTick(ClientTickEvent e) {
         if (nullCheck()) {
             if (disableOnDisconnect.getValue()) toggle();
@@ -38,10 +38,12 @@ public class AutoWalk extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onInputUpdate(UpdateInputEvent e) {
         if (mode.getValue().equals("Forward")) forwardAction();
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public void forwardAction() {
         mc.player.input.movementForward = 1;
     }

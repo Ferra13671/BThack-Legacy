@@ -5,11 +5,10 @@ import com.ferra13671.BThack.core.Client.Systems.FirstLaunchWelcomer;
 import com.ferra13671.BThack.core.Client.Systems.GrimNoFallSystem;
 import com.ferra13671.BThack.core.Client.Systems.HotbarSystem;
 import com.ferra13671.BThack.core.Client.Systems.KeyHandler;
-import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Mc;
 import com.ferra13671.BThack.api.Utils.Initializable;
 import com.ferra13671.BThack.managers.Managers;
 import com.ferra13671.BThack.api.Plugin.*;
-import com.ferra13671.BThack.api.Utils.Grim.GrimFreezeUtils;
 import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
 import com.ferra13671.TextureUtils.Controller.DefaultGlController;
 import com.ferra13671.TextureUtils.GLTextureSystem;
@@ -64,7 +63,6 @@ public final class InitializeHelper implements Mc {
             }
         }
 
-        BThack.EVENT_BUS.register(new GrimFreezeUtils());
         hasInitedManagers = true;
     }
 

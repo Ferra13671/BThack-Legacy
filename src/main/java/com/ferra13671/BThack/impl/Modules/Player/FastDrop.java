@@ -16,10 +16,10 @@ public class FastDrop extends Module {
 
     public final NumberSetting delay = new NumberSetting("Delay", this, 0, 0, 4, true);
 
-
     private int ticks;
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onTick(ClientTickEvent e) {
         if (nullCheck()) return;
 

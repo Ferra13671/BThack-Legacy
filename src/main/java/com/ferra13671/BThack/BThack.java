@@ -10,7 +10,7 @@ import com.ferra13671.BThack.core.DeviceSystem;
 import com.ferra13671.BThack.core.Render.BThackRender;
 import com.ferra13671.BThack.core.ShutdownSystem;
 import com.ferra13671.BThack.api.GuiSystem.BThackWidgets;
-import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Mc;
 import com.ferra13671.BThack.api.Plugin.Plugin;
 import com.ferra13671.BThack.api.Plugin.PluginSystem;
 import com.ferra13671.BThack.api.GuiSystem.BThackScreens;
@@ -118,6 +118,7 @@ public final class BThack implements ModInitializer, Mc {
             BThack.initDebug("Config successfully uploaded!");
         } catch (Exception e) {
             BThack.initErr("There was an error when loading the config. Further work may occur with failures.");
+            //noinspection CallToPrintStackTrace
             e.printStackTrace();
         }
 
@@ -198,6 +199,7 @@ public final class BThack implements ModInitializer, Mc {
         log("\\,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,/");
     }
 
+    @SuppressWarnings("StringConcatenationInLoop")
     public static void initLog(CharSequence message) {
         String line = " ";
         for (int i = 2; i < message.length(); i++) {
@@ -209,6 +211,7 @@ public final class BThack implements ModInitializer, Mc {
         log(line);
     }
 
+    @SuppressWarnings("StringConcatenationInLoop")
     public static void initDebug(CharSequence message) {
         String line = " ";
         for (int i = 2; i < message.length(); i++) {
@@ -220,6 +223,7 @@ public final class BThack implements ModInitializer, Mc {
         debug(line);
     }
 
+    @SuppressWarnings("StringConcatenationInLoop")
     public static void initErr(CharSequence message) {
         String messageText = "ERROR: " + message;
         String line = " ";
@@ -230,12 +234,5 @@ public final class BThack implements ModInitializer, Mc {
         error(line);
         error(message.toString());
         error(line);
-    }
-
-    public enum InitStage {
-        NOT_INITED,
-        CLIENT_INIT,
-        POST_INIT,
-        FULL_INITED
     }
 }

@@ -38,6 +38,7 @@ import java.util.Objects;
 import static com.ferra13671.BThack.core.Client.Systems.FileSystem.JsonUtils.*;
 
 public final class SubConfigs {
+    @SuppressWarnings("unused")
     public static final SubConfig MODULES = new SubConfig() {
         @Override
         protected void saveSubConfig() throws Exception {
@@ -79,6 +80,7 @@ public final class SubConfigs {
                                 try {
                                     s.load(settingObject, settingValueObject);
                                 } catch (Exception e) {
+                                    //noinspection CallToPrintStackTrace
                                     e.printStackTrace();
                                 }
                             }
@@ -95,6 +97,7 @@ public final class SubConfigs {
             }
         }
     };
+    @SuppressWarnings("unused")
     public static final SubConfig FRAMES = new SubConfig() {
         @Override
         protected void saveSubConfig() throws Exception {
@@ -256,6 +259,7 @@ public final class SubConfigs {
             ClanSettingsBuilder.reloadSettings();
         }
     };
+    @SuppressWarnings("unused")
     public static final SubConfig ACTION_BOT_TASKS = new SubConfig() {
         @Override
         protected void saveSubConfig() throws Exception {
@@ -355,6 +359,7 @@ public final class SubConfigs {
                     , () -> {});
         }
     };
+    @SuppressWarnings("unused")
     public static final SubConfig MACROS = new SubConfig() {
         @Override
         protected void saveSubConfig() throws Exception {
@@ -398,20 +403,22 @@ public final class SubConfigs {
             Managers.TWOFA_MANAGER.load();
         }
     };
+    @SuppressWarnings("unused")
     public static final SubConfig DATA_LISTS = new SubConfig() {
         @Override
-        protected void saveSubConfig() throws Exception {
+        protected void saveSubConfig() {
             DataLists.forEach(dataList -> {
                 try {
                     dataList.saveInFile();
                 } catch (IOException e) {
+                    //noinspection CallToPrintStackTrace
                     e.printStackTrace();
                 }
             });
         }
 
         @Override
-        protected void loadSubConfig() throws Exception {
+        protected void loadSubConfig() {
             DataLists.forEach(dataList -> {
                 try {
                     dataList.loadFromFile();
@@ -421,6 +428,7 @@ public final class SubConfigs {
             });
         }
     };
+    @SuppressWarnings("unused")
     public static final SubConfig AUTO_AUTH = new SubConfig() {
         @Override
         protected void saveSubConfig() throws Exception {
@@ -432,6 +440,7 @@ public final class SubConfigs {
             Managers.AUTO_AUTH_MANAGER.load();
         }
     };
+    @SuppressWarnings("unused")
     public static final SubConfig ACCOUNTS = new SubConfig() {
         @Override
         protected void saveSubConfig() throws Exception {
@@ -443,6 +452,7 @@ public final class SubConfigs {
             Managers.ACCOUNT_MANAGER.load();
         }
     };
+    @SuppressWarnings("unused")
     public static final SubConfig AUTO_ANVIL_ENCHANT = new SubConfig() {
         @Override
         protected void saveSubConfig() throws Exception {
@@ -485,6 +495,7 @@ public final class SubConfigs {
             loadCape();
         }
 
+        @SuppressWarnings("resource")
         private static void loadCape() throws Exception {
             InputStream stream = switch (Client.clientInfo.getCapeInfo().dataType()) {
                 case NONE -> null;

@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.mixins;
 
-import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Mc;
 import com.ferra13671.BThack.managers.Managers;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.client.network.PlayerListEntry;
@@ -17,6 +17,7 @@ public class MixinPlayerListEntry implements Mc {
 
     @Shadow @Final private GameProfile profile;
 
+    @SuppressWarnings("DataFlowIssue")
     @Inject(method = "getSkinTextures", at = @At("TAIL"), cancellable = true)
     private void hookGetSkinTextures(CallbackInfoReturnable<SkinTextures> cir) {
         if (Managers.CAPE_MANAGER.isEnabled() && profile.getName().equals(mc.player.getGameProfile().getName())) {

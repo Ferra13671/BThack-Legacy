@@ -40,6 +40,7 @@ public abstract class MixinFireWorkRocketEntity extends ProjectileEntity impleme
         }
     }
 
+    @SuppressWarnings("UnreachableCode")
     @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/projectile/FireworkRocketEntity;updateRotation()V", shift = At.Shift.AFTER), cancellable = true)
     public void modifyTickAfterUpdateRotation(CallbackInfo ci) {
         FireworkRocketEntity rocketEntity = ((FireworkRocketEntity) (Object) this);
@@ -56,12 +57,14 @@ public abstract class MixinFireWorkRocketEntity extends ProjectileEntity impleme
         }
     }
 
+    @SuppressWarnings("UnreachableCode")
     @Inject(method = "explodeAndRemove", at = @At("HEAD"))
     public void modifyExplodeAndRemove(CallbackInfo ci) {
         Managers.FIREWORK_MANAGER.onExplode(((FireworkRocketEntity) (Object) this));
         exploded = true;
     }
 
+    @SuppressWarnings({"UnreachableCode", "AddedMixinMembersNamePattern"})
     @Override
     public void _explodeAndRemove() {
         Managers.FIREWORK_MANAGER.onExplode(((FireworkRocketEntity) (Object) this));

@@ -6,7 +6,6 @@ import com.ferra13671.BThack.api.Module.ModuleInfo;
 
 @ModuleInfo(name = "NoOverlay", description = "lang.module.NoOverlay", category = "RENDER")
 public class NoOverlay extends Module {
-
     public final BooleanSetting hurtCam = new BooleanSetting("Hurt Camera", this, true);
     public final BooleanSetting pumpkin = new BooleanSetting("Pumpkin", this, true);
     public final BooleanSetting portal = new BooleanSetting("Portal", this, true);

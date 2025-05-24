@@ -20,21 +20,21 @@ public final class PluginSystem {
             return;
         }
         for (EntrypointContainer<Plugin> entrypoint : FabricLoader.getInstance().getEntrypointContainers("bthack", Plugin.class)) {
-
             ModMetadata metadata = entrypoint.getProvider().getMetadata();
             Plugin plugin;
+
             try {
                 plugin = entrypoint.getEntrypoint();
                 plugin.pluginName = metadata.getName();
                 if (!metadata.getAuthors().isEmpty()) {
                     plugin.authors = new String[metadata.getAuthors().size()];
                     int i = 0;
-                    for (Person author : metadata.getAuthors()) {
+
+                    for (Person author : metadata.getAuthors())
                         plugin.authors[i++] = author.getName();
-                    }
-                } else {
+                } else
                     plugin.authors = new String[]{"None"};
-                }
+
                 loadedPlugins.add(plugin);
             } catch (Exception e) {
                 BThack.error("An error occurred while trying to initialize the plugin '" + metadata.getName() + "'!");

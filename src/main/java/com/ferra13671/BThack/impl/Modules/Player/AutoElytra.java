@@ -16,8 +16,8 @@ public class AutoElytra extends Module {
 
     public final NumberSetting fallDist = new NumberSetting("Fall Distance", this, 5, 3, 10, false);
 
-
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onTick(ClientTickEvent e) {
         if (nullCheck() || mc.player.isGliding()) return;
 
@@ -38,6 +38,7 @@ public class AutoElytra extends Module {
         return true;
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public void startFlyAction() {
         IEntity player = (IEntity) mc.player;
         player.invokeSetFlag(7, true);

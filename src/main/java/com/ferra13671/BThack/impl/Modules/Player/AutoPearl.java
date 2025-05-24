@@ -11,8 +11,8 @@ public class AutoPearl extends OneActionModule {
 
     public final BooleanSetting swingHand = new BooleanSetting("Swing Hand", this, true);
 
-
     @Override
+    @SuppressWarnings("DataFlowIssue")
     public void onEnable() {
         if (nullCheck()) {
             toggle();

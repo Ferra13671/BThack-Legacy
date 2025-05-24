@@ -4,7 +4,7 @@ import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.events.Entity.SetVelocityEvent;
 import com.ferra13671.BThack.events.Player.ChangePlayerLookEvent;
-import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Mc;
 import com.ferra13671.BThack.api.Utils.Modules.NoRotateMathUtils;
 import com.ferra13671.MegaEvents.Base.Event;
 import net.minecraft.entity.Entity;
@@ -38,7 +38,7 @@ public abstract class MixinEntity implements Mc {
     @Shadow public float pitch;
 
     @Inject(method = "setVelocity(DDD)V", at = @At("HEAD"), cancellable = true)
-    @SuppressWarnings("ConstantConditions")
+    @SuppressWarnings({"ConstantConditions", "UnreachableCode"})
     public void modifySetVelocity(double x, double y, double z, CallbackInfo ci) {
         if ((Object) this != mc.player) return;
         SetVelocityEvent event = new SetVelocityEvent(new Vec3d(x, y, z));
@@ -51,7 +51,7 @@ public abstract class MixinEntity implements Mc {
     }
 
     @Inject(method = "setVelocity(Lnet/minecraft/util/math/Vec3d;)V", at = @At("HEAD"), cancellable = true)
-    @SuppressWarnings("ConstantConditions")
+    @SuppressWarnings({"ConstantConditions", "UnreachableCode"})
     public void modifySetVelocityVec3d(Vec3d velocity, CallbackInfo ci) {
         if ((Object) this != mc.player) return;
         SetVelocityEvent event = new SetVelocityEvent(velocity);
@@ -107,6 +107,7 @@ public abstract class MixinEntity implements Mc {
                     ci.cancel();
     }
 
+    @SuppressWarnings({"ConstantValue", "UnreachableCode"})
     @ModifyVariable(method = "updateMovementInFluid", at = @At("STORE"), ordinal = 1)
     public Vec3d modifyGetFluidStateVelocityOnUpdateMovementInFluid(Vec3d vec3d) {
         if ((Object) this == mc.player && ModuleList.noPush.isEnabled() && ModuleList.noPush.liquids.getValue())

@@ -34,6 +34,7 @@ public class UseItemOnBlockTask extends ActionBotTask {
     }
 
     @Override
+    @SuppressWarnings("DataFlowIssue")
     public void play() throws ThreadClosedException {
         ItemUtils.useItemOnBlock(PlaceManager.getHitResult(BlockPos.ofFloored(mc.player.getX() + x, mc.player.getY() + y, mc.player.getZ() + z), false, Direction.UP));
     }

@@ -5,7 +5,7 @@ import com.ferra13671.BThack.managers.Managers;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.events.DisconnectEvent;
-import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Mc;
 import com.ferra13671.BThack.shaders.ShaderTicker;
 import com.ferra13671.BThack.api.Utils.Initializable;
 import com.ferra13671.BThack.shaders.MainMenu.MainMenuBThackShader;
@@ -24,6 +24,7 @@ public class MainMenuShaderManager implements Initializable, Mc {
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onDisconnect(DisconnectEvent e) {
         if (Module.nullCheck()) return;
         resetShaderTime();

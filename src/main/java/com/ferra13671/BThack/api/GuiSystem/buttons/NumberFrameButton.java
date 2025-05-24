@@ -27,15 +27,9 @@ public class NumberFrameButton extends Button {
             "1","2","3","4","5","6","7","8","9","0"
     );
 
-
     public NumberFrameButton(int id, int centerX, int centerY, int width, int height) {
         super(id,centerX,centerY, width, height, "");
         this.nullText = "";
-    }
-
-    public NumberFrameButton(int id, int centerX, int centerY, int width, int height, String nullText) {
-        super(id,centerX,centerY, width, height, "");
-        this.nullText = nullText;
     }
 
     @Override

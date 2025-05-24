@@ -11,8 +11,6 @@ public class ShutdownSystem {
     }
 
     public static void init() {
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            shutdownHooks.forEach(Runnable::run);
-        }));
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> shutdownHooks.forEach(Runnable::run)));
     }
 }

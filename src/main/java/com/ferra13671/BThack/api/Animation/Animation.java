@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.api.Animation;
 
-import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Mc;
 
 public class Animation implements Mc, Cloneable {
     private final Easing easing;
@@ -37,14 +37,11 @@ public class Animation implements Mc, Cloneable {
         this.millis = millis;
     }
 
-    public long getStartMillis() {
-        return startMillis;
-    }
-
     public long getPassedMillis() {
         return System.currentTimeMillis() - startMillis;
     }
 
+    @SuppressWarnings("MethodDoesntCallSuperMethod")
     @Override
     public Animation clone() {
         return new Animation(easing, millis);

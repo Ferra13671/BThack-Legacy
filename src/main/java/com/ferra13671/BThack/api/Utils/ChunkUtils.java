@@ -1,6 +1,5 @@
 package com.ferra13671.BThack.api.Utils;
 
-import com.ferra13671.BThack.api.Interfaces.Mc;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.chunk.WorldChunk;
@@ -12,6 +11,7 @@ import java.util.stream.Stream;
 
 public final class ChunkUtils implements Mc {
 
+    @SuppressWarnings("DataFlowIssue")
     public static Stream<WorldChunk> getLoadedChunks() {
         int radius = Math.max(2, mc.options.getClampedViewDistance()) + 3;
         int diameter = radius * 2 + 1;
@@ -31,7 +31,7 @@ public final class ChunkUtils implements Mc {
                     if(z > max.z)
                         throw new IllegalStateException("Stream limit didn't work.");
                     return new ChunkPos(x, z);
-        }).limit(diameter * diameter)
+        }).limit((long) diameter * diameter)
                 .filter(c -> mc.world.isChunkLoaded(c.x, c.z))
                 .map(c -> mc.world.getChunk(c.x, c.z)).filter(Objects::nonNull);
     }

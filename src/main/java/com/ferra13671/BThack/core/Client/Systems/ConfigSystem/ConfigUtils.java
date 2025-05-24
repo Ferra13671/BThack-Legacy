@@ -1,7 +1,6 @@
 package com.ferra13671.BThack.core.Client.Systems.ConfigSystem;
 
 import com.ferra13671.BThack.Constants;
-import com.ferra13671.BThack.core.Client.Systems.FileSystem.FileSystem;
 import com.ferra13671.TextureUtils.PathMode;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -19,6 +18,7 @@ public final class ConfigUtils {
         Path p = Paths.get("BThack/" + path + "/" + name + ".json");
         if (Files.exists(p)) {
             File file = new File("BThack/" + path + "/" + name + ".json");
+            //noinspection ResultOfMethodCallIgnored
             file.delete();
         }
 
@@ -43,37 +43,6 @@ public final class ConfigUtils {
                 return null;
             }
         }
-    }
-
-    public static void loadFromTxt(String fileName, String path, Consumer<String> runnable) throws IOException {
-        Path savePath = Paths.get("BThack/" + path + "/" + fileName + ".txt");
-
-        if (!Files.exists(savePath)) {
-            FileSystem.registerFile(fileName, path, FileSystem.FileType.TXT);
-            return;
-        }
-
-        BufferedReader reader = Files.newBufferedReader(savePath, StandardCharsets.UTF_8);
-        String line = reader.readLine();
-        while (line != null) {
-            runnable.accept(line);
-            line = reader.readLine();
-        }
-        reader.close();
-    }
-
-    public static void saveInTxt(String fileName, String path, Consumer<BufferedWriter> runnable) throws IOException {
-        Path savePath = Paths.get("BThack/" + path + "/" + fileName + ".txt");
-
-        if (Files.exists(savePath)) {
-            File file = savePath.toFile();
-            file.delete();
-            FileSystem.registerFile(fileName, path, FileSystem.FileType.TXT);
-        }
-
-        BufferedWriter writer = Files.newBufferedWriter(savePath, StandardCharsets.UTF_8);
-        runnable.accept(writer);
-        writer.close();
     }
 
     public static void loadFromJson(String fileName, String path, Consumer<JsonObject> runnable, Runnable notFoundFileRunnable) throws IOException {

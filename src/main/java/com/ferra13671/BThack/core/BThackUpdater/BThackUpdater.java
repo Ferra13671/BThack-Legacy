@@ -76,7 +76,7 @@ public class BThackUpdater implements PreLaunchEntrypoint {
                 public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) {
                     File file = path.toFile();
                     try {
-                        JarFile mod = new JarFile(file);
+                        @SuppressWarnings("resource") JarFile mod = new JarFile(file);
                         InputStream modInfo = mod.getInputStream(new JarEntry("fabric.mod.json"));
                         if (modInfo != null) {
                             JsonObject jsonObject = JsonParser.parseReader(new InputStreamReader(modInfo)).getAsJsonObject();

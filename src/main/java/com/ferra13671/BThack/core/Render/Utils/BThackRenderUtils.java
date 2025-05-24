@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.core.Render.Utils;
 
-import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Mc;
 import com.ferra13671.BThack.api.Utils.Modules.StrafeUtils;
 import com.ferra13671.BThack.api.Utils.RegionPos;
 import com.ferra13671.BThack.api.Utils.Rotate.RotateUtils;
@@ -79,6 +79,7 @@ public final class BThackRenderUtils implements Mc {
         return tessellator;
     }
 
+    @SuppressWarnings("resource")
     public static Tessellator prepareToDraw(ShaderProgramKey shader) {
         Tessellator tessellator = Tessellator.getInstance();
         RenderSystem.setShader(shader);
@@ -105,6 +106,7 @@ public final class BThackRenderUtils implements Mc {
         BufferRenderer.drawWithGlobalProgram(buffer);
     }
 
+    @SuppressWarnings("resource")
     public static void resetShader() {
         RenderSystem.setShader(ShaderProgramKeys.POSITION_COLOR);
     }

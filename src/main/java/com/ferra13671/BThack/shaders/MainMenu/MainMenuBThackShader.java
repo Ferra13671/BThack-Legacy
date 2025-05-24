@@ -3,7 +3,7 @@ package com.ferra13671.BThack.shaders.MainMenu;
 import com.ferra13671.BThack.shaders.BThackShaderProgram;
 import com.ferra13671.BThack.shaders.CoreShaderLoader;
 import com.ferra13671.BThack.core.Render.Utils.BThackRenderUtils;
-import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Mc;
 import net.minecraft.client.gl.GlUniform;
 import net.minecraft.client.gl.ShaderProgramKey;
 

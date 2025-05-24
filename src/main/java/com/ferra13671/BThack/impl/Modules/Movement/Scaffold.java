@@ -50,12 +50,14 @@ public class Scaffold extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onTick(ClientTickEvent e) {
         if (nullCheck()) return;
 
         action();
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public void action() {
         if (!PlaceManager.pickUpPlaceBlocks(false)) return;
 

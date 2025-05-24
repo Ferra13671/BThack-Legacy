@@ -3,7 +3,7 @@ package com.ferra13671.BThack.mixins;
 import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.core.Client.Client;
 import com.ferra13671.BThack.api.IMixin.ModifyWindow;
-import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Mc;
 import com.ferra13671.BThack.impl.HudComponents.OneTextComponents.ServerIPComponent;
 import net.minecraft.client.texture.NativeImage;
 import net.minecraft.client.util.Icons;
@@ -38,6 +38,7 @@ public class MixinWindow implements Mc, ModifyWindow {
         ci.cancel();
     }
 
+    @SuppressWarnings("AddedMixinMembersNamePattern")
     @Override
     public void updateTitle() {
         Client.clientInfo.updateName();

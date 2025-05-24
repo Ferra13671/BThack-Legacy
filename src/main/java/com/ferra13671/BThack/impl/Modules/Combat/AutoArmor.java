@@ -38,6 +38,7 @@ public class AutoArmor extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onTick(ClientTickEvent e) {
         if (nullCheck()) return;
         bestSlots = new ArrayList<>();
@@ -47,6 +48,7 @@ public class AutoArmor extends Module {
         swapAction();
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public void findAction() {
         slotInfos.clear();
         for (int i = 0; i < (allowInventory.getValue() ? 36 : 9); i++) {
@@ -56,6 +58,7 @@ public class AutoArmor extends Module {
         }
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public void filterAction() {
         int bestHelmetSlot = -1;
         int bestHelmetScore = getScore(mc.player.getInventory().getArmorStack(3));
@@ -117,6 +120,7 @@ public class AutoArmor extends Module {
             bestSlots.set(0, new SlotInfo(null, bestBootsSlot, bestBootsChest));
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public void swapAction() {
         SlotInfo helmetSlot = bestSlots.get(3);
         SlotInfo chestplateSlot = bestSlots.get(2);
@@ -169,6 +173,7 @@ public class AutoArmor extends Module {
         return score;
     }
 
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     public boolean isGoodEnchantment(RegistryEntry<Enchantment> ench) {
         return ench.getKey().get().equals(Enchantments.BLAST_PROTECTION) ||
                 ench.getKey().get().equals(Enchantments.PROTECTION) ||
@@ -177,6 +182,7 @@ public class AutoArmor extends Module {
                 ench.getKey().get().equals(Enchantments.MENDING);
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public boolean isEmptyArmor(int slot) {
         return allowReplace.getValue() || mc.player.getInventory().getArmorStack(slot).isEmpty();
     }

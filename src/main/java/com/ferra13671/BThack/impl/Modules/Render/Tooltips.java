@@ -57,6 +57,7 @@ public class Tooltips extends Module {
 
     private final MapRenderState mapRenderState = new MapRenderState();
 
+    @SuppressWarnings("ExtractMethodRecommender")
     public void renderShulkerTooltip(ItemStack itemStack, List<ItemStack> stacks, int x, int y) {
         if (stacks.isEmpty()) return;
 

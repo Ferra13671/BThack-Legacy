@@ -21,10 +21,11 @@ public class AutoAnvilEnchantCommand extends AbstractCommand {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void compile(LiteralArgumentBuilder<CommandSource> builder) {
         builder.then(literal("add").then(arg("item", Arguments.ITEM).then(arg("enchantment", Arguments.ENCHANTMENT).then(arg("level", Arguments.INTEGER(0, 5)).executes(context -> {
             Item item = context.getArgument("item", Item.class);
-            RegistryKey<Enchantment> enchantment = context.getArgument("enchantment", RegistryKey.class);//Ignore
+            RegistryKey<Enchantment> enchantment = context.getArgument("enchantment", RegistryKey.class);
             int level = context.getArgument("level", Integer.class);
             if (!AutoAnvilEnchant.recipes.containsKey(item)) {
                 HashMap<RegistryKey<Enchantment>, Integer> hashMap = new HashMap<>();
@@ -39,7 +40,7 @@ public class AutoAnvilEnchantCommand extends AbstractCommand {
         })))));
         builder.then(literal("remove").then(arg("item", Arguments.ITEM).then(arg("enchantment", Arguments.ENCHANTMENT).executes(context -> {
             Item item = context.getArgument("item", Item.class);
-            RegistryKey<Enchantment> enchantment = context.getArgument("enchantment", RegistryKey.class);//Ignore
+            RegistryKey<Enchantment> enchantment = context.getArgument("enchantment", RegistryKey.class);
             if (AutoAnvilEnchant.recipes.containsKey(item))
                 AutoAnvilEnchant.recipes.get(item).remove(enchantment);
 

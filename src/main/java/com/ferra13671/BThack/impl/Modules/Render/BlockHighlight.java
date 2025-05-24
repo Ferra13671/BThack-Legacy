@@ -44,6 +44,7 @@ public class BlockHighlight extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onBlockOutlineRender(RenderWorldLastEvent e) {
         RenderBox renderBox = null;
 
@@ -75,13 +76,11 @@ public class BlockHighlight extends Module {
 
             renderBox = getRenderBox(currentBox);
             canceled = false;
-        } else {
+        } else
             reset();
-        }
 
-        if (renderBox == null && alphaAnimation.getEase() < 1 && prevBox != null) {
+        if (renderBox == null && alphaAnimation.getEase() < 1 && prevBox != null)
             renderBox = getRenderBox(prevBox);
-        }
 
         if (renderBox != null) {
             BThackRender.boxRender.prepareBoxRender();

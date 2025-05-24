@@ -85,6 +85,7 @@ public abstract class MixinGameRenderer {
         BThack.EVENT_BUS.activate(event);
     }
 
+    @SuppressWarnings("DataFlowIssue")
     @Redirect(method = "renderHand", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/GameRenderer;tiltViewWhenHurt(Lnet/minecraft/client/util/math/MatrixStack;F)V"))
     public void modifyTiltViewWhenHurtInRenderHand(GameRenderer instance, MatrixStack matrices, float tickDelta) {
         if ((ModuleList.handTweaks.isEnabled() && ModuleList.handTweaks.noBob.getValue()))
@@ -102,6 +103,7 @@ public abstract class MixinGameRenderer {
             bobView(matrices, tickDelta);
     }
 
+    @SuppressWarnings("DataFlowIssue")
     @Inject(method = "renderHand", at = @At("HEAD"), cancellable = true)
     public void modifyRenderHandPost(Camera camera, float tickDelta, Matrix4f matrix4f, CallbackInfo ci) {
         if (ModuleList.shaders.isEnabled()) {
@@ -175,6 +177,7 @@ public abstract class MixinGameRenderer {
         return ModuleList.zoom.isEnabled() && ModuleList.zoom.needZoom() ? ModuleList.zoom.getFov(original) : original;
     }
 
+    @SuppressWarnings("DataFlowIssue")
     @Unique
     public void renderShaderHand(Camera camera, float tickDelta) {
         if (!renderingPanorama) {

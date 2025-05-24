@@ -27,6 +27,7 @@ public class Waypoints extends Module {
 
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onHudRender(RenderHudPreEvent e) {
         if (nullCheck()) return;
 
@@ -70,6 +71,7 @@ public class Waypoints extends Module {
         BThackMatrix.pop();
     }
 
+    @SuppressWarnings("DataFlowIssue")
     private void drawWaypoint(Vec3d position, Waypoint waypoint) {
         BThackMatrix.translate(0, 0, 1);
         float[] pos = BThackRenderUtils.worldPosToScreenXY(position, false);

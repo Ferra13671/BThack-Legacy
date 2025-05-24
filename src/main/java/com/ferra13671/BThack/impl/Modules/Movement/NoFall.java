@@ -42,6 +42,7 @@ public class NoFall extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onPacketSend(PacketEvent.Send e) {
         if (e.getPacket() instanceof PlayerMoveC2SPacket packet) {
             if (mode.getValue().equals("Default"))
@@ -52,6 +53,7 @@ public class NoFall extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onTick(ClientTickEvent e) {
         if (nullCheck()) {
             started = false;

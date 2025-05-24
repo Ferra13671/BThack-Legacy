@@ -30,20 +30,21 @@ public class NoElytraBreak extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onTravel(PlayerTravelEvent e) {
         if (nullCheck()) {
             ticker.reset();
             return;
         }
 
-        if (!startAbuse)
-            if (mc.player.isGliding())
+        if (!startAbuse && mc.player.isGliding())
                 startAbuse = true;
 
         if (startAbuse)
             abuseFlyAction();
     }
 
+    @SuppressWarnings("DataFlowIssue")
     private void abuseFlyAction() {
         if (pauseIfFirework.getValue()) {
             if (Managers.FIREWORK_MANAGER.isUsingFireWork()) {
@@ -74,10 +75,11 @@ public class NoElytraBreak extends Module {
         startAbuse = false;
     }
 
+    @SuppressWarnings("DataFlowIssue")
     private boolean flyCheck(IEntity entity) {
-        if (mc.player.getInventory().getArmorStack(2).getItem() == Items.ELYTRA) {
+        if (mc.player.getInventory().getArmorStack(2).getItem() == Items.ELYTRA)
             return !mc.player.verticalCollision && !entity.invokeGetFlag(7) || !mc.player.isGliding();
-        } else
+        else
             return false;
     }
 }

@@ -16,6 +16,7 @@ import com.ferra13671.BThack.managers.managers.SocialManager;
 import com.ferra13671.BThack.managers.managers.TwoFA.TwoFAManager;
 import net.minecraft.util.Formatting;
 
+@SuppressWarnings("unused")
 public class Managers {
     public static final TPSManager TPS_MANAGER = new TPSManager();
     public static final BlockSearchManager BLOCK_SEARCH_MANAGER = new BlockSearchManager();

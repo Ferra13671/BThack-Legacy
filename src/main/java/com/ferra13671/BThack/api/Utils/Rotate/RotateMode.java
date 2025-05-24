@@ -1,13 +1,13 @@
 package com.ferra13671.BThack.api.Utils.Rotate;
 
-import com.ferra13671.BThack.api.Interfaces.Mc;
-import com.ferra13671.BThack.api.Utils.Grim.GrimUtils;
+import com.ferra13671.BThack.api.Utils.Mc;
+import com.ferra13671.BThack.api.Utils.GrimUtils;
 
 import java.util.function.BiConsumer;
 
 public enum RotateMode implements Mc {
     NONE((yaw, pitch) -> {}, () -> {}),
-    PACKET(RotateUtils::packetRotate, () -> RotateUtils.packetRotate(mc.player.getYaw(), mc.player.getPitch())),
+    @SuppressWarnings("DataFlowIssue") PACKET(RotateUtils::packetRotate, () -> RotateUtils.packetRotate(mc.player.getYaw(), mc.player.getPitch())),
     PACKET2(RotateUtils::packetRotate, () -> {}),
     GRIM(GrimUtils::sendPreActionGrimPackets, GrimUtils::sendPostActionGrimPackets),
     VANILLA((yaw, pitch) -> RotateUtils.rotate(yaw, pitch, 1), () -> {});

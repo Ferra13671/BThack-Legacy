@@ -22,8 +22,8 @@ public class TreeCutter extends Module {
 
     public final ModeSetting mode = new ModeSetting("Mode", this, Arrays.asList("Only Up", "Only Down", "Both")).defaultValue("Both");
 
-
     @Override
+    @SuppressWarnings("DataFlowIssue")
     public void onEnable() {
         if (nullCheck()) {
             toggle();
@@ -42,6 +42,7 @@ public class TreeCutter extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onAttackBlock(AttackBlockEvent e) {
         if (nullCheck() || BreakManager.isDestroying) return;
         if (e.getBlockPos() != null) {
@@ -67,6 +68,7 @@ public class TreeCutter extends Module {
         return poses;
     }
 
+    @SuppressWarnings("DataFlowIssue")
     private List<BlockPos> getBlockPosesInternal(BlockPos startPos, int moveDelta) {
         List<BlockPos> result = new ArrayList<>();
         int step = moveDelta;

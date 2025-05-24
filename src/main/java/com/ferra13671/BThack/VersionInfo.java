@@ -8,8 +8,7 @@ public final class VersionInfo {
     private boolean firstLaunched = true;
     private boolean sendDebug = false;
 
-    public VersionInfo() {
-    }
+    public VersionInfo() {}
 
     void setNewVersion(String newVersion) {
         this.newVersion = newVersion;
@@ -23,6 +22,7 @@ public final class VersionInfo {
         this.needShowAgainAllReleases = needShowAgainAllReleases;
     }
 
+    @SuppressWarnings("SameParameterValue")
     void setOutdated(boolean outdated) {
         this.outdated = outdated;
     }
@@ -36,7 +36,7 @@ public final class VersionInfo {
     }
 
     public String getNewVersion() {
-        return new String(newVersion);
+        return newVersion;
     }
 
     public boolean isNeedShowAgainOneRelease() {

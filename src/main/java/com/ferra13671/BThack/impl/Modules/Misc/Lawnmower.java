@@ -41,7 +41,7 @@ public class Lawnmower extends Module {
     private final Map<BlockPos, Animation> breakedBoxes = new HashMap<>();
 
     @EventSubscriber
-    @SuppressWarnings("unused")
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onTick(ClientTickEvent e) {
         if (nullCheck()) return;
 
@@ -66,6 +66,7 @@ public class Lawnmower extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onWorldRender(RenderWorldLastEvent e) {
         if (!render.getValue() || nullCheck() || breakedBoxes.isEmpty()) return;
 
@@ -98,19 +99,13 @@ public class Lawnmower extends Module {
         }
     }
 
+    @SuppressWarnings("DataFlowIssue")
     private boolean isValidBlockPos(BlockPos pos) {
         BlockState state = mc.world.getBlockState(pos);
-
-        if (state.getBlock() instanceof TallPlantBlock || state.getBlock() instanceof ShortPlantBlock)
-            return true;
-
-        return flowers.getValue() && state.getBlock() instanceof FlowerBlock && isVisible(pos);
+        return state.getBlock() instanceof TallPlantBlock || state.getBlock() instanceof ShortPlantBlock || (flowers.getValue() && state.getBlock() instanceof FlowerBlock && isVisible(pos));
     }
 
     private boolean isVisible(BlockPos pos) {
-        if (ignoreWalls.getValue())
-            return true;
-
-        return BlockUtils.hasLineOfSight(pos.toCenterPos());
+        return ignoreWalls.getValue() || BlockUtils.hasLineOfSight(pos.toCenterPos());
     }
 }

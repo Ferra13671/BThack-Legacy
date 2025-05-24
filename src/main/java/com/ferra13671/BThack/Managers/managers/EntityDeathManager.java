@@ -3,7 +3,7 @@ package com.ferra13671.BThack.managers.managers;
 import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.events.ClientTickEvent;
 import com.ferra13671.BThack.events.Entity.EntityDeathEvent;
-import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Mc;
 import com.ferra13671.BThack.api.Utils.Initializable;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.Ticker;
@@ -24,6 +24,7 @@ public class EntityDeathManager implements Initializable, Mc {
 
     Ticker delayTicker = new Ticker();
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onTick(ClientTickEvent e) {
         if (Module.nullCheck()) return;
 

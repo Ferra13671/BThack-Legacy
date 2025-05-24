@@ -33,6 +33,7 @@ public class Replanish extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onTick(ClientTickEvent e) {
         if (nullCheck()) return;
 
@@ -48,12 +49,11 @@ public class Replanish extends Module {
         }
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public void action() {
         for (int i = 0; i < 9; i++) {
             ItemStack stack = mc.player.getInventory().getStack(i);
-            if (stack.isEmpty() || !stack.isStackable()) {
-                continue;
-            }
+            if (stack.isEmpty() || !stack.isStackable()) continue;
             if (stack.getCount() == 1 || stack.getCount() <= count.getValue()) {
                 for (ItemInfo itemInfo : itemInfos) {
                     if (itemInfo.item == stack.getItem() && stack.getName().getString().equals(itemInfo.stackName) && itemInfo.slot != i) {
@@ -71,15 +71,15 @@ public class Replanish extends Module {
         }
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public void findAction() {
         itemInfos.clear();
         for (int i = 9; i < 36; i++) {
             ItemStack stack = mc.player.getInventory().getStack(i);
-            if (stack != null && !stack.isEmpty()) {
+            if (stack != null && !stack.isEmpty())
                 itemInfos.add(new ItemInfo(stack.getName().getString(), stack.getItem(), i));
-            } else {
+            else
                 itemInfos.add(new ItemInfo("", Items.AIR, i));
-            }
         }
     }
 

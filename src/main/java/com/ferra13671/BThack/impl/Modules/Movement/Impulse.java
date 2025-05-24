@@ -13,8 +13,8 @@ public class Impulse extends OneActionModule {
     public final BooleanSetting considerY = new BooleanSetting("Consider Y", this, true);
     public final NumberSetting factor = new NumberSetting("Impulse factor", this, 0.1, 0.1, 100, false);
 
-
     @Override
+    @SuppressWarnings("DataFlowIssue")
     public void onEnable() {
         if (nullCheck()) {
             toggle();

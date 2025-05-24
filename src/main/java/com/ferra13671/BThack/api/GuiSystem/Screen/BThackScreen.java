@@ -1,12 +1,11 @@
 package com.ferra13671.BThack.api.GuiSystem.Screen;
 
-
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.core.Render.BThackRender;
 import com.ferra13671.BThack.core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Animation.Animation;
 import com.ferra13671.BThack.gui.Screen.TransitionScreen;
-import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Mc;
 import com.ferra13671.BThack.managers.Managers;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.GuiSystem.buttons.Button;
@@ -98,12 +97,10 @@ public class BThackScreen extends Screen implements Mc {
 
     @Override
     public boolean charTyped(char chr, int modifiers) {
-        if (widgetManage.widgets.isEmpty()) {
-            for (Button button : buttons) {
+        if (widgetManage.widgets.isEmpty())
+            for (Button button : buttons)
                 if (!button.isHided())
                     button.charTyped(chr);
-            }
-        }
 
         widgetManage.charTyped(chr, modifiers);
         return super.charTyped(chr, modifiers);
@@ -111,22 +108,19 @@ public class BThackScreen extends Screen implements Mc {
 
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int shift) {
-        if (widgetManage.widgets.isEmpty()) {
-            for (Button button : buttons) {
+        if (widgetManage.widgets.isEmpty())
+            for (Button button : buttons)
                 if (!button.isHided())
                     button.keyTyped(keyCode);
-            }
-        }
 
         widgetManage.keyPressed(keyCode, scanCode, shift);
         return super.keyPressed(keyCode, scanCode, shift);
     }
 
     public Button getButtonFromId(int id) {
-        for (Button button : buttons) {
+        for (Button button : buttons)
             if (button.getId() == id)
                 return button;
-        }
         return null;
     }
 

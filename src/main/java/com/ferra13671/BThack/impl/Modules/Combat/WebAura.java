@@ -35,6 +35,7 @@ public class WebAura extends Module {
 
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onTick(ClientTickEvent e) {
         if (nullCheck()) return;
 
@@ -60,13 +61,11 @@ public class WebAura extends Module {
                         mc.world.isAir(BlockPos.ofFloored(entity1.getX(), entity1.getY(), entity1.getZ()))
         );
 
-        if (players.getValue() && player != null) {
+        if ((players.getValue() && player != null) || (mobs.getValue() && entity != null))
             placeAction(slot, player);
-        } else if (mobs.getValue() && entity != null) {
-            placeAction(slot, entity);
-        }
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public void placeAction(int slot, Entity entity) {
         int oldSlot = mc.player.getInventory().selectedSlot;
 

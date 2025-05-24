@@ -1,6 +1,5 @@
 package com.ferra13671.BThack.api.Utils;
 
-import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.managers.Managers;
 import com.ferra13671.BThack.managers.managers.Thread.ThreadManager;
 import net.minecraft.item.Item;
@@ -18,6 +17,7 @@ public final class InventoryUtils implements Mc {
     public static final int FEET_SLOT = 8;
     public static final int OFFHAND_SLOT = 45;
 
+    @SuppressWarnings("DataFlowIssue")
     public static void swapItem(int needSlot) {
         mc.player.getInventory().selectedSlot = needSlot;
         mc.interactionManager.tick();
@@ -27,6 +27,7 @@ public final class InventoryUtils implements Mc {
         Managers.NETWORK_MANAGER.sendPacket(new UpdateSelectedSlotC2SPacket(needSlot));
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public static void swapItemOnInventory(int needHotbarSlot, int inventorySlot) {
         mc.interactionManager.tick();
         mc.interactionManager.clickSlot(0, inventorySlot, needHotbarSlot, SlotActionType.SWAP, mc.player);
@@ -41,6 +42,7 @@ public final class InventoryUtils implements Mc {
         return findItem(item, slots, stack -> 1);
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public static int findItem(Item item, int slots, Function<ItemStack, Integer> filter) {
         int bestSlot = -1;
         int bestScore = -1;
@@ -65,6 +67,7 @@ public final class InventoryUtils implements Mc {
         return findItem(item, slots, stack -> 1);
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public static int findItem(Class<? extends Item> item, int slots, Function<ItemStack, Integer> filter) {
         int bestSlot = -1;
         int bestScore = -1;
@@ -81,10 +84,12 @@ public final class InventoryUtils implements Mc {
         return bestSlot;
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public static ItemStack getItem(int hotbarSlot) {
         return mc.player.getInventory().getStack(hotbarSlot);
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public static int findFreeHotbarSlot() {
         for (int i = 0; i < 9; i++) {
             if (mc.player.getInventory().getStack(i).isEmpty()) return i;
@@ -92,6 +97,7 @@ public final class InventoryUtils implements Mc {
         return -1;
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public static int findFreeSlot() {
         for (int i = 0; i < 36; i++) {
             if (mc.player.getInventory().getStack(i).isEmpty()) return i;
@@ -99,6 +105,7 @@ public final class InventoryUtils implements Mc {
         return -1;
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public static void replaceItems(int slot1, int slot2, int delay) {
         ThreadManager.startNewThread(thread -> {
             mc.interactionManager.clickSlot(0, slot1, 0, SlotActionType.PICKUP, mc.player);
@@ -116,6 +123,7 @@ public final class InventoryUtils implements Mc {
         });
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public static void replaceItems(int slot1, int slot2) {
         mc.interactionManager.clickSlot(0, slot1, 0, SlotActionType.PICKUP, mc.player);
         mc.interactionManager.tick();

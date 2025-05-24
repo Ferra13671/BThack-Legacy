@@ -2,7 +2,7 @@ package com.ferra13671.BThack.shaders;
 
 import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.events.DisconnectEvent;
-import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Mc;
 import com.ferra13671.BThack.shaders.MainMenu.MainMenuBThackShader;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 
@@ -68,6 +68,7 @@ public class Shaders implements Mc {
     public final MainMenuBThackShader SNOW = MainMenuBThackShader.of("snow");
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onDisconnect(DisconnectEvent e) {
         shaderTicker.reset();
     }

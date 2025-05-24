@@ -5,7 +5,7 @@ import com.ferra13671.BThack.managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Module.ModuleInfo;
-import com.ferra13671.BThack.api.Utils.Grim.GrimUtils;
+import com.ferra13671.BThack.api.Utils.GrimUtils;
 import com.ferra13671.BThack.api.Utils.InventoryUtils;
 import com.ferra13671.BThack.api.Utils.Modules.KillAuraUtils;
 import com.ferra13671.BThack.api.Utils.Rotate.RotateUtils;
@@ -25,7 +25,6 @@ public class AutoShear extends Module {
     public final ModeSetting rotateMode = new ModeSetting("Rotate Mode", this, Arrays.asList("Grim", "Packet"), rotate::getValue);
     public final ModeSetting swap = new ModeSetting("Swap", this, Arrays.asList("Packet", "Client"));
 
-
     private Predicate<Entity> filter;
 
     @Override
@@ -36,6 +35,7 @@ public class AutoShear extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onTick(ClientTickEvent e) {
         if (nullCheck()) return;
 
@@ -65,7 +65,6 @@ public class AutoShear extends Module {
     }
 
     public void rotatePost() {
-        if (rotate.getValue())
-            if (rotateMode.getValue().equals("Grim")) GrimUtils.sendPostActionGrimPackets();
+        if (rotate.getValue() && rotateMode.getValue().equals("Grim")) GrimUtils.sendPostActionGrimPackets();
     }
 }

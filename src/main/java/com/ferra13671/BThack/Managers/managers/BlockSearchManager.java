@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.managers.managers;
 
 import com.ferra13671.BThack.core.Client.ModuleList;
-import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Mc;
 import com.ferra13671.BThack.api.Utils.Initializable;
 import com.ferra13671.BThack.managers.managers.Thread.ThreadManager;
 import com.ferra13671.BThack.api.Module.Module;
@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.function.Predicate;
 
 public class BlockSearchManager implements Initializable, Mc {
 
@@ -20,10 +19,9 @@ public class BlockSearchManager implements Initializable, Mc {
     private final CopyOnWriteArrayList<BlockPos> results = new CopyOnWriteArrayList<>();
 
     @Override
-    public void init() {
-        //no action
-    }
+    public void init() {}
 
+    @SuppressWarnings("DataFlowIssue")
     public void start() {
         ThreadManager.startNewThread(thread -> {
             while (ModuleList.search.isEnabled()) {
@@ -67,16 +65,12 @@ public class BlockSearchManager implements Initializable, Mc {
         return searchBlocks;
     }
 
-
+    @SuppressWarnings("DataFlowIssue")
     public boolean needAdd(BlockPos pos) {
         return searchBlocks.contains(mc.world.getBlockState(pos).getBlock());
     }
 
     public ArrayList<BlockPos> getResults() {
         return new ArrayList<>(results);
-    }
-
-    public void removeResultIf(Predicate<? super BlockPos> predicate) {
-        results.removeIf(predicate);
     }
 }

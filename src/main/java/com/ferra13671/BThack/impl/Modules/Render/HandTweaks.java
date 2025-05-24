@@ -37,6 +37,7 @@ public class HandTweaks extends Module {
 
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onTransformSideFirstPerson(TransformFirstPersonEvent.Pre e) {
         if (noEatAnim.getValue())
             if (e.transformType == TransformFirstPersonEvent.TransformType.EAT)
@@ -49,6 +50,7 @@ public class HandTweaks extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onTransFormPost(TransformFirstPersonEvent.Post e) {
         Matrix4f matrix = e.matrices.peek().getPositionMatrix();
         if (e.arm == Arm.LEFT) {

@@ -39,6 +39,7 @@ public class LiquidFiller extends Module {
 
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onTick(ClientTickEvent e) {
         if (nullCheck() || PlaceManager.isBuilding) return;
 
@@ -48,6 +49,7 @@ public class LiquidFiller extends Module {
         interactAction(sch);
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public void filterAction(List<Vec3i> sch) {
         for (BlockPos pos : BlockUtils.getSphere(BlockPos.ofFloored(mc.player.getX(), mc.player.getY(), mc.player.getZ()), range.getValue().floatValue(), range.getValue().floatValue(), false, true, 0)) {
             Block block = mc.world.getBlockState(pos).getBlock();
@@ -55,16 +57,13 @@ public class LiquidFiller extends Module {
             if (!ignoreWalls.getValue())
                 if (!BlockUtils.hasLineOfSight(mc.player.getPos(), pos.toCenterPos())) continue;
 
-            if (block == Blocks.WATER) {
-                if (water.getValue()) sch.add(pos);
-            } else if (block == Blocks.LAVA) {
-                if (lava.getValue()) sch.add(pos);
-            } else if (block instanceof FluidBlock) {
-                if (other.getValue()) sch.add(pos);
-            }
+            if (water.getValue() && block == Blocks.WATER) sch.add(pos);
+            else if (lava.getValue() && block == Blocks.LAVA) sch.add(pos);
+            else if (other.getValue() && block instanceof FluidBlock) sch.add(pos);
         }
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public void interactAction(List<Vec3i> sch) {
         int places = 0;
         for (Vec3i pos : sch) {

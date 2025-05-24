@@ -35,6 +35,7 @@ public class LastOpenChest extends Module {
     private boolean needRender = false;
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onUseBlock(UseBlockEvent e) {
         if (isChest(e.getBlockHitResult().getBlockPos())) {
             chestPos = e.getBlockHitResult().getBlockPos();
@@ -44,31 +45,30 @@ public class LastOpenChest extends Module {
 
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onGuiOpen(GuiOpenEvent e) {
-
         if (e.getScreen() instanceof GenericContainerScreen || e.getScreen() instanceof ShulkerBoxScreen) {
             if (chestPos != null) {
                 if (MathUtils.getDistance(mc.player.getPos(), new Vec3d(chestPos.getX(), chestPos.getY(), chestPos.getZ())) > 20) {
                     chestPos = null;
                     needRender = false;
-                } else {
+                } else
                     needRender = true;
-                }
             }
         }
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onTick(ClientTickEvent e) {
         if (nullCheck()) return;
 
-        if (chestPos != null) {
-            if (!isChest(chestPos))
-                chestPos = null;
-        }
+        if (chestPos != null && !isChest(chestPos))
+            chestPos = null;
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onRender(RenderWorldLastEvent e) {
         if (chestPos != null && needRender) {
             float _red = colorSet.getValue().getRed() / 255f;
@@ -84,6 +84,7 @@ public class LastOpenChest extends Module {
         }
     }
 
+    @SuppressWarnings("DataFlowIssue")
     private boolean isChest(BlockPos pos) {
         Block block = mc.world.getBlockState(pos).getBlock();
         return block == Blocks.CHEST || block == Blocks.ENDER_CHEST || block == Blocks.TRAPPED_CHEST || block == Blocks.BARREL || block instanceof ShulkerBoxBlock;

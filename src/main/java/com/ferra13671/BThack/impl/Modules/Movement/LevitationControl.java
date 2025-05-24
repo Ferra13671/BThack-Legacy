@@ -10,12 +10,12 @@ import net.minecraft.entity.effect.StatusEffects;
 public class LevitationControl extends Module {
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onMove(SetVelocityEvent e) {
         if (mc.player.hasStatusEffect(StatusEffects.LEVITATION)) {
             double yMove = e.getVelocity().y;
-            if (!mc.options.jumpKey.isPressed()) {
+            if (!mc.options.jumpKey.isPressed())
                 yMove = 0;
-            }
 
             e.getVelocity().y = yMove;
         }

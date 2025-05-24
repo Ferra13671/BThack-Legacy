@@ -33,6 +33,7 @@ public class BreakTask extends ActionBotTask {
     }
 
     @Override
+    @SuppressWarnings("DataFlowIssue")
     public void play() throws ThreadClosedException {
         SimpleBreakThread simpleDestroyThread = new SimpleBreakThread(BlockPos.ofFloored(mc.player.getX() + x, mc.player.getY() + y, mc.player.getZ() + z));
         simpleDestroyThread.start();

@@ -1,6 +1,5 @@
 package com.ferra13671.BThack.api.Utils;
 
-import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.managers.Managers;
 import com.ferra13671.BThack.managers.managers.Place.PlaceManager;
 import it.unimi.dsi.fastutil.objects.Object2IntArrayMap;
@@ -30,12 +29,15 @@ import java.util.Set;
 import java.util.function.Predicate;
 
 public final class ItemUtils implements Mc {
+
+    @SuppressWarnings("DataFlowIssue")
     public static void useItem(Hand hand, boolean swing, float yaw, float pitch) {
         if (swing)
             mc.player.swingHand(hand);
         Managers.NETWORK_MANAGER.sendPacket(new PlayerInteractItemC2SPacket(hand, 0, yaw, pitch));
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public static void useItem(Item item, boolean swing, float yaw, float pitch) {
         int oldSlot = mc.player.getInventory().selectedSlot;
         int slot = InventoryUtils.findItem(item);
@@ -46,26 +48,6 @@ public final class ItemUtils implements Mc {
             InventoryUtils.swapItemOnInventory(oldSlot, slot);
         }
         useItem(Hand.MAIN_HAND, swing, yaw, pitch);
-        if (slot < 9) {
-            InventoryUtils.swapItem(oldSlot);
-        } else {
-            InventoryUtils.swapItemOnInventory(oldSlot, slot);
-        }
-    }
-
-    public static void useItemOnBlock(Item item, BlockPos pos) {
-        int oldSlot = mc.player.getInventory().selectedSlot;
-        int slot = InventoryUtils.findItem(item);
-        if (slot == -1) return;
-        if (slot < 9) {
-            InventoryUtils.swapItem(slot);
-        } else {
-            InventoryUtils.swapItemOnInventory(oldSlot, slot);
-        }
-        BlockHitResult bhr = PlaceManager.getHitResult(pos);
-        if (bhr != null) {
-            mc.interactionManager.interactBlock(mc.player, Hand.MAIN_HAND, bhr);
-        }
         if (slot < 9) {
             InventoryUtils.swapItem(oldSlot);
         } else {
@@ -100,12 +82,14 @@ public final class ItemUtils implements Mc {
         useItemOnBlock(bhr);
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public static void useItemOnBlock(BlockHitResult bhr) {
         if (bhr != null) {
             mc.interactionManager.interactBlock(mc.player, Hand.MAIN_HAND, bhr);
         }
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public static int getBlock() {
         for(int i = 0; i < 36; ++i) {
             if (mc.player.getInventory().getStack(i).getItem() instanceof BlockItem) {
@@ -168,6 +152,7 @@ public final class ItemUtils implements Mc {
         return 0;
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public static double getScore(ItemStack itemStack, BlockState state, Predicate<ItemStack> good) {
         if (!good.test(itemStack) || !isTool(itemStack)) return -1;
         if (!itemStack.isSuitableFor(state) && !(itemStack.getItem() instanceof SwordItem && (state.getBlock() instanceof BambooBlock || state.getBlock() instanceof BambooShootBlock)) && !(itemStack.getItem() instanceof ShearsItem && state.getBlock() instanceof LeavesBlock || state.isIn(BlockTags.WOOL))) return -1;
@@ -198,15 +183,15 @@ public final class ItemUtils implements Mc {
         return getMineSpeedInternal(state, itemStack) / hardness / (BlockUtils.canBreak(position) ? 30f : 100f);
     }
 
+    @SuppressWarnings("DataFlowIssue")
     private static float getMineSpeedInternal(BlockState state, ItemStack itemStack) {
         if (mc.player == null) return 0;
         float digSpeed = getDestroySpeed(state, itemStack);
 
         if (digSpeed > 1) {
             int efficiencyModifier = getEnchantmentLevel(itemStack, Enchantments.EFFICIENCY);
-            if (efficiencyModifier > 0 && !itemStack.isEmpty()) {
+            if (efficiencyModifier > 0 && !itemStack.isEmpty())
                 digSpeed += (float) (StrictMath.pow(efficiencyModifier, 2) + 1);
-            }
         }
 
         if (mc.player.hasStatusEffect(StatusEffects.HASTE))
@@ -228,9 +213,8 @@ public final class ItemUtils implements Mc {
 
         if (mc.player == null)
             return 0;
-        if (itemStack != null && !itemStack.isEmpty()) {
+        if (itemStack != null && !itemStack.isEmpty())
             destroySpeed *= itemStack.getMiningSpeedMultiplier(state);
-        }
 
         return destroySpeed;
     }

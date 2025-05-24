@@ -36,10 +36,10 @@ public class IgniteAura extends Module {
     public final ModeSetting clanMode = ClanSettingsBuilder.buildStatusMode(this, clanManager);
     public final ModeSetting targetClan = ClanSettingsBuilder.buildClanTargetMode(this, clanManager, clanMode);
 
-
     private final List<Block> fires = Arrays.asList(Blocks.FIRE, Blocks.SOUL_FIRE);
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onTick(ClientTickEvent e) {
         if (nullCheck()) return;
 
@@ -74,6 +74,7 @@ public class IgniteAura extends Module {
         }
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public void fireAction(int slot, Entity entity) {
         int oldSlot = mc.player.getInventory().selectedSlot;
 

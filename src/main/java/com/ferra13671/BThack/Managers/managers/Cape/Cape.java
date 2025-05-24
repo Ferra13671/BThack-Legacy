@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.managers.managers.Cape;
 
-import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Mc;
 import com.ferra13671.BThack.api.Utils.MathUtils;
 import com.ferra13671.BThack.mixins.accessor.INativeImage;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -56,12 +56,13 @@ public class Cape implements Closeable, Mc {
         return cape;
     }
 
+    @SuppressWarnings({"CallToPrintStackTrace", "DataFlowIssue", "UnreachableCode"})
     private static void registerInMinecraft(Identifier i, BufferedImage bi) {
         try {
             int ow = bi.getWidth();
             int oh = bi.getHeight();
             NativeImage image = new NativeImage(NativeImage.Format.RGBA, ow, oh, false);
-            @SuppressWarnings("DataFlowIssue") long ptr = ((INativeImage) (Object) image).getPointer();
+            long ptr = ((INativeImage) (Object) image).getPointer();
             IntBuffer backingBuffer = MemoryUtil.memIntBuffer(ptr, image.getWidth() * image.getHeight());
             Object _d;
             WritableRaster _ra = bi.getRaster();
@@ -91,11 +92,10 @@ public class Cape implements Closeable, Mc {
             }
             NativeImageBackedTexture tex = new NativeImageBackedTexture(image);
             tex.upload();
-            if (RenderSystem.isOnRenderThread()) {
+            if (RenderSystem.isOnRenderThread())
                 mc.getTextureManager().registerTexture(i, tex);
-            } else {
+            else
                 RenderSystem.recordRenderCall(() -> mc.getTextureManager().registerTexture(i, tex));
-            }
         } catch (Throwable e) {
             e.printStackTrace();
         }

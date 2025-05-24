@@ -99,6 +99,7 @@ public class AutoAnvilEnchant extends Module {
     private PostClickInfo postClickInfo = null;
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onTick(ClientTickEvent e) {
         if (nullCheck()) return;
 
@@ -139,6 +140,7 @@ public class AutoAnvilEnchant extends Module {
         }
     }
 
+    @SuppressWarnings({"DataFlowIssue", "OptionalGetWithoutIsPresent"})
     public void internalAction(ItemInfo itemInfo, List<ItemInfo> itemInfos, BlockPos anvilBlockPos) {
         int slot = itemInfo.slot;
         ItemStack itemStack = mc.player.getInventory().getStack(slot);
@@ -222,6 +224,7 @@ public class AutoAnvilEnchant extends Module {
         }
     }
 
+    @SuppressWarnings({"DataFlowIssue", "OptionalGetWithoutIsPresent"})
     public List<ItemInfo> findItems(Item item, HashMap<RegistryKey<Enchantment>, Integer> needEnchantments) {
         List<ItemInfo> items = new ArrayList<>();
         for (int i = 0; i < 36; i++) {
@@ -248,8 +251,9 @@ public class AutoAnvilEnchant extends Module {
         return items;
     }
 
+    @SuppressWarnings({"rawtypes", "WhileLoopReplaceableByForEach", "unchecked", "DataFlowIssue"})
     public int getLevelToMerge(ItemStack itemStack1, ItemStack itemStack2) {
-        int level = 1;
+        int level;
 
         int i = 0;
         long l = 0L;

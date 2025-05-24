@@ -12,6 +12,7 @@ public class Strafe extends Module {
 
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onTick(ClientTickEvent e) {
         if (nullCheck()) return;
 

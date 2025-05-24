@@ -6,6 +6,5 @@ import com.ferra13671.BThack.api.Module.ModuleInfo;
 
 @ModuleInfo(name = "Reach", description = "lang.module.Reach", category = "MISC")
 public class Reach extends Module {
-
     public final NumberSetting range = new NumberSetting("Range", this, 0.5, 0.1, 4, false);
 }

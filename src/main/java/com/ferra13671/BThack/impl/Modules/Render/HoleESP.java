@@ -47,6 +47,7 @@ public class HoleESP extends Module {
 
     private BThackThread searchThread = new SearchThread();
 
+    @SuppressWarnings("DataFlowIssue")
     public List<BlockPos> findObsidianHoles() {
         List<BlockPos> obsHoles;
         if (rangeMode.getValue().equals("Normal")) {
@@ -59,6 +60,7 @@ public class HoleESP extends Module {
                 .collect(Collectors.toList());
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public List<BlockPos> findBedrockHoles() {
         List<BlockPos> bedHoles = rangeMode.getValue().equals("Normal") ?
                 BlockUtils.getNearbyBlocks(mc.player, range.getValue(), false) :
@@ -73,6 +75,7 @@ public class HoleESP extends Module {
     protected List<BlockPos> bedrockHoleList = new ArrayList<>();
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onRenderWorldLast(RenderWorldLastEvent event) {
         if (nullCheck()) return;
 
@@ -119,6 +122,7 @@ public class HoleESP extends Module {
     public static class SearchThread extends BThackThread {
 
         @Override
+        @SuppressWarnings("DataFlowIssue")
         public void threadAction() {
             while (ModuleList.holeESP.isEnabled() && ModuleList.holeESP.updateMode.getValue().equals("Thread")) {
                 if (Module.nullCheck()) return;

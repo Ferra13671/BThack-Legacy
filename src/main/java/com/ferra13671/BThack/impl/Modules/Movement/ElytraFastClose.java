@@ -11,6 +11,7 @@ import com.ferra13671.MegaEvents.Base.EventSubscriber;
 public class ElytraFastClose extends Module {
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onTick(ClientTickEvent e) {
         if (nullCheck()) return;
 

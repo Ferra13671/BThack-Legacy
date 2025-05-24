@@ -13,7 +13,6 @@ import com.ferra13671.BThack.api.Category.Categories;
 import com.ferra13671.BThack.gui.Screen.ClickGui.component.Component;
 import com.ferra13671.BThack.gui.Screen.ClickGui.component.Frame;
 import com.ferra13671.BThack.gui.Screen.ClickGui.component.components.ModuleButton;
-import com.ferra13671.BThack.gui.Screen.HudEditor.Utils.HudComponentButton;
 import com.ferra13671.BThack.api.Module.HudComponent;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.shaders.Shaders;
@@ -61,9 +60,8 @@ public class HudEditorScreen extends BThackScreen {
 
     @Override
     public void render(DrawContext guiGraphics, int mouseX, int mouseY, float partialTicks) {
-        if (ModuleList.clickGui.blur.getValue()) {
+        if (ModuleList.clickGui.blur.getValue())
             ClickGui.renderBlur();
-        }
 
         if (Client.clientInfo.isWinter() && ModuleList.clickGui.snow.getValue()) {
             BThackRenderUtils.applyBlend();
@@ -86,11 +84,8 @@ public class HudEditorScreen extends BThackScreen {
             }
         }
 
-        if (writingSlider.get() != null) {
-            if (writingSlider.get().writing) {
-                BThackRender.drawString("New Value: " + writingSlider.get().textBuilder, (int) ((mc.getWindow().getScaledWidth() / 2f) - (FontUtils.getTextWidth("New Value: " + writingSlider.get().textBuilder) / 2)), (mc.getWindow().getScaledHeight() - 45), ColorUtils.WHITE);
-            }
-        }
+        if (writingSlider.get() != null && writingSlider.get().writing)
+            BThackRender.drawString("New Value: " + writingSlider.get().textBuilder, (int) ((mc.getWindow().getScaledWidth() / 2f) - (FontUtils.getTextWidth("New Value: " + writingSlider.get().textBuilder) / 2)), (mc.getWindow().getScaledHeight() - 45), ColorUtils.WHITE);
 
         for (ModuleButton moduleButton : frame.buttons)
             moduleButton.updateAnim();
@@ -105,19 +100,18 @@ public class HudEditorScreen extends BThackScreen {
 
     @Override
     public void tick() {
-        for (HudComponentButton button : hudComponentButtons) {
+        for (HudComponentButton button : hudComponentButtons)
             button.hudComponent.tick();
-        }
     }
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int mouseButton) {
         if (!frame.updateClick(mouseX, mouseY, mouseButton)) return false;
 
-        for (HudComponentButton button : hudComponentButtons) {
+        for (HudComponentButton button : hudComponentButtons)
             if (button.hudComponent.isEnabled())
                 button.mouseClicked((int) mouseX, (int) mouseY, mouseButton);
-        }
+
         checkCloseAfterClicking();
         return super.mouseClicked(mouseX,mouseY,mouseButton);
     }
@@ -140,13 +134,9 @@ public class HudEditorScreen extends BThackScreen {
 
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int shift) {
-        if(frame.isOpen() && keyCode != 1) {
-            if(!frame.getButtons().isEmpty()) {
-                for(Component component : frame.getButtons()) {
-                    component.keyTyped(keyCode);
-                }
-            }
-        }
+        if(frame.isOpen() && keyCode != 1 && !frame.getButtons().isEmpty())
+            for(Component component : frame.getButtons())
+                component.keyTyped(keyCode);
 
         switch (keyCode) {
             case KeyboardUtils.KEY_ESCAPE -> mc.setScreen(null);

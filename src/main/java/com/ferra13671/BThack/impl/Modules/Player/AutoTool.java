@@ -15,14 +15,14 @@ public class AutoTool extends Module {
 
 
     @EventSubscriber(priority = Integer.MIN_VALUE)
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onLeftClick(AttackBlockEvent e) {
         if (nullCheck() || e.isCancelled()) return;
 
         equipBestSlot(mc.world.getBlockState(e.getBlockPos()));
     }
 
-
-
+    @SuppressWarnings("DataFlowIssue")
     public static void equipBestSlot(BlockState blockState) {
         double bestScore = -1;
         int bestSlot = -1;
@@ -39,10 +39,10 @@ public class AutoTool extends Module {
             }
         }
 
-        if (bestScore != -1 && bestSlot != -1) {
-            if (bestSlot < 9) {
+        if (bestScore != -1) {
+            if (bestSlot < 9)
                 InventoryUtils.swapItem(bestSlot);
-            } else {
+            else {
                 int freeSlot = InventoryUtils.findFreeHotbarSlot();
                 if (freeSlot != -1) {
                     InventoryUtils.swapItemOnInventory(freeSlot, bestSlot);
@@ -55,6 +55,7 @@ public class AutoTool extends Module {
         }
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public static int getBestSlot(BlockState blockState, int slots) {
         MinecraftClient mc = MinecraftClient.getInstance();
 
@@ -73,9 +74,8 @@ public class AutoTool extends Module {
             }
         }
 
-        if (bestScore != -1 && bestSlot != -1) {
+        if (bestScore != -1)
             return bestSlot;
-        }
         return -1;
     }
 }

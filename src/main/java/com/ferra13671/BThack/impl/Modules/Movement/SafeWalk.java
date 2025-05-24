@@ -41,6 +41,7 @@ public class SafeWalk extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onTick(ClientTickEvent e) {
         if (nullCheck() || !mode.getValue().equals("Legit Shift") || !mc.player.verticalCollision) return;
 
@@ -51,6 +52,7 @@ public class SafeWalk extends Module {
         }
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public void onClipAtLedge(boolean clipping) {
         if (mode.getValue().equals("Legit Shift")) {
             if (sneaking)

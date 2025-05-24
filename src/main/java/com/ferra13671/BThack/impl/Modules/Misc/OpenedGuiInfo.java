@@ -17,6 +17,7 @@ public class OpenedGuiInfo extends Module {
 
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onGuiOpen(GuiOpenEvent e) {
         if (e.getScreen() == null) return;
 

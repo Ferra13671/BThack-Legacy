@@ -52,6 +52,7 @@ public class ColorSetting extends Setting<Color> {
         jsonObject.add(getName(), colorObject);
     }
 
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean isBlockedAlpha() {
         return blockedAlpha;
     }

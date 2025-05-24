@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.api.Utils.Modules;
 
-import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Mc;
 import com.ferra13671.BThack.managers.Managers;
 import com.ferra13671.BThack.managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.managers.managers.Clans.Clan;
@@ -42,6 +42,7 @@ public final class KillAuraUtils implements Mc {
         rotateMode.postRotate();
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public static void attackNoRotate(Entity target) {
         mc.interactionManager.attackEntity(mc.player, target);
         mc.player.swingHand(Hand.MAIN_HAND);
@@ -54,6 +55,7 @@ public final class KillAuraUtils implements Mc {
         else rotateMode.preRotate(rotations[0], rotations[1]);
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public static PlayerEntity filterPlayers(double range, boolean friends, boolean teammates, boolean clanManager, String clanMode, String targetClan, Predicate<Entity> extraFilter) {
         return mc.world.getPlayers().stream().filter(entityPlayer -> filterPlayer(entityPlayer, friends, teammates, clanManager, clanMode, targetClan) && extraFilter.test(entityPlayer)).min(Comparator.comparing(entityPlayer ->
                 entityPlayer.distanceTo(mc.player))).filter(entityPlayer -> entityPlayer.distanceTo(mc.player) <= range).orElse(null);
@@ -67,11 +69,11 @@ public final class KillAuraUtils implements Mc {
         return entityPlayer != mc.player && !isFriend(entityPlayer, friends) && !isTeammate(entityPlayer, teammates) && isSuccessfulClanMember(entityPlayer, clanManager, clanMode, targetClan) && entityPlayer.isAlive();
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public static Entity filterEntity(double range, Predicate<Entity> entityFilter) {
         ArrayList<Entity> entities = new ArrayList<>();
-        for (Entity entity : mc.world.getEntities()) {
+        for (Entity entity : mc.world.getEntities())
             entities.add(entity);
-        }
 
         return entities.stream().filter(entity1 -> entity1 != mc.player && entity1.isAlive() && entityFilter.test(entity1)).min(Comparator.comparing(entity1 ->
                 entity1.distanceTo(mc.player))).filter(entity1 -> entity1.distanceTo(mc.player) <= range).orElse(null);
@@ -86,15 +88,7 @@ public final class KillAuraUtils implements Mc {
     }
 
     public static boolean canBeSeeTarget(boolean ignoreWalls, Entity target) {
-        if (!ignoreWalls) {
-            return PlayerUtils.canEntityBeSeen(mc.player, target);
-        } else {
-            return true;
-        }
-    }
-
-    public static boolean isMob(Entity entity) {
-        return entity instanceof MobEntity || entity instanceof FlyingEntity || entity instanceof PassiveEntity || entity instanceof AmbientEntity || entity instanceof WaterCreatureEntity || entity instanceof GolemEntity;
+        return ignoreWalls || PlayerUtils.canEntityBeSeen(mc.player, target);
     }
 
     public static boolean isHostile(Entity entity) {
@@ -117,10 +111,6 @@ public final class KillAuraUtils implements Mc {
         return entity -> canBeSeeTarget(ignoreWalls, entity) && ((hostiles.getValue() && isHostile(entity)) || (passive.getValue() && isPassive(entity)) || (golems.getValue() && isGolem(entity)) || (otherMobs.getValue() && isOtherMob(entity)));
     }
 
-    public static boolean isFriend(PlayerEntity player, BooleanSetting friends) {
-        return isFriend(player, friends.getValue());
-    }
-
     public static boolean isFriend(PlayerEntity player, boolean friends) {
         if (!friends) {
             return Managers.FRIENDS_MANAGER.contains(player);
@@ -128,10 +118,7 @@ public final class KillAuraUtils implements Mc {
         return false;
     }
 
-    public static boolean isTeammate(PlayerEntity player, BooleanSetting teammates) {
-        return isTeammate(player, teammates.getValue());
-    }
-
+    @SuppressWarnings("DataFlowIssue")
     public static boolean isTeammate(PlayerEntity player, boolean teammates) {
         if (!teammates) {
             return mc.player.isTeammate(player);
@@ -139,49 +126,41 @@ public final class KillAuraUtils implements Mc {
         return false;
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public static boolean isSuccessfulClanMember(PlayerEntity player, boolean clanManager, String clanMode, String targetClan) {
         if (clanManager) {
             List<Clan> clans = Managers.CLAN_MANAGER.getClansFromMember(player.getDisplayName().getString());
-            switch (clanMode) {
-                case "Only Enemy":
+            return switch (clanMode) {
+                case "Only Enemy" -> {
                     if (!clans.isEmpty()) {
-                        for (Clan clan : clans) {
-                            if (clan.getStatus() == ClanStatus.ENEMY) {
-                                return true;
-                            }
-                        }
-                        return false;
-                    } else {
-                        return true;
-                    }
-                case "Neutral Also":
+                        for (Clan clan : clans)
+                            if (clan.getStatus() == ClanStatus.ENEMY)
+                                yield true;
+                        yield false;
+                    } else
+                        yield true;
+                }
+                case "Neutral Also" -> {
                     if (!clans.isEmpty()) {
-                        for (Clan clan : clans) {
-                            if (clan.getStatus() == ClanStatus.ENEMY || clan.getStatus() == ClanStatus.NEUTRAL) {
-                                return true;
-                            }
-                        }
-                        return false;
-                    } else {
-                        return true;
-                    }
-                case "Target Clan":
+                        for (Clan clan : clans)
+                            if (clan.getStatus() == ClanStatus.ENEMY || clan.getStatus() == ClanStatus.NEUTRAL)
+                                yield true;
+                        yield false;
+                    } else
+                        yield true;
+                }
+                case "Target Clan" -> {
                     if (!clans.isEmpty()) {
-                        for (Clan clan : clans) {
-                            if (clan.getName().equals(targetClan)) {
-                                return true;
-                            }
-                        }
-                        return false;
-                    } else {
-                        return true;
-                    }
-                case "All Clans":
-                default:
-                    return true;
-            }
-        } else {
+                        for (Clan clan : clans)
+                            if (clan.getName().equals(targetClan))
+                                yield true;
+                        yield false;
+                    } else
+                        yield true;
+                }
+                default -> true;
+            };
+        } else
             return true;
-        }
     }
 }

@@ -27,6 +27,7 @@ public class NoSlow extends Module {
 
     Int2ObjectOpenHashMap<ItemStack> int2ObjectMap = new Int2ObjectOpenHashMap<>();
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onInput(UpdateInputEvent e) {
         if (mode.getValue().equals("Grim V3")) {
             if(mc.player.isUsingItem()){

@@ -9,8 +9,8 @@ import net.minecraft.network.packet.c2s.play.CloseHandledScreenC2SPacket;
 @ModuleInfo(name = "XCarry", description = "lang.module.XCarry", category = "PLAYER")
 public class XCarry extends Module {
 
-
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onSendPacket(PacketEvent.Send e) {
         if (e.getPacket() instanceof CloseHandledScreenC2SPacket packet
                 && (packet.getSyncId() == mc.player.playerScreenHandler.syncId

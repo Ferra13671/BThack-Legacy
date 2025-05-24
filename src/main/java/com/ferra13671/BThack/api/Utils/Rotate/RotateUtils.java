@@ -2,7 +2,7 @@ package com.ferra13671.BThack.api.Utils.Rotate;
 
 
 import com.ferra13671.BThack.core.Client.ModuleList;
-import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Mc;
 import com.ferra13671.BThack.managers.Managers;
 import com.ferra13671.BThack.api.Utils.Modules.NoRotateMathUtils;
 import net.minecraft.entity.Entity;
@@ -21,6 +21,7 @@ public final class RotateUtils implements Mc {
         rotate(yaw, pitch, mc.getRenderTickCounter().getTickDelta(true));
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public static void rotate(float yaw, float pitch, float delta) {
         float oldYaw = mc.player.prevYaw;
         float oldPitch = mc.player.prevPitch;
@@ -29,6 +30,7 @@ public final class RotateUtils implements Mc {
         mc.player.setPitch(MathHelper.lerp(delta, oldPitch, pitch));
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public static void packetRotate(float yaw, float pitch) {
         Managers.NETWORK_MANAGER.sendPacket(new PlayerMoveC2SPacket.LookAndOnGround(yaw, pitch, mc.player.onGround, mc.player.horizontalCollision));
         mc.player.lastYaw = yaw;
@@ -44,6 +46,7 @@ public final class RotateUtils implements Mc {
         return rotations(new Vec3d(pos.getX(), pos.getY(), pos.getZ()));
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public static float[] rotations(Vec3d vec3d) {
         double x = vec3d.getX() - mc.player.getX();
         double y = vec3d.getY() - mc.player.getEyeY();
@@ -140,32 +143,6 @@ public final class RotateUtils implements Mc {
         };
     }
 
-    public static int getRoundedToCornersEntityRotation(Entity entity) {
-        return switch (RotateUtils.getDirection(entity)) {
-            case "X- Z+", "X-" -> -45;
-            case "X- Z-", "Z-" -> 45;
-            case "X+ Z-", "X+" -> 135;
-            default -> -135;
-        };
-    }
-
-    public static Direction getFacing(Entity entity) {
-        float pitch = mc.player.getPitch();
-        if (-45 > pitch) {
-            return Direction.UP;
-        }
-        if (45 < pitch) {
-            return Direction.DOWN;
-        }
-
-        return switch (RotateUtils.getDirection(entity)) {
-            case "X- Z+", "X-" -> Direction.WEST;
-            case "X- Z-", "Z-" -> Direction.NORTH;
-            case "X+ Z-", "X+" -> Direction.EAST;
-            default -> Direction.SOUTH;
-        };
-    }
-
     public static Direction getInvertedFacing(float yaw, float pitch, boolean pitchAlso) {
         if (pitchAlso) {
             if (-45 > pitch) {
@@ -184,14 +161,13 @@ public final class RotateUtils implements Mc {
         };
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public static Direction getInvertedFacingEntity(Entity entity) {
         float pitch = mc.player.getPitch();
-        if (-45 > pitch) {
+        if (-45 > pitch)
             return Direction.DOWN;
-        }
-        if (45 < pitch) {
+        if (45 < pitch)
             return Direction.UP;
-        }
 
         return switch (RotateUtils.getDirection(entity)) {
             case "X- Z+", "X-" -> Direction.EAST;
@@ -201,6 +177,7 @@ public final class RotateUtils implements Mc {
         };
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public static Vec3d getEyesPos() {
         float eyeHeight = mc.player.getEyeHeight(mc.player.getPose());
         return mc.player.getPos().add(0, eyeHeight, 0);
@@ -232,10 +209,12 @@ public final class RotateUtils implements Mc {
         return new Vec3d(sinYaw * nCosPitch, sinPitch, cosYaw * nCosPitch);
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public static float getCameraYaw() {
         return ModuleList.noRotate.isEnabled() ? mc.player.getYaw() : mc.gameRenderer.getCamera().getYaw();
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public static float getCameraPitch() {
         return ModuleList.noRotate.isEnabled() && ModuleList.noRotate.blockPitch.getValue() && !(ModuleList.elytraFlight.isEnabled() && ModuleList.elytraFlight.mode.getValue().equals("Pitch40"))
                 ? mc.player.getPitch() : mc.gameRenderer.getCamera().getPitch();

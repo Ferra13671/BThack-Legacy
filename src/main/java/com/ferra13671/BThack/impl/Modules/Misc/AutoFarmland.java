@@ -9,7 +9,7 @@ import com.ferra13671.BThack.managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.api.Utils.*;
-import com.ferra13671.BThack.api.Utils.Grim.GrimUtils;
+import com.ferra13671.BThack.api.Utils.GrimUtils;
 import com.ferra13671.BThack.api.Utils.Rotate.RotateUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.block.Block;
@@ -49,6 +49,7 @@ public class AutoFarmland extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onTick(ClientTickEvent e) {
         if (nullCheck()) return;
 
@@ -59,6 +60,7 @@ public class AutoFarmland extends Module {
         }
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public void filterAction() {
         poses.clear();
 
@@ -77,17 +79,17 @@ public class AutoFarmland extends Module {
                 dirtFilter(pos);
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public void dirtFilter(BlockPos pos) {
         Block block = mc.world.getBlockState(pos).getBlock();
         if (block == Blocks.DIRT || block == Blocks.GRASS_BLOCK) {
-            if (!ignoreWalls.getValue()) {
-                if (!BlockUtils.hasLineOfSight(mc.player.getPos(), pos.toCenterPos())) return;
-            }
+            if (!ignoreWalls.getValue() && !BlockUtils.hasLineOfSight(mc.player.getPos(), pos.toCenterPos())) return;
             if (mc.world.isAir(pos.add(0, 1, 0)))
                 poses.add(pos);
         }
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public void interactAction() {
         for (BlockPos pos : poses) {
             int oldSlot = mc.player.getInventory().selectedSlot;
@@ -100,6 +102,7 @@ public class AutoFarmland extends Module {
         poses.clear();
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public void interactActionInternal(BlockPos pos) {
         rotatePreAction(pos);
         switch (interact.getValue()) {

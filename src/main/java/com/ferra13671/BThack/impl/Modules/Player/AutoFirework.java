@@ -27,7 +27,6 @@ public class AutoFirework extends Module {
     public final NumberSetting delay = new NumberSetting("Delay", this, 0, 0, 5000, true, () -> mode.getValue().equals("Always"));
     public final BooleanSetting swingHand = new BooleanSetting("Swing Hand", this, true);
 
-
     private final Ticker ticker = new Ticker();
 
     @Override
@@ -70,6 +69,7 @@ public class AutoFirework extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onTick(ClientTickEvent e) {
         if (nullCheck()) return;
         if (!mc.player.isGliding()) return;

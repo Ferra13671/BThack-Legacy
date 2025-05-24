@@ -1,6 +1,5 @@
 package com.ferra13671.BThack.core.Client.Systems.ConfigSystem;
 
-import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.managers.managers.Setting.Settings.Setting;
 import com.ferra13671.BThack.core.Client.Client;
 import com.ferra13671.BThack.managers.managers.Thread.ThreadManager;
@@ -39,9 +38,6 @@ public final class ConfigSystem {
 
     public static void loadConfig() {
         SubConfigs.getSubConfigs().forEach(SubConfig::load);
-        try {
-            ConfigUtils.loadFromTxt("CurrentConfig", "Modules", Client.clientInfo::setCurrentConfigName);
-        } catch (IOException ignored) {}
     }
 
     public static List<String> getAllConfigs() {
@@ -103,6 +99,7 @@ public final class ConfigSystem {
                                         try {
                                             s.load(settingObject, settingValueObject);
                                         } catch (Exception e) {
+                                            //noinspection CallToPrintStackTrace
                                             e.printStackTrace();
                                         }
                                     }
@@ -113,16 +110,6 @@ public final class ConfigSystem {
                             module.setKey(moduleObject.get("Bind").getAsInt());
                             module.setVisible(moduleObject.get("Visible").getAsBoolean());
                         }
-                    }
-
-                    try {
-                        ConfigUtils.saveInTxt("CurrentConfig", "Modules", writer -> {
-                            try {
-                                writer.write(fileName);
-                            } catch (IOException ignored) {}
-                        });
-                    } catch (IOException e) {
-                        BThack.error(e.getMessage());
                     }
                 },
                 () -> {}

@@ -9,7 +9,7 @@ import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.api.Utils.*;
 import com.ferra13671.BThack.api.Utils.Modules.KillAuraUtils;
-import com.ferra13671.BThack.api.Utils.Grim.GrimUtils;
+import com.ferra13671.BThack.api.Utils.GrimUtils;
 import com.ferra13671.BThack.api.Utils.Rotate.RotateMode;
 import com.ferra13671.BThack.api.Utils.Rotate.RotateUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
@@ -31,10 +31,10 @@ public class FireBallAura extends Module {
     public final BooleanSetting shulkerBullets = new BooleanSetting("Shulker Bullets", this, true);
     public final BooleanSetting noDurability = new BooleanSetting("No Durability", this, false);
 
-
     private final Set<Entity> fireBalls = Sets.newHashSet();
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onClientTick(ClientTickEvent e) {
         if (nullCheck()) return;
 
@@ -65,6 +65,7 @@ public class FireBallAura extends Module {
         fireBalls.removeIf(entity -> !entities.contains(entity));
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public void preRotate(Entity entity) {
         if (rotate.getValue()) {
             float[] rots = RotateUtils.rotations(entity);
@@ -78,6 +79,7 @@ public class FireBallAura extends Module {
         }
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public void postRotate(float oldYaw, float oldPitch) {
         if (rotate.getValue()) {
             switch (rotateMode.getValue()) {
@@ -90,6 +92,7 @@ public class FireBallAura extends Module {
         }
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public void preSwap() {
         if (!noDurability.getValue()) return;
         for (int i = 0; i < 9; i++) {
@@ -101,6 +104,7 @@ public class FireBallAura extends Module {
         }
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public void postSwap(int oldSlot) {
         if (oldSlot == mc.player.getInventory().selectedSlot) return;
         InventoryUtils.swapItem(oldSlot);

@@ -2,7 +2,7 @@ package com.ferra13671.BThack.core.Render.Line;
 
 import com.ferra13671.BThack.core.Render.BThackRender;
 import com.ferra13671.BThack.core.Render.Utils.BThackRenderUtils;
-import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Mc;
 import com.ferra13671.BThack.api.Utils.Rotate.RotateUtils;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.util.math.Vec3d;

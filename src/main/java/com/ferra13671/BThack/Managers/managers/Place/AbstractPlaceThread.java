@@ -2,7 +2,7 @@ package com.ferra13671.BThack.managers.managers.Place;
 
 import com.ferra13671.BThack.managers.managers.Thread.BThackThread;
 import com.ferra13671.BThack.managers.managers.Thread.ThreadClosedException;
-import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Mc;
 import net.minecraft.block.Block;
 import net.minecraft.util.math.BlockPos;
 

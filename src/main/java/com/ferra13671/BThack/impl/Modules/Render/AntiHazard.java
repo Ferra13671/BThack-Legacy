@@ -9,16 +9,14 @@ import net.minecraft.entity.effect.StatusEffects;
 @ModuleInfo(name = "AntiHazard", description = "lang.module.AntiHazard", category = "RENDER")
 public class AntiHazard extends Module {
 
-
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onTick(ClientTickEvent e) {
         if (nullCheck()) return;
 
-        if (mc.player.hasStatusEffect(StatusEffects.BLINDNESS)) {
+        if (mc.player.hasStatusEffect(StatusEffects.BLINDNESS))
             mc.player.removeStatusEffect(StatusEffects.BLINDNESS);
-        }
-        if (mc.player.hasStatusEffect(StatusEffects.NAUSEA)) {
+        if (mc.player.hasStatusEffect(StatusEffects.NAUSEA))
             mc.player.removeStatusEffect(StatusEffects.NAUSEA);
-        }
     }
 }

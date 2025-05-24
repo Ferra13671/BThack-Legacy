@@ -44,6 +44,7 @@ public class AutoMount extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onTick(ClientTickEvent e) {
         if (nullCheck()) return;
         if (mc.player.getControllingVehicle() != null) return;
@@ -53,17 +54,13 @@ public class AutoMount extends Module {
         for (Entity entity : mc.world.getEntities()) {
             if (entity == mc.player || MathUtils.getDistance(mc.player.getPos(), entity.getPos()) > range.getValue()) continue;
 
-            if (canMount(entity)) {
+            if (canMount(entity))
                 mc.interactionManager.interactEntity(mc.player, entity, Hand.MAIN_HAND);
-            }
         }
     }
 
     public boolean canMount(Entity entity) {
-        if (entity instanceof AbstractHorseEntity horse) {
-            if (horse.isBaby())
-                return false;
-        }
+        if (entity instanceof AbstractHorseEntity horse && horse.isBaby()) return false;
 
         if ((entity instanceof BoatEntity || entity instanceof ChestBoatEntity) && boats.getValue())
             return true;
@@ -77,13 +74,11 @@ public class AutoMount extends Module {
         if (entity instanceof DonkeyEntity && donkeys.getValue())
             return true;
 
-        if (entity instanceof PigEntity pig && pigs.getValue()) {
+        if (entity instanceof PigEntity pig && pigs.getValue())
             return pig.isSaddled();
-        }
 
-        if (entity instanceof LlamaEntity llama && llamas.getValue()) {
+        if (entity instanceof LlamaEntity llama && llamas.getValue())
             return !llama.isBaby();
-        }
 
         return false;
     }

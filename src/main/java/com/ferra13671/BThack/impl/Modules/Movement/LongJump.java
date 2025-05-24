@@ -47,6 +47,7 @@ public class LongJump extends Module {
 
     private final ElytraAndFireworkMode elytraAndFireworkMode = new ElytraAndFireworkMode();
     private final GlideMode glideMode = new GlideMode();
+    @SuppressWarnings("DataFlowIssue")
     private final TravelChanger travelChanger = new TravelChanger(5000, () -> new Float[]{mc.player.getYaw(), (float) -pitch.getValue()}, () -> false, () -> false);
 
     @Override
@@ -56,6 +57,7 @@ public class LongJump extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onJump(PlayerJumpEvent e) {
         switch (mode.getValue()) {
             case "Normal" -> {
@@ -120,6 +122,7 @@ public class LongJump extends Module {
         }
 
         @EventSubscriber
+        @SuppressWarnings({"unused", "DataFlowIssue"})
         public void onTick(ClientTickEvent e) {
             if (nullCheck()) {
                 stop();
@@ -199,9 +202,8 @@ public class LongJump extends Module {
                                 if (swapMode.getValue().equals("Swap")) {
                                     mc.interactionManager.clickSlot(0, InventoryUtils.CHESTPLATE_SLOT, 0, SlotActionType.QUICK_MOVE, mc.player);
                                     mc.interactionManager.clickSlot(0, item, 0, SlotActionType.QUICK_MOVE, mc.player);
-                                } else {
+                                } else
                                     InventoryUtils.replaceItems(InventoryUtils.CHESTPLATE_SLOT, item);
-                                }
                                 stop();
                                 return;
                             }
@@ -218,9 +220,8 @@ public class LongJump extends Module {
                             if (swapMode.getValue().equals("Swap")) {
                                 mc.interactionManager.clickSlot(0, InventoryUtils.CHESTPLATE_SLOT, 0, SlotActionType.QUICK_MOVE, mc.player);
                                 mc.interactionManager.clickSlot(0, item, 0, SlotActionType.QUICK_MOVE, mc.player);
-                            } else {
+                            } else
                                 InventoryUtils.replaceItems(InventoryUtils.CHESTPLATE_SLOT, item);
-                            }
                             break;
                         }
                     }
@@ -252,12 +253,12 @@ public class LongJump extends Module {
         }
 
         @EventSubscriber
+        @SuppressWarnings({"unused", "DataFlowIssue"})
         public void onSetVelocity(SetVelocityEvent e) {
             if (!afterJumpDelay.passed(100)) return;
             if (!mc.player.verticalCollision) {
-                if (Managers.FALL_DISTANCE_MANAGER.getFallDistance() > 0) {
+                if (Managers.FALL_DISTANCE_MANAGER.getFallDistance() > 0)
                     e.setVelocity(new Vec3d(e.getVelocity().x, -fallSpeed.getValue(), e.getVelocity().z));
-                }
             } else stop();
         }
 

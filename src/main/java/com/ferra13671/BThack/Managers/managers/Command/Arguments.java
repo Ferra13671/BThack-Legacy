@@ -35,6 +35,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
 
+@SuppressWarnings("unused")
 public class Arguments {
     public static final Supplier<ArgumentType<Boolean>> BOOLEAN = BoolArgumentType::bool;
     public static final Supplier<ArgumentType<String>> STRING_ONE = StringArgumentType::word;

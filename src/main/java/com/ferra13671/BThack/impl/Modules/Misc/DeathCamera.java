@@ -44,6 +44,7 @@ public class DeathCamera extends Module {
     }
 
     @Override
+    @SuppressWarnings("DataFlowIssue")
     public void onDisable() {
         super.onDisable();
         death = false;
@@ -53,28 +54,29 @@ public class DeathCamera extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onTick(ClientTickEvent e) {
         if (nullCheck()) {
             death = false;
             return;
         }
 
-        if (mc.player.isDead()) {
-            if (!death) {
-                freeCamData.reset();
-                death = true;
-                mc.player.input = new FreeCam.FreecamKeyboardInput(mc.options, freeCamData);
-                mc.player.setHealth(20);
-            }
+        if (mc.player.isDead() && !death) {
+            freeCamData.reset();
+            death = true;
+            mc.player.input = new FreeCam.FreecamKeyboardInput(mc.options, freeCamData);
+            mc.player.setHealth(20);
         }
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onSetScreen(GuiOpenEvent e) {
         if (e.getScreen() instanceof DeathScreen) e.setCancelled(true);
     }
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onInput(InputEvent.KeyInputEvent e) {
         if (nullCheck()) return;
 
@@ -86,18 +88,21 @@ public class DeathCamera extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onCameraPosition(PositionCameraEvent e) {
         if (death)
             e.setPosition(freeCamData.lastPosition.lerp(freeCamData.position, e.getTickDelta()));
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onCameraRotate(RotateCameraEvent e) {
         if (death)
             e.setRotation(new Vec2f(freeCamData.yaw, freeCamData.pitch));
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onMouseUpdate(ChangePlayerLookEvent e) {
         if (death) {
             e.cancel();
@@ -106,15 +111,16 @@ public class DeathCamera extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onSetOpaqueCube(SetOpaqueCubeEvent e) {
         if (death)
             e.setCancelled(true);
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onHudRender(RenderHudPreEvent e) {
-        if (death) {
+        if (death)
             BThackRender.drawCenteredString(String.format(LanguageSystem.translate("lang.module.DeathCamera.message"), KeyboardUtils.getKeyName(respawnKey.getValue())), mc.getWindow().getScaledWidth() / 2f, mc.getWindow().getScaledHeight() / 4f, ColorUtils.fastRGBA(255, 100, 100, 255));
-        }
     }
 }

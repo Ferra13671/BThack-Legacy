@@ -11,6 +11,7 @@ public class RotateCommand extends AbstractCommand {
     }
 
     @Override
+    @SuppressWarnings("DataFlowIssue")
     public void compile(LiteralArgumentBuilder<CommandSource> builder) {
         builder.then(arg("yaw", Arguments.FLOAT(-30000, 30000)).then(arg("pitch", Arguments.FLOAT(-90, 90)).executes(context -> {
             mc.player.setYaw(context.getArgument("yaw", Float.class));

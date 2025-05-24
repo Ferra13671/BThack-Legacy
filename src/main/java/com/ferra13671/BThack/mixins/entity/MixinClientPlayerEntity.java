@@ -72,6 +72,7 @@ public abstract class MixinClientPlayerEntity extends AbstractClientPlayerEntity
         else return instance.shouldPause();
     }
 
+    @SuppressWarnings("DataFlowIssue")
     @Inject(method = "tickMovement", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/tutorial/TutorialManager;onMovement(Lnet/minecraft/client/input/Input;)V"))
     public void modifyTickMovementPreItemSlow(CallbackInfo ci) {
         tempTicksLeftToDoubleTapSprint = ticksLeftToDoubleTapSprint;
@@ -102,6 +103,7 @@ public abstract class MixinClientPlayerEntity extends AbstractClientPlayerEntity
         }
     }
 
+    @SuppressWarnings("DataFlowIssue")
     @Inject(method = "sendMovementPackets", at = @At("HEAD"))
     public void modifySendMovementPackets(CallbackInfo ci) {
         if (ModuleList.noSlow.isEnabled() && ModuleList.noSlow.useItems.getValue() && ModuleList.noSlow.mode.getValue().equals("Grim V2")) {

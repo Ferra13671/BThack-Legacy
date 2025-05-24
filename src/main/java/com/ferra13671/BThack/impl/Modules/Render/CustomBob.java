@@ -16,7 +16,7 @@ public class CustomBob extends Module {
     public final NumberSetting RXStrength = new NumberSetting("RX Strength", this, 1.35, 0, 10, false);
     public final NumberSetting RZStrength = new NumberSetting("RZ Strength", this, 1.5, 0, 10, false);
 
-
+    @SuppressWarnings("DataFlowIssue")
     public void customBob(MatrixStack matrices) {
         AbstractClientPlayerEntity playerEntity = (AbstractClientPlayerEntity) mc.getCameraEntity();
         float f = playerEntity.distanceMoved - playerEntity.lastDistanceMoved;

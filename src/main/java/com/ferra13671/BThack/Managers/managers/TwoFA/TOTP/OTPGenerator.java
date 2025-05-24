@@ -46,14 +46,6 @@ public abstract class OTPGenerator {
         HMACDigest(HmacAlgorithms value) {
             this.value = value;
         }
-
-        public String toQueryParam() {
-            return switch (this) {
-                case SHA1 -> "SHA1";
-                case SHA256 -> "SHA256";
-                case SHA512 -> "SHA512";
-            };
-        }
     }
 
     public enum OTPLength {

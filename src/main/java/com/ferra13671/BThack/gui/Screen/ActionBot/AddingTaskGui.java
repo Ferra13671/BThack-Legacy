@@ -1,7 +1,5 @@
 package com.ferra13671.BThack.gui.Screen.ActionBot;
 
-
-
 import com.ferra13671.BThack.core.Render.BThackRender;
 import com.ferra13671.BThack.core.Render.Font.FontUtils;
 import com.ferra13671.BThack.core.Render.Utils.ColorUtils;
@@ -20,21 +18,14 @@ import java.util.ArrayList;
 
 public class AddingTaskGui extends BThackScreen {
     private String taskName = "Select the desired task";
-
-
     private AddingTaskButton preSelectTask;
-
-
     private final ArrayList<AddingTaskButton> taskButtons = new ArrayList<>();
-
     private double maxYScroll;
-
     protected static TaskButton substituteTask;
 
     public AddingTaskGui() {
         super(Text.literal("AddingTask"));
     }
-
 
     @Override
     public void init() {
@@ -103,9 +94,9 @@ public class AddingTaskGui extends BThackScreen {
         taskButtons.forEach(button -> button.selected = false);
 
         for (AddingTaskButton button : taskButtons) {
-            if (button.isMouseOnButton((int) mouseX, (int) mouseY)) {
+            if (button.isMouseOnButton((int) mouseX, (int) mouseY))
                 button.mouseClicked((int) mouseX, (int) mouseY, mouseButton);
-            }
+
             if (button.selected) {
                 preSelectTask = button;
                 updateTaskName();
@@ -122,14 +113,11 @@ public class AddingTaskGui extends BThackScreen {
 
 
     public static void addTask(ActionBotTask task) {
-        if (task != null) {
-            if (substituteTask != null) {
+        if (task != null)
+            if (substituteTask != null)
                 ActionBotConfig.tasks.add(AddingTaskGui.substituteTask.getId(), task);
-            } else {
+            else
                 ActionBotConfig.addActionTaskToList(task);
-            }
-        }
-
-         mc.setScreen(new ActionBotConfigGui());
+        mc.setScreen(new ActionBotConfigGui());
     }
 }

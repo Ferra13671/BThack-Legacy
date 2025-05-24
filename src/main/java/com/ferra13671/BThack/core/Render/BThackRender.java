@@ -31,7 +31,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 import org.joml.Matrix4f;
-import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Mc;
 import org.joml.Vector3f;
 
 import java.awt.*;
@@ -119,6 +119,7 @@ public final class BThackRender implements Mc {
         Drawers.RECT.end();
     }
 
+    @SuppressWarnings("unused")
     public static void drawRoundedRect(float x1, float y1, float x2, float y2, float radius, int color) {
         BufferBuilder buffer = BThackRenderUtils.prepareToDraw(Shaders.INSTANCE.ROUNDED_RECT.getShader()).begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION);
 
@@ -226,6 +227,7 @@ public final class BThackRender implements Mc {
         ModuleList.HUD.hudStyle.draw(x1, y1, x2, y2);
     }
 
+    @SuppressWarnings("unused")
     public static void drawLine(float x1, float y1, float x2, float y2, float width, int color) {
         Matrix4f matrix4f = BThackMatrix.peek().getPositionMatrix();
 

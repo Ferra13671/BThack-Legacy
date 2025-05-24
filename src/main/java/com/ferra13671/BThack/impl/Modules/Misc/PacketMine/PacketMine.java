@@ -154,6 +154,7 @@ public class PacketMine extends Module {
     }
 
     @EventSubscriber(priority = Integer.MAX_VALUE)
+    @SuppressWarnings("unused")
     public void onAttackBlock(AttackBlockEvent e) {
         if (nullCheck() || BreakManager.isDestroying) return;
         if (e.getBlockPos() == null) return;
@@ -165,6 +166,7 @@ public class PacketMine extends Module {
     }
 
     @EventSubscriber(priority = Integer.MAX_VALUE)
+    @SuppressWarnings("unused")
     public void onUseBlock(UseBlockEvent e) {
         if (e.blockHitResult.getBlockPos() == null) return;
         if (currentBreakingBlock == null) return;
@@ -176,6 +178,7 @@ public class PacketMine extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onRender(RenderWorldLastEvent e) {
         ArrayList<RenderBox> renderBoxes = new ArrayList<>();
 
@@ -265,6 +268,7 @@ public class PacketMine extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onTick(ClientTickEvent e) {
         if (nullCheck() || mc.isPaused()) return;
 
@@ -349,6 +353,7 @@ public class PacketMine extends Module {
         currentBreakingBlock = new BreakingBlock(pos);
     }
 
+    @SuppressWarnings("DataFlowIssue")
     private void checkDestroyDelta() {
         BreakingBlock breakingBlock = getAnyBreakingBlock();
         int bestSlot = AutoTool.getBestSlot(mc.world.getBlockState(breakingBlock.blockPos), inventoryMode.getValue() ? 36 : 9);
@@ -385,6 +390,7 @@ public class PacketMine extends Module {
         return true;
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public boolean checkStopAction(BreakingBlock breakingBlock) {
         if (breakingBlock == null) return true;
         if (breakingBlock.currentDestroyProgress == 1) {
@@ -399,6 +405,7 @@ public class PacketMine extends Module {
         return false;
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public void updateBreakProgressInternal(BreakingBlock breakingBlock) {
         if (breakingBlock == null) return;
         if (!breakingBlock.startDestroying) {
@@ -407,9 +414,8 @@ public class PacketMine extends Module {
             if (instaRebreak.getValue() && breakedPos != null && breakedPos.equals(breakingBlock.blockPos)){
                 breakingBlock.currentDestroyProgress = 1;
                 stopDestroyBlock(breakingBlock.blockPos);
-            } else {
+            } else
                 startDestroyBlock(breakingBlock.blockPos);
-            }
             if (swingHand.getValue()) mc.player.swingHand(Hand.MAIN_HAND);
             breakingBlock.startDestroying = true;
         } else {
@@ -434,6 +440,7 @@ public class PacketMine extends Module {
         Managers.NETWORK_MANAGER.sendSequencePacket(id -> new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.STOP_DESTROY_BLOCK, blockPos, RotateUtils.getInvertedFacingEntity(mc.player), id));
     }
 
+    @SuppressWarnings("DataFlowIssue")
     private void autoCityAction() {
         for (PlayerEntity player : mc.world.getPlayers()) {
             if (player == mc.player ||
@@ -449,6 +456,7 @@ public class PacketMine extends Module {
         }
     }
 
+    @SuppressWarnings("DataFlowIssue")
     private BlockPos getNearestAutoCityBlockPos(PlayerEntity player) {
         BlockPos nearestPos = null;
         double nearestLength = -1;
@@ -464,6 +472,7 @@ public class PacketMine extends Module {
         return nearestPos;
     }
 
+    @SuppressWarnings("DataFlowIssue")
     private void packetEquipItem() {
         BreakingBlock breakingBlock = getAnyBreakingBlock();
         int bestSlot = AutoTool.getBestSlot(mc.world.getBlockState(breakingBlock.blockPos), inventoryMode.getValue() ? 36 : 9);
@@ -479,6 +488,7 @@ public class PacketMine extends Module {
         }
     }
 
+    @SuppressWarnings("DataFlowIssue")
     private void packetRemoveItem() {
         if (currentSlot != -1 && currentHotbarSlot != -1) {
             mc.interactionManager.clickSlot(0, currentSlot, currentHotbarSlot, SlotActionType.SWAP, mc.player);

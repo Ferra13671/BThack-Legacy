@@ -18,7 +18,5 @@ public class TickManager implements Initializable {
     }
 
     @Override
-    public void init() {
-        //no action
-    }
+    public void init() {}
 }

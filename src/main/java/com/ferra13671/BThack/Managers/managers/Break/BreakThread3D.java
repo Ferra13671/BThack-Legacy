@@ -41,6 +41,7 @@ public class BreakThread3D extends AbstractBreakThread {
     }
 
     @Override
+    @SuppressWarnings("DataFlowIssue")
     protected void destroyAction() throws ThreadClosedException {
         if (Module.nullCheck() || schematic == null) {
             return;

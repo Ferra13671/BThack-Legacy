@@ -12,7 +12,7 @@ import com.ferra13671.BThack.api.Animation.Animation;
 import com.ferra13671.BThack.api.Animation.Easing;
 import com.ferra13671.BThack.api.Category.Category;
 import com.ferra13671.BThack.api.GuiSystem.BThackScreens;
-import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Mc;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.Constants;
 import com.ferra13671.BThack.api.Utils.Data;

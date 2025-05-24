@@ -33,6 +33,7 @@ public class FullBright extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onTick(ClientTickEvent e) {
         if (nullCheck()) return;
         if (mode.getValue().equals("Gamma")) return;

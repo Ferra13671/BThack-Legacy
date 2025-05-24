@@ -22,6 +22,7 @@ public class Criticals extends Module {
 
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onUpdate(AttackEntityEvent e) {
         if (e.getEntity() instanceof EndCrystalEntity || e.getPlayer() != mc.player) return;
 
@@ -30,7 +31,7 @@ public class Criticals extends Module {
         e.setCancelled(true);
 
         switch (mode.getValue()) {
-            case "Packet":
+            case "Packet" -> {
                 Managers.NETWORK_MANAGER.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY() + 0.1f, mc.player.getZ(), false, mc.player.horizontalCollision));
                 Managers.NETWORK_MANAGER.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY(), mc.player.getZ(), false, mc.player.horizontalCollision));
 
@@ -42,8 +43,8 @@ public class Criticals extends Module {
 
                 Managers.NETWORK_MANAGER.sendPacket(new PlayerMoveC2SPacket.OnGroundOnly(mc.player.onGround, mc.player.horizontalCollision));
                 mc.player.addCritParticles(e.getEntity());
-                break;
-            case "Bypass":
+            }
+            case "Bypass" -> {
                 Managers.NETWORK_MANAGER.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY() + 0.1625, mc.player.getZ(), false, mc.player.horizontalCollision));
                 Managers.NETWORK_MANAGER.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY(), mc.player.getZ(), false, mc.player.horizontalCollision));
                 Managers.NETWORK_MANAGER.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY() + 4.0E-6, mc.player.getZ(), false, mc.player.horizontalCollision));
@@ -59,25 +60,12 @@ public class Criticals extends Module {
 
                 Managers.NETWORK_MANAGER.sendPacket(new PlayerMoveC2SPacket.OnGroundOnly(mc.player.onGround, mc.player.horizontalCollision));
                 mc.player.addCritParticles(e.getEntity());
-                break;
-                /*
-            case "MiniJump":
-                mc.player.jump();
-                mc.player.velocity.y = 0.25;
-                mc.player.fallDistance = 1;
-                mc.player.onGround = false;
-                break;
-            case "Jump":
-                mc.player.jump();
-                mc.player.fallDistance = 1;
-                mc.player.onGround = false;
-                break;
-
-                 */
+            }
         }
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onTick(ClientTickEvent e) {
         if (nullCheck()) return;
 

@@ -2,7 +2,7 @@ package com.ferra13671.BThack.core.Render.Font;
 
 import com.ferra13671.BThack.core.Render.Utils.BThackRenderUtils;
 import com.ferra13671.BThack.core.Render.Utils.ColorUtils;
-import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Mc;
 import com.ferra13671.BThack.Constants;
 import com.ferra13671.BThack.api.Utils.MathUtils;
 import com.ferra13671.TextureUtils.TextureStorage;
@@ -141,6 +141,7 @@ public class FontRenderer implements Closeable, Mc {
         return glyphMap.getGlyph(glyph);
     }
 
+    @SuppressWarnings("resource")
     public void draw(MatrixStack stack, String s, float x, float y, int rgb, boolean shadow) {
         float[] color = ColorUtils.hashCodeToRGBA(rgb);
 
@@ -305,10 +306,6 @@ public class FontRenderer implements Closeable, Mc {
         return font;
     }
 
-    public float getOriginalSize() {
-        return originalSize;
-    }
-
     public int getPageSize() {
         return pageSize;
     }
@@ -319,14 +316,6 @@ public class FontRenderer implements Closeable, Mc {
 
     public String getPrebakeGlyphs() {
         return prebakeGlyphs;
-    }
-
-    public int getScaleMul() {
-        return scaleMul;
-    }
-
-    public boolean isInitialized() {
-        return initialized;
     }
 
     record DrawEntry(float atX, float atY, float r, float g, float b, Glyph toDraw) {

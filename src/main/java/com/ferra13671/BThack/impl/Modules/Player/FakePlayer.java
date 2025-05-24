@@ -10,7 +10,6 @@ import net.minecraft.entity.Entity;
 @ModuleInfo(name = "FakePlayer", description = "lang.module.FakePlayer", category = "PLAYER")
 public class FakePlayer extends Module {
 
-
     private Entity fakePlayer;
 
     @Override
@@ -20,9 +19,7 @@ public class FakePlayer extends Module {
             return;
         }
         super.onEnable();
-        if (mc.player != null && mc.world != null) {
-            fakePlayer = PlayerUtils.createNewFakePlayer(mc.player, "FakePlayer");
-        }
+        fakePlayer = PlayerUtils.createNewFakePlayer(mc.player, "FakePlayer");
     }
 
     @Override
@@ -35,6 +32,7 @@ public class FakePlayer extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onDisconnect(DisconnectEvent e) {
         fakePlayer = null;
         toggle();

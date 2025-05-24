@@ -12,6 +12,7 @@ public class PlayerCountComponent extends AbstractOneTextComponent {
     }
 
     @Override
+    @SuppressWarnings("DataFlowIssue")
     public String getText() {
         return "Players " + Formatting.WHITE + mc.player.networkHandler.getPlayerList().size();
     }

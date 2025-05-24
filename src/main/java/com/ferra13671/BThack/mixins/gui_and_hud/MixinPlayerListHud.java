@@ -38,6 +38,7 @@ public abstract class MixinPlayerListHud {
         cir.cancel();
     }
 
+    @SuppressWarnings("DataFlowIssue")
     @Inject(method = "collectPlayerEntries", at = @At(value = "HEAD"), cancellable = true)
     public void modifyCollectPlayerEntries(CallbackInfoReturnable<List<PlayerListEntry>> cir) {
         if (BThack.isFuturePresent()) return;

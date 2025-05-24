@@ -47,11 +47,13 @@ public class ChestStealer extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onSetScreen(GuiOpenEvent e) {
         if (!(mc.currentScreen instanceof GenericContainerScreen)) active = false;
     }
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onUpdate(ClientTickEvent e) {
         if (nullCheck()) return;
 
@@ -104,10 +106,10 @@ public class ChestStealer extends Module {
         }
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public boolean checkFullInventory() {
-        for (int i = 0; i < 36; i++) {
+        for (int i = 0; i < 36; i++)
             if (mc.player.getInventory().getStack(i).getItem() == Items.AIR) return false;
-        }
         return true;
     }
 }

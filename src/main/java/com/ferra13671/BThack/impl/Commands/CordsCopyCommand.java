@@ -12,6 +12,7 @@ public class CordsCopyCommand extends AbstractCommand {
     }
 
     @Override
+    @SuppressWarnings("DataFlowIssue")
     public void compile(LiteralArgumentBuilder<CommandSource> builder) {
         builder.executes(context -> {
             try {

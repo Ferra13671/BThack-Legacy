@@ -46,12 +46,4 @@ public interface IPlayerMoveC2SPacket {
     @Mutable
     @Accessor("onGround")
     void setOnGround(boolean onGround);
-
-    @Mutable
-    @Accessor("changePosition")
-    void setChangePosition(boolean changePosition);
-
-    @Mutable
-    @Accessor("changeLook")
-    void setChangeLook(boolean changeLook);
 }

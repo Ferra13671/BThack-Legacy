@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.core.Client.Systems.ConfigSystem;
 
+@SuppressWarnings("CallToPrintStackTrace")
 public abstract class SubConfig {
 
     public final void save() {

@@ -1,6 +1,5 @@
 package com.ferra13671.BThack.mixins.baritone;
 
-
 import baritone.api.utils.Helper;
 import com.ferra13671.BThack.core.Client.ModuleList;
 import net.minecraft.text.MutableText;

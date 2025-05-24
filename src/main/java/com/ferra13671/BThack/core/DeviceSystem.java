@@ -13,6 +13,7 @@ public class DeviceSystem {
             /*
             When trying to get FontMetrics on the phone, a HeadlessException will be thrown because Java will not be able to get the display information.
              */
+            @SuppressWarnings("unused")
             FontMetrics metrics = new BufferedImage(5, 5, BufferedImage.TYPE_INT_RGB).getGraphics().getFontMetrics();
         } catch (HeadlessException exception) {
             launchDevice = LaunchDevice.PHONE;

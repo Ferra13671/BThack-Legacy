@@ -36,6 +36,7 @@ public class PlaceTask extends ActionBotTask {
     }
 
     @Override
+    @SuppressWarnings("DataFlowIssue")
     public void play() throws ThreadClosedException {
         PlaceThread3D buildThread3D = new PlaceThread3D();
         buildThread3D.set3DSchematic(1, new ArrayList<>(List.of(new Vec3d(mc.player.getX() + x, mc.player.getY() + y, mc.player.getZ() + z))), new BlockPos(0,0,0));

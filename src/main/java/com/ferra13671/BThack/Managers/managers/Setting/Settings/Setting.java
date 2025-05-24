@@ -62,6 +62,7 @@ public abstract class Setting<T> {
 
     public abstract AbstractSetting<? extends Setting<T>> asSettingButton(ModuleButton parent, int offset);
 
+    @SuppressWarnings("unchecked")
     public <S extends Setting<T>> S inCategory(CategorySetting categorySetting) {
         categorySetting.getValue().add(this);
         inCategory = true;

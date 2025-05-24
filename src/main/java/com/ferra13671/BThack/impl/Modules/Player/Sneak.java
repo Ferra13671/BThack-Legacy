@@ -16,12 +16,11 @@ public class Sneak extends Module {
 
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onInputUpdate(UpdateInputEvent e) {
         if (mode.getValue().equals("Always"))
             InputUtils.setSneaking(true);
-        else {
-            if (mc.player.input.movementForward != 0 || mc.player.input.movementSideways != 0)
+        else if (mc.player.input.movementForward != 0 || mc.player.input.movementSideways != 0)
                 InputUtils.setSneaking(true);
-        }
     }
 }

@@ -13,6 +13,7 @@ public class EntitiesNearbyCommand extends AbstractCommand {
     }
 
     @Override
+    @SuppressWarnings("DataFlowIssue")
     public void compile(LiteralArgumentBuilder<CommandSource> builder) {
         builder.executes(context -> {
             int a = 0;

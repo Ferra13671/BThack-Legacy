@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.mixins.block;
 
 import com.ferra13671.BThack.core.Client.ModuleList;
-import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Mc;
 import com.ferra13671.BThack.api.Utils.DataList.BlockList;
 import com.ferra13671.BThack.api.Utils.DataList.DataLists;
 import com.ferra13671.BThack.impl.Modules.Render.Xray;
@@ -34,6 +34,7 @@ public class MixinBlock implements Mc {
         }
     }
 
+    @SuppressWarnings("ConstantValue")
     @Inject(method = "getVelocityMultiplier", at = @At("HEAD"), cancellable = true)
     public void modifyGetVelocityMultiplier(CallbackInfoReturnable<Float> cir) {
         if (ModuleList.noSlow.isEnabled()) {
@@ -49,6 +50,7 @@ public class MixinBlock implements Mc {
         }
     }
 
+    @SuppressWarnings("UnreachableCode")
     @Inject(method = "getSlipperiness", at = @At("HEAD"), cancellable = true)
     public void modifyGetSlipperiness(CallbackInfoReturnable<Float> cir) {
         Block block = (Block) (Object) this;

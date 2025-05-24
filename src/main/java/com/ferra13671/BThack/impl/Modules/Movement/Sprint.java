@@ -59,6 +59,7 @@ public class Sprint extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onTick(ClientTickEvent e) {
         if (nullCheck()) return;
 
@@ -81,6 +82,7 @@ public class Sprint extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onInputUpdate(UpdateInputEvent e) {
         if (!strafe.getValue()) return;
         if (!(mc.player.input instanceof KeyboardInput)) return;
@@ -91,6 +93,7 @@ public class Sprint extends Module {
         }
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public boolean needSprint() {
         if (nullCheck()) return false;
 
@@ -102,6 +105,7 @@ public class Sprint extends Module {
                 && !mc.player.getAbilities().flying;
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public boolean isMoving() {
         return
                 !mc.player.isSneaking()

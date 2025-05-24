@@ -15,7 +15,7 @@ import com.ferra13671.BThack.managers.managers.TravelChange.TravelChanger;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.*;
 import com.ferra13671.BThack.api.Utils.Modules.StrafeUtils;
-import com.ferra13671.BThack.api.Utils.Grim.GrimUtils;
+import com.ferra13671.BThack.api.Utils.GrimUtils;
 import com.ferra13671.BThack.api.Utils.Rotate.RotateUtils;
 import com.ferra13671.BThack.impl.Modules.Player.AutoFirework;
 import com.ferra13671.BThack.mixins.accessor.entity.IEntity;
@@ -485,11 +485,10 @@ public class ElytraFlight extends Module {
         return standardValue;
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public float bounceYawRotate(float standardValue) {
-        if (strafing.getValue()) {
-            if (!mc.player.verticalCollision)
-                return StrafeUtils.getPlayerYawOnKeybindings();
-        }
+        if (strafing.getValue() && !mc.player.verticalCollision)
+            return StrafeUtils.getPlayerYawOnKeybindings();
         return mc.player.isOnGround() ? Managers.TRAVEL_CHANGE_MANAGER.getLastYaw() : standardValue;
     }
 
@@ -769,7 +768,7 @@ public class ElytraFlight extends Module {
 
 
     //---------1.12.2 Control Mode---------//
-    @SuppressWarnings("ConstantConditions")
+    @SuppressWarnings({"ConstantConditions", "ExtractMethodRecommender"})
     private void controlMode(PlayerTravelEvent event) {
         /* States and movement input */
         double currentSpeed = Math.sqrt(mc.player.velocity.x * mc.player.velocity.x + mc.player.velocity.z * mc.player.velocity.z);
@@ -792,7 +791,7 @@ public class ElytraFlight extends Module {
 
         moveDown = mc.options.sneakKey.isPressed();
 
-        /* Dynamic down speed */
+        //Dynamic down speed
         double calcDownSpeed;
         if (dynamicDownSpeed.getValue()) {
             double minDownSpeed = Math.min(downSpeedC.getValue(), dynamicDownSpeedC.getValue());
@@ -1070,7 +1069,7 @@ public class ElytraFlight extends Module {
                     rotation = new Vec2f(rotation.x, _packetPitch);
 
                 /* Cancels rotation packets if player is not moving and not clicking */
-                cancelRotation = _isStandingStill && ((!mc.options.useKey.isPressed() && !mc.options.attackKey.isPressed() && blockInteract.getValue()) || !blockInteract.getValue());
+                cancelRotation = _isStandingStill && ((!mc.options.useKey.isPressed() && !mc.options.attackKey.isPressed()) || !blockInteract.getValue());
             }
         }
 

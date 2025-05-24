@@ -72,6 +72,7 @@ public class Zoom extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onKey(InputEvent.KeyInputEvent e) {
         if (e.getKeyCode() == holdKey.getValue() && toggleMode.getValue().equals("Hold")) {
             if (e.getAction() == InputEvent.KeyInputEvent.Action.PRESS) {

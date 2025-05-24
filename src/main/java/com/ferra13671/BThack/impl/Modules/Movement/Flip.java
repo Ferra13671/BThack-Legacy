@@ -9,21 +9,18 @@ public class Flip extends OneActionModule {
 
     public final BooleanSetting saveSpeed = new BooleanSetting("Save Speed", this, true);
 
-
     @Override
+    @SuppressWarnings("DataFlowIssue")
     public void onEnable() {
         if (nullCheck()) {
             toggle();
             return;
         }
 
-        double mX = mc.player.velocity.x;
-        double mZ = mc.player.velocity.z;
-
         mc.player.setYaw(mc.player.getYaw() - 180);
         if (saveSpeed.getValue()) {
-            mc.player.velocity.x = -mX;
-            mc.player.velocity.z = -mZ;
+            mc.player.velocity.x *= -1;
+            mc.player.velocity.z *= -1;
         }
     }
 }

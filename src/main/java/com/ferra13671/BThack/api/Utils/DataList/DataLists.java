@@ -2,7 +2,7 @@ package com.ferra13671.BThack.api.Utils.DataList;
 
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.core.Client.Systems.FileSystem.JsonUtils;
-import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Mc;
 import com.ferra13671.BThack.managers.Managers;
 import com.ferra13671.BThack.api.Plugin.Plugin;
 import com.ferra13671.BThack.api.Plugin.PluginSystem;
@@ -115,8 +115,9 @@ public class DataLists implements Mc {
         inited = true;
     }
 
+    @SuppressWarnings({"unchecked", "unused"})
     public static <T extends DataList<?, ?>> T get(String key, Class<T> clazz) {
-        return (T) dataLists.get(key); //Ignore the warning from IntelliJ IDEA
+        return (T) dataLists.get(key);
     }
 
     public static void add(DataList<?, ?> dataList) {

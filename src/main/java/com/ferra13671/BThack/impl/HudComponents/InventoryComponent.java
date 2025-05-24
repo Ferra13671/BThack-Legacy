@@ -20,6 +20,7 @@ public class InventoryComponent extends HudComponent {
     }
 
     @Override
+    @SuppressWarnings("DataFlowIssue")
     public void render() {
         if (nullCheck()) return;
 

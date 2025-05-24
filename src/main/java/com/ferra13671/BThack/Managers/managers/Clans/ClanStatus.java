@@ -5,9 +5,6 @@ public enum ClanStatus {
     NEUTRAL("Neutral"),
     ENEMY("Enemy");
 
-
-
-
     private final String name;
 
     ClanStatus(String name) {

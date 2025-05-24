@@ -43,7 +43,7 @@ public class NoRender extends Module {
     }
 
     @EventSubscriber
-    @SuppressWarnings("unused")
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onPacketReceive(PacketEvent.Receive e) {
         if (nullCheck()) return;
 

@@ -10,6 +10,7 @@ import com.ferra13671.MegaEvents.Base.EventSubscriber;
 public class NoFriendDamage extends Module {
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onAttack(AttackEntityEvent e) {
         if (nullCheck()) return;
 

@@ -1,6 +1,5 @@
 package com.ferra13671.BThack.api.Utils;
 
-import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Utils.Rotate.RotateUtils;
 import com.ferra13671.BThack.mixins.accessor.entity.IEntity;
 import com.mojang.authlib.GameProfile;
@@ -20,19 +19,20 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public final class PlayerUtils implements Mc {
 
+    @SuppressWarnings("DataFlowIssue")
     public static boolean isInWater() {
         return !mc.player.firstUpdate && ((IEntity) mc.player).getFluidHeight().getDouble(FluidTags.WATER) > 0.0;
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public static double calcMoveYaw() {
         float yawIn = mc.player.yaw;
         float moveForward = calcInput(mc.options.forwardKey, mc.options.backKey);
         float moveSideways = calcInput(mc.options.leftKey, mc.options.rightKey);
         float yaw = yawIn;
 
-        if (yawIn == 0) {
+        if (yawIn == 0)
             yaw = mc.player.yaw;
-        }
 
         float strafe = 90 * moveSideways;
         strafe *= (moveForward != 0F) ? moveForward * 0.5F : 1F;
@@ -64,6 +64,7 @@ public final class PlayerUtils implements Mc {
         return createNewFakePlayer(parent, new GameProfile(UUID.randomUUID(), name));
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public static PlayerEntity createNewFakePlayer(PlayerEntity parent, GameProfile profile) {
         OtherClientPlayerEntity entity = new OtherClientPlayerEntity(mc.world, profile);
         entity.copyPositionAndRotation(parent);
@@ -91,6 +92,7 @@ public final class PlayerUtils implements Mc {
         return entity;
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public static void removeEntity(Entity entity) {
         mc.world.removeEntity(entity.getId(), Entity.RemovalReason.DISCARDED);
         entity.setRemoved(Entity.RemovalReason.DISCARDED);
@@ -126,16 +128,17 @@ public final class PlayerUtils implements Mc {
         return getDimension().equals("the_end");
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public static String getDimension() {
         return mc.world.getRegistryKey().getValue().getPath();
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public static boolean isMoving() {
-        if (mc.player.input != null)
-            return mc.player.input.movementForward != 0 || mc.player.input.movementSideways != 0;
-        return false;
+        return mc.player.input != null && (mc.player.input.movementForward != 0 || mc.player.input.movementSideways != 0);
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public static void closeHandledScreen() {
         RenderSystem.recordRenderCall(() -> mc.player.closeHandledScreen());
     }

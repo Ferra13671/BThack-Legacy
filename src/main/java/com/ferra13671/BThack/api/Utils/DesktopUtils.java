@@ -1,7 +1,6 @@
 package com.ferra13671.BThack.api.Utils;
 
 import com.ferra13671.BThack.BThack;
-import com.ferra13671.BThack.api.Interfaces.Mc;
 import net.minecraft.util.Util;
 
 public final class DesktopUtils implements Mc {

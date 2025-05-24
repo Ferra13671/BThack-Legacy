@@ -18,6 +18,7 @@ public class AutoMend extends Module {
 
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onTick(ClientTickEvent e) {
         if (nullCheck() || needPause()) return;
 
@@ -33,25 +34,24 @@ public class AutoMend extends Module {
     }
 
 
+    @SuppressWarnings("DataFlowIssue")
     public boolean needPause() {
         ItemStack itemStack = mc.player.getOffHandStack();
 
         if (itemStack.isEmpty()) return false;
 
-        if (ItemUtils.equalsEnchantment(itemStack, Enchantments.MENDING)) {
+        if (ItemUtils.equalsEnchantment(itemStack, Enchantments.MENDING))
             return itemStack.getDamage() != 0;
-        }
 
         return false;
     }
 
+    @SuppressWarnings("DataFlowIssue")
     private int getSlot() {
         for (int i = 0; i < 36; i++) {
             ItemStack itemStack = mc.player.getInventory().getStack(i);
-
-            if (ItemUtils.equalsEnchantment(itemStack, Enchantments.MENDING) && itemStack.getDamage() > 0) {
+            if (ItemUtils.equalsEnchantment(itemStack, Enchantments.MENDING) && itemStack.getDamage() > 0)
                 return i;
-            }
         }
 
         return -1;

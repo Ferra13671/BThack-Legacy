@@ -6,7 +6,7 @@ import com.ferra13671.BThack.api.Category.Categories;
 import com.ferra13671.BThack.api.Category.Category;
 import com.ferra13671.BThack.api.IMixin.ModifyWindow;
 import com.ferra13671.BThack.api.Module.HudComponent;
-import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Mc;
 import com.ferra13671.BThack.managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.DataList.DataLists;

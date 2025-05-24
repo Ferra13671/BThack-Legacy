@@ -31,9 +31,7 @@ import net.minecraft.util.math.Vec3d;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-
 public class TunnelTask extends ActionBotTask {
-
 
     public TunnelTask(Direction direction, double length) {
         super("Make Tunnel");
@@ -63,6 +61,7 @@ public class TunnelTask extends ActionBotTask {
     public double minZ;
     protected boolean cancel;
     private float yaw = -99999999;
+    @SuppressWarnings("DataFlowIssue")
     private final TravelChanger travelChanger = new TravelChanger(1000,
             () -> new Float[]{yaw, mc.player.getPitch()},
             () -> false,
@@ -72,6 +71,7 @@ public class TunnelTask extends ActionBotTask {
     private boolean moving = false;
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onInput(UpdateInputEvent e) {
         InputUtils.setInput(moving, false, false, false, mc.player.input.playerInput.jump(), mc.player.input.playerInput.sneak(), mc.player.input.playerInput.sprint());
         mc.player.input.movementForward = moving ? 1 : 0;
@@ -79,6 +79,7 @@ public class TunnelTask extends ActionBotTask {
     }
 
     @Override
+    @SuppressWarnings("DataFlowIssue")
     public void play() throws ThreadClosedException {
         alignAction();
 
@@ -125,13 +126,8 @@ public class TunnelTask extends ActionBotTask {
                     return;
                 }
 
-                if (!mc.player.horizontalCollision) {
-                    x = mc.player.getX() + (RotateUtils.getCordFactorFromDirection((int) yaw)[0]);
-                    z = mc.player.getZ() + (RotateUtils.getCordFactorFromDirection((int) yaw)[1]);
-                } else {
-                    x = mc.player.getX() + (RotateUtils.getCordFactorFromDirection((int) yaw)[0]);
-                    z = mc.player.getZ() + (RotateUtils.getCordFactorFromDirection((int) yaw)[1]);
-                }
+                x = mc.player.getX() + (RotateUtils.getCordFactorFromDirection((int) yaw)[0]);
+                z = mc.player.getZ() + (RotateUtils.getCordFactorFromDirection((int) yaw)[1]);
 
                 blockPos1 = BlockPos.ofFloored(x, y, z);
                 blockPos2 = new BlockPos(blockPos1.getX(), blockPos1.getY() + 1, blockPos1.getZ());
@@ -183,14 +179,17 @@ public class TunnelTask extends ActionBotTask {
         }
     }
 
+    @SuppressWarnings("DataFlowIssue")
     private boolean toFarX() {
         return mc.player.getX() > maxX || mc.player.getX() < minX;
     }
 
+    @SuppressWarnings("DataFlowIssue")
     private boolean toFarZ() {
         return mc.player.getZ() > maxZ || mc.player.getZ() < minZ;
     }
 
+    @SuppressWarnings("DataFlowIssue")
     private boolean checkLava() {
         double x = mc.player.getX() + (RotateUtils.getCordFactorFromDirection((int) yaw)[0] * 2);
         double y = mc.player.getY() + 0.5;
@@ -205,19 +204,19 @@ public class TunnelTask extends ActionBotTask {
         ));
 
         for (BlockPos pos : blockPosData) {
-            if (PlaceManager.lavas.contains(mc.world.getBlockState(pos).getBlock())) {
+            if (PlaceManager.lavas.contains(mc.world.getBlockState(pos).getBlock()))
                 return true;
-            } else if (PlaceManager.lavas.contains(mc.world.getBlockState(new BlockPos(pos.getX(), pos.getY() - 1, pos.getZ())).getBlock())) {
+            else if (PlaceManager.lavas.contains(mc.world.getBlockState(new BlockPos(pos.getX(), pos.getY() - 1, pos.getZ())).getBlock()))
                 return true;
-            } else if (PlaceManager.lavas.contains(mc.world.getBlockState(new BlockPos(pos.getX(), pos.getY() + 1, pos.getZ())).getBlock())) {
+            else if (PlaceManager.lavas.contains(mc.world.getBlockState(new BlockPos(pos.getX(), pos.getY() + 1, pos.getZ())).getBlock()))
                 return true;
-            } else if (PlaceManager.lavas.contains(mc.world.getBlockState(new BlockPos(pos.getX(), pos.getY() + 2, pos.getZ())).getBlock())) {
+            else if (PlaceManager.lavas.contains(mc.world.getBlockState(new BlockPos(pos.getX(), pos.getY() + 2, pos.getZ())).getBlock()))
                 return true;
-            }
         }
         return false;
     }
 
+    @SuppressWarnings("DataFlowIssue")
     private void emergencyTrap() {
         ArrayList<Vec3d> trapSchematic = new ArrayList<>(Arrays.asList(
                 new Vec3d(1,1,0),
@@ -276,11 +275,6 @@ public class TunnelTask extends ActionBotTask {
         disableScaffold(scaffoldActivated);
     }
 
-
-
-
-
-
     public Direction getDirection() {
         return this.direction;
     }
@@ -288,7 +282,6 @@ public class TunnelTask extends ActionBotTask {
     public double getLength() {
         return this.length;
     }
-
 
     public enum Direction {
         X_PLUS(1,0),
@@ -342,7 +335,6 @@ public class TunnelTask extends ActionBotTask {
                 break;
             }
         }
-
 
         ActionBotConfig.tasks.add(new TunnelTask(direction, length));
     }

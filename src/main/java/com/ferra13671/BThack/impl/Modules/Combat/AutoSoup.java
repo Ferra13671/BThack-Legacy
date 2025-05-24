@@ -24,6 +24,7 @@ public class AutoSoup extends Module {
 
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onTick(ClientTickEvent e) {
         if (nullCheck()) return;
 
@@ -34,6 +35,7 @@ public class AutoSoup extends Module {
         }
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public void autoSoupAction() {
         int slot = InventoryUtils.findItem(Items.MUSHROOM_STEW);
         if (slot == -1) return;

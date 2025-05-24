@@ -61,6 +61,7 @@ public class DiscordRPC extends Module {
 
                     discordRPC.Discord_UpdatePresence(discordRichPresence);
                 } catch (Exception exception) {
+                    //noinspection CallToPrintStackTrace
                     exception.printStackTrace();
                 }
                 thread.sleepThread(1000);

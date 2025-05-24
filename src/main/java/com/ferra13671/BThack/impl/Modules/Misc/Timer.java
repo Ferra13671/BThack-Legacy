@@ -20,6 +20,7 @@ public class Timer extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onTick(ClientTickEvent e) {
         if (nullCheck()) return;
 
@@ -29,8 +30,7 @@ public class Timer extends Module {
     @Override
     public void onDisable() {
         super.onDisable();
-        if (ModuleList.elytraFlight.isEnabled())
-            if (ModuleList.elytraFlight.mode.equals("Timer")) return;
+        if (ModuleList.elytraFlight.isEnabled() && ModuleList.elytraFlight.mode.getValue().equals("Timer")) return;
         Managers.TICK_MANAGER.applyTickModifier(1);
     }
 }

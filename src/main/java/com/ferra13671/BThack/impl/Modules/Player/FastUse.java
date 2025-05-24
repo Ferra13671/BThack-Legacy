@@ -29,10 +29,10 @@ public class FastUse extends Module {
     public final BooleanSetting expBottle = new BooleanSetting("ExpBottle", this, true, () -> !throwables.getValue());
     public final BooleanSetting others = new BooleanSetting("Others", this, true);
 
-
     private boolean sending = false;
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onUpdate(ClientTickEvent e) {
         if (nullCheck()) return;
 
@@ -56,6 +56,7 @@ public class FastUse extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onPacketSend(PacketEvent.Send e) {
         if (sending) return;
         if (e.getPacket() instanceof PlayerInteractItemC2SPacket packet) {
@@ -73,8 +74,7 @@ public class FastUse extends Module {
                         item instanceof SplashPotionItem
                 )
                     fastUseAction();
-            if (expBottle.getValue() && !throwables.getValue())
-                if (item instanceof ExperienceBottleItem)
+            if (expBottle.getValue() && !throwables.getValue() && item instanceof ExperienceBottleItem)
                     fastUseAction();
         }
         if (e.getPacket() instanceof PlayerInteractBlockC2SPacket packet) {
@@ -82,9 +82,8 @@ public class FastUse extends Module {
 
             Item item = hand == Hand.MAIN_HAND ? mc.player.getMainHandStack().getItem() : mc.player.getOffHandStack().getItem();
 
-            if (throwables.getValue()) {
+            if (throwables.getValue())
                 if (item instanceof FireworkRocketItem) fastUseAction();
-            }
         }
     }
 

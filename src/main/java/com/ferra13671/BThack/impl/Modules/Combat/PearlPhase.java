@@ -10,7 +10,7 @@ import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.SoundSystem.SoundSystem;
 import com.ferra13671.BThack.api.SoundSystem.Sounds;
 import com.ferra13671.BThack.api.Utils.*;
-import com.ferra13671.BThack.api.Utils.Grim.GrimUtils;
+import com.ferra13671.BThack.api.Utils.GrimUtils;
 import com.ferra13671.BThack.api.Utils.Rotate.RotateUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.item.Items;
@@ -55,6 +55,7 @@ public class PearlPhase extends Module {
     }
 
     @Override
+    @SuppressWarnings("DataFlowIssue")
     public void onEnable() {
         if (nullCheck()) {
             toggle();
@@ -70,6 +71,7 @@ public class PearlPhase extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onTick(ClientTickEvent e) {
         if (nullCheck()) return;
 

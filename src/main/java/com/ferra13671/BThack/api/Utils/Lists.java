@@ -226,6 +226,7 @@ public final class Lists {
     static {
         for (Field field : Enchantments.class.getFields()) {
             try {
+                //noinspection unchecked
                 registerEnchantment((RegistryKey<Enchantment>) field.get(null));
             } catch (IllegalAccessException ignored) {}
         }

@@ -6,7 +6,7 @@ import com.ferra13671.BThack.core.Render.Font.FontUtils;
 import com.ferra13671.BThack.core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Animation.Animation;
 import com.ferra13671.BThack.api.Animation.Easing;
-import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Mc;
 import com.ferra13671.BThack.api.GuiSystem.ButtonClickInfo;
 import com.ferra13671.BThack.api.SoundSystem.Sound;
 import com.ferra13671.BThack.api.SoundSystem.SoundSystem;
@@ -122,12 +122,9 @@ public class Button implements Mc {
         return hovered;
     }
 
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean isHided() {
         return hided;
-    }
-
-    public boolean isAllowUpdate() {
-        return allowUpdate;
     }
 
     public boolean isSelected() {

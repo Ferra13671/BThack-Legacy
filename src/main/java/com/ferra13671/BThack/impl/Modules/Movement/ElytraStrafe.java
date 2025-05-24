@@ -11,18 +11,17 @@ import net.minecraft.util.math.Vec3d;
 public class ElytraStrafe extends Module {
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onTick(ClientTickEvent e) {
         if (nullCheck()) return;
 
-        if (mc.player != null) {
-            if (mc.player.isGliding()) {
-                Vec3d velocity = mc.player.getVelocity();
+        if (mc.player.isGliding()) {
+            Vec3d velocity = mc.player.getVelocity();
 
-                double currentPlayerSpeed = Math.sqrt(velocity.x * velocity.x + velocity.z * velocity.z);
-                double[] strafeMovements = StrafeUtils.getMoveFactors(currentPlayerSpeed);
-                mc.player.velocity.x = strafeMovements[0];
-                mc.player.velocity.z = strafeMovements[1];
-            }
+            double currentPlayerSpeed = Math.sqrt(velocity.x * velocity.x + velocity.z * velocity.z);
+            double[] strafeMovements = StrafeUtils.getMoveFactors(currentPlayerSpeed);
+            mc.player.velocity.x = strafeMovements[0];
+            mc.player.velocity.z = strafeMovements[1];
         }
     }
 }

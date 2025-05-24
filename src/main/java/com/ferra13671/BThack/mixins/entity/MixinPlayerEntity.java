@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.mixins.entity;
 
 import com.ferra13671.BThack.core.Client.ModuleList;
-import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Mc;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
@@ -18,12 +18,14 @@ public abstract class MixinPlayerEntity extends Entity implements Mc {
         super(type, world);
     }
 
+    @SuppressWarnings({"ConstantValue", "UnreachableCode"})
     @ModifyArg(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;setVelocity(Lnet/minecraft/util/math/Vec3d;)V", ordinal = 0))
     public Vec3d modifySetVelocityOnAttack(Vec3d vec3d) {
         if ((Object) this == mc.player && ModuleList.keepSprint.isEnabled()) return getVelocity();
         else return vec3d;
     }
 
+    @SuppressWarnings({"ConstantValue", "UnreachableCode"})
     @ModifyArg(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;setSprinting(Z)V"))
     public boolean modifySetSprintingOnAttack(boolean sprinting) {
         if ((Object) this == mc.player && ModuleList.keepSprint.isEnabled()) return isSprinting();

@@ -38,6 +38,7 @@ public class AutoDisconnect extends Module {
 
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onPlayerTick(ClientTickEvent e) {
         if (nullCheck()) return;
 
@@ -54,6 +55,7 @@ public class AutoDisconnect extends Module {
             totemsAction();
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public void autoDisconnectAction() {
         float playerHP = mc.player.getHealth() + mc.player.getAbsorptionAmount();
         double minHP = minHealth.getValue();
@@ -65,6 +67,7 @@ public class AutoDisconnect extends Module {
         }
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public void introvertAction() {
         for (PlayerEntity player : mc.world.getPlayers()) {
             if (player == mc.player) continue;
@@ -83,6 +86,7 @@ public class AutoDisconnect extends Module {
         }
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public void heightAction() {
         if (mc.player.getY() < minHeight.getValue()) {
             mc.player.networkHandler.onDisconnect(new DisconnectS2CPacket(Text.literal(String.format(getChatName() + " Your position on Y was less than %s. You've been disconnected.", minHeight.getValue()))));
@@ -90,6 +94,7 @@ public class AutoDisconnect extends Module {
         }
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public void totemsAction() {
         int totems = 0;
 

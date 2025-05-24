@@ -21,16 +21,14 @@ public class DurabilityComponent extends HudComponent {
     }
 
     @Override
+    @SuppressWarnings("DataFlowIssue")
     public void render() {
-        String text;
-
         BThackRender.drawHudPlate(getX(), getY(), getX() + width, getY() + height);
 
-        if (mode.getValue().equals("Full 1")) {
-            text = "Left HandD: " + Formatting.WHITE + ItemUtils.getItemDurability(mc.player.getOffHandStack()) + Formatting.RESET + "  Right HandD: " + Formatting.WHITE + ItemUtils.getItemDurability(mc.player.getInventory().getMainHandStack());
-        } else {
-            text = "Durability: " + Formatting.WHITE + ItemUtils.getItemDurability(mc.player.getInventory().getMainHandStack());
-        }
+        String text = mode.getValue().equals("Full 1") ?
+                "Left HandD: " + Formatting.WHITE + ItemUtils.getItemDurability(mc.player.getOffHandStack()) + Formatting.RESET + "  Right HandD: " + Formatting.WHITE + ItemUtils.getItemDurability(mc.player.getInventory().getMainHandStack()) :
+                        "Durability: " + Formatting.WHITE + ItemUtils.getItemDurability(mc.player.getInventory().getMainHandStack());
+
         drawText(text, getX() + 3, getY() + 3);
         width = FontUtils.getTextWidth(text, FontRenderManager.DrawMode.NORMAL_BOLD) + 6;
         height = FontUtils.getTextHeight(text, FontRenderManager.DrawMode.NORMAL_BOLD) + 6;

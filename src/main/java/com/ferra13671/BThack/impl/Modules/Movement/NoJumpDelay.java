@@ -10,6 +10,7 @@ import com.ferra13671.MegaEvents.Base.EventSubscriber;
 public class NoJumpDelay extends Module {
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onUpdate(ClientTickEvent e) {
         if (nullCheck()) return;
 

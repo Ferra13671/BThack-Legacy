@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.mixins.render;
 
-import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Mc;
 import com.ferra13671.BThack.api.Utils.DataList.BlockList;
 import com.ferra13671.BThack.api.Utils.DataList.DataLists;
 import com.ferra13671.BThack.impl.Modules.Render.Xray;
@@ -21,7 +21,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class MixinSodiumBlockOcclusionCache implements Mc {
 
 
-	@Inject(at = @At("HEAD"), method = "shouldDrawSide", cancellable = true)
+	@SuppressWarnings({"DataFlowIssue", "UnresolvedMixinReference"})
+    @Inject(at = @At("HEAD"), method = "shouldDrawSide", cancellable = true)
 	public void modifyShouldDrawSide(BlockState state, BlockView world, BlockPos pos, Direction side, CallbackInfoReturnable<Boolean> cir) {
 		if (Xray.doXray) {
 			BlockState state2 = mc.world.getBlockState(pos);

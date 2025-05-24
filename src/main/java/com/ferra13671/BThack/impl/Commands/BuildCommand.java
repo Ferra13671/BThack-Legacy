@@ -13,6 +13,7 @@ public class BuildCommand extends AbstractCommand {
     }
 
     @Override
+    @SuppressWarnings("DataFlowIssue")
     public void compile(LiteralArgumentBuilder<CommandSource> builder) {
         builder.then(arg("x delta", Arguments.DOUBLE).then(arg("y delta", Arguments.DOUBLE).then(arg("z delta", Arguments.DOUBLE).executes(context -> {
             ItemUtils.useItemOnBlock(BlockPos.ofFloored(mc.player.getX() + context.getArgument("x delta", Double.class), mc.player.getY() + context.getArgument("y delta", Double.class), mc.player.getZ() + context.getArgument("z delta", Double.class)));

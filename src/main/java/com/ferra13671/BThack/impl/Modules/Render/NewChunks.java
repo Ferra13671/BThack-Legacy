@@ -174,6 +174,7 @@ public class NewChunks extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onTick(ClientTickEvent e) {
         if (nullCheck()) {
             clearChunks();
@@ -212,6 +213,7 @@ public class NewChunks extends Module {
         }
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public void liquidDirsSearchAction(BlockPos pos, ChunkPos chunkPos) {
         for (Direction dir: searchDirs) {
             try {
@@ -232,6 +234,7 @@ public class NewChunks extends Module {
         } catch (Exception ignored) {}
     }
 
+    @SuppressWarnings({"DataFlowIssue", "OptionalGetWithoutIsPresent"})
     public void chunkDataSearchAction(ChunkDataS2CPacket packet) {
         ChunkPos oldPos = new ChunkPos(packet.getChunkX(), packet.getChunkZ());
         if (newChunks.contains(oldPos) || oldChunks.contains(oldPos)) return;
@@ -239,10 +242,8 @@ public class NewChunks extends Module {
         if (mc.world.getChunkManager().getChunk(packet.getChunkX(), packet.getChunkZ()) == null) {
             WorldChunk chunk = new WorldChunk(mc.world, oldPos);
             try {
-                CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
-                    chunk.loadFromPacket(packet.getChunkData().getSectionsDataBuf(), new NbtCompound(),
-                            packet.getChunkData().getBlockEntities(packet.getChunkX(), packet.getChunkZ()));
-                }, taskExecutor);
+                CompletableFuture<Void> future = CompletableFuture.runAsync(() -> chunk.loadFromPacket(packet.getChunkData().getSectionsDataBuf(), new NbtCompound(),
+                        packet.getChunkData().getBlockEntities(packet.getChunkX(), packet.getChunkZ())), taskExecutor);
                 future.join();
             } catch (CompletionException ignored) {}
 
@@ -373,6 +374,7 @@ public class NewChunks extends Module {
                 }
 
                 if (firstChunkAppearsNew) isNewChunk = true;
+                //noinspection ConstantValue
                 if (isNewChunk && !chunkIsBeingUpdated && ((PlayerUtils.isInEnd()) ? isNewChunk : !isOldGeneration)) {
                     if (addChunkWithCheck(oldPos, newChunks)) return;
                 } else if (!isNewChunk && !chunkIsBeingUpdated && isOldGeneration) {

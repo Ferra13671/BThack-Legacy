@@ -50,6 +50,7 @@ public class SuperInstaMine extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onTick(ClientTickEvent e) {
         if (nullCheck()) return;
 
@@ -57,6 +58,7 @@ public class SuperInstaMine extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onAttack(AttackBlockEvent e) {
         if (e.getBlockPos() == null || !BlockUtils.canBreak(e.getBlockPos())) return;
 
@@ -65,9 +67,7 @@ public class SuperInstaMine extends Module {
         switch (e.getDirection()) {
             case DOWN -> matrix4f.rotate((float) Math.toRadians(90), -1, 0, 0);
             case UP -> matrix4f.rotate((float) Math.toRadians(90), 1, 0, 0);
-            case NORTH -> {
-                //nothing
-            }
+            case NORTH -> {}
             case SOUTH -> matrix4f.rotate((float) Math.toRadians(180), 0, 1, 0);
             case WEST -> matrix4f.rotate((float) Math.toRadians(90), 0, 1, 0);
             case EAST -> matrix4f.rotate((float) Math.toRadians(90), 0, -1, 0);
@@ -75,6 +75,7 @@ public class SuperInstaMine extends Module {
         addBlocks(pos, length.getValue().intValue(), extraWidth.getValue().intValue(), extraHeight.getValue().intValue());
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public void mineAction() {
         List<BlockState> removeKeys = new ArrayList<>();
         poses.forEach((block, list) -> {
@@ -130,6 +131,7 @@ public class SuperInstaMine extends Module {
         }
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public void addBlock(BlockPos pos) {
         BlockState block = mc.world.getBlockState(pos);
         if (poses.containsKey(block)) {

@@ -20,6 +20,7 @@ public class PacketPlace extends Module {
 
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onPlaceBlock(UseBlockEvent e) {
 
         e.setCancelled(true);

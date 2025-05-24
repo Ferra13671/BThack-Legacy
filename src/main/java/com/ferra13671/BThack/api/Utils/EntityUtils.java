@@ -34,6 +34,7 @@ public final class EntityUtils {
         return new Vec3d(x, y, z);
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public static Box getLerpedBox(BlockEntity e, float partialTicks) {
         Vec3d offset = getLerpedPos(e, partialTicks).subtract(e.getPos().toCenterPos());
         return BlockUtils.getBox(e).offset(offset);

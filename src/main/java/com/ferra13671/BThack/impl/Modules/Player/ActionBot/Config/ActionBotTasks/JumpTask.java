@@ -17,11 +17,11 @@ public class JumpTask extends ActionBotTask {
         this.taskDescription = List.of(
                 "When the task is activated, the player starts jumping."
         );
-
     }
 
 
     @Override
+    @SuppressWarnings("DataFlowIssue")
     public void play() throws ThreadClosedException {
         mc.player.jump();
         sleepThread(50);
@@ -34,9 +34,7 @@ public class JumpTask extends ActionBotTask {
     }
 
     @Override
-    public void save(JsonObject jsonObject) {
-        //No action
-    }
+    public void save(JsonObject jsonObject) {}
 
     @Override
     public void load(JsonObject jsonObject) {

@@ -53,6 +53,7 @@ public class AutoFish extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onTick(ClientTickEvent e) {
         if (nullCheck())  return;
 
@@ -77,12 +78,10 @@ public class AutoFish extends Module {
         if(soundBiteDetected) {
             reelInTimer = biteDelay.getValue().intValue();
             soundBiteDetected = false;
-        } else if (mc.player.fishHook.getHookedEntity() != null) {
+        } else if (mc.player.fishHook.getHookedEntity() != null)
             reelInTimer = biteDelay.getValue().intValue();
-        }
 
-        if(reelInTimer == 0)
-        {
+        if(reelInTimer == 0) {
             ItemUtils.useItem(Hand.MAIN_HAND, true, mc.player.getYaw(), mc.player.getPitch());
             reelInTimer = retryDelay.getValue().intValue();
             castRodTimer = retryDelay.getValue().intValue();
@@ -90,28 +89,25 @@ public class AutoFish extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onPacket(PacketEvent.Receive e) {
-        if (e.getPacket() instanceof PlaySoundS2CPacket packet) {
-            if (packet.getSound().value() == SoundEvents.ENTITY_FISHING_BOBBER_SPLASH) {
-                if (!isFishing()) return;
+        if (e.getPacket() instanceof PlaySoundS2CPacket packet && packet.getSound().value() == SoundEvents.ENTITY_FISHING_BOBBER_SPLASH) {
+            if (!isFishing()) return;
 
-                double distance = MathUtils.getDistance(new Vec3d(packet.getX(), packet.getY(), packet.getZ()), mc.player.fishHook.getPos());
-                if (distance < validRange.getValue()) {
-                    soundBiteDetected = true;
-                }
-            }
+            double distance = MathUtils.getDistance(new Vec3d(packet.getX(), packet.getY(), packet.getZ()), mc.player.fishHook.getPos());
+            if (distance < validRange.getValue())
+                soundBiteDetected = true;
         }
     }
 
-
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     private boolean isFishing() {
         return mc.player != null && mc.player.fishHook != null
                 && !mc.player.fishHook.isRemoved()
                 && mc.player.getMainHandStack().isOf(Items.FISHING_ROD);
     }
 
-
-
+    @SuppressWarnings("DataFlowIssue")
     private boolean swapToBestRod() {
         int bestRodQuality = -1;
         int bestRodSlot = -1;
@@ -136,11 +132,10 @@ public class AutoFish extends Module {
 
         if (bestRodSlot != -1) {
             if (bestRodSlot == mc.player.getInventory().selectedSlot) return true;
-            if (bestRodSlot < 9) {
+            if (bestRodSlot < 9)
                 InventoryUtils.swapItem(bestRodSlot);
-            } else {
+            else
                 InventoryUtils.swapItemOnInventory(mc.player.getInventory().selectedSlot, bestRodSlot);
-            }
             return true;
         }
         return false;

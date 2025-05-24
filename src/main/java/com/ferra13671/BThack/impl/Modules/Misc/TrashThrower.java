@@ -18,7 +18,6 @@ public class TrashThrower extends Module {
 
     public final NumberSetting delay = new NumberSetting("Delay", this, 200, 50, 1000, true);
 
-
     private boolean firstOpened = true;
     private final Ticker ticker = new Ticker();
 
@@ -35,6 +34,7 @@ public class TrashThrower extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onTick(ClientTickEvent e) {
         if (nullCheck()) return;
 

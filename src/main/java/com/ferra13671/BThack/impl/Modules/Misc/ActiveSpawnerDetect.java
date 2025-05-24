@@ -88,11 +88,13 @@ public class ActiveSpawnerDetect extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onDisconnect(DisconnectEvent e) {
         clearChunkData();
     }
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue", "DuplicateExpressions"})
     public void onTick(ClientTickEvent event) {
         if (nullCheck()) return;
 
@@ -129,7 +131,7 @@ public class ActiveSpawnerDetect extends Module {
                                         if (caveAirFound && airFound) {
                                             spawnerPositions.add(pos);
                                             activatedSpawnerFound = true;
-                                            if (monster == ":spider") displayMessage("dungeon", pos, ":spider");
+                                            if (monster.equals(":spider")) displayMessage("dungeon", pos, ":spider");
                                             else displayMessage("dungeon", pos, "null");
                                         }
                                     } else if (monster.contains("cave_spider")) {
@@ -172,7 +174,7 @@ public class ActiveSpawnerDetect extends Module {
                                 if (chatFeedback.getValue()) {
                                     if (monster != null){
                                         if (monster.contains("zombie") || monster.contains("skeleton") || monster.contains(":spider")) {
-                                            if (monster == ":spider") displayMessage("dungeon", pos, ":spider");
+                                            if (monster.equals(":spider")) displayMessage("dungeon", pos, ":spider");
                                             else displayMessage("dungeon", pos, "null");
                                         } else if (monster.contains("cave_spider")) {
                                             displayMessage("cave_spider", pos, "null");
@@ -242,8 +244,7 @@ public class ActiveSpawnerDetect extends Module {
                             }
                         }
                     }
-                    if (blockEntity instanceof TrialSpawnerBlockEntity){
-                        TrialSpawnerBlockEntity trialspawner = (TrialSpawnerBlockEntity) blockEntity;
+                    if (blockEntity instanceof TrialSpawnerBlockEntity trialspawner){
                         BlockPos tPos = trialspawner.getPos();
                         BlockPos playerPos = new BlockPos(mc.player.getBlockX(), tPos.getY(), mc.player.getBlockZ());
                         if (playerPos.isWithinDistance(tPos, renderDistance.getValue() * 16) && trialSpawners.getValue() && !trialspawnerPositions.contains(tPos) && !noRenderPositions.contains(tPos) && !deactivatedSpawnerPositions.contains(tPos) && !spawnerPositions.contains(tPos) && trialspawner.getSpawnerState() != TrialSpawnerState.WAITING_FOR_PLAYERS) {
@@ -288,6 +289,7 @@ public class ActiveSpawnerDetect extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue", "ConstantValue"})
     public void onRender(RenderWorldLastEvent e) {
         List<RenderBox> renderBoxes = new ArrayList<>();
         List<RenderLine> renderLines = new ArrayList<>();
@@ -376,6 +378,7 @@ public class ActiveSpawnerDetect extends Module {
         }
     }
 
+    @SuppressWarnings("DataFlowIssue")
     private void displayMessage(String key, BlockPos pos, String key2) {
         if (chatFeedback.getValue()){
             switch (key) {
@@ -442,6 +445,7 @@ public class ActiveSpawnerDetect extends Module {
         removeChunksOutsideRenderDistance(noRenderPositions, renderDistanceBlocks);
     }
 
+    @SuppressWarnings("DataFlowIssue")
     private void removeChunksOutsideRenderDistance(Set<BlockPos> chunkSet, double renderDistanceBlocks) {
         chunkSet.removeIf(blockPos -> {
             BlockPos playerPos = new BlockPos(mc.player.getBlockX(), blockPos.getY(), mc.player.getBlockZ());

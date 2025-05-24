@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.core.Render.Line;
 
-import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Mc;
 import com.ferra13671.BThack.api.Utils.EntityUtils;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;

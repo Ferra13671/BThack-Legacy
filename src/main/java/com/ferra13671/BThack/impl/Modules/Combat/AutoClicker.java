@@ -32,6 +32,7 @@ public class AutoClicker extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onTick(ClientTickEvent e) {
         if (nullCheck()) return;
 
@@ -43,10 +44,12 @@ public class AutoClicker extends Module {
         }
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public boolean delayPassed() {
         return mode.getValue().equals("Cooldown") ? mc.player.getAttackCooldownProgress(0) >= 1.0 : ticker.passed(delay.getValue());
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public boolean check() {
         return !onlySword.getValue() || mc.player.getMainHandStack().getItem() instanceof SwordItem;
     }

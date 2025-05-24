@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.managers.managers.Command.CustomArguments;
 
 import com.ferra13671.BThack.managers.managers.SocialManager;
-import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Mc;
 import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.arguments.ArgumentType;
@@ -43,6 +43,7 @@ public class SocialAddArgument implements ArgumentType<String>, Mc {
     }
 
     @Override
+    @SuppressWarnings("DataFlowIssue")
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
         return CommandSource.suggestMatching(mc.getNetworkHandler().getPlayerList().stream().map(p -> p.getProfile().getName()), builder);
     }

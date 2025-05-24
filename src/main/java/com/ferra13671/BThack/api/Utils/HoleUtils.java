@@ -1,6 +1,5 @@
 package com.ferra13671.BThack.api.Utils;
 
-import com.ferra13671.BThack.api.Interfaces.Mc;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -18,24 +17,24 @@ public final class HoleUtils implements Mc {
             new BlockPos(0, -1, 0)
     };
 
+    @SuppressWarnings("DataFlowIssue")
     public static boolean isBedrockHole(BlockPos blockPos) {
         boolean isBedrockHole = true;
 
         for (BlockPos blockPos1 : holeOffsets) {
             Block block = mc.world.getBlockState(blockPos.add(blockPos1)).getBlock();
 
-            if (block != Blocks.BEDROCK) {
+            if (block != Blocks.BEDROCK)
                 isBedrockHole = false;
-            }
         }
 
-        if (mc.world.getBlockState(blockPos.add(0, 0, 0)).getBlock() != Blocks.AIR || mc.world.getBlockState(blockPos.add(0, 1, 0)).getBlock() != Blocks.AIR || mc.world.getBlockState(blockPos.add(0, 2, 0)).getBlock() != Blocks.AIR) {
+        if (mc.world.getBlockState(blockPos.add(0, 0, 0)).getBlock() != Blocks.AIR || mc.world.getBlockState(blockPos.add(0, 1, 0)).getBlock() != Blocks.AIR || mc.world.getBlockState(blockPos.add(0, 2, 0)).getBlock() != Blocks.AIR)
             isBedrockHole = false;
-        }
 
         return isBedrockHole;
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public static boolean isMutableHole(BlockPos blockPos, boolean falseIfBedrockHole) {
         if (falseIfBedrockHole)
             if (isBedrockHole(blockPos))
@@ -45,14 +44,12 @@ public final class HoleUtils implements Mc {
         for (BlockPos blockPos1 : holeOffsets) {
             Block block = mc.world.getBlockState(blockPos.add(blockPos1)).getBlock();
 
-            if (block != Blocks.OBSIDIAN && block != Blocks.BEDROCK) {
+            if (block != Blocks.OBSIDIAN && block != Blocks.BEDROCK)
                 isMutrableHole = false;
-            }
         }
 
-        if (!ignoreBlocks.contains(mc.world.getBlockState(blockPos.add(0, 0, 0)).getBlock()) || !ignoreBlocks.contains(mc.world.getBlockState(blockPos.add(0, 1, 0)).getBlock()) || !ignoreBlocks.contains(mc.world.getBlockState(blockPos.add(0, 2, 0)).getBlock())) {
+        if (!ignoreBlocks.contains(mc.world.getBlockState(blockPos.add(0, 0, 0)).getBlock()) || !ignoreBlocks.contains(mc.world.getBlockState(blockPos.add(0, 1, 0)).getBlock()) || !ignoreBlocks.contains(mc.world.getBlockState(blockPos.add(0, 2, 0)).getBlock()))
             isMutrableHole = false;
-        }
 
         return isMutrableHole;
     }

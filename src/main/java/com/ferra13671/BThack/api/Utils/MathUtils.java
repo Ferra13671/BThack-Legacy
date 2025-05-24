@@ -34,9 +34,8 @@ public final class MathUtils {
     }
 
     public static double roundToDecimal(double n, int point) {
-        if (point == 0) {
+        if (point == 0)
             return Math.floor(n);
-        }
         double factor = Math.pow(10, point);
         return Math.round(n * factor) / factor;
     }

@@ -90,6 +90,7 @@ public abstract class MixinWorldRenderer {
         if (ModuleList.shaders.isEnabled()) cir.setReturnValue(true);
     }
 
+    @SuppressWarnings("RedundantIfStatement")
     @Unique
     public boolean hasAllowedEntity(Entity entity) {
         boolean value = false;

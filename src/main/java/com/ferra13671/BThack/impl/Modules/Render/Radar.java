@@ -38,7 +38,7 @@ public class Radar extends Module {
     private final Color enemyColor = new Color(255, 0, 0);
 
     @EventSubscriber
-    @SuppressWarnings("unused")
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onRender(RenderHudPreEvent e) {
         Window sr = mc.getWindow();
         Color rectColor = new Color(0, 0, 0, opacity.getValue().floatValue());

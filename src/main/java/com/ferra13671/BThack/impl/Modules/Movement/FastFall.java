@@ -28,12 +28,12 @@ public class FastFall extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onTick(ClientTickEvent e) {
         if (nullCheck()) return;
 
-        if (!mode.getValue().equals("Timer"))
-            if (Managers.TICK_MANAGER.getTickModifier() != 1)
-                Managers.TICK_MANAGER.applyTickModifier(1);
+        if (!mode.getValue().equals("Timer") && Managers.TICK_MANAGER.getTickModifier() != 1)
+            Managers.TICK_MANAGER.applyTickModifier(1);
 
         switch (mode.getValue()) {
             case "Timer" -> timerAction();
@@ -42,6 +42,7 @@ public class FastFall extends Module {
         }
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public void timerAction() {
         if (ModuleList.timer.isEnabled())
             ModuleList.timer.setEnabled(false);
@@ -53,11 +54,13 @@ public class FastFall extends Module {
                 Managers.TICK_MANAGER.applyTickModifierWithFactor(timerSpeed.getValue());
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public void velocityAction() {
         if (Managers.FALL_DISTANCE_MANAGER.getFallDistance() >= fallDistance.getValue())
             mc.player.velocity.y = -downSpeed.getValue();
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public void posAction() {
         if (Managers.FALL_DISTANCE_MANAGER.getFallDistance() >= fallDistance.getValue())
             mc.player.setPosition(mc.player.getX(), mc.player.getY() - Managers.FALL_DISTANCE_MANAGER.getFallDistance(), mc.player.getZ());

@@ -28,11 +28,10 @@ public class TotemPopNotifier extends Module {
 
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onTotemPop(TotemPopEvent e) {
-        if (!yourselfAlso.getValue())
-            if (e.entity == mc.player) return;
-        if (friends.getValue())
-            if (Managers.FRIENDS_MANAGER.contains((PlayerEntity) e.entity)) return;
+        if (!yourselfAlso.getValue() && e.entity == mc.player) return;
+        if (friends.getValue() && Managers.FRIENDS_MANAGER.contains((PlayerEntity) e.entity)) return;
         if (!KillAuraUtils.isSuccessfulClanMember((PlayerEntity) e.entity, clanManager.getValue(), clanMode.getValue(), targetClan.getValue())) return;
 
         String text = "" + Formatting.WHITE + Formatting.BOLD + e.entity.getDisplayName().getString() + Formatting.RESET + Formatting.GOLD + " just popped " + Formatting.WHITE + Formatting.BOLD + e.totemsPopped + Formatting.RESET + Formatting.GOLD + " times!";

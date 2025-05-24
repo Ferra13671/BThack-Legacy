@@ -16,6 +16,7 @@ public abstract class MixinSkyRendering implements ModifySkyRendering {
 
     @Shadow protected abstract void tessellateStar(VertexConsumer vertexConsumer);
 
+    @SuppressWarnings("AddedMixinMembersNamePattern")
     @Override
     public void generateStarsMap() {
         if (starBuffer != null)

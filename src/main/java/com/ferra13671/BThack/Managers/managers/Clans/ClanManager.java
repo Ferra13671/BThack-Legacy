@@ -64,6 +64,7 @@ public final class ClanManager implements Initializable {
         SubConfigs.CLANS.load();
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public boolean isAlly(PlayerEntity player) {
         String name = player.getDisplayName().getString();
         return isAlly(name);

@@ -30,6 +30,7 @@ public class RightClickTask extends ActionBotTask {
     }
 
     @Override
+    @SuppressWarnings("DataFlowIssue")
     public void play() throws ThreadClosedException {
         thread.sleepThread(300);
         mc.player.setYaw(yaw);

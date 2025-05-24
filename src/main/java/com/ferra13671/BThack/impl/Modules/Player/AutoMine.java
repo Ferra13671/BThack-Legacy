@@ -66,6 +66,7 @@ public class AutoMine extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onSendMessage(SendMessageEvent e) {
         if (e.message.startsWith("#mine ")) {
             setEnabled(false);

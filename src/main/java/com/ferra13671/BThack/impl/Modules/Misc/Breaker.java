@@ -24,24 +24,22 @@ public class Breaker extends Module {
 
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onTick(ClientTickEvent e) {
         if (nullCheck() || BreakManager.isDestroying) return;
 
         List<BlockPos> blockPoses = BlockUtils.getSphere(mc.player.getBlockPos(), 4, 4, false, true, 0).stream().filter(this::check)
                 .toList();
-        List<Vec3i> schematic = new ArrayList<>();
-        schematic.addAll(blockPoses);
+        List<Vec3i> schematic = new ArrayList<>(blockPoses);
 
         BreakThread3D destroyThread3D = new BreakThread3D();
         destroyThread3D.set3DSchematic(schematic, BlockPos.ORIGIN);
         destroyThread3D.start();
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public boolean check(BlockPos pos) {
-        if (mode.getValue().equals("WhiteList")) {
-            return DataLists.get("Breaker", BlockList.class).values.contains(mc.world.getBlockState(pos).getBlock());
-        } else {
-            return !DataLists.get("Breaker", BlockList.class).values.contains(mc.world.getBlockState(pos).getBlock());
-        }
+        boolean value = DataLists.get("Breaker", BlockList.class).values.contains(mc.world.getBlockState(pos).getBlock());
+        return mode.getValue().equals("WhiteList") == value;
     }
 }

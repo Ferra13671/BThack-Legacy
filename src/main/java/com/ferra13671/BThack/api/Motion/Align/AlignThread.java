@@ -2,7 +2,7 @@ package com.ferra13671.BThack.api.Motion.Align;
 
 import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.events.Entity.UpdateInputEvent;
-import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Mc;
 import com.ferra13671.BThack.managers.Managers;
 import com.ferra13671.BThack.managers.managers.Thread.BThackThread;
 import com.ferra13671.BThack.managers.managers.Thread.ThreadClosedException;
@@ -23,6 +23,7 @@ public class AlignThread extends BThackThread implements Mc {
     private final double maxZ;
 
     public float yaw = -99999999;
+    @SuppressWarnings("DataFlowIssue")
     private final TravelChanger travelChanger = new TravelChanger(1000,
             () -> new Float[]{yaw, mc.player.getPitch()},
             () -> false,
@@ -45,6 +46,7 @@ public class AlignThread extends BThackThread implements Mc {
     }
 
     @Override
+    @SuppressWarnings("DataFlowIssue")
     public void threadAction() throws ThreadClosedException {
         BThack.EVENT_BUS.register(this);
         Managers.TRAVEL_CHANGE_MANAGER.addChanger(travelChanger);
@@ -64,19 +66,23 @@ public class AlignThread extends BThackThread implements Mc {
     }
 
     @EventSubscriber
+    @SuppressWarnings({"DataFlowIssue", "unused"})
     public void onInput(UpdateInputEvent e) {
         InputUtils.setInput(true, false, false, false, mc.player.input.playerInput.jump(), false, mc.player.input.playerInput.sprint());
         mc.player.input.movementForward = 1;
     }
 
+    @SuppressWarnings("DataFlowIssue")
     private void rotate() {
         yaw = RotateUtils.rotations(new Vec3d(needX, mc.player.getY(), needZ))[0];
     }
 
+    @SuppressWarnings("DataFlowIssue")
     private boolean toFarX() {
         return mc.player.getX() > maxX || mc.player.getX() < minX;
     }
 
+    @SuppressWarnings("DataFlowIssue")
     private boolean toFarZ() {
         return mc.player.getZ() > maxZ || mc.player.getZ() < minZ;
     }

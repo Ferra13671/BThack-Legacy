@@ -4,7 +4,7 @@ import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.core.Client.Client;
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.events.ClientTickEvent;
-import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Mc;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
@@ -14,6 +14,7 @@ import net.minecraft.util.Formatting;
 public class FirstLaunchWelcomer implements Mc {
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onTick(ClientTickEvent e) {
         if (!Module.nullCheck()) {
             mc.player.sendMessage(Text.literal("Welcome to " + Formatting.BLUE + "BThack" + Formatting.RESET + "!"), false);

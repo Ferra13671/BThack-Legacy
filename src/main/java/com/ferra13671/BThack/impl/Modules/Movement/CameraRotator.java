@@ -14,8 +14,8 @@ public class CameraRotator extends Module {
     public final NumberSetting speed = new NumberSetting("Speed", this, 1,0.1,4,false);
     public final BooleanSetting inversion = new BooleanSetting("Inversion", this, false);
 
-
     @Override
+    @SuppressWarnings("DataFlowIssue")
     public void onEnable() {
         ThreadManager.startNewThread(new IThread() {
             double a = 0;
@@ -28,11 +28,10 @@ public class CameraRotator extends Module {
                         a = speed.getValue();
                         b = (float) (1080 * a);
                         b = b / 950;
-                        if (!inversion.getValue()) {
-                            mc.player.yaw = mc.player.yaw + b;
-                        } else {
-                            mc.player.yaw = mc.player.yaw - b;
-                        }
+                        if (!inversion.getValue())
+                            mc.player.yaw += b;
+                        else
+                            mc.player.yaw -= b;
                         thread.sleepThread(1);
                     } else Thread.yield();
                 }

@@ -2,7 +2,6 @@ package com.ferra13671.BThack.api.Utils;
 
 
 import com.ferra13671.BThack.core.Client.ModuleList;
-import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.managers.managers.Thread.BThackThread;
 import com.ferra13671.BThack.api.Module.Module;
 
@@ -12,6 +11,7 @@ public final class SpeedMathThread extends BThackThread implements Mc {
     public static boolean active = false;
 
     @Override
+    @SuppressWarnings("DataFlowIssue")
     public void threadAction() {
         active = true;
         while (ModuleList.HUD.isEnabled()) {

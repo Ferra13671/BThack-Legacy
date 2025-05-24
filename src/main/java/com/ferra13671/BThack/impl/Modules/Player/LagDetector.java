@@ -41,6 +41,7 @@ public class LagDetector extends Module {
 
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onOverlay(RenderHudPreEvent e) {
         if (!mc.isIntegratedServerRunning()) {
             if (lagText.isEmpty())
@@ -51,16 +52,16 @@ public class LagDetector extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onClientTick(ClientTickEvent e) {
         if (nullCheck()) return;
         if (mc.isIntegratedServerRunning()) return;
 
         if (lastPacketTimer.passed(timeoutMillis)) {
-            if (isOffline()) {
+            if (isOffline())
                 lagText = LanguageSystem.translate("lang.module.LagDetector.offlineInternet");
-            } else {
+            else
                 lagText = LanguageSystem.translate("lang.module.LagDetector.serverNotResponding");
-            }
         } else {
             if (!lagText.isEmpty()) lagText = "";
         }
@@ -78,6 +79,7 @@ public class LagDetector extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onReceivePackets(PacketEvent.Receive e) {
         lastPacketTimer.reset();
 
@@ -95,6 +97,7 @@ public class LagDetector extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onPacketSend(PacketEvent.Send e) {
         if (e.getPacket() instanceof LoginHelloC2SPacket){
             lastPacketTimer.reset(69420L);

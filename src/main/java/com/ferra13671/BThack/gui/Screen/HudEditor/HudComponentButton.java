@@ -1,4 +1,4 @@
-package com.ferra13671.BThack.gui.Screen.HudEditor.Utils;
+package com.ferra13671.BThack.gui.Screen.HudEditor;
 
 import com.ferra13671.BThack.core.Render.BThackRender;
 import com.ferra13671.BThack.core.Render.Utils.ColorUtils;

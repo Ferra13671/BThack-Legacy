@@ -19,8 +19,8 @@ public class ElytraSwap extends OneActionModule {
 
     public final ModeSetting moveType = new ModeSetting("Move Type", this, Arrays.asList("Swap", "Pickup"));
 
-
     @Override
+    @SuppressWarnings("DataFlowIssue")
     public void onEnable() {
         if (nullCheck()) {
             toggle();
@@ -28,13 +28,14 @@ public class ElytraSwap extends OneActionModule {
         }
 
         Item armor = mc.player.getInventory().getArmorStack(2).getItem();
-        if (armor == Items.ELYTRA) {
+        if (armor == Items.ELYTRA)
             if (!equipChestplate()) removeChestplateOrElytra();
-        } else if (armor instanceof ArmorItem){
+        else if (armor instanceof ArmorItem)
             if (!equipElytra()) removeChestplateOrElytra();
-        } else if (!equipChestplate()) equipElytra();
+        else if (!equipChestplate()) equipElytra();
     }
 
+    @SuppressWarnings({"DataFlowIssue", "BooleanMethodIsAlwaysInverted"})
     private boolean equipChestplate() {
         for (int needSlot = 0; needSlot < 36; needSlot++) {
             ItemStack itemStack = mc.player.getInventory().getStack(needSlot);
@@ -55,6 +56,7 @@ public class ElytraSwap extends OneActionModule {
         return false;
     }
 
+    @SuppressWarnings("DataFlowIssue")
     private boolean equipElytra() {
         for (int needSlot = 0; needSlot < 36; needSlot++) {
             if (mc.player.getInventory().getStack(needSlot).getItem() == Items.ELYTRA) {
@@ -72,6 +74,7 @@ public class ElytraSwap extends OneActionModule {
         return false;
     }
 
+    @SuppressWarnings("DataFlowIssue")
     private void removeChestplateOrElytra() {
         int slot = InventoryUtils.findFreeSlot();
         if (slot == -1) return;

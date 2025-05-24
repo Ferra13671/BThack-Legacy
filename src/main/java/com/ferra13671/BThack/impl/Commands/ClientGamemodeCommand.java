@@ -11,6 +11,7 @@ public class ClientGamemodeCommand extends AbstractCommand {
     }
 
     @Override
+    @SuppressWarnings("DataFlowIssue")
     public void compile(LiteralArgumentBuilder<CommandSource> builder) {
         builder.then(literal("survival").executes(context -> {
             mc.interactionManager.setGameMode(GameMode.SURVIVAL);

@@ -1,11 +1,10 @@
 package com.ferra13671.BThack.gui.Screen.ClickGui.component.components.setting.settings;
 
-
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.core.Render.BThackRender;
 import com.ferra13671.BThack.gui.Screen.ClickGui.component.components.ModuleButton;
 import com.ferra13671.BThack.gui.Screen.ClickGui.component.components.setting.AbstractSetting;
-import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Mc;
 import com.ferra13671.BThack.managers.managers.Setting.Settings.GuiButtonSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.GuiSystem.Screen.BThackScreen;
@@ -36,6 +35,7 @@ public class OpenGuiButton extends AbstractSetting<GuiButtonSetting> implements 
         return true;
     }
 
+    @SuppressWarnings("DataFlowIssue")
     @Override
     public boolean mouseClicked(int mouseX, int mouseY, int button) {
         if (!getVisible()) return false;

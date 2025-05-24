@@ -1,8 +1,8 @@
 package com.ferra13671.BThack.api.Utils;
 
-import com.ferra13671.BThack.api.Interfaces.Mc;
 import net.minecraft.util.PlayerInput;
 
+@SuppressWarnings("DataFlowIssue")
 public final class InputUtils implements Mc {
 
     public static void setForward(boolean forward) {

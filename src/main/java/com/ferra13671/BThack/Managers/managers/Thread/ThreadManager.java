@@ -7,9 +7,7 @@ public final class ThreadManager implements Initializable {
     private ThreadManager() {}
 
     @Override
-    public void init() {
-        //no action
-    }
+    public void init() {}
 
     public static BThackThread startNewThread(IThread iThread) {
         BThackThread thread = new BThackThread() {

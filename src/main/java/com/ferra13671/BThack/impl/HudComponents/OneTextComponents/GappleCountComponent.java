@@ -16,16 +16,14 @@ public class GappleCountComponent extends AbstractOneTextComponent {
     }
 
     @Override
+    @SuppressWarnings("DataFlowIssue")
     public String getText() {
         int gapples = 0;
 
-        for (DefaultedList<ItemStack> list : ((IPlayerInventory) mc.player.getInventory()).getCombinedInventory()) {
-            for (ItemStack stack : list) {
-                if (stack.getItem() == Items.ENCHANTED_GOLDEN_APPLE) {
+        for (DefaultedList<ItemStack> list : ((IPlayerInventory) mc.player.getInventory()).getCombinedInventory())
+            for (ItemStack stack : list)
+                if (stack.getItem() == Items.ENCHANTED_GOLDEN_APPLE)
                     gapples += stack.getCount();
-                }
-            }
-        }
 
         return "Gapples: " + Formatting.WHITE + gapples;
     }

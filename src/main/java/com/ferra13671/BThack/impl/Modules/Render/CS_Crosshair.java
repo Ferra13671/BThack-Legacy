@@ -44,6 +44,7 @@ public class CS_Crosshair extends Module {
     private float prevSpread = 0;
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onOverlay(RenderHudPreEvent e) {
         if (nullCheck()) return;
 
@@ -88,6 +89,7 @@ public class CS_Crosshair extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onAction(AttackEntityEvent e) {
         if (nullCheck() || !movable.getValue()) return;
 

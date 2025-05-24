@@ -16,18 +16,22 @@ public final class PluginUtils {
     private static final ArrayList<AbstractCommand> pluginsCommands = new ArrayList<>();
 
 
+    @SuppressWarnings("unused")
     public static void addPluginModules(List<PluginModule> pluginModules) {
         pluginsModules.addAll(pluginModules);
     }
 
+    @SuppressWarnings("unused")
     public static void addPluginHudComponents(List<HudComponent> pluginHudComponents) {
         pluginsHudComponents.addAll(pluginHudComponents);
     }
 
+    @SuppressWarnings("unused")
     public static void addPluginCommands(List<AbstractCommand> pluginCommands) {
         pluginsCommands.addAll(pluginCommands);
     }
 
+    @SuppressWarnings("unused")
     public static void loadPluginTranslations(InputStream inputStream, String lang) {
         LanguageSystem.loadTranslations(inputStream, lang);
     }

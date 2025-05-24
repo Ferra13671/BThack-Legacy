@@ -1,12 +1,13 @@
 package com.ferra13671.BThack.shaders;
 
-import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Mc;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gl.GlUniform;
 import net.minecraft.client.gl.ShaderProgram;
 import net.minecraft.client.gl.ShaderProgramKey;
 import org.joml.Matrix4f;
 
+@SuppressWarnings("unused")
 public class BThackShaderProgram implements Mc {
     private final ShaderProgramKey programKey;
     private ShaderProgram shader;

@@ -104,6 +104,7 @@ public class KillAura extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onTick(ClientTickEvent e) {
         if (nullCheck()) return;
 
@@ -121,6 +122,7 @@ public class KillAura extends Module {
     }
 
     //---------Aura---------//
+    @SuppressWarnings("DataFlowIssue")
     public void auraMode() {
         if (!mc.player.isAlive()) {
             targetedEntity = null;
@@ -137,9 +139,8 @@ public class KillAura extends Module {
             }
         }
 
-        if (targetedEntity == null || targetedEntity.lockTicks <= 0 && (delayPassed() && rotateMath.getValue().equals("Always"))) {
+        if (targetedEntity == null || targetedEntity.lockTicks <= 0 && (delayPassed() && rotateMath.getValue().equals("Always")))
             targetSearchAction();
-        }
 
         attackTargetAction();
     }
@@ -222,14 +223,11 @@ public class KillAura extends Module {
         if (objectMouseOver instanceof EntityHitResult entityHitResult) {
             Entity ent = entityHitResult.getEntity();
 
-            if (players.getValue() && ent instanceof PlayerEntity player) {
-                if (KillAuraUtils.filterPlayer(player, friends.getValue(), teammates.getValue(), clanManager.getValue(), clanMode.getValue(), targetClan.getValue())) {
+            if (players.getValue() && ent instanceof PlayerEntity player)
+                if (KillAuraUtils.filterPlayer(player, friends.getValue(), teammates.getValue(), clanManager.getValue(), clanMode.getValue(), targetClan.getValue()))
                     ((IMinecraftClient) mc).attack();
-                }
-            }
-            if (entityFilter.test(ent)) {
+            if (entityFilter.test(ent))
                 ((IMinecraftClient) mc).attack();
-            }
 
             delayTicker.reset();
         }
@@ -244,6 +242,7 @@ public class KillAura extends Module {
         };
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public boolean delayPassed() {
         return switch (attackMode.getValue()) {
             case "CoolDown" -> mc.player.getAttackCooldownProgress(0) >= 1.0;
@@ -252,6 +251,7 @@ public class KillAura extends Module {
         };
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public boolean needPause() {
         return (
                 (pauseIfMine.getValue() && ItemUtils.isTool(mc.player.getActiveItem().getItem()) && mc.player.isUsingItem()) || (ModuleList.packetMine.isEnabled() && (ModuleList.packetMine.currentBreakingBlock != null || !ModuleList.packetMine.conveyorBlocks.isEmpty()))
@@ -260,6 +260,7 @@ public class KillAura extends Module {
         );
     }
 
+    @SuppressWarnings({"DataFlowIssue", "BooleanMethodIsAlwaysInverted"})
     public boolean isCrit() {
         return mc.player.velocity.y < 0 && !mc.player.isOnGround() && Managers.FALL_DISTANCE_MANAGER.getFallDistance() > 0 && Managers.FALL_DISTANCE_MANAGER.getFallDistance() < 0.3;
     }

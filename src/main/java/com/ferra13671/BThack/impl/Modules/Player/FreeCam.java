@@ -6,7 +6,7 @@ import com.ferra13671.BThack.events.Camera.PositionCameraEvent;
 import com.ferra13671.BThack.events.Camera.RotateCameraEvent;
 import com.ferra13671.BThack.events.Player.ChangePlayerLookEvent;
 import com.ferra13671.BThack.events.SetOpaqueCubeEvent;
-import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Mc;
 import com.ferra13671.BThack.managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.Rotate.RotateUtils;
@@ -29,6 +29,7 @@ public class FreeCam extends Module {
     private final FreeCamData freeCamData = new FreeCamData();
 
 
+    @SuppressWarnings("DataFlowIssue")
     @Override
     public void onEnable() {
         if (nullCheck()) {
@@ -44,6 +45,7 @@ public class FreeCam extends Module {
         mc.player.input = new FreecamKeyboardInput(mc.options, freeCamData);
     }
 
+    @SuppressWarnings("DataFlowIssue")
     @Override
     public void onDisable() {
         super.onDisable();
@@ -53,22 +55,26 @@ public class FreeCam extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onCameraPosition(PositionCameraEvent e) {
         e.setPosition(freeCamData.lastPosition.lerp(freeCamData.position, e.getTickDelta()));
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onCameraRotate(RotateCameraEvent e) {
         e.setRotation(new Vec2f(freeCamData.yaw, freeCamData.pitch));
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onMouseUpdate(ChangePlayerLookEvent e) {
         e.cancel();
         freeCamData.changeLookDirection(e.cursorDeltaX, e.cursorDeltaY);
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onSetOpaqueCube(SetOpaqueCubeEvent e) {
         e.setCancelled(true);
     }

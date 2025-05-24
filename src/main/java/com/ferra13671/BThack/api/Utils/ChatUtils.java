@@ -1,7 +1,6 @@
 package com.ferra13671.BThack.api.Utils;
 
 import com.ferra13671.BThack.Constants;
-import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
 import net.minecraft.client.network.PlayerListEntry;
 import net.minecraft.sound.SoundEvent;

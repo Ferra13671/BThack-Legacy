@@ -1,6 +1,5 @@
 package com.ferra13671.BThack.gui.Screen.ClickGui.component.components.setting.settings;
 
-
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.core.Render.BThackMatrix;
 import com.ferra13671.BThack.core.Render.BThackRender;

@@ -17,7 +17,6 @@ public class MultiFakePlayer extends Module {
 
     public final KeyCodeSetting summonKey = new KeyCodeSetting("Summon Key", this);
 
-
     private final ArrayList<Entity> fakePlayers = new ArrayList<>();
 
     @Override
@@ -28,6 +27,7 @@ public class MultiFakePlayer extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onInput(InputEvent.KeyInputEvent e) {
         if (nullCheck()) return;
 
@@ -41,9 +41,8 @@ public class MultiFakePlayer extends Module {
     @Override
     public void onDisable() {
         super.onDisable();
-        for (Entity fakePlayer : fakePlayers) {
+        for (Entity fakePlayer : fakePlayers)
             PlayerUtils.removeEntity(fakePlayer);
-        }
 
         fakePlayers.clear();
     }

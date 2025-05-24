@@ -2,7 +2,7 @@ package com.ferra13671.BThack.core.Render.Font;
 
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.core.Render.BThackRender;
-import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Mc;
 
 import java.awt.*;
 import java.io.IOException;

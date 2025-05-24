@@ -27,6 +27,7 @@ public class AutoSign extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onPacketSend(PacketEvent.Send e) {
         if (e.getPacket() instanceof UpdateSignC2SPacket packet) {
             text = packet.getText();
@@ -34,6 +35,7 @@ public class AutoSign extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onOpenScreen(GuiOpenEvent e) {
         if (!(e.getScreen() instanceof AbstractSignEditScreen) || text == null) return;
 

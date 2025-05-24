@@ -23,6 +23,7 @@ public class AutoShield extends Module {
     private short delayTick = 0;
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onClientTick(ClientTickEvent e) {
         if (nullCheck()) return;
 

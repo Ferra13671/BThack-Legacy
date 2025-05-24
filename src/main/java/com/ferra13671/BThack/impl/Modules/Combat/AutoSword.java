@@ -12,6 +12,7 @@ import net.minecraft.item.SwordItem;
 public class AutoSword extends Module {
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onPacket(AttackEntityEvent e) {
         if (e.getEntity() instanceof EndCrystalEntity || e.getPlayer() != mc.player) return;
 

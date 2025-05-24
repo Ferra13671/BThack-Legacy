@@ -3,7 +3,7 @@ package com.ferra13671.BThack.managers.managers.Break;
 
 import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.events.ClientTickEvent;
-import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Mc;
 import com.ferra13671.BThack.api.Utils.Initializable;
 import com.ferra13671.BThack.api.Utils.Rotate.RotateUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
@@ -23,6 +23,7 @@ public class BreakManager implements Initializable, Mc {
     }
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onTick(ClientTickEvent e) {
         if (mc.player == null || mc.world == null || mc.isPaused()) return;
 
@@ -31,20 +32,16 @@ public class BreakManager implements Initializable, Mc {
             return;
         }
 
-
         float[] rots = RotateUtils.rotations(currentBlockPos);
 
         try {
             if (!mc.interactionManager.isBreakingBlock() && !isInteractDestroying) {
-                if (mc.interactionManager.attackBlock(currentBlockPos, RotateUtils.getInvertedFacing(rots[0], rots[1], true))) {
+                if (mc.interactionManager.attackBlock(currentBlockPos, RotateUtils.getInvertedFacing(rots[0], rots[1], true)))
                     mc.player.swingHand(Hand.MAIN_HAND);
-                }
                 isInteractDestroying = true;
-            } else {
-                if (mc.interactionManager.updateBlockBreakingProgress(currentBlockPos, RotateUtils.getInvertedFacing(rots[0], rots[1], true))) {
+            } else
+                if (mc.interactionManager.updateBlockBreakingProgress(currentBlockPos, RotateUtils.getInvertedFacing(rots[0], rots[1], true)))
                     mc.player.swingHand(Hand.MAIN_HAND);
-                }
-            }
         } catch (Exception ignored) {}
     }
 }

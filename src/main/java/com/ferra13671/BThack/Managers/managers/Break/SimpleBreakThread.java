@@ -16,6 +16,7 @@ public class SimpleBreakThread extends AbstractBreakThread {
     }
 
     @Override
+    @SuppressWarnings("DataFlowIssue")
     protected void destroyAction() throws ThreadClosedException {
         if (mc.player == null || mc.world == null) {
             BreakManager.isDestroying = false;

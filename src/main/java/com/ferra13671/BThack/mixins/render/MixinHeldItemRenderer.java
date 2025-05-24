@@ -3,7 +3,7 @@ package com.ferra13671.BThack.mixins.render;
 import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.events.Render.TransformFirstPersonEvent;
 import com.ferra13671.BThack.api.IMixin.ModifyHeldItemRenderer;
-import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Mc;
 import com.ferra13671.MegaEvents.Base.Event;
 import com.google.common.base.MoreObjects;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
@@ -46,6 +46,7 @@ public abstract class MixinHeldItemRenderer implements Mc, ModifyHeldItemRendere
     @Shadow private ItemStack offHand;
 
     //Modified hand renderer that uses VertexConsumerProvider instead of VertexConsumerProvider.Immediate.
+    @SuppressWarnings({"AddedMixinMembersNamePattern", "DataFlowIssue"})
     @Override
     public void renderShaderItem(float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, ClientPlayerEntity player, int light) {
         float f = player.getHandSwingProgress(tickDelta);

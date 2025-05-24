@@ -14,6 +14,7 @@ public class HClipCommand extends AbstractCommand {
     }
 
     @Override
+    @SuppressWarnings("DataFlowIssue")
     public void compile(LiteralArgumentBuilder<CommandSource> builder) {
         builder.then(arg("x Delta", Arguments.DOUBLE).then(arg("z Delta", Arguments.DOUBLE).executes(context -> {
             double xDelta = context.getArgument("x Delta", Double.class);

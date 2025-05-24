@@ -26,6 +26,7 @@ public class Speed extends Module {
 
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onPlayerTick(ClientTickEvent e) {
         if (nullCheck()) return;
 
@@ -60,12 +61,14 @@ public class Speed extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onJumpHeight(JumpHeightEvent e) {
         if (mode.getValue().equals("Normal"))
             e.setJumpHeight(jumpHeight.getValue().floatValue());
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onInput(UpdateInputEvent e) {
         InputUtils.setJumping(true);
     }

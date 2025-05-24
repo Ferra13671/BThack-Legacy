@@ -16,8 +16,8 @@ public class NoSwing extends Module {
 
     public final ModeSetting mode = new ModeSetting("Mode", this, new ArrayList<>(Arrays.asList("Client", "Server")));
 
-
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onPacket(PacketEvent.Send e) {
         if (mode.getValue().equals("Server")  && e.getPacket() instanceof HandSwingC2SPacket) {
             e.setCancelled(true);
@@ -25,6 +25,7 @@ public class NoSwing extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onClientTick(ClientTickEvent e) {
         if (nullCheck()) return;
         mc.player.handSwinging = false;

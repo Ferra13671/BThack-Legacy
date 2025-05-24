@@ -34,13 +34,13 @@ public class VisualRange extends Module {
         players.clear();
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public void onAddEntity(Entity entity) {
         if (entity instanceof PlayerEntity player) {
             String playerName = entity.getDisplayName().getString();
             if (player != mc.player && !players.contains(playerName)) {
                 if (enter.getValue()) {
-                    if (!friends.getValue())
-                        if (Managers.FRIENDS_MANAGER.contains(player)) return;
+                    if (!friends.getValue() && Managers.FRIENDS_MANAGER.contains(player)) return;
 
                     String text = getChatName() + String.format(LanguageSystem.translate("lang.module.VisualRange.playerEntered"), playerName + Formatting.RESET + Formatting.GOLD);
                     if (enterSound.getValue())
@@ -53,13 +53,13 @@ public class VisualRange extends Module {
         }
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public void onRemoveEntity(Entity entity) {
         if (entity instanceof PlayerEntity player) {
             String playerName = entity.getDisplayName().getString();
             if (player != mc.player && players.contains(playerName)) {
                 if (leave.getValue()) {
-                    if (!friends.getValue())
-                        if (Managers.FRIENDS_MANAGER.contains(player)) return;
+                    if (!friends.getValue() && Managers.FRIENDS_MANAGER.contains(player)) return;
 
                     String text = getChatName() + String.format(LanguageSystem.translate("lang.module.VisualRange.playerLeaved"), playerName + Formatting.RESET + Formatting.GOLD);
                     if (leaveSound.getValue())

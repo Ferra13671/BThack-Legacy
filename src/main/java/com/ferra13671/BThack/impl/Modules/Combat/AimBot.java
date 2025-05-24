@@ -31,6 +31,7 @@ public class AimBot extends Module {
     public final ModeSetting target = ClanSettingsBuilder.buildClanTargetMode(this, clanManager, clanMode);
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onUpdate(RenderWorldLastEvent e) {
         if (nullCheck()) return;
 
@@ -38,6 +39,7 @@ public class AimBot extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onTick(ClientTickEvent e) {
         if (nullCheck()) return;
 
@@ -50,13 +52,10 @@ public class AimBot extends Module {
 
         Entity entity = KillAuraUtils.filterEntity(ModuleList.aimBot.range.getValue());
 
-        if (ModuleList.aimBot.players.getValue() && player != null && KillAuraUtils.canBeSeeTarget(ModuleList.aimBot.ignoreWalls, player)) {
+        if (ModuleList.aimBot.players.getValue() && player != null && KillAuraUtils.canBeSeeTarget(ModuleList.aimBot.ignoreWalls, player))
             RotateUtils.rotateToEntity(player);
-        }
-        if (ModuleList.aimBot.mobs.getValue()) {
-            if (entity != null && KillAuraUtils.canBeSeeTarget(ModuleList.aimBot.ignoreWalls, entity) && entity.isAlive() && !(entity instanceof ItemEntity)) {
-                RotateUtils.rotateToEntity(entity);
-            }
-        }
+
+        if (ModuleList.aimBot.mobs.getValue() && entity != null && KillAuraUtils.canBeSeeTarget(ModuleList.aimBot.ignoreWalls, entity) && entity.isAlive() && !(entity instanceof ItemEntity))
+            RotateUtils.rotateToEntity(entity);
     }
 }

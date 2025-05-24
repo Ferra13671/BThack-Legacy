@@ -13,6 +13,7 @@ public class MinecraftTimeComponent extends AbstractOneTextComponent {
     }
 
     @Override
+    @SuppressWarnings("DataFlowIssue")
     public String getText() {
         int hours = (int) (mc.world.getTimeOfDay() / 1000d);
         if (hours > 24) {

@@ -117,7 +117,6 @@ public final class ModuleList {
     public static KeepSprint keepSprint = register(new KeepSprint());
     public static LevitationControl levitationControl = register(new LevitationControl());
     public static LongJump longJump = register(new LongJump());
-    public static NinjaBridge ninjaBridge = register(new NinjaBridge());
     public static NoFall noFall = register(new NoFall());
     public static NoJumpDelay noJumpDelay = register(new NoJumpDelay());
     public static NoPush noPush = register(new NoPush());

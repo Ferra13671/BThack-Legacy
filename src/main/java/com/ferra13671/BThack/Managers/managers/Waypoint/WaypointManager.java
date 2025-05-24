@@ -57,10 +57,4 @@ public class WaypointManager implements Initializable {
         endWaypoints.remove(waypoint);
         netherWaypoints.remove(waypoint);
     }
-
-    public void removeWaypoint(String name) {
-        overworldWaypoints.removeIf(waypoint -> waypoint.getName().equals(name));
-        endWaypoints.removeIf(waypoint -> waypoint.getName().equals(name));
-        netherWaypoints.removeIf(waypoint -> waypoint.getName().equals(name));
-    }
 }

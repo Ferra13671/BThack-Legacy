@@ -45,6 +45,7 @@ public abstract class MixinChatHud implements ModifyChatHud {
 
     @Shadow @Final private MinecraftClient client;
 
+    @SuppressWarnings("AddedMixinMembersNamePattern")
     @Override
     public void _clearChat() {
         this.visibleMessages.clear();

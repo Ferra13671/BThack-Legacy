@@ -33,8 +33,8 @@ public class ESP extends Module {
     public final ColorSetting monsterColor = new ColorSetting("Monster Color", this, new Color(211, 234, 43)).withBlockedAlpha().inCategory(colorsCategory);
     public final ColorSetting animalColor = new ColorSetting("Animal Color", this, new Color(176, 255, 86)).withBlockedAlpha().inCategory(colorsCategory);
 
-
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onRender(RenderWorldLastEvent e) {
         if (nullCheck()) return;
 

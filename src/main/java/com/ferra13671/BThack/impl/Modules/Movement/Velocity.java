@@ -56,6 +56,7 @@ public class Velocity extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings("DataFlowIssue")
     public void onPacketReceive(PacketEvent.Receive e) {
         if (nullCheck()) return;
         if (!fallFlying.getValue() && mc.player.isGliding()) return;
@@ -118,6 +119,7 @@ public class Velocity extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onTick(ClientTickEvent e) {
         if (nullCheck() || !mode.getValue().equals("Grim")) return;
 

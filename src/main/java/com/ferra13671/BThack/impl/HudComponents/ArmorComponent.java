@@ -36,6 +36,7 @@ public class ArmorComponent extends HudComponent {
         else renderHorizontally();
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public void renderVertically() {
         int y = 0;
 
@@ -48,9 +49,8 @@ public class ArmorComponent extends HudComponent {
                 String text = ItemUtils.getItemDurability(armorStack) + "/" + ItemUtils.getItemMaxDurability(armorStack) + " (" + ItemUtils.getItemDurabilityInPercentages(armorStack) + ")";
 
                 float textWidth = FontUtils.getTextWidth(text, FontRenderManager.DrawMode.NORMAL_BOLD);
-                if (textWidth > maxWidth) {
+                if (textWidth > maxWidth)
                     maxWidth = textWidth;
-                }
 
                 BThackRender.drawItem(armorStack, (int) getX() + 3, (int) getY() + 3 + y, false);
                 BThackRender.drawString(text, (int) getX() + 23, (int) getY() + y + 3, ColorUtils.fastRGBA(armorStack.getItemBarColor()), true, FontRenderManager.DrawMode.NORMAL_BOLD);
@@ -66,6 +66,7 @@ public class ArmorComponent extends HudComponent {
         this.width = 20 + maxWidth + 6;
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public void renderHorizontally() {
         int x = 0;
 

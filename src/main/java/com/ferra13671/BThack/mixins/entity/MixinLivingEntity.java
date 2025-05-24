@@ -4,7 +4,7 @@ import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.events.Entity.JumpHeightEvent;
 import com.ferra13671.BThack.events.Player.PlayerTravelEvent;
-import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Mc;
 import com.ferra13671.MegaEvents.Base.Event;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -34,12 +34,14 @@ public abstract class MixinLivingEntity extends Entity implements Mc {
 
     @Shadow public abstract double getAttributeValue(RegistryEntry<EntityAttribute> attribute);
 
+    @SuppressWarnings({"ConstantValue", "UnreachableCode"})
     @Inject(method = "isBaby", at = @At("HEAD"), cancellable = true)
     public void modifyIsBaby(CallbackInfoReturnable<Boolean> cir) {
         if ((Object) this == mc.player && ModuleList.babyModel.isEnabled())
             cir.setReturnValue(true);
     }
 
+    @SuppressWarnings({"UnreachableCode", "ConstantValue"})
     @Inject(method = "getJumpVelocity(F)F", at = @At("TAIL"), cancellable = true)
     public void modifyGetJumpVelocity(float strength, CallbackInfoReturnable<Float> cir) {
         if ((Object) this != mc.player) return;
@@ -53,6 +55,7 @@ public abstract class MixinLivingEntity extends Entity implements Mc {
             cir.setReturnValue(event.getJumpHeight());
     }
 
+    @SuppressWarnings({"UnreachableCode", "ConstantValue"})
     @Inject(method = "travel", at = @At("HEAD"), cancellable = true)
     public void modifyTravelPre(CallbackInfo ci) {
         if ((Object) this != mc.player) return;

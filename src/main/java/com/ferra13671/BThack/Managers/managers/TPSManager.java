@@ -41,6 +41,7 @@ public class TPSManager implements Initializable {
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onPacket(PacketEvent.Receive e) {
         if (e.getPacket() instanceof WorldTimeUpdateS2CPacket) {
             if (prevTime != -1) {

@@ -21,11 +21,11 @@ public class AttackTrace extends Module {
     public final NumberSetting renderTime = new NumberSetting("Render Time", this, 20, 5, 50, false);
     public final ColorSetting color = new ColorSetting("Color", this, new Color(255, 127, 127)).withBlockedAlpha();
 
-
     private Entity attackEntity = null;
     private final Ticker ticker = new Ticker();
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onRender(RenderWorldLastEvent e) {
         if (nullCheck()) return;
 
@@ -42,6 +42,7 @@ public class AttackTrace extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onAttack(AttackEntityEvent e) {
         if (nullCheck()) return;
 

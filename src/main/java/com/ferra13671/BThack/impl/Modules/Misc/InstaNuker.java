@@ -43,6 +43,7 @@ public class InstaNuker extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onTick(ClientTickEvent e) {
         if (nullCheck()) return;
         if (pauseIfJump.getValue())
@@ -57,6 +58,7 @@ public class InstaNuker extends Module {
         }
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public void filterAction() {
         for (BlockPos pos : BlockUtils.getSphere(mc.player.getBlockPos(), range.getValue().floatValue(), range.getValue().floatValue(), false, true, 0)) {
             if (pos.getY() >= (int) mc.player.getY()) {
@@ -83,16 +85,15 @@ public class InstaNuker extends Module {
         }
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public void instaBreakAction() {
         poses.forEach((block, list) -> {
             int slot = AutoTool.getBestSlot(mc.world.getBlockState(list.getFirst()), 9);
             if (slot != -1) {
                 final int oldSlot = mc.player.getInventory().selectedSlot;
                 if (checkSlots(oldSlot, slot)) {
-                    if (packetSwitch.getValue()) {
-                        if (oldSlot != slot)
+                    if (packetSwitch.getValue() && oldSlot != slot)
                             Managers.NETWORK_MANAGER.sendPacket(new UpdateSelectedSlotC2SPacket(slot));
-                    }
                     for (BlockPos pos : list) {
                         if (MathUtils.getDistance(mc.player.getPos(), pos.toCenterPos()) > range.getValue()) continue;
                         if (!BlockUtils.canBreak(pos)) continue;

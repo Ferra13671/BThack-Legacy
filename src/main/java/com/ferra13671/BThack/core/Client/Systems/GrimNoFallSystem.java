@@ -9,6 +9,7 @@ public class GrimNoFallSystem {
 
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onDisconnect(DisconnectEvent e) {
         takenFallDamage = 0;
     }

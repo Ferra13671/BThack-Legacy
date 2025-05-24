@@ -92,7 +92,6 @@
 "lang.module.KeepSprint": Umożliwia zapisanie sprintu po ataku.
 "lang.module.LevitationControl": Pozwala kontrolować lewitację.
 "lang.module.LongJump": Umożliwia dalekie skoki.
-"lang.module.NinjaBridge": Automatycznie buduje most w stylu NinjaBridge w kierunku, w którym jesteś zwrócony.
 "lang.module.NoFall": Zapobiega uszkodzeniom spowodowanym upadkiem.
 "lang.module.NoJumpDelay": Wyłącza opóźnienie skoków.
 "lang.module.NoPush": Usuwa odpychanie z bloków, jednostek i cieczy.

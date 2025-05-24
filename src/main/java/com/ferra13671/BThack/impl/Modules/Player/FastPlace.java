@@ -17,8 +17,8 @@ public class FastPlace extends Module {
     public final ModeSetting mode = new ModeSetting("Mode", this, Arrays.asList("Normal", "Ultra"));
     public final NumberSetting times = new NumberSetting("Times", this, 30, 5, 64, true, () -> mode.getValue().equals("Ultra"));
 
-
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onTick(ClientTickEvent e) {
         if (nullCheck()) return;
 

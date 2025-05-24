@@ -16,13 +16,13 @@ public class AntiHunger extends Module {
 
     public final BooleanSetting cancelMoveState = new BooleanSetting("Cancel Move State", this, true);
 
-
     @Override
     public void onChangeSetting(Setting<?> setting) {
         arrayListInfo = cancelMoveState.getValue() ? "Cancel Move" : "Standard";
     }
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onPacket(PacketEvent.Send e) {
 
         if (e.getPacket() instanceof PlayerMoveC2SPacket) {
@@ -35,9 +35,8 @@ public class AntiHunger extends Module {
                 ClientCommandC2SPacket packet = (ClientCommandC2SPacket) e.getPacket();
                 if (packet.getMode() == ClientCommandC2SPacket.Mode.START_SPRINTING ||
                         packet.getMode() == ClientCommandC2SPacket.Mode.STOP_SPRINTING
-                ) {
+                )
                     e.setCancelled(true);
-                }
             }
         }
     }

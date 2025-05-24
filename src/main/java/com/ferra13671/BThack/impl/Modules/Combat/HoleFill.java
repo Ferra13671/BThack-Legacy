@@ -24,17 +24,15 @@ public class HoleFill extends Module {
 
     public final BooleanSetting onlyObsidian = new BooleanSetting("Only Obsidian", this, true);
 
-
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onTick(ClientTickEvent e) {
         if (nullCheck() || PlaceManager.isBuilding) return;
 
         ArrayList<BlockPos> blockPoses = new ArrayList<>();
-        for (PlayerEntity player : mc.world.getPlayers()) {
-            if (HoleUtils.isMutableHole(mc.player.getBlockPos(), false)) {
+        for (PlayerEntity player : mc.world.getPlayers())
+            if (HoleUtils.isMutableHole(mc.player.getBlockPos(), false))
                 blockPoses.add(player.getBlockPos());
-            }
-        }
 
         BlockPos blockPos = BlockUtils.getSphere(mc.player.getBlockPos(), 4, 4, false, true, 0).stream().filter(blockPos1 -> HoleUtils.isMutableHole(blockPos1, false) && !blockPoses.contains(blockPos1))
                 .min(Comparator.comparing(blockPos2 -> MathUtils.getDistance(mc.player.getPos(), blockPos2.toCenterPos()))).orElse(null);

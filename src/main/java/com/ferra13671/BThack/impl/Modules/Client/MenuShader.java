@@ -32,8 +32,7 @@ public class MenuShader extends Module {
     }
 
     @Override
-    public void onEnable() {
-    }
+    public void onEnable() {}
 
     @Override
     public void onChangeSetting(Setting<?> setting) {

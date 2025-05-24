@@ -19,7 +19,6 @@ public class NoSoundLag extends Module {
     public final BooleanSetting explode = new BooleanSetting("Explode", this, true);
     public final BooleanSetting attack = new BooleanSetting("Attack", this, true);
 
-
     private final Set<SoundEvent> armorSounds = new HashSet<>(Sets.newHashSet(
             SoundEvents.ITEM_ARMOR_EQUIP_NETHERITE.value(),
             SoundEvents.ITEM_ARMOR_EQUIP_TURTLE.value(),
@@ -33,15 +32,13 @@ public class NoSoundLag extends Module {
     ));
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onSound(SoundPlayEvent e) {
-        if (armorEquip.getValue())
-            if (armorSounds.contains(e.soundEvent))
-                e.setCancelled(true);
-        if (explode.getValue())
-            if (e.soundEvent.equals(SoundEvents.ENTITY_GENERIC_EXPLODE))
-                e.setCancelled(true);
-        if (attack.getValue())
-            if (e.soundEvent.equals(SoundEvents.ENTITY_PLAYER_ATTACK_WEAK) || e.soundEvent.equals(SoundEvents.ENTITY_PLAYER_ATTACK_STRONG))
-                e.setCancelled(true);
+        if (armorEquip.getValue() && armorSounds.contains(e.soundEvent))
+            e.setCancelled(true);
+        if (explode.getValue() && e.soundEvent.equals(SoundEvents.ENTITY_GENERIC_EXPLODE.value()))
+            e.setCancelled(true);
+        if (attack.getValue() && e.soundEvent.equals(SoundEvents.ENTITY_PLAYER_ATTACK_WEAK) || e.soundEvent.equals(SoundEvents.ENTITY_PLAYER_ATTACK_STRONG))
+            e.setCancelled(true);
     }
 }

@@ -19,7 +19,7 @@ import com.ferra13671.BThack.gui.Screen.ClickGui.component.components.setting.se
 import com.ferra13671.BThack.gui.Widget.Config.ConfigsWidget;
 import com.ferra13671.BThack.api.GuiSystem.buttons.Button;
 import com.ferra13671.BThack.api.GuiSystem.buttons.ImageButton;
-import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Mc;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.shaders.ShaderTicker;
 import com.ferra13671.BThack.shaders.Shaders;

@@ -8,7 +8,7 @@ import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.events.Camera.RotateCameraEvent;
 import com.ferra13671.BThack.events.Player.ChangePlayerLookEvent;
 import com.ferra13671.BThack.events.Player.PlayerTravelEvent;
-import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Mc;
 import com.ferra13671.BThack.api.Utils.Initializable;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.Rotate.RotateUtils;
@@ -55,6 +55,7 @@ public class TravelChangeManager implements Initializable, Mc {
         }
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public void removeChanger(TravelChanger changer) {
         if (changers.contains(changer)) {
             changers.remove(changer);
@@ -84,6 +85,7 @@ public class TravelChangeManager implements Initializable, Mc {
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onCameraRotate(RotateCameraEvent e) {
         if (!changers.isEmpty() && !ModuleList.freeCam.isEnabled()) {
             e.setRotation(new Vec2f(freeCamData.yaw, freeCamData.pitch));
@@ -91,6 +93,7 @@ public class TravelChangeManager implements Initializable, Mc {
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onChangePlayer(ChangePlayerLookEvent e) {
         if (!changers.isEmpty() && !ModuleList.freeCam.isEnabled()) {
             e.cancel();
@@ -99,6 +102,7 @@ public class TravelChangeManager implements Initializable, Mc {
     }
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onPlayerTravel(PlayerTravelEvent e) {
         if (!changers.isEmpty()) {
             Float[] rots = changers.getFirst().rotateGetter().get();
@@ -110,6 +114,7 @@ public class TravelChangeManager implements Initializable, Mc {
     }
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onInputUpdate(UpdateInputEvent e) {
         if (!changers.isEmpty()) {
             TravelChanger travelChanger = changers.getFirst();
@@ -121,6 +126,7 @@ public class TravelChangeManager implements Initializable, Mc {
     /*
     I'm too lazy to write all the math myself, so I just use a matrix for transform player input.
      */
+    @SuppressWarnings("DataFlowIssue")
     private void moveFix(boolean sneaking, TravelChanger travelChanger) {
         float forward = (mc.player.input.playerInput.forward() ? 1 : mc.player.input.playerInput.backward() ? -1 : 0);
         float sideways = (mc.player.input.playerInput.left() ? 1 : mc.player.input.playerInput.right() ? -1 : 0);

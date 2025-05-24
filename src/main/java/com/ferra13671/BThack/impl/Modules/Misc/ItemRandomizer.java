@@ -11,6 +11,7 @@ import com.ferra13671.MegaEvents.Base.EventSubscriber;
 public class ItemRandomizer extends Module {
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onClientTick(ClientTickEvent e) {
         if (nullCheck()) return;
 

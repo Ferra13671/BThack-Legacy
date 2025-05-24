@@ -14,6 +14,7 @@ public class VClipCommand extends AbstractCommand {
     }
 
     @Override
+    @SuppressWarnings("DataFlowIssue")
     public void compile(LiteralArgumentBuilder<CommandSource> builder) {
         builder.then(arg("y delta", Arguments.DOUBLE).executes(context -> {
             double yDelta = context.getArgument("y delta", Double.class);

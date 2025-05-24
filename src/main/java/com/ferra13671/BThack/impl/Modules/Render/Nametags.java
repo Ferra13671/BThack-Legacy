@@ -44,6 +44,7 @@ public class Nametags extends Module {
 
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onRenderHud(RenderHudPreEvent e) {
         for (Entity entity : mc.world.getEntities()) {
             if (entity instanceof PlayerEntity player && players.getValue() && player != mc.player) {
@@ -92,6 +93,7 @@ public class Nametags extends Module {
         BThackMatrix.pop();
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public void renderMiniPlayerNametag(float[] cords, PlayerEntity player) {
         float hp = getHealth(player);
         String text = player.getDisplayName().getString() + " " + (hp > 15 ? Formatting.GREEN : (hp > 8 ? Formatting.YELLOW : Formatting.RED)) + Constants.DECIMAL_FORMAT.format(hp);
@@ -105,6 +107,7 @@ public class Nametags extends Module {
         BThackRender.drawCenteredString((Managers.FRIENDS_MANAGER.contains(player) ? ClientSettings.getFriendColor() : Managers.ENEMIES_MANAGER.contains(player) ? ClientSettings.getEnemyColor() : "") + text, cords[0], downY - ((downY - upY) / 2f) - (FontUtils.getTextHeight(text, FontRenderManager.DrawMode.NORMAL_BOLD) / 2), -1, FontRenderManager.DrawMode.NORMAL_BOLD);
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public void renderNormalPlayerNametag(float[] cords, PlayerEntity player) {
         float leftX = cords[0] - 60;
         float upY = cords[1] - 45;
@@ -117,6 +120,7 @@ public class Nametags extends Module {
         drawArmor(leftX + 5, upY + 4, player);
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public void renderFullPlayerNametag(float[] cords, PlayerEntity player) {
         float leftX = cords[0] - 100;
         float upY = cords[1] - 50;
@@ -135,10 +139,6 @@ public class Nametags extends Module {
         drawHandsInfo(moveF, upY + 4, player);
         drawSocialInfo(leftX + 5, upY + 23, player);
         drawHP(rightX - 100, upY + 23, player);
-    }
-
-    public void renderMobNametag(LivingEntity livingEntity) {
-
     }
 
     public Vec3d getNametagPos(Entity entity, float yPlus) {

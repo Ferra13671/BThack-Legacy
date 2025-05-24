@@ -3,7 +3,7 @@ package com.ferra13671.BThack.managers.managers.Place;
 import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.managers.Managers;
 import com.ferra13671.BThack.events.ClientTickEvent;
-import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Mc;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.*;
 import com.ferra13671.BThack.api.Utils.Rotate.RotateMode;
@@ -61,6 +61,7 @@ public class PlaceManager implements Initializable, Mc {
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onTick(ClientTickEvent e) {
         if (blockPoses.isEmpty()) return;
         synchronized (blockPoses) {
@@ -69,16 +70,12 @@ public class PlaceManager implements Initializable, Mc {
                 return;
             }
 
-            blockPoses.forEach(PlaceManager::placeBlock);
+            blockPoses.forEach(pos -> placeBlock(pos, RotateMode.GRIM));
             blockPoses.clear();
         }
     }
 
-    @Deprecated
-    public static void placeBlock(BlockPos pos) {
-        placeBlock(pos, RotateMode.GRIM);
-    }
-
+    @SuppressWarnings({"DataFlowIssue", "deprecation"})
     public static void placeBlock(BlockPos pos, RotateMode rotateMode) {
         try {
             if (!mc.world.getBlockState(pos).isReplaceable()) return;
@@ -116,9 +113,10 @@ public class PlaceManager implements Initializable, Mc {
 
     public static BlockHitResult getHitResult(com.ferra13671.BThack.managers.managers.Place.FacingBlock facingBlock) {
         Vec3d pos = facingBlock.pos().toCenterPos();
-        return new BlockHitResult(new Vec3d(pos.getX() + (facingBlock.direction().getOffsetX() != 0 ? facingBlock.direction().getOffsetX() : 0.5f), pos.getY() + (facingBlock.direction().getOffsetY() != 0 ? facingBlock.direction().getOffsetY() : 0.5f), pos.getZ() + (facingBlock.direction().getOffsetZ() != 0 ? facingBlock.direction().getOffsetZ() : 0.5f)), facingBlock.direction(), facingBlock.pos(), false);
+        return new BlockHitResult(new Vec3d(pos.getX(), pos.getY(), pos.getZ()).add(new Vec3d(facingBlock.direction().getVector()).multiply(0.5)), facingBlock.direction(), facingBlock.pos(), false);
     }
 
+    @SuppressWarnings("DataFlowIssue")
     protected static boolean check(ArrayList<BlockPos> positions) {
         for (BlockPos pos : positions) {
             com.ferra13671.BThack.managers.managers.Place.FacingBlock fBlock = PlaceManager.checkNearBlocksExtended(pos);
@@ -136,10 +134,10 @@ public class PlaceManager implements Initializable, Mc {
         return shiftBlocks.contains(in);
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public static boolean pickUpPlaceBlocks(boolean swap, List<Block> needBlocks) {
-        if (mc.player.getMainHandStack().getItem() instanceof BlockItem item) {
+        if (mc.player.getMainHandStack().getItem() instanceof BlockItem item)
             if (isNeedBlock(item.getBlock(), needBlocks)) return true;
-        }
 
         for (int i = 0; i < 36; i++) {
             if (mc.player.getInventory().getStack(i).getItem() instanceof BlockItem blockItem) {
@@ -167,21 +165,24 @@ public class PlaceManager implements Initializable, Mc {
         return false;
     }
 
+    @SuppressWarnings("deprecation")
     public static boolean isNeedBlock(Block block, List<Block> needBlocks) {
         BlockState state = block.getDefaultState();
         if (shiftBlocks.contains(block) || !((IAbstractBlock) block).getCollidable()) return false;
         if (block instanceof AbstractChestBlock<?> || block instanceof ShulkerBoxBlock) return false;
-        if (needBlocks.isEmpty()) {
+        if (needBlocks.isEmpty())
             return state.isSolid();
-        } else {
+        else
             return state.isSolid() && needBlocks.contains(block);
-        }
+
     }
 
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public static boolean pickUpPlaceBlocks(boolean swap) {
         return pickUpPlaceBlocks(swap, new ArrayList<>());
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public static boolean isPossibleRich(BlockPos blockPos) {
         return MathUtils.getDistance(mc.player.getPos() ,blockPos.toCenterPos()) <= 6;
     }
@@ -233,6 +234,7 @@ public class PlaceManager implements Initializable, Mc {
         return checkNearBlocks(blockPos.add(0, -1, -1));
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public static com.ferra13671.BThack.managers.managers.Place.FacingBlock checkNearBlocks(BlockPos blockPos) {
         BlockPos playerPos = BlockPos.ofFloored(mc.player.getX(), mc.player.getY() - 1, mc.player.getZ());
 
@@ -262,15 +264,16 @@ public class PlaceManager implements Initializable, Mc {
         return facingBlock;
     }
 
+    @SuppressWarnings({"DataFlowIssue", "deprecation"})
     public static com.ferra13671.BThack.managers.managers.Place.FacingBlock checkNearBlock(BlockPos pos, Direction direction, BlockPos playerPos) {
         if ((!mc.world.getBlockState(pos).isSolid()) || pos == playerPos || pos.getY() > 319) return null;
-        if (!checkCanPlaceAtDirection(pos, direction)) {
+        if (!checkCanPlaceAtDirection(pos, direction))
             return null;
-        } else {
+        else
             return new FacingBlock(pos, direction);
-        }
     }
 
+    @SuppressWarnings("DataFlowIssue")
     private static boolean checkCanPlaceAtDirection(BlockPos pos, Direction direction) {
         Vec3d vec3d = pos.toCenterPos();
         vec3d.x += direction.getOffsetX() / 2d;

@@ -17,8 +17,8 @@ public class NoGlitchBlocks extends Module {
     public final BooleanSetting _break = new BooleanSetting("Break", this, true);
     public final BooleanSetting _place = new BooleanSetting("Place", this, true);
 
-
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onUseBlock(UseBlockEvent e) {
         if (_place.getValue() && !mc.isInSingleplayer()) {
             e.setCancelled(true);
@@ -26,9 +26,9 @@ public class NoGlitchBlocks extends Module {
         }
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public void onBreakBlock(BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
         if (_break.getValue() && !mc.isInSingleplayer()) {
-            cir.cancel();
             cir.setReturnValue(false);
 
             BlockState state = mc.world.getBlockState(pos);

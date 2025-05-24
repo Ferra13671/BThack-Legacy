@@ -30,7 +30,6 @@ public class Blink extends Module {
     public final BooleanSetting disableIfVelocity = new BooleanSetting("Disable If Velocity", this, true);
     public final BooleanSetting disableIfAttack = new BooleanSetting("Disable If Attack", this, true);
 
-
     private final List<Packet<?>> packets = new ArrayList<>();
     private final Ticker ticker = new Ticker();
 
@@ -52,6 +51,7 @@ public class Blink extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onSend(PacketEvent.Send e) {
         if (nullCheck() || mc.isInSingleplayer()) return;
 
@@ -73,25 +73,25 @@ public class Blink extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings("DataFlowIssue")
     public void onPacketReceive(PacketEvent.Receive e) {
         if (nullCheck() || mc.isInSingleplayer()) return;
 
-        if (autoDisable.getValue() && disableIfVelocity.getValue() && e.getPacket() instanceof EntityVelocityUpdateS2CPacket packet && packet.getEntityId() == mc.player.getId()) {
+        if (autoDisable.getValue() && disableIfVelocity.getValue() && e.getPacket() instanceof EntityVelocityUpdateS2CPacket packet && packet.getEntityId() == mc.player.getId())
             setEnabled(false);
-        }
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onAttack(AttackEntityEvent e) {
         if (autoDisable.getValue() && disableIfAttack.getValue() && e.getPlayer() == mc.player)
             setEnabled(false);
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onTick(ClientTickEvent e) {
-        if (nullCheck()) {
-            if (!packets.isEmpty()) sendPackets();
-        }
+        if (nullCheck() && !packets.isEmpty()) sendPackets();
 
         arrayListInfo = (ticker.getPassedTime() / 1000) + "s.";
 
@@ -102,10 +102,9 @@ public class Blink extends Module {
     }
 
     private void sendPackets() {
-        if (!nullCheck()) {
+        if (!nullCheck())
             for (Packet<?> packet : packets)
                 Managers.NETWORK_MANAGER.sendPacketNoEvent(packet);
-        }
         packets.clear();
     }
 }

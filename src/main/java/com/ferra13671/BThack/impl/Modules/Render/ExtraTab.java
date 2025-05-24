@@ -30,6 +30,7 @@ public class ExtraTab extends Module {
 
         super.onEnable();
     }
+    @SuppressWarnings("DataFlowIssue")
 
     public Text getModifiedPlayerName(String name) {
         if (friends.getValue() && Managers.FRIENDS_MANAGER.contains(name))

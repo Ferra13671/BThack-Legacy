@@ -40,6 +40,7 @@ public class PhaseESP extends Module {
     List<RenderBox> boxes = new CopyOnWriteArrayList<>();
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onRender (RenderWorldLastEvent e){
         List<RenderBox> renderBoxes = new CopyOnWriteArrayList<>();
         if (nullCheck() || mc.player == null ||!mc.player.isOnGround()) return;
@@ -47,6 +48,7 @@ public class PhaseESP extends Module {
             BlockPos blockPos = BlockPos.ofFloored(mc.player.getX() + vec.getX(), mc.player.getY(), mc.player.getZ() + vec.getZ());
             BlockPos blockPosy = BlockPos.ofFloored(mc.player.getX() + vec.getX(), mc.player.getY() - 1, mc.player.getZ() + vec.getZ());
             Box box = BlockUtils.createBox(blockPos, 0.5, 0.5, 0.03, false);
+            //noinspection ConstantValue
             if (blockPos == null || mc.world.isAir(blockPos)) continue;
 
             Block block = mc.world.getBlockState(blockPos).getBlock();

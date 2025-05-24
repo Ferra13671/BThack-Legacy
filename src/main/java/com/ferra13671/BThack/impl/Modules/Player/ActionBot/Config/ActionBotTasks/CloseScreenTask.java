@@ -24,9 +24,7 @@ public class CloseScreenTask extends ActionBotTask {
     }
 
     @Override
-    public void save(JsonObject jsonObject) {
-        //No action
-    }
+    public void save(JsonObject jsonObject) {}
 
     @Override
     public void load(JsonObject jsonObject) {

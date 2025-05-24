@@ -18,8 +18,8 @@ public class GuiMove extends Module {
     public final BooleanSetting chat = new BooleanSetting("Chat", this, false);
     public final BooleanSetting clickGui = new BooleanSetting("ClickGui", this, true);
 
-
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onTick(ClientTickEvent e) {
         if (mc.currentScreen == null || ModuleList.elytraFlight.isEnabled()) return;
 
@@ -28,8 +28,7 @@ public class GuiMove extends Module {
 
         KeyBinding[] keys = {mc.options.forwardKey, mc.options.backKey, mc.options.leftKey, mc.options.rightKey, mc.options.sprintKey, mc.options.sneakKey, mc.options.jumpKey};
 
-        for (KeyBinding keyBinding : keys) {
+        for (KeyBinding keyBinding : keys)
             keyBinding.setPressed(KeyboardUtils.isKeyDown(((ModifyKeyBinding) keyBinding)._getBoundKey().getCode()));
-        }
     }
 }

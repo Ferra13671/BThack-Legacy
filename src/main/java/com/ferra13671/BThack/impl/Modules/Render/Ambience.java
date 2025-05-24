@@ -63,10 +63,10 @@ public class Ambience extends Module {
     public final ModeSetting weather = new ModeSetting("Weather", this, Arrays.asList("Clear", "Rain", "Thunder", "Ash", "Snow"), customWeather::getValue).inCategory(weatherCategory);
     public final NumberSetting ashProbability = new NumberSetting("Ash Probability", this, 1, 0.1, 10, false, () -> customWeather.getValue() && weather.getValue().equals("Ash")).inCategory(weatherCategory);
 
-
     private final Ticker ticker = new Ticker();
 
     @Override
+    @SuppressWarnings("resource")
     public void onChangeSetting(Setting<?> setting) {
         if (setting == worldTimeMode) ticker.reset();
         if (isEnabled()) {
@@ -76,6 +76,7 @@ public class Ambience extends Module {
     }
 
     @Override
+    @SuppressWarnings("resource")
     public void onEnable() {
         super.onEnable();
         ticker.reset();
@@ -83,6 +84,7 @@ public class Ambience extends Module {
     }
 
     @Override
+    @SuppressWarnings("resource")
     public void onDisable() {
         super.onDisable();
         ((ModifySkyRendering) ((IWorldRenderer)mc.worldRenderer)._getSkyRendering()).generateStarsMap();
@@ -107,7 +109,8 @@ public class Ambience extends Module {
         return switch (worldTimeMode.getValue()) {
             case "Day" -> 5000L;
             case "Night" -> 17000L;
-            case "Morning" -> 0L;
+            case "Morning" -> //noinspection DuplicateBranchesInSwitch
+                    0L;
             case "Sunset" -> 13000L;
             case "Custom" -> customTime.getValue().longValue();
             case "Spin" -> (long) (((ticker.getPassedTime() % 10000f) / 10000f) *spinSpeed.getValue().floatValue() * 24000);
@@ -116,6 +119,7 @@ public class Ambience extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings({"DataFlowIssue", "unused"})
     public void onRender(RenderWorldLastEvent e) {
         if (customWorldTime.getValue() && worldTimeMode.getValue().equals("Spin") && !nullCheck())
             mc.world.getLevelProperties().setTimeOfDay(getWorldTime());

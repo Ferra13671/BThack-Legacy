@@ -4,7 +4,7 @@ import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.events.DisconnectEvent;
 import com.ferra13671.BThack.events.Entity.EntityDeathEvent;
 import com.ferra13671.BThack.events.PacketEvent;
-import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Mc;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.network.packet.c2s.play.UpdateSelectedSlotC2SPacket;
@@ -14,6 +14,7 @@ public class HotbarSystem implements Mc {
     private int currentSlot = -1;
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onSend(PacketEvent.Send e) {
         if (e.getPacket() instanceof UpdateSelectedSlotC2SPacket packet) {
             if (currentSlot == packet.getSelectedSlot()) e.setCancelled(true);
@@ -22,6 +23,7 @@ public class HotbarSystem implements Mc {
     }
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onReceive(PacketEvent.Receive e) {
         if (Module.nullCheck()) return;
         if (e.getPacket() instanceof UpdateSelectedSlotS2CPacket packet) {
@@ -35,11 +37,13 @@ public class HotbarSystem implements Mc {
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onDisconnect(DisconnectEvent e) {
         currentSlot = -1;
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onDeath(EntityDeathEvent e) {
         if (e.entity == mc.player) currentSlot = -1;
     }

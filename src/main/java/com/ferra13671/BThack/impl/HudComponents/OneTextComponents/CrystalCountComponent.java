@@ -16,16 +16,14 @@ public class CrystalCountComponent extends AbstractOneTextComponent {
     }
 
     @Override
+    @SuppressWarnings("DataFlowIssue")
     public String getText() {
         int crystals = 0;
 
-        for (DefaultedList<ItemStack> list : ((IPlayerInventory) mc.player.getInventory()).getCombinedInventory()) {
-            for (ItemStack stack : list) {
-                if (stack.getItem() == Items.END_CRYSTAL) {
+        for (DefaultedList<ItemStack> list : ((IPlayerInventory) mc.player.getInventory()).getCombinedInventory())
+            for (ItemStack stack : list)
+                if (stack.getItem() == Items.END_CRYSTAL)
                     crystals += stack.getCount();
-                }
-            }
-        }
 
         return "Crystals: " + Formatting.WHITE + crystals;
     }

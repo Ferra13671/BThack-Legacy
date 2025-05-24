@@ -75,6 +75,7 @@ public class HUD extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onTick(ClientTickEvent e) {
         if (nullCheck()) return;
         if (mc.currentScreen instanceof HudEditorScreen) return;
@@ -91,6 +92,7 @@ public class HUD extends Module {
     }
 
     @EventSubscriber(priority = Integer.MIN_VALUE)
+    @SuppressWarnings("unused")
     public void onRender(RenderHudPreEvent e) {
         if (mc.currentScreen instanceof HudEditorScreen || mc.options.hudHidden) return;
         BThackMatrix.push();

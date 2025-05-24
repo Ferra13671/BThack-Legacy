@@ -131,10 +131,12 @@ public class ClickGui extends OneActionModule {
         }
     }
 
+
     public static void renderBlur() {
         PostEffectProcessor postEffectProcessor = mc.getShaderLoader().loadPostEffect(Constants.BLUR_IDENTIFIER, DefaultFramebufferSet.MAIN_ONLY);
         if (postEffectProcessor != null) {
             postEffectProcessor.setUniforms("Radius", ModuleList.clickGui.blurStrength.getValue().floatValue());
+            //noinspection deprecation
             postEffectProcessor.render(mc.getFramebuffer(), mc.gameRenderer.pool);
         }
         mc.getFramebuffer().beginWrite(false);

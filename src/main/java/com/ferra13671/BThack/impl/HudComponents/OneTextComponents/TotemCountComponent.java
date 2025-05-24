@@ -16,6 +16,7 @@ public class TotemCountComponent extends AbstractOneTextComponent {
     }
 
     @Override
+    @SuppressWarnings("DataFlowIssue")
     public String getText() {
         int totems = 0;
 

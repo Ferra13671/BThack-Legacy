@@ -35,6 +35,7 @@ public class MiddleClick extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onMouse(InputEvent.MouseInputEvent e) {
         if (e.getButton() == GLFW.GLFW_MOUSE_BUTTON_MIDDLE && e.getAction() == GLFW.GLFW_PRESS && mc.currentScreen == null) {
             switch (mode.getValue()) {

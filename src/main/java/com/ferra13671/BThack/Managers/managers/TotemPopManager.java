@@ -5,12 +5,11 @@ import com.ferra13671.BThack.events.DisconnectEvent;
 import com.ferra13671.BThack.events.Entity.EntityDeathEvent;
 import com.ferra13671.BThack.events.Entity.TotemPopEvent;
 import com.ferra13671.BThack.events.PacketEvent;
-import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Mc;
 import com.ferra13671.BThack.api.Utils.Initializable;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityStatuses;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.packet.s2c.play.EntityStatusS2CPacket;
 
@@ -24,10 +23,6 @@ public class TotemPopManager implements Initializable, Mc {
     public void init() {
         BThack.EVENT_BUS.register(this);
         BThack.debug("Totem Pop Manager inited.");
-    }
-
-    public int getPoppedTotems(LivingEntity entity) {
-        return playerInfos.getOrDefault(entity.getUuid(), 0);
     }
 
     @EventSubscriber
@@ -49,11 +44,13 @@ public class TotemPopManager implements Initializable, Mc {
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onEntityDeath(EntityDeathEvent e) {
         playerInfos.remove(e.entity.getUuid());
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onDisconnect(DisconnectEvent e) {
         playerInfos.clear();
     }

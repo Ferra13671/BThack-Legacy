@@ -20,6 +20,7 @@ public class HitSound extends Module {
 
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onUpdate(AttackEntityEvent e) {
         if (nullCheck()) return;
 

@@ -16,16 +16,14 @@ public class EXPCountComponent extends AbstractOneTextComponent {
     }
 
     @Override
+    @SuppressWarnings("DataFlowIssue")
     public String getText() {
         int bootles = 0;
 
-        for (DefaultedList<ItemStack> list : ((IPlayerInventory) mc.player.getInventory()).getCombinedInventory()) {
-            for (ItemStack stack : list) {
-                if (stack.getItem() == Items.EXPERIENCE_BOTTLE) {
+        for (DefaultedList<ItemStack> list : ((IPlayerInventory) mc.player.getInventory()).getCombinedInventory())
+            for (ItemStack stack : list)
+                if (stack.getItem() == Items.EXPERIENCE_BOTTLE)
                     bootles += stack.getCount();
-                }
-            }
-        }
 
         return "EXP Bottles: " + Formatting.WHITE + bootles;
     }

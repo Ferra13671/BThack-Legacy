@@ -2,7 +2,7 @@ package com.ferra13671.BThack.impl.Modules.Player.ActionBot.Config.ActionBotTask
 
 import com.ferra13671.BThack.core.Client.Systems.FileSystem.JsonUtils;
 import com.ferra13671.BThack.managers.managers.Thread.ThreadClosedException;
-import com.ferra13671.BThack.api.Utils.Grim.GrimUtils;
+import com.ferra13671.BThack.api.Utils.GrimUtils;
 import com.ferra13671.BThack.api.Utils.ItemUtils;
 import com.ferra13671.BThack.impl.Modules.Player.ActionBot.Config.ActionBotConfig;
 import com.ferra13671.BThack.impl.Modules.Player.ActionBot.Config.ActionBotTask;

@@ -65,13 +65,12 @@ public final class FileSystem {
         }
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public static void deleteDirectory(File directory) {
         File[] contents = directory.listFiles();
-        if (contents != null) {
-            for (File file : contents) {
+        if (contents != null)
+            for (File file : contents)
                 deleteDirectory(file);
-            }
-        }
         directory.delete();
     }
 

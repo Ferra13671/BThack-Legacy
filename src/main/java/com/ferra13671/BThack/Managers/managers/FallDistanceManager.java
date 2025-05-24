@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.managers.managers;
 
 import com.ferra13671.BThack.BThack;
-import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Mc;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.Initializable;
 import com.ferra13671.BThack.events.ClientTickEvent;
@@ -16,6 +16,7 @@ public class FallDistanceManager implements Initializable, Mc {
     }
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onTick(ClientTickEvent e) {
         if (!Module.nullCheck() && !mc.player.isOnGround()) {
             double yDelta = mc.player.getY() - mc.player.prevY;

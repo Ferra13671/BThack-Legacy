@@ -52,8 +52,8 @@ public class ChestESP extends Module {
 
     public final NumberSetting renderRange = new NumberSetting("Range", this, 200, 50, 600, false);
 
-
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onRender(RenderWorldLastEvent e) {
         if (nullCheck()) return;
 
@@ -171,6 +171,7 @@ public class ChestESP extends Module {
     }
 
     @EventSubscriber(priority = -1)
+    @SuppressWarnings("unused")
     public void onRender2(RenderWorldLastEvent e) {
         if (!tracers.getValue()) return;
 

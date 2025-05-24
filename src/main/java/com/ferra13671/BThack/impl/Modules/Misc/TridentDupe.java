@@ -31,8 +31,8 @@ public class TridentDupe extends Module {
 
     public final BooleanSetting autoInventory = new BooleanSetting("Auto Inventory", this, true);
 
-
     @Override
+    @SuppressWarnings("DataFlowIssue")
     public void onChangeSetting(Setting<?> setting) {
         if (isEnabled()) {
             if (autoInventory.getValue()) {
@@ -43,6 +43,7 @@ public class TridentDupe extends Module {
     }
 
     @EventSubscriber(priority = Integer.MAX_VALUE)
+    @SuppressWarnings("unused")
     public void onSendPacket(PacketEvent.Send event) {
 
         if (event.getPacket() instanceof PlayerMoveC2SPacket
@@ -51,9 +52,8 @@ public class TridentDupe extends Module {
 
         if (!(event.getPacket() instanceof ClickSlotC2SPacket)
                 && !(event.getPacket() instanceof PlayerActionC2SPacket))
-        {
             return;
-        }
+
         if (!cancel)
             return;
 
@@ -61,6 +61,7 @@ public class TridentDupe extends Module {
     }
 
     @Override
+    @SuppressWarnings("DataFlowIssue")
     public void onEnable() {
         if (nullCheck()) {
             toggle();
@@ -79,8 +80,8 @@ public class TridentDupe extends Module {
 
     }
 
-    private void dupe()
-    {
+    @SuppressWarnings("DataFlowIssue")
+    private void dupe() {
         int delayInt = delay.getValue().intValue() * 100;
 
         mc.interactionManager.interactItem(mc.player, Hand.MAIN_HAND);
@@ -116,45 +117,40 @@ public class TridentDupe extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onTick(ClientTickEvent e) {
 
         long currentTime = System.currentTimeMillis();
-        {
-            Iterator<Pair<Long, Runnable>> iterator = scheduledTasks.iterator();
+        Iterator<Pair<Long, Runnable>> iterator = scheduledTasks.iterator();
 
-            while (iterator.hasNext()) {
-                Pair<Long, Runnable> entry = iterator.next();
-                if (entry.getLeft() <= currentTime) {
-                    entry.getRight().run();
-                    iterator.remove(); // Remove executed task from the list
-                }
+        while (iterator.hasNext()) {
+            Pair<Long, Runnable> entry = iterator.next();
+            if (entry.getLeft() <= currentTime) {
+                entry.getRight().run();
+                iterator.remove(); // Remove executed task from the list
             }
         }
-        {
-            Iterator<Pair<Long, Runnable>> iterator = scheduledTasks2.iterator();
-
-            while (iterator.hasNext()) {
-                Pair<Long, Runnable> entry = iterator.next();
-                if (entry.getLeft() <= currentTime) {
-                    entry.getRight().run();
-                    iterator.remove(); // Remove executed task from the list
-                }
+        iterator = scheduledTasks2.iterator();
+        while (iterator.hasNext()) {
+            Pair<Long, Runnable> entry = iterator.next();
+            if (entry.getLeft() <= currentTime) {
+                entry.getRight().run();
+                iterator.remove(); // Remove executed task from the list
             }
         }
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onDisconnect(DisconnectEvent e) {
         toggle();
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onGui(GuiOpenEvent e) {
-        if (autoInventory.getValue()) {
-            if (e.getScreen() == null || !(e.getScreen() instanceof InventoryScreen)) setEnabled(false);
-        }
-        if (e.getScreen() instanceof DisconnectedScreen) {
+        if (autoInventory.getValue() && (e.getScreen() == null || !(e.getScreen() instanceof InventoryScreen))) setEnabled(false);
+        if (e.getScreen() instanceof DisconnectedScreen)
             setEnabled(false);
-        }
     }
 }

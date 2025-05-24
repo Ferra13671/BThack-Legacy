@@ -40,6 +40,7 @@ public class AutoOffhand extends Module {
 
 
     @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
     public void onClientTick(ClientTickEvent e) {
         if (nullCheck()) return;
 
@@ -73,6 +74,7 @@ public class AutoOffhand extends Module {
         }
     }
 
+    @SuppressWarnings("DataFlowIssue")
     private boolean tryOffhand(Item item) {
         if (mc.player.getOffHandStack().getItem() != item) {
             if (!replaceOther.getValue() && mc.player.getOffHandStack().getItem() != Items.AIR) return false;

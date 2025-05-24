@@ -77,6 +77,7 @@ public abstract class MixinClientConnection implements ModifyClientConnection {
         }
     }
 
+    @SuppressWarnings({"AddedMixinMembersNamePattern", "resource"})
     @Override
     public void sendPacketNoEvent(Packet<?> packet) {
         ++packetsSentCounter;
@@ -87,7 +88,7 @@ public abstract class MixinClientConnection implements ModifyClientConnection {
         }
     }
 
-    @Inject(method = "disconnect", at = @At(value = "HEAD"))
+    @Inject(method = "disconnect*", at = @At(value = "HEAD"))
     private void hookDisconnect(Text disconnectReason, CallbackInfo ci) {
         BThack.EVENT_BUS.activate(new DisconnectEvent());
     }

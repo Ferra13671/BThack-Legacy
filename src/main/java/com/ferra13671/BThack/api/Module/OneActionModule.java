@@ -8,15 +8,12 @@ public class OneActionModule extends Module {
 
     @Override
     public void sendToggleMessage() {
-        if (enabled && ModuleList.chatNotifications.isEnabled() && ModuleList.chatNotifications.moduleToggle.getValue()) {
+        if (enabled && ModuleList.chatNotifications.isEnabled() && ModuleList.chatNotifications.moduleToggle.getValue())
             ChatUtils.sendMessage(this.getName() + ": " + Formatting.YELLOW + "Toggled");
-        }
     }
 
     @Override
-    public void playOffSound() {
-        //No Action
-    }
+    public void playOffSound() {}
 
     @Override
     public void toggle() {
@@ -27,9 +24,8 @@ public class OneActionModule extends Module {
             onEnable();
             onDisable();
             enabled = false;
-        } else {
+        } else
             onDisable();
-        }
     }
 
     @Override
@@ -47,9 +43,8 @@ public class OneActionModule extends Module {
             onEnable();
             onDisable();
             this.enabled = false;
-        } else {
+        } else
             onDisable();
-        }
     }
 
     @Override
@@ -59,8 +54,7 @@ public class OneActionModule extends Module {
             onEnable();
             onDisable();
             this.enabled = false;
-        } else {
+        } else
             onDisable();
-        }
     }
 }

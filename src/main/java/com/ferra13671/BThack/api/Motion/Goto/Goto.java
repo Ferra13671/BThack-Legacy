@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.api.Motion.Goto;
 
-import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Mc;
 import com.ferra13671.BThack.managers.managers.Thread.BThackThread;
 import com.ferra13671.BThack.managers.managers.Thread.ThreadClosedException;
 import com.ferra13671.BThack.api.Utils.Rotate.RotateUtils;
@@ -17,8 +17,6 @@ public class Goto extends BThackThread implements Mc {
     protected boolean cancel;
     protected CollisionAction action;
 
-    private Runnable runnable;
-
     private boolean moving = false;
 
     public Goto(double needX, double needZ, CollisionAction action) {
@@ -31,10 +29,6 @@ public class Goto extends BThackThread implements Mc {
         return moving;
     }
 
-    public void setPostAction(Runnable runnable) {
-        this.runnable = runnable;
-    }
-
     @Override
     public synchronized void start() {
         moving = true;
@@ -42,6 +36,7 @@ public class Goto extends BThackThread implements Mc {
     }
 
     @Override
+    @SuppressWarnings("DataFlowIssue")
     public void threadAction() throws ThreadClosedException {
         maxX = needX + 0.15;
         minX = needX - 0.15;
@@ -80,55 +75,47 @@ public class Goto extends BThackThread implements Mc {
         pause = false;
         mc.player.input.movementForward = 0;
         moving = false;
-        if (runnable != null) {
-            runnable.run();
-        }
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public void tryJump() {
         mc.player.input.movementForward = 0;
         double oldPosY = mc.player.getY();
-        mc.player.jump();
-        mc.player.input.movementForward = 1;
-        sleepThread(600);
-        mc.player.input.movementForward = 0;
-        if (mc.player.getY() < oldPosY + 0.4) {
-            mc.player.jump();
-            mc.player.input.movementForward = 1;
-            sleepThread(600);
-            mc.player.input.movementForward = 0;
-        } else {
-            pause = false;
-        }
-        if (mc.player.getY() < oldPosY + 0.4) {
-            mc.player.jump();
-            mc.player.input.movementForward = 1;
-            sleepThread(600);
-            mc.player.input.movementForward = 0;
-        } else {
-            pause = false;
-        }
+        tryJumpInternal(oldPosY);
+        tryJumpInternal(oldPosY);
+        tryJumpInternal(oldPosY);
         if (mc.player.getY() < oldPosY + 0.4) {
             cancel = true;
             pause = false;
         }
     }
 
+    @SuppressWarnings("DataFlowIssue")
+    public void tryJumpInternal(double oldPosY) {
+        if (mc.player.getY() < oldPosY + 0.4) {
+            mc.player.jump();
+            mc.player.input.movementForward = 1;
+            sleepThread(600);
+            mc.player.input.movementForward = 0;
+        } else
+            pause = false;
+    }
+
+    @SuppressWarnings("DataFlowIssue")
     private void cancel() throws ThreadClosedException {
         cancel = false;
         pause = false;
         mc.player.input.movementForward = 0;
         moving = false;
-        if (runnable != null) {
-            runnable.run();
-        }
         stopOnException();
     }
 
+    @SuppressWarnings("DataFlowIssue")
     private boolean toFarX() {
         return mc.player.getX() > maxX || mc.player.getX() < minX;
     }
 
+    @SuppressWarnings("DataFlowIssue")
     private boolean toFarZ() {
         return mc.player.getZ() > maxZ || mc.player.getZ() < minZ;
     }

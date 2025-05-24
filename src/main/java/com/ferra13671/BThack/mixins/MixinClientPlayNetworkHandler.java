@@ -2,7 +2,7 @@ package com.ferra13671.BThack.mixins;
 
 import com.ferra13671.BThack.core.Client.Client;
 import com.ferra13671.BThack.core.Client.ModuleList;
-import com.ferra13671.BThack.api.Interfaces.Mc;
+import com.ferra13671.BThack.api.Utils.Mc;
 import com.ferra13671.BThack.managers.Managers;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Utils.ChatUtils;
@@ -25,6 +25,7 @@ import java.util.Set;
 @Mixin(ClientPlayNetworkHandler.class)
 public class MixinClientPlayNetworkHandler implements Mc {
 
+    @SuppressWarnings("DataFlowIssue")
     @ModifyArg(method = "setPosition", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;setYaw(F)V"))
     private static float modifySetYawOnOnPlayerPositionLook(float yaw) {
         if (ModuleList.noSRotations.isEnabled())
@@ -32,6 +33,7 @@ public class MixinClientPlayNetworkHandler implements Mc {
         else return yaw;
     }
 
+    @SuppressWarnings("DataFlowIssue")
     @ModifyArg(method = "setPosition", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;setPitch(F)V"))
     private static float modifySetPitchOnOnPlayerPositionLook(float pitch) {
         if (ModuleList.noSRotations.isEnabled())
@@ -39,6 +41,7 @@ public class MixinClientPlayNetworkHandler implements Mc {
         else return pitch;
     }
 
+    @SuppressWarnings("DataFlowIssue")
     @Inject(method = "setPosition", at = @At("TAIL"))
     private static void modifyOnPlayerPositionLook(PlayerPosition pos, Set<PositionFlag> flags, Entity entity, boolean bl, CallbackInfoReturnable<Boolean> cir) {
         if (ModuleList.noSRotations.isEnabled()) {

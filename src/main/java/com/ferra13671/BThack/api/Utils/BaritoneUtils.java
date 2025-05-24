@@ -3,7 +3,6 @@ package com.ferra13671.BThack.api.Utils;
 import baritone.api.BaritoneAPI;
 import baritone.api.pathing.goals.GoalXZ;
 import baritone.api.utils.BlockOptionalMetaLookup;
-import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Utils.Rotate.RotateUtils;
 import net.minecraft.block.Block;
 import net.minecraft.util.math.ChunkPos;
@@ -13,7 +12,7 @@ import java.util.List;
 public final class BaritoneUtils implements Mc {
     private static final int border = 30000000;
 
-
+    @SuppressWarnings("DataFlowIssue")
     public static void autoWalkUpdate() {
         ChunkPos chunkPos = mc.player.getChunkPos();
         if (!mc.world.isChunkLoaded(chunkPos.x, chunkPos.z)) return;
@@ -40,9 +39,5 @@ public final class BaritoneUtils implements Mc {
 
     public static boolean isActive() {
         return BaritoneAPI.getProvider().getPrimaryBaritone().getCustomGoalProcess().isActive();
-    }
-
-    public static boolean isPathing() {
-        return BaritoneAPI.getProvider().getPrimaryBaritone().getPathingBehavior().isPathing();
     }
 }

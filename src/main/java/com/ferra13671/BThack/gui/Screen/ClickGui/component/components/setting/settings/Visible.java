@@ -1,6 +1,5 @@
 package com.ferra13671.BThack.gui.Screen.ClickGui.component.components.setting.settings;
 
-
 import com.ferra13671.BThack.gui.Screen.ClickGui.component.components.ModuleButton;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.SoundSystem.SoundSystem;

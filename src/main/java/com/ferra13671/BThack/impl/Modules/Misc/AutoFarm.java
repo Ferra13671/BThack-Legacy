@@ -8,7 +8,7 @@ import com.ferra13671.BThack.managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.api.Utils.*;
-import com.ferra13671.BThack.api.Utils.Grim.GrimUtils;
+import com.ferra13671.BThack.api.Utils.GrimUtils;
 import com.ferra13671.BThack.api.Utils.Rotate.RotateUtils;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.block.BlockState;
@@ -48,6 +48,7 @@ public class AutoFarm extends Module {
     }
 
     @EventSubscriber
+    @SuppressWarnings("unused")
     public void onTick(ClientTickEvent e) {
         if (nullCheck()) return;
 
@@ -61,6 +62,7 @@ public class AutoFarm extends Module {
         }
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public void breakFilterAction() {
         breakPoses = new HashMap<>();
         for (BlockPos pos : BlockUtils.getSphere(mc.player.getBlockPos(), 4, 4, false, true, 0)) {
@@ -71,6 +73,7 @@ public class AutoFarm extends Module {
         }
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public void breakAction() {
         prevBreakPoses = new HashMap<>();
         breakPoses.forEach((pos, crop) -> {
@@ -92,6 +95,7 @@ public class AutoFarm extends Module {
         });
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public void plantFilterAction() {
         plantPoses = new HashMap<>();
         for (BlockPos pos : BlockUtils.getSphere(mc.player.getBlockPos(), 4, 4, false, true, 0)) {
@@ -111,6 +115,7 @@ public class AutoFarm extends Module {
         prevBreakPoses.clear();
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public void plantAction() {
         plantPoses.forEach((pos, seed) -> {
             int slot = InventoryUtils.findItem(seed);
@@ -129,6 +134,7 @@ public class AutoFarm extends Module {
         });
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public int findBestItem() {
         double bestScore = -1;
         int bestSlot = -1;
