@@ -44,22 +44,14 @@ public class AutoClicker extends Module {
     }
 
     public boolean delayPassed() {
-        if (mode.getValue().equals("Cooldown"))
-            return mc.player.getAttackCooldownProgress(0) >= 1.0;
-        else
-            return ticker.passed(delay.getValue());
+        return mode.getValue().equals("Cooldown") ? mc.player.getAttackCooldownProgress(0) >= 1.0 : ticker.passed(delay.getValue());
     }
 
     public boolean check() {
-        if (onlySword.getValue())
-            return mc.player.getMainHandStack().getItem() instanceof SwordItem;
-        else
-            return true;
+        return !onlySword.getValue() || mc.player.getMainHandStack().getItem() instanceof SwordItem;
     }
 
     public boolean checkPressing() {
-        if (ifPressing.getValue())
-            return mc.options.attackKey.isPressed();
-        else return true;
+        return !ifPressing.getValue() || mc.options.attackKey.isPressed();
     }
 }

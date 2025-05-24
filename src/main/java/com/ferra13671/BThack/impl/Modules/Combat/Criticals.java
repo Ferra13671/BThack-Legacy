@@ -34,7 +34,6 @@ public class Criticals extends Module {
                 Managers.NETWORK_MANAGER.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY() + 0.1f, mc.player.getZ(), false, mc.player.horizontalCollision));
                 Managers.NETWORK_MANAGER.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY(), mc.player.getZ(), false, mc.player.horizontalCollision));
 
-                mc.player.fallDistance = 1;
                 mc.player.onGround = false;
 
                 Managers.NETWORK_MANAGER.sendPacket(PlayerInteractEntityC2SPacket.attack(e.getEntity(), mc.player.isSneaking()));
@@ -52,7 +51,6 @@ public class Criticals extends Module {
                 Managers.NETWORK_MANAGER.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY() + 1.0E-6, mc.player.getZ(), false, mc.player.horizontalCollision));
                 Managers.NETWORK_MANAGER.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY(), mc.player.getZ(), false, mc.player.horizontalCollision));
 
-                mc.player.fallDistance = 1;
                 mc.player.onGround = false;
 
                 Managers.NETWORK_MANAGER.sendPacket(PlayerInteractEntityC2SPacket.attack(e.getEntity(), mc.player.isSneaking()));

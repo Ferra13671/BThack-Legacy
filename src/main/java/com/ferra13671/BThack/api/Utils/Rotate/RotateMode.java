@@ -10,7 +10,7 @@ public enum RotateMode implements Mc {
     PACKET(RotateUtils::packetRotate, () -> RotateUtils.packetRotate(mc.player.getYaw(), mc.player.getPitch())),
     PACKET2(RotateUtils::packetRotate, () -> {}),
     GRIM(GrimUtils::sendPreActionGrimPackets, GrimUtils::sendPostActionGrimPackets),
-    VANILLA(RotateUtils::rotate, () -> {});
+    VANILLA((yaw, pitch) -> RotateUtils.rotate(yaw, pitch, 1), () -> {});
 
     private final BiConsumer<Float, Float> preRotate;
     private final Runnable postRotate;

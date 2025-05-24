@@ -29,25 +29,25 @@ public abstract class MixinWeatherRendering {
     //ViaFabricPlus does not allow @Redirect to be used in this method
     @Inject(method = "renderPrecipitation(Lnet/minecraft/world/World;Lnet/minecraft/client/render/VertexConsumerProvider;IFLnet/minecraft/util/math/Vec3d;)V", at = @At("HEAD"), cancellable = true)
     public void modifyRenderPrecipitation(World world, VertexConsumerProvider vertexConsumers, int ticks, float delta, Vec3d pos, CallbackInfo ci) {
-        if (ModuleList.ambience.isEnabled() && ModuleList.ambience.customWeather.getValue() && (!ModuleList.ambience.weather.getValue().equals("Clear") && !ModuleList.ambience.isParticleWeather())) {
+        if (ModuleList.ambience.isEnabled() && ModuleList.ambience.customWeather.getValue()) {
             ci.cancel();
-            float f = ModuleList.ambience.getRainGradient(world.getRainGradient(delta));
-            if (!(f <= 0.0F)) {
-                int i = MinecraftClient.isFancyGraphicsOrBetter() ? 10 : 5;
-                List<WeatherRendering.Piece> list = new ArrayList<>();
-                List<WeatherRendering.Piece> list2 = new ArrayList<>();
-                buildPrecipitationPieces(world, ticks, delta, pos, i, list, list2);
-                if (!list.isEmpty() || !list2.isEmpty()) {
-                    renderPrecipitation(vertexConsumers, pos, i, f, list, list2);
+            if (!ModuleList.ambience.weather.getValue().equals("Clear") && !ModuleList.ambience.isParticleWeather()) {
+                float f = ModuleList.ambience.getRainGradient(world.getRainGradient(delta));
+                if (!(f <= 0.0F)) {
+                    int i = MinecraftClient.isFancyGraphicsOrBetter() ? 10 : 5;
+                    List<WeatherRendering.Piece> list = new ArrayList<>();
+                    List<WeatherRendering.Piece> list2 = new ArrayList<>();
+                    buildPrecipitationPieces(world, ticks, delta, pos, i, list, list2);
+                    if (!list.isEmpty() || !list2.isEmpty())
+                        renderPrecipitation(vertexConsumers, pos, i, f, list, list2);
                 }
-
             }
         }
     }
 
     @Inject(method = "addParticlesAndSound", at = @At("HEAD"), cancellable = true)
     public void modifyTickRainSplashing(ClientWorld world, Camera camera, int ticks, ParticlesMode particlesMode, CallbackInfo ci) {
-        if (ModuleList.noWeather.isEnabled() && (!ModuleList.ambience.isEnabled() || !ModuleList.ambience.customWeather.getValue()))
+        if (ModuleList.noWeather.isEnabled() || (ModuleList.ambience.isEnabled() && ModuleList.ambience.customWeather.getValue() && ModuleList.ambience.weather.getValue().equals("Clear")))
             ci.cancel();
     }
 

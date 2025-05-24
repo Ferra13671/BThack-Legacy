@@ -51,9 +51,8 @@ public class AutoArmor extends Module {
         slotInfos.clear();
         for (int i = 0; i < (allowInventory.getValue() ? 36 : 9); i++) {
             ItemStack stack = mc.player.getInventory().getStack(i);
-            if (stack.getItem() instanceof ArmorItem) {
+            if (stack.getItem() instanceof ArmorItem)
                 slotInfos.add(new SlotInfo(stack, i, false));
-            }
         }
     }
 
@@ -75,7 +74,7 @@ public class AutoArmor extends Module {
         boolean bestBootsChest = false;
 
         for (SlotInfo info : slotInfos) {
-            if (info.stack.getItem() instanceof ArmorItem armor) {
+            if (info.stack.getItem() instanceof ArmorItem) {
                 int score = getScore(info.stack);
                 int slotId = info.stack.get(DataComponentTypes.EQUIPPABLE).slot().getEntitySlotId();
                 if (slotId == EquipmentSlot.HEAD.getEntitySlotId()) {
@@ -123,28 +122,20 @@ public class AutoArmor extends Module {
         SlotInfo chestplateSlot = bestSlots.get(2);
         SlotInfo legsSlot = bestSlots.get(1);
         SlotInfo bootsSlot = bestSlots.get(0);
-        if (helmetSlot != null) {
-            if (isEmptyArmor(3))
-                InventoryUtils.replaceItems(InventoryUtils.HEAD_SLOT, (helmetSlot.slot < 9 ? helmetSlot.slot + 36 : helmetSlot.slot));
-        }
-        if (chestplateSlot != null && mc.player.getInventory().getArmorStack(2).getItem() != Items.ELYTRA) {
-            if (isEmptyArmor(2))
-                InventoryUtils.replaceItems(InventoryUtils.CHESTPLATE_SLOT, (chestplateSlot.slot < 9 ? chestplateSlot.slot + 36 : chestplateSlot.slot));
-        }
-        if (legsSlot != null) {
-            if (isEmptyArmor(1))
-                InventoryUtils.replaceItems(InventoryUtils.LEGS_SLOT, (legsSlot.slot < 9 ? legsSlot.slot + 36 : legsSlot.slot));
-        }
-        if (bootsSlot != null) {
-            if (isEmptyArmor(0))
-                InventoryUtils.replaceItems(InventoryUtils.FEET_SLOT, (bootsSlot.slot < 9 ? bootsSlot.slot + 36 : bootsSlot.slot));
-        }
+        if (helmetSlot != null && isEmptyArmor(3))
+            InventoryUtils.replaceItems(InventoryUtils.HEAD_SLOT, (helmetSlot.slot < 9 ? helmetSlot.slot + 36 : helmetSlot.slot));
+        if (chestplateSlot != null && mc.player.getInventory().getArmorStack(2).getItem() != Items.ELYTRA && isEmptyArmor(2))
+            InventoryUtils.replaceItems(InventoryUtils.CHESTPLATE_SLOT, (chestplateSlot.slot < 9 ? chestplateSlot.slot + 36 : chestplateSlot.slot));
+        if (legsSlot != null && isEmptyArmor(1))
+            InventoryUtils.replaceItems(InventoryUtils.LEGS_SLOT, (legsSlot.slot < 9 ? legsSlot.slot + 36 : legsSlot.slot));
+        if (bootsSlot != null && isEmptyArmor(0))
+            InventoryUtils.replaceItems(InventoryUtils.FEET_SLOT, (bootsSlot.slot < 9 ? bootsSlot.slot + 36 : bootsSlot.slot));
     }
 
     public int getScore(ItemStack stack) {
         Item item = stack.getItem();
         int score = 0;
-        if (item instanceof ArmorItem armor) {
+        if (item instanceof ArmorItem) {
             score += stack.getMaxDamage();
             /*
             ArmorMaterial material = armor.getMaterial().value();
@@ -163,9 +154,8 @@ public class AutoArmor extends Module {
 
              */
 
-            if (enchFilter.getValue()) {
+            if (enchFilter.getValue())
                 score += getEnchantmentScore(stack);
-            }
         }
 
         return score;
@@ -173,10 +163,9 @@ public class AutoArmor extends Module {
 
     public int getEnchantmentScore(ItemStack stack) {
         int score = 0;
-        for (RegistryEntry<Enchantment> ench : stack.getEnchantments().getEnchantments()) {
+        for (RegistryEntry<Enchantment> ench : stack.getEnchantments().getEnchantments())
             if (isGoodEnchantment(ench))
                 score += stack.getEnchantments().getLevel(ench);
-        }
         return score;
     }
 
@@ -193,11 +182,7 @@ public class AutoArmor extends Module {
     }
 
     public boolean filter(int bestScore, int score) {
-        if (filter.getValue().equals("Best")) {
-            return score > bestScore;
-        } else {
-            return score < bestScore;
-        }
+        return filter.getValue().equals("Best") ? score > bestScore : score < bestScore;
     }
 
     public record SlotInfo(ItemStack stack, int slot, boolean chest) {}

@@ -43,52 +43,39 @@ public class AutoOffhand extends Module {
     public void onClientTick(ClientTickEvent e) {
         if (nullCheck()) return;
 
+        arrayListInfo = mode.getValue();
         switch (mode.getValue()) {
-            case "Standard":
-                arrayListInfo = "Standard";
+            case "Standard" -> {
                 switch (item.getValue()) {
-                    case "Totem":
-                        tryOffhand(Items.TOTEM_OF_UNDYING);
-                        break;
-                    case "Crystal":
-                        tryOffhand(Items.END_CRYSTAL);
-                        break;
-                    case "Gapple":
-                        tryOffhand(Items.ENCHANTED_GOLDEN_APPLE);
-                        break;
+                    case "Totem" -> tryOffhand(Items.TOTEM_OF_UNDYING);
+                    case "Crystal" -> tryOffhand(Items.END_CRYSTAL);
+                    case "Gapple" -> {
+                        if (!tryOffhand(Items.ENCHANTED_GOLDEN_APPLE))
+                            tryOffhand(Items.GOLDEN_APPLE);
+                    }
                 }
-                break;
-            case "Extra":
-                arrayListInfo = "Extra";
+            }
+            case "Extra" -> {
                 float playerHp = mc.player.getHealth();
-                if (totem.getValue()) {
-                    if (playerHp > totemMinHP.getValue() && playerHp < totemMaxHP.getValue()) {
+                if (totem.getValue())
+                    if (playerHp >= totemMinHP.getValue() && playerHp <= totemMaxHP.getValue())
                         if (tryOffhand(Items.TOTEM_OF_UNDYING))
                             return;
-                    }
-                }
-                if (crystal.getValue()) {
-                    if (playerHp > crystalMinHP.getValue() && playerHp < crystalMaxHP.getValue()) {
+                if (crystal.getValue())
+                    if (playerHp >= crystalMinHP.getValue() && playerHp <= crystalMaxHP.getValue())
                         if (tryOffhand(Items.END_CRYSTAL))
                             return;
-                    }
-                }
-                if (gapple.getValue()) {
-                    if (playerHp > gappleMinHP.getValue() && playerHp < gappleMaxHP.getValue()) {
-                        if (tryOffhand(Items.ENCHANTED_GOLDEN_APPLE))
-                            return;
-                    }
-                }
-                break;
+                if (gapple.getValue())
+                    if (playerHp >= gappleMinHP.getValue() && playerHp <= gappleMaxHP.getValue())
+                        if (!tryOffhand(Items.ENCHANTED_GOLDEN_APPLE))
+                            tryOffhand(Items.GOLDEN_APPLE);
+            }
         }
     }
 
     private boolean tryOffhand(Item item) {
         if (mc.player.getOffHandStack().getItem() != item) {
-            if (!replaceOther.getValue()) {
-                if (mc.player.getOffHandStack().getItem() != Items.AIR)
-                    return false;
-            }
+            if (!replaceOther.getValue() && mc.player.getOffHandStack().getItem() != Items.AIR) return false;
 
             int slot = InventoryUtils.findItem(item);
             if (slot == -1) return false;

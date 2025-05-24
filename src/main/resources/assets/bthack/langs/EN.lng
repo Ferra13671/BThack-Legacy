@@ -10,7 +10,6 @@
 "lang.module.HUD": Enabling and configuring HUD modules.
 "lang.module.HudEditor": Opens the HUD Editor menu.
 "lang.module.Macros": Enables the macro system.
-"lang.module.MemoryCleaner": Enabling and configuring the memory cleaning module.
 "lang.module.MenuShader": Enables shader rendering in the main menu.
 
 //COMBAT

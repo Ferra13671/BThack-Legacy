@@ -18,12 +18,15 @@ public final class RotateUtils implements Mc {
     }
 
     public static void rotate(float yaw, float pitch) {
-        float partialTicks = mc.getRenderTickCounter().getTickDelta(true);
+        rotate(yaw, pitch, mc.getRenderTickCounter().getTickDelta(true));
+    }
+
+    public static void rotate(float yaw, float pitch, float delta) {
         float oldYaw = mc.player.prevYaw;
         float oldPitch = mc.player.prevPitch;
 
-        mc.player.setYaw(MathHelper.lerp(partialTicks, oldYaw, yaw));
-        mc.player.setPitch(MathHelper.lerp(partialTicks, oldPitch, pitch));
+        mc.player.setYaw(MathHelper.lerp(delta, oldYaw, yaw));
+        mc.player.setPitch(MathHelper.lerp(delta, oldPitch, pitch));
     }
 
     public static void packetRotate(float yaw, float pitch) {
@@ -34,7 +37,7 @@ public final class RotateUtils implements Mc {
     }
 
     public static float[] rotations(Entity entity) {
-        return rotations(new Vec3d(entity.getX(), entity.getY(), entity.getZ()));
+        return rotations(entity.getBoundingBox().getCenter());
     }
 
     public static float[] rotations(BlockPos pos) {

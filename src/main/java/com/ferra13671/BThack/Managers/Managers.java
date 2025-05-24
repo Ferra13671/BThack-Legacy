@@ -11,7 +11,6 @@ import com.ferra13671.BThack.managers.managers.Cape.CapeManager;
 import com.ferra13671.BThack.managers.managers.Command.CommandManager;
 import com.ferra13671.BThack.managers.managers.Break.BreakManager;
 import com.ferra13671.BThack.managers.managers.Macros.MacrosManager;
-import com.ferra13671.BThack.managers.managers.MemoryManager;
 import com.ferra13671.BThack.managers.managers.Clans.ClanManager;
 import com.ferra13671.BThack.managers.managers.SocialManager;
 import com.ferra13671.BThack.managers.managers.TwoFA.TwoFAManager;
@@ -27,7 +26,6 @@ public class Managers {
     public static final MainMenuShaderManager MAIN_MENU_SHADER_MANAGER = new MainMenuShaderManager();
     public static final TotemPopManager TOTEM_POP_MANAGER = new TotemPopManager();
     public static final SettingsManager SETTINGS_MANAGER = new SettingsManager();
-    public static final MemoryManager MEMORY_MANAGER = new MemoryManager();
     public static final TravelChangeManager TRAVEL_CHANGE_MANAGER = new TravelChangeManager();
     public static final CommandManager COMMAND_MANAGER = new CommandManager();
     public static final EntityDeathManager ENTITY_DEATH_MANAGER = new EntityDeathManager();
@@ -51,4 +49,5 @@ public class Managers {
         }
     };
     public static final ClanManager CLAN_MANAGER = new ClanManager();
+    public static final FallDistanceManager FALL_DISTANCE_MANAGER = new FallDistanceManager();
 }

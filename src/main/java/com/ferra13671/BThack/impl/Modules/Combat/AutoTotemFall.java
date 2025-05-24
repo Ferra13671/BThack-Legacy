@@ -1,6 +1,7 @@
 package com.ferra13671.BThack.impl.Modules.Combat;
 
 import com.ferra13671.BThack.events.ClientTickEvent;
+import com.ferra13671.BThack.managers.Managers;
 import com.ferra13671.BThack.managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Module.ModuleInfo;
@@ -34,7 +35,7 @@ public class AutoTotemFall extends Module {
     public void onTick(ClientTickEvent e) {
         if (nullCheck()) return;
 
-        isFalling = mc.player.fallDistance > fallCheck.getValue() && !mc.player.verticalCollision;
+        isFalling = Managers.FALL_DISTANCE_MANAGER.getFallDistance() > fallCheck.getValue() && !mc.player.verticalCollision;
 
         if (!isFalling) return;
         if (PlayerUtils.getGroundPos(mc.world, mc.player).y + toGround.getValue() > mc.player.getY()) {

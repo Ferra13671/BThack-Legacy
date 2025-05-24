@@ -49,18 +49,18 @@ public class FastFall extends Module {
         if (mc.player.verticalCollision)
             Managers.TICK_MANAGER.applyTickModifier(1);
         else
-            if (mc.player.fallDistance >= fallDistance.getValue())
+            if (Managers.FALL_DISTANCE_MANAGER.getFallDistance() >= fallDistance.getValue())
                 Managers.TICK_MANAGER.applyTickModifierWithFactor(timerSpeed.getValue());
     }
 
     public void velocityAction() {
-        if (mc.player.fallDistance >= fallDistance.getValue())
+        if (Managers.FALL_DISTANCE_MANAGER.getFallDistance() >= fallDistance.getValue())
             mc.player.velocity.y = -downSpeed.getValue();
     }
 
     public void posAction() {
-        if (mc.player.fallDistance >= fallDistance.getValue())
-            mc.player.setPosition(mc.player.getX(), mc.player.getY() - mc.player.fallDistance, mc.player.getZ());
+        if (Managers.FALL_DISTANCE_MANAGER.getFallDistance() >= fallDistance.getValue())
+            mc.player.setPosition(mc.player.getX(), mc.player.getY() - Managers.FALL_DISTANCE_MANAGER.getFallDistance(), mc.player.getZ());
 
     }
 }

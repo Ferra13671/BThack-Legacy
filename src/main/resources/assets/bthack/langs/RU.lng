@@ -9,7 +9,6 @@
 "lang.module.HUD": Включение и настройка худ модулей.
 "lang.module.HudEditor": Открывает HUD Editor меню.
 "lang.module.Macros": Включает систему макросов.
-"lang.module.MemoryCleaner": Включение и настройка модуля очистки памяти.
 "lang.module.MenuShader": Включает рендеринг шейдеров в главном меню.
 
 //COMBAT

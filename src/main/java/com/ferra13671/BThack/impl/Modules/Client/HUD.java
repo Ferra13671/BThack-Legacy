@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.impl.Modules.Client;
 
+import com.ferra13671.BThack.api.Utils.Ticker;
 import com.ferra13671.BThack.managers.managers.Setting.Settings.*;
 import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Client.Client;
@@ -57,9 +58,9 @@ public class HUD extends Module {
 
         color = new ColorSetting("Color", this, new Color(213, 142, 253), () -> !rainbow.getValue() && !gradient.getValue()).withBlockedAlpha();
     }
-    public HudStyle hudStyle = HudStyle.valueOf(style.getValue().toUpperCase().replace(" ", "_"));
 
-    private int updateTickDelay = 0;
+    public HudStyle hudStyle = HudStyle.valueOf(style.getValue().toUpperCase().replace(" ", "_"));
+    private final Ticker updateTicker = new Ticker();
 
     @Override
     public void onChangeSetting(Setting<?> setting) {
@@ -70,7 +71,7 @@ public class HUD extends Module {
     @Override
     public void onDisable() {
         super.onDisable();
-        updateTickDelay = 0;
+        updateTicker.reset();
     }
 
     @EventSubscriber
@@ -78,9 +79,8 @@ public class HUD extends Module {
         if (nullCheck()) return;
         if (mc.currentScreen instanceof HudEditorScreen) return;
 
-        updateTickDelay++;
-        if (updateTickDelay < 3) return;
-        updateTickDelay = 0;
+        if (!updateTicker.passed(150)) return;
+        updateTicker.reset();
 
         for (HudComponent hudComponent : Client.hudComponents)
             if (hudComponent.isEnabled())
@@ -94,7 +94,7 @@ public class HUD extends Module {
     public void onRender(RenderHudPreEvent e) {
         if (mc.currentScreen instanceof HudEditorScreen || mc.options.hudHidden) return;
         BThackMatrix.push();
-
+        BThackMatrix.translate(0, 0, 1000);
         for (HudComponent hudComponent : Client.hudComponents)
             if (hudComponent.isEnabled())
                 hudComponent.render();

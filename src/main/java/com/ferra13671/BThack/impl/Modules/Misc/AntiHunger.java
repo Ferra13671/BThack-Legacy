@@ -1,6 +1,7 @@
 package com.ferra13671.BThack.impl.Modules.Misc;
 
 import com.ferra13671.BThack.events.PacketEvent;
+import com.ferra13671.BThack.managers.Managers;
 import com.ferra13671.BThack.managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.managers.managers.Setting.Settings.Setting;
 import com.ferra13671.BThack.api.Module.Module;
@@ -26,7 +27,7 @@ public class AntiHunger extends Module {
 
         if (e.getPacket() instanceof PlayerMoveC2SPacket) {
             IPlayerMoveC2SPacket packet = (IPlayerMoveC2SPacket) e.getPacket();
-            packet.setOnGround((mc.player.fallDistance <= 0 || mc.interactionManager.isBreakingBlock()) && mc.player.isGliding());
+            packet.setOnGround((Managers.FALL_DISTANCE_MANAGER.getFallDistance() <= 0 || mc.interactionManager.isBreakingBlock()) && mc.player.isGliding());
         }
 
         if (e.getPacket() instanceof ClientCommandC2SPacket) {

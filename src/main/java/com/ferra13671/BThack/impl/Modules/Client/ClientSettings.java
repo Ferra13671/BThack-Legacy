@@ -61,19 +61,13 @@ public class ClientSettings extends Module {
     protected void removeFromArrayList() {}
 
     @Override
-    public void sendToggleMessage() {
-        //no action
-    }
+    public void sendToggleMessage() {}
 
     @Override
-    public void playOnSound() {
-        //no action
-    }
+    public void playOnSound() {}
 
     @Override
-    public void playOffSound() {
-        //no action
-    }
+    public void playOffSound() {}
 
     @Override
     public void onDisable() {

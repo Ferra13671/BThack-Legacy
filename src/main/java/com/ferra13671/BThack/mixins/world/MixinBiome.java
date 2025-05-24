@@ -23,9 +23,7 @@ public class MixinBiome {
 
     @Inject(method = "hasPrecipitation", at = @At("HEAD"), cancellable = true)
     public void modifyHasPrecipitation(CallbackInfoReturnable<Boolean> cir) {
-        if (ModuleList.ambience.isEnabled() && ModuleList.ambience.customWeather.getValue() && !ModuleList.ambience.weather.getValue().equals("Clear") && !ModuleList.ambience.isParticleWeather()) {
-            cir.setReturnValue(true);
-            cir.cancel();
-        }
+        if (ModuleList.ambience.isEnabled() && ModuleList.ambience.customWeather.getValue())
+            cir.setReturnValue(!ModuleList.ambience.weather.getValue().equals("Clear") && !ModuleList.ambience.isParticleWeather());
     }
 }

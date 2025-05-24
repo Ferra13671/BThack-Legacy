@@ -148,14 +148,14 @@ public class Ambience extends Module {
     }
 
     public float getRainGradient(float value) {
-        if (ModuleList.ambience.isEnabled() && ModuleList.ambience.customWeather.getValue() && (!ModuleList.ambience.weather.getValue().equals("Clear") && !ModuleList.ambience.isParticleWeather()))
-            return ModuleList.ambience.weather.getValue().equals("Thunder") ? 2f : 1f;
+        if (ModuleList.ambience.isEnabled() && ModuleList.ambience.customWeather.getValue())
+            return (!ModuleList.ambience.weather.getValue().equals("Clear") && !ModuleList.ambience.isParticleWeather()) ? (ModuleList.ambience.weather.getValue().equals("Thunder") ? 2f : 1f) : 0;
         else return value;
     }
 
     public float getThunderGradient(float value) {
-        if (ModuleList.ambience.isEnabled() && ModuleList.ambience.customWeather.getValue() && ModuleList.ambience.weather.getValue().equals("Thunder"))
-            return 1f;
+        if (ModuleList.ambience.isEnabled() && ModuleList.ambience.customWeather.getValue())
+            return ModuleList.ambience.weather.getValue().equals("Thunder") ? 1f : 0f;
         else return value;
     }
 }

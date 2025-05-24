@@ -255,7 +255,7 @@ public class LongJump extends Module {
         public void onSetVelocity(SetVelocityEvent e) {
             if (!afterJumpDelay.passed(100)) return;
             if (!mc.player.verticalCollision) {
-                if (mc.player.fallDistance > 0) {
+                if (Managers.FALL_DISTANCE_MANAGER.getFallDistance() > 0) {
                     e.setVelocity(new Vec3d(e.getVelocity().x, -fallSpeed.getValue(), e.getVelocity().z));
                 }
             } else stop();

@@ -50,6 +50,7 @@ public class KillAura extends Module {
     public final ModeSetting moveFixMode = new ModeSetting("Mode", this, Arrays.asList("Legal", "Strong")).inCategory(moveFixCategory);
 
     public final BooleanSetting ignoreWalls = new BooleanSetting("Ignore Walls", this, false);
+    public final BooleanSetting onlyCriticals = new BooleanSetting("Only Criticals", this, false);
 
     public final CategorySetting targetsCategory = new CategorySetting("Targets", this);
     public final BooleanSetting players = new BooleanSetting("Players", this, true).inCategory(targetsCategory);
@@ -166,25 +167,31 @@ public class KillAura extends Module {
 
     public void attackTargetAction() {
         if (targetedEntity != null) {
-            if (!Managers.TRAVEL_CHANGE_MANAGER.containsChanger(travelChanger)) Managers.TRAVEL_CHANGE_MANAGER.addChanger(travelChanger);
-            if (rotateMath.getValue().equals("Always") || updateRotTicker.passed(targetRotateDelay.getValue())) {
-                targetRotation = RotateUtils.rotations(targetedEntity.entity);
-                updateRotTicker.reset();
-            }
-            switch (rotateMath.getValue()) {
-                case "Old", "Always" -> currentRotation = targetRotation;
-                case "New" -> {
-                    if (currentRotation != null) {
-                        currentRotation[0] += (targetRotation[0] - currentRotation[0]) * rotateStep.getValue().floatValue();
-                        currentRotation[1] += (targetRotation[1] - currentRotation[1]) * rotateStep.getValue().floatValue();
-                    } else currentRotation = new float[]{RotateUtils.getCameraYaw(), RotateUtils.getCameraPitch()};
+            if (!instaRotate.getValue()) {
+                if (!Managers.TRAVEL_CHANGE_MANAGER.containsChanger(travelChanger))
+                    Managers.TRAVEL_CHANGE_MANAGER.addChanger(travelChanger);
+
+                if (rotateMath.getValue().equals("Always") || updateRotTicker.passed(targetRotateDelay.getValue())) {
+                    targetRotation = RotateUtils.rotations(targetedEntity.entity);
+                    updateRotTicker.reset();
                 }
-            }
+                switch (rotateMath.getValue()) {
+                    case "Old", "Always" -> currentRotation = targetRotation;
+                    case "New" -> {
+                        if (currentRotation != null) {
+                            currentRotation[0] += (targetRotation[0] - currentRotation[0]) * rotateStep.getValue().floatValue();
+                            currentRotation[1] += (targetRotation[1] - currentRotation[1]) * rotateStep.getValue().floatValue();
+                        } else currentRotation = new float[]{RotateUtils.getCameraYaw(), RotateUtils.getCameraPitch()};
+                    }
+                }
+            } else Managers.TRAVEL_CHANGE_MANAGER.removeChanger(travelChanger);
+
             if (!delayPassed()) return;
             if (instaRotate.getValue() || targetedEntity.lockTicks >= lockTicks.getValue()) {
+                if (onlyCriticals.getValue() && !isCrit()) return;
                 if (instaRotate.getValue()) {
                     RotateMode rotateMode = getRotateMode();
-                    KillAuraUtils.preAttackRotate(rotateMode, currentRotation, packets.getValue().intValue());
+                    KillAuraUtils.preAttackRotate(rotateMode, RotateUtils.rotations(targetedEntity.entity), packets.getValue().intValue());
                 }
                 KillAuraUtils.attackNoRotate(targetedEntity.entity);
                 delayTicker.reset();
@@ -209,6 +216,8 @@ public class KillAura extends Module {
     public void triggerBotMode() {
         if (!delayPassed()) return;
         HitResult objectMouseOver = mc.crosshairTarget;
+
+        if (onlyCriticals.getValue() && !isCrit()) return;
 
         if (objectMouseOver instanceof EntityHitResult entityHitResult) {
             Entity ent = entityHitResult.getEntity();
@@ -249,6 +258,10 @@ public class KillAura extends Module {
                 || (pauseIfEat.getValue() && ItemUtils.isFood(mc.player.getActiveItem()) && mc.player.isUsingItem())
                 || (pauseIfBlink.getValue() && ModuleList.blink.isEnabled())
         );
+    }
+
+    public boolean isCrit() {
+        return mc.player.velocity.y < 0 && !mc.player.isOnGround() && Managers.FALL_DISTANCE_MANAGER.getFallDistance() > 0 && Managers.FALL_DISTANCE_MANAGER.getFallDistance() < 0.3;
     }
 
     public record Target(LivingEntity entity, int lockTicks) {}

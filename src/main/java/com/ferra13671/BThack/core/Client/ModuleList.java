@@ -31,11 +31,10 @@ public final class ModuleList {
     public static ClientSettings clientSettings = register(new ClientSettings());
     public static CustomCape customCape = register(new CustomCape());
     public static CustomFont customFont = (DeviceSystem.getLaunchDevice() == DeviceSystem.LaunchDevice.PC) ? register(new CustomFont()) : null;
-    public static DiscordRPC discordRPC = register(new DiscordRPC());
+    public static DiscordRPC discordRPC = (DeviceSystem.getLaunchDevice() == DeviceSystem.LaunchDevice.PC) ? register(new DiscordRPC()) : null;
     public static HUD HUD = register(new HUD());
     public static HudEditor hudEditor = register(new HudEditor());
     public static Macros macros = register(new Macros());
-    public static MemoryCleaner memoryCleaner = register(new MemoryCleaner());
     public static MenuShader menuShader = register(new MenuShader());
 
     //COMBAT

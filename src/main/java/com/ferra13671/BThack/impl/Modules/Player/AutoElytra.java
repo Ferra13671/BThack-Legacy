@@ -21,7 +21,7 @@ public class AutoElytra extends Module {
     public void onTick(ClientTickEvent e) {
         if (nullCheck() || mc.player.isGliding()) return;
 
-        if (mc.player.fallDistance >= fallDist.getValue() && !mc.player.verticalCollision) {
+        if (Managers.FALL_DISTANCE_MANAGER.getFallDistance() >= fallDist.getValue() && !mc.player.verticalCollision) {
             if (!(mc.player.getInventory().getArmorStack(2).getItem() == Items.ELYTRA)) {
                 if (equipAction())
                     startFlyAction();

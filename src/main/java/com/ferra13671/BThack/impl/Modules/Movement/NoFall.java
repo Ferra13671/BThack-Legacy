@@ -4,6 +4,7 @@ import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.core.Client.Systems.GrimNoFallSystem;
 import com.ferra13671.BThack.events.ClientTickEvent;
 import com.ferra13671.BThack.events.PacketEvent;
+import com.ferra13671.BThack.managers.Managers;
 import com.ferra13671.BThack.managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.managers.managers.Setting.Settings.Setting;
 import com.ferra13671.BThack.api.Module.Module;
@@ -61,7 +62,7 @@ public class NoFall extends Module {
             ChatUtils.sendMessage(LanguageSystem.translate("lang.module.NoFall.message"));
             sentMessage = true;
         }
-        if (!mc.player.isOnGround() && mc.player.fallDistance > 3 && !started)
+        if (!mc.player.isOnGround() && Managers.FALL_DISTANCE_MANAGER.getFallDistance() > 3 && !started)
             started = true;
 
         if (started) {

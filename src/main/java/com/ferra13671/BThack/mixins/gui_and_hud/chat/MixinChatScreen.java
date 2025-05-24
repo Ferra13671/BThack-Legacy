@@ -2,7 +2,6 @@ package com.ferra13671.BThack.mixins.gui_and_hud.chat;
 
 import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.core.Client.ModuleList;
-import com.ferra13671.BThack.core.Render.BThackRender;
 import com.ferra13671.BThack.core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.events.SendMessageEvent;
 import com.ferra13671.BThack.api.Interfaces.Mc;
@@ -77,14 +76,11 @@ public abstract class MixinChatScreen implements Mc {
         if (ModuleList.passwordHider.isEnabled()) {
             if (chatField.getText().startsWith("/l ") || chatField.getText().startsWith("/login ") || chatField.getText().startsWith("/reg ") || chatField.getText().startsWith("/register ")) {
                 context.getMatrices().push();
-                context.getMatrices().translate(0, 0, 1000);
-                BThackRender.drawRect(
-                        7,
+                context.getMatrices().translate(0, 0, 10000);
+                context.fill(7,
                         mc.getWindow().getScaledHeight() - 14,
                         mc.textRenderer.getWidth(chatField.getText()) + 8,
-                        mc.getWindow().getScaledHeight() - 2,
-                        ColorUtils.BLACK, context.getMatrices().peek().getPositionMatrix()
-                );
+                        mc.getWindow().getScaledHeight() - 2, ColorUtils.BLACK);
                 context.getMatrices().pop();
             }
         }

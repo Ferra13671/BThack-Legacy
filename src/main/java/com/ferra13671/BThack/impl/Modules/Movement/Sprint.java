@@ -92,7 +92,7 @@ public class Sprint extends Module {
     }
 
     public boolean needSprint() {
-        if (mc.player == null || mc.world == null) return false;
+        if (nullCheck()) return false;
 
         return
                 !mc.options.sneakKey.isPressed()
@@ -105,7 +105,7 @@ public class Sprint extends Module {
     public boolean isMoving() {
         return
                 !mc.player.isSneaking()
-                && mc.player.input.movementForward > 0
+                && mc.player.input.playerInput.forward()
                         && !mc.player.horizontalCollision;
     }
 }
