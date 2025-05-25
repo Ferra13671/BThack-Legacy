@@ -506,7 +506,10 @@ public class PacketMine extends Module {
     }
 
     public void clearBreakBlocks() {
-        currentBreakingBlock = null;
+        if (currentBreakingBlock != null && !currentBreakingBlock.canBreak()) {
+            breakedPos = currentBreakingBlock.blockPos;
+            currentBreakingBlock = null;
+        }
         doubleBreakingBlock = null;
         breakDelay = breakDelaySet.getValue().intValue();
     }
