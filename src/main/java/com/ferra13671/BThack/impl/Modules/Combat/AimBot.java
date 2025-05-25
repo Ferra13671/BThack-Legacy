@@ -1,7 +1,6 @@
 package com.ferra13671.BThack.impl.Modules.Combat;
 
 import com.ferra13671.BThack.api.Module.ModuleInfo;
-import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.events.Render.RenderWorldLastEvent;
 import com.ferra13671.BThack.events.ClientTickEvent;
 import com.ferra13671.BThack.managers.managers.Setting.Settings.BooleanSetting;
@@ -21,9 +20,10 @@ public class AimBot extends Module {
 
     public final NumberSetting range = new NumberSetting("Range", this, 4.0,1,5,false);
     public final BooleanSetting players = new BooleanSetting("Players", this, true);
+    public final BooleanSetting invisibles = new BooleanSetting("Invisibles", this, true, players::getValue);
+    public final BooleanSetting teammates = new BooleanSetting("Teammates", this, false, players::getValue);
+    public final BooleanSetting friends = new BooleanSetting("Friends", this, false, players::getValue);
     public final BooleanSetting mobs = new BooleanSetting("Mobs", this, true);
-    public final BooleanSetting teammates = new BooleanSetting("Teammates", this, false);
-    public final BooleanSetting friends = new BooleanSetting("Friends", this, false);
     public final BooleanSetting ignoreWalls = new BooleanSetting("Ignore Walls", this, false);
 
     public final BooleanSetting clanManager = ClanSettingsBuilder.buildToggle(this);
@@ -35,7 +35,15 @@ public class AimBot extends Module {
     public void onUpdate(RenderWorldLastEvent e) {
         if (nullCheck()) return;
 
-        rotate();
+        PlayerEntity player = KillAuraUtils.filterPlayers(range.getValue(), invisibles.getValue(), friends.getValue(), teammates.getValue(), clanManager.getValue(), clanMode.getValue(), target.getValue());
+
+        Entity entity = KillAuraUtils.filterEntity(range.getValue());
+
+        if (players.getValue() && player != null && KillAuraUtils.canBeSeeTarget(ignoreWalls, player))
+            RotateUtils.rotateToEntity(player);
+
+        if (mobs.getValue() && entity != null && KillAuraUtils.canBeSeeTarget(ignoreWalls, entity) && entity.isAlive() && !(entity instanceof ItemEntity))
+            RotateUtils.rotateToEntity(entity);
     }
 
     @EventSubscriber
@@ -44,18 +52,5 @@ public class AimBot extends Module {
         if (nullCheck()) return;
 
         arrayListInfo = "" + range.getValue();
-    }
-
-    public static void rotate() {
-
-        PlayerEntity player = KillAuraUtils.filterPlayers(ModuleList.aimBot.range.getValue(), ModuleList.aimBot.friends.getValue(), ModuleList.aimBot.teammates.getValue(), ModuleList.aimBot.clanManager.getValue(), ModuleList.aimBot.clanMode.getValue(), ModuleList.aimBot.target.getValue());
-
-        Entity entity = KillAuraUtils.filterEntity(ModuleList.aimBot.range.getValue());
-
-        if (ModuleList.aimBot.players.getValue() && player != null && KillAuraUtils.canBeSeeTarget(ModuleList.aimBot.ignoreWalls, player))
-            RotateUtils.rotateToEntity(player);
-
-        if (ModuleList.aimBot.mobs.getValue() && entity != null && KillAuraUtils.canBeSeeTarget(ModuleList.aimBot.ignoreWalls, entity) && entity.isAlive() && !(entity instanceof ItemEntity))
-            RotateUtils.rotateToEntity(entity);
     }
 }

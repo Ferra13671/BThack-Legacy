@@ -38,8 +38,10 @@ public class KillAura extends Module {
     public final CategorySetting rotateCategory = new CategorySetting("Rotate", this);
     public final BooleanSetting instaRotate = new BooleanSetting("Insta Rotate", this, false, () -> mode.getValue().equals("Aura")).inCategory(rotateCategory);
     public final ModeSetting rotateMath = new ModeSetting("Rotate Math", this, Arrays.asList("New", "Old", "Always"), () -> mode.getValue().equals("Aura") && !instaRotate.getValue()).inCategory(rotateCategory);
-    public final NumberSetting targetRotateDelay = new NumberSetting("Target Rot. Delay", this, 150, 0, 500, true, () -> mode.getValue().equals("Aura") && !instaRotate.getValue() && !rotateMath.getValue().equals("Always")).inCategory(rotateCategory);
-    public final NumberSetting rotateStep = new NumberSetting("Rotate Step", this, 0.6125, 0.35, 0.8, false, () -> mode.getValue().equals("Aura") && !instaRotate.getValue() && rotateMath.getValue().equals("New")).inCategory(rotateCategory);
+    public final NumberSetting updateRotateMin = new NumberSetting("Update Rotate Min", this, 80, 0, 500, true, () -> mode.getValue().equals("Aura") && !instaRotate.getValue() && !rotateMath.getValue().equals("Always")).inCategory(rotateCategory);
+    public final NumberSetting updateRotateMax = new NumberSetting("Update Rotate Max", this, 150, 0, 500, true, () -> mode.getValue().equals("Aura") && !instaRotate.getValue() && !rotateMath.getValue().equals("Always")).inCategory(rotateCategory);
+    public final NumberSetting rotateMinStep = new NumberSetting("Rotate Min Step", this, 0.6125, 0.35, 0.8, false, () -> mode.getValue().equals("Aura") && !instaRotate.getValue() && rotateMath.getValue().equals("New")).inCategory(rotateCategory);
+    public final NumberSetting rotateMaxStep = new NumberSetting("Rotate Max Step", this, 0.8, 0.35, 0.8, false, () -> mode.getValue().equals("Aura") && !instaRotate.getValue() && rotateMath.getValue().equals("New")).inCategory(rotateCategory);
     public final NumberSetting lockTicks = new NumberSetting("Lock Ticks", this, 5, 3, 10, true, () -> mode.getValue().equals("Aura") && !instaRotate.getValue()).inCategory(rotateCategory);
     public final BooleanSetting grim = new BooleanSetting("Grim", this, true, () ->  mode.getValue().equals("Aura")).inCategory(rotateCategory);
     public final ModeSetting rotateMode = new ModeSetting("RotateMode", this, new ArrayList<>(Arrays.asList("Packet", "Vanilla", "None")), () ->  mode.getValue().equals("Aura") && instaRotate.getValue()).inCategory(rotateCategory);
@@ -54,8 +56,9 @@ public class KillAura extends Module {
 
     public final CategorySetting targetsCategory = new CategorySetting("Targets", this);
     public final BooleanSetting players = new BooleanSetting("Players", this, true).inCategory(targetsCategory);
-    public final BooleanSetting teammates = new BooleanSetting("Teammates", this, false).inCategory(targetsCategory);
-    public final BooleanSetting friends = new BooleanSetting("Friends", this, false).inCategory(targetsCategory);
+    public final BooleanSetting invisibles = new BooleanSetting("Invisibles", this, true, players::getValue).inCategory(targetsCategory);
+    public final BooleanSetting teammates = new BooleanSetting("Teammates", this, false, players::getValue).inCategory(targetsCategory);
+    public final BooleanSetting friends = new BooleanSetting("Friends", this, false, players::getValue).inCategory(targetsCategory);
     public final BooleanSetting hostiles = new BooleanSetting("Hostiles", this, true).inCategory(targetsCategory);
     public final BooleanSetting passive = new BooleanSetting("Passive", this, true).inCategory(targetsCategory);
     public final BooleanSetting golems = new BooleanSetting("Golems", this, false).inCategory(targetsCategory);
@@ -68,6 +71,7 @@ public class KillAura extends Module {
     public final BooleanSetting pauseIfEat = new BooleanSetting("If Eat", this, true).inCategory(pauseCategory);
     public final BooleanSetting pauseIfMine = new BooleanSetting("If Mine", this, true).inCategory(pauseCategory);
     public final BooleanSetting pauseIfBlink = new BooleanSetting("If Blink", this, false).inCategory(pauseCategory);
+    public final BooleanSetting pauseIfGui = new BooleanSetting("If Gui", this,false).inCategory(pauseCategory);
 
 
     private Predicate<Entity> entityFilter;
@@ -78,6 +82,7 @@ public class KillAura extends Module {
     public Target targetedEntity;
     private float[] targetRotation;
     private float[] currentRotation;
+    private int currentUpdateTargetDelay = 0;
     private final TravelChanger travelChanger = new TravelChanger(10000,
             () -> new Float[]{currentRotation[0], currentRotation[1]},
             moveFix::getValue,
@@ -148,13 +153,14 @@ public class KillAura extends Module {
     public void targetSearchAction() {
         LivingEntity target = null;
         if (players.getValue())
-            target = KillAuraUtils.filterPlayers(range.getValue(), friends.getValue(), teammates.getValue(), clanManager.getValue(), clanMode.getValue(), targetClan.getValue(), entity -> !entity.isSpectator() && !((PlayerEntity) entity).isCreative());
+            target = KillAuraUtils.filterPlayers(range.getValue(), invisibles.getValue(), friends.getValue(), teammates.getValue(), clanManager.getValue(), clanMode.getValue(), targetClan.getValue(), entity -> !entity.isSpectator() && !((PlayerEntity) entity).isCreative());
 
         if (target == null)
             target = (LivingEntity) KillAuraUtils.filterEntity(range.getValue(), entityFilter);
 
         if (target != null) {
             targetedEntity = new Target(target, 0);
+            currentUpdateTargetDelay = getUpdateRotateDelay();
             travelCancelled = false;
         } else {
             if (!travelCancelled) {
@@ -172,16 +178,17 @@ public class KillAura extends Module {
                 if (!Managers.TRAVEL_CHANGE_MANAGER.containsChanger(travelChanger))
                     Managers.TRAVEL_CHANGE_MANAGER.addChanger(travelChanger);
 
-                if (rotateMath.getValue().equals("Always") || updateRotTicker.passed(targetRotateDelay.getValue())) {
+                if (rotateMath.getValue().equals("Always") || updateRotTicker.passed(currentUpdateTargetDelay)) {
                     targetRotation = RotateUtils.rotations(targetedEntity.entity);
                     updateRotTicker.reset();
+                    currentUpdateTargetDelay = getUpdateRotateDelay();
                 }
                 switch (rotateMath.getValue()) {
                     case "Old", "Always" -> currentRotation = targetRotation;
                     case "New" -> {
                         if (currentRotation != null) {
-                            currentRotation[0] += (targetRotation[0] - currentRotation[0]) * rotateStep.getValue().floatValue();
-                            currentRotation[1] += (targetRotation[1] - currentRotation[1]) * rotateStep.getValue().floatValue();
+                            currentRotation[0] += (targetRotation[0] - currentRotation[0]) * getRotateStep();
+                            currentRotation[1] += (targetRotation[1] - currentRotation[1]) * getRotateStep();
                         } else currentRotation = new float[]{RotateUtils.getCameraYaw(), RotateUtils.getCameraPitch()};
                     }
                 }
@@ -206,10 +213,18 @@ public class KillAura extends Module {
                     Managers.TRAVEL_CHANGE_MANAGER.removeChanger(travelChanger);
                 currentRotation = null;
             } else {
-                currentRotation[0] += (RotateUtils.getCameraYaw() - currentRotation[0]) * rotateStep.getValue().floatValue();
-                currentRotation[1] += (RotateUtils.getCameraPitch() - currentRotation[1]) * rotateStep.getValue().floatValue();
+                currentRotation[0] += (RotateUtils.getCameraYaw() - currentRotation[0]) * getRotateStep();
+                currentRotation[1] += (RotateUtils.getCameraPitch() - currentRotation[1]) * getRotateStep();
             }
         }
+    }
+
+    public float getRotateStep() {
+        return MathUtils.randomFloat(rotateMinStep.getValue().floatValue(), rotateMaxStep.getValue().floatValue());
+    }
+
+    public int getUpdateRotateDelay() {
+        return MathUtils.randomInt(updateRotateMin.getValue().intValue(), updateRotateMax.getValue().intValue());
     }
     //----------------------//
 
@@ -224,7 +239,7 @@ public class KillAura extends Module {
             Entity ent = entityHitResult.getEntity();
 
             if (players.getValue() && ent instanceof PlayerEntity player)
-                if (KillAuraUtils.filterPlayer(player, friends.getValue(), teammates.getValue(), clanManager.getValue(), clanMode.getValue(), targetClan.getValue()))
+                if (KillAuraUtils.filterPlayer(player, invisibles.getValue(), friends.getValue(), teammates.getValue(), clanManager.getValue(), clanMode.getValue(), targetClan.getValue()))
                     ((IMinecraftClient) mc).attack();
             if (entityFilter.test(ent))
                 ((IMinecraftClient) mc).attack();
@@ -257,6 +272,7 @@ public class KillAura extends Module {
                 (pauseIfMine.getValue() && ItemUtils.isTool(mc.player.getActiveItem().getItem()) && mc.player.isUsingItem()) || (ModuleList.packetMine.isEnabled() && (ModuleList.packetMine.currentBreakingBlock != null || !ModuleList.packetMine.conveyorBlocks.isEmpty()))
                 || (pauseIfEat.getValue() && ItemUtils.isFood(mc.player.getActiveItem()) && mc.player.isUsingItem())
                 || (pauseIfBlink.getValue() && ModuleList.blink.isEnabled())
+                || (pauseIfGui.getValue() && mc.currentScreen != null)
         );
     }
 

@@ -56,17 +56,28 @@ public final class KillAuraUtils implements Mc {
     }
 
     @SuppressWarnings("DataFlowIssue")
-    public static PlayerEntity filterPlayers(double range, boolean friends, boolean teammates, boolean clanManager, String clanMode, String targetClan, Predicate<Entity> extraFilter) {
-        return mc.world.getPlayers().stream().filter(entityPlayer -> filterPlayer(entityPlayer, friends, teammates, clanManager, clanMode, targetClan) && extraFilter.test(entityPlayer)).min(Comparator.comparing(entityPlayer ->
-                entityPlayer.distanceTo(mc.player))).filter(entityPlayer -> entityPlayer.distanceTo(mc.player) <= range).orElse(null);
+    public static PlayerEntity filterPlayers(double range, boolean invisibles, boolean friends, boolean teammates, boolean clanManager, String clanMode, String targetClan, Predicate<Entity> extraFilter) {
+        return mc.world.getPlayers().stream().filter(player ->
+                        filterPlayer(player, invisibles, friends, teammates, clanManager, clanMode, targetClan) && extraFilter.test(player))
+                .min(Comparator.comparing(entityPlayer ->
+                        entityPlayer.distanceTo(mc.player)))
+                .filter(entityPlayer ->
+                        entityPlayer.distanceTo(mc.player) <= range)
+                .orElse(null);
     }
 
-    public static PlayerEntity filterPlayers(double range, boolean friends, boolean teammates, boolean clanManager, String clanMode, String targetClan) {
-        return filterPlayers(range, friends, teammates, clanManager, clanMode, targetClan, (entity) -> true);
+    public static PlayerEntity filterPlayers(double range, boolean invisibles, boolean friends, boolean teammates, boolean clanManager, String clanMode, String targetClan) {
+        return filterPlayers(range, invisibles, friends, teammates, clanManager, clanMode, targetClan, (entity) -> true);
     }
 
-    public static boolean filterPlayer(PlayerEntity entityPlayer, boolean friends, boolean teammates, boolean clanManager, String clanMode, String targetClan) {
-        return entityPlayer != mc.player && !isFriend(entityPlayer, friends) && !isTeammate(entityPlayer, teammates) && isSuccessfulClanMember(entityPlayer, clanManager, clanMode, targetClan) && entityPlayer.isAlive();
+    public static boolean filterPlayer(PlayerEntity player, boolean invisibles, boolean friends, boolean teammates, boolean clanManager, String clanMode, String targetClan) {
+        return
+                player != mc.player
+                        && !isInvisible(player, invisibles)
+                        && !isFriend(player, friends)
+                        && !isTeammate(player, teammates)
+                        && isSuccessfulClanMember(player, clanManager, clanMode, targetClan)
+                        && player.isAlive();
     }
 
     @SuppressWarnings("DataFlowIssue")
@@ -111,11 +122,12 @@ public final class KillAuraUtils implements Mc {
         return entity -> canBeSeeTarget(ignoreWalls, entity) && ((hostiles.getValue() && isHostile(entity)) || (passive.getValue() && isPassive(entity)) || (golems.getValue() && isGolem(entity)) || (otherMobs.getValue() && isOtherMob(entity)));
     }
 
+    public static boolean isInvisible(PlayerEntity player, boolean invisibles) {
+        return !invisibles && player.isInvisible();
+    }
+
     public static boolean isFriend(PlayerEntity player, boolean friends) {
-        if (!friends) {
-            return Managers.FRIENDS_MANAGER.contains(player);
-        }
-        return false;
+        return !friends && Managers.FRIENDS_MANAGER.contains(player);
     }
 
     @SuppressWarnings("DataFlowIssue")

@@ -26,9 +26,10 @@ public class WebAura extends Module {
     public final BooleanSetting ignoreWalls = new BooleanSetting("Ignore Walls", this, true);
 
     public final BooleanSetting players = new BooleanSetting("Players", this, true);
+    public final BooleanSetting invisibles = new BooleanSetting("Invisibles", this, true, players::getValue);
+    public final BooleanSetting friends = new BooleanSetting("Friends", this, false, players::getValue);
+    public final BooleanSetting teammates = new BooleanSetting("Teammates", this, false, players::getValue);
     public final BooleanSetting mobs = new BooleanSetting("Mobs", this, false);
-    public final BooleanSetting friends = new BooleanSetting("Friends", this, false);
-    public final BooleanSetting teammates = new BooleanSetting("Teammates", this, false);
     public final BooleanSetting clanManager = ClanSettingsBuilder.buildToggle(this);
     public final ModeSetting clanMode = ClanSettingsBuilder.buildStatusMode(this, clanManager);
     public final ModeSetting targetClan = ClanSettingsBuilder.buildClanTargetMode(this, clanManager, clanMode);
@@ -43,6 +44,7 @@ public class WebAura extends Module {
         if (slot == -1) return;
 
         PlayerEntity player = KillAuraUtils.filterPlayers(4,
+                invisibles.getValue(),
                 friends.getValue(),
                 teammates.getValue(),
                 clanManager.getValue(),
