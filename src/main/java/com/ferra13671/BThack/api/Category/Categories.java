@@ -8,10 +8,10 @@ public class Categories {
 
     public static final Category COMBAT = register("COMBAT");
     public static final Category MISC = register("MISC");
-    public static final Category CLIENT = register("CLIENT");
     public static final Category RENDER = register("RENDER");
     public static final Category MOVEMENT = register("MOVEMENT");
     public static final Category PLAYER = register("PLAYER");
+    public static final Category CLIENT = register("CLIENT");
 
     public static final Category HUD = new Category("HUD");
 
