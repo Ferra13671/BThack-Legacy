@@ -39,7 +39,7 @@ public abstract class AbstractTaskGui extends BThackScreen {
         taskSettingButtons.addAll(getSettingButtons());
 
         buttons.clear();
-        taskSettingButtons.forEach(taskSettingButton -> buttons.add(taskSettingButton.button));
+        taskSettingButtons.forEach(taskSettingButton -> buttons.add(taskSettingButton.button()));
         buttons.add(Button.of(-1, mc.getWindow().getScaledWidth() - 40, mc.getWindow().getScaledHeight() - 30, 30, 15, "Confirm")
                 .withAction(buttonClickInfo -> {
                     ActionBotTask task = getAddingTask();
@@ -61,7 +61,7 @@ public abstract class AbstractTaskGui extends BThackScreen {
         drawBackGround(mouseX, mouseY);
 
         taskSettingButtons.forEach(taskSettingButton -> {
-            taskSettingButton.button.updateButton(mouseX, mouseY);
+            taskSettingButton.button().updateButton(mouseX, mouseY);
             taskSettingButton.render();
         });
 
