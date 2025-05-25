@@ -1,3 +1,24 @@
+# 1.21.4-2.0 Changes
+- Added 'Grim' mode in NoFall module
+- Added 'Pause -> If Blink' setting in KillAura
+- Added 'Rotate Mode' setting in Scaffold
+- Added 'Grim V3' mode in NoSlow
+- Added 'Bloom' mode in Shaders module
+- Added 'Custom Swing Speed' setting in HandTweaks module
+- Added more settings in KillAura
+- Modified HighwayBuilder module
+- NoWeather has been moved in RENDER category
+- FogColor, SkyColor, CloudsColor, CustomDayTime and WorldElements modules have been combined into the Ambience module
+- The config loading system has been changed to a more secure one
+- The search method for any block no longer selects blocks without collision
+- HandTweaks now changes the position/rotation/size of the hands more correctly
+- The WORLD category has been deleted
+- FXAA module removed
+- TopperRadar module removed
+- MinecraftShaders module removed
+- NinjaBridge module removed
+- Port 1.21.1 -> 1.21.4
+
 # 1.21.1-1.9 Changes
 - Added SilentSwap in Surround
 - Added 'Style' setting in HUD module
