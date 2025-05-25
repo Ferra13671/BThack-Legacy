@@ -1,68 +1,62 @@
 package com.ferra13671.BThack.impl.Modules.Render;
 
-import com.ferra13671.BThack.events.Render.TransformFirstPersonEvent;
+import com.ferra13671.BThack.events.Render.RenderHandEvent;
 import com.ferra13671.BThack.managers.managers.Setting.Settings.BooleanSetting;
 import com.ferra13671.BThack.managers.managers.Setting.Settings.CategorySetting;
 import com.ferra13671.BThack.managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
-import net.minecraft.util.Arm;
-import org.joml.Matrix4f;
+import net.minecraft.util.Hand;
+import net.minecraft.util.math.RotationAxis;
 
 @ModuleInfo(name = "HandTweaks", description = "lang.module.HandTweaks", category = "RENDER")
 public class HandTweaks extends Module {
 
-    public final CategorySetting leftHandCategory = new CategorySetting("Left Hand", this);
-    public final NumberSetting lHandX = new NumberSetting("LHand X", this, -0.63, -2.0, 2.0, false).inCategory(leftHandCategory);
-    public final NumberSetting lHandY = new NumberSetting("LHand Y", this, -0.08, -2.0, 2.0, false).inCategory(leftHandCategory);
-    public final NumberSetting lHandZ = new NumberSetting("LHand Z", this, -0.67, -2.0, 2.0, false).inCategory(leftHandCategory);
-    public final NumberSetting lHandYaw = new NumberSetting("LHand Yaw", this, 0, -100, 100, true).inCategory(leftHandCategory);
-    public final NumberSetting lHandPitch = new NumberSetting("LHand Pitch", this, 0, -100, 100, true).inCategory(leftHandCategory);
-    public final NumberSetting lHandRoll = new NumberSetting("LHand Roll", this, 0, -100, 100, true).inCategory(leftHandCategory);
-    public final NumberSetting lHandScale = new NumberSetting("LHand Scale", this, 1, 0.05, 4, false).inCategory(leftHandCategory);
+    public final CategorySetting mainHandCategory = new CategorySetting("Main Hand", this);
+    public final BooleanSetting armAlso = new BooleanSetting("Arm Also", this, true).inCategory(mainHandCategory);
+    public final NumberSetting mainPosX = new NumberSetting("Pos X", this, -0.63, -2.0, 2.0, false).inCategory(mainHandCategory);
+    public final NumberSetting mainPosY = new NumberSetting("Pos Y", this, -0.08, -2.0, 2.0, false).inCategory(mainHandCategory);
+    public final NumberSetting mainPosZ = new NumberSetting("Pos Z", this, -0.67, -2.0, 2.0, false).inCategory(mainHandCategory);
+    public final NumberSetting mainRotX = new NumberSetting("Rot X", this, 0, -100, 100, true).inCategory(mainHandCategory);
+    public final NumberSetting mainRotY = new NumberSetting("Rot Y", this, 0, -100, 100, true).inCategory(mainHandCategory);
+    public final NumberSetting mainRotZ = new NumberSetting("Rot Z", this, 0, -100, 100, true).inCategory(mainHandCategory);
+    public final NumberSetting mainScaleX = new NumberSetting("Scale X", this, 1, 0.05, 4, false).inCategory(mainHandCategory);
+    public final NumberSetting mainScaleY = new NumberSetting("Scale Y", this, 1, 0.05, 4, false).inCategory(mainHandCategory);
+    public final NumberSetting mainScaleZ = new NumberSetting("Scale Z", this, 1, 0.05, 4, false).inCategory(mainHandCategory);
 
-    public final CategorySetting rightHandCategory = new CategorySetting("Right Hand", this);
-    public final NumberSetting rHandX = new NumberSetting("RHand X", this, 0.63, -2.0, 2.0, false).inCategory(rightHandCategory);
-    public final NumberSetting rHandY = new NumberSetting("RHand Y", this, -0.08, -2.0, 2.0, false).inCategory(rightHandCategory);
-    public final NumberSetting rHandZ = new NumberSetting("RHand Z", this, -0.67, -2.0, 2.0, false).inCategory(rightHandCategory);
-    public final NumberSetting rHandYaw = new NumberSetting("RHand Yaw", this, 0, -100, 100, true).inCategory(rightHandCategory);
-    public final NumberSetting rHandPitch = new NumberSetting("RHand Pitch", this, 0, -100, 100, true).inCategory(rightHandCategory);
-    public final NumberSetting rHandRoll = new NumberSetting("RHand Roll", this, 0, -100, 100, true).inCategory(rightHandCategory);
-    public final NumberSetting rHandScale = new NumberSetting("RHand Scale", this, 1, 0.05, 4, false).inCategory(rightHandCategory);
+    public final CategorySetting offHandCategory = new CategorySetting("Off Hand", this);
+    public final NumberSetting offPosX = new NumberSetting("Pos X", this, 0.63, -2.0, 2.0, false).inCategory(offHandCategory);
+    public final NumberSetting offPosY = new NumberSetting("Pos Y", this, -0.08, -2.0, 2.0, false).inCategory(offHandCategory);
+    public final NumberSetting offPosZ = new NumberSetting("Pos Z", this, -0.67, -2.0, 2.0, false).inCategory(offHandCategory);
+    public final NumberSetting offRotX = new NumberSetting("Rot X", this, 0, -100, 100, true).inCategory(offHandCategory);
+    public final NumberSetting offRotY = new NumberSetting("Rot Y", this, 0, -100, 100, true).inCategory(offHandCategory);
+    public final NumberSetting offRotZ = new NumberSetting("Rot Z", this, 0, -100, 100, true).inCategory(offHandCategory);
+    public final NumberSetting offScaleX = new NumberSetting("Scale X", this, 1, 0.05, 4, false).inCategory(offHandCategory);
+    public final NumberSetting offScaleY = new NumberSetting("Scale Y", this, 1, 0.05, 4, false).inCategory(offHandCategory);
+    public final NumberSetting offScaleZ = new NumberSetting("Scale Z", this, 1, 0.05, 4, false).inCategory(offHandCategory);
 
     public final BooleanSetting noEatAnim = new BooleanSetting("No Eat Anim", this, false);
     public final BooleanSetting noBob = new BooleanSetting("No Bob", this, false);
     public final NumberSetting handAnimStep = new NumberSetting("Hand Anim. Step", this, 0.5, 0.3, 1, false);
 
-
     @EventSubscriber
     @SuppressWarnings("unused")
-    public void onTransformSideFirstPerson(TransformFirstPersonEvent.Pre e) {
-        if (noEatAnim.getValue())
-            if (e.transformType == TransformFirstPersonEvent.TransformType.EAT)
-                    e.setCancelled(true);
-        if (e.arm == Arm.LEFT) {
-            e.matrices.translate(lHandX.getValue(), lHandY.getValue(), lHandZ.getValue());
-        } else if (e.arm == Arm.RIGHT) {
-            e.matrices.translate(rHandX.getValue(), rHandY.getValue(), rHandZ.getValue());
-        }
-    }
+    public void onRenderHand(RenderHandEvent e) {
+        if (e.hand == Hand.MAIN_HAND) {
+            if (!armAlso.getValue() && e.type == RenderHandEvent.Type.ARM) return;
 
-    @EventSubscriber
-    @SuppressWarnings("unused")
-    public void onTransFormPost(TransformFirstPersonEvent.Post e) {
-        Matrix4f matrix = e.matrices.peek().getPositionMatrix();
-        if (e.arm == Arm.LEFT) {
-            matrix.rotate((float) Math.toRadians(lHandYaw.getValue()),0,1,0);
-            matrix.rotate((float) Math.toRadians(lHandPitch.getValue()),1,0,0);
-            matrix.rotate((float) Math.toRadians(lHandRoll.getValue()),0,0,1);
-            matrix.scale(lHandScale.getValue().floatValue());
-        } else if (e.arm == Arm.RIGHT) {
-            matrix.rotate((float) Math.toRadians(rHandYaw.getValue()),0,1,0);
-            matrix.rotate((float) Math.toRadians(rHandPitch.getValue()),1,0,0);
-            matrix.rotate((float) Math.toRadians(rHandRoll.getValue()),0,0,1);
-            matrix.scale(rHandScale.getValue().floatValue());
+            e.matrix.translate(mainPosX.getValue(), mainPosY.getValue(), mainPosZ.getValue());
+            e.matrix.multiply(RotationAxis.POSITIVE_X.rotationDegrees(mainRotX.getValue().floatValue()));
+            e.matrix.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(mainRotY.getValue().floatValue()));
+            e.matrix.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(mainRotZ.getValue().floatValue()));
+            e.matrix.scale(mainScaleX.getValue().floatValue(), mainScaleY.getValue().floatValue(), mainScaleZ.getValue().floatValue());
+        } else {
+            e.matrix.translate(offPosX.getValue(), offPosY.getValue(), offPosZ.getValue());
+            e.matrix.multiply(RotationAxis.POSITIVE_X.rotationDegrees(offRotX.getValue().floatValue()));
+            e.matrix.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(offRotY.getValue().floatValue()));
+            e.matrix.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(offRotZ.getValue().floatValue()));
+            e.matrix.scale(offScaleX.getValue().floatValue(), offScaleY.getValue().floatValue(), offScaleZ.getValue().floatValue());
         }
     }
 }

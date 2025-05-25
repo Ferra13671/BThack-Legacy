@@ -1,10 +1,10 @@
 package com.ferra13671.BThack.mixins.render;
 
 import com.ferra13671.BThack.BThack;
-import com.ferra13671.BThack.events.Render.TransformFirstPersonEvent;
+import com.ferra13671.BThack.core.Client.ModuleList;
+import com.ferra13671.BThack.events.Render.RenderHandEvent;
 import com.ferra13671.BThack.api.IMixin.ModifyHeldItemRenderer;
 import com.ferra13671.BThack.api.Utils.Mc;
-import com.ferra13671.MegaEvents.Base.Event;
 import com.google.common.base.MoreObjects;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -72,69 +72,19 @@ public abstract class MixinHeldItemRenderer implements Mc, ModifyHeldItemRendere
         }
     }
 
-    //TransformFirstPerson
-    @Inject(method = "applySwingOffset", at = @At("HEAD"), cancellable = true)
-    public void modifyApplySwingOffsetPre(MatrixStack matrices, Arm arm, float swingProgress, CallbackInfo ci) {
-        Event event = new TransformFirstPersonEvent.Pre(arm, matrices, TransformFirstPersonEvent.TransformType.SWING);
-        BThack.EVENT_BUS.activate(event);
-        if (event.isCancelled())
-            ci.cancel();
+    @Inject(method = "renderFirstPersonItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/item/HeldItemRenderer;renderItem(Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/item/ItemStack;Lnet/minecraft/item/ModelTransformationMode;ZLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V", shift = At.Shift.BEFORE))
+    public void modifyRenderHeldItemInRenderFirstPersonItem(AbstractClientPlayerEntity player, float tickDelta, float pitch, Hand hand, float swingProgress, ItemStack item, float equipProgress, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, CallbackInfo ci) {
+        BThack.EVENT_BUS.activate(new RenderHandEvent(RenderHandEvent.Type.HELD_ITEM, hand, matrices));
     }
 
-    @Inject(method = "applySwingOffset", at = @At("TAIL"))
-    public void modifyApplySwingOffsetPost(MatrixStack matrices, Arm arm, float swingProgress, CallbackInfo ci) {
-        Event event = new TransformFirstPersonEvent.Post(arm, matrices, TransformFirstPersonEvent.TransformType.SWING);
-        BThack.EVENT_BUS.activate(event);
-    }
-
-    @Inject(method = "applyEquipOffset", at = @At("HEAD"), cancellable = true)
-    public void modifyApplyEquipOffsetPre(MatrixStack matrices, Arm arm, float equipProgress, CallbackInfo ci) {
-        Event event = new TransformFirstPersonEvent.Pre(arm, matrices, TransformFirstPersonEvent.TransformType.EQUIP);
-        BThack.EVENT_BUS.activate(event);
-        if (event.isCancelled())
-            ci.cancel();
-    }
-
-    @Inject(method = "applyEquipOffset", at = @At("TAIL"))
-    public void modifyApplyEquipOffsetPost(MatrixStack matrices, Arm arm, float equipProgress, CallbackInfo ci) {
-        Event event = new TransformFirstPersonEvent.Post(arm, matrices, TransformFirstPersonEvent.TransformType.EQUIP);
-        BThack.EVENT_BUS.activate(event);
-    }
-
-    @Inject(method = "applyBrushTransformation", at = @At("HEAD"), cancellable = true)
-    public void modifyApplyBrushTransformationPre(MatrixStack matrices, float tickDelta, Arm arm, ItemStack stack, PlayerEntity player, float equipProgress, CallbackInfo ci) {
-        Event event = new TransformFirstPersonEvent.Pre(arm, matrices, TransformFirstPersonEvent.TransformType.BRUSH);
-        BThack.EVENT_BUS.activate(event);
-        if (event.isCancelled())
-            ci.cancel();
-    }
-
-    @Inject(method = "applyBrushTransformation", at = @At("TAIL"))
-    public void modifyApplyBrushTransformationPost(MatrixStack matrices, float tickDelta, Arm arm, ItemStack stack, PlayerEntity player, float equipProgress, CallbackInfo ci) {
-        Event event = new TransformFirstPersonEvent.Post(arm, matrices, TransformFirstPersonEvent.TransformType.BRUSH);
-        BThack.EVENT_BUS.activate(event);
+    @Inject(method = "renderFirstPersonItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/item/HeldItemRenderer;renderArmHoldingItem(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;IFFLnet/minecraft/util/Arm;)V"))
+    public void modifyRenderArmInRenderFirstPersonItem(AbstractClientPlayerEntity player, float tickDelta, float pitch, Hand hand, float swingProgress, ItemStack item, float equipProgress, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, CallbackInfo ci) {
+        BThack.EVENT_BUS.activate(new RenderHandEvent(RenderHandEvent.Type.ARM, hand, matrices));
     }
 
     @Inject(method = "applyEatOrDrinkTransformation", at = @At("HEAD"), cancellable = true)
     public void modifyApplyEatOrDrinkTransformationPre(MatrixStack matrices, float tickDelta, Arm arm, ItemStack stack, PlayerEntity player, CallbackInfo ci) {
-        Event event = new TransformFirstPersonEvent.Pre(arm, matrices, TransformFirstPersonEvent.TransformType.EAT);
-        BThack.EVENT_BUS.activate(event);
-        if (event.isCancelled())
+        if (ModuleList.handTweaks.isEnabled() && ModuleList.handTweaks.noEatAnim.getValue())
             ci.cancel();
     }
-
-    @Inject(method = "applyEatOrDrinkTransformation", at = @At("TAIL"))
-    public void modifyApplyEatOrDrinkTransformationPost(MatrixStack matrices, float tickDelta, Arm arm, ItemStack stack, PlayerEntity player, CallbackInfo ci) {
-        Event event = new TransformFirstPersonEvent.Post(arm, matrices, TransformFirstPersonEvent.TransformType.EAT);
-        BThack.EVENT_BUS.activate(event);
-    }
-
-    @Inject(method = "renderArmHoldingItem", at = @At("HEAD"), cancellable = true)
-    public void modifyRenderArmHoldingItemPre(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, float equipProgress, float swingProgress, Arm arm, CallbackInfo ci) {
-        Event event = new TransformFirstPersonEvent.Pre(arm, matrices, TransformFirstPersonEvent.TransformType.ARM);
-        BThack.EVENT_BUS.activate(event);
-        if (event.isCancelled())
-            ci.cancel();
-    }
-    ///////////////////////////
 }
