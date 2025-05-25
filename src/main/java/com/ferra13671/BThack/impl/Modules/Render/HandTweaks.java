@@ -15,7 +15,7 @@ public class HandTweaks extends Module {
 
     public final CategorySetting mainHandCategory = new CategorySetting("Main Hand", this);
     public final BooleanSetting armAlso = new BooleanSetting("Arm Also", this, true).inCategory(mainHandCategory);
-    public final NumberSetting mainPosX = new NumberSetting("Pos X", this, -0.63, -2.0, 2.0, false).inCategory(mainHandCategory);
+    public final NumberSetting mainPosX = new NumberSetting("Pos X", this, 0.71, -2.0, 2.0, false).inCategory(mainHandCategory);
     public final NumberSetting mainPosY = new NumberSetting("Pos Y", this, -0.08, -2.0, 2.0, false).inCategory(mainHandCategory);
     public final NumberSetting mainPosZ = new NumberSetting("Pos Z", this, -0.67, -2.0, 2.0, false).inCategory(mainHandCategory);
     public final NumberSetting mainRotX = new NumberSetting("Rot X", this, 0, -100, 100, true).inCategory(mainHandCategory);
@@ -26,7 +26,7 @@ public class HandTweaks extends Module {
     public final NumberSetting mainScaleZ = new NumberSetting("Scale Z", this, 1, 0.05, 4, false).inCategory(mainHandCategory);
 
     public final CategorySetting offHandCategory = new CategorySetting("Off Hand", this);
-    public final NumberSetting offPosX = new NumberSetting("Pos X", this, 0.63, -2.0, 2.0, false).inCategory(offHandCategory);
+    public final NumberSetting offPosX = new NumberSetting("Pos X", this, -0.71, -2.0, 2.0, false).inCategory(offHandCategory);
     public final NumberSetting offPosY = new NumberSetting("Pos Y", this, -0.08, -2.0, 2.0, false).inCategory(offHandCategory);
     public final NumberSetting offPosZ = new NumberSetting("Pos Z", this, -0.67, -2.0, 2.0, false).inCategory(offHandCategory);
     public final NumberSetting offRotX = new NumberSetting("Rot X", this, 0, -100, 100, true).inCategory(offHandCategory);
