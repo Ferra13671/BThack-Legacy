@@ -38,7 +38,10 @@ public class HandTweaks extends Module {
 
     public final BooleanSetting noEatAnim = new BooleanSetting("No Eat Anim", this, false);
     public final BooleanSetting noBob = new BooleanSetting("No Bob", this, false);
-    public final NumberSetting handAnimStep = new NumberSetting("Hand Anim. Step", this, 0.5, 0.3, 1, false);
+    public final NumberSetting handMoveStep = new NumberSetting("Hand Move Step", this, 0.5, 0.3, 1, false);
+
+    public final BooleanSetting customSwingSpeed = new BooleanSetting("Custom Swing Speed", this, true);
+    public final NumberSetting swingSpeed = new NumberSetting("Swing Speed", this, 15, 1, 35, true, customSwingSpeed::getValue);
 
     @EventSubscriber
     @SuppressWarnings("unused")

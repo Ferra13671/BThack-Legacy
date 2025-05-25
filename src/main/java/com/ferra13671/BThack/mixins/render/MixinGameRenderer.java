@@ -91,7 +91,7 @@ public abstract class MixinGameRenderer {
         if ((ModuleList.handTweaks.isEnabled() && ModuleList.handTweaks.noBob.getValue()))
             tiltViewWhenHurt(matrices, tickDelta);
 
-        if (ModuleList.handTweaks.isEnabled() && ModuleList.handTweaks.handAnimStep.getValue().floatValue() == 1f) {
+        if (ModuleList.handTweaks.isEnabled() && ModuleList.handTweaks.handMoveStep.getValue().floatValue() == 1f) {
             client.player.renderYaw = client.player.lastRenderYaw = client.player.yaw;
             client.player.renderPitch = client.player.lastRenderPitch = client.player.pitch;
         }

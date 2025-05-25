@@ -63,7 +63,7 @@ public abstract class MixinClientPlayerEntity extends AbstractClientPlayerEntity
 
     @ModifyConstant(method = "tickNewAi", constant = @Constant(floatValue = 0.5F))
     public float modifyRenderRotStepConstantInTickNewAi(float constant) {
-        return ModuleList.handTweaks.isEnabled() ? ModuleList.handTweaks.handAnimStep.getValue().floatValue() : constant;
+        return ModuleList.handTweaks.isEnabled() ? ModuleList.handTweaks.handMoveStep.getValue().floatValue() : constant;
     }
 
     @Redirect(method = "tickNausea", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screen/Screen;shouldPause()Z"))

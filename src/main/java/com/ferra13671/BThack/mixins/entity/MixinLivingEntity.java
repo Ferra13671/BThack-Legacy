@@ -34,6 +34,12 @@ public abstract class MixinLivingEntity extends Entity implements Mc {
 
     @Shadow public abstract double getAttributeValue(RegistryEntry<EntityAttribute> attribute);
 
+    @Inject(method = "getHandSwingDuration", at = @At("HEAD"), cancellable = true)
+    public void modifyGetHandSwingDuration(CallbackInfoReturnable<Integer> cir) {
+        if (ModuleList.handTweaks.isEnabled() && ModuleList.handTweaks.customSwingSpeed.getValue())
+            cir.setReturnValue(ModuleList.handTweaks.swingSpeed.getValue().intValue());
+    }
+
     @SuppressWarnings({"ConstantValue", "UnreachableCode"})
     @Inject(method = "isBaby", at = @At("HEAD"), cancellable = true)
     public void modifyIsBaby(CallbackInfoReturnable<Boolean> cir) {
