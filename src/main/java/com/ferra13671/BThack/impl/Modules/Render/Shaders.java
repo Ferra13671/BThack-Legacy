@@ -5,6 +5,7 @@ import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.api.Module.ModuleInfo;
 import com.ferra13671.BThack.mixins.accessor.IPostEffectProcessor;
 import com.ferra13671.BThack.mixins.accessor.IShaderProgram;
+import com.ferra13671.BThack.shaders.CoreShaders;
 import net.minecraft.client.gl.GlUniform;
 import net.minecraft.client.gl.PostEffectProcessor;
 import net.minecraft.client.gl.ShaderProgram;
@@ -132,7 +133,7 @@ public class Shaders extends Module {
     public void modifiedSetup(String name, GlUniform uniform) {
         switch (name) {
             case "scale" -> uniform.set((float) (scale.getValue() * 1000));
-            case "time" -> uniform.set(com.ferra13671.BThack.shaders.Shaders.INSTANCE.shaderTicker.getPassedTime() / 1000f);
+            case "time" -> uniform.set(CoreShaders.shaderTicker.getPassedTime() / 1000f);
             case "resolution" -> uniform.set((float) mc.getWindow().getWidth(), mc.getWindow().getHeight());
             case "fillAlpha" -> uniform.set(fillAlpha.getValue().floatValue() / 255f);
             case "outlineAlpha" -> uniform.set(outlineAlpha.getValue().floatValue() / 255f);

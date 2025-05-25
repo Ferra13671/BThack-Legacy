@@ -36,7 +36,7 @@ public class MenuShader extends Module {
 
     @Override
     public void onChangeSetting(Setting<?> setting) {
-        Managers.MAIN_MENU_SHADER_MANAGER.setMainMenuShader(getShader());
+        Managers.MAIN_MENU_SHADER_MANAGER.resetShaderTime();
     }
 
     public MainMenuBThackShader getShader() {

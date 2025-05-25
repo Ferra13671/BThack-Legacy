@@ -10,7 +10,7 @@ import com.ferra13671.BThack.managers.managers.Setting.Settings.ColorSetting;
 import com.ferra13671.BThack.managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
 import com.ferra13671.BThack.shaders.BThackShaderProgram;
-import com.ferra13671.BThack.shaders.Shaders;
+import com.ferra13671.BThack.shaders.CoreShaders;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.MapRenderState;
@@ -94,6 +94,7 @@ public class Tooltips extends Module {
         BThackMatrix.pop();
     }
 
+    @SuppressWarnings("ExtractMethodRecommender")
     public void renderMapTooltip(DrawContext context, ItemStack stack, int x, int y) {
 
         RenderSystem.enableBlend();
@@ -118,7 +119,7 @@ public class Tooltips extends Module {
             BThackMatrix.translate(0f, 0f, 600f);
             BThackRender.drawRect(x1, y1 - 10, x2, y2, ColorUtils.fastRGBA(backGroundColor.getValue().getRed(), backGroundColor.getValue().getGreen(), backGroundColor.getValue().getBlue(), backGroundColor.getValue().getAlpha()));
             if (isShaderRender()) {
-                BThackShaderProgram shader = getCurrentShader(); //Just ignore this warn
+                BThackShaderProgram shader = getCurrentShader();
                 shader.setUniformValue("scale", scale.getValue().floatValue());
                 shader.setUniformValue("speed", speed.getValue().floatValue());
                 if (rainbow.getValue())
@@ -147,7 +148,7 @@ public class Tooltips extends Module {
     }
 
     public BThackShaderProgram getCurrentShader() {
-        return gradient.getValue() ? Shaders.INSTANCE.XY_GRADIENT : Shaders.INSTANCE.X_RAINBOW;
+        return gradient.getValue() ? CoreShaders.XY_GRADIENT : CoreShaders.X_RAINBOW;
     }
 
     private int getColor() {

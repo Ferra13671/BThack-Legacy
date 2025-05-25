@@ -71,9 +71,9 @@ public final class MainMenuShaders {
         return new HashMap<>(shaders);
     }
 
-    private static MainMenuBThackShader of(String path) {
-        MainMenuBThackShader mainMenuShader = MainMenuBThackShader.of(path);
-        shaders.put(path, mainMenuShader);
+    public static MainMenuBThackShader of(String name) {
+        MainMenuBThackShader mainMenuShader = MainMenuBThackShader.of("mainmenu/info/" + name);
+        shaders.put(name, mainMenuShader);
         return mainMenuShader;
     }
 }

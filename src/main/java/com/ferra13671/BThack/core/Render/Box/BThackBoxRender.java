@@ -2,7 +2,7 @@ package com.ferra13671.BThack.core.Render.Box;
 
 import com.ferra13671.BThack.core.Render.BThackRender;
 import com.ferra13671.BThack.core.Render.Utils.BThackRenderUtils;
-import com.ferra13671.BThack.shaders.Shaders;
+import com.ferra13671.BThack.shaders.CoreShaders;
 import com.ferra13671.BThack.api.Utils.RegionPos;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gl.GlUsage;
@@ -52,7 +52,7 @@ public class BThackBoxRender {
         MatrixStack matrixStack =  BThackRender.worldMatrixStack;
 
         RegionPos region = BThackRenderUtils.getCameraRegion();
-        Shaders.INSTANCE.POSITION.use();
+        CoreShaders.POSITION.use();
 
         ShaderProgram shader = RenderSystem.getShader();
 
@@ -78,14 +78,14 @@ public class BThackBoxRender {
     }
 
     public void renderSolidBox(RenderBox box, Matrix4f viewMatrix, Matrix4f projMatrix, ShaderProgram shader) {
-        Shaders.INSTANCE.POSITION.setUniformValue("color", box.boxRed, box.boxGreen, box.boxBlue, box.boxAlpha);
+        CoreShaders.POSITION.setUniformValue("color", box.boxRed, box.boxGreen, box.boxBlue, box.boxAlpha);
         solidBox.bind();
         solidBox.draw(viewMatrix, projMatrix, shader);
         VertexBuffer.unbind();
     }
 
     public void renderOutlineBox(RenderBox box, Matrix4f viewMatrix, Matrix4f projMatrix, ShaderProgram shader) {
-        Shaders.INSTANCE.POSITION.setUniformValue("color", box.linesRed, box.linesGreen, box.linesBlue, box.linesAlpha);
+        CoreShaders.POSITION.setUniformValue("color", box.linesRed, box.linesGreen, box.linesBlue, box.linesAlpha);
         outlinedBox.bind();
         outlinedBox.draw(viewMatrix, projMatrix, shader);
         VertexBuffer.unbind();

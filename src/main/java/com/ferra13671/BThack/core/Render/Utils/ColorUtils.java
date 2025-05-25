@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.core.Render.Utils;
 
-import com.ferra13671.BThack.shaders.Shaders;
+import com.ferra13671.BThack.shaders.CoreShaders;
 import com.ferra13671.BThack.api.Utils.MathUtils;
 import net.minecraft.util.math.ColorHelper;
 import net.minecraft.util.math.MathHelper;
@@ -25,13 +25,13 @@ public final class ColorUtils {
     }
 
     public static int rainbow(int count, float speed) {
-        double rainbowState = Math.ceil(((Shaders.INSTANCE.shaderTicker.getPassedTime() * speed) + (100 * count)) / 20.0);
+        double rainbowState = Math.ceil(((CoreShaders.shaderTicker.getPassedTime() * speed) + (100 * count)) / 20.0);
         rainbowState = (rainbowState % 360) / 360;
         return Color.getHSBColor((float) rainbowState, 0.5f, 1f).getRGB();
     }
 
     public static int gradient(int color1, int color2, int count, float scale, float speed) {
-        float colorState = (float) Math.ceil(((Shaders.INSTANCE.shaderTicker.getPassedTime() * speed) + ((200 * scale) * count)) / 20.0);
+        float colorState = (float) Math.ceil(((CoreShaders.shaderTicker.getPassedTime() * speed) + ((200 * scale) * count)) / 20.0);
         colorState %= 360;
         colorState /= 360;
         if (colorState > 0.5) colorState = 1f - colorState;
@@ -49,7 +49,7 @@ public final class ColorUtils {
     }
 
     public static Color gradient(Color color1, Color color2, int count, float scale, float speed) {
-        float colorState = (float) Math.ceil(((Shaders.INSTANCE.shaderTicker.getPassedTime() * speed) + ((200 * scale) * count)) / 20.0);
+        float colorState = (float) Math.ceil(((CoreShaders.shaderTicker.getPassedTime() * speed) + ((200 * scale) * count)) / 20.0);
         colorState %= 360;
         colorState /= 360;
         if (colorState > 0.5) colorState = 1f - colorState;
@@ -87,6 +87,7 @@ public final class ColorUtils {
         };
     }
 
+    @SuppressWarnings("PointlessBitwiseExpression")
     public static int fastRGBA(int red, int green, int blue, int alpha) {
         return ((MathUtils.applyRange(alpha, 0, 255) & 0xFF) << 24) |
                 ((MathUtils.applyRange(red, 0, 255) & 0xFF) << 16) |

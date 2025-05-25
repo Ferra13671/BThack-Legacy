@@ -2,7 +2,7 @@ package com.ferra13671.BThack.core.Render.Drawers;
 
 import com.ferra13671.BThack.core.Render.BThackMatrix;
 import com.ferra13671.BThack.core.Render.Utils.BThackRenderUtils;
-import com.ferra13671.BThack.shaders.Shaders;
+import com.ferra13671.BThack.shaders.CoreShaders;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexFormat;
 import net.minecraft.client.render.VertexFormats;
@@ -16,8 +16,8 @@ public class RectDrawer extends Drawer {
     public void begin(int color) {
         float[] c = hashCodeToRGBA(color);
 
-        Shaders.INSTANCE.POSITION.use();
-        Shaders.INSTANCE.POSITION.setUniformValue("color", c[0], c[1], c[2], c[3]);
+        CoreShaders.POSITION.use();
+        CoreShaders.POSITION.setUniformValue("color", c[0], c[1], c[2], c[3]);
 
         Tessellator tessellator = prepareToDraw();
 
@@ -45,7 +45,7 @@ public class RectDrawer extends Drawer {
 
     public void end() {
         BThackRenderUtils.draw(buffer.end());
-        Shaders.INSTANCE.POSITION.release();
+        CoreShaders.POSITION.release();
         buffer = null;
     }
 

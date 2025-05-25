@@ -33,9 +33,7 @@ public class BThackShaderProgram implements Mc {
         RenderSystem.setShader(shader);
     }
 
-    public void release() {
-        //No actions
-    }
+    public void release() {}
 
     public void setUniformValue(String uniformName, float value) {
         GlUniform uniform = shader.getUniform(uniformName);
@@ -87,6 +85,6 @@ public class BThackShaderProgram implements Mc {
     }
 
     public static BThackShaderProgram of(String id) {
-        return of(CoreShaderLoader.getShaderKeys().get(id));
+        return of(CoreShaderLoader.getShaderKey(id));
     }
 }

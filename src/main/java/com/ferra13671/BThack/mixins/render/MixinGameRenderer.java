@@ -5,7 +5,7 @@ import com.ferra13671.BThack.api.IMixin.ModifyHeldItemRenderer;
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.core.Render.BThackRender;
 import com.ferra13671.BThack.events.Render.RenderWorldLastEvent;
-import com.ferra13671.BThack.shaders.Shaders;
+import com.ferra13671.BThack.shaders.CoreShaders;
 import com.ferra13671.BThack.mixins.accessor.IGameRenderer;
 import com.ferra13671.BThack.mixins.accessor.IWorldRenderer;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
@@ -169,7 +169,7 @@ public abstract class MixinGameRenderer {
 
     @Inject(method = "render", at = @At("HEAD"))
     public void modifyRender(RenderTickCounter tickCounter, boolean tick, CallbackInfo ci) {
-        Shaders.INSTANCE.updateTime();
+        CoreShaders.updateTime();
     }
 
     @ModifyReturnValue(method = "getFov",at = @At("RETURN"))

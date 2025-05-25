@@ -12,7 +12,7 @@ import com.ferra13671.BThack.gui.Screen.ClickGui.component.components.ModuleButt
 import com.ferra13671.BThack.gui.Screen.ClickGui.component.components.setting.AbstractSetting;
 import com.ferra13671.BThack.managers.managers.Setting.Settings.ColorSetting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.shaders.Shaders;
+import com.ferra13671.BThack.shaders.CoreShaders;
 import com.ferra13671.BThack.Constants;
 import com.ferra13671.BThack.api.Utils.MathUtils;
 import com.ferra13671.BThack.impl.Modules.Client.ClickGui;
@@ -163,20 +163,20 @@ public class ColorPicker extends AbstractSetting<ColorSetting> {
 
             //Hue Rect
             Tessellator tessellator = BThackRenderUtils.prepareToDraw();
-            Shaders.INSTANCE.POSITION.use();
+            CoreShaders.POSITION.use();
             float hue = 0;
             float hueFactor = 1 / 26f;
             float hueY = 0;
             for (int i = 0; i < 26; i++) {
                 Color hueColor = Color.getHSBColor(hue, 1f, 1f);
                 Drawers.RECT.beginBuffer(tessellator);
-                Shaders.INSTANCE.POSITION.setUniformValue("color", hueColor.getRed() / 255f, hueColor.getGreen() / 255f, hueColor.getBlue() / 255f, hueColor.getAlpha() / 255f);
+                CoreShaders.POSITION.setUniformValue("color", hueColor.getRed() / 255f, hueColor.getGreen() / 255f, hueColor.getBlue() / 255f, hueColor.getAlpha() / 255f);
                 Drawers.RECT.draw(hueRect.getStartX(), hueRect.getStartY() + hueY, hueRect.getEndX(), hueRect.getStartY() + (hueY + 2));
                 Drawers.RECT.endNoReset();
                 hue += hueFactor;
                 hueY += 2;
             }
-            Shaders.INSTANCE.POSITION.release();
+            CoreShaders.POSITION.release();
 
             drawColorCrosshair();
             drawHueCrosshair();

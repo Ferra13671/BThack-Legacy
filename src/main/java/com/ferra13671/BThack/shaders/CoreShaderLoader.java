@@ -1,7 +1,11 @@
 package com.ferra13671.BThack.shaders;
 
+import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.api.Utils.Mc;
+import net.minecraft.client.gl.Defines;
 import net.minecraft.client.gl.ShaderProgramKey;
+import net.minecraft.client.render.VertexFormats;
+import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,11 +23,24 @@ public final class CoreShaderLoader implements Mc {
         bthackPrograms.add(bthackProgram);
     }
 
-    public static HashMap<String, ShaderProgramKey> getShaderKeys() {
-        return new HashMap<>(shaderKeys);
+    public static ShaderProgramKey getShaderKey(String id) {
+        ShaderProgramKey shaderProgramKey = shaderKeys.get(id);
+        if (shaderProgramKey == null) BThack.error(String.format("ShaderProgramKey with id '%s' is null!", id));
+        return shaderProgramKey;
     }
 
     public static void loadPrograms() {
         bthackPrograms.forEach(program -> program.setShader(mc.getShaderLoader().getOrCreateProgram(program.getProgramKey())));
+    }
+
+    public static void initShaderKeys(List<ShaderProgramKey> minecraftShaderKeysList) {
+        minecraftShaderKeysList.addAll(ShaderKeys.getRenderShaderKeys());
+        minecraftShaderKeysList.addAll(ShaderKeys.getMenuShaderKeys());
+    }
+
+    public static ShaderProgramKey createShaderProgramKey(String path) {
+        ShaderProgramKey shaderProgramKey = new ShaderProgramKey(Identifier.of("bthack", "core/" + path), VertexFormats.POSITION, Defines.EMPTY);
+        addShaderKey(path, shaderProgramKey);
+        return shaderProgramKey;
     }
 }

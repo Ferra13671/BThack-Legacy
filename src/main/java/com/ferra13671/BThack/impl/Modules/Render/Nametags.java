@@ -15,7 +15,7 @@ import com.ferra13671.BThack.managers.managers.Setting.Settings.ColorSetting;
 import com.ferra13671.BThack.managers.managers.Setting.Settings.ModeSetting;
 import com.ferra13671.BThack.managers.managers.Setting.Settings.NumberSetting;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.shaders.Shaders;
+import com.ferra13671.BThack.shaders.CoreShaders;
 import com.ferra13671.BThack.impl.Modules.Client.ClientSettings;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 import net.minecraft.entity.Entity;
@@ -151,7 +151,7 @@ public class Nametags extends Module {
     public void drawBase(float leftX, float upY, float rightX, float downY) {
         BThackRender.drawRect(leftX, upY, rightX, downY, ColorUtils.fastRGBA(0,0,0,150));
         if (rainbow.getValue())
-            BThackRender.drawShaderOutlineRect(Shaders.INSTANCE.X_RAINBOW, leftX, upY, rightX, downY, 1.5f);
+            BThackRender.drawShaderOutlineRect(CoreShaders.X_RAINBOW, leftX, upY, rightX, downY, 1.5f);
         else BThackRender.drawOutlineRect(leftX, upY, rightX, downY, 1.5f, outlineColor.getValue().hashCode());
     }
 

@@ -10,7 +10,7 @@ import com.ferra13671.BThack.core.Render.Utils.BThackRenderUtils;
 import com.ferra13671.BThack.core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Module.HudComponent;
 import com.ferra13671.BThack.api.Module.Module;
-import com.ferra13671.BThack.shaders.Shaders;
+import com.ferra13671.BThack.shaders.CoreShaders;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.impl.Modules.Client.HUD;
 import net.minecraft.client.MinecraftClient;
@@ -37,11 +37,11 @@ public class KeyBindsComponent extends HudComponent {
         if (ModuleList.HUD.gradient.getValue()) {
             float[] rgba1 = ColorUtils.hashCodeToRGBA(ModuleList.HUD.color1.getValue().hashCode());
             float[] rgba2 = ColorUtils.hashCodeToRGBA(ModuleList.HUD.color2.getValue().hashCode());
-            Shaders.INSTANCE.XY_GRADIENT.setUniformValue("color1", rgba1[0], rgba1[1], rgba1[2], rgba1[3]);
-            Shaders.INSTANCE.XY_GRADIENT.setUniformValue("color2", rgba2[0], rgba2[1], rgba2[2], rgba2[3]);
-            Shaders.INSTANCE.XY_GRADIENT.setUniformValue("scale", ModuleList.HUD.scale.getValue().floatValue() * 5);
-            Shaders.INSTANCE.XY_GRADIENT.setUniformValue("speed", ModuleList.HUD.speed.getValue().floatValue());
-            BThackRender.drawShader(Shaders.INSTANCE.XY_GRADIENT, getX(), getY() + 10 + textHeight, getX() + width, getY() + 10 + (2f / BThackRenderUtils.getGuiScale()) + textHeight);
+            CoreShaders.XY_GRADIENT.setUniformValue("color1", rgba1[0], rgba1[1], rgba1[2], rgba1[3]);
+            CoreShaders.XY_GRADIENT.setUniformValue("color2", rgba2[0], rgba2[1], rgba2[2], rgba2[3]);
+            CoreShaders.XY_GRADIENT.setUniformValue("scale", ModuleList.HUD.scale.getValue().floatValue() * 5);
+            CoreShaders.XY_GRADIENT.setUniformValue("speed", ModuleList.HUD.speed.getValue().floatValue());
+            BThackRender.drawShader(CoreShaders.XY_GRADIENT, getX(), getY() + 10 + textHeight, getX() + width, getY() + 10 + (2f / BThackRenderUtils.getGuiScale()) + textHeight);
         } else
             BThackRender.drawRect(getX(), getY() + 10 + textHeight, getX() + width, getY() + 11 + textHeight, HUD.getHUDColor());
 

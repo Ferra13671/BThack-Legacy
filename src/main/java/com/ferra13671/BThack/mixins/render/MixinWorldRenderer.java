@@ -1,5 +1,6 @@
 package com.ferra13671.BThack.mixins.render;
 
+import com.ferra13671.BThack.managers.Managers;
 import com.ferra13671.BThack.shaders.CoreShaderLoader;
 import com.ferra13671.BThack.core.Client.ModuleList;
 import com.ferra13671.BThack.core.Render.Utils.BThackRenderUtils;
@@ -38,6 +39,7 @@ public abstract class MixinWorldRenderer {
     @Inject(method = "reload(Lnet/minecraft/resource/ResourceManager;)V", at = @At("TAIL"))
     public void modifyReload(ResourceManager manager, CallbackInfo ci) {
         CoreShaderLoader.loadPrograms();
+        Managers.MAIN_MENU_SHADER_MANAGER.resetShaderTime();
     }
 
     @Inject(method = "render", at = @At("HEAD"))

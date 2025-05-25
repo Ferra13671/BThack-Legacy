@@ -8,29 +8,23 @@ import net.minecraft.client.gl.GlUniform;
 import net.minecraft.client.gl.ShaderProgramKey;
 
 public class MainMenuBThackShader extends BThackShaderProgram implements Mc {
-    private GlUniform resolution;
-    private GlUniform mouse;
-    private GlUniform time;
 
     public MainMenuBThackShader(ShaderProgramKey programKey) {
         super(programKey);
     }
 
-    public void setParameters(float mouseX, float mouseY, float screenWidth, float screenHeight, float time) {
-        if (resolution == null)
-            resolution = getShader().getUniform("resolution");
-        if (mouse == null)
-            mouse = getShader().getUniform("mouse");
-        if (this.time == null)
-            this.time = getShader().getUniform("time");
+    public void setParameters(float mouseX, float mouseY, float screenWidth, float screenHeight, float _time) {
+        GlUniform resolution = getShader().getUniform("resolution");
+        GlUniform mouse = getShader().getUniform("mouse");
+        GlUniform time = getShader().getUniform("time");
 
         int guiScale = BThackRenderUtils.getGuiScale();
         if (resolution != null)
             resolution.set(screenWidth * guiScale, screenHeight * guiScale);
         if (mouse != null)
             mouse.set(mouseX / screenWidth, (screenHeight - 1.0f - mouseY) / screenHeight);
-        if (this.time != null)
-            this.time.set(time);
+        if (time != null)
+            time.set(_time);
     }
 
     public static MainMenuBThackShader of(ShaderProgramKey programKey) {
@@ -38,6 +32,6 @@ public class MainMenuBThackShader extends BThackShaderProgram implements Mc {
     }
 
     public static MainMenuBThackShader of(String id) {
-        return of(CoreShaderLoader.getShaderKeys().get(id));
+        return of(CoreShaderLoader.getShaderKey(id));
     }
 }

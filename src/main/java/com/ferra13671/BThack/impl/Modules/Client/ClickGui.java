@@ -9,7 +9,7 @@ import com.ferra13671.BThack.core.Render.Utils.ColorUtils;
 import com.ferra13671.BThack.api.Animation.Easing;
 import com.ferra13671.BThack.api.Module.OneActionModule;
 import com.ferra13671.BThack.shaders.BThackShaderProgram;
-import com.ferra13671.BThack.shaders.Shaders;
+import com.ferra13671.BThack.shaders.CoreShaders;
 import com.ferra13671.BThack.api.Utils.KeyboardUtils;
 import com.ferra13671.BThack.api.GuiSystem.BThackScreens;
 import net.minecraft.client.gl.PostEffectProcessor;
@@ -97,29 +97,27 @@ public class ClickGui extends OneActionModule {
 
     public void prepareCurrentShader(float alpha, float brightness) {
         if (gradient.getValue()) {
-            Shaders.INSTANCE.XY_GRADIENT.setUniformValue("scale", scale.getValue().floatValue());
-            Shaders.INSTANCE.XY_GRADIENT.setUniformValue("speed", speed.getValue().floatValue());
-            Shaders.INSTANCE.XY_GRADIENT.setUniformValue("brightness", brightness);
+            CoreShaders.XY_GRADIENT.setUniformValue("scale", scale.getValue().floatValue());
+            CoreShaders.XY_GRADIENT.setUniformValue("speed", speed.getValue().floatValue());
+            CoreShaders.XY_GRADIENT.setUniformValue("brightness", brightness);
 
-            Shaders.INSTANCE.XY_GRADIENT.setUniformValue("color1", color1.getValue().getRed() / 255f, color1.getValue().getGreen() / 255f, color1.getValue().getBlue() / 255f, alpha);
-            Shaders.INSTANCE.XY_GRADIENT.setUniformValue("color2", color2.getValue().getRed() / 255f, color2.getValue().getGreen() / 255f, color2.getValue().getBlue() / 255f, alpha);
+            CoreShaders.XY_GRADIENT.setUniformValue("color1", color1.getValue().getRed() / 255f, color1.getValue().getGreen() / 255f, color1.getValue().getBlue() / 255f, alpha);
+            CoreShaders.XY_GRADIENT.setUniformValue("color2", color2.getValue().getRed() / 255f, color2.getValue().getGreen() / 255f, color2.getValue().getBlue() / 255f, alpha);
         } else {
-            Shaders.INSTANCE.X_RAINBOW.setUniformValue("alpha", alpha);
-            Shaders.INSTANCE.X_RAINBOW.setUniformValue("brightness", brightness);
-            Shaders.INSTANCE.X_RAINBOW.setUniformValue("scale", scale.getValue().floatValue());
-            Shaders.INSTANCE.X_RAINBOW.setUniformValue("speed", speed.getValue().floatValue());
+            CoreShaders.X_RAINBOW.setUniformValue("alpha", alpha);
+            CoreShaders.X_RAINBOW.setUniformValue("brightness", brightness);
+            CoreShaders.X_RAINBOW.setUniformValue("scale", scale.getValue().floatValue());
+            CoreShaders.X_RAINBOW.setUniformValue("speed", speed.getValue().floatValue());
         }
     }
 
     public BThackShaderProgram getCurrentShader() {
-        if (gradient.getValue()) return Shaders.INSTANCE.XY_GRADIENT;
-        else return Shaders.INSTANCE.X_RAINBOW;
+        if (gradient.getValue()) return CoreShaders.XY_GRADIENT;
+        else return CoreShaders.X_RAINBOW;
     }
 
     @Override
-    public void playOnSound() {
-        //No action
-    }
+    public void playOnSound() {}
 
     @Override
     public void onEnable() {
