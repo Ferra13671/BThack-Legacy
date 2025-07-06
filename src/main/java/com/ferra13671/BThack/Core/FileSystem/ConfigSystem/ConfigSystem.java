@@ -578,7 +578,8 @@ public final class ConfigSystem {
 
     public static void refreshWallpapers() {
         for (Wallpaper wallpaper : SelectWallpaperScreen.wallpapers) {
-            wallpaper.texture().deleteTexture();
+            if (wallpaper.texture().getTexId() != Client.clientInfo.getDefaultMainMenuImage().getTexId())
+                wallpaper.texture().delete();
         }
         SelectWallpaperScreen.wallpapers.clear();
 
@@ -588,7 +589,7 @@ public final class ConfigSystem {
             for (File file : files) {
                 if (file.isFile()) {
                     if (imageFormats.contains(FilenameUtils.getExtension(file.getName()))) {
-                        SelectWallpaperScreen.wallpapers.add(new Wallpaper(file.getName(), new GLTexture("BThack/Wallpapers/" + file.getName(), PathMode.OUTSIDEJAR, GLTexture.ColorMode.RGBA)));
+                        SelectWallpaperScreen.wallpapers.add(new Wallpaper(file.getName(), GLTexture.fromPath("BThack/Wallpapers/" + file.getName(), PathMode.OUTSIDEJAR, GLTexture.ColorMode.RGBA)));
                     }
                 }
             }
@@ -611,7 +612,7 @@ public final class ConfigSystem {
             String line = reader.readLine();
             if (line != null) {
                 if (!line.equals("default") && Files.exists(Paths.get("BThack/Wallpapers/" + line))) {
-                    BThackMainMenuScreen.mainMenuTexture = new GLTexture("BThack/Wallpapers/" + line, PathMode.OUTSIDEJAR, GLTexture.ColorMode.RGBA);
+                    BThackMainMenuScreen.mainMenuTexture = GLTexture.fromPath("BThack/Wallpapers/" + line, PathMode.OUTSIDEJAR, GLTexture.ColorMode.RGBA);
                 }
             }
             reader.close();

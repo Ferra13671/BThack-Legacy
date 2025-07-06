@@ -45,7 +45,7 @@ public class HUD extends Module {
         );
     }
 
-    public static final GLTexture bthack_logo = new GLTexture("assets/bthack/bthacklogo.png", PathMode.INSIDEJAR, GLTexture.ColorMode.RGBA);
+    public static final GLTexture bthack_logo = GLTexture.fromPath("assets/bthack/bthacklogo.png", PathMode.INSIDEJAR, GLTexture.ColorMode.RGBA);
 
 
     int updateTickDelay = 0;
