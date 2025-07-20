@@ -2,6 +2,12 @@
     <img src="https://raw.githubusercontent.com/Ferra13671/BThack/1.21.1/src/main/resources/assets/bthack/textures/bthacklogo.png" style="width: 69%" alt="logo">
 </p>
 
+> [!BThack is closed]
+> Work on BThack has been stopped.
+> I'm currently working on BThack Recode,
+> a new paid client with better quality modules, as well as pvp modules.
+> You can follow BThack Recode on my [Discord server](https://discord.gg/vmX26ByYEX)
+
 ![All Downloads](https://img.shields.io/github/downloads/Ferra13671/BThack/total)
 ![Repo size](https://img.shields.io/github/repo-size/Ferra13671/BThack)
 ![Discord Online](https://img.shields.io/discord/1227601645907742750)
