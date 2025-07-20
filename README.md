@@ -2,7 +2,6 @@
     <img src="https://raw.githubusercontent.com/Ferra13671/BThack/1.21.1/src/main/resources/assets/bthack/textures/bthacklogo.png" style="width: 69%" alt="logo">
 </p>
 
-> [!BThack is closed]
 > Work on BThack has been stopped.
 > I'm currently working on BThack Recode,
 > a new paid client with better quality modules, as well as pvp modules.
