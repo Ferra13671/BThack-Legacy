@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.shaders;
 
 import com.ferra13671.BThack.BThack;
-import com.ferra13671.BThack.api.Utils.Mc;
+import com.ferra13671.BThack.api.utils.Mc;
 import net.minecraft.client.gl.Defines;
 import net.minecraft.client.gl.ShaderProgramKey;
 import net.minecraft.client.render.VertexFormats;

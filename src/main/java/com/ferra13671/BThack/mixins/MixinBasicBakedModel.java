@@ -1,9 +1,9 @@
 package com.ferra13671.BThack.mixins;
 
-import com.ferra13671.BThack.api.Utils.Mc;
-import com.ferra13671.BThack.api.Utils.DataList.BlockList;
-import com.ferra13671.BThack.api.Utils.DataList.DataLists;
-import com.ferra13671.BThack.impl.Modules.Render.Xray;
+import com.ferra13671.BThack.api.utils.Mc;
+import com.ferra13671.BThack.api.utils.datalist.BlockList;
+import com.ferra13671.BThack.api.utils.datalist.DataLists;
+import com.ferra13671.BThack.impl.modules.render.Xray;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.render.model.BakedQuad;
 import net.minecraft.client.render.model.BasicBakedModel;

@@ -1,0 +1,116 @@
+package com.ferra13671.BThack.impl.modules.combat;
+
+import com.ferra13671.BThack.events.ClientTickEvent;
+import com.ferra13671.BThack.managers.Managers;
+import com.ferra13671.BThack.managers.impl.setting.Settings.BooleanSetting;
+import com.ferra13671.BThack.managers.impl.setting.Settings.ModeSetting;
+import com.ferra13671.BThack.managers.impl.setting.Settings.NumberSetting;
+import com.ferra13671.BThack.api.module.Module;
+import com.ferra13671.BThack.api.module.ModuleInfo;
+import com.ferra13671.BThack.api.utils.*;
+import com.ferra13671.BThack.api.utils.modules.KillAuraUtils;
+import com.ferra13671.BThack.api.utils.GrimUtils;
+import com.ferra13671.BThack.api.utils.rotate.RotateMode;
+import com.ferra13671.BThack.api.utils.rotate.RotateUtils;
+import com.ferra13671.MegaEvents.Base.EventSubscriber;
+import com.google.common.collect.Sets;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.projectile.FireballEntity;
+import net.minecraft.entity.projectile.ShulkerBulletEntity;
+import net.minecraft.item.Item;
+import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
+
+import java.util.*;
+
+@ModuleInfo(name = "FireBallAura", description = "lang.module.FireBallAura", category = "COMBAT")
+public class FireBallAura extends Module {
+
+    public final NumberSetting range = new NumberSetting("Range", this, 3, 2, 6, false);
+    public final BooleanSetting rotate = new BooleanSetting("Rotate", this, true);
+    public final ModeSetting rotateMode = new ModeSetting("Rotate Mode", this, Arrays.asList("Packet", "Grim"));
+    public final BooleanSetting shulkerBullets = new BooleanSetting("Shulker Bullets", this, true);
+    public final BooleanSetting noDurability = new BooleanSetting("No Durability", this, false);
+
+    private final Set<Entity> fireBalls = Sets.newHashSet();
+
+    @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
+    public void onClientTick(ClientTickEvent e) {
+        if (nullCheck()) return;
+
+        arrayListInfo = "" + range.getValue();
+
+        ArrayList<Entity> entities = new ArrayList<>();
+
+        for (Entity entity : mc.world.getEntities()) {
+            entities.add(entity);
+        }
+
+        Entity fireBall = entities.stream().filter(this::checkEntity).min(Comparator.comparing(
+                entity -> entity.distanceTo(mc.player))).filter(entity -> entity.distanceTo(mc.player) <= range.getValue()).orElse(null);
+
+        if (fireBall != null) {
+            if (!fireBalls.contains(fireBall)) {
+                float[] oldRot = new float[]{mc.player.yaw, mc.player.pitch};
+                int oldSlot = mc.player.getInventory().selectedSlot;
+
+                preSwap();
+                preRotate(fireBall);
+                KillAuraUtils.attack(fireBall, RotateMode.NONE, 0);
+                postRotate(oldRot[0], oldRot[1]);
+                postSwap(oldSlot);
+            }
+        }
+
+        fireBalls.removeIf(entity -> !entities.contains(entity));
+    }
+
+    @SuppressWarnings("DataFlowIssue")
+    public void preRotate(Entity entity) {
+        if (rotate.getValue()) {
+            float[] rots = RotateUtils.rotations(entity);
+            switch (rotateMode.getValue()) {
+                case "Packet" ->
+                        Managers.NETWORK_MANAGER.sendPacket(
+                                new PlayerMoveC2SPacket.LookAndOnGround(rots[0], rots[1], mc.player.onGround, mc.player.horizontalCollision)
+                        );
+                case "Grim" -> GrimUtils.sendPreActionGrimPackets(rots[0], rots[1]);
+            }
+        }
+    }
+
+    @SuppressWarnings("DataFlowIssue")
+    public void postRotate(float oldYaw, float oldPitch) {
+        if (rotate.getValue()) {
+            switch (rotateMode.getValue()) {
+                case "Packet" ->
+                        Managers.NETWORK_MANAGER.sendPacket(
+                                new PlayerMoveC2SPacket.LookAndOnGround(oldYaw, oldPitch, mc.player.onGround, mc.player.horizontalCollision)
+                        );
+                case "Grim" -> GrimUtils.sendPostActionGrimPackets();
+            }
+        }
+    }
+
+    @SuppressWarnings("DataFlowIssue")
+    public void preSwap() {
+        if (!noDurability.getValue()) return;
+        for (int i = 0; i < 9; i++) {
+            Item item = mc.player.getInventory().getStack(i).getItem();
+            if (!ItemUtils.isTool(item)) {
+                InventoryUtils.swapItem(i);
+                return;
+            }
+        }
+    }
+
+    @SuppressWarnings("DataFlowIssue")
+    public void postSwap(int oldSlot) {
+        if (oldSlot == mc.player.getInventory().selectedSlot) return;
+        InventoryUtils.swapItem(oldSlot);
+    }
+
+    public boolean checkEntity(Entity entity) {
+        return entity instanceof FireballEntity || (shulkerBullets.getValue() && entity instanceof ShulkerBulletEntity);
+    }
+}

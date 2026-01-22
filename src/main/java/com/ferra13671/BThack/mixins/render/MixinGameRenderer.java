@@ -1,10 +1,10 @@
 package com.ferra13671.BThack.mixins.render;
 
 import com.ferra13671.BThack.BThack;
-import com.ferra13671.BThack.api.IMixin.ModifyHeldItemRenderer;
-import com.ferra13671.BThack.core.Client.ModuleList;
-import com.ferra13671.BThack.core.Render.BThackRender;
-import com.ferra13671.BThack.events.Render.RenderWorldLastEvent;
+import com.ferra13671.BThack.api.imixin.ModifyHeldItemRenderer;
+import com.ferra13671.BThack.core.client.ModuleList;
+import com.ferra13671.BThack.core.render.BThackRender;
+import com.ferra13671.BThack.events.render.RenderWorldLastEvent;
 import com.ferra13671.BThack.shaders.CoreShaders;
 import com.ferra13671.BThack.mixins.accessor.IGameRenderer;
 import com.ferra13671.BThack.mixins.accessor.IWorldRenderer;

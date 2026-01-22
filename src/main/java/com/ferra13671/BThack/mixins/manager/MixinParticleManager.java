@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.mixins.manager;
 
-import com.ferra13671.BThack.core.Client.Client;
-import com.ferra13671.BThack.core.Client.ModuleList;
+import com.ferra13671.BThack.core.client.Client;
+import com.ferra13671.BThack.core.client.ModuleList;
 import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.client.render.Camera;
 import net.minecraft.client.render.VertexConsumerProvider;

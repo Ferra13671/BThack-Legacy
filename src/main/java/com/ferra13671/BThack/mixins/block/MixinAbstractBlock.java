@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.mixins.block;
 
-import com.ferra13671.BThack.core.Client.ModuleList;
-import com.ferra13671.BThack.impl.Modules.Render.Xray;
+import com.ferra13671.BThack.core.client.ModuleList;
+import com.ferra13671.BThack.impl.modules.render.Xray;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;

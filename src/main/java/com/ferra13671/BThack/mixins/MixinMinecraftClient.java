@@ -3,7 +3,7 @@ package com.ferra13671.BThack.mixins;
 import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.events.GuiOpenEvent;
 import com.ferra13671.BThack.events.ClientTickEvent;
-import com.ferra13671.BThack.api.Utils.Mc;
+import com.ferra13671.BThack.api.utils.Mc;
 import com.ferra13671.BThack.managers.Managers;
 import com.ferra13671.TextureUtils.GLTextureSystem;
 import net.minecraft.client.MinecraftClient;

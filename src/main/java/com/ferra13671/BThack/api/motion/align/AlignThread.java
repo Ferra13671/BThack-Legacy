@@ -1,0 +1,89 @@
+package com.ferra13671.BThack.api.motion.align;
+
+import com.ferra13671.BThack.BThack;
+import com.ferra13671.BThack.events.entity.UpdateInputEvent;
+import com.ferra13671.BThack.api.utils.Mc;
+import com.ferra13671.BThack.managers.Managers;
+import com.ferra13671.BThack.managers.impl.thread.BThackThread;
+import com.ferra13671.BThack.managers.impl.thread.ThreadClosedException;
+import com.ferra13671.BThack.managers.impl.travelchange.TravelChanger;
+import com.ferra13671.BThack.api.utils.InputUtils;
+import com.ferra13671.BThack.api.utils.rotate.RotateUtils;
+import com.ferra13671.MegaEvents.Base.EventSubscriber;
+import net.minecraft.util.math.Vec3d;
+
+public class AlignThread extends BThackThread implements Mc {
+    boolean isMoving = false;
+
+    private final double needX;
+    private final double needZ;
+    private final double minX;
+    private final double maxX;
+    private final double minZ;
+    private final double maxZ;
+
+    public float yaw = -99999999;
+    @SuppressWarnings("DataFlowIssue")
+    private final TravelChanger travelChanger = new TravelChanger(1000,
+            () -> new Float[]{yaw, mc.player.getPitch()},
+            () -> false,
+            () -> false
+    );
+
+    public AlignThread(double needX, double needZ, double minX, double maxX, double minZ, double maxZ) {
+        this.needX = needX;
+        this.needZ = needZ;
+        this.minX = minX;
+        this.maxX = maxX;
+        this.minZ = minZ;
+        this.maxZ = maxZ;
+    }
+
+    @Override
+    public void start() {
+        isMoving = true;
+        super.start();
+    }
+
+    @Override
+    @SuppressWarnings("DataFlowIssue")
+    public void threadAction() throws ThreadClosedException {
+        BThack.EVENT_BUS.register(this);
+        Managers.TRAVEL_CHANGE_MANAGER.addChanger(travelChanger);
+        isMoving = true;
+        try {
+            while (toFarX() || toFarZ()) {
+                checkThreadStopped();
+                rotate();
+                Thread.yield();
+            }
+        } finally {
+            isMoving = false;
+            mc.player.input.movementForward = 0;
+            BThack.EVENT_BUS.unregister(this);
+            Managers.TRAVEL_CHANGE_MANAGER.removeChanger(travelChanger);
+        }
+    }
+
+    @EventSubscriber
+    @SuppressWarnings({"DataFlowIssue", "unused"})
+    public void onInput(UpdateInputEvent e) {
+        InputUtils.setInput(true, false, false, false, mc.player.input.playerInput.jump(), false, mc.player.input.playerInput.sprint());
+        mc.player.input.movementForward = 1;
+    }
+
+    @SuppressWarnings("DataFlowIssue")
+    private void rotate() {
+        yaw = RotateUtils.rotations(new Vec3d(needX, mc.player.getY(), needZ))[0];
+    }
+
+    @SuppressWarnings("DataFlowIssue")
+    private boolean toFarX() {
+        return mc.player.getX() > maxX || mc.player.getX() < minX;
+    }
+
+    @SuppressWarnings("DataFlowIssue")
+    private boolean toFarZ() {
+        return mc.player.getZ() > maxZ || mc.player.getZ() < minZ;
+    }
+}

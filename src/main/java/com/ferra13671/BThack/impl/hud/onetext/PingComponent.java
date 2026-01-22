@@ -1,0 +1,36 @@
+package com.ferra13671.BThack.impl.hud.onetext;
+
+import com.ferra13671.BThack.managers.impl.setting.Settings.ModeSetting;
+import com.ferra13671.BThack.api.module.ModuleInfo;
+import com.ferra13671.BThack.impl.hud.AbstractOneTextComponent;
+import net.minecraft.util.Formatting;
+
+import java.util.Arrays;
+import java.util.Objects;
+
+@ModuleInfo(name = "Ping", category = "HUD", autoEnabled = true)
+public class PingComponent extends AbstractOneTextComponent {
+
+    public final ModeSetting mode = new ModeSetting("Ping Mode", this, Arrays.asList("Normal", "Short"));
+
+    public PingComponent() {
+        super(5, 145);
+    }
+
+    @Override
+    public String getText() {
+        return switch (mode.getValue()) {
+            case "Normal" -> "Ping " + Formatting.WHITE + getPing() + "ms";
+            case "Short" -> "" + Formatting.WHITE + getPing() + "ms";
+            default -> "";
+        };
+    }
+
+    private int getPing() {
+        if (mc.player != null && mc.getNetworkHandler() != null && mc.getNetworkHandler().getPlayerListEntry(mc.player.getGameProfile().getName()) != null) {
+            return Objects.requireNonNull(mc.getNetworkHandler().getPlayerListEntry(mc.player.getGameProfile().getName())).getLatency();
+        }
+
+        return -1;
+    }
+}

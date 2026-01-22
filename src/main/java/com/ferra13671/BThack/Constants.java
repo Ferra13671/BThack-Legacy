@@ -1,8 +1,8 @@
 package com.ferra13671.BThack;
 
-import com.ferra13671.BThack.core.Render.Utils.ColorUtils;
-import com.ferra13671.BThack.api.Animation.Animation;
-import com.ferra13671.BThack.api.Animation.Easing;
+import com.ferra13671.BThack.core.render.utils.ColorUtils;
+import com.ferra13671.BThack.api.animation.Animation;
+import com.ferra13671.BThack.api.animation.Easing;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.minecraft.util.Formatting;

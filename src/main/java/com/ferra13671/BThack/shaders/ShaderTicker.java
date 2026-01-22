@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.shaders;
 
-import com.ferra13671.BThack.api.Utils.Ticker;
+import com.ferra13671.BThack.api.utils.Ticker;
 
 public class ShaderTicker {
     private final Ticker ticker = new Ticker();

@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.mixins;
 
-import com.ferra13671.BThack.api.Utils.Mc;
+import com.ferra13671.BThack.api.utils.Mc;
 import com.ferra13671.BThack.managers.Managers;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.client.network.PlayerListEntry;

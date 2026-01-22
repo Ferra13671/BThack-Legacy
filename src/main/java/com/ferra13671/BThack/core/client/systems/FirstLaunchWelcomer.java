@@ -1,0 +1,28 @@
+package com.ferra13671.BThack.core.client.systems;
+
+import com.ferra13671.BThack.BThack;
+import com.ferra13671.BThack.core.client.Client;
+import com.ferra13671.BThack.core.client.ModuleList;
+import com.ferra13671.BThack.events.ClientTickEvent;
+import com.ferra13671.BThack.api.utils.Mc;
+import com.ferra13671.BThack.api.module.Module;
+import com.ferra13671.BThack.api.utils.KeyboardUtils;
+import com.ferra13671.MegaEvents.Base.EventSubscriber;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
+
+public class FirstLaunchWelcomer implements Mc {
+
+    @EventSubscriber
+    @SuppressWarnings({"unused", "DataFlowIssue"})
+    public void onTick(ClientTickEvent e) {
+        if (!Module.nullCheck()) {
+            mc.player.sendMessage(Text.literal("Welcome to " + Formatting.BLUE + "BThack" + Formatting.RESET + "!"), false);
+            mc.player.sendMessage(Text.literal("The ClickGui bind is " + Formatting.AQUA + KeyboardUtils.getKeyName(ModuleList.clickGui.getKey())), false);
+            mc.player.sendMessage(Text.literal("The command prefix is " + Formatting.AQUA + Client.clientInfo.getChatPrefix()), false);
+            mc.player.sendMessage(Text.literal("Type " + Formatting.AQUA + "$help" + Formatting.RESET + " to get a list of available commands"), false);
+
+            BThack.EVENT_BUS.unregister(this);
+        }
+    }
+}

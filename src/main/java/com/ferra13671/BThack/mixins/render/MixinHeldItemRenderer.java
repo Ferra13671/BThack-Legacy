@@ -1,10 +1,10 @@
 package com.ferra13671.BThack.mixins.render;
 
 import com.ferra13671.BThack.BThack;
-import com.ferra13671.BThack.core.Client.ModuleList;
-import com.ferra13671.BThack.events.Render.RenderHandEvent;
-import com.ferra13671.BThack.api.IMixin.ModifyHeldItemRenderer;
-import com.ferra13671.BThack.api.Utils.Mc;
+import com.ferra13671.BThack.core.client.ModuleList;
+import com.ferra13671.BThack.events.render.RenderHandEvent;
+import com.ferra13671.BThack.api.imixin.ModifyHeldItemRenderer;
+import com.ferra13671.BThack.api.utils.Mc;
 import com.google.common.base.MoreObjects;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerEntity;

@@ -1,0 +1,381 @@
+package com.ferra13671.BThack.impl.modules.misc;
+
+import com.ferra13671.BThack.api.motion.align.AlignToBlockCenter;
+import com.ferra13671.BThack.api.motion.CollisionAction;
+import com.ferra13671.BThack.api.motion.Goto;
+import com.ferra13671.BThack.events.ClientTickEvent;
+import com.ferra13671.BThack.managers.impl.place.PlaceManager;
+import com.ferra13671.BThack.managers.impl.place.PlaceThread3D;
+import com.ferra13671.BThack.managers.impl.Break.BreakManager;
+import com.ferra13671.BThack.managers.impl.Break.BreakThread3D;
+import com.ferra13671.BThack.managers.impl.setting.Settings.BooleanSetting;
+import com.ferra13671.BThack.managers.impl.setting.Settings.CategorySetting;
+import com.ferra13671.BThack.managers.impl.setting.Settings.ModeSetting;
+import com.ferra13671.BThack.managers.impl.setting.Settings.NumberSetting;
+import com.ferra13671.BThack.managers.impl.thread.BThackThread;
+import com.ferra13671.BThack.managers.impl.thread.ThreadManager;
+import com.ferra13671.BThack.api.module.Module;
+import com.ferra13671.BThack.api.module.ModuleInfo;
+import com.ferra13671.BThack.api.utils.ChatUtils;
+import com.ferra13671.BThack.api.utils.InventoryUtils;
+import com.ferra13671.BThack.api.utils.MathUtils;
+import com.ferra13671.BThack.api.utils.rotate.RotateMode;
+import com.ferra13671.BThack.api.utils.rotate.RotateUtils;
+import com.ferra13671.MegaEvents.Base.EventSubscriber;
+import com.ferra13671.SimpleLanguageSystem.LanguageSystem;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.FluidBlock;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.Items;
+import net.minecraft.util.Formatting;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3i;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+/*
+  Known bugs:
+        Terrible work on the corner highways
+  TODO:
+        Ability to freely rotate the camera when working
+        More settings
+ */
+@ModuleInfo(name = "HighwayBuilder", description = "lang.module.HighwayBuilder", category = "MISC")
+public class HighwayBuilder extends Module {
+
+    public final ModeSetting mode = new ModeSetting("Mode", this, new ArrayList<>(Arrays.asList("Highway", "Tunnel")));
+
+    public final NumberSetting buildTicks = new NumberSetting("Build Ticks", this, 1, 0, 5, true, () -> !mode.getValue().equals("Tunnel"));
+
+    public final CategorySetting movementCategory = new CategorySetting("Movement", this);
+    public final BooleanSetting postMoveAlign = new BooleanSetting("Post Move Align", this, true).inCategory(movementCategory);
+    public final NumberSetting moveStep = new NumberSetting("Move Step", this, 0.6, 0.5, 1, false).inCategory(movementCategory);
+    public final BooleanSetting blockKeyboardMovement = new BooleanSetting("Block Keyboard Move", this, true).inCategory(movementCategory);
+
+    public final BooleanSetting borders = new BooleanSetting("Borders", this, true, () -> !mode.getValue().equals("Tunnel"));
+    public final BooleanSetting extraBlocks = new BooleanSetting("Extra Blocks", this, false, () -> !mode.getValue().equals("Tunnel"));
+    public final BooleanSetting onlyObsidian = new BooleanSetting("Only Obsidian", this, true, () -> !mode.getValue().equals("Tunnel"));
+    public final NumberSetting highwWidth = new NumberSetting("Highw. Width", this, 4, 2, 6, true);
+    public final NumberSetting tunnelHeight = new NumberSetting("Tunnel Height", this, 4, 3, 5, true);
+    //If the value is less than 100, problems with moving between stages may appear
+    public final NumberSetting stageDelay = new NumberSetting("Stage Delay", this, 100, 100, 200, true);
+
+    public final CategorySetting clearCategory = new CategorySetting("Clearing", this, () -> !mode.getValue().equals("Tunnel"));
+    public final BooleanSetting clearFloat = new BooleanSetting("Float", this, true).inCategory(clearCategory);
+    public final BooleanSetting clearBorder = new BooleanSetting("Border", this, true).inCategory(clearCategory);
+    public final BooleanSetting clearExtraBlocks = new BooleanSetting("Extra Blocks", this, true).inCategory(clearCategory);
+
+    public final CategorySetting autoDisableCategory = new CategorySetting("Auto Disable", this);
+    public final BooleanSetting disableIfHealth = new BooleanSetting("If Health", this, false).inCategory(autoDisableCategory);
+    public final NumberSetting minHealth = new NumberSetting("Min Health", this, 5, 1, 15, false, disableIfHealth::getValue).inCategory(autoDisableCategory);
+    public final BooleanSetting disableIfChangeY = new BooleanSetting("If Change Y", this, true).inCategory(autoDisableCategory);
+
+
+    /**
+     * List of all active HighwayBuilder threads.
+     * When the module is turned off, all threads in the list will be stopped instantly,
+     * which will allow HighwayBuilder to finish immediately, rather than waiting for all threads to finish.
+     */
+    private final List<BThackThread> threads = new ArrayList<>();
+
+    private int startY;
+
+    public int highwayYaw;
+    public byte[] moveFactor;
+
+    @EventSubscriber
+    @SuppressWarnings({"DataFlowIssue", "unused"})
+    public void onTick(ClientTickEvent e) {
+        if (nullCheck()) return;
+
+        if (confirmDisabling()) {
+            setEnabled(false);
+            return;
+        }
+
+        if (blockKeyboardMovement.getValue()) {
+            mc.options.forwardKey.setPressed(false);
+            mc.options.backKey.setPressed(false);
+            mc.options.leftKey.setPressed(false);
+            mc.options.rightKey.setPressed(false);
+            mc.options.jumpKey.setPressed(false);
+            mc.options.sneakKey.setPressed(false);
+        }
+
+        threads.removeIf(thread -> !thread.isAlive());
+
+        if (PlaceManager.isBuilding) return;
+
+
+        BlockPos blockPos = BlockPos.ofFloored(mc.player.getX(), Math.round(mc.player.getY()) - 1, mc.player.getZ());
+        if (!mc.world.getBlockState(blockPos).isReplaceable()) return;
+
+        int slot = InventoryUtils.findItem(BlockItem.class);
+        if (onlyObsidian.getValue() && mode.getValue().equals("Highway")) {
+            slot = InventoryUtils.findItem(Items.OBSIDIAN);
+            if (slot == -1) slot = InventoryUtils.findItem(Items.CRYING_OBSIDIAN);
+        }
+        if (slot == -1) {
+            ChatUtils.sendMessage(this.getChatName() + " " + Formatting.RED + LanguageSystem.translate("lang.module.Scaffold.noBlocks"));
+            setEnabled(false);
+            return;
+        }
+
+        int oldSlot = mc.player.getInventory().selectedSlot;
+        InventoryUtils.swapAction(oldSlot, slot, false, "Client");
+        PlaceManager.placeBlock(blockPos, RotateMode.GRIM);
+        InventoryUtils.swapAction(oldSlot, slot, true, "Client");
+    }
+
+    @Override
+    @SuppressWarnings("DataFlowIssue")
+    public void onEnable() {
+        if (nullCheck()) {
+            setEnabled(false);
+            return;
+        }
+        super.onEnable();
+        highwayYaw = RotateUtils.getAbsDirection(mc.player);
+        moveFactor = getCordFactorFromDirection();
+        startY = (int) mc.player.getY();
+        threads.add(ThreadManager.startNewThread("HighwayThread", thread -> {
+
+            alignAction(thread);
+
+            while (this.isEnabled()) {
+                byte[] moveFactor = RotateUtils.getCordFactorFromDirection(highwayYaw);
+
+                waterAndLavaCheckAction(thread);
+                thread.checkThreadStopped();
+
+                breakAction(thread, moveFactor);
+                thread.checkThreadStopped();
+
+                if (!PlaceManager.pickUpPlaceBlocks(true, onlyObsidian.getValue() && mode.getValue().equals("Highway") ? Arrays.asList(Blocks.OBSIDIAN, Blocks.CRYING_OBSIDIAN) : new ArrayList<>())) {
+                    ChatUtils.sendMessage(this.getChatName() + " " + Formatting.RED + LanguageSystem.translate("lang.module.Scaffold.noBlocks"));
+                    setEnabled(false);
+                    return;
+                }
+
+                gotoAction(thread, moveFactor);
+                thread.checkThreadStopped();
+                if (postMoveAlign.getValue())
+                    alignAction(thread);
+                thread.checkThreadStopped();
+
+                buildAction(thread);
+                thread.checkThreadStopped();
+            }
+        }));
+    }
+
+    @Override
+    public void onDisable() {
+        super.onDisable();
+
+        threads.forEach(BThackThread::closeThread);
+        threads.clear();
+    }
+
+    /**
+     * All the actions and logic for breaking interfering blocks.
+     */
+    private void breakAction(BThackThread thread, byte[] moveFactor) {
+        ArrayList<Vec3i> schematic = getBreakSchematic(0, 0, 0,0);
+        breakInternal(thread, moveFactor, schematic, true);
+
+        ArrayList<Vec3i> buildSchematic = getBuildSchematic();
+        schematic.removeIf(buildSchematic::contains);
+
+        breakInternal(thread, moveFactor, schematic, false);
+        if (mode.getValue().equals("Tunnel")) {
+            breakInternal(thread, new byte[]{(byte) (moveFactor[0] + 1), (byte) (moveFactor[1] + 1)}, schematic, false);
+            breakInternal(thread, new byte[]{(byte) (moveFactor[0] - 1), (byte) (moveFactor[1] - 1)}, schematic, false);
+        }
+    }
+
+    @SuppressWarnings("DataFlowIssue")
+    private void breakInternal(BThackThread thread, byte[] moveFactor, ArrayList<Vec3i> schematic, boolean ignoreObsidian) {
+        BreakThread3D destroyThread = new BreakThread3D();
+        destroyThread.set3DSchematic(schematic, BlockPos.ofFloored(mc.player.getX() + (moveFactor[0] * 2), Math.round(mc.player.getY()) - (!mode.getValue().equals("Tunnel") ? 1 : 0), mc.player.getZ() + (moveFactor[1] * 2)));
+        destroyThread.setIgnoreBlocks(ignoreObsidian ? Arrays.asList(Blocks.OBSIDIAN, Blocks.CRYING_OBSIDIAN) : new ArrayList<>());
+        destroyThread.start();
+        thread.sleepThread(2);
+        threads.add(destroyThread);
+        while (BreakManager.isDestroying) {
+            thread.sleepThread(stageDelay.getValue().longValue());
+        }
+    }
+
+    /**
+     * All the logic and action to move.
+     */
+    @SuppressWarnings("DataFlowIssue")
+    private void gotoAction(BThackThread thread, byte[] moveFactor) {
+        boolean obstructionFound = !mc.world.isAir(BlockPos.ofFloored(mc.player.getX() + moveFactor[0], mc.player.getY(), mc.player.getZ() + moveFactor[1]));
+
+        if (!mc.world.isAir(BlockPos.ofFloored(mc.player.getX() + moveFactor[0], mc.player.getY() + 1, mc.player.getZ() + moveFactor[1])))
+            obstructionFound = true;
+
+        float step = (obstructionFound ? 0.16f : moveStep.getValue().floatValue());
+        Goto gotoN = new Goto(mc.player.getX() + (moveFactor[0] * step), mc.player.getZ() + (moveFactor[1] * step), CollisionAction.NONE);
+        gotoN.start();
+        thread.sleepThread(2);
+        threads.add(gotoN);
+        while (gotoN.isMoving()) {
+            thread.sleepThread(stageDelay.getValue().longValue());
+        }
+    }
+
+    /**
+     * All logic and actions for XZ alignment.
+     */
+    private void alignAction(BThackThread thread) {
+        AlignToBlockCenter alignToBlockCenter = new AlignToBlockCenter();
+        alignToBlockCenter.align();
+
+        thread.sleepThread(2);
+        threads.add(alignToBlockCenter.getThread());
+        while (alignToBlockCenter.isMoving()) {
+            thread.sleepThread(100);
+        }
+    }
+
+    /**
+     * All the actions and logic for placing highways.
+     */
+    @SuppressWarnings("DataFlowIssue")
+    private void buildAction(BThackThread thread) {
+        if (!mode.getValue().equals("Tunnel")) {
+            ArrayList<Vec3i> schematic = getBuildSchematic();
+            PlaceThread3D buildThread3D = new PlaceThread3D();
+            buildThread3D.set3DSchematic(buildTicks.getValue().intValue(), schematic, BlockPos.ofFloored(mc.player.getX(), Math.round(mc.player.getY()) - 1, mc.player.getZ()));
+            buildThread3D.setNeedBlocks(onlyObsidian.getValue() ? Arrays.asList(Blocks.OBSIDIAN, Blocks.CRYING_OBSIDIAN) : new ArrayList<>());
+            buildThread3D.start();
+            thread.sleepThread(2);
+            threads.add(buildThread3D);
+            while (PlaceManager.isBuilding) {
+                thread.sleepThread(stageDelay.getValue().longValue());
+            }
+        }
+    }
+
+    /**
+     * Checks for water and lava on the path.
+     * (However, it doesn't work)
+     */
+    @SuppressWarnings("DataFlowIssue")
+    private void waterAndLavaCheckAction(BThackThread thread) {
+        ArrayList<Vec3i> checkRadius = getBreakSchematic(1, 1, 1, 1);
+        ArrayList<Vec3i> checkBlocks = new ArrayList<>();
+        for (Vec3i vec3i : checkRadius) {
+            BlockPos pos = new BlockPos(vec3i);
+            if (mc.world.getBlockState(pos).getBlock() instanceof FluidBlock) {
+                checkBlocks.add(pos);
+            }
+        }
+        PlaceThread3D thread3D = new PlaceThread3D();
+        thread3D.set3DSchematic(1, checkBlocks, BlockPos.ofFloored(mc.player.getX() + moveFactor[0], Math.round(mc.player.getY()) - (!mode.getValue().equals("Tunnel") ? 1 : 0), mc.player.getZ() + moveFactor[1]));
+        thread3D.start();
+
+        thread.sleepThread(2);
+        threads.add(thread3D);
+        while (PlaceManager.isBuilding) {
+            thread.sleepThread(stageDelay.getValue().longValue());
+        }
+
+        for (Vec3i vec3i : checkBlocks) {
+            if (mc.world.getBlockState(new BlockPos(vec3i)).getBlock() instanceof FluidBlock) {
+                toggle();
+                thread.closeThread();
+            }
+        }
+    }
+
+    /**
+     * Returns the block mining scheme. (Can break on corner highways)
+     */
+    protected ArrayList<Vec3i> getBreakSchematic(int extraMinWidth, int extraMaxWidth, int extraMinHeight, int extraMaxHeight) {
+        ArrayList<Vec3i> sch = new ArrayList<>();
+
+        int a = (int) (-(highwWidth.getValue() / 2)) - (((borders.getValue() || extraBlocks.getValue()) && !mode.getValue().equals("Tunnel")) ? 1 : 0) - extraMinWidth;
+        int b = (int) ((highwWidth.getValue() - 1) - ((int) (highwWidth.getValue() / 2))) + (((borders.getValue() || extraBlocks.getValue()) && !mode.getValue().equals("Tunnel")) ? 1 : 0) + extraMaxWidth;
+
+        int extraValue = (!clearBorder.getValue() || mode.getValue().equals("Tunnel")) ? 1 : 0;
+
+        addLine(a + extraValue, b - extraValue, -extraMinHeight + 1, sch);
+
+        for (int i = -extraMinHeight + 2; i < tunnelHeight.getValue() + 1 + extraMaxHeight; i++)
+            addLine(a, b, i, sch);
+
+        if (clearFloat.getValue() || mode.getValue().equals("Tunnel")) {
+            int e = !clearExtraBlocks.getValue() ? 1 : 0;
+            addLine(a + e, b - e, -extraMinHeight, sch);
+        }
+
+        return sch;
+    }
+
+    public void addLine(int start, int end, int y, ArrayList<Vec3i> schematic) {
+        List<Integer> abValues = MathUtils.getNumbers(start, end);
+        boolean last = false;
+        while (!abValues.isEmpty()) {
+            Integer value = last ? abValues.getLast() : abValues.getFirst();
+            addPos(value, y, schematic);
+            abValues.remove(value);
+            last = !last;
+        }
+    }
+
+    public void addPos(int value, int y, ArrayList<Vec3i> schematic) {
+        schematic.add(new Vec3i((value - moveFactor[0]) * moveFactor[1], y, (value - moveFactor[1]) * moveFactor[0]));
+    }
+
+    /**
+     * Returns a schematic for placing the blocks. (Can break on corner highways)
+     */
+    protected ArrayList<Vec3i> getBuildSchematic() {
+        ArrayList<Vec3i> sch = new ArrayList<>();
+
+        int a = (int) (-(highwWidth.getValue() / 2)) - (extraBlocks.getValue() ? 1 : 0);
+        int b = (int) ((highwWidth.getValue() - 1) - ((int) (highwWidth.getValue() / 2))) + (extraBlocks.getValue() ? 1 : 0);
+
+        addLine(a, b, 0, sch);
+        if (borders.getValue()) {
+            int e = extraBlocks.getValue() ? 0 : 1;
+            addPos(a - e, 1, sch);
+            addPos(b + e, 1, sch);
+        }
+
+        return sch;
+    }
+
+    @SuppressWarnings("DataFlowIssue")
+    private boolean confirmDisabling() {
+        return
+                (disableIfHealth.getValue() && mc.player.getHealth() < minHealth.getValue()) ||
+                        (disableIfChangeY.getValue() && startY != (int) mc.player.getY());
+    }
+
+    /**
+     * Returns the 2 byte numbers required to correctly determine the position of the blocks on the schematics.
+     */
+    public byte[] getCordFactorFromDirection() {
+        return switch (highwayYaw) {
+            case 45 -> new byte[]{-1, -1};
+            case 135 -> new byte[]{1, -1};
+
+            case 225 -> new byte[]{1, 1};
+            case 315 -> new byte[]{-1, 1};
+
+
+            case 90 -> new byte[]{-1, 0};
+            case 180 -> new byte[]{0, 1};
+            case 270 -> new byte[]{1, 0};
+            case 0 -> new byte[]{0, -1};
+            default -> new byte[]{0, 0};
+        };
+    }
+}

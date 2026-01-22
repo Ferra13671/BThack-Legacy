@@ -1,0 +1,57 @@
+package com.ferra13671.BThack.managers.impl;
+
+import com.ferra13671.BThack.BThack;
+import com.ferra13671.BThack.events.DisconnectEvent;
+import com.ferra13671.BThack.events.entity.EntityDeathEvent;
+import com.ferra13671.BThack.events.entity.TotemPopEvent;
+import com.ferra13671.BThack.events.PacketEvent;
+import com.ferra13671.BThack.api.utils.Mc;
+import com.ferra13671.BThack.api.utils.Initializable;
+import com.ferra13671.MegaEvents.Base.EventSubscriber;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityStatuses;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.network.packet.s2c.play.EntityStatusS2CPacket;
+
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+
+public class TotemPopManager implements Initializable, Mc {
+    private final ConcurrentHashMap<UUID, Integer> playerInfos = new ConcurrentHashMap<>();
+
+    @Override
+    public void init() {
+        BThack.EVENT_BUS.register(this);
+        BThack.debug("Totem Pop Manager inited.");
+    }
+
+    @EventSubscriber
+    public void onPacketReceive(PacketEvent.Receive e) {
+        if (mc.world != null) {
+            if (e.getPacket() instanceof EntityStatusS2CPacket packet
+                    && packet.getStatus() == EntityStatuses.USE_TOTEM_OF_UNDYING) {
+                Entity entity = packet.getEntity(mc.world);
+                if (entity != null && entity.isAlive()) {
+                    if (!(entity instanceof PlayerEntity)) return;
+                    int totemsPopped = playerInfos.containsKey(entity.getUuid()) ?
+                            playerInfos.get(entity.getUuid()) + 1 : 1;
+                    playerInfos.put(entity.getUuid(), totemsPopped);
+
+                    BThack.EVENT_BUS.activate(new TotemPopEvent(entity, totemsPopped));
+                }
+            }
+        }
+    }
+
+    @EventSubscriber
+    @SuppressWarnings("unused")
+    public void onEntityDeath(EntityDeathEvent e) {
+        playerInfos.remove(e.entity.getUuid());
+    }
+
+    @EventSubscriber
+    @SuppressWarnings("unused")
+    public void onDisconnect(DisconnectEvent e) {
+        playerInfos.clear();
+    }
+}
