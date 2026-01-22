@@ -1,7 +1,7 @@
 package com.ferra13671.BThack.mixins.render;
 
-import com.ferra13671.BThack.api.IMixin.ModifySkyRendering;
-import com.ferra13671.BThack.core.Client.ModuleList;
+import com.ferra13671.BThack.api.imixin.ModifySkyRendering;
+import com.ferra13671.BThack.core.client.ModuleList;
 import net.minecraft.client.gl.VertexBuffer;
 import net.minecraft.client.render.*;
 import org.spongepowered.asm.mixin.Final;

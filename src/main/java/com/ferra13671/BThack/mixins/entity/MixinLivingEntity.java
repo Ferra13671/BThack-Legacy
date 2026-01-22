@@ -1,10 +1,10 @@
 package com.ferra13671.BThack.mixins.entity;
 
 import com.ferra13671.BThack.BThack;
-import com.ferra13671.BThack.core.Client.ModuleList;
-import com.ferra13671.BThack.events.Entity.JumpHeightEvent;
-import com.ferra13671.BThack.events.Player.PlayerTravelEvent;
-import com.ferra13671.BThack.api.Utils.Mc;
+import com.ferra13671.BThack.core.client.ModuleList;
+import com.ferra13671.BThack.events.entity.JumpHeightEvent;
+import com.ferra13671.BThack.events.player.PlayerTravelEvent;
+import com.ferra13671.BThack.api.utils.Mc;
 import com.ferra13671.MegaEvents.Base.Event;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;

@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.mixins;
 
-import com.ferra13671.BThack.core.Client.ModuleList;
+import com.ferra13671.BThack.core.client.ModuleList;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.network.handler.DecoderHandler;

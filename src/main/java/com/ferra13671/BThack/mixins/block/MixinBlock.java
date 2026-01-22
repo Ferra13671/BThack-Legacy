@@ -1,10 +1,10 @@
 package com.ferra13671.BThack.mixins.block;
 
-import com.ferra13671.BThack.core.Client.ModuleList;
-import com.ferra13671.BThack.api.Utils.Mc;
-import com.ferra13671.BThack.api.Utils.DataList.BlockList;
-import com.ferra13671.BThack.api.Utils.DataList.DataLists;
-import com.ferra13671.BThack.impl.Modules.Render.Xray;
+import com.ferra13671.BThack.core.client.ModuleList;
+import com.ferra13671.BThack.api.utils.Mc;
+import com.ferra13671.BThack.api.utils.datalist.BlockList;
+import com.ferra13671.BThack.api.utils.datalist.DataLists;
+import com.ferra13671.BThack.impl.modules.render.Xray;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;

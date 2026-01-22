@@ -1,10 +1,10 @@
 package com.ferra13671.BThack.mixins;
 
 import com.ferra13671.BThack.BThack;
-import com.ferra13671.BThack.core.Client.Client;
-import com.ferra13671.BThack.core.Client.ModuleList;
-import com.ferra13671.BThack.events.Camera.PositionCameraEvent;
-import com.ferra13671.BThack.events.Camera.RotateCameraEvent;
+import com.ferra13671.BThack.core.client.Client;
+import com.ferra13671.BThack.core.client.ModuleList;
+import com.ferra13671.BThack.events.camera.PositionCameraEvent;
+import com.ferra13671.BThack.events.camera.RotateCameraEvent;
 import net.minecraft.block.enums.CameraSubmersionType;
 import net.minecraft.client.render.Camera;
 import org.spongepowered.asm.mixin.Mixin;

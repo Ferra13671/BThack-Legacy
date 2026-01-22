@@ -1,8 +1,8 @@
 package com.ferra13671.BThack.mixins.render;
 
-import com.ferra13671.BThack.core.Client.ModuleList;
-import com.ferra13671.BThack.api.Utils.Mc;
-import com.ferra13671.BThack.api.Utils.MathUtils;
+import com.ferra13671.BThack.core.client.ModuleList;
+import com.ferra13671.BThack.api.utils.Mc;
+import com.ferra13671.BThack.api.utils.MathUtils;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.ChestBlockEntity;
 import net.minecraft.block.entity.EnchantingTableBlockEntity;

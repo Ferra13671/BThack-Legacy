@@ -2,9 +2,9 @@ package com.ferra13671.BThack.mixins.render;
 
 import com.ferra13671.BThack.managers.Managers;
 import com.ferra13671.BThack.shaders.CoreShaderLoader;
-import com.ferra13671.BThack.core.Client.ModuleList;
-import com.ferra13671.BThack.core.Render.Utils.BThackRenderUtils;
-import com.ferra13671.BThack.api.Utils.Modules.KillAuraUtils;
+import com.ferra13671.BThack.core.client.ModuleList;
+import com.ferra13671.BThack.core.render.utils.BThackRenderUtils;
+import com.ferra13671.BThack.api.utils.modules.KillAuraUtils;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gl.PostEffectProcessor;

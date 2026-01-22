@@ -2,8 +2,8 @@ package com.ferra13671.BThack.shaders;
 
 import com.ferra13671.BThack.BThack;
 import com.ferra13671.BThack.events.DisconnectEvent;
-import com.ferra13671.BThack.api.Utils.Mc;
-import com.ferra13671.BThack.shaders.MainMenu.MainMenuBThackShader;
+import com.ferra13671.BThack.api.utils.Mc;
+import com.ferra13671.BThack.shaders.mainmenu.MainMenuBThackShader;
 import com.ferra13671.MegaEvents.Base.EventSubscriber;
 
 public class CoreShaders implements Mc {

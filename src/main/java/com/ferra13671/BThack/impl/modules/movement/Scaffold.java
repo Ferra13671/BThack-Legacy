@@ -1,0 +1,133 @@
+package com.ferra13671.BThack.impl.modules.movement;
+
+import com.ferra13671.BThack.api.module.ModuleInfo;
+import com.ferra13671.BThack.api.utils.rotate.RotateMode;
+import com.ferra13671.BThack.core.client.ModuleList;
+import com.ferra13671.BThack.events.ClientTickEvent;
+import com.ferra13671.BThack.managers.impl.place.PlaceManager;
+import com.ferra13671.BThack.managers.impl.place.FacingBlock;
+import com.ferra13671.BThack.managers.impl.setting.Settings.ModeSetting;
+import com.ferra13671.BThack.api.module.Module;
+import com.ferra13671.BThack.api.utils.InventoryUtils;
+import com.ferra13671.BThack.managers.impl.setting.Settings.BooleanSetting;
+import com.ferra13671.MegaEvents.Base.EventSubscriber;
+import net.minecraft.block.Block;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3i;
+
+import java.util.Arrays;
+import java.util.List;
+
+/**
+ * @author Ferra13671 and Nikitadan4pi
+ */
+@ModuleInfo(name = "Scaffold", description = "lang.module.Scaffold", category = "MOVEMENT")
+public class Scaffold extends Module {
+
+    public final BooleanSetting keepY = new BooleanSetting ("Keep Y", this, false);
+    public final ModeSetting switchMode = new ModeSetting("Switch Mode", this, Arrays.asList("Normal", "Logic"));
+
+    public final BooleanSetting extraWidth = new BooleanSetting("Extra Width", this, false);
+    public final BooleanSetting placeDelay = new BooleanSetting("Place Delay", this, true, extraWidth::getValue);
+
+    public final ModeSetting rotateMode = new ModeSetting("Rotate Mode", this, Arrays.asList("Grim", "Packet", "None"));
+
+
+    private double yFlag;
+    private BlockPos oldPos;
+
+
+    @Override
+    public void onEnable() {
+        if (ModuleList.highwayBuilder.isEnabled()) {
+            toggle();
+            return;
+        }
+
+        super.onEnable();
+        yFlag = 0;
+        oldPos = null;
+    }
+
+    @EventSubscriber
+    @SuppressWarnings("unused")
+    public void onTick(ClientTickEvent e) {
+        if (nullCheck()) return;
+
+        action();
+    }
+
+    @SuppressWarnings("DataFlowIssue")
+    public void action() {
+        if (!PlaceManager.pickUpPlaceBlocks(false)) return;
+
+
+        BlockPos blockPos;
+        if (keepY.getValue()){
+            if (yFlag == 0){
+                yFlag = mc.player.getY() - 1;
+            }
+            blockPos = BlockPos.ofFloored(mc.player.getX(), yFlag, mc.player.getZ());
+        }
+        else {
+            blockPos = BlockPos.ofFloored(mc.player.getX(), mc.player.getY() - 1, mc.player.getZ());
+        }
+        boolean needAttemptToPlace = false;
+        for (Vec3i vec3i : getSchematic()) {
+            if (mc.world.getBlockState(blockPos.add(vec3i)).isReplaceable()) {
+                needAttemptToPlace = true;
+                break;
+            }
+        }
+        if (!needAttemptToPlace) return;
+
+        if (oldPos != null && switchMode.getValue().equals("Logic")) {
+            Block block = mc.world.getBlockState(oldPos).getBlock();
+            int slot = InventoryUtils.findItem(block.asItem());
+            if (slot != -1) {
+                if (slot < 9) InventoryUtils.swapItem(slot);
+                else {
+                    int freeSlot = InventoryUtils.findFreeHotbarSlot();
+                    if (freeSlot == -1) freeSlot = mc.player.getInventory().selectedSlot;
+                    InventoryUtils.swapItemOnInventory(freeSlot, slot);
+                    InventoryUtils.swapItem(freeSlot);
+                }
+            }
+        }
+
+
+        oldPos = blockPos;
+
+        for (Vec3i vec3i : getSchematic()) {
+            BlockPos pos = blockPos.add(vec3i);
+            if (!mc.world.getBlockState(pos).isReplaceable()) continue;
+
+            if (!PlaceManager.pickUpPlaceBlocks(true)) {
+                return;
+            }
+            if (PlaceManager.isPossibleRich(pos)) {
+                FacingBlock fBlock = PlaceManager.checkNearBlocksExtended(pos);
+                if (fBlock == null) {
+                    continue;
+                }
+
+                PlaceManager.placeBlock(pos, RotateMode.valueOf(rotateMode.getValue().toUpperCase()));
+                if (placeDelay.getValue())
+                    return;
+            }
+        }
+    }
+
+    public List<Vec3i> getSchematic() {
+        if (extraWidth.getValue()) return Arrays.asList(new Vec3i(0, 0, 0),
+                new Vec3i(-1, 0, 0),
+                new Vec3i(-1, 0, -1),
+                new Vec3i(1, 0, -1),
+                new Vec3i(-1, 0, 1),
+                new Vec3i(1, 0, 1),
+                new Vec3i(0, 0, -1),
+                new Vec3i(1, 0, 0),
+                new Vec3i(0, 0, 1));
+        else return List.of(new Vec3i(0, 0, 0));
+    }
+}

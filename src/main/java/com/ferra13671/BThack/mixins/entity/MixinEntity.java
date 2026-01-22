@@ -1,11 +1,11 @@
 package com.ferra13671.BThack.mixins.entity;
 
 import com.ferra13671.BThack.BThack;
-import com.ferra13671.BThack.core.Client.ModuleList;
-import com.ferra13671.BThack.events.Entity.SetVelocityEvent;
-import com.ferra13671.BThack.events.Player.ChangePlayerLookEvent;
-import com.ferra13671.BThack.api.Utils.Mc;
-import com.ferra13671.BThack.api.Utils.Modules.NoRotateMathUtils;
+import com.ferra13671.BThack.core.client.ModuleList;
+import com.ferra13671.BThack.events.entity.SetVelocityEvent;
+import com.ferra13671.BThack.events.player.ChangePlayerLookEvent;
+import com.ferra13671.BThack.api.utils.Mc;
+import com.ferra13671.BThack.api.utils.modules.NoRotateMathUtils;
 import com.ferra13671.MegaEvents.Base.Event;
 import net.minecraft.entity.Entity;
 import net.minecraft.text.Text;

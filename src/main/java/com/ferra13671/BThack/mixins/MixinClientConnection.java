@@ -1,10 +1,10 @@
 package com.ferra13671.BThack.mixins;
 
 import com.ferra13671.BThack.BThack;
-import com.ferra13671.BThack.core.Client.ModuleList;
+import com.ferra13671.BThack.core.client.ModuleList;
 import com.ferra13671.BThack.events.DisconnectEvent;
 import com.ferra13671.BThack.events.PacketEvent;
-import com.ferra13671.BThack.api.IMixin.ModifyClientConnection;
+import com.ferra13671.BThack.api.imixin.ModifyClientConnection;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.network.ClientConnection;

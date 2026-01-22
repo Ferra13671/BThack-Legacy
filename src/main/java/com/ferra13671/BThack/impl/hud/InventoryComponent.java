@@ -1,0 +1,38 @@
+package com.ferra13671.BThack.impl.hud;
+
+import com.ferra13671.BThack.api.module.ModuleInfo;
+import com.ferra13671.BThack.core.render.BThackRender;
+import com.ferra13671.BThack.api.module.HudComponent;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.item.ItemStack;
+
+@ModuleInfo(name = "Inventory", category = "HUD", autoEnabled = true)
+public class InventoryComponent extends HudComponent {
+
+    public InventoryComponent() {
+        super(
+                (MinecraftClient.getInstance().getWindow().getScaledWidth() / 2f) + (MinecraftClient.getInstance().getWindow().getScaledWidth() / 7.5f),
+                MinecraftClient.getInstance().getWindow().getScaledHeight() - 60
+        );
+
+        this.width = 145 + 6;
+        this.height = 49 + 6;
+    }
+
+    @Override
+    @SuppressWarnings("DataFlowIssue")
+    public void render() {
+        if (nullCheck()) return;
+
+        BThackRender.drawHudPlate(getX(), getY(), getX() + width, getY() + height);
+
+        for (int i = 0; i < 27; i++) {
+            ItemStack itemStack = mc.player.getInventory().main.get(i + 9);
+
+            int offsetX = (int) getX() + (i % 9) * 16;
+            int offsetY = (int) getY() + (i / 9) * 16;
+
+            BThackRender.drawItem(itemStack, offsetX + 3, offsetY + 3, true);
+        }
+    }
+}

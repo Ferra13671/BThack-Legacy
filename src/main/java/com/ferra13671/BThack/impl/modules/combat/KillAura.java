@@ -1,0 +1,285 @@
+package com.ferra13671.BThack.impl.modules.combat;
+
+import com.ferra13671.BThack.api.module.ModuleInfo;
+import com.ferra13671.BThack.core.client.ModuleList;
+import com.ferra13671.BThack.events.ClientTickEvent;
+import com.ferra13671.BThack.managers.Managers;
+import com.ferra13671.BThack.managers.impl.setting.Settings.BooleanSetting;
+import com.ferra13671.BThack.managers.impl.setting.Settings.CategorySetting;
+import com.ferra13671.BThack.managers.impl.setting.Settings.ModeSetting;
+import com.ferra13671.BThack.managers.impl.setting.Settings.NumberSetting;
+import com.ferra13671.BThack.managers.impl.travelchange.TravelChanger;
+import com.ferra13671.BThack.api.module.Module;
+import com.ferra13671.BThack.managers.impl.clans.ClanSettingsBuilder;
+import com.ferra13671.BThack.api.utils.*;
+import com.ferra13671.BThack.api.utils.modules.KillAuraUtils;
+import com.ferra13671.BThack.api.utils.rotate.RotateMode;
+import com.ferra13671.BThack.api.utils.rotate.RotateUtils;
+import com.ferra13671.BThack.mixins.accessor.IMinecraftClient;
+import com.ferra13671.MegaEvents.Base.EventSubscriber;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.hit.EntityHitResult;
+import net.minecraft.util.hit.HitResult;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.function.Predicate;
+
+@ModuleInfo(name = "KillAura", description = "lang.module.KillAura", category = "COMBAT")
+public class KillAura extends Module {
+
+    public final ModeSetting mode = new ModeSetting("Mode", this, new ArrayList<>(Arrays.asList("Aura", "TriggerBot")));
+    public final ModeSetting attackMode = new ModeSetting("AttackMode", this, new ArrayList<>(Arrays.asList("CoolDown", "Delay")));
+    public final NumberSetting delay = new NumberSetting("Delay(Second)", this, 1.4, 0.1, 4, false, () -> attackMode.getValue().equals("Delay"));
+    public final NumberSetting range = new NumberSetting("Range", this, 3.62, 1, 10, false, () -> mode.getValue().equals("Aura"));
+
+    public final CategorySetting rotateCategory = new CategorySetting("Rotate", this);
+    public final BooleanSetting instaRotate = new BooleanSetting("Insta Rotate", this, false, () -> mode.getValue().equals("Aura")).inCategory(rotateCategory);
+    public final ModeSetting rotateMath = new ModeSetting("Rotate Math", this, Arrays.asList("New", "Old", "Always"), () -> mode.getValue().equals("Aura") && !instaRotate.getValue()).inCategory(rotateCategory);
+    public final NumberSetting updateRotateMin = new NumberSetting("Update Rotate Min", this, 80, 0, 500, true, () -> mode.getValue().equals("Aura") && !instaRotate.getValue() && !rotateMath.getValue().equals("Always")).inCategory(rotateCategory);
+    public final NumberSetting updateRotateMax = new NumberSetting("Update Rotate Max", this, 150, 0, 500, true, () -> mode.getValue().equals("Aura") && !instaRotate.getValue() && !rotateMath.getValue().equals("Always")).inCategory(rotateCategory);
+    public final NumberSetting rotateMinStep = new NumberSetting("Rotate Min Step", this, 0.6125, 0.35, 0.8, false, () -> mode.getValue().equals("Aura") && !instaRotate.getValue() && rotateMath.getValue().equals("New")).inCategory(rotateCategory);
+    public final NumberSetting rotateMaxStep = new NumberSetting("Rotate Max Step", this, 0.8, 0.35, 0.8, false, () -> mode.getValue().equals("Aura") && !instaRotate.getValue() && rotateMath.getValue().equals("New")).inCategory(rotateCategory);
+    public final NumberSetting lockTicks = new NumberSetting("Lock Ticks", this, 5, 3, 10, true, () -> mode.getValue().equals("Aura") && !instaRotate.getValue()).inCategory(rotateCategory);
+    public final BooleanSetting grim = new BooleanSetting("Grim", this, true, () ->  mode.getValue().equals("Aura")).inCategory(rotateCategory);
+    public final ModeSetting rotateMode = new ModeSetting("RotateMode", this, new ArrayList<>(Arrays.asList("Packet", "Vanilla", "None")), () ->  mode.getValue().equals("Aura") && instaRotate.getValue()).inCategory(rotateCategory);
+    public final NumberSetting packets = new NumberSetting("Packets", this, 1, 1, 5, true, () -> rotateMode.getValue().equals("Packet") && mode.getValue().equals("Aura")).inCategory(rotateCategory);
+
+    public final CategorySetting moveFixCategory = new CategorySetting("Move Fix", this);
+    public final BooleanSetting moveFix = new BooleanSetting("Move Fix", this, true).inCategory(moveFixCategory);
+    public final ModeSetting moveFixMode = new ModeSetting("Mode", this, Arrays.asList("Legal", "Strong")).inCategory(moveFixCategory);
+
+    public final BooleanSetting ignoreWalls = new BooleanSetting("Ignore Walls", this, false);
+    public final BooleanSetting onlyCriticals = new BooleanSetting("Only Criticals", this, false);
+
+    public final CategorySetting targetsCategory = new CategorySetting("Targets", this);
+    public final BooleanSetting players = new BooleanSetting("Players", this, true).inCategory(targetsCategory);
+    public final BooleanSetting invisibles = new BooleanSetting("Invisibles", this, true, players::getValue).inCategory(targetsCategory);
+    public final BooleanSetting teammates = new BooleanSetting("Teammates", this, false, players::getValue).inCategory(targetsCategory);
+    public final BooleanSetting friends = new BooleanSetting("Friends", this, false, players::getValue).inCategory(targetsCategory);
+    public final BooleanSetting hostiles = new BooleanSetting("Hostiles", this, true).inCategory(targetsCategory);
+    public final BooleanSetting passive = new BooleanSetting("Passive", this, true).inCategory(targetsCategory);
+    public final BooleanSetting golems = new BooleanSetting("Golems", this, false).inCategory(targetsCategory);
+    public final BooleanSetting otherMobs = new BooleanSetting("Other Mobs", this, true).inCategory(targetsCategory);
+    public final BooleanSetting clanManager = ClanSettingsBuilder.buildToggle(this).inCategory(targetsCategory);
+    public final ModeSetting clanMode = ClanSettingsBuilder.buildStatusMode(this, clanManager).inCategory(targetsCategory);
+    public final ModeSetting targetClan = ClanSettingsBuilder.buildClanTargetMode(this, clanManager, clanMode).inCategory(targetsCategory);
+
+    public final CategorySetting pauseCategory = new CategorySetting("Pause", this);
+    public final BooleanSetting pauseIfEat = new BooleanSetting("If Eat", this, true).inCategory(pauseCategory);
+    public final BooleanSetting pauseIfMine = new BooleanSetting("If Mine", this, true).inCategory(pauseCategory);
+    public final BooleanSetting pauseIfBlink = new BooleanSetting("If Blink", this, false).inCategory(pauseCategory);
+    public final BooleanSetting pauseIfGui = new BooleanSetting("If Gui", this,false).inCategory(pauseCategory);
+
+
+    private Predicate<Entity> entityFilter;
+
+    private final Ticker delayTicker = new Ticker();
+    private final Ticker deleteTravelTicker = new Ticker();
+    private boolean travelCancelled = true;
+    public Target targetedEntity;
+    private float[] targetRotation;
+    private float[] currentRotation;
+    private int currentUpdateTargetDelay = 0;
+    private final TravelChanger travelChanger = new TravelChanger(10000,
+            () -> new Float[]{currentRotation[0], currentRotation[1]},
+            moveFix::getValue,
+            () -> moveFixMode.getValue().equals("Strong")
+    );
+    private Entity prevAttackedEntity;
+
+    private final Ticker updateRotTicker = new Ticker();
+
+    @Override
+    public void onEnable() {
+        super.onEnable();
+        delayTicker.reset();
+        targetedEntity = null;
+        entityFilter = KillAuraUtils.createEntityFilter(hostiles, passive, golems, otherMobs, ignoreWalls);
+    }
+
+    @Override
+    public void onDisable() {
+        super.onDisable();
+        delayTicker.reset();
+        targetedEntity = null;
+        Managers.TRAVEL_CHANGE_MANAGER.removeChanger(travelChanger);
+    }
+
+    @EventSubscriber
+    @SuppressWarnings("unused")
+    public void onTick(ClientTickEvent e) {
+        if (nullCheck()) return;
+
+        String killAuraMode = mode.getValue();
+
+        arrayListInfo = killAuraMode + (!killAuraMode.equals("TriggerBot") ? "; " + range.getValue() : "");
+
+        if (needPause()) return;
+
+        switch (killAuraMode) {
+            case "Aura" -> auraMode();
+            case "TriggerBot" -> triggerBotMode();
+        }
+
+    }
+
+    //---------Aura---------//
+    @SuppressWarnings("DataFlowIssue")
+    public void auraMode() {
+        if (!mc.player.isAlive()) {
+            targetedEntity = null;
+            return;
+        }
+        if (targetedEntity != null) {
+            if (mc.player.distanceTo(targetedEntity.entity) > range.getValue() || targetedEntity.entity.isDead() || mc.world.getEntityById(targetedEntity.entity.getId()) == null) {
+                if (!travelCancelled) {
+                    deleteTravelTicker.reset();
+                    travelCancelled = true;
+                }
+                targetedEntity = null;
+                prevAttackedEntity = null;
+            }
+        }
+
+        if (targetedEntity == null || targetedEntity.lockTicks <= 0 && (delayPassed() && rotateMath.getValue().equals("Always")))
+            targetSearchAction();
+
+        attackTargetAction();
+    }
+
+    public void targetSearchAction() {
+        LivingEntity target = null;
+        if (players.getValue())
+            target = KillAuraUtils.filterPlayers(range.getValue(), invisibles.getValue(), friends.getValue(), teammates.getValue(), clanManager.getValue(), clanMode.getValue(), targetClan.getValue(), entity -> !entity.isSpectator() && !((PlayerEntity) entity).isCreative());
+
+        if (target == null)
+            target = (LivingEntity) KillAuraUtils.filterEntity(range.getValue(), entityFilter);
+
+        if (target != null) {
+            targetedEntity = new Target(target, 0);
+            currentUpdateTargetDelay = getUpdateRotateDelay();
+            travelCancelled = false;
+        } else {
+            if (!travelCancelled) {
+                deleteTravelTicker.reset();
+                travelCancelled = true;
+            }
+            targetedEntity = null;
+            prevAttackedEntity = null;
+        }
+    }
+
+    public void attackTargetAction() {
+        if (targetedEntity != null) {
+            if (!instaRotate.getValue()) {
+                if (!Managers.TRAVEL_CHANGE_MANAGER.containsChanger(travelChanger))
+                    Managers.TRAVEL_CHANGE_MANAGER.addChanger(travelChanger);
+
+                if (rotateMath.getValue().equals("Always") || updateRotTicker.passed(currentUpdateTargetDelay)) {
+                    targetRotation = RotateUtils.rotations(targetedEntity.entity);
+                    updateRotTicker.reset();
+                    currentUpdateTargetDelay = getUpdateRotateDelay();
+                }
+                switch (rotateMath.getValue()) {
+                    case "Old", "Always" -> currentRotation = targetRotation;
+                    case "New" -> {
+                        if (currentRotation != null) {
+                            currentRotation[0] += (targetRotation[0] - currentRotation[0]) * getRotateStep();
+                            currentRotation[1] += (targetRotation[1] - currentRotation[1]) * getRotateStep();
+                        } else currentRotation = new float[]{RotateUtils.getCameraYaw(), RotateUtils.getCameraPitch()};
+                    }
+                }
+            } else Managers.TRAVEL_CHANGE_MANAGER.removeChanger(travelChanger);
+
+            if (!delayPassed()) return;
+            if (instaRotate.getValue() || targetedEntity.lockTicks >= lockTicks.getValue()) {
+                if (onlyCriticals.getValue() && !isCrit()) return;
+                if (instaRotate.getValue()) {
+                    RotateMode rotateMode = getRotateMode();
+                    KillAuraUtils.preAttackRotate(rotateMode, RotateUtils.rotations(targetedEntity.entity), packets.getValue().intValue());
+                }
+                KillAuraUtils.attackNoRotate(targetedEntity.entity);
+                delayTicker.reset();
+                prevAttackedEntity = targetedEntity.entity;
+            } else {
+                targetedEntity = new Target(targetedEntity.entity, prevAttackedEntity == targetedEntity.entity ? lockTicks.getValue().intValue() : targetedEntity.lockTicks + 1);
+            }
+        } else {
+            if (travelCancelled && (deleteTravelTicker.passed(200) || !rotateMath.getValue().equals("New"))) {
+                if (Managers.TRAVEL_CHANGE_MANAGER.containsChanger(travelChanger))
+                    Managers.TRAVEL_CHANGE_MANAGER.removeChanger(travelChanger);
+                currentRotation = null;
+            } else {
+                currentRotation[0] += (RotateUtils.getCameraYaw() - currentRotation[0]) * getRotateStep();
+                currentRotation[1] += (RotateUtils.getCameraPitch() - currentRotation[1]) * getRotateStep();
+            }
+        }
+    }
+
+    public float getRotateStep() {
+        return MathUtils.randomFloat(rotateMinStep.getValue().floatValue(), rotateMaxStep.getValue().floatValue());
+    }
+
+    public int getUpdateRotateDelay() {
+        return MathUtils.randomInt(updateRotateMin.getValue().intValue(), updateRotateMax.getValue().intValue());
+    }
+    //----------------------//
+
+    //---------TriggerBot---------//
+    public void triggerBotMode() {
+        if (!delayPassed()) return;
+        HitResult objectMouseOver = mc.crosshairTarget;
+
+        if (onlyCriticals.getValue() && !isCrit()) return;
+
+        if (objectMouseOver instanceof EntityHitResult entityHitResult) {
+            Entity ent = entityHitResult.getEntity();
+
+            if (players.getValue() && ent instanceof PlayerEntity player)
+                if (KillAuraUtils.filterPlayer(player, invisibles.getValue(), friends.getValue(), teammates.getValue(), clanManager.getValue(), clanMode.getValue(), targetClan.getValue()))
+                    ((IMinecraftClient) mc).attack();
+            if (entityFilter.test(ent))
+                ((IMinecraftClient) mc).attack();
+
+            delayTicker.reset();
+        }
+    }
+    //----------------------------//
+
+    public RotateMode getRotateMode() {
+        return switch (rotateMode.getValue()) {
+            case "Packet" -> RotateMode.PACKET;
+            case "Vanilla" -> RotateMode.VANILLA;
+            default -> RotateMode.NONE;
+        };
+    }
+
+    @SuppressWarnings("DataFlowIssue")
+    public boolean delayPassed() {
+        return switch (attackMode.getValue()) {
+            case "CoolDown" -> mc.player.getAttackCooldownProgress(0) >= 1.0;
+            case "Delay" -> delayTicker.passed((int) (delay.getValue() * 1000));
+            default -> true;
+        };
+    }
+
+    @SuppressWarnings("DataFlowIssue")
+    public boolean needPause() {
+        return (
+                (pauseIfMine.getValue() && ItemUtils.isTool(mc.player.getActiveItem().getItem()) && mc.player.isUsingItem()) || (ModuleList.packetMine.isEnabled() && (ModuleList.packetMine.currentBreakingBlock != null || !ModuleList.packetMine.conveyorBlocks.isEmpty()))
+                || (pauseIfEat.getValue() && ItemUtils.isFood(mc.player.getActiveItem()) && mc.player.isUsingItem())
+                || (pauseIfBlink.getValue() && ModuleList.blink.isEnabled())
+                || (pauseIfGui.getValue() && mc.currentScreen != null)
+        );
+    }
+
+    @SuppressWarnings({"DataFlowIssue", "BooleanMethodIsAlwaysInverted"})
+    public boolean isCrit() {
+        return mc.player.velocity.y < 0 && !mc.player.isOnGround() && Managers.FALL_DISTANCE_MANAGER.getFallDistance() > 0 && Managers.FALL_DISTANCE_MANAGER.getFallDistance() < 0.3;
+    }
+
+    public record Target(LivingEntity entity, int lockTicks) {}
+}

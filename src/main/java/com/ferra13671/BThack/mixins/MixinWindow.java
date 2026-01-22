@@ -1,10 +1,10 @@
 package com.ferra13671.BThack.mixins;
 
 import com.ferra13671.BThack.BThack;
-import com.ferra13671.BThack.core.Client.Client;
-import com.ferra13671.BThack.api.IMixin.ModifyWindow;
-import com.ferra13671.BThack.api.Utils.Mc;
-import com.ferra13671.BThack.impl.HudComponents.OneTextComponents.ServerIPComponent;
+import com.ferra13671.BThack.core.client.Client;
+import com.ferra13671.BThack.api.imixin.ModifyWindow;
+import com.ferra13671.BThack.api.utils.Mc;
+import com.ferra13671.BThack.impl.hud.onetext.ServerIPComponent;
 import net.minecraft.client.texture.NativeImage;
 import net.minecraft.client.util.Icons;
 import net.minecraft.client.util.Window;

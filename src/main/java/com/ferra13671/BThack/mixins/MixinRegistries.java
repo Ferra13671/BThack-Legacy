@@ -1,6 +1,6 @@
 package com.ferra13671.BThack.mixins;
 
-import com.ferra13671.BThack.api.SoundSystem.Sounds;
+import com.ferra13671.BThack.core.client.systems.sound.Sounds;
 import net.minecraft.registry.Registries;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
